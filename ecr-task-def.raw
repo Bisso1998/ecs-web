@@ -19,10 +19,16 @@
 			"logConfiguration": {
 				"logDriver": "awslogs",
 				"options": {
-					"awslogs-group": "$STAGE-$APP_NAME",
+					"awslogs-group": "$PREFIX$STAGE-$APP_NAME",
 					"awslogs-region": "ap-southeast-1"
 				}
 			}
+		}
+	],
+	"placementConstraints": [
+		{
+			"expression": "attribute:instance-category-default == true",
+			"type": "memberOf"
 		}
 	]
 }
