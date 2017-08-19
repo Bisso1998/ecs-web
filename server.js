@@ -2,8 +2,15 @@
 
 const express = require( 'express' );
 const cookieParser = require( 'cookie-parser' );
+var fs = require( 'fs' );
 
 var requestModule = require( 'request' );
+var http = require( 'http' );
+var https = require( 'https' );
+var httpPromise = require( 'request-promise' );
+
+var httpAgent = new http.Agent({ keepAlive : true });
+var httpsAgent = new https.Agent({ keepAlive : true });
 
 // Constants
 const PORT = 80;
@@ -87,6 +94,16 @@ var Website = defineEnum({
 	BENGALI:		    { hostName: "bengali.pratilipi.com",    mobileHostName: "bn.pratilipi.com", displayLanguage: Language.BENGALI,	    filterLanguage: Language.BENGALI },
 	KANNADA:		    { hostName: "kannada.pratilipi.com",    mobileHostName: "kn.pratilipi.com", displayLanguage: Language.KANNADA,	    filterLanguage: Language.KANNADA },
 	TELUGU:			{ hostName: "telugu.pratilipi.com",     mobileHostName: "te.pratilipi.com", displayLanguage: Language.TELUGU,		filterLanguage: Language.TELUGU },
+
+	PROD_ALL_LANGUAGE:	{ hostName: "www-prod.pratilipi.com",          mobileHostName: "m-prod.pratilipi.com",  displayLanguage: Language.ENGLISH,	filterLanguage: null },
+	PROD_HINDI:			{ hostName: "hindi-prod.pratilipi.com",        mobileHostName: "hi-prod.pratilipi.com", displayLanguage: Language.HINDI,		filterLanguage: Language.HINDI },
+	PROD_GUJARATI:		{ hostName: "gujarati-prod.pratilipi.com",     mobileHostName: "gu-prod.pratilipi.com", displayLanguage: Language.GUJARATI,	filterLanguage: Language.GUJARATI },
+	PROD_TAMIL:			{ hostName: "tamil-prod.pratilipi.com",        mobileHostName: "ta-prod.pratilipi.com", displayLanguage: Language.TAMIL,		filterLanguage: Language.TAMIL },
+	PROD_MARATHI:		{ hostName: "marathi-prod.pratilipi.com",      mobileHostName: "mr-prod.pratilipi.com", displayLanguage: Language.MARATHI,	filterLanguage: Language.MARATHI },
+	PROD_MALAYALAM:		{ hostName: "malayalam-prod.pratilipi.com",    mobileHostName: "ml-prod.pratilipi.com", displayLanguage: Language.MALAYALAM,	filterLanguage: Language.MALAYALAM },
+	PROD_BENGALI:		{ hostName: "bengali-prod.pratilipi.com",      mobileHostName: "bn-prod.pratilipi.com", displayLanguage: Language.BENGALI,	filterLanguage: Language.BENGALI },
+	PROD_KANNADA:		{ hostName: "kannada-prod.pratilipi.com",      mobileHostName: "kn-prod.pratilipi.com", displayLanguage: Language.KANNADA,	filterLanguage: Language.KANNADA },
+	PROD_TELUGU:		{ hostName: "telugu-prod.pratilipi.com",       mobileHostName: "te-prod.pratilipi.com", displayLanguage: Language.TELUGU,	filterLanguage: Language.TELUGU },
 
 	GAMMA_ALL_LANGUAGE:	{ hostName: "www-gamma.pratilipi.com",          mobileHostName: "m-gamma.pratilipi.com",  displayLanguage: Language.ENGLISH,	filterLanguage: null },
 	GAMMA_HINDI:			{ hostName: "hindi-gamma.pratilipi.com",        mobileHostName: "hi-gamma.pratilipi.com", displayLanguage: Language.HINDI,		filterLanguage: Language.HINDI },
@@ -176,14 +193,26 @@ function _forwardToGae( url, req, res ) {
 			url += ( url.contains( "?" ) ? "&" : "?" ) + "accessToken=" + req.cookies[ 'access_token' ];
 	}
 	var options = {
-		method: 'GET',
-		url: url,
-		headers: {
-			"ECS-HostName": req.headers.host
-		}
+		uri: url,
+		headers: { "ECS-HostName": req.headers.host },
+		method: "GET",
+		agent : url.indexOf( "https://" ) >= 0 ? httpsAgent : httpAgent,
+		json: true,
+		timeout: 60000, // 60 seconds
+		simple: false,
+		time: true,
+		resolveWithFullResponse: true
 	};
-	console.log( "forwardToGae :: " + JSON.stringify( options ) );
-	req.pipe( requestModule( options ) ).pipe( res );
+	console.log( "_forwardToGae::" + url );
+	httpPromise( options )
+		.then( resp => {
+			res.status( resp.statusCode ).send( resp.body );
+		})
+		.catch( err => {
+			console.log( "GAE_ERROR :: " + err.message );
+			res.status( 500 ).send( UNEXPECTED_SERVER_EXCEPTION );
+		})
+	;
 }
 
 // App
@@ -194,6 +223,7 @@ app.use( cookieParser() );
 
 // Health
 app.get( '/health', (req, res, next) => {
+	console.log( "Healthy!" );
 	res.send( Date.now() + "" );
 });
 
@@ -299,7 +329,10 @@ app.get( '/*', (req, res, next) => {
 		var userAgent = req.get( 'User-Agent' );
 		var isCrawler = false;
 
-		if( userAgent.contains( "Googlebot" ) ) { // Googlebot/2.1; || Googlebot-News || Googlebot-Image/1.0 || Googlebot-Video/1.0
+		if( ! userAgent ) {
+			// Do Nothing
+
+		} else if( userAgent.contains( "Googlebot" ) ) { // Googlebot/2.1; || Googlebot-News || Googlebot-Image/1.0 || Googlebot-Video/1.0
 			isCrawler = true;
 
 		} else if( userAgent === "Google (+https://developers.google.com/+/web/snippet/)" ) { // Google+
@@ -485,16 +518,21 @@ app.use( (req, res, next) => {
 				console.log( 'ACCESS_TOKEN_ERROR :: ', error );
 				res.status(500).send( UNEXPECTED_SERVER_EXCEPTION );
 			} else {
-				accessToken = JSON.parse( body )[ "accessToken" ];
-				var domain = process.env.STAGE === 'devo' ? '.ptlp.co' : '.pratilipi.com';
-				if( _getWebsite( req.headers.host )[ "__name__" ] === "ALPHA" )
-					domain = "localhost";
-				res.cookie( 'access_token', accessToken,
-					{ domain: domain,
-						path: '/',
-						maxAge: 30 * 24 * 3600000, // 30 days
-						httpOnly: false } );
-				next();
+				try { accessToken = JSON.parse( body )[ "accessToken" ]; } catch(e) {}
+				if( ! accessToken ) {
+					console.log( 'ACCESS_TOKEN_CALL_ERROR' );
+					res.status(500).send( UNEXPECTED_SERVER_EXCEPTION );
+				} else {
+					var domain = process.env.STAGE === 'devo' ? '.ptlp.co' : '.pratilipi.com';
+					if( _getWebsite( req.headers.host )[ "__name__" ] === "ALPHA" )
+						domain = "localhost";
+					res.cookie( 'access_token', accessToken,
+						{ domain: domain,
+							path: '/',
+							maxAge: 30 * 24 * 3600000, // 30 days
+							httpOnly: false } );
+					next();
+				}
 			}
 		});
 
@@ -551,21 +589,42 @@ app.get( '/*', (req, res, next) => {
 	var website = _getWebsite( req.headers.host );
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
-		res.set( 'Content-Type', 'text/css' ).sendfile( 'src/pwa-stylesheets/style.css' );
+		var css = fs.readFileSync( 'src/pwa-stylesheets/style.css', 'utf8' );
+		res.set( 'Content-Type', 'text/css' ).send( css );
 	} else if( req.path === '/pwa-sw-' + website.__name__ + '.js' ) {
-		res.set( 'Content-Type', 'text/javascript' ).sendfile( 'src/pwa-service-worker' + req.path );
-	} else if( req.path === '/favicon.ico' ) {
+		var sw = fs.readFileSync( 'src/pwa-service-worker' + req.path, 'utf8' );
+		res.set( 'Content-Type', 'text/javascript' ).send( sw );
+	} else if( req.path === '/favicon.ico' || req.path === '/favicon.png' ) {
 		res.sendfile( 'src/favicon.ico' );
 	} else if( req.path.indexOf( '/pwa-images/' ) === 0 ) {
 		res.sendfile( 'src' + req.path );
 	} else if( req.path.indexOf( '/resources/' ) === 0 || req.path.indexOf( '/stylesheets/' ) === 0 ) {
 		res.set( 'Content-Type', 'text/plain' ).send( "" );
 	} else if( req.path === "/pwa-manifest-" + website.__name__ + ".json" ) {
-		res.set( 'Content-Type', 'application/json' ).sendfile( 'src/pwa-manifest' + "/pwa-manifest-" + website.__name__ + ".json" );
+		var manifest = fs.readFileSync( 'src/pwa-manifest' + "/pwa-manifest-" + website.__name__ + ".json", 'utf8' );
+		res.set( 'Content-Type', 'application/json' ).send( manifest );
+	} else if( req.path === '/pratilipi-logo-144px.png' ) {
+		res.sendfile( 'src' + req.path );
 	} else {
+		// https://github.com/expressjs/express/issues/3127
+		var html = fs.readFileSync( 'src/pwa-markup/PWA-' + website.__name__ + '.html', 'utf8' );
+		res.set( 'Content-Type', 'text/html' ).send( html );
 		console.log( "Serving html file to url :: ",  req.url );
-		res.set( 'Content-Type', 'text/html' ).sendfile( 'src/pwa-markup/PWA-' + website.__name__ + '.html' );
 	}
+});
+
+// Debugging
+app.use( (err, req, res, next) => {
+	console.error( "ERROR_STACK :: ", err.stack );
+	res.status(500).json( UNEXPECTED_SERVER_EXCEPTION );
+});
+
+process.on( 'unhandledRejection', function( reason, p ) {
+	console.info( "unhandledRejection ", p, " reason: ", reason );
+});
+
+process.on( 'uncaughtException', function( err ) {
+	console.log( 'Error: ',  err );
 });
 
 app.listen( PORT );
