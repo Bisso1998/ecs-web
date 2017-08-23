@@ -1899,6 +1899,19 @@ nav.pratilipi-navigation-drawer {
   font-size: 32px; }
 .pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded a.mdl-tabs__tab.is-active {
   border-right: 2px solid #d0021b; }
+.pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded a.mdl-tabs__tab.is-activated {
+  color: rgba(0, 0, 0, 0.87);
+  border-right: none;
+  border-bottom: 2px solid #d0021b; }
+.pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded a.invite-tab.mdl-tabs__tab.is-active {
+  border-right: none;
+  border-bottom: 2px solid #d0021b; }
+.pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded a.follow-tab.mdl-tabs__tab.is-active {
+  border-right: none;
+  border-bottom: 2px solid #d0021b; }
+.pratilipi-settings-page .mdl-tabs.is-upgraded .mdl-tabs__panel.invite-section.is-activated,
+.pratilipi-settings-page .mdl-tabs.is-upgraded .mdl-tabs__panel.follow-section.is-activated {
+  display: block; }
 .pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
   content: inherit;
   height: 0; }
