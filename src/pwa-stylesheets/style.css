@@ -1927,6 +1927,8 @@ nav.pratilipi-navigation-drawer {
     display: none; }
   .pratilipi-settings-page #connected-accounts table td:nth-child(2) {
     display: none; } }
+.pratilipi-settings-page .search-contact .mdl-textfield__label:after {
+  bottom: 0px; }
 
 .pratilipi-event-page .mdl-card.image-holder {
   margin-bottom: 0;
