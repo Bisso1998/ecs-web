@@ -190,13 +190,15 @@ if( !( 'contains' in String.prototype ) ) {
 function _forwardToMini( req, res ) {
 	var _getMiniEndpoint = function( req ) {
 		//Strip out port number
-		var hostname = ( req.headers.host.match(/:/g) ) ? req.headers.host.slice( 0, req.headers.host.indexOf(":") ) : req.headers.host;
-		return "https://" + hostname + ":81";
+		var hostName = ( req.headers.host.match(/:/g) ) ? req.headers.host.slice( 0, req.headers.host.indexOf(":") ) : req.headers.host;
+		if( hostName === "localhost" )
+			return "http://pr-hi.ptlp.co:81";
+		return "http://" + hostName + ":81";
 	};
 	var url = _getMiniEndpoint( req ) + req.url;
 	var options = {
 		uri: url,
-		headers: { "ECS-HostName": req.headers.host, "Access-Token": req.cookies[ 'access_token' ] },
+		headers: { "Access-Token": req.cookies[ 'access_token' ] },
 		method: "GET",
 		agent : url.indexOf( "https://" ) >= 0 ? httpsAgent : httpAgent,
 		timeout: 60000, // 60 seconds
@@ -210,7 +212,7 @@ function _forwardToMini( req, res ) {
 			res.status( resp.statusCode ).set( resp.headers ).send( resp.body );
 		})
 		.catch( err => {
-			console.log( "GAE_ERROR :: " + err.message );
+			console.log( "MINI_ERROR :: " + err.message );
 			res.status( 500 ).send( UNEXPECTED_SERVER_EXCEPTION );
 		})
 	;
