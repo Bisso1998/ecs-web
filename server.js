@@ -264,7 +264,9 @@ const app = express();
 app.use( cookieParser() );
 
 // gzip all responses
-app.use( compression() );
+app.use( compression({
+	level: 9
+}) );
 
 // Health
 app.get( '/health', (req, res, next) => {
