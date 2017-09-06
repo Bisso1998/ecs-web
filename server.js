@@ -306,6 +306,10 @@ app.use( (req, res, next) => {
 */
 app.enable( 'trust proxy' );
 app.use( (req, res, next) => {
+	console.log('-----------DEBUGGING SECURE-----------');
+	console.log(req.secure);
+	console.log('-----------DEBUGGING SECURE-----------');
+
 	if( req.secure || _getWebsite( req.query.host ).__name__ === "ALPHA" ) {
 		return next();
 	}
@@ -315,6 +319,10 @@ app.use( (req, res, next) => {
 
 // Remove trailing slash
 app.use( (req, res, next) => {
+	console.log('-----------DEBUGGING PATH-----------');
+	console.log(req.path);
+	console.log('-----------DEBUGGING PATH-----------');
+
 	if( req.path !== "/" && req.originalUrl.endsWith( "/" ) )
 		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.query.host + req.originalUrl.slice(0, -1) );
 	else
