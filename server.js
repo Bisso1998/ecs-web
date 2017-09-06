@@ -187,7 +187,7 @@ String.prototype.isStaticFileRequest = function() {
 function _forwardToMini( req, res ) {
 	var _getMiniEndpoint = function( req ) {
 		//Strip out port number
-		var hostName = ( req.query.host.match(/:/g) ) ? req.query.host.slice( 0, req.query.host.indexOf(":") ) : req.query.host;
+		var hostName = ( req.headers.webHostName.match(/:/g) ) ? req.headers.webHostName.slice( 0, req.headers.webHostName.indexOf(":") ) : req.headers.webHostName;
 		if( hostName === "localhost" )
 			return "https://hi-devo.ptlp.co";
 		return "http://" + hostName + ":81";
@@ -229,7 +229,7 @@ function _forwardToGae( url, req, res ) {
 	}
 	var options = {
 		uri: url,
-		headers: { "ECS-HostName": req.query.host },
+		headers: { "ECS-HostName": req.headers.webHostName },
 		method: "GET",
 		agent : url.indexOf( "https://" ) >= 0 ? httpsAgent : httpAgent,
 		timeout: 60000, // 60 seconds
@@ -273,7 +273,7 @@ app.use( (req, res, next) => {
 	console.log(req.query);
 	console.log(req.headers);
 	console.log('-----------------DEBUGGING HEADERS----------------');
-	var host = req.query.host;
+	var host = req.headers.webHostName;
 	var redirected = false;
 	Website.forEach( function( web ) {
 		if( host === "www." + web.hostName ) {
@@ -291,7 +291,7 @@ app.use( (req, res, next) => {
 
 // If nothing matches, redirect to pratilipi.com
 app.use( (req, res, next) => {
-	if( _getWebsite( req.query.host ) == null )
+	if( _getWebsite( req.headers.webHostName ) == null )
 		return res.redirect( 301, 'https://www.pratilipi.com/?redirect=ecs' );
 	else
 		next();
@@ -304,17 +304,17 @@ app.use( (req, res, next) => {
 *	This also assumes that you're terminating the SSL on the proxy. If you're doing SSL end to end use the answer from @basarat above. End to end SSL is the better solution.
 *	app.enable('trust proxy') allows express to check the X-Forwarded-Proto header.
 */
-app.enable( 'trust proxy' );
-app.use( (req, res, next) => {
-	console.log('-----------DEBUGGING SECURE-----------');
-	console.log(req.secure);
-	console.log('-----------DEBUGGING SECURE-----------');
+// app.enable( 'trust proxy' );
+// app.use( (req, res, next) => {
+// 	console.log('-----------DEBUGGING SECURE-----------');
+// 	console.log(req.secure);
+// 	console.log('-----------DEBUGGING SECURE-----------');
 
-	if( req.secure || _getWebsite( req.query.host ).__name__ === "ALPHA" ) {
-		return next();
-	}
-	res.redirect( "https://" + req.query.host + req.url );
-});
+// 	if( req.secure || _getWebsite( req.headers.webHostName ).__name__ === "ALPHA" ) {
+// 		return next();
+// 	}
+// 	res.redirect( "https://" + req.headers.webHostName + req.url );
+// });
 
 
 // Remove trailing slash
@@ -324,7 +324,7 @@ app.use( (req, res, next) => {
 	console.log('-----------DEBUGGING PATH-----------');
 
 	if( req.path !== "/" && req.originalUrl.endsWith( "/" ) )
-		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.query.host + req.originalUrl.slice(0, -1) );
+		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.headers.webHostName + req.originalUrl.slice(0, -1) );
 	else
 		next();
 });
@@ -345,7 +345,7 @@ app.use( (req, res, next) => {
 	redirections[ "/resetpassword" ] =  "/forgot-password" ;
 
 	if( redirections[ req.path ] )
-		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.query.host + redirections[ req.path ] );
+		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.headers.webHostName + redirections[ req.path ] );
 	else
 		next();
 
@@ -354,7 +354,7 @@ app.use( (req, res, next) => {
 // Redirecting to new Pratilipi content image url
 app.use( (req, res, next) => {
 	if( req.path === "/api.pratilipi/pratilipi/resource" )
-		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.query.host + "/api/pratilipi/content/image" + "?" + req.url.split( '?' )[1] );
+		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.headers.webHostName + "/api/pratilipi/content/image" + "?" + req.url.split( '?' )[1] );
 	else
 		next();
 });
@@ -433,8 +433,8 @@ app.get( '/*', (req, res, next) => {
 // Redirecting to Mini website - only for prod env
 app.use( (req, res, next) => {
 
-	var web = _getWebsite( req.query.host )
-	if( req.query.host !== web.mobileHostName && process.env.STAGE === "prod" ) {
+	var web = _getWebsite( req.headers.webHostName )
+	if( req.headers.webHostName !== web.mobileHostName && process.env.STAGE === "prod" ) {
 
 		var userAgent = req.get( 'User-Agent' );
 		var basicBrowser = false;
@@ -567,7 +567,7 @@ app.use( (req, res, next) => {
 					res.status(500).send( UNEXPECTED_SERVER_EXCEPTION );
 				} else {
 					var domain = process.env.STAGE === 'devo' ? '.ptlp.co' : '.pratilipi.com';
-					if( _getWebsite( req.query.host )[ "__name__" ] === "ALPHA" )
+					if( _getWebsite( req.headers.webHostName )[ "__name__" ] === "ALPHA" )
 						domain = "localhost";
 					res.locals[ "access-token" ] = accessToken;
 					res.cookie( 'access_token', accessToken,
@@ -585,8 +585,8 @@ app.use( (req, res, next) => {
 
 // Serving mini website
 app.get( '/*', (req, res, next) => {
-	var web = _getWebsite( req.query.host );
-	if( req.query.host === web.mobileHostName ) {
+	var web = _getWebsite( req.headers.webHostName );
+	if( req.headers.webHostName === web.mobileHostName ) {
 		_forwardToMini( req, res );
 	} else {
 		next();
@@ -595,7 +595,7 @@ app.get( '/*', (req, res, next) => {
 
 // Master website: www.pratilipi.com
 app.get( '/*', (req, res, next) => {
-	var web = _getWebsite( req.query.host );
+	var web = _getWebsite( req.headers.webHostName );
 	if( web.__name__ === "ALL_LANGUAGE" || web.__name__ === "GAMMA_ALL_LANGUAGE" )
 		_forwardToMini( req, res );
 	else
@@ -639,7 +639,7 @@ app.get( '/*', (req, res, next) => {
 // Serving PWA files
 app.get( '/*', (req, res, next) => {
 
-	var website = _getWebsite( req.query.host );
+	var website = _getWebsite( req.headers.webHostName );
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
 		fs.readFile( 'src/pwa-stylesheets/style.css', { 'encoding': 'utf8' }, (err, data) => {
