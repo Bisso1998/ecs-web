@@ -13,8 +13,6 @@ var httpPromise = require( 'request-promise' );
 var httpAgent = new http.Agent({ keepAlive : true });
 var httpsAgent = new https.Agent({ keepAlive : true });
 
-var router = express.Router();
-
 // Constants
 const PORT = 80;
 process.env.UV_THREADPOOL_SIZE = 128;
@@ -129,14 +127,14 @@ var Website = defineEnum({
 	DEVO_KANNADA:     { hostName: "kannada-devo.ptlp.co",   mobileHostName: "kn-devo.ptlp.co", displayLanguage: Language.KANNADA,	filterLanguage: Language.KANNADA },
 
 	DEVO_ALL_LANGUAGE_GR:{ hostName: "www-devo-gr.ptlp.co",       mobileHostName: "m-devo-gr.ptlp.co", displayLanguage: Language.ENGLISH,		filterLanguage: null },
-	DEVO_GR_HINDI:       { hostName: "hindi-devo-gr.ptlp.co",     mobileHostName: "hi-devo-gr.ptlp.co", displayLanguage: Language.HINDI,		filterLanguage: Language.HINDI },
-	DEVO_GR_GUJARATI:    { hostName: "gujarati-devo-gr.ptlp.co",  mobileHostName: "gu-devo-gr.ptlp.co", displayLanguage: Language.GUJARATI,	filterLanguage: Language.GUJARATI },
-	DEVO_GR_TAMIL:       { hostName: "tamil-devo-gr.ptlp.co",     mobileHostName: "ta-devo-gr.ptlp.co", displayLanguage: Language.TAMIL,		filterLanguage: Language.TAMIL },
-	DEVO_GR_MARATHI:     { hostName: "marathi-devo-gr.ptlp.co",   mobileHostName: "mr-devo-gr.ptlp.co", displayLanguage: Language.MARATHI,	filterLanguage: Language.MARATHI },
-	DEVO_GR_MALAYALAM:   { hostName: "malayalam-devo-gr.ptlp.co", mobileHostName: "ml-devo-gr.ptlp.co", displayLanguage: Language.MALAYALAM,	filterLanguage: Language.MALAYALAM },
-	DEVO_GR_BENGALI:     { hostName: "bengali-devo-gr.ptlp.co",   mobileHostName: "bn-devo-gr.ptlp.co", displayLanguage: Language.BENGALI,	filterLanguage: Language.BENGALI },
-	DEVO_GR_TELUGU:      { hostName: "telugu-devo-gr.ptlp.co",    mobileHostName: "te-devo-gr.ptlp.co", displayLanguage: Language.TELUGU,	filterLanguage: Language.TELUGU },
-	DEVO_GR_KANNADA:     { hostName: "kannada-devo-gr.ptlp.co",   mobileHostName: "kn-devo-gr.ptlp.co", displayLanguage: Language.KANNADA,	filterLanguage: Language.KANNADA },
+	DEVO_HINDI_GR:       { hostName: "hindi-devo-gr.ptlp.co",     mobileHostName: "hi-devo-gr.ptlp.co", displayLanguage: Language.HINDI,		filterLanguage: Language.HINDI },
+	DEVO_GUJARATI_GR:    { hostName: "gujarati-devo-gr.ptlp.co",  mobileHostName: "gu-devo-gr.ptlp.co", displayLanguage: Language.GUJARATI,	filterLanguage: Language.GUJARATI },
+	DEVO_TAMIL_GR:       { hostName: "tamil-devo-gr.ptlp.co",     mobileHostName: "ta-devo-gr.ptlp.co", displayLanguage: Language.TAMIL,		filterLanguage: Language.TAMIL },
+	DEVO_MARATHI_GR:     { hostName: "marathi-devo-gr.ptlp.co",   mobileHostName: "mr-devo-gr.ptlp.co", displayLanguage: Language.MARATHI,	filterLanguage: Language.MARATHI },
+	DEVO_MALAYALAM_GR:   { hostName: "malayalam-devo-gr.ptlp.co", mobileHostName: "ml-devo-gr.ptlp.co", displayLanguage: Language.MALAYALAM,	filterLanguage: Language.MALAYALAM },
+	DEVO_BENGALI_GR:     { hostName: "bengali-devo-gr.ptlp.co",   mobileHostName: "bn-devo-gr.ptlp.co", displayLanguage: Language.BENGALI,	filterLanguage: Language.BENGALI },
+	DEVO_TELUGU_GR:      { hostName: "telugu-devo-gr.ptlp.co",    mobileHostName: "te-devo-gr.ptlp.co", displayLanguage: Language.TELUGU,	filterLanguage: Language.TELUGU },
+	DEVO_KANNADA_GR:     { hostName: "kannada-devo-gr.ptlp.co",   mobileHostName: "kn-devo-gr.ptlp.co", displayLanguage: Language.KANNADA,	filterLanguage: Language.KANNADA },
 
 	ALPHA:	{ hostName: "localhost:8080", mobileHostName: "localhost:8081", displayLanguage: Language.HINDI, displayLanguage: Language.HINDI,  }
 
@@ -189,14 +187,14 @@ String.prototype.isStaticFileRequest = function() {
 function _forwardToMini( req, res ) {
 	var _getMiniEndpoint = function( req ) {
 		//Strip out port number
-		var hostName = ( req.headers.webhostname.match(/:/g) ) ? req.headers.webhostname.slice( 0, req.headers.webhostname.indexOf(":") ) : req.headers.webhostname;
+		var hostName = ( req.headers.host.match(/:/g) ) ? req.headers.host.slice( 0, req.headers.host.indexOf(":") ) : req.headers.host;
 		if( hostName === "localhost" )
 			return "https://hi-devo.ptlp.co";
 		return "http://" + hostName + ":81";
 	};
-	var url = _getMiniEndpoint( req ) + req.headers.requestedurl;
+	var url = _getMiniEndpoint( req ) + req.url;
 	var headers = { "Access-Token": res.locals[ "access-token" ] };
-	if( req.headers.requestedpath.isStaticFileRequest() ) {
+	if( req.path.isStaticFileRequest() ) {
 		req.pipe( requestModule(url) ).pipe( res );
 	} else {
 		var options = {
@@ -225,13 +223,13 @@ function _forwardToMini( req, res ) {
 // _forwardToGae -> url might be null
 function _forwardToGae( url, req, res ) {
 	if( ! url ) {
-		url = APPENGINE_ENDPOINT + req.headers.requestedurl;
+		url = APPENGINE_ENDPOINT + req.url;
 		if( res.locals[ "access-token" ] )
 			url += ( url.contains( "?" ) ? "&" : "?" ) + "accessToken=" + res.locals[ "access-token" ];
 	}
 	var options = {
 		uri: url,
-		headers: { "ECS-HostName": req.headers.webhostname },
+		headers: { "ECS-HostName": req.headers.host },
 		method: "GET",
 		agent : url.indexOf( "https://" ) >= 0 ? httpsAgent : httpAgent,
 		timeout: 60000, // 60 seconds
@@ -258,9 +256,7 @@ const app = express();
 app.use( cookieParser() );
 
 // gzip all responses
-app.use( compression({
-	level: 9
-}) );
+app.use( compression() );
 
 // Health
 app.get( '/health', (req, res, next) => {
@@ -270,19 +266,15 @@ app.get( '/health', (req, res, next) => {
 
 
 // https://www.hindi.pratilipi.com -> https://hindi.pratilipi.com
-router.use( (req, res, next) => {
-	console.log('-----------------DEBUGGING HEADERS----------------');
-	console.log(req.query);
-	console.log(req.headers);
-	console.log('-----------------DEBUGGING HEADERS----------------');
-	var host = req.headers.webhostname;
+app.use( (req, res, next) => {
+	var host = req.get( 'host' );
 	var redirected = false;
 	Website.forEach( function( web ) {
 		if( host === "www." + web.hostName ) {
-			return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + web.hostName + req.headers.originalurl );
+			return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + web.hostName + req.originalUrl );
 			redirected = true;
 		} else if( host === "www." + web.mobileHostName ) {
-			return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + web.mobileHostName + req.headers.originalurl );
+			return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + web.mobileHostName + req.originalUrl );
 			redirected = true;
 		}
 	});
@@ -292,8 +284,8 @@ router.use( (req, res, next) => {
 
 
 // If nothing matches, redirect to pratilipi.com
-router.use( (req, res, next) => {
-	if( _getWebsite( req.headers.webhostname ) == null )
+app.use( (req, res, next) => {
+	if( _getWebsite( req.headers.host ) == null )
 		return res.redirect( 301, 'https://www.pratilipi.com/?redirect=ecs' );
 	else
 		next();
@@ -306,33 +298,25 @@ router.use( (req, res, next) => {
 *	This also assumes that you're terminating the SSL on the proxy. If you're doing SSL end to end use the answer from @basarat above. End to end SSL is the better solution.
 *	app.enable('trust proxy') allows express to check the X-Forwarded-Proto header.
 */
-// app.enable( 'trust proxy' );
-// router.use( (req, res, next) => {
-// 	console.log('-----------DEBUGGING SECURE-----------');
-// 	console.log(req.secure);
-// 	console.log('-----------DEBUGGING SECURE-----------');
-
-// 	if( req.secure || _getWebsite( req.headers.webhostname ).__name__ === "ALPHA" ) {
-// 		return next();
-// 	}
-// 	res.redirect( "https://" + req.headers.webhostname + req.headers.requestedurl );
-// });
+app.enable( 'trust proxy' );
+app.use( (req, res, next) => {
+	if( req.secure || _getWebsite( req.headers.host ).__name__ === "ALPHA" ) {
+		return next();
+	}
+	res.redirect( "https://" + req.headers.host + req.url );
+});
 
 
 // Remove trailing slash
-router.use( (req, res, next) => {
-	console.log('-----------DEBUGGING PATH-----------');
-	console.log(req.headers.requestedpath);
-	console.log('-----------DEBUGGING PATH-----------');
-
-	if( req.headers.requestedpath !== "/" && req.headers.originalurl.endsWith( "/" ) )
-		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.headers.webhostname + req.headers.originalurl.slice(0, -1) );
+app.use( (req, res, next) => {
+	if( req.path !== "/" && req.originalUrl.endsWith( "/" ) )
+		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.get('host') + req.originalUrl.slice(0, -1) );
 	else
 		next();
 });
 
 // Redirections
-router.use( (req, res, next) => {
+app.use( (req, res, next) => {
 	var redirections = {};
 	redirections[ "/theme.pratilipi/logo.png" ] =  "/logo.png" ;
 	redirections[ "/apple-touch-icon.png" ] =  "/favicon.ico" ;
@@ -346,25 +330,25 @@ router.use( (req, res, next) => {
 	redirections[ "/batch-process" ] =  "/admin/batch-process" ;
 	redirections[ "/resetpassword" ] =  "/forgot-password" ;
 
-	if( redirections[ req.headers.requestedpath ] )
-		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.headers.webhostname + redirections[ req.headers.requestedpath ] );
+	if( redirections[ req.path ] )
+		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.get('host') + redirections[ req.path ] );
 	else
 		next();
 
 });
 
 // Redirecting to new Pratilipi content image url
-router.use( (req, res, next) => {
-	if( req.headers.requestedpath === "/api.pratilipi/pratilipi/resource" )
-		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.headers.webhostname + "/api/pratilipi/content/image" + "?" + req.headers.requestedurl.split( '?' )[1] );
+app.use( (req, res, next) => {
+	if( req.path === "/api.pratilipi/pratilipi/resource" )
+		return res.redirect( 301, ( req.secure ? 'https://' : 'http://' ) + req.get('host') + "/api/pratilipi/content/image" + "?" + req.url.split( '?' )[1] );
 	else
 		next();
 });
 
 // Crawling Urls like robots.txt, sitemap
-router.get( '/*', (req, res, next) => {
+app.get( '/*', (req, res, next) => {
 	if( process.env.STAGE === "prod" ) {
-		if( req.headers.requestedpath === '/sitemap' || req.headers.requestedpath === '/robots.txt' )
+		if( req.path === '/sitemap' || req.path === '/robots.txt' )
 			_forwardToGae( null, req, res );
 		else
 			next();
@@ -375,7 +359,7 @@ router.get( '/*', (req, res, next) => {
 
 
 // Crawlers - only for prod and gamma env
-router.get( '/*', (req, res, next) => {
+app.get( '/*', (req, res, next) => {
 
 	if( process.env.STAGE === "prod" || process.env.STAGE === "gamma" ) {
 
@@ -433,10 +417,10 @@ router.get( '/*', (req, res, next) => {
 
 
 // Redirecting to Mini website - only for prod env
-router.use( (req, res, next) => {
+app.use( (req, res, next) => {
 
-	var web = _getWebsite( req.headers.webhostname )
-	if( req.headers.webhostname !== web.mobileHostName && process.env.STAGE === "prod" ) {
+	var web = _getWebsite( req.headers.host )
+	if( req.headers.host !== web.mobileHostName && process.env.STAGE === "prod" ) {
 
 		var userAgent = req.get( 'User-Agent' );
 		var basicBrowser = false;
@@ -539,7 +523,7 @@ router.use( (req, res, next) => {
 		}
 
 		if( basicBrowser ) {
-			return res.redirect( 307, ( req.secure ? 'https://' : 'http://' ) + web.mobileHostName + req.headers.requestedurl );
+			return res.redirect( 307, ( req.secure ? 'https://' : 'http://' ) + web.mobileHostName + req.url );
 		} else {
 			next();
 		}
@@ -550,9 +534,9 @@ router.use( (req, res, next) => {
 
 
 // access_token
-router.use( (req, res, next) => {
+app.use( (req, res, next) => {
 
-	if( req.headers.requestedpath.isStaticFileRequest() ) {
+	if( req.path.isStaticFileRequest() ) {
 		next();
 	} else {
 		var accessToken = req.cookies[ "access_token" ];
@@ -569,7 +553,7 @@ router.use( (req, res, next) => {
 					res.status(500).send( UNEXPECTED_SERVER_EXCEPTION );
 				} else {
 					var domain = process.env.STAGE === 'devo' ? '.ptlp.co' : '.pratilipi.com';
-					if( _getWebsite( req.headers.webhostname )[ "__name__" ] === "ALPHA" )
+					if( _getWebsite( req.headers.host )[ "__name__" ] === "ALPHA" )
 						domain = "localhost";
 					res.locals[ "access-token" ] = accessToken;
 					res.cookie( 'access_token', accessToken,
@@ -586,9 +570,9 @@ router.use( (req, res, next) => {
 });
 
 // Serving mini website
-router.get( '/*', (req, res, next) => {
-	var web = _getWebsite( req.headers.webhostname );
-	if( req.headers.webhostname === web.mobileHostName ) {
+app.get( '/*', (req, res, next) => {
+	var web = _getWebsite( req.headers.host );
+	if( req.headers.host === web.mobileHostName ) {
 		_forwardToMini( req, res );
 	} else {
 		next();
@@ -596,8 +580,8 @@ router.get( '/*', (req, res, next) => {
 });
 
 // Master website: www.pratilipi.com
-router.get( '/*', (req, res, next) => {
-	var web = _getWebsite( req.headers.webhostname );
+app.get( '/*', (req, res, next) => {
+	var web = _getWebsite( req.headers.host );
 	if( web.__name__ === "ALL_LANGUAGE" || web.__name__ === "GAMMA_ALL_LANGUAGE" )
 		_forwardToMini( req, res );
 	else
@@ -605,21 +589,21 @@ router.get( '/*', (req, res, next) => {
 });
 
 // Other urls where PWA is not supported
-router.get( '/*', (req, res, next) => {
+app.get( '/*', (req, res, next) => {
 
 	var forwardToMini = false;
-	if( req.headers.requestedpath === '/pratilipi-write'
-		|| req.headers.requestedpath === '/write'
-		|| req.headers.requestedpath.startsWith( '/admin/' )
-		|| req.headers.requestedpath === '/edit-event'
-		|| req.headers.requestedpath === '/edit-blog'
-		|| req.headers.requestedurl.contains( 'loadPWA=false' ) ) {
+	if( req.path === '/pratilipi-write'
+		|| req.path === '/write'
+		|| req.path.startsWith( '/admin/' )
+		|| req.path === '/edit-event'
+		|| req.path === '/edit-blog'
+		|| req.url.contains( 'loadPWA=false' ) ) {
 		forwardToMini = true;
 	}
 
 	// static files
 	var referer = req.header( 'Referer' ) != null ? req.header( 'Referer' ) : "";
-	if( req.headers.requestedpath.isStaticFileRequest() &&
+	if( req.path.isStaticFileRequest() &&
 		( referer.contains( '/pratilipi-write' )
 			|| referer.contains( '/write' )
 			|| referer.contains( '/admin' )
@@ -639,36 +623,36 @@ router.get( '/*', (req, res, next) => {
 // TODO: NotificationFilter
 
 // Serving PWA files
-router.get( '/*', (req, res, next) => {
+app.get( '/*', (req, res, next) => {
 
-	var website = _getWebsite( req.headers.webhostname );
+	var website = _getWebsite( req.headers.host );
 
-	if( req.headers.requestedpath === '/pwa-stylesheets/css/style.css' ) {
+	if( req.path === '/pwa-stylesheets/css/style.css' ) {
 		fs.readFile( 'src/pwa-stylesheets/style.css', { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'text/css' ).send(data);
 		});
-	} else if( req.headers.requestedpath === '/pwa-sw-' + website.__name__ + '.js' ) {
-		fs.readFile( 'src/pwa-service-worker' + req.headers.requestedpath, { 'encoding': 'utf8' }, (err, data) => {
+	} else if( req.path === '/pwa-sw-' + website.__name__ + '.js' ) {
+		fs.readFile( 'src/pwa-service-worker' + req.path, { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'text/javascript' ).send(data);
 		});
-	} else if( req.headers.requestedpath === '/favicon.ico' || req.headers.requestedpath === '/favicon.png' ) {
+	} else if( req.path === '/favicon.ico' || req.path === '/favicon.png' ) {
 		res.sendfile( 'src/favicon.ico' );
-	} else if( req.headers.requestedpath.indexOf( '/pwa-images/' ) === 0 ) {
-		res.sendfile( 'src' + req.headers.requestedpath );
-	} else if( req.headers.requestedpath.indexOf( '/resources/' ) === 0 || req.headers.requestedpath.indexOf( '/stylesheets/' ) === 0 ) {
+	} else if( req.path.indexOf( '/pwa-images/' ) === 0 ) {
+		res.sendfile( 'src' + req.path );
+	} else if( req.path.indexOf( '/resources/' ) === 0 || req.path.indexOf( '/stylesheets/' ) === 0 ) {
 		res.set( 'Content-Type', 'text/plain' ).send( "" );
-	} else if( req.headers.requestedpath === "/pwa-manifest-" + website.__name__ + ".json" ) {
+	} else if( req.path === "/pwa-manifest-" + website.__name__ + ".json" ) {
 		fs.readFile( 'src/pwa-manifest' + '/pwa-manifest-' + website.__name__ + '.json', { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'application/json' ).send(data);
 		});
-	} else if( req.headers.requestedpath === '/pratilipi-logo-144px.png' ) {
-		res.sendfile( 'src' + req.headers.requestedpath );
+	} else if( req.path === '/pratilipi-logo-144px.png' ) {
+		res.sendfile( 'src' + req.path );
 	} else {
 		// https://github.com/expressjs/express/issues/3127
-		console.log( "Serving html file to url :: ",  req.headers.requestedurl );
+		console.log( "Serving html file to url :: ",  req.url );
 		fs.readFile( 'src/pwa-markup/PWA-' + website.__name__ + '.html', { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'text/html' ).send(data);
@@ -677,12 +661,10 @@ router.get( '/*', (req, res, next) => {
 });
 
 // Debugging
-router.use( (err, req, res, next) => {
+app.use( (err, req, res, next) => {
 	console.error( "ERROR_STACK :: ", err.stack );
 	res.status(500).json( UNEXPECTED_SERVER_EXCEPTION );
 });
-
-app.use('/web', router);
 
 process.on( 'unhandledRejection', function( reason, p ) {
 	console.info( "unhandledRejection ", p, " reason: ", reason );
