@@ -4,7 +4,7 @@
 
 	var localFilesToCache = [
 		'.',
-		'pwa-stylesheets/css/style.css?110920171015',
+		'pwa-stylesheets/css/style.css?150920171940',
 		'pwa-images/404.svg',
 		'pwa-images/library-empty.svg',
 		'pwa-images/NewSprite_2.png',
@@ -19,6 +19,8 @@
 		'stylesheets/PageNotFound.png',
 		'stylesheets/Server.png'
 	];
+	// TODO: Remove once pwg is fixed
+	localFilesToCache = [];
 
 	var externalFilesToCache = [
 		'https://www.ptlp.co/resource-all/pwa/js/jkkrrsh.js',
@@ -27,7 +29,7 @@
 		'https://www.ptlp.co/resource-all/font/font-ta.css'
 	];
 
-	var STATIC_VERSION = "110920171015";
+	var STATIC_VERSION = "150920171940";
 	var DYNAMIC_VERSION = "7";
 	var staticCacheName = 'pratilipi-cache-static-' + STATIC_VERSION;
 	var dynamicCacheName = 'pratilipi-cache-dynamic-' + DYNAMIC_VERSION;
@@ -36,7 +38,7 @@
 	var apiPrefix = "https://tamil.pratilipi.com";
 
 	/* Cache Keys */
-	var PWA_INDEX_HTML = "app-shell-110920171015.html";
+	var PWA_INDEX_HTML = "app-shell-150920171940.html";
 	var INIT_BANNER_LIST = "init-banner-list.json";
 	var TRENDING_SEARCH_KEYWORDS = "trending-search-keywords.json";
 
@@ -47,14 +49,14 @@
 			caches.open( staticCacheName )
 			.then( function(cache) {
 				return cache.addAll( localFilesToCache );
-			}).then( function() { // index.html
-				fetch( "/" ).then( function(response) {
-					if( response.ok ) {
-						caches.open( staticCacheName ).then( function(cache) {
-							cache.put( PWA_INDEX_HTML, response );
-						});
-					}
-				});
+//			}).then( function() { // index.html
+//				fetch( "/" ).then( function(response) {
+//					if( response.ok ) {
+//						caches.open( staticCacheName ).then( function(cache) {
+//							cache.put( PWA_INDEX_HTML, response );
+//						});
+//					}
+//				});
 //			}).then( function() { // CDN
 //				for( var i = 0; i < externalFilesToCache.length; i++ ) {
 //					fetch( externalFilesToCache[i] ).then( function(response) {
@@ -118,7 +120,7 @@
 			&& url.indexOf( hostName + "/resources/" ) === -1
 			&& url.indexOf( hostName + "/stylesheets/" ) === -1
 			&& url.indexOf( "loadPWA=false" ) === -1
-			&& false ) {
+			&& false ) { // Hack
 				event.respondWith(
 					caches.match( PWA_INDEX_HTML ).then( function(response) {
 						if( response ) return response;
