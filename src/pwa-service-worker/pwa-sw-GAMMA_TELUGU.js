@@ -4,7 +4,7 @@
 
 	var localFilesToCache = [
 		'.',
-		'pwa-stylesheets/css/style.css?140920171613',
+		'pwa-stylesheets/css/style.css?290920171149',
 		'pwa-images/404.svg',
 		'pwa-images/library-empty.svg',
 		'pwa-images/NewSprite_2.png',
@@ -29,7 +29,7 @@
 		'https://www.ptlp.co/resource-all/font/font-te.css'
 	];
 
-	var STATIC_VERSION = "140920171613";
+	var STATIC_VERSION = "290920171149";
 	var DYNAMIC_VERSION = "7";
 	var staticCacheName = 'pratilipi-cache-static-' + STATIC_VERSION;
 	var dynamicCacheName = 'pratilipi-cache-dynamic-' + DYNAMIC_VERSION;
@@ -38,7 +38,7 @@
 	var apiPrefix = "https://telugu-gamma.pratilipi.com";
 
 	/* Cache Keys */
-	var PWA_INDEX_HTML = "app-shell-140920171613.html";
+	var PWA_INDEX_HTML = "app-shell-290920171149.html";
 	var INIT_BANNER_LIST = "init-banner-list.json";
 	var TRENDING_SEARCH_KEYWORDS = "trending-search-keywords.json";
 
@@ -49,14 +49,14 @@
 			caches.open( staticCacheName )
 			.then( function(cache) {
 				return cache.addAll( localFilesToCache );
-			}).then( function() { // index.html
-				fetch( "/" ).then( function(response) {
-					if( response.ok ) {
-						caches.open( staticCacheName ).then( function(cache) {
-							cache.put( PWA_INDEX_HTML, response );
-						});
-					}
-				});
+//			}).then( function() { // index.html
+//				fetch( "/" ).then( function(response) {
+//					if( response.ok ) {
+//						caches.open( staticCacheName ).then( function(cache) {
+//							cache.put( PWA_INDEX_HTML, response );
+//						});
+//					}
+//				});
 //			}).then( function() { // CDN
 //				for( var i = 0; i < externalFilesToCache.length; i++ ) {
 //					fetch( externalFilesToCache[i] ).then( function(response) {
