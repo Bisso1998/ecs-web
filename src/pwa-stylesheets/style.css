@@ -3234,11 +3234,11 @@ ul.pratilipi-recommendation-carousel {
   bottom: 0;
   left: 0;
   right: 0; }
-  .pratilipi-pratilipi-page-bottom-strip a, .pratilipi-pratilipi-page-bottom-strip button {
+  .pratilipi-pratilipi-page-bottom-strip .bottom-strip-button {
     flex-grow: 1;
     margin: 0px;
     height: 50px;
-    font-size: 1.3em;
+    font-size: 1.2em;
     border-radius: unset; }
 
 /*# sourceMappingURL=style.css.map */
