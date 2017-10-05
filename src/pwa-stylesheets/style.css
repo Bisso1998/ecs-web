@@ -3231,7 +3231,7 @@ ul.pratilipi-recommendation-carousel {
   display: flex;
   flex-direction: row;
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0; }
   .pratilipi-pratilipi-page-bottom-strip .bottom-strip-button {
@@ -3240,5 +3240,11 @@ ul.pratilipi-recommendation-carousel {
     height: 50px;
     font-size: 1.2em;
     border-radius: unset; }
+  @media (min-width: 768px) {
+    .pratilipi-pratilipi-page-bottom-strip {
+      display: none !important; } }
+
+.pratilipi-pratilipi-page-bottom-strip--hidden {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */
