@@ -3224,4 +3224,27 @@ ul.pratilipi-recommendation-carousel {
         min-width: 36px;
         padding: 0; }
 
+.pratilipi-pratilipi-page-bottom-strip {
+  z-index: 2;
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; }
+  .pratilipi-pratilipi-page-bottom-strip .bottom-strip-button {
+    flex-grow: 1;
+    margin: 0px;
+    height: 50px;
+    border-radius: unset;
+    max-width: 34%; }
+  @media (min-width: 768px) {
+    .pratilipi-pratilipi-page-bottom-strip {
+      display: none !important; } }
+
+.pratilipi-pratilipi-page-bottom-strip--hidden {
+  display: none; }
+
 /*# sourceMappingURL=style.css.map */
