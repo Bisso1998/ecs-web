@@ -1094,6 +1094,12 @@ nav.pratilipi-navigation-drawer {
       align-self: center;
       line-height: 1;
       color: initial; }
+  @media (min-width: 769px) {
+    .pratilipi-pratilipi-info .hide-in-desktop {
+      display: none; } }
+  @media (max-width: 768px) {
+    .pratilipi-pratilipi-info .hide-in-mobile-and-tablets {
+      display: none; } }
 
 .pratilipi-review-list {
   z-index: initial;
