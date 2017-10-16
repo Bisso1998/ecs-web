@@ -189,8 +189,20 @@ app.get( '/*', (req, res, next) => {
 	if (bucketId) {
 		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * TOTAL_GROWTH_BUCKETS);
 		if (Number(bucketId) <= numberOfBucketsToShowProduct) {
-			variation = 'product/'
+			variation = 'product/';
 		}
+	}
+
+	if (req.query.variation === 'GROWTH') {
+		variation = 'growth/';
+	} else if (req.query.variation === 'PRODUCT') {
+		variation = 'product/';
+	}
+
+	if (req.header('Referer').contains('variation=GROWTH')) {
+		variation = 'growth/';
+	} else if (req.header('Referer').contains('variation=PRODUCT')) {
+		variation = 'product/';
 	}
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
