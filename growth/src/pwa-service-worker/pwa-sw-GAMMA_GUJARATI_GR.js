@@ -4,7 +4,7 @@
 
 	var localFilesToCache = [
 		'.',
-		'pwa-stylesheets/css/style.css?290920171253',
+		'pwa-stylesheets/css/style.css?161020171748',
 		'pwa-images/404.svg',
 		'pwa-images/library-empty.svg',
 		'pwa-images/NewSprite_2.png',
@@ -29,7 +29,7 @@
 		'https://www.ptlp.co/resource-all/font/font-gu.css'
 	];
 
-	var STATIC_VERSION = "290920171253";
+	var STATIC_VERSION = "161020171748";
 	var DYNAMIC_VERSION = "7";
 	var staticCacheName = 'pratilipi-cache-static-' + STATIC_VERSION;
 	var dynamicCacheName = 'pratilipi-cache-dynamic-' + DYNAMIC_VERSION;
@@ -38,7 +38,7 @@
 	var apiPrefix = "https://gujarati-gamma-gr.pratilipi.com";
 
 	/* Cache Keys */
-	var PWA_INDEX_HTML = "app-shell-290920171253.html";
+	var PWA_INDEX_HTML = "app-shell-161020171748.html";
 	var INIT_BANNER_LIST = "init-banner-list.json";
 	var TRENDING_SEARCH_KEYWORDS = "trending-search-keywords.json";
 
@@ -166,6 +166,25 @@
 			cacheAndRevalidate( dynamicCacheName, TRENDING_SEARCH_KEYWORDS, event );
 		}
 
+	});
+
+	self.addEventListener( 'push', function(event) {
+		const title = 'Test Title';
+		const options = {
+			body: 'Test body....'
+		};
+
+		const notificationPromise = self.registration.showNotification(title, options);
+		event.waitUntil( notificationPromise );
+
+	});
+
+
+	self.addEventListener( 'notificationclick', function(event) {
+		event.notification.close();
+		event.waitUntil(
+			clients.openWindow('https://www.pratilipi.com')
+		);
 	});
 
 	function cacheAndRevalidate( cacheName, cacheKey, event ) {

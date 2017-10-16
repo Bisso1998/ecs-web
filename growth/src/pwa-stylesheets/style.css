@@ -594,16 +594,6 @@ main.mdl-layout__content {
             cursor: pointer;
             bottom: 22px;
             background: white; }
-          .pratilipi-header .row-one .search-bar-holder form .mdl-textfield input::-webkit-input-placeholder {
-            color: red !important; }
-          .pratilipi-header .row-one .search-bar-holder form .mdl-textfield input:-moz-placeholder {
-            /* Firefox 18- */
-            color: red !important; }
-          .pratilipi-header .row-one .search-bar-holder form .mdl-textfield input::-moz-placeholder {
-            /* Firefox 19+ */
-            color: red !important; }
-          .pratilipi-header .row-one .search-bar-holder form .mdl-textfield input:-ms-input-placeholder {
-            color: red !important; }
     .pratilipi-header .row-one .header-icons-holder {
       flex-basis: 48px;
       text-align: center; }
@@ -1104,6 +1094,12 @@ nav.pratilipi-navigation-drawer {
       align-self: center;
       line-height: 1;
       color: initial; }
+  @media (min-width: 769px) {
+    .pratilipi-pratilipi-info .hide-in-desktop {
+      display: none; } }
+  @media (max-width: 768px) {
+    .pratilipi-pratilipi-info .hide-in-mobile-and-tablets {
+      display: none; } }
 
 .pratilipi-review-list {
   z-index: initial;
@@ -1845,49 +1841,6 @@ nav.pratilipi-navigation-drawer {
   right: 0;
   bottom: 0;
   margin: auto; }
-.pratilipi-settings-page div.modal-body {
-  padding: 15px 30px; }
-  .pratilipi-settings-page div.modal-body .mdl-textfield {
-    width: 100% !important;
-    display: block; }
-  .pratilipi-settings-page div.modal-body i.dropdown-icon {
-    position: absolute;
-    right: 0px;
-    bottom: 18px;
-    width: 32px;
-    height: 32px;
-    font-size: 32px; }
-  .pratilipi-settings-page div.modal-body ul.dropdown-ul {
-    width: 100%;
-    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    border: 1px solid #999;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 4px; }
-    .pratilipi-settings-page div.modal-body ul.dropdown-ul .mdl-menu__item, .pratilipi-settings-page div.modal-body ul.dropdown-ul .mdl-menu__item:hover {
-      color: #000; }
-.pratilipi-settings-page .eachBlog:hover {
-  background-color: rgba(178, 189, 189, 0.2); }
-.pratilipi-settings-page .tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black; }
-.pratilipi-settings-page .tooltip .tooltiptext {
-  visibility: hidden;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  width: 120px;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -60px;
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1; }
-.pratilipi-settings-page .tooltip:hover .tooltiptext {
-  visibility: visible; }
 
 .pratilipi-event-page .mdl-card.image-holder {
   margin-bottom: 0;
@@ -2596,20 +2549,19 @@ nav.mdl-navigation {
   .pratilipi-tags .pratilipi-tag-element {
     padding-top: 3px;
     padding-bottom: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
     margin: 5px;
     text-align: center;
-    border: solid 1px black;
+    border: solid 1px #c8c8c8;
     border-radius: 20px;
+    margin-left: 0;
+    margin-right: 8px;
     cursor: pointer;
     white-space: nowrap; }
   .pratilipi-tags .checked {
-    background: #D0021B;
-    border: solid 1px #D0021B;
-    color: #FFF; }
+    background: #c8c8c8; }
   .pratilipi-tags .disabled {
-    border: 1px solid #D3D3D3;
     cursor: default; }
   @media (max-width: 480px) {
     .pratilipi-tags .save-tags-button {
@@ -2619,7 +2571,6 @@ nav.mdl-navigation {
     font-size: 80%;
     color: #4A4A4A; }
   .pratilipi-tags .mdl-textfield {
-    width: 100%;
     display: block; }
   .pratilipi-tags .dropdown-icon {
     position: absolute;
@@ -2649,6 +2600,57 @@ nav.mdl-navigation {
     top: -5px;
     right: 105%;
     white-space: normal; }
+  .pratilipi-tags .tag-deletable {
+    padding-right: 4px; }
+@keyframes ripple {
+  0% {
+    box-shadow: 0px 0px 0px 1px transparent; }
+  50% {
+    box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0.1); }
+  100% {
+    box-shadow: 0px 0px 0px 15px transparent; } }
+  .pratilipi-tags .md-radio {
+    margin: 16px 0; }
+    .pratilipi-tags .md-radio.md-radio-inline {
+      display: inline-block; }
+    .pratilipi-tags .md-radio input[type="radio"] {
+      display: none; }
+      .pratilipi-tags .md-radio input[type="radio"]:checked + label:before {
+        border-color: #d0021b;
+        animation: ripple 0.2s linear forwards; }
+      .pratilipi-tags .md-radio input[type="radio"]:checked + label:after {
+        transform: scale(1); }
+    .pratilipi-tags .md-radio label {
+      display: inline-block;
+      height: 20px;
+      position: relative;
+      padding: 0 30px;
+      margin-bottom: 0;
+      cursor: pointer;
+      vertical-align: bottom; }
+      .pratilipi-tags .md-radio label:before, .pratilipi-tags .md-radio label:after {
+        position: absolute;
+        content: '';
+        border-radius: 50%;
+        transition: all .3s ease;
+        transition-property: transform, border-color; }
+      .pratilipi-tags .md-radio label:before {
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(0, 0, 0, 0.54); }
+      .pratilipi-tags .md-radio label:after {
+        top: 5px;
+        left: 5px;
+        width: 10px;
+        height: 10px;
+        transform: scale(0);
+        background: #d0021b; }
+  .pratilipi-tags *, .pratilipi-tags *:before, .pratilipi-tags *:after {
+    box-sizing: border-box; }
+  .pratilipi-tags .pratilipi-red-important {
+    color: #d0021b !important; }
 
 .th-nor-config {
   background-color: #FFF !important;
@@ -3227,5 +3229,28 @@ ul.pratilipi-recommendation-carousel {
       .pratilipi-author-leaderboard .author-leaderboard-ul .mdl-list__item .small-button {
         min-width: 36px;
         padding: 0; }
+
+.pratilipi-pratilipi-page-bottom-strip {
+  z-index: 2;
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+  .pratilipi-pratilipi-page-bottom-strip .bottom-strip-button {
+    flex-grow: 1;
+    margin: 0px;
+    height: 50px;
+    border-radius: unset;
+    max-width: 34%; }
+  @media (min-width: 768px) {
+    .pratilipi-pratilipi-page-bottom-strip {
+      display: none !important; } }
+
+.pratilipi-pratilipi-page-bottom-strip--hidden {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */
