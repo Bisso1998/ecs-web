@@ -184,25 +184,25 @@ app.get( '/*', (req, res, next) => {
 
 	var website = _getWebsite( req.headers.host );
 	var bucketId = req.cookies.bucketId;
-	var variation = 'growth/';
+	var variation = 'build/growth/';
 
 	if (bucketId) {
 		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * TOTAL_GROWTH_BUCKETS);
 		if (Number(bucketId) <= numberOfBucketsToShowProduct) {
-			variation = 'product/';
+			variation = 'build/product/';
 		}
 	}
 
 	if (req.query.variation === 'GROWTH') {
-		variation = 'growth/';
+		variation = 'build/growth/';
 	} else if (req.query.variation === 'PRODUCT') {
-		variation = 'product/';
+		variation = 'build/product/';
 	}
 
 	if (req.header('Referer').contains('variation=GROWTH')) {
-		variation = 'growth/';
+		variation = 'build/growth/';
 	} else if (req.header('Referer').contains('variation=PRODUCT')) {
-		variation = 'product/';
+		variation = 'build/product/';
 	}
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
