@@ -16,6 +16,8 @@ var httpsAgent = new https.Agent({ keepAlive : true });
 // Constants
 const PORT = 80;
 process.env.UV_THREADPOOL_SIZE = 128;
+const PRODUCT_PERCENTAGE = 50;
+const TOTAL_GROWTH_BUCKETS = 10;
 
 function Enum() {
 	this._enums = [];
@@ -181,34 +183,43 @@ app.get( '/health', (req, res, next) => {
 app.get( '/*', (req, res, next) => {
 
 	var website = _getWebsite( req.headers.host );
+	var bucketId = req.cookies.bucketId;
+	var variation = 'growth/';
+
+	if (bucketId) {
+		const numberOfBucketsToShowProduct = Math.floor((50 / 100) * TOTAL_GROWTH_BUCKETS);
+		if (Number(bucketId) <= numberOfBucketsToShowProduct) {
+			variation = 'product/'
+		}
+	}
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
-		fs.readFile( 'src/pwa-stylesheets/style.css', { 'encoding': 'utf8' }, (err, data) => {
+		fs.readFile( variation + 'src/pwa-stylesheets/style.css', { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'text/css' ).send(data);
 		});
 	} else if( req.path === '/pwa-sw-' + website.__name__ + '.js' ) {
-		fs.readFile( 'src/pwa-service-worker' + req.path, { 'encoding': 'utf8' }, (err, data) => {
+		fs.readFile( variation + 'src/pwa-service-worker' + req.path, { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'text/javascript' ).send(data);
 		});
 	} else if( req.path === '/favicon.ico' || req.path === '/favicon.png' ) {
-		res.sendfile( 'src/favicon.ico' );
+		res.sendfile( variation + 'src/favicon.ico' );
 	} else if( req.path.indexOf( '/pwa-images/' ) === 0 ) {
-		res.sendfile( 'src' + req.path );
+		res.sendfile( variation + 'src' + req.path );
 	} else if( req.path.indexOf( '/resources/' ) === 0 || req.path.indexOf( '/stylesheets/' ) === 0 ) {
 		res.set( 'Content-Type', 'text/plain' ).send( "" );
 	} else if( req.path === "/pwa-manifest-" + website.__name__ + ".json" ) {
-		fs.readFile( 'src/pwa-manifest' + '/pwa-manifest-' + website.__name__ + '.json', { 'encoding': 'utf8' }, (err, data) => {
+		fs.readFile( variation + 'src/pwa-manifest' + '/pwa-manifest-' + website.__name__ + '.json', { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'application/json' ).send(data);
 		});
 	} else if( req.path === '/pratilipi-logo-144px.png' ) {
-		res.sendfile( 'src' + req.path );
+		res.sendfile( variation + 'src' + req.path );
 	} else {
 		// https://github.com/expressjs/express/issues/3127
 		console.log( "Serving html file to url :: ",  req.url );
-		fs.readFile( 'src/pwa-markup/PWA-' + website.__name__ + '.html', { 'encoding': 'utf8' }, (err, data) => {
+		fs.readFile( variation + 'src/pwa-markup/PWA-' + website.__name__ + '.html', { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'text/html' ).send(data);
 		});
