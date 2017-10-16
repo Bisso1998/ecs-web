@@ -187,7 +187,7 @@ app.get( '/*', (req, res, next) => {
 	var variation = 'growth/';
 
 	if (bucketId) {
-		const numberOfBucketsToShowProduct = Math.floor((50 / 100) * TOTAL_GROWTH_BUCKETS);
+		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * TOTAL_GROWTH_BUCKETS);
 		if (Number(bucketId) <= numberOfBucketsToShowProduct) {
 			variation = 'product/'
 		}
