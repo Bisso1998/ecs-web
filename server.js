@@ -61,6 +61,10 @@ Enum.prototype = {
 	}
 };
 
+String.prototype.contains = function (str, startIndex) {
+    return -1 !== String.prototype.indexOf.call(this, str, startIndex);
+};
+
 function defineEnum( definition ) {
 	var e = new Enum();
 	for( var k in definition ) {
