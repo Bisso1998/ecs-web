@@ -199,9 +199,9 @@ app.get( '/*', (req, res, next) => {
 		variation = 'build/product/';
 	}
 
-	if (req.header('Referer').contains('variation=GROWTH')) {
+	if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
 		variation = 'build/growth/';
-	} else if (req.header('Referer').contains('variation=PRODUCT')) {
+	} else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
 		variation = 'build/product/';
 	}
 
