@@ -17,7 +17,6 @@ var httpsAgent = new https.Agent({ keepAlive : true });
 const PORT = 80;
 process.env.UV_THREADPOOL_SIZE = 128;
 const PRODUCT_PERCENTAGE = 50;
-const TOTAL_GROWTH_BUCKETS = 10;
 
 function Enum() {
 	this._enums = [];
@@ -187,11 +186,12 @@ app.get( '/health', (req, res, next) => {
 app.get( '/*', (req, res, next) => {
 
 	var website = _getWebsite( req.headers.host );
-	var bucketId = req.cookies.bucketId;
+	var bucketId = req.headers["bucket-id"];
+	var totalGrowthBuckets = req.headers["total-growth-buckets"] || 10;
 	var variation = 'build/growth/';
 
 	if (bucketId) {
-		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * TOTAL_GROWTH_BUCKETS);
+		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
 		if (Number(bucketId) <= numberOfBucketsToShowProduct) {
 			variation = 'build/product/';
 		}
