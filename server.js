@@ -186,7 +186,7 @@ app.get( '/health', (req, res, next) => {
 app.get( '/*', (req, res, next) => {
 
 	var website = _getWebsite( req.headers.host );
-	var bucketId = req.headers["bucket-id"];
+	var bucketId = req.headers["bucket-id"] + 1;
 	var totalGrowthBuckets = req.headers["total-growth-buckets"] || 10;
 	var variation = 'build/growth/';
 
