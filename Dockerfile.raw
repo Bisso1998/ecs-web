@@ -7,6 +7,7 @@ RUN npm install
 
 # Bundle app source
 COPY src src
+COPY build build
 COPY server.js .
 
 EXPOSE 80
