@@ -204,7 +204,7 @@ app.get( '/*', (req, res, next) => {
 	}
 
 	if (req.query.customVariation && fs.existsSync('build/' + req.query.customVariation)) {
-		variation = 'build/' + req.query.customVariation;
+		variation = 'build/' + req.query.customVariation + '/';
 	}
 
 	if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
