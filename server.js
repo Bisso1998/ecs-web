@@ -214,7 +214,7 @@ app.get( '/*', (req, res, next) => {
 	} else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
 		variation = 'build/product/';
 	} else {
-		const parsedUrl = parse('https://github.com/foo/bar?customVariation=static-read-strip', true);
+		const parsedUrl = parse(req.header('Referer'), true);
 		if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
 			variation = 'build/' + parsedUrl.query.customVariation + '/';
 		}
