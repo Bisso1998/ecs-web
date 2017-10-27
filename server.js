@@ -3,6 +3,8 @@
 const express = require( 'express' );
 var compression = require( 'compression' );
 const cookieParser = require( 'cookie-parser' );
+const parse = require('url-parse');
+
 var fs = require( 'fs' );
 
 var requestModule = require( 'request' );
@@ -211,6 +213,11 @@ app.get( '/*', (req, res, next) => {
 		variation = 'build/growth/';
 	} else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
 		variation = 'build/product/';
+	} else {
+		const parsedUrl = parse('https://github.com/foo/bar?customVariation=static-read-strip', true);
+		if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
+			variation = 'build/' + parsedUrl.query.customVariation + '/';
+		}
 	}
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
