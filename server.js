@@ -3,6 +3,8 @@
 const express = require( 'express' );
 var compression = require( 'compression' );
 const cookieParser = require( 'cookie-parser' );
+const parse = require('url-parse');
+
 var fs = require( 'fs' );
 
 var requestModule = require( 'request' );
@@ -186,13 +188,13 @@ app.get( '/health', (req, res, next) => {
 app.get( '/*', (req, res, next) => {
 
 	var website = _getWebsite( req.headers.host );
-	var bucketId = req.headers["bucket-id"];
+	var bucketId = req.headers["bucket-id"] + 1;
 	var totalGrowthBuckets = req.headers["total-growth-buckets"] || 10;
 	var variation = 'build/growth/';
 
 	if (bucketId) {
 		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
-		if (Number(bucketId) + 1 <= numberOfBucketsToShowProduct) {
+		if (Number(bucketId) <= numberOfBucketsToShowProduct) {
 			variation = 'build/product/';
 		}
 	}
@@ -203,10 +205,19 @@ app.get( '/*', (req, res, next) => {
 		variation = 'build/product/';
 	}
 
+	if (req.query.customVariation && fs.existsSync('build/' + req.query.customVariation)) {
+		variation = 'build/' + req.query.customVariation + '/';
+	}
+
 	if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
 		variation = 'build/growth/';
 	} else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
 		variation = 'build/product/';
+	} else {
+		const parsedUrl = parse(req.header('Referer'), true);
+		if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
+			variation = 'build/' + parsedUrl.query.customVariation + '/';
+		}
 	}
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
@@ -257,4 +268,3 @@ process.on( 'uncaughtException', function( err ) {
 });
 
 app.listen( PORT );
-
