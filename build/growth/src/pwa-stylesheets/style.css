@@ -1097,9 +1097,6 @@ nav.pratilipi-navigation-drawer {
   @media (min-width: 769px) {
     .pratilipi-pratilipi-info .hide-in-desktop {
       display: none; } }
-  @media (max-width: 768px) {
-    .pratilipi-pratilipi-info .hide-in-mobile-and-tablets {
-      display: none; } }
 
 .pratilipi-review-list {
   z-index: initial;
@@ -1831,19 +1828,6 @@ nav.pratilipi-navigation-drawer {
   font-size: 32px; }
 .pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded a.mdl-tabs__tab.is-active {
   border-right: 2px solid #d0021b; }
-.pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded a.mdl-tabs__tab.is-activated {
-  color: rgba(0, 0, 0, 0.87);
-  border-right: none;
-  border-bottom: 2px solid #d0021b; }
-.pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded a.invite-tab.mdl-tabs__tab.is-active {
-  border-right: none;
-  border-bottom: 2px solid #d0021b; }
-.pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded a.follow-tab.mdl-tabs__tab.is-active {
-  border-right: none;
-  border-bottom: 2px solid #d0021b; }
-.pratilipi-settings-page .mdl-tabs.is-upgraded .mdl-tabs__panel.invite-section.is-activated,
-.pratilipi-settings-page .mdl-tabs.is-upgraded .mdl-tabs__panel.follow-section.is-activated {
-  display: block; }
 .pratilipi-settings-page .vertical-mdl-tabs.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
   content: inherit;
   height: 0; }
@@ -1854,13 +1838,6 @@ nav.pratilipi-navigation-drawer {
   right: 0;
   bottom: 0;
   margin: auto; }
-@media only screen and (max-width: 490px) {
-  .pratilipi-settings-page #connected-accounts table th:nth-child(2) {
-    display: none; }
-  .pratilipi-settings-page #connected-accounts table td:nth-child(2) {
-    display: none; } }
-.pratilipi-settings-page .search-contact .mdl-textfield__label:after {
-  bottom: 0px; }
 
 .pratilipi-event-page .mdl-card.image-holder {
   margin-bottom: 0;
@@ -3250,28 +3227,5 @@ ul.pratilipi-recommendation-carousel {
       .pratilipi-author-leaderboard .author-leaderboard-ul .mdl-list__item .small-button {
         min-width: 36px;
         padding: 0; }
-
-.pratilipi-pratilipi-page-bottom-strip {
-  z-index: 2;
-  width: 100%;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: row;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0; }
-  .pratilipi-pratilipi-page-bottom-strip .bottom-strip-button {
-    flex-grow: 1;
-    margin: 0px;
-    height: 50px;
-    border-radius: unset;
-    max-width: 34%; }
-  @media (min-width: 768px) {
-    .pratilipi-pratilipi-page-bottom-strip {
-      display: none !important; } }
-
-.pratilipi-pratilipi-page-bottom-strip--hidden {
-  display: none; }
 
 /*# sourceMappingURL=style.css.map */
