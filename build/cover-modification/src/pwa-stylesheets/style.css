@@ -3491,7 +3491,7 @@ ul.pratilipi-recommendation-carousel {
   width: 100%;
   z-index: 999; }
 .pratilipi-info-cover .fixedElement-read-button {
-  padding: 8px !important;
+  padding: 16px !important;
   position: fixed !important;
   top: 0 !important;
   left: unset !important;
