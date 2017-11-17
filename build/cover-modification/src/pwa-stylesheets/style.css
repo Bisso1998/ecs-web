@@ -3484,6 +3484,8 @@ ul.pratilipi-recommendation-carousel {
 @media (min-width: 769px) {
   .pratilipi-info-cover {
     display: none !important; } }
+.pratilipi-info-cover .mdl-menu__container.is-visible {
+  z-index: 1001; }
 .pratilipi-info-cover .fixedElement {
   position: fixed;
   top: 0;
