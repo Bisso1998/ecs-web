@@ -3493,9 +3493,9 @@ ul.pratilipi-recommendation-carousel {
   width: 100%;
   z-index: 999; }
 .pratilipi-info-cover .fixedElement-read-button {
-  padding: 16px !important;
+  padding: 8px !important;
   position: fixed !important;
-  top: 0 !important;
+  top: 8px !important;
   left: unset !important;
   z-index: 1000 !important; }
 .pratilipi-info-cover .stars-container {
