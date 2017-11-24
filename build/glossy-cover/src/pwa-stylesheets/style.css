@@ -3488,12 +3488,11 @@ ul.pratilipi-recommendation-carousel {
   z-index: 1001; }
 .pratilipi-info-cover .fixedElement {
   position: fixed;
-  top: 0px;
-  padding-top: 80px;
+  top: 0;
+  left: 0;
   width: 100%;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 999; }
+  z-index: 999;
+  min-height: 64px; }
 .pratilipi-info-cover .fixedBookmarkShareButton {
   top: 0px;
   position: fixed !important;
