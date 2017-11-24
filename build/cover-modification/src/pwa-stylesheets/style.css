@@ -3491,7 +3491,10 @@ ul.pratilipi-recommendation-carousel {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999; }
+  z-index: 999;
+  min-height: 64px; }
+.pratilipi-info-cover .fixedElement .hide-stats-on-fixed {
+  display: none; }
 .pratilipi-info-cover .fixedElement-read-button {
   padding: 8px 0px !important;
   position: fixed !important;
