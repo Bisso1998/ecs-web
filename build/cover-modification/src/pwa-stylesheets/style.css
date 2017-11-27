@@ -3484,23 +3484,6 @@ ul.pratilipi-recommendation-carousel {
 @media (min-width: 769px) {
   .pratilipi-info-cover {
     display: none !important; } }
-.pratilipi-info-cover .mdl-menu__container.is-visible {
-  z-index: 1001; }
-.pratilipi-info-cover .fixedElement {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 999;
-  min-height: 64px; }
-.pratilipi-info-cover .fixedElement .hide-stats-on-fixed {
-  display: none; }
-.pratilipi-info-cover .fixedElement-read-button {
-  padding: 8px 0px !important;
-  position: fixed !important;
-  top: 8px !important;
-  left: unset !important;
-  z-index: 1000 !important; }
 .pratilipi-info-cover .stars-container {
   position: relative;
   display: inline-block;
