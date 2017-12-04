@@ -594,16 +594,6 @@ main.mdl-layout__content {
             cursor: pointer;
             bottom: 22px;
             background: white; }
-          .pratilipi-header .row-one .search-bar-holder form .mdl-textfield input::-webkit-input-placeholder {
-            color: red !important; }
-          .pratilipi-header .row-one .search-bar-holder form .mdl-textfield input:-moz-placeholder {
-            /* Firefox 18- */
-            color: red !important; }
-          .pratilipi-header .row-one .search-bar-holder form .mdl-textfield input::-moz-placeholder {
-            /* Firefox 19+ */
-            color: red !important; }
-          .pratilipi-header .row-one .search-bar-holder form .mdl-textfield input:-ms-input-placeholder {
-            color: red !important; }
     .pratilipi-header .row-one .header-icons-holder {
       flex-basis: 48px;
       text-align: center; }
@@ -1129,8 +1119,9 @@ nav.pratilipi-navigation-drawer {
   -o-flex-direction: row;
   flex-direction: row;
   padding: 0; }
-  .pratilipi-review .review-header .user-rating {
-    align-self: center; }
+  .pratilipi-review .review-header .three-dots {
+    position: relative;
+    right: 2px; }
 .pratilipi-review .user-info {
   flex-grow: 1;
   -webkit-display: flex;
@@ -1142,10 +1133,13 @@ nav.pratilipi-navigation-drawer {
   .pratilipi-review .user-info a.reviewer-name {
     text-decoration: none;
     color: #000 !important; }
-  .pratilipi-review .user-info .review-date {
-    color: rgba(0, 0, 0, 0.54);
-    display: block;
-    margin-top: 2px; }
+  .pratilipi-review .user-info .rating-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center; }
+    .pratilipi-review .user-info .rating-block .review-date {
+      color: rgba(0, 0, 0, 0.54);
+      margin-left: 4px; }
 .pratilipi-review .review-container {
   white-space: pre-wrap;
   padding: 16px 0 8px 0; }
@@ -1198,6 +1192,8 @@ nav.pratilipi-navigation-drawer {
       color: rgba(0, 0, 0, 0.54);
       display: block;
       margin-top: 2px; }
+  .pratilipi-review-comment .comment-header .three-dots {
+    position: relative; }
 .pratilipi-review-comment .comment-container {
   padding: 16px 0 8px 0; }
 .pratilipi-review-comment .comment-footer {
@@ -1845,49 +1841,6 @@ nav.pratilipi-navigation-drawer {
   right: 0;
   bottom: 0;
   margin: auto; }
-.pratilipi-settings-page div.modal-body {
-  padding: 15px 30px; }
-  .pratilipi-settings-page div.modal-body .mdl-textfield {
-    width: 100% !important;
-    display: block; }
-  .pratilipi-settings-page div.modal-body i.dropdown-icon {
-    position: absolute;
-    right: 0px;
-    bottom: 18px;
-    width: 32px;
-    height: 32px;
-    font-size: 32px; }
-  .pratilipi-settings-page div.modal-body ul.dropdown-ul {
-    width: 100%;
-    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    border: 1px solid #999;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 4px; }
-    .pratilipi-settings-page div.modal-body ul.dropdown-ul .mdl-menu__item, .pratilipi-settings-page div.modal-body ul.dropdown-ul .mdl-menu__item:hover {
-      color: #000; }
-.pratilipi-settings-page .eachBlog:hover {
-  background-color: rgba(178, 189, 189, 0.2); }
-.pratilipi-settings-page .tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black; }
-.pratilipi-settings-page .tooltip .tooltiptext {
-  visibility: hidden;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  width: 120px;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -60px;
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1; }
-.pratilipi-settings-page .tooltip:hover .tooltiptext {
-  visibility: visible; }
 
 .pratilipi-event-page .mdl-card.image-holder {
   margin-bottom: 0;
@@ -2366,7 +2319,8 @@ nav.mdl-navigation {
   overflow-y: hidden;
   min-height: 80vh;
   max-width: 700px;
-  margin: auto; }
+  margin: auto;
+  white-space: pre-wrap; }
   .pratilipi-reader-content .content * {
     -webkit-font-smoothing: antialiased !important;
     -khtml-font-smoothing: antialiased !important;
@@ -2596,20 +2550,19 @@ nav.mdl-navigation {
   .pratilipi-tags .pratilipi-tag-element {
     padding-top: 3px;
     padding-bottom: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
     margin: 5px;
     text-align: center;
-    border: solid 1px black;
+    border: solid 1px #c8c8c8;
     border-radius: 20px;
+    margin-left: 0;
+    margin-right: 8px;
     cursor: pointer;
     white-space: nowrap; }
   .pratilipi-tags .checked {
-    background: #D0021B;
-    border: solid 1px #D0021B;
-    color: #FFF; }
+    background: #c8c8c8; }
   .pratilipi-tags .disabled {
-    border: 1px solid #D3D3D3;
     cursor: default; }
   @media (max-width: 480px) {
     .pratilipi-tags .save-tags-button {
@@ -2619,7 +2572,6 @@ nav.mdl-navigation {
     font-size: 80%;
     color: #4A4A4A; }
   .pratilipi-tags .mdl-textfield {
-    width: 100%;
     display: block; }
   .pratilipi-tags .dropdown-icon {
     position: absolute;
@@ -2649,6 +2601,57 @@ nav.mdl-navigation {
     top: -5px;
     right: 105%;
     white-space: normal; }
+  .pratilipi-tags .tag-deletable {
+    padding-right: 4px; }
+@keyframes ripple {
+  0% {
+    box-shadow: 0px 0px 0px 1px transparent; }
+  50% {
+    box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0.1); }
+  100% {
+    box-shadow: 0px 0px 0px 15px transparent; } }
+  .pratilipi-tags .md-radio {
+    margin: 16px 0; }
+    .pratilipi-tags .md-radio.md-radio-inline {
+      display: inline-block; }
+    .pratilipi-tags .md-radio input[type="radio"] {
+      display: none; }
+      .pratilipi-tags .md-radio input[type="radio"]:checked + label:before {
+        border-color: #d0021b;
+        animation: ripple 0.2s linear forwards; }
+      .pratilipi-tags .md-radio input[type="radio"]:checked + label:after {
+        transform: scale(1); }
+    .pratilipi-tags .md-radio label {
+      display: inline-block;
+      height: 20px;
+      position: relative;
+      padding: 0 30px;
+      margin-bottom: 0;
+      cursor: pointer;
+      vertical-align: bottom; }
+      .pratilipi-tags .md-radio label:before, .pratilipi-tags .md-radio label:after {
+        position: absolute;
+        content: '';
+        border-radius: 50%;
+        transition: all .3s ease;
+        transition-property: transform, border-color; }
+      .pratilipi-tags .md-radio label:before {
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(0, 0, 0, 0.54); }
+      .pratilipi-tags .md-radio label:after {
+        top: 5px;
+        left: 5px;
+        width: 10px;
+        height: 10px;
+        transform: scale(0);
+        background: #d0021b; }
+  .pratilipi-tags *, .pratilipi-tags *:before, .pratilipi-tags *:after {
+    box-sizing: border-box; }
+  .pratilipi-tags .pratilipi-red-important {
+    color: #d0021b !important; }
 
 .th-nor-config {
   background-color: #FFF !important;
@@ -3227,5 +3230,258 @@ ul.pratilipi-recommendation-carousel {
       .pratilipi-author-leaderboard .author-leaderboard-ul .mdl-list__item .small-button {
         min-width: 36px;
         padding: 0; }
+
+.pratilipi-reader-app-install-banner {
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  border-top: 1px solid #f3f3f3;
+  -webkit-display: flex;
+  -khtml-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -khtml-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  -khtml-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  -webkit-box-shadow: 0px -1px 0px 0px rgba(0,0,0,0.1);
+  -khtml-box-shadow: 0px -1px 0px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px -1px 0px 0px rgba(0,0,0,0.1);
+  -ms-box-shadow: 0px -1px 0px 0px rgba(0,0,0,0.1);
+  -o-box-shadow: 0px -1px 0px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px -1px 0px 0px rgba(0,0,0,0.1);
+  -webkit-transition: opacity 250ms, visibility 250ms;
+  -khtml-transition: opacity 250ms, visibility 250ms;
+  -moz-transition: opacity 250ms, visibility 250ms;
+  -ms-transition: opacity 250ms, visibility 250ms;
+  -o-transition: opacity 250ms, visibility 250ms;
+  transition: opacity 250ms, visibility 250ms; }
+  .pratilipi-reader-app-install-banner .banner {
+    -webkit-display: flex;
+    -khtml-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -khtml-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+    -webkit-margin: 20px 16px;
+    -khtml-margin: 20px 16px;
+    -moz-margin: 20px 16px;
+    -ms-margin: 20px 16px;
+    -o-margin: 20px 16px;
+    margin: 20px 16px; }
+    .pratilipi-reader-app-install-banner .banner .header {
+      -webkit-display: flex;
+      -khtml-display: flex;
+      -moz-display: flex;
+      -ms-display: flex;
+      -o-display: flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      -khtml-flex-direction: row;
+      -moz-flex-direction: row;
+      -ms-flex-direction: row;
+      -o-flex-direction: row;
+      flex-direction: row;
+      -webkit-align-items: center;
+      -khtml-align-items: center;
+      -moz-align-items: center;
+      -ms-align-items: center;
+      -o-align-items: center;
+      align-items: center; }
+      .pratilipi-reader-app-install-banner .banner .header img.icon {
+        background: none;
+        width: 48px;
+        max-width: 48px;
+        height: 48px;
+        max-height: 48px; }
+      .pratilipi-reader-app-install-banner .banner .header .message {
+        text-align: left;
+        margin-left: 12px;
+        font-size: 16px;
+        line-height: 1.4; }
+    .pratilipi-reader-app-install-banner .banner .footer {
+      -webkit-display: flex;
+      -khtml-display: flex;
+      -moz-display: flex;
+      -ms-display: flex;
+      -o-display: flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      -khtml-flex-direction: row;
+      -moz-flex-direction: row;
+      -ms-flex-direction: row;
+      -o-flex-direction: row;
+      flex-direction: row;
+      -webkit-justify-content: flex-end;
+      -khtml-justify-content: flex-end;
+      -moz-justify-content: flex-end;
+      -ms-justify-content: flex-end;
+      -o-justify-content: flex-end;
+      justify-content: flex-end;
+      -webkit-align-items: center;
+      -khtml-align-items: center;
+      -moz-align-items: center;
+      -ms-align-items: center;
+      -o-align-items: center;
+      align-items: center;
+      -webkit-margin: 8px 0;
+      -khtml-margin: 8px 0;
+      -moz-margin: 8px 0;
+      -ms-margin: 8px 0;
+      -o-margin: 8px 0;
+      margin: 8px 0; }
+      .pratilipi-reader-app-install-banner .banner .footer button.declined {
+        font-size: 18px;
+        margin-right: 32px;
+        outline: none;
+        border: none;
+        background: none; }
+      .pratilipi-reader-app-install-banner .banner .footer button.accepted {
+        font-size: 18px;
+        border: 0;
+        background: #00a651;
+        color: white;
+        text-shadow: none;
+        box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.5);
+        border-radius: 2px;
+        letter-spacing: 0.3px;
+        line-height: 16px;
+        display: block;
+        padding: 10px 15px 10px 15px;
+        outline: none;
+        text-align: center; }
+
+.pratilipi-reader-exp-002 * {
+  box-sizing: border-box; }
+.pratilipi-reader-exp-002 .modal-body {
+  -webkit-display: flex;
+  -khtml-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -khtml-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  -o-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  -khtml-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  background: white;
+  border-radius: 1px;
+  position: relative;
+  width: 300px;
+  height: 320px;
+  margin: auto;
+  padding: 0 !important; }
+  .pratilipi-reader-exp-002 .modal-body .header, .pratilipi-reader-exp-002 .modal-body .message, .pratilipi-reader-exp-002 .modal-body .footer {
+    margin: 16px 12px;
+    padding: 0 !important; }
+  .pratilipi-reader-exp-002 .modal-body .header {
+    -webkit-display: flex;
+    -khtml-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -khtml-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-justify-content: center;
+    -khtml-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    -o-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -khtml-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center; }
+    .pratilipi-reader-exp-002 .modal-body .header img.icon {
+      background: none;
+      width: 56px;
+      max-width: 56px;
+      height: 56px;
+      max-height: 56px; }
+  .pratilipi-reader-exp-002 .modal-body .message {
+    font-size: 16px;
+    line-height: 1.8;
+    white-space: normal;
+    text-align: center; }
+  .pratilipi-reader-exp-002 .modal-body .footer {
+    -webkit-display: flex;
+    -khtml-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -khtml-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-justify-content: flex-end;
+    -khtml-justify-content: flex-end;
+    -moz-justify-content: flex-end;
+    -ms-justify-content: flex-end;
+    -o-justify-content: flex-end;
+    justify-content: flex-end;
+    -webkit-align-items: center;
+    -khtml-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center; }
+    .pratilipi-reader-exp-002 .modal-body .footer button.declined {
+      font-size: 18px;
+      outline: none;
+      border: none;
+      background: none;
+      margin-right: 20px; }
+    .pratilipi-reader-exp-002 .modal-body .footer button.accepted {
+      font-size: 18px;
+      border: 0;
+      background: #00a651;
+      color: white;
+      text-shadow: none;
+      box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.5);
+      border-radius: 2px;
+      letter-spacing: 0.3px;
+      line-height: 16px;
+      display: block;
+      padding: 10px 15px 10px 15px;
+      outline: none;
+      text-align: center; }
 
 /*# sourceMappingURL=style.css.map */

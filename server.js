@@ -188,14 +188,18 @@ app.get( '/health', (req, res, next) => {
 app.get( '/*', (req, res, next) => {
 
 	var website = _getWebsite( req.headers.host );
-	var bucketId = req.headers["bucket-id"] + 1;
-	var totalGrowthBuckets = req.headers["total-growth-buckets"] || 10;
+	var bucketId = Number(req.headers["bucket-id"] || 0) + 1;
+	var totalGrowthBuckets = Number(req.headers["total-growth-buckets"] || 10);
 	var variation = 'build/growth/';
 
 	if (bucketId) {
 		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
 		if (Number(bucketId) <= numberOfBucketsToShowProduct) {
 			variation = 'build/product/';
+		} else if (Number(bucketId) <= 15) {
+			variation = 'build/glossy-cover/';
+		} else if (Number(bucketId) <= 20) {
+			variation = 'build/cover-modification/';
 		}
 	}
 
