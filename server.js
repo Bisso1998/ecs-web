@@ -194,9 +194,7 @@ app.get( '/*', (req, res, next) => {
 
 	if (bucketId) {
 		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
-		if (Number(bucketId) <= 5) {
-			variation = 'build/prod-variation-1/';
-		} else if (Number(bucketId) <= 10) {
+		if (Number(bucketId) <= 10) {
 			variation = 'build/prod-variation-2/';
 		} else if (Number(bucketId) <= 15) {
 			variation = 'build/glossy-cover/';
