@@ -3492,8 +3492,7 @@ ul.pratilipi-recommendation-carousel {
   width: 100% !important;
   margin: 8px 0px;
   text-align: center;
-  margin-bottom: 30px;
-  padding-bottom: 60px; }
+  padding-bottom: 25px; }
   @media (min-width: 769px) {
     .pratilipi-info-cover {
       display: none !important; } }
@@ -3524,15 +3523,14 @@ ul.pratilipi-recommendation-carousel {
       margin: 8px; }
   .pratilipi-info-cover .pratilipi-details-section {
     position: inherit;
-    height: 100%;
     text-align: center; }
     .pratilipi-info-cover .pratilipi-details-section .pratilipi-cover-image {
-      height: 50%;
+      width: 50%;
       margin-top: 15%;
       margin-bottom: 3%; }
     .pratilipi-info-cover .pratilipi-details-section .pratilipi-title {
       color: white;
-      width: 100%;
+      padding: 0px 10px;
       text-align: center;
       z-index: 1000; }
     .pratilipi-info-cover .pratilipi-details-section .pratilipi-title-fixed {
@@ -3570,7 +3568,8 @@ ul.pratilipi-recommendation-carousel {
     left: 0;
     width: 100%;
     z-index: 999;
-    min-height: 64px; }
+    min-height: 64px;
+    padding-top: 36px; }
   .pratilipi-info-cover .fixedBookmarkShareButton {
     top: 0px;
     position: fixed !important;
