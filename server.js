@@ -192,14 +192,14 @@ app.get( '/*', (req, res, next) => {
 	var totalGrowthBuckets = Number(req.headers["total-growth-buckets"] || 10);
 	var variation = 'build/prod-variation-2/';
 
-	if (bucketId) {
-		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
-		if (Number(bucketId) <= 10) {
-			variation = 'build/prod-variation-2/';
-		} else if (Number(bucketId) <= 20) {
-			variation = 'build/recommendation-card/';
-		}
-	}
+	// if (bucketId) {
+	// 	const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
+	// 	if (Number(bucketId) <= 10) {
+	// 		variation = 'build/prod-variation-2/';
+	// 	} else if (Number(bucketId) <= 20) {
+	// 		variation = 'build/recommendation-card/';
+	// 	}
+	// }
 
 	if (req.query.variation === 'GROWTH') {
 		variation = 'build/growth/';
