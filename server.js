@@ -190,7 +190,7 @@ app.get( '/*', (req, res, next) => {
 	var website = _getWebsite( req.headers.host );
 	var bucketId = Number(req.headers["bucket-id"] || 0) + 1;
 	var totalGrowthBuckets = Number(req.headers["total-growth-buckets"] || 10);
-	var variation = 'build/glossy-cover/';
+	var variation = 'build/prod-variation-2/';
 
 	if (bucketId) {
 		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
