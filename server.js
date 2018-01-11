@@ -250,6 +250,8 @@ app.get( '/*', (req, res, next) => {
 		});
 	} else if( req.path === '/pratilipi-logo-144px.png' ) {
 		res.sendfile( variation + 'src' + req.path );
+	} else if( req.path === '/pwa-sw-DEVO_HINDI-updater.js' ) {
+		res.sendfile( 'src' + req.path );
 	} else {
 		// https://github.com/expressjs/express/issues/3127
 		console.log( "Serving html file to url :: ",  req.url );
