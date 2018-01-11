@@ -4,6 +4,7 @@ const express = require( 'express' );
 var compression = require( 'compression' );
 const cookieParser = require( 'cookie-parser' );
 const parse = require('url-parse');
+const morgan = require('morgan');
 
 var fs = require( 'fs' );
 
@@ -182,6 +183,8 @@ app.get( '/health', (req, res, next) => {
 	console.log( "Healthy!" );
 	res.send( Date.now() + "" );
 });
+
+app.use( morgan('short') );
 
 
 // Serving PWA files
