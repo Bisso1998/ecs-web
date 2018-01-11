@@ -230,7 +230,7 @@ app.get( '/*', (req, res, next) => {
 			res.set( 'Content-Type', 'text/css' ).send(data);
 		});
 	} else if( req.path === '/pwa-sw-' + website.__name__ + '.js' ) {
-		fs.readFile( variation + 'src/pwa-service-worker' + req.path, { 'encoding': 'utf8' }, (err, data) => {
+		fs.readFile( 'build/web-push-notifications/src/pwa-service-worker' + req.path, { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'text/javascript' ).send(data);
 		});
@@ -241,7 +241,7 @@ app.get( '/*', (req, res, next) => {
 	} else if( req.path.indexOf( '/resources/' ) === 0 || req.path.indexOf( '/stylesheets/' ) === 0 ) {
 		res.set( 'Content-Type', 'text/plain' ).send( "" );
 	} else if( req.path === "/pwa-manifest-" + website.__name__ + ".json" ) {
-		fs.readFile( variation + 'src/pwa-manifest' + '/pwa-manifest-' + website.__name__ + '.json', { 'encoding': 'utf8' }, (err, data) => {
+		fs.readFile( 'build/web-push-notifications/src/pwa-manifest' + '/pwa-manifest-' + website.__name__ + '.json', { 'encoding': 'utf8' }, (err, data) => {
 			if(err) throw err;
 			res.set( 'Content-Type', 'application/json' ).send(data);
 		});
