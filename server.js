@@ -245,6 +245,8 @@ app.get( '/*', (req, res, next) => {
 		});
 	} else if( req.path === '/pratilipi-logo-144px.png' ) {
 		res.sendfile( variation + 'src' + req.path );
+	} else if (req.path === '/test-suryadeep-pal') {
+		res.send('test for cookie');
 	} else {
 		// https://github.com/expressjs/express/issues/3127
 		console.log( "Serving html file to url :: ",  req.url );
