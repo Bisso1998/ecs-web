@@ -201,26 +201,26 @@ app.get( '/*', (req, res, next) => {
 	// 	}
 	// }
 
-	if (req.query.variation === 'GROWTH') {
-		variation = 'build/growth/';
-	} else if (req.query.variation === 'PRODUCT') {
-		variation = 'build/product/';
-	}
+	// if (req.query.variation === 'GROWTH') {
+	// 	variation = 'build/growth/';
+	// } else if (req.query.variation === 'PRODUCT') {
+	// 	variation = 'build/product/';
+	// }
 
-	if (req.query.customVariation && fs.existsSync('build/' + req.query.customVariation)) {
-		variation = 'build/' + req.query.customVariation + '/';
-	}
+	// if (req.query.customVariation && fs.existsSync('build/' + req.query.customVariation)) {
+	// 	variation = 'build/' + req.query.customVariation + '/';
+	// }
 
-	if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
-		variation = 'build/growth/';
-	} else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
-		variation = 'build/product/';
-	} else {
-		const parsedUrl = parse(req.header('Referer'), true);
-		if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
-			variation = 'build/' + parsedUrl.query.customVariation + '/';
-		}
-	}
+	// if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
+	// 	variation = 'build/growth/';
+	// } else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
+	// 	variation = 'build/product/';
+	// } else {
+	// 	const parsedUrl = parse(req.header('Referer'), true);
+	// 	if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
+	// 		variation = 'build/' + parsedUrl.query.customVariation + '/';
+	// 	}
+	// }
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
 		fs.readFile( variation + 'src/pwa-stylesheets/style.css', { 'encoding': 'utf8' }, (err, data) => {
@@ -245,8 +245,6 @@ app.get( '/*', (req, res, next) => {
 		});
 	} else if( req.path === '/pratilipi-logo-144px.png' ) {
 		res.sendfile( variation + 'src' + req.path );
-	} else if (req.path === '/test-suryadeep-pal') {
-		res.send('test for cookie');
 	} else {
 		// https://github.com/expressjs/express/issues/3127
 		console.log( "Serving html file to url :: ",  req.url );
