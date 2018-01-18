@@ -621,7 +621,7 @@ a.join-now-btn {
   color: #fff; }
   .login-top-section .dark-mask {
     position: absolute;
-    height: 200px;
+    height: 180px;
     width: 100%;
     background: rgba(0, 0, 0, 0.6); }
   .login-top-section .login-top-section-contents {
