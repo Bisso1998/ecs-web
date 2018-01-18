@@ -613,11 +613,11 @@ a.join-now-btn {
 
 .login-top-section {
   display: none;
-  background-image: url("../../pwa-images/login-default-bg.jpg");
+  background-image: url("../../pwa-images/login_default_bg.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  height: 200px;
+  height: 180px;
   color: #fff; }
   .login-top-section .dark-mask {
     position: absolute;
@@ -632,9 +632,9 @@ a.join-now-btn {
     .login-top-section .login-top-section-contents .right {
       text-align: right; }
       .login-top-section .login-top-section-contents .right button {
-        margin-top: 10px; }
+        margin-top: 5px; }
     .login-top-section .login-top-section-contents h4 {
-      margin: 10px 0;
+      margin: 5px 0;
       font-size: 20px; }
     .login-top-section .login-top-section-contents p {
       font-size: 14px; }
@@ -646,19 +646,19 @@ a.join-now-btn {
   display: block; }
 
 .login-top-section.section-add-library {
-  background-image: url("../../pwa-images/login-library-bg.jpg"); }
+  background-image: url("../../pwa-images/login_library_bg.jpg"); }
 
 .login-top-section.section-notification {
-  background-image: url("../../pwa-images/login-notification-bg.jpg"); }
+  background-image: url("../../pwa-images/login_notification_bg.jpg"); }
 
 .login-top-section.section-story {
-  background-image: url("../../pwa-images/login-story-bg.jpg"); }
+  background-image: url("../../pwa-images/login_story_bg.jpg"); }
 
 .login-top-section.section-follow-author {
-  background-image: url("../../pwa-images/login-author-bg.jpg"); }
+  background-image: url("../../pwa-images/login_author_bg.jpg"); }
 
 .login-top-section.section-review {
-  background-image: url("../../pwa-images/login-review-bg.jpg"); }
+  background-image: url("../../pwa-images/login_review_bg.jpg"); }
 
 .pratilipi-header {
   -webkit-display: flex;
