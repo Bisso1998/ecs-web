@@ -509,19 +509,24 @@ main.mdl-layout__content {
   text-align: center;
   color: #fff;
   font-size: 15px;
-  padding: 5px 0; }
+  padding: 0; }
   @media only screen and (max-width: 480px) {
     .bottom-fixed-banner {
-      padding: 5px 0 0;
+      padding: 2px 0 0;
       font-size: 14px; } }
-  @media only screen and (min-width: 768px) and (max-width: 840px) {
-    .bottom-fixed-banner .mdl-cell {
-      max-width: 365px; } }
-  @media only screen and (min-width: 480px) and (max-width: 768px) {
-    .bottom-fixed-banner .mdl-cell {
-      width: calc(100% - 16px); } }
+  .bottom-fixed-banner .mdl-cell {
+    margin: 4px 0 8px; }
+    @media only screen and (min-width: 768px) and (max-width: 840px) {
+      .bottom-fixed-banner .mdl-cell {
+        max-width: 365px; } }
+    @media only screen and (min-width: 480px) and (max-width: 768px) {
+      .bottom-fixed-banner .mdl-cell {
+        width: calc(100% - 16px); } }
+    @media only screen and (max-width: 768px) {
+      .bottom-fixed-banner .mdl-cell {
+        margin: 4px 0; } }
   .bottom-fixed-banner .mdl-cell--middle {
-    margin-bottom: 0px; }
+    margin: 2px 0 0; }
     @media only screen and (max-width: 360px) {
       .bottom-fixed-banner .mdl-cell--middle {
         margin-right: 25px;
@@ -578,7 +583,8 @@ main.mdl-layout__content {
 
 .bottom-fixed-banner.icons-only .login-button {
   padding: 3px 30px;
-  width: 80px; }
+  width: 80px;
+  margin-bottom: 3px; }
 
 .pratilipi-login-card {
   background: #fff;
