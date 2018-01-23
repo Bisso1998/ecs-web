@@ -581,7 +581,7 @@ main.mdl-layout__content {
     color: #4CAF50; }
 
 .bottom-fixed-banner.icons-only .login-button {
-  padding: 3px 30px;
+  padding: 1px 30px;
   width: 80px;
   margin-bottom: 3px; }
 
@@ -1418,7 +1418,8 @@ nav.pratilipi-navigation-drawer {
 .pratilipi-login-container .login-button, .pratilipi-login-container .login-button2 {
   margin: 15px auto !important;
   width: 100% !important;
-  height: 50px; }
+  height: 45px;
+  min-width: 310px; }
 .pratilipi-login-container .login-or {
   color: rgba(0, 0, 0, 0.26); }
 .pratilipi-login-container .login-textfield {
@@ -1432,14 +1433,16 @@ nav.pratilipi-navigation-drawer {
   color: rgba(0, 0, 0, 0.26);
   display: block; }
 .pratilipi-login-container .sign-up-link {
-  margin-top: 12px; }
+  margin-top: 12px;
+  min-width: 320px; }
 .pratilipi-login-container .pratilipi-red {
   color: #d0021b; }
 .pratilipi-login-container .margin-zero {
   margin: 0; }
 .pratilipi-login-container .terms-conditions {
   display: block;
-  margin: 16px 0; }
+  margin: 16px 0;
+  font-size: 12px; }
   .pratilipi-login-container .terms-conditions a {
     white-space: nowrap; }
 .pratilipi-login-container .member-login {
