@@ -512,7 +512,7 @@ main.mdl-layout__content {
   @media only screen and (max-width: 480px) {
     .bottom-fixed-banner {
       padding: 2px 0 0;
-      font-size: 14px; } }
+      font-size: 13px; } }
   .bottom-fixed-banner .mdl-cell {
     margin: 4px 0 8px; }
     @media only screen and (min-width: 768px) and (max-width: 840px) {
@@ -632,7 +632,7 @@ a.join-now-btn {
   .login-top-section .login-top-section-contents {
     position: relative;
     text-align: center;
-    width: 90%;
+    width: 97%;
     margin: 0 auto; }
     .login-top-section .login-top-section-contents .right {
       text-align: right; }
@@ -640,7 +640,7 @@ a.join-now-btn {
         margin-top: 5px; }
     .login-top-section .login-top-section-contents h4 {
       margin: 5px 0;
-      font-size: 20px; }
+      font-size: 18px; }
     .login-top-section .login-top-section-contents p {
       font-size: 14px; }
 
