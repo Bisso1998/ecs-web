@@ -2,7 +2,6 @@
 
 const express = require( 'express' );
 var compression = require( 'compression' );
-const cookieParser = require( 'cookie-parser' );
 const parse = require('url-parse');
 const morgan = require('morgan');
 
@@ -172,9 +171,6 @@ const UNEXPECTED_SERVER_EXCEPTION = { "message": "Some exception occurred at ser
 // App
 const app = express();
 
-// cookie parser
-app.use( cookieParser() );
-
 // gzip all responses
 app.use( compression() );
 
@@ -195,23 +191,6 @@ app.get( '/*', (req, res, next) => {
 	var totalGrowthBuckets = Number(req.headers["total-growth-buckets"] || 10);
 	var variation = 'build/login-modals/';
 
-	// if (bucketId) {
-	// 	const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
-	// 	if (Number(bucketId) <= numberOfBucketsToShowProduct) {
-	// 		variation = 'build/product/';
-	// 	} else if (Number(bucketId) <= 15) {
-	// 		variation = 'build/glossy-cover/';
-	// 	} else if (Number(bucketId) <= 20) {
-	// 		variation = 'build/cover-modification/';
-	// 	}
-	// }
-
-	// if (req.query.variation === 'GROWTH') {
-	// 	variation = 'build/growth/';
-	// } else if (req.query.variation === 'PRODUCT') {
-	// 	variation = 'build/product/';
-	// }
-
 	if (req.query.customVariation && fs.existsSync('build/' + req.query.customVariation)) {
 		variation = 'build/' + req.query.customVariation + '/';
 	}
@@ -220,17 +199,6 @@ app.get( '/*', (req, res, next) => {
 	if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
 		variation = 'build/' + parsedUrl.query.customVariation + '/';
 	}
-
-	// if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
-	// 	variation = 'build/growth/';
-	// } else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
-	// 	variation = 'build/product/';
-	// } else {
-	// 	const parsedUrl = parse(req.header('Referer'), true);
-	// 	if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
-	// 		variation = 'build/' + parsedUrl.query.customVariation + '/';
-	// 	}
-	// }
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
 		fs.readFile( variation + 'src/pwa-stylesheets/style.css', { 'encoding': 'utf8' }, (err, data) => {
