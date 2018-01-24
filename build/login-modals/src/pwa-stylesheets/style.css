@@ -1377,7 +1377,7 @@ nav.pratilipi-navigation-drawer {
 .pratilipi-login-container {
   text-align: center;
   margin: auto;
-  padding: 20px 8px 20px 8px;
+  padding: 5px 8px 5px 8px;
   max-width: 400px;
   background: #fff; }
   .pratilipi-login-container .mdl-textfield, .pratilipi-login-container button, .pratilipi-login-container .forgot-password-holder {
@@ -1419,7 +1419,7 @@ nav.pratilipi-navigation-drawer {
 .pratilipi-login-container .pratilipi-heading {
   margin: 10px auto 16px auto; }
 .pratilipi-login-container .login-button, .pratilipi-login-container .login-button2 {
-  margin: 15px auto !important;
+  margin: 5px auto !important;
   width: 100% !important;
   height: 45px;
   min-width: 310px; }
@@ -1444,7 +1444,7 @@ nav.pratilipi-navigation-drawer {
   margin: 0; }
 .pratilipi-login-container .terms-conditions {
   display: block;
-  margin: 16px 0;
+  margin: 5px 0;
   font-size: 12px; }
   .pratilipi-login-container .terms-conditions a {
     white-space: nowrap; }
