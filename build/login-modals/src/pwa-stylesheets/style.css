@@ -1419,10 +1419,12 @@ nav.pratilipi-navigation-drawer {
 .pratilipi-login-container .pratilipi-heading {
   margin: 10px auto 16px auto; }
 .pratilipi-login-container .login-button, .pratilipi-login-container .login-button2 {
-  margin: 5px auto !important;
+  margin: 15px auto !important;
   width: 100% !important;
   height: 45px;
   min-width: 310px; }
+.pratilipi-login-container .login-button2 {
+  margin: 5px auto !important; }
 .pratilipi-login-container .login-or {
   color: rgba(0, 0, 0, 0.26); }
 .pratilipi-login-container .login-textfield {
