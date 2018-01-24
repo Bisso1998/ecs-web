@@ -1393,6 +1393,8 @@ nav.pratilipi-navigation-drawer {
     color: #9e9e9e; }
   .pratilipi-login-container #login_form, .pratilipi-login-container #register_form {
     display: none; }
+  .pratilipi-login-container #register_form .mdl-textfield__label {
+    overflow: initial; }
 
 .pratilipi-login-container .login-sprite-icon-24 {
   /* margin: 10px auto; */
