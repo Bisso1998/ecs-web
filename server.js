@@ -192,8 +192,18 @@ app.get( '/*', (req, res, next) => {
 	var totalGrowthBuckets = Number(req.headers["total-growth-buckets"] || 10);
 	var variation = 'build/growth/';
 
+	console.log('-------------------------------');
+	console.log(totalGrowthBuckets);
+	console.log(Number(bucketId));
+	console.log('-------------------------------');
+
 	if (bucketId) {
 		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
+
+		console.log('-------------------------------');
+		console.log(numberOfBucketsToShowProduct);
+		console.log('-------------------------------');
+		
 		if (Number(bucketId) <= numberOfBucketsToShowProduct) {
 			variation = 'build/product/';
 		} else if (Number(bucketId) <= 20) {
