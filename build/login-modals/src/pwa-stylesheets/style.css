@@ -589,7 +589,8 @@ main.mdl-layout__content {
   background: #fff;
   padding: 10px;
   text-align: center;
-  border: 1px solid lightgrey; }
+  border: 1px solid lightgrey;
+  display: none; }
   .pratilipi-login-card h3 {
     color: #d0021b;
     font-size: 17px;
