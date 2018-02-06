@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .sprites-icon {
   display: inline-block;
   vertical-align: middle;
@@ -498,6 +497,174 @@ main.mdl-layout__content {
 
 .mdl-layout__drawer.is-visible ~ .mdl-layout__content {
   flex-shrink: 1; }
+
+.bottom-fixed-banner {
+  display: none;
+  background: #d0021b;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 15;
+  text-align: center;
+  color: #fff;
+  font-size: 15px;
+  padding: 0; }
+  @media only screen and (max-width: 480px) {
+    .bottom-fixed-banner {
+      padding: 2px 0 0;
+      font-size: 13px; } }
+  .bottom-fixed-banner .mdl-cell {
+    margin: 4px 0 8px; }
+    @media only screen and (min-width: 768px) and (max-width: 840px) {
+      .bottom-fixed-banner .mdl-cell {
+        max-width: 365px; } }
+    @media only screen and (min-width: 480px) and (max-width: 768px) {
+      .bottom-fixed-banner .mdl-cell {
+        width: calc(100% - 16px); } }
+    @media only screen and (max-width: 768px) {
+      .bottom-fixed-banner .mdl-cell {
+        margin: 4px 0; } }
+  .bottom-fixed-banner .mdl-cell--middle {
+    margin: 2px 0 0; }
+    @media only screen and (max-width: 360px) {
+      .bottom-fixed-banner .mdl-cell--middle {
+        margin-right: 25px;
+        margin-left: 25px; } }
+  .bottom-fixed-banner .login-button {
+    background: #fff;
+    margin: 5px 10px 5px 0; }
+    @media only screen and (max-width: 480px) {
+      .bottom-fixed-banner .login-button {
+        margin: 0px 5px 5px; } }
+  .bottom-fixed-banner .login-button.mdl-button--colored {
+    background: #3b5998; }
+  .bottom-fixed-banner a.join-now-btn {
+    background: #fff;
+    color: #d0021b;
+    margin-bottom: 0;
+    display: inline-block;
+    width: 200px;
+    padding: 8px 20px; }
+  .bottom-fixed-banner a.other-options-link {
+    display: inline-block;
+    color: #fff;
+    font-size: 12px;
+    line-height: 18px; }
+    .bottom-fixed-banner a.other-options-link .material-icons {
+      color: #fff;
+      margin: 0;
+      vertical-align: middle; }
+  .bottom-fixed-banner a.close-banner {
+    display: block;
+    float: right;
+    margin-top: 10px; }
+    @media only screen and (max-width: 767px) {
+      .bottom-fixed-banner a.close-banner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-top: 5px; } }
+    .bottom-fixed-banner a.close-banner .material-icons {
+      color: #fff; }
+  .bottom-fixed-banner .material-icons {
+    color: #9e9e9e;
+    margin-right: 5px; }
+
+.bottom-fixed-banner.blue {
+  background: #2196F3; }
+  .bottom-fixed-banner.blue a.join-now-btn {
+    color: #2196F3; }
+
+.bottom-fixed-banner.green {
+  background: #4CAF50; }
+  .bottom-fixed-banner.green a.join-now-btn {
+    color: #4CAF50; }
+
+.bottom-fixed-banner.icons-only .login-button {
+  padding: 1px 30px;
+  width: 80px;
+  margin-bottom: 3px; }
+
+.pratilipi-login-card {
+  background: #fff;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid lightgrey;
+  display: none; }
+  .pratilipi-login-card h3 {
+    color: #d0021b;
+    font-size: 17px;
+    margin: 5px 0 0; }
+  .pratilipi-login-card p {
+    margin-bottom: 10px; }
+  .pratilipi-login-card .login-button.mdl-button--colored {
+    background: #3b5998; }
+  .pratilipi-login-card a.other-options-link {
+    color: #d0021b;
+    margin-left: 5px;
+    font-size: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 5px;
+    outline: 0; }
+
+a.join-now-btn {
+  background: #d0021b;
+  color: #fff;
+  padding: 10px 20px;
+  display: block;
+  margin: 0 auto 10px;
+  max-width: 220px;
+  font-size: 16px; }
+
+.login-top-section {
+  display: none;
+  background-image: url("../../pwa-images/login_default_bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 180px;
+  color: #fff; }
+  .login-top-section .dark-mask {
+    position: absolute;
+    height: 180px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6); }
+  .login-top-section .login-top-section-contents {
+    position: relative;
+    text-align: center;
+    width: 97%;
+    margin: 0 auto; }
+    .login-top-section .login-top-section-contents .right {
+      text-align: right; }
+      .login-top-section .login-top-section-contents .right button {
+        margin-top: 5px; }
+    .login-top-section .login-top-section-contents h4 {
+      margin: 5px 0;
+      font-size: 18px; }
+    .login-top-section .login-top-section-contents p {
+      font-size: 14px; }
+
+.login-bottom-section .pratilipi-logo-icon, .login-bottom-section .pratilipi-login-container .pratilipi-heading {
+  display: none; }
+
+.login-top-section.section-default {
+  display: block; }
+
+.login-top-section.section-add-library {
+  background-image: url("../../pwa-images/login_library_bg.jpg"); }
+
+.login-top-section.section-notification {
+  background-image: url("../../pwa-images/login_notification_bg.jpg"); }
+
+.login-top-section.section-story {
+  background-image: url("../../pwa-images/login_story_bg.jpg"); }
+
+.login-top-section.section-follow-author {
+  background-image: url("../../pwa-images/login_author_bg.jpg"); }
+
+.login-top-section.section-review {
+  background-image: url("../../pwa-images/login_review_bg.jpg"); }
 
 .pratilipi-header {
   -webkit-display: flex;
@@ -1095,9 +1262,6 @@ nav.pratilipi-navigation-drawer {
       align-self: center;
       line-height: 1;
       color: initial; }
-  @media (max-width: 768px) {
-    .pratilipi-pratilipi-info .hide-on-mobile-and-tab {
-      display: none; } }
 
 .pratilipi-review-list {
   z-index: initial;
@@ -1213,12 +1377,25 @@ nav.pratilipi-navigation-drawer {
 .pratilipi-login-container {
   text-align: center;
   margin: auto;
-  padding: 20px 8px 0 8px;
-  max-width: 400px; }
+  padding: 5px 8px 5px 8px;
+  max-width: 400px;
+  background: #fff; }
   .pratilipi-login-container .mdl-textfield, .pratilipi-login-container button, .pratilipi-login-container .forgot-password-holder {
     max-width: 280px;
     display: block;
     margin: auto; }
+  .pratilipi-login-container .mdl-button--colored[disabled][disabled] {
+    color: rgba(255, 255, 255, 0.5); }
+  .pratilipi-login-container .material-icons {
+    width: 24px;
+    height: 24px;
+    float: left;
+    margin: 6px 0;
+    color: #9e9e9e; }
+  .pratilipi-login-container #login_form, .pratilipi-login-container #register_form {
+    display: none; }
+  .pratilipi-login-container #register_form .mdl-textfield__label {
+    overflow: initial; }
 
 .pratilipi-login-container .login-sprite-icon-24 {
   /* margin: 10px auto; */
@@ -1241,9 +1418,13 @@ nav.pratilipi-navigation-drawer {
   border-color: #ccc !important; }
 .pratilipi-login-container .pratilipi-heading {
   margin: 10px auto 16px auto; }
-.pratilipi-login-container .login-button {
-  margin: 8px auto !important;
-  width: 100% !important; }
+.pratilipi-login-container .login-button, .pratilipi-login-container .login-button2 {
+  margin: 15px auto !important;
+  width: 100% !important;
+  height: 45px;
+  min-width: 310px; }
+.pratilipi-login-container .login-button2 {
+  margin: 5px auto !important; }
 .pratilipi-login-container .login-or {
   color: rgba(0, 0, 0, 0.26); }
 .pratilipi-login-container .login-textfield {
@@ -1257,18 +1438,30 @@ nav.pratilipi-navigation-drawer {
   color: rgba(0, 0, 0, 0.26);
   display: block; }
 .pratilipi-login-container .sign-up-link {
-  margin-top: 12px; }
+  margin-top: 12px;
+  min-width: 320px; }
 .pratilipi-login-container .pratilipi-red {
   color: #d0021b; }
 .pratilipi-login-container .margin-zero {
   margin: 0; }
 .pratilipi-login-container .terms-conditions {
   display: block;
-  margin: 16px 0; }
+  margin: 5px 0;
+  font-size: 12px; }
   .pratilipi-login-container .terms-conditions a {
     white-space: nowrap; }
 .pratilipi-login-container .member-login {
   margin: 12px 0; }
+
+#login-dialog .modal-header {
+  border: 0;
+  padding: 10px 10px 0; }
+
+#login-dialog div.modal-body {
+  padding: 0px 10px; }
+
+.signup-section {
+  display: none; }
 
 .pratilipi-pratilipi-card {
   min-height: auto;
@@ -3487,144 +3680,5 @@ ul.pratilipi-recommendation-carousel {
       padding: 10px 15px 10px 15px;
       outline: none;
       text-align: center; }
-
-.pratilipi-info-cover {
-  width: 100% !important;
-  margin: 8px 0px;
-  text-align: center;
-  padding-bottom: 25px; }
-  @media (min-width: 769px) {
-    .pratilipi-info-cover {
-      display: none !important; } }
-  .pratilipi-info-cover .background-gloss {
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    height: 100%;
-    filter: blur(5px) brightness(0.6);
-    position: absolute;
-    margin: 0px; }
-  .pratilipi-info-cover .pratilipi-options-section {
-    position: absolute;
-    left: 0;
-    margin: 8px;
-    z-index: 999; }
-    .pratilipi-info-cover .pratilipi-options-section .upload-image-button {
-      position: relative;
-      margin: 8px; }
-  .pratilipi-info-cover .bookmark-share {
-    position: absolute;
-    right: 0;
-    z-index: 1001;
-    margin-top: 8px; }
-    .pratilipi-info-cover .bookmark-share .upload-image-button {
-      position: relative;
-      margin: 8px; }
-  .pratilipi-info-cover .pratilipi-details-section {
-    position: inherit;
-    text-align: center; }
-    .pratilipi-info-cover .pratilipi-details-section .pratilipi-cover-image {
-      width: 50%;
-      margin-top: 15%;
-      margin-bottom: 3%; }
-    .pratilipi-info-cover .pratilipi-details-section .pratilipi-title {
-      color: white;
-      padding: 0px 10px;
-      text-align: center;
-      z-index: 1000; }
-    .pratilipi-info-cover .pratilipi-details-section .pratilipi-title-fixed {
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: none;
-      color: white;
-      width: 100%;
-      text-align: center;
-      z-index: 1000;
-      background-color: rgba(0, 0, 0, 0.6); }
-      .pratilipi-info-cover .pratilipi-details-section .pratilipi-title-fixed span {
-        display: inline-block;
-        width: 90%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis; }
-    .pratilipi-info-cover .pratilipi-details-section .pratilipi-stats {
-      font-size: 0.9em;
-      color: white;
-      margin: 10px; }
-      .pratilipi-info-cover .pratilipi-details-section .pratilipi-stats .stat-container {
-        padding: 10px; }
-        .pratilipi-info-cover .pratilipi-details-section .pratilipi-stats .stat-container .material-icons {
-          width: 10px;
-          padding: 5px;
-          padding-right: 10px;
-          font-size: 0.9em; }
-  .pratilipi-info-cover .mdl-menu__container.is-visible {
-    z-index: 1001; }
-  .pratilipi-info-cover .fixedElement {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 999;
-    min-height: 64px;
-    padding-top: 36px; }
-  .pratilipi-info-cover .fixedBookmarkShareButton {
-    top: 0px;
-    position: fixed !important;
-    right: 0;
-    z-index: 1000 !important;
-    background-color: rgba(0, 0, 0, 0.6); }
-  .pratilipi-info-cover .fixedTitle {
-    top: 0px;
-    position: fixed !important;
-    z-index: 1000 !important;
-    white-space: nowrap; }
-  .pratilipi-info-cover .fixedElement-read-button {
-    padding: 8px 0px !important;
-    position: fixed !important;
-    top: 8px !important;
-    left: unset !important;
-    z-index: 1000 !important; }
-  .pratilipi-info-cover .stars-container {
-    position: relative;
-    display: inline-block;
-    color: transparent; }
-  .pratilipi-info-cover .stars-container:before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '★★★★★';
-    color: lightgray; }
-  .pratilipi-info-cover .stars-container:after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '★★★★★';
-    color: gold;
-    overflow: hidden; }
-  .pratilipi-info-cover .stars-0:after {
-    width: 0%; }
-  .pratilipi-info-cover .stars-10:after {
-    width: 10%; }
-  .pratilipi-info-cover .stars-20:after {
-    width: 20%; }
-  .pratilipi-info-cover .stars-30:after {
-    width: 30%; }
-  .pratilipi-info-cover .stars-40:after {
-    width: 40%; }
-  .pratilipi-info-cover .stars-50:after {
-    width: 50%; }
-  .pratilipi-info-cover .stars-60:after {
-    width: 60%; }
-  .pratilipi-info-cover .stars-70:after {
-    width: 70%; }
-  .pratilipi-info-cover .stars-80:after {
-    width: 80%; }
-  .pratilipi-info-cover .stars-90:after {
-    width: 90%; }
-  .pratilipi-info-cover .stars-100:after {
-    width: 100; }
 
 /*# sourceMappingURL=style.css.map */
