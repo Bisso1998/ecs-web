@@ -190,47 +190,37 @@ app.get( '/*', (req, res, next) => {
 	var website = _getWebsite( req.headers.host );
 	var bucketId = Number(req.headers["bucket-id"] || 0) + 1;
 	var totalGrowthBuckets = Number(req.headers["total-growth-buckets"] || 10);
-	var variation = 'build/growth/';
-
-	console.log('-------------------------------');
-	console.log(totalGrowthBuckets);
-	console.log(Number(bucketId));
-	console.log('-------------------------------');
+	var variation = 'build/prod-variation-2/';
 
 	if (bucketId) {
 		const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
-
-		console.log('-------------------------------');
-		console.log(numberOfBucketsToShowProduct);
-		console.log('-------------------------------');
-		
-		if (Number(bucketId) <= numberOfBucketsToShowProduct) {
-			variation = 'build/product/';
+		if (Number(bucketId) <= 10) {
+			variation = 'build/prod-variation-2/';
 		} else if (Number(bucketId) <= 20) {
-			variation = 'build/login-modals/';
+			variation = 'build/book-design/';
 		}
 	}
 
-	if (req.query.variation === 'GROWTH') {
-		variation = 'build/growth/';
-	} else if (req.query.variation === 'PRODUCT') {
-		variation = 'build/product/';
-	}
+	// if (req.query.variation === 'GROWTH') {
+	// 	variation = 'build/growth/';
+	// } else if (req.query.variation === 'PRODUCT') {
+	// 	variation = 'build/product/';
+	// }
 
-	if (req.query.customVariation && fs.existsSync('build/' + req.query.customVariation)) {
-		variation = 'build/' + req.query.customVariation + '/';
-	}
+	// if (req.query.customVariation && fs.existsSync('build/' + req.query.customVariation)) {
+	// 	variation = 'build/' + req.query.customVariation + '/';
+	// }
 
-	if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
-		variation = 'build/growth/';
-	} else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
-		variation = 'build/product/';
-	} else {
-		const parsedUrl = parse(req.header('Referer'), true);
-		if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
-			variation = 'build/' + parsedUrl.query.customVariation + '/';
-		}
-	}
+	// if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
+	// 	variation = 'build/growth/';
+	// } else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
+	// 	variation = 'build/product/';
+	// } else {
+	// 	const parsedUrl = parse(req.header('Referer'), true);
+	// 	if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
+	// 		variation = 'build/' + parsedUrl.query.customVariation + '/';
+	// 	}
+	// }
 
 	if( req.path === '/pwa-stylesheets/css/style.css' ) {
 		fs.readFile( variation + 'src/pwa-stylesheets/style.css', { 'encoding': 'utf8' }, (err, data) => {
