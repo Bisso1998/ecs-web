@@ -3712,17 +3712,15 @@ ul.pratilipi-recommendation-carousel {
       border-radius: 2px;
       display: inline-block;
       font-size: 12px;
-      height: 25px; }
+      line-height: 25px; }
       .pratilipi-book-design .stats .avg-rating span {
         vertical-align: middle;
-        margin-top: 4px;
         display: inline-block; }
       .pratilipi-book-design .stats .avg-rating .material-icons {
         font-size: 12px;
         width: 12px;
         padding-left: 5px;
-        vertical-align: middle;
-        margin-top: 2px; }
+        vertical-align: middle; }
       .pratilipi-book-design .stats .avg-rating.stars-red {
         background: #ff6d13; }
       .pratilipi-book-design .stats .avg-rating.stars-orange {
