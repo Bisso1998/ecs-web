@@ -197,7 +197,7 @@ app.get( '/*', (req, res, next) => {
 		if (Number(bucketId) <= 10) {
 			variation = 'build/prod-variation-2/';
 		} else if (Number(bucketId) <= 20) {
-			variation = 'build/login-modals/';
+			variation = 'build/book-design/';
 		}
 	}
 
