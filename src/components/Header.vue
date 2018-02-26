@@ -19,7 +19,10 @@
                             <v-icon>language</v-icon>
                         </v-btn>
                         <v-list>
-                            <v-list-tile v-for="(language, index) in languages" to="/">
+                            <v-list-tile 
+                                v-for="(language) in languages" 
+                                :href="'https://' + language.fullName + '.pratilipi.com'"
+                                :key="language.shortName">
                                 <v-list-tile-title>{{ $t("language_" + language.shortName, language.shortName) }}</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
