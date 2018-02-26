@@ -75,6 +75,9 @@ export default {
         box-shadow: 0 2px 2px rgba(0,0,0,0.2);
         margin-bottom: 10px;
     }
+    .menu__content .isActive a div {
+        color: red;
+    }
     .logo {
         background: url(../assets/pratilipi_logo.png) no-repeat left center;
         background-size: contain;

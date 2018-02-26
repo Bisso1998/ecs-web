@@ -1,8 +1,7 @@
 <template>
     <div>
         <div class="top-footer">
-            Test<br>
-            Test
+            Todo: Footer columns
         </div>
         <footer>
             <v-container grid-list-md text-xs-center>
@@ -30,6 +29,7 @@ export default {
 <style lang="scss" scoped>
     .top-footer {
         background: #212121;
+        color: #fff;
     }
     footer {
         background: #191919;
