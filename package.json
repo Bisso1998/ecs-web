@@ -11,7 +11,6 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0",
     "jquery": "^3.3.1",
     "vue": "^2.5.2",
     "vue-awesome": "^2.3.4",
@@ -19,7 +18,8 @@
     "vue-resource": "^1.4.0",
     "vue-round-filter": "^1.1.2",
     "vue-router": "^3.0.1",
-    "vue-slick": "^1.1.12"
+    "vue-slick": "^1.1.12",
+    "vuetify": "^1.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

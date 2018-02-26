@@ -1,7 +1,9 @@
 <template>
     <div>
         <header>
-            
+            <div class="container">
+                <div class="logo">Pratilipi</div>
+            </div>
         </header>
     </div>
 </template>
