@@ -1,6 +1,8 @@
 <template>
     <div class="pratilipi-page">
-        Pratilipi Data for Pratilipi : {{ pratilipi_id }}
+        Pratilipi ID : {{ pratilipi_id }}
+        <br>
+        Pratilipi Data : {{ pratilipiData }}
     </div>
 </template>
 
@@ -15,6 +17,8 @@ export default {
     },
     created: function() {
         this.pratilipi_id = this.$route.params.pratilipi_id;
+        this.pratilipiData = this.$route.params.pratilipiData;
+        console.log(this.$route.params);
     },
     components: {
         
