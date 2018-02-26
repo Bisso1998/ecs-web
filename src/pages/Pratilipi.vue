@@ -3,6 +3,9 @@
         Pratilipi ID : {{ pratilipi_id }}
         <br>
         Pratilipi Data : {{ pratilipiData }}
+
+        <br>
+        {{ $t("_pratilipi_type_books") }}
     </div>
 </template>
 
