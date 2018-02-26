@@ -1,10 +1,12 @@
 <template>
-    <div class="home-page">
-        <Header></Header>
-        <div v-bind:key="eachSection.listPageUrl" v-for="(eachSection, index) in sectionList">
-            <PratilipiListComponent :sectionData="eachSection" :index="index"></PratilipiListComponent>
+    <v-app>
+        <div class="home-page">
+            <Header></Header>
+            <div v-bind:key="eachSection.listPageUrl" v-for="(eachSection, index) in sectionList">
+                <PratilipiListComponent :sectionData="eachSection" :index="index"></PratilipiListComponent>
+            </div>
         </div>
-    </div>
+    </v-app>
 </template>
 
 <script>

@@ -1,4 +1,4 @@
-<template> 
+<template>
     <header>
         <v-container>
             <v-layout row wrap>
@@ -20,10 +20,28 @@
                         </v-btn>
                         <v-list>
                             <v-list-tile to="/">
-                                <v-list-tile-title>Malayalam</v-list-tile-title>
+                                <v-list-tile-title>{{ $t("language_hi") }}</v-list-tile-title>
                             </v-list-tile>
                             <v-list-tile to="/">
-                                <v-list-tile-title>Hindi</v-list-tile-title>
+                                <v-list-tile-title>{{ $t("language_gu") }}</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile to="/">
+                                <v-list-tile-title>{{ $t("language_ta") }}</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile to="/">
+                                <v-list-tile-title>{{ $t("language_mr") }}</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile to="/">
+                                <v-list-tile-title>{{ $t("language_ml") }}</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile to="/">
+                                <v-list-tile-title>{{ $t("language_bn") }}</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile to="/">
+                                <v-list-tile-title>{{ $t("language_te") }}</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile to="/">
+                                <v-list-tile-title>{{ $t("language_kn") }}</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
