@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="home-page">
         <Header></Header>
         <div v-bind:key="eachSection.listPageUrl" v-for="(eachSection, index) in sectionList">
             <PratilipiListComponent :sectionData="eachSection" :index="index"></PratilipiListComponent>
