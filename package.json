@@ -11,13 +11,12 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "firebase": "^4.10.1",
     "jquery": "^3.3.1",
     "vue": "^2.5.2",
     "vue-awesome": "^2.3.4",
-    "vue-cookie": "^1.1.4",
     "vue-i18n": "^7.4.2",
     "vue-resource": "^1.4.0",
-    "vue-round-filter": "^1.1.2",
     "vue-router": "^3.0.1",
     "vue-slick": "^1.1.12"
   },
