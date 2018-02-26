@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <Header></Header>
         <div v-bind:key="eachSection.listPageUrl" v-for="(eachSection, index) in sectionList">
             <PratilipiListComponent :sectionData="eachSection" :index="index"></PratilipiListComponent>
         </div>
@@ -7,6 +8,7 @@
 </template>
 
 <script>
+import Header from '@/components/Header.vue';
 import PratilipiListComponent from '@/components/PratilipiList.vue';
 
 export default {
@@ -28,6 +30,7 @@ export default {
         
     },
     components: {
+        Header,
         PratilipiListComponent
     }
 }
