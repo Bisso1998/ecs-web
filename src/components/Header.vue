@@ -19,29 +19,12 @@
                             <v-icon>language</v-icon>
                         </v-btn>
                         <v-list>
-                            <v-list-tile to="/">
-                                <v-list-tile-title>{{ $t("language_hi") }}</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile to="/">
-                                <v-list-tile-title>{{ $t("language_gu") }}</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile to="/">
-                                <v-list-tile-title>{{ $t("language_ta") }}</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile to="/">
-                                <v-list-tile-title>{{ $t("language_mr") }}</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile to="/">
-                                <v-list-tile-title>{{ $t("language_ml") }}</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile to="/">
-                                <v-list-tile-title>{{ $t("language_bn") }}</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile to="/">
-                                <v-list-tile-title>{{ $t("language_te") }}</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile to="/">
-                                <v-list-tile-title>{{ $t("language_kn") }}</v-list-tile-title>
+                            <v-list-tile 
+                                v-for="(language) in languages" 
+                                :href="'https://' + language.fullName + '.pratilipi.com'"
+                                :class="{ isActive: isCurrentLanguage(language.shortName) }"
+                                :key="language.shortName">
+                                <v-list-tile-title>{{ $t("language_" + language.shortName, language.shortName) }}</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -65,9 +48,25 @@
 </template>
 
 <script>
+import constants from '@/constants'
 
 export default {
-    
+    data(){
+        return {
+            languages: constants.LANGUAGES,
+            isCurrentLanguage: (language) => {
+                if (language === this._i18n.locale) {
+                    return true;    
+                } else {
+                    return false;
+                }
+                
+            }
+        }
+    },
+    methods: {
+
+    }
 }
 </script>
 
