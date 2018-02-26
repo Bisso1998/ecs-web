@@ -1,35 +1,36 @@
 <template>
     <div>
-        <div class="pratilipi">
-            <div 
-                class="pratilipi-image" 
-                :style="{ 'background-image': 'url(' + pratilipiData.coverImageUrl + ')' }">
-            </div>
-            <div class="pratilipi-details">
-                <span class="title">{{ pratilipiData.title }}</span>    
-                <br>
-                <span class="author">{{ pratilipiData.author.displayName }}</span>
-            </div>
-            <div class="stats">
-                <div class="rating">
-                    <div class="icons">
-                        <icon name="star" scale="1"></icon>
-                    </div>
-                    <span>
-                        {{ pratilipiData.averageRating | round(1) }}
-                    </span>
+        <router-link :to="{ name: 'Pratilipi', params: { pratilipi_id: pratilipiData.slug.split('/').pop() }}" style="text-decoration: none">
+            <div class="pratilipi">
+                <div 
+                    class="pratilipi-image" 
+                    :style="{ 'background-image': 'url(' + pratilipiData.coverImageUrl + ')' }">
                 </div>
-                <div class="read-count">
-                    <div class="icons">
-                        <icon name="eye" scale="1"></icon>
+                <div class="pratilipi-details">
+                    <span class="title">{{ pratilipiData.title }}</span>    
+                    <br>
+                    <span class="author">{{ pratilipiData.author.displayName }}</span>
+                </div>
+                <div class="stats">
+                    <div class="rating">
+                        <div class="icons">
+                            <icon name="star" scale="1"></icon>
+                        </div>
+                        <span>
+                            {{ pratilipiData.averageRating | round(1) }}
+                        </span>
                     </div>
-                    <span>
-                        {{ pratilipiData.readCount | round(1) }}    
-                    </span>
+                    <div class="read-count">
+                        <div class="icons">
+                            <icon name="eye" scale="1"></icon>
+                        </div>
+                        <span>
+                            {{ pratilipiData.readCount | round(1) }}    
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        
+        </router-link>
     </div>
 </template>
 
