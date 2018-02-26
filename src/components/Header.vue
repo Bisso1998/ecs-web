@@ -19,8 +19,11 @@
                             <v-icon>language</v-icon>
                         </v-btn>
                         <v-list>
-                            <v-list-tile v-for="item in items" :key="item.title" @click="">
-                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                            <v-list-tile to="/">
+                                <v-list-tile-title>Malayalam</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile to="/">
+                                <v-list-tile-title>Hindi</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -46,14 +49,7 @@
 <script>
 
 export default {
-    data: () => ({
-        items: [
-            { title: 'Click Me 1' },
-            { title: 'Click Me 2' },
-            { title: 'Click Me 3' },
-            { title: 'Click Me 4' }
-        ]
-    })
+    
 }
 </script>
 
