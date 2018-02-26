@@ -6,12 +6,13 @@ import PratilipiComponent from '@/pages/Pratilipi.vue'
 Vue.use(Router)
 
 export default new Router({
+    mode: 'history',
     routes: [{
         path: '/',
         name: 'Home',
         component: HomeComponent
     }, {
-    	path: '/story/:pratilipi_id',
+        path: '/story/:pratilipi_id',
         name: 'Pratilipi',
         component: PratilipiComponent
     }]

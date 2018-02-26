@@ -1,6 +1,8 @@
 <template>
     <div>
-        <router-link :to="{ name: 'Pratilipi', params: { pratilipi_id: pratilipiData.slug.split('/').pop() }}" style="text-decoration: none">
+        <router-link :to="{ name: 'Pratilipi', params: { 
+            pratilipi_id: pratilipiData.slug.split('/').pop(),
+            pratilipiData }}" style="text-decoration: none">
             <div class="pratilipi">
                 <div 
                     class="pratilipi-image" 
