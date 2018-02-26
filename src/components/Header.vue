@@ -22,6 +22,7 @@
                             <v-list-tile 
                                 v-for="(language) in languages" 
                                 :href="'https://' + language.fullName + '.pratilipi.com'"
+                                :class="{ isActive: isCurrentLanguage(language.shortName) }"
                                 :key="language.shortName">
                                 <v-list-tile-title>{{ $t("language_" + language.shortName, language.shortName) }}</v-list-tile-title>
                             </v-list-tile>
@@ -52,8 +53,19 @@ import constants from '@/constants'
 export default {
     data(){
         return {
-            languages: constants.LANGUAGES
+            languages: constants.LANGUAGES,
+            isCurrentLanguage: (language) => {
+                if (language === this._i18n.locale) {
+                    return true;    
+                } else {
+                    return false;
+                }
+                
+            }
         }
+    },
+    methods: {
+
     }
 }
 </script>
