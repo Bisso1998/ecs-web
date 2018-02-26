@@ -21,7 +21,7 @@ export default {
     created: function() {
         this
             .$http
-            .get('init?_apiVer=2&language=HINDI')
+            .get('init?_apiVer=2&language=MALAYALAM')
             .then(function(response) {
                 this.sectionList = response.body.sections;
             }, function(error) {
