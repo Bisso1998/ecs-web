@@ -1,17 +1,16 @@
 <template>
-    <v-app>
+    <MainLayout>
         <div class="home-page">
-            <Header></Header>
             <div v-bind:key="eachSection.listPageUrl" v-for="(eachSection, index) in sectionList">
-                <PratilipiListComponent :sectionData="eachSection" :index="index"></PratilipiListComponent>
+                <PratilipiListComponent :sectionData="eachSection " :index="index"></PratilipiListComponent>
             </div>
         </div>
-    </v-app>
+    </MainLayout>
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
 import PratilipiListComponent from '@/components/PratilipiList.vue';
+import MainLayout from '@/layout/main-layout.vue';
 
 export default {
     name: 'Home',
@@ -32,8 +31,8 @@ export default {
         
     },
     components: {
-        Header,
-        PratilipiListComponent
+        PratilipiListComponent,
+        MainLayout
     }
 }
 </script>
