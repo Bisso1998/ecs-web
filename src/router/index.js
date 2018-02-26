@@ -11,7 +11,7 @@ export default new Router({
         name: 'Home',
         component: HomeComponent
     }, {
-    	path: '/pratilipi/:pratilipi_id',
+    	path: '/story/:pratilipi_id',
         name: 'Pratilipi',
         component: PratilipiComponent
     }]
