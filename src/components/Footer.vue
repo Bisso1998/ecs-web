@@ -28,10 +28,10 @@
                     <div class="col-sm-3">
                         <div class="foot-title">{{ $t("footer_follow_us_on_social_media") }}</div>
                         <div class="foot-items social">
-                            <a :href="$t('facebook_page')" class="fb"><icon name="facebook-f"></icon></a>
-                            <a :href="$t('twitter_page')" class="twitter"><icon name="twitter"></icon></a>
-                            <a :href="$t('googleplus_page')" class="google"><icon name="google-plus"></icon></a>
-                            <a :href="$t('linkedin_page')" class="linkedin"><icon name="linkedin"></icon></a>
+                            <a :href="$t('facebook_page')" class="fb" target="_blank"><icon name="facebook-f"></icon></a>
+                            <a :href="$t('twitter_page')" class="twitter" target="_blank"><icon name="twitter"></icon></a>
+                            <a :href="$t('googleplus_page')" class="google" target="_blank"><icon name="google-plus"></icon></a>
+                            <a :href="$t('linkedin_page')" class="linkedin" target="_blank"><icon name="linkedin"></icon></a>
                         </div>
                     </div>
                 </div>
