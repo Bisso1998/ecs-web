@@ -10,17 +10,19 @@ import i18n from './i18n'
 // import './firebase'
 import './filters'
 import './bootstrap'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(VueResource);
 Vue.use(Vuex);
 
-Vue.http.headers.common['accesstoken'] = '941d88ec-0805-48a9-9524-c24ed83d06ee';
+// Vue.http.headers.common['accesstoken'] = '941d88ec-0805-48a9-9524-c24ed83d06ee';
 Vue.url.options.root = 'https://hindi.pratilipi.com/api/';
 
 /* eslint-disable no-new */
 new Vue({
     i18n,
+    store,
     el: '#app',
     router,
     components: { App },
