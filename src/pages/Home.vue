@@ -37,5 +37,8 @@ export default {
 }
 </script>
 
-<style>
+<style  lang="scss" scoped>
+    .home-page {
+        margin-top: 75px;
+    }
 </style>

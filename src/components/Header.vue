@@ -12,14 +12,31 @@
                     </div>
                 </div>
                 <div class="col-sm-5">
-                    <button type="button" class="btn btn-xs btn-outline-secondary dropdown-toggle" id="languages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="material-icons">search</i>
+                    <button type="button" class="btn btn-xs btn-outline-secondary header-icon" id="languages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="material-icons">language</i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="languages">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a
+                            class="dropdown-item"
+                            v-for="(language) in languages" 
+                            :href="'https://' + language.fullName + '.pratilipi.com'"
+                            :class="{ isActive: isCurrentLanguage(language.shortName) }"
+                            :key="language.shortName">{{ $t("language_" + language.shortName, language.shortName) }}
+                        </a>
                     </div>
+                    <button type="button" class="btn btn-xs btn-outline-secondary header-icon">
+                      <i class="material-icons">create</i>
+                    </button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary header-icon">
+                      <i class="material-icons">library_books</i>
+                    </button>
+                    <button type="button" class="btn btn-xs btn-outline-secondary header-icon">
+                      <i class="material-icons">notifications</i>
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        <i class="material-icons">account_circle</i>
+                        {{ $t("user_sign_in") }}
+                    </button>
                 </div>
             </div>
         </div>
@@ -53,47 +70,64 @@ export default {
     header {
         box-shadow: 0 2px 2px rgba(0,0,0,0.2);
         margin-bottom: 10px;
-        padding: 10px 0
-    }
-    .menu__content .isActive a div {
-        color: red;
-    }
-    .logo {
-        background: url(../assets/pratilipi_logo.png) no-repeat left center;
-        background-size: contain;
-        text-indent: 50px;
-        height: 40px;
-        text-align: left;
-        line-height: 40px;
-        font-size: 17px;
-        font-weight: 700;
-        max-width: 150px;
-    }
-    .search-box {
-        margin-top: 4px;
-        .form-group {
-            margin: 0;
-            input {
-                font-size: 14px;
+        padding: 10px 0;
+        position: fixed;
+        top: 0;
+        z-index: 2;
+        width: 100%;
+        background: #fff;
+        .menu__content .isActive a div {
+            color: red;
+        }
+        .logo {
+            background: url(../assets/pratilipi_logo.png) no-repeat left center;
+            background-size: contain;
+            text-indent: 50px;
+            height: 40px;
+            text-align: left;
+            line-height: 40px;
+            font-size: 17px;
+            font-weight: 700;
+            max-width: 150px;
+        }
+        .search-box {
+            margin-top: 4px;
+            .form-group {
+                margin: 0;
+                input {
+                    font-size: 14px;
+                }
+                i {
+                    position: absolute;
+                    top: 7px;
+                    right: 20px;
+                }
             }
+        }
+        .btn {
+            margin: 2px 8px;
+        }
+        .header-icon {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            padding: 0;
             i {
-                position: absolute;
-                top: 7px;
-                right: 20px;
+                font-size: 20px;
+                height: 40px;
+                line-height: 40px;
+                width: 38px;
             }
         }
-        & /deep/ .input-group.input-group--append-icon label {
-            max-width: 95%;
-            top: 0;
+        a.dropdown-item.isActive {
+            color: #d00b12;
         }
-        & /deep/ .input-group--text-field input {
-            border-bottom: 1px solid #e0e0e0;
+        .btn-outline-secondary:focus, .btn-outline-secondary:not(:disabled):not(.disabled):active:focus {
+            box-shadow: none;
         }
-        & /deep/ .input-group__details {
-            min-height: 0;
+        .btn-primary i {
+            vertical-align: middle;
+            width: 30px;
         }
-    }
-    .btn {
-        margin: 2px 8px;
     }
 </style>

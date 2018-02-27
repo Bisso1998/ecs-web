@@ -32,6 +32,11 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      Popper: ['popper.js', 'default']
+    }),
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
