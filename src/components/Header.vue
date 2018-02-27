@@ -7,12 +7,19 @@
                 </div>
                 <div class="col-sm-5 search-box">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="inputSuccess2"/>
-                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        <input type="text" class="form-control" id="search-box-big" v-bind:placeholder='$t("search_bar_help")'/>
+                        <i class="material-icons">search</i>
                     </div>
                 </div>
                 <div class="col-sm-5">
-                    
+                    <button type="button" class="btn btn-xs btn-outline-secondary dropdown-toggle" id="languages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="material-icons">search</i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="languages">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,6 +53,7 @@ export default {
     header {
         box-shadow: 0 2px 2px rgba(0,0,0,0.2);
         margin-bottom: 10px;
+        padding: 10px 0
     }
     .menu__content .isActive a div {
         color: red;
@@ -62,9 +70,17 @@ export default {
         max-width: 150px;
     }
     .search-box {
-        margin-top: 5px;
-        .input-group {
-            padding: 0;
+        margin-top: 4px;
+        .form-group {
+            margin: 0;
+            input {
+                font-size: 14px;
+            }
+            i {
+                position: absolute;
+                top: 7px;
+                right: 20px;
+            }
         }
         & /deep/ .input-group.input-group--append-icon label {
             max-width: 95%;
