@@ -3,21 +3,29 @@
         <div class="top-footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
+                        <div class="foot-title">{{ $t("footer_mobile_app") }}</div>
+                        <div class="foot-items">
+                            <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_footer&utm_campaign=app_download" target="_blank">
+                                <img src="https://www.ptlp.co/resource-all/image/google-play-badge.png" alt="google-play" class="google-play-badge">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
                         <div class="foot-title">{{ $t("footer_contact_us") }}</div>
                         <div class="foot-items">
                             <a :href="'tel:' + $t('footer_contact_number').replace(' ', '')"><i class="material-icons material-icons-16 vertical-middle">phone</i> {{ $t("footer_contact_number") }}</a>
                             <a :href="'mailto:' + $t('footer_contact_email')"><i class="material-icons material-icons-16 vertical-middle">mail</i> {{ $t("footer_contact_email") }}</a>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="foot-title">{{ $t("footer_about_us") }}</div>
                         <div class="foot-items">
                             <a href="/about/pratilipi">{{ $t("footer_about_us") }}</a>
             				<a href="/work-with-us">{{ $t("footer_work_with_us") }}</a>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="foot-title">{{ $t("footer_follow_us_on_social_media") }}</div>
                         <div class="foot-items social">
                             <a :href="$t('facebook_page')" class="fb"><icon name="facebook-f"></icon></a>
@@ -67,7 +75,7 @@ export default {
         text-align: left;
         margin-top: 20px;
         .foot-title {
-            font-size: 16px;
+            font-size: 15px;
             position: relative;
             padding-bottom: 10px;
             &:before {
@@ -118,6 +126,10 @@ export default {
             }
             &.social a.linkedin {
                 background: #007bb6;
+            }
+            img.google-play-badge {
+                width: 150px;
+                margin-left: -10px;
             }
         }
     }
