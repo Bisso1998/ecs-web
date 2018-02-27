@@ -10,10 +10,12 @@ import i18n from './i18n'
 // import './firebase'
 import './filters'
 import './bootstrap'
+import Icon from 'vue-awesome/components/Icon'
 
 Vue.config.productionTip = false
 Vue.use(VueResource);
 Vue.use(Vuex);
+Vue.component('icon', Icon)
 
 Vue.http.headers.common['accesstoken'] = '941d88ec-0805-48a9-9524-c24ed83d06ee';
 Vue.url.options.root = 'https://hindi.pratilipi.com/api/';

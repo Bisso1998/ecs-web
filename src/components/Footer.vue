@@ -14,8 +14,8 @@
                     <div class="col-sm-3">
                         <div class="foot-title">{{ $t("footer_contact_us") }}</div>
                         <div class="foot-items">
-                            <a :href="'tel:' + $t('footer_contact_number').replace(' ', '')"><i class="material-icons material-icons-16 vertical-middle">phone</i> {{ $t("footer_contact_number") }}</a>
-                            <a :href="'mailto:' + $t('footer_contact_email')"><i class="material-icons material-icons-16 vertical-middle">mail</i> {{ $t("footer_contact_email") }}</a>
+                            <a :href="'tel:' + $t('footer_contact_number').replace(' ', '')"><i class="material-icons material-icons-16 vertical-middle">phone</i>{{ $t("footer_contact_number") }}</a>
+                            <a :href="'mailto:' + $t('footer_contact_email')"><i class="material-icons material-icons-16 vertical-middle">mail</i>{{ $t("footer_contact_email") }}</a>
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -54,16 +54,13 @@
 </template>
 
 <script>
-import Icon from 'vue-awesome/components/Icon'
 import 'vue-awesome/icons/facebook-f'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/linkedin'
 
 export default {
-    components: {
-        Icon
-    }
+    
 }
 </script>
 
@@ -98,7 +95,7 @@ export default {
                 i {
                     font-size: 14px;
                     vertical-align: middle;
-                    padding-right: 5px;
+                    padding-right: 10px;
                 }
             }
             &.social a {

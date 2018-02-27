@@ -73,7 +73,7 @@ export default {
         padding: 10px 0;
         position: fixed;
         top: 0;
-        z-index: 2;
+        z-index: 5;
         width: 100%;
         background: #fff;
         .menu__content .isActive a div {
