@@ -10,6 +10,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const portfinder = require('portfinder')
+const cookie = require('cookie')
+const request = require('request');
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -43,6 +45,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
+    },
+    before: (app) => {
+      app.use((req, res, next) => {
+        const access_token = cookie.parse(req.headers.cookie).access_token;
+        request.get({
+          url: 'https://gamma.pratilipi.com/user/accesstoken?accessToken=' + access_token,
+          json: true
+        }, function(errorInResponse, response, data) {
+          res.setHeader('set-cookie', 'access_token=' + data.accessToken);
+          next();
+        });
+      });
     }
   },
   plugins: [
