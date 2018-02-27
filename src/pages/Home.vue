@@ -12,6 +12,8 @@
 import PratilipiListComponent from '@/components/PratilipiList.vue';
 import MainLayout from '@/layout/main-layout.vue';
 
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
     name: 'Home',
     data() {
@@ -30,9 +32,17 @@ export default {
             });
         
     },
+    methods: {
+        ...mapActions([
+            'getListOfSections'
+        ]),
+    },
     components: {
         PratilipiListComponent,
         MainLayout
+    },
+    created() {
+        this.getListOfSections();
     }
 }
 </script>
