@@ -12,9 +12,9 @@ export default {
 
         /**
         Need to look for an alternative
+        **/
         headers = headers || {};
         headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
-        **/
 
         if (headers != null) {
             for (var key in headers)

@@ -77,7 +77,13 @@ const processRequests = function(requests) {
 
 const processGetResponse = function(response, status, aCallBack) {
     if (aCallBack != null)
-        aCallBack(status == 200 ? response : null);
+        aCallBack(status == 200 ? {
+            status,
+            response
+        } : {
+            status,
+            response
+        });
 };
 
 const processPostResponse = function(response, status, successCallBack, errorCallBack) {
@@ -406,9 +412,9 @@ export default {
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 
-    getHomePageSections: (aCallBack) => {
+    getHomePageSections: (language, aCallBack) => {
         httpUtil.get(API_PREFIX + INIT_API,
-            null, { "language": "${ language }" },
+            null, { language },
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 
