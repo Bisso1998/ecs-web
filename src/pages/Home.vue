@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <div class="home-page">
-            <div v-bind:key="eachSection.listPageUrl" v-for="(eachSection, index) in sectionList">
+            <div v-bind:key="eachSection.listPageUrl" v-for="(eachSection, index) in getHomePageSections">
                 <PratilipiListComponent :sectionData="eachSection " :index="index"></PratilipiListComponent>
             </div>
         </div>
@@ -11,6 +11,7 @@
 <script>
 import PratilipiListComponent from '@/components/PratilipiList.vue';
 import MainLayout from '@/layout/main-layout.vue';
+import constants from '@/constants'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -21,16 +22,10 @@ export default {
             sectionList: []
         }
     },
-    created: function() {
-        this
-            .$http
-            .get('init?_apiVer=2&language=MALAYALAM')
-            .then(function(response) {
-                this.sectionList = response.body.sections;
-            }, function(error) {
-                console.log(error);
-            });
-        
+    computed: {
+        ...mapGetters([
+            'getHomePageSections'
+        ])
     },
     methods: {
         ...mapActions([
@@ -42,7 +37,13 @@ export default {
         MainLayout
     },
     created() {
-        this.getListOfSections();
+        const currentLocale = this._i18n.locale;
+        constants.LANGUAGES.forEach((eachLanguage) => {
+            if (eachLanguage.shortName === currentLocale) {
+                this.getListOfSections(eachLanguage.fullName.toUpperCase());
+            }
+        });
+        
     }
 }
 </script>

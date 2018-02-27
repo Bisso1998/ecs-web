@@ -31,12 +31,14 @@ export default {
     //     }
     // }
 
-    getListOfSections({ commit, state }) {
+    getListOfSections({ commit, state }, language) {
         commit('setSectionDataLoadingTrue');
-        DataAccessor.getHomePageSections((data) => {
-            commit('setSectionData', data);
-        }, (error) => {
-            commit('setSectionDataLoadingError');
+        DataAccessor.getHomePageSections(language, (data) => {
+            if (data.status === 200) {
+                commit('setSectionData', data.response);
+            } else {
+                commit('setSectionDataLoadingError');
+            }
         })
     }
 }

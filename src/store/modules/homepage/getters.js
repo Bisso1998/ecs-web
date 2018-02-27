@@ -17,4 +17,6 @@ export default {
     //         return total + product.price * product.quantity
     //     }, 0)
     // }
+    
+    getHomePageSections: state => state.sections.data
 }

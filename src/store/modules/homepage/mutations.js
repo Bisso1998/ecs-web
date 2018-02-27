@@ -24,6 +24,7 @@ export default {
     },
 
     setSectionData(state, sectionData) {
+        console.log(state);
         state.sections.loading_state = 'LOADING_SUCCESS';
         state.sections.data = sectionData.sections;
     },
