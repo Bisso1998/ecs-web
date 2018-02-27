@@ -33,7 +33,7 @@
                     <button type="button" class="btn btn-xs btn-outline-secondary header-icon">
                       <i class="material-icons">notifications</i>
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login_modal">
                         <i class="material-icons">account_circle</i>
                         {{ $t("user_sign_in") }}
                     </button>
