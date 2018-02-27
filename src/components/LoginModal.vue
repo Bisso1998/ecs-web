@@ -21,12 +21,12 @@
         				<div class="login-section">
                             <form>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="loginEmail" placeholder="Enter email">
+                                    <input type="email" v-model="email" class="form-control" id="loginEmail" placeholder="Enter email">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                                    <input type="password" v-model="password" class="form-control" id="loginPassword" placeholder="Password">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="button" @click="loginUser({email, password})" class="btn btn-primary">Login</button>
                             </form>
         				</div>
         				<div class="signup-section">
@@ -39,10 +39,23 @@
     </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    
+    name: 'login-modal',
+    data() {
+        return {
+            email: '',
+            password: ''
+        }
+    },
+    methods: {
+        ...mapActions([
+            'loginUser'
+        ]),
+    }
 }
+
 </script>
 
 <style lang="scss" scoped>
