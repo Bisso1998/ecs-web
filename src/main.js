@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import Vuex from 'vuex'
 
 import App from './App'
 import router from './router'
@@ -12,6 +13,7 @@ import './bootstrap'
 
 Vue.config.productionTip = false
 Vue.use(VueResource);
+Vue.use(Vuex);
 
 Vue.http.headers.common['accesstoken'] = '941d88ec-0805-48a9-9524-c24ed83d06ee';
 Vue.url.options.root = 'https://hindi.pratilipi.com/api/';
