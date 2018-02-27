@@ -16,7 +16,6 @@
                 <div class="stats">
                     <div class="rating">
                         <div class="icons">
-                            <icon name="star" scale="1"></icon>
                         </div>
                         <span>
                             {{ pratilipiData.averageRating | round(1) }}
@@ -24,7 +23,6 @@
                     </div>
                     <div class="read-count">
                         <div class="icons">
-                            <icon name="eye" scale="1"></icon>
                         </div>
                         <span>
                             {{ pratilipiData.readCount | round(1) }}    
@@ -37,8 +35,6 @@
 </template>
 
 <script>
-import 'vue-awesome/icons/star'
-import 'vue-awesome/icons/eye'
 
 export default {
     name: 'Pratilipi',

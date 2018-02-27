@@ -4,17 +4,11 @@
             Todo: Footer columns
         </div>
         <footer>
-            <v-container grid-list-md text-xs-center>
-                <v-layout row wrap>
-                  <v-flex xs12 class="copyright">
-                      <p>
-                          © {{ new Date().getFullYear() }} Nasadiya Tech. Pvt. Ltd. | 
-                          <a href="/privacy-policy">{{ $t("footer_privacy_policy") }}</a> |
-                          <a href="/terms-of-service">{{ $t("footer_terms_of_service") }}</a>
-                      </p>
-                  </v-flex>
-              </v-layout>
-          </v-container>
+            <p>
+                © {{ new Date().getFullYear() }} Nasadiya Tech. Pvt. Ltd. | 
+                <a href="/privacy-policy">{{ $t("footer_privacy_policy") }}</a> |
+                <a href="/terms-of-service">{{ $t("footer_terms_of_service") }}</a>
+            </p>
         </footer>
     </div>
 </template>

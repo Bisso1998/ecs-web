@@ -3,7 +3,6 @@
         <h2 class="section-title">{{sectionData.title}}</h2>
         <div class="pratilipi-list">
             <div v-on:click="prev" class="back">
-                <icon name="angle-left" scale="2"></icon>
             </div>
             <slick ref="slick" :options="slickOptions">
                 <PratilipiComponent 
@@ -12,7 +11,6 @@
                 :pratilipiData="eachPratilipi"></PratilipiComponent>
             </slick>
             <div v-on:click="next" class="forward">
-                <icon name="angle-right" scale="2"></icon>
             </div>
         </div>
 	</div>
@@ -21,8 +19,6 @@
 <script type="text/javascript">
 import PratilipiComponent from '@/components/Pratilipi.vue'
 import Slick from 'vue-slick'
-import 'vue-awesome/icons/angle-right'
-import 'vue-awesome/icons/angle-left'
 
 export default {
     name: 'PratilipiList',

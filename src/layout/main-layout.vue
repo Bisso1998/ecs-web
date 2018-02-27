@@ -1,9 +1,9 @@
 <template>
-    <v-app>
+    <div>
         <Header></Header>
         <slot></slot>
         <Footer></Footer>
-    </v-app>
+    </div>
 </template>
 
 <script>

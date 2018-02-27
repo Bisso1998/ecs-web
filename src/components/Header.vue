@@ -1,49 +1,21 @@
 <template>
     <header>
-        <v-container>
-            <v-layout row wrap>
-                <v-flex xs2>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
                     <div class="logo">{{ $t("pratilipi") }}</div>
-                </v-flex>
-                <v-flex xs5 class="search-box">
-                    <v-text-field
-                      name="input-1-3"
-                      v-bind:label='$t("search_bar_help")'
-                      append-icon="search"
-                      single-line
-                    ></v-text-field>
-                </v-flex>
-                <v-flex xs5>
-                    <v-menu offset-y>
-                        <v-btn flat icon slot="activator">
-                            <v-icon>language</v-icon>
-                        </v-btn>
-                        <v-list>
-                            <v-list-tile 
-                                v-for="(language) in languages" 
-                                :href="'https://' + language.fullName + '.pratilipi.com'"
-                                :class="{ isActive: isCurrentLanguage(language.shortName) }"
-                                :key="language.shortName">
-                                <v-list-tile-title>{{ $t("language_" + language.shortName, language.shortName) }}</v-list-tile-title>
-                            </v-list-tile>
-                        </v-list>
-                    </v-menu>
-                    <v-btn flat icon>
-                        <v-icon>create</v-icon>
-                    </v-btn>
-                    <v-btn flat icon>
-                        <v-icon>library_books</v-icon>
-                    </v-btn>
-                    <v-btn flat icon>
-                        <v-icon>notifications</v-icon>
-                    </v-btn>
-                    <v-btn color="blue white--text">
-                      <v-icon left>account_circle</v-icon>
-                      {{ $t("user_sign_in") }}
-                    </v-btn>
-                </v-flex>
-            </v-layout>
-        </v-container>
+                </div>
+                <div class="col-sm-5 search-box">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" id="inputSuccess2"/>
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    
+                </div>
+            </div>
+        </div>
     </header>
 </template>
 
