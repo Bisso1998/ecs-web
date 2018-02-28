@@ -462,6 +462,14 @@ export default {
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 
+    getPratilipiRecommendation: ( contextId, context, resultCount, aCallBack ) => {
+        if( contextId == null ) return;
+        httpUtil.get( API_PREFIX + RECOMMENDATION_PREFIX + RECOMMENDATION_PRATILIPI_API,
+            null,
+            { "contextId": contextId, "context": context, "resultCount": resultCount },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+    },
+
 
     /* POST Methods */
     createOrUpdateUser: (userId, email, phone, successCallBack, errorCallBack) => {
