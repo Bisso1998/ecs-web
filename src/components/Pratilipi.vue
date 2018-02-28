@@ -2,7 +2,7 @@
     <div>
         <div class="pratilipi">
             <div class="book-type" :class="pratilipiData.type">
-                {{ pratilipiData.type }} <span></span>
+                {{ pratilipiData.type | getPratilipiTypeInNativeLanguage($t) }} <span></span>
             </div>
             <router-link :to="{ name: 'Pratilipi', params: { 
                 pratilipi_id: pratilipiData.slug.split('/').pop(),
