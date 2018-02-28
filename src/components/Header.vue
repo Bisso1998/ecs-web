@@ -33,10 +33,14 @@
                     <button type="button" class="btn btn-xs btn-outline-secondary header-icon">
                       <i class="material-icons">notifications</i>
                     </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login_modal">
+                    <button v-if="userDetails.isGuest" type="button" class="btn btn-primary" data-toggle="modal" data-target="#login_modal">
                         <i class="material-icons">account_circle</i>
                         {{ $t("user_sign_in") }}
                     </button>
+                    <router-link to="userDetails.profilePageUrl" v-else class="btn btn-xs btn-outline-secondary logged-in">
+                        <img :src="userDetails.profileImageUrl" alt="">
+                        <span class="username">{{ userDetails.displayName }}</span>
+                    </router-link>
                 </div>
             </div>
             <div class="row secondary-header">
@@ -159,6 +163,37 @@ export default {
                     line-height: 35px;
                     width: 33px;
                 }
+            }
+        }
+        .logged-in {
+            border: 0;
+            padding: 0;
+            @media screen and (max-width: 576px ) {
+                overflow: hidden;
+                width: 40px;
+            }
+            img {
+                font-size: 20px;
+                height: 40px;
+                line-height: 40px;
+                width: 40px;
+                border: 1px solid;
+                border-radius: 50%;
+                @media screen and (max-width: 576px ) {
+                    height: 35px;
+                    width: 35px;
+                    line-height: 35px;
+                }
+            }
+            span {
+                margin-left: 5px;
+            }
+            img, span {
+                vertical-align: middle;
+            }
+            &:hover, &:active {
+                background: #fff !important;
+                color: #6c757d;
             }
         }
         a.dropdown-item.isActive {
