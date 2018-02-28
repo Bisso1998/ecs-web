@@ -37,7 +37,7 @@
                         <i class="material-icons">account_circle</i>
                         {{ $t("user_sign_in") }}
                     </button>
-                    <router-link to="userDetails.profilePageUrl" v-else class="btn btn-xs btn-outline-secondary logged-in">
+                    <router-link :to="userDetails.profilePageUrl" v-else class="btn btn-xs btn-outline-secondary logged-in">
                         <img :src="userDetails.profileImageUrl" alt="">
                         <span class="username">{{ userDetails.displayName }}</span>
                     </router-link>
