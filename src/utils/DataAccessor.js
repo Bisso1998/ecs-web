@@ -1,4 +1,4 @@
-import httpUtil from './HttpUtil';
+import { httpUtil, formatParams } from './HttpUtil';
 
 
 const API_PREFIX = window.location.origin.indexOf("localhost") > -1 ? "https://gamma.pratilipi.com" : "/api";
@@ -60,7 +60,7 @@ const request = function(name, api, params) {
     return {
         "name": name,
         "api": api,
-        "params": params != null ? encodeURIComponent(httpUtil.formatParams(params)) : null
+        "params": params != null ? encodeURIComponent(formatParams(params)) : null
     };
 };
 

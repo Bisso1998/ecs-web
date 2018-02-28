@@ -10,18 +10,43 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: 'Pratilipi',
     data() {
         return {
-            pratilipi_id: null
+            pratilipi_id: null,
+            pratilipiData: null
         }
     },
-    created: function() {
-        this.pratilipi_id = this.$route.params.pratilipi_id;
-        this.pratilipiData = this.$route.params.pratilipiData;
+    computed: {
+        ...mapGetters('pratilipipage', [
+            'getPratilipiData',
+            'getUserPratilipiData',
+            'getReviews',
+            'getRecommendations'
+        ])
+    },
+    methods: {
+        ...mapActions('pratilipipage', [
+            'fetchPratilipiDetailsAndUserPratilipiData',
+            'fetchUserPratilipiData',
+            'fetchUserReviews',
+            'fetchPratilipiRecommendation',
+            'setCachedPratilipiData'
+        ]),
+    },
+    created() {
+        const slug_id = this.$route.params.slug_id;
+        const pratilipiData = this.$route.params.pratilipiData;
         console.log(this.$route.params);
+
+        if (pratilipiData) {
+            this.setCachedPratilipiData(pratilipiData);
+        }
+
+        this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
     },
     components: {
         
