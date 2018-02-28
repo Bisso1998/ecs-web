@@ -18,4 +18,17 @@ export default {
     // setCheckoutStatus(state, status) {
     //     state.checkoutStatus = status
     // }
+    
+    setUserDataLoadingTrue(state) {
+        state.loading_state = 'LOADING';
+    },
+    
+    setUserDataLoadingSuccess(state, userData) {
+        state.loading_state = 'LOADING_SUCCESS';
+        state.data = userData;
+    },
+    
+    setUserDataLoadingError(state) {
+        state.loading_state = 'LOADING_ERROR';
+    }
 }

@@ -47,6 +47,12 @@
 import constants from '@/constants'
 
 export default {
+    props: {
+        userDetails: {
+            type: Object,
+            required: true
+        }
+    },
     data(){
         return {
             languages: constants.LANGUAGES,
