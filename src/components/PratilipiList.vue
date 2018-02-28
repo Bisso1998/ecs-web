@@ -83,6 +83,10 @@ export default {
 			font-size: 26px;
 			margin-bottom: 25px;
 			color: #212121;
+			@media screen and (max-width: 576px ) {
+                font-size: 22px;
+				margin-bottom: 15px;
+            }
         }
     }
     .pratilipi-list {

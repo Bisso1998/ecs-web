@@ -3,7 +3,7 @@
         <div class="top-footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-md-3">
                         <div class="foot-title">{{ $t("footer_mobile_app") }}</div>
                         <div class="foot-items">
                             <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_footer&utm_campaign=app_download" target="_blank">
@@ -11,21 +11,21 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-md-3">
                         <div class="foot-title">{{ $t("footer_contact_us") }}</div>
                         <div class="foot-items">
                             <a :href="'tel:' + $t('footer_contact_number').replace(' ', '')"><i class="material-icons material-icons-16 vertical-middle">phone</i>{{ $t("footer_contact_number") }}</a>
                             <a :href="'mailto:' + $t('footer_contact_email')"><i class="material-icons material-icons-16 vertical-middle">mail</i>{{ $t("footer_contact_email") }}</a>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-md-3">
                         <div class="foot-title">{{ $t("footer_about_us") }}</div>
                         <div class="foot-items">
                             <a href="/about/pratilipi">{{ $t("footer_about_us") }}</a>
             				<a href="/work-with-us">{{ $t("footer_work_with_us") }}</a>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-md-3">
                         <div class="foot-title">{{ $t("footer_follow_us_on_social_media") }}</div>
                         <div class="foot-items social">
                             <a :href="$t('facebook_page')" class="fb" target="_blank"><icon name="facebook-f"></icon></a>
@@ -87,6 +87,9 @@ export default {
         }
         .foot-items {
             margin: 20px 0;
+            @media screen and (max-width: 768px ) {
+                margin: 10px 0 40px;
+            }
             a {
                 display: block;
                 color: #fff;
