@@ -34,7 +34,7 @@
                             <i class="material-icons">access_time</i>
                         </div>
                         <span>
-                            {{ pratilipiData.readingTime | round(1) }}    
+                            {{ pratilipiData.readingTime | showInMinutesOrHours($t) }}
                         </span>
                     </div>
                 </div>
