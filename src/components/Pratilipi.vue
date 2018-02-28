@@ -16,7 +16,7 @@
                 <button><i class="material-icons">share</i></button>
                 <button>
                     <i v-if="!pratilipiData.addedToLib" class="material-icons" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">bookmark_border</i>
-                    <i v-else class="material-icons added-to-lib" @click="removeFromLibrary(pratilipiData.pratilipiId)">bookmark_border</i>
+                    <i v-else class="material-icons added-to-lib" @click="removeFromLibrary(pratilipiData.pratilipiId)">bookmark</i>
                 </button>
             </div>
             <router-link :to="{ name: 'Pratilipi', params: { 
@@ -203,22 +203,30 @@ export default {
                 height: 40px;
                 font-size: 14px;
                 background: #fff;
+                color: #2c3e50;
                 border-radius: 50%;
                 cursor: pointer;
                 outline: none;
-                border: 0;
+                border: 1px solid #e9e9e9;
                 z-index: 2;
-                @media screen and (max-width: 768px ) {
-                    margin: 10px 10px 0 0;
-                }
                 i {
                     height: 40px;
                     line-height: 40px;
                     font-size: 18px;
+                    &.added-to-lib {
+                        color: #007aff;
+                    }
                 }
                 &:hover {
                     color: #fff;
                     background: #9E9E9E;
+                }
+                @media screen and (max-width: 768px ) {
+                    margin: 10px 10px 0 0;
+                    &:hover {
+                        background: #fff;
+                        color: #2c3e50;
+                    }
                 }
             }
         }
