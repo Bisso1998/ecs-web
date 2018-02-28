@@ -30,18 +30,27 @@ export default {
     //         commit('decrementProductInventory', { id: product.id })
     //     }
     // }
-    getUserDetails({ commit, state }) {
-
+    fetchUserDetails({ commit, state }) {
+        commit('setUserDataLoadingTrue');
+        DataAccessor.getUser((data) => {
+            if (data.status === 200) {
+                commit('setUserDataLoadingSuccess', data.response);
+            } else {
+                commit('setUserDataLoadingError');
+            }
+        })
     },
 
     loginUser({ commit, state }, { email, password }) {
         console.log(email);
         console.log(password);
-
+        commit('setUserDataLoadingTrue');
         DataAccessor.loginUser(email, password, (data) => {
             console.log(data);
+            commit('setUserDataLoadingSuccess', data);
         }, (error) => {
             console.log(error);
+            commit('setUserDataLoadingError');
         })
     }
 }
