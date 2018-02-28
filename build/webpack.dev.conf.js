@@ -48,7 +48,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     },
     before: (app) => {
       app.use((req, res, next) => {
-        const access_token = cookie.parse(req.headers.cookie).access_token;
+        const access_token = cookie.parse(req.headers.cookie || '').access_token;
         request.get({
           url: 'https://gamma.pratilipi.com/user/accesstoken?accessToken=' + access_token,
           json: true
