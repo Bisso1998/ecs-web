@@ -31,6 +31,22 @@ export default {
     //     }
     // }
 
+    addToLibrary({ commit, state }, pratilipiId) {
+        DataAccessor.addOrRemoveFromLibrary(pratilipiId, true, (response) => {
+            commit('addPratilipiToLibrarySuccess', response);
+        }, (error) => {
+            commit('addPratilipiToLibraryError');
+        })
+    },
+
+    removeFromLibrary({ commit, state }, pratilipiId) {
+        DataAccessor.addOrRemoveFromLibrary(pratilipiId, false, (response) => {
+            commit('removePratilipiFromLibrarySuccess', response);
+        }, (error) => {
+            commit('removePratilipiFromLibraryError');
+        })
+    },
+
     getListOfSections({ commit, state }, language) {
         commit('setSectionDataLoadingTrue');
         DataAccessor.getHomePageSections(language, (data) => {
