@@ -49,6 +49,19 @@ export default {
             password: ''
         }
     },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
+    watch:{
+        getUserDetails(value) {
+            console.log(value);
+            if (value && !value.isGuest) {
+                $('#login_modal').modal('hide');
+            }
+        }
+    },
     methods: {
         ...mapActions([
             'loginUser'
