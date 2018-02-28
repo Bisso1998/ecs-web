@@ -15,7 +15,7 @@
                 <div class="stats">
                     <div class="rating">
                         <div class="icons">
-                            <icon name="star" scale="1"></icon>
+                            <i class="material-icons">star</i>
                         </div>
                         <span>
                             {{ pratilipiData.averageRating | round(1) }}
@@ -23,10 +23,18 @@
                     </div>
                     <div class="read-count">
                         <div class="icons">
-                            <icon name="eye" scale="1"></icon>
+                            <i class="material-icons">remove_red_eye</i>
                         </div>
                         <span>
                             {{ pratilipiData.readCount | round(1) }}    
+                        </span>
+                    </div>
+                    <div class="read-time">
+                        <div class="icons">
+                            <i class="material-icons">access_time</i>
+                        </div>
+                        <span>
+                            {{ pratilipiData.readingTime | round(1) }}    
                         </span>
                     </div>
                 </div>
@@ -36,8 +44,6 @@
 </template>
 
 <script>
-import 'vue-awesome/icons/star'
-import 'vue-awesome/icons/eye'
 
 export default {
     name: 'Pratilipi',
@@ -92,19 +98,22 @@ export default {
         .stats {
             border-top: 1px solid #e9e9e9;
             margin-top: 5px;
-            .rating, .read-count {
+            .rating, .read-count, .read-time {
                 float: left;
-                width: 49%;
+                width: 32%;
                 padding: 10px;
-                font-size: 14px;
+                font-size: 13px;
                 color: #212121;
                 .icons {
                     display: inline-block;
                     vertical-align: middle;
-                    padding-right: 10px;
+                    padding-right: 5px;
+                    i {
+                        font-size: 13px;
+                    }
                 }
             }
-            .read-count {
+            .read-count, .read-time {
                 border-left: 1px solid #e9e9e9;
             }
         }
