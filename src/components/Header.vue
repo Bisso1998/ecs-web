@@ -168,6 +168,13 @@ export default {
         .logged-in {
             border: 0;
             padding: 0;
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            @media screen and (max-width: 768px ) {
+                max-width: 170px;
+            }
             @media screen and (max-width: 576px ) {
                 overflow: hidden;
                 width: 40px;
