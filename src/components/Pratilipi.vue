@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import Utils from '@/utils/Utils';
 
 export default {
     name: 'Pratilipi',
@@ -84,6 +85,7 @@ export default {
             if (this.$store.getters.getUserDetails.isGuest) {
                 // throw popup modal
                 console.log('User is not logged in');
+                Utils.goToLogin();
             } else {
                 this.addToLibrary(pratilipiId);    
             }
