@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header></Header>
+        <Header :userDetails="getUserDetails"></Header>
         <slot></slot>
         <LoginModal></LoginModal>
         <Footer></Footer>
@@ -12,11 +12,26 @@ import Header from '@/components/Header.vue';
 import LoginModal from '@/components/LoginModal.vue';
 import Footer from '@/components/Footer.vue';
 
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
+    methods: {
+        ...mapActions([
+            'fetchUserDetails'
+        ]),
+    },
     components: {
         Header,
         LoginModal,
         Footer
+    },
+    created() {
+        this.fetchUserDetails();
     }
 }
 </script>
