@@ -45,7 +45,7 @@ export default {
                 // slidesToShow: 1,
                 infinite: false,
                 // accessibility: true,
-                adaptiveHeight: true,
+                adaptiveHeight: false,
                 variableWidth: true,
                 arrows: false,
                 // dots: true,
