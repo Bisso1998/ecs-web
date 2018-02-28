@@ -152,6 +152,7 @@ export default {
         .stats {
             border-top: 1px solid #e9e9e9;
             margin-top: 5px;
+            overflow: hidden;
             .rating, .read-count, .read-time {
                 float: left;
                 width: 32%;
