@@ -5,7 +5,7 @@
             pratilipiData }}" :title="pratilipiData.title">
             <div class="pratilipi">
                 <div class="book-type" :class="pratilipiData.type">
-                    <span>{{ pratilipiData.type }}</span>
+                    <span>{{ pratilipiData.type | getPratilipiTypeInNativeLanguage($t) }}</span>
                 </div>
                 <div 
                     class="pratilipi-image" 
