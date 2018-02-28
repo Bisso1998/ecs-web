@@ -1,5 +1,5 @@
 /* HttpUtil */
-export default {
+const httpUtil = {
 
     get: (aUrl, headers, params, aCallback) => {
         var anHttpRequest = new XMLHttpRequest();
@@ -112,3 +112,5 @@ function getCookie(cname) {
     }
     return null;
 }
+
+export { httpUtil, formatParams };
