@@ -87,7 +87,7 @@ export default {
             line-height: 18px;
             font-weight: 700;
             color: #fff;
-            padding: 0 20px;
+            padding: 0 20px 3px;
             background: #d1021b;
             position: absolute;
             top: 15px;
@@ -103,6 +103,7 @@ export default {
                 left: 50%;
                 margin-left: 0px;
                 left: 100%;
+                padding-bottom: 3px;
             }
             &:after {
                 content: '';
