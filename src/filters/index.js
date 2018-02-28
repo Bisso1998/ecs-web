@@ -27,11 +27,26 @@ Vue.filter('showInMinutesOrHours', function(value, translator) {
         readingTimeInNativeLanguage = finalHours + ' ' + translator('hours');
     } else if (finalHours === 1) {
         readingTimeInNativeLanguage = finalHours + ' ' + translator('hour');
-    } else if (finalMinutes >  1) {
-    	readingTimeInNativeLanguage = finalMinutes + ' ' + translator('minutes');
+    } else if (finalMinutes > 1) {
+        readingTimeInNativeLanguage = finalMinutes + ' ' + translator('minutes');
     } else {
-    	readingTimeInNativeLanguage = finalMinutes + ' ' + translator('minute');
+        readingTimeInNativeLanguage = finalMinutes + ' ' + translator('minute');
     }
 
     return readingTimeInNativeLanguage;
+});
+
+Vue.filter('getPratilipiTypeInNativeLanguage', function(value, translator) {
+    switch (value) {
+        case 'STORY':
+            return translator('_pratilipi_type_book');
+        case 'POEM':
+            return translator('_pratilipi_type_poem');
+        case 'ARTICLE':
+            return translator('_pratilipi_type_article');
+        case 'BOOK':
+            return translator('_pratilipi_type_book');
+        case 'MAGAZINE':
+            return translator('_pratilipi_type_magazine');
+    }
 });
