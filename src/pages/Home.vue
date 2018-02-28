@@ -23,12 +23,12 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
+        ...mapGetters('homepage', [
             'getHomePageSections'
         ])
     },
     methods: {
-        ...mapActions([
+        ...mapActions('homepage', [
             'getListOfSections'
         ]),
     },
