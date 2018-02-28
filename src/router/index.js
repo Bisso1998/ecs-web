@@ -15,5 +15,9 @@ export default new Router({
         path: '/story/:slug_id',
         name: 'Pratilipi',
         component: PratilipiComponent
+    }, {
+        path: '/user/:user_id',
+        name: 'User',
+        component: PratilipiComponent
     }]
 })

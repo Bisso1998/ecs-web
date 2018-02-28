@@ -37,7 +37,7 @@
                         <i class="material-icons">account_circle</i>
                         {{ $t("user_sign_in") }}
                     </button>
-                    <router-link :to="userDetails.profilePageUrl" v-else class="btn btn-xs btn-outline-secondary logged-in">
+                    <router-link :to="{name: 'User', params: { user_id: userDetails.profilePageUrl.split('/user/')[1] }}" v-else class="btn btn-xs btn-outline-secondary logged-in">
                         <img :src="userDetails.profileImageUrl" alt="">
                         <span class="username">{{ userDetails.displayName }}</span>
                     </router-link>
@@ -168,10 +168,13 @@ export default {
         .logged-in {
             border: 0;
             padding: 0;
-            max-width: 300px;
+            max-width: 165px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            @media screen and (max-width: 768px ) {
+                max-width: 300px;
+            }
             @media screen and (max-width: 768px ) {
                 max-width: 170px;
             }
