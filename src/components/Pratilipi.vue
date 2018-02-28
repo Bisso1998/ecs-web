@@ -252,13 +252,13 @@ export default {
             .rating, .read-count, .read-time {
                 float: left;
                 width: 32%;
-                padding: 10px 5px;
+                padding: 10px 4px;
                 font-size: 13px;
                 color: #212121;
                 .icons {
                     display: inline-block;
                     vertical-align: middle;
-                    padding-right: 5px;
+                    padding-right: 4px;
                     i {
                         font-size: 13px;
                     }
@@ -267,6 +267,12 @@ export default {
             .read-count, .read-time {
                 border-left: 1px solid #e9e9e9;
             }
+            .read-time {
+                font-size: 12px;
+            }
         }
+    }
+    .language-ta .pratilipi .stats .read-time {
+        font-size: 10px;
     }
 </style>

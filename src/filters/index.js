@@ -39,7 +39,7 @@ Vue.filter('showInMinutesOrHours', function(value, translator) {
 Vue.filter('getPratilipiTypeInNativeLanguage', function(value, translator) {
     switch (value) {
         case 'STORY':
-            return translator('_pratilipi_type_book');
+            return translator('_pratilipi_type_story');
         case 'POEM':
             return translator('_pratilipi_type_poem');
         case 'ARTICLE':

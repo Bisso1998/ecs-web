@@ -2,16 +2,16 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-lg-2 col-sm-3 col-2">
                     <div class="logo">{{ $t("pratilipi") }}</div>
                 </div>
-                <div class="col-sm-5 search-box">
+                <div class="col-sm-5 p-0 search-box d-none d-lg-block">
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" id="search-box-big" v-bind:placeholder='$t("search_bar_help")'/>
                         <i class="material-icons">search</i>
                     </div>
                 </div>
-                <div class="col-sm-5">
+                <div class="col-lg-5 col-sm-9 col-10 pl-0 text-right">
                     <button type="button" class="btn btn-xs btn-outline-secondary header-icon" id="languages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="material-icons">language</i>
                     </button>
@@ -37,6 +37,17 @@
                         <i class="material-icons">account_circle</i>
                         {{ $t("user_sign_in") }}
                     </button>
+                </div>
+            </div>
+            <div class="row secondary-header">
+                <div class="col-sm-2 col-2 d-block d-lg-none text-left">
+                    <button><i class="material-icons">menu</i></button>
+                </div>
+                <div class="col-sm-10 col-10 d-block d-lg-none search-box text-right">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" id="search-box-big" v-bind:placeholder='$t("search")'/>
+                        <i class="material-icons">search</i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,34 +106,59 @@ export default {
             font-size: 17px;
             font-weight: 700;
             max-width: 150px;
+            @media screen and (max-width: 410px ) {
+                width: 40px;
+                overflow: hidden;
+            }
         }
         .search-box {
             margin-top: 4px;
             .form-group {
                 margin: 0;
+                border: 1px solid #ced4da;
+                border-radius: .25rem;
                 input {
                     font-size: 14px;
+                    width: 95%;
+                    border: 0;
+                    outline: none;
+                    &:focus {
+                        outline: none;
+                        box-shadow: none;
+                    }
                 }
                 i {
                     position: absolute;
                     top: 7px;
-                    right: 20px;
+                    right: 6px;
+                }
+                &:focus-within {
+                    box-shadow: 0 0 2px rgba(0,0,0,0.2);
                 }
             }
         }
         .btn {
-            margin: 2px 8px;
+            margin: 2px 4px;
         }
         .header-icon {
             border-radius: 50%;
             width: 40px;
             height: 40px;
             padding: 0;
+            @media screen and (max-width: 576px ) {
+                width: 35px;
+                height: 35px;
+            }
             i {
                 font-size: 20px;
                 height: 40px;
                 line-height: 40px;
                 width: 38px;
+                @media screen and (max-width: 576px ) {
+                    height: 35px;
+                    line-height: 35px;
+                    width: 33px;
+                }
             }
         }
         a.dropdown-item.isActive {
@@ -131,9 +167,40 @@ export default {
         .btn-outline-secondary:focus, .btn-outline-secondary:not(:disabled):not(.disabled):active:focus {
             box-shadow: none;
         }
-        .btn-primary i {
-            vertical-align: middle;
-            width: 30px;
+        .btn-primary {
+            font-size: 12px;
+            &:focus {
+                box-shadow: none;
+            }
+            i {
+                vertical-align: middle;
+                width: 30px;
+                @media screen and (max-width: 576px ) {
+                    width: 45px;
+                }
+            }
+            @media screen and (max-width: 576px ) {
+                width: 45px;
+                padding-right: 0;
+                padding-left: 0;
+            }
+        }
+        .secondary-header {
+            @media screen and (max-width: 992px ) {
+                margin-top: 10px;
+            }
+            button {
+                margin-top: 10px;
+            }
+            .search-box {
+                margin-top: 7px;
+                .form-group {
+                    position: relative;
+                    i {
+                        top: 5px;
+                    }
+                }
+            }
         }
     }
 </style>
