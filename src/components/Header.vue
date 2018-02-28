@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-sm-10 col-10 d-block d-lg-none search-box text-right">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="search-box-big" v-bind:placeholder='$t("search")'/>
+                        <input type="text" class="form-control" id="search-box-small" v-bind:placeholder='$t("search")'/>
                         <i class="material-icons">search</i>
                     </div>
                 </div>
