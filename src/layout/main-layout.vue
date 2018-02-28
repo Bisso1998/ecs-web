@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="currentLocale">
         <Header :userDetails="getUserDetails"></Header>
         <slot></slot>
         <LoginModal></LoginModal>
@@ -20,10 +20,15 @@ export default {
             'getUserDetails'
         ])
     },
+    data() {
+        return {
+            currentLocale: ''
+        }
+    },
     methods: {
         ...mapActions([
             'fetchUserDetails'
-        ]),
+        ])
     },
     components: {
         Header,
@@ -31,6 +36,7 @@ export default {
         Footer
     },
     created() {
+        this.currentLocale = 'language-' + this.$i18n.locale;
         this.fetchUserDetails();
     }
 }
