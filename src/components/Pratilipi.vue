@@ -14,7 +14,10 @@
             </router-link>
             <div class="image-mask">
                 <button><i class="material-icons">share</i></button>
-                <button><i class="material-icons">bookmark_border</i></button>
+                <button>
+                    <i v-if="!pratilipiData.addedToLib" class="material-icons" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">bookmark_border</i>
+                    <i v-else class="material-icons added-to-lib" @click="removeFromLibrary(pratilipiData.pratilipiId)">bookmark_border</i>
+                </button>
             </div>
             <router-link :to="{ name: 'Pratilipi', params: { 
                 slug_id: pratilipiData.slug.split('/').pop(),
@@ -62,10 +65,28 @@ export default {
         pratilipiData: {
             type: Object,
             required: true
+        },
+        addToLibrary: {
+            type: Function
+        },
+        removeFromLibrary: {
+            type: Function
         }
     },
     data() {
         return {
+        }
+    },
+    methods: {
+        addPratilipiToLibrary(pratilipiId) {
+
+            console.log(this);
+            if (this.$store.getters.getUserDetails.isGuest) {
+                // throw popup modal
+                console.log('User is not logged in');
+            } else {
+                this.addToLibrary(pratilipiId);    
+            }
         }
     }
 }

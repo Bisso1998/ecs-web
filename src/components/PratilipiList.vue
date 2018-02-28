@@ -10,7 +10,10 @@
 	                <PratilipiComponent 
 	                v-for="eachPratilipi in sectionData.pratilipiList" 
 	                v-bind:key="eachPratilipi.pratilipiId"
-	                :pratilipiData="eachPratilipi"></PratilipiComponent>
+	                :pratilipiData="eachPratilipi"
+                    :addToLibrary="addToLibrary"
+                    :removeFromLibrary="removeFromLibrary"
+                    ></PratilipiComponent>
 					<router-link :to="sectionData.listPageUrl" class="view_more">{{ $t("view_more") }}</router-link>
 	            </slick>
 				
@@ -36,6 +39,12 @@ export default {
         index: {
             type: Number,
             required: true
+        },
+        addToLibrary: {
+            type: Function
+        }, 
+        removeFromLibrary: {
+            type: Function
         }
     },
     data() {

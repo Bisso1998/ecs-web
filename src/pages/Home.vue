@@ -2,7 +2,11 @@
     <MainLayout>
         <div class="home-page">
             <div v-bind:key="eachSection.listPageUrl" v-for="(eachSection, index) in getHomePageSections">
-                <PratilipiListComponent :sectionData="eachSection " :index="index"></PratilipiListComponent>
+                <PratilipiListComponent 
+                    :sectionData="eachSection" 
+                    :index="index"
+                    v-bind="{ addToLibrary, removeFromLibrary }"
+                ></PratilipiListComponent>
             </div>
         </div>
     </MainLayout>
@@ -29,7 +33,9 @@ export default {
     },
     methods: {
         ...mapActions('homepage', [
-            'getListOfSections'
+            'getListOfSections',
+            'addToLibrary',
+            'removeFromLibrary'
         ]),
     },
     components: {
