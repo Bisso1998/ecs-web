@@ -1,16 +1,24 @@
 <template>
     <div>
-        <router-link :to="{ name: 'Pratilipi', params: { 
-            pratilipi_id: pratilipiData.slug.split('/').pop(),
-            pratilipiData }}" :title="pratilipiData.title">
-            <div class="pratilipi">
-                <div class="book-type" :class="pratilipiData.type">
-                    <span>{{ pratilipiData.type }}</span>
-                </div>
+        <div class="pratilipi">
+            <div class="book-type" :class="pratilipiData.type">
+                {{ pratilipiData.type }} <span></span>
+            </div>
+            <router-link :to="{ name: 'Pratilipi', params: { 
+                pratilipi_id: pratilipiData.slug.split('/').pop(),
+                pratilipiData }}" :title="pratilipiData.title">
                 <div 
                     class="pratilipi-image" 
                     :style="{ 'background-image': 'url(' + pratilipiData.coverImageUrl + ')' }">
                 </div>
+            </router-link>
+            <div class="image-mask">
+                <button><i class="material-icons">share</i></button>
+                <button><i class="material-icons">bookmark_border</i></button>
+            </div>
+            <router-link :to="{ name: 'Pratilipi', params: { 
+                pratilipi_id: pratilipiData.slug.split('/').pop(),
+                pratilipiData }}" :title="pratilipiData.title">
                 <div class="pratilipi-details">
                     <span class="title">{{ pratilipiData.title }}</span>
                     <span class="author">{{ pratilipiData.author.displayName }}</span>
@@ -41,8 +49,8 @@
                         </span>
                     </div>
                 </div>
-            </div>
-        </router-link>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -84,6 +92,7 @@ export default {
             position: absolute;
             top: 15px;
             left: -10px;
+            z-index: 1;
             &:before {
                 content: '';
                 position: absolute;
@@ -104,6 +113,17 @@ export default {
                 top: 100%;
                 left: -10px;
                 left: 0;
+            }
+            span {
+                content: '';
+                position: absolute;
+                border-top: 0 solid transparent;
+                border-bottom: 10px solid transparent;
+                border-right: 10px solid rgba(0, 0, 0, 0.2);
+                top: 100%;
+                left: -10px;
+                left: 0;
+                z-index: 9;
             }
             &.ARTICLE {
                 background: #42bab0;
@@ -129,7 +149,61 @@ export default {
             height: 150px;
             background-size: cover;
             background-position: center;
+            position: relative;
         }
+        .image-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 288px;
+            height: 150px;
+            margin: 5px;
+            background: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            transition: all 0.5s, visibility 0s;
+            -ms-transition: all 0.5s, visibility 0s;
+            -webkit-transition: all 0.5s, visibility 0s;
+            -moz-transition: all 0.5s, visibility 0s;
+            @media screen and (max-width: 768px ) {
+                opacity: 1;
+                background: none;
+                text-align: right;
+                width: auto;
+                height: auto;
+                right: 0;
+                left: auto;
+            }
+            button {
+                padding: 0;
+                margin: 60px 4px 0;
+                text-align: center;
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+                background: #fff;
+                border-radius: 50%;
+                cursor: pointer;
+                outline: none;
+                border: 0;
+                z-index: 2;
+                @media screen and (max-width: 768px ) {
+                    margin: 10px 10px 0 0;
+                }
+                i {
+                    height: 40px;
+                    line-height: 40px;
+                    font-size: 18px;
+                }
+                &:hover {
+                    color: #fff;
+                    background: #9E9E9E;
+                }
+            }
+        }
+        &:hover .image-mask {
+            opacity: 1;
+        }
+        
         .pratilipi-details {
             text-align: left;
             padding: 0 10px;
