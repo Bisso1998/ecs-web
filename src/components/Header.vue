@@ -5,13 +5,13 @@
                 <div class="col-sm-2">
                     <div class="logo">{{ $t("pratilipi") }}</div>
                 </div>
-                <div class="col-sm-5 search-box">
+                <div class="col-sm-5 p-0 search-box d-none d-lg-block">
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" id="search-box-big" v-bind:placeholder='$t("search_bar_help")'/>
                         <i class="material-icons">search</i>
                     </div>
                 </div>
-                <div class="col-sm-5">
+                <div class="col-sm-5 p-0">
                     <button type="button" class="btn btn-xs btn-outline-secondary header-icon" id="languages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="material-icons">language</i>
                     </button>
@@ -100,18 +100,30 @@ export default {
             margin-top: 4px;
             .form-group {
                 margin: 0;
+                border: 1px solid #ced4da;
+                border-radius: .25rem;
                 input {
                     font-size: 14px;
+                    width: 95%;
+                    border: 0;
+                    outline: none;
+                    &:focus {
+                        outline: none;
+                        box-shadow: none;
+                    }
                 }
                 i {
                     position: absolute;
                     top: 7px;
-                    right: 20px;
+                    right: 6px;
+                }
+                &:focus-within {
+                    box-shadow: 0 0 2px rgba(0,0,0,0.2);
                 }
             }
         }
         .btn {
-            margin: 2px 8px;
+            margin: 2px 4px;
         }
         .header-icon {
             border-radius: 50%;
@@ -131,9 +143,12 @@ export default {
         .btn-outline-secondary:focus, .btn-outline-secondary:not(:disabled):not(.disabled):active:focus {
             box-shadow: none;
         }
-        .btn-primary i {
-            vertical-align: middle;
-            width: 30px;
+        .btn-primary {
+            font-size: 12px;
+            i {
+                vertical-align: middle;
+                width: 30px;
+            }
         }
     }
 </style>

@@ -80,7 +80,7 @@ export default {
 		.section-title {
             margin: 0;
             padding-top: 10px;
-			font-size: 30px;
+			font-size: 26px;
 			margin-bottom: 25px;
 			color: #212121;
         }
@@ -109,8 +109,8 @@ export default {
 				font-size: 26px;
             }
 			&:hover {
-				background: #212121;
-				border-color: #212121;
+				background: #9E9E9E;
+				border-color: #9E9E9E;
 				box-shadow: 0 0px 2px rgba(0,0,0,0.2);
 				color: #fff;
 			}
