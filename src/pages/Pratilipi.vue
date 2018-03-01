@@ -2,7 +2,7 @@
     <MainLayout>
         <div class="pratilipi-page">
             <div class="container">
-                <div class="row">
+                <div class="row" v-if="getPratilipiData && getPratilipiData.author && getPratilipiData.author.pageUrl">
                     <div class="book-details col-md-12 col-lg-5 p-0">
                         <div class="card">
                             <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getPratilipiData.coverImageUrl  + ')' }"></div>
@@ -24,7 +24,7 @@
                                 <span class="date">{{ $t("pratilipi_listing_date") }}: {{ getPratilipiData.listingDateMillis | convertDate($t) }}</span>
                             </div>
                             <div class="main-actions">
-                                <button class="library-btn">
+                                <button class="library-btn" @click="addToLibrary(getPratilipiData.pratilipiId)">
                                     <span>+ {{ $t("library") }}</span>
                                 </button>
                                 <router-link
@@ -82,7 +82,9 @@ export default {
             'fetchUserPratilipiData',
             'fetchUserReviews',
             'fetchPratilipiRecommendation',
-            'setCachedPratilipiData'
+            'setCachedPratilipiData',
+            'addToLibrary',
+            'removeFromLibrary'
         ]),
     },
     created() {
@@ -93,6 +95,7 @@ export default {
             this.setCachedPratilipiData(pratilipiData);
         }
 
+        console.log(slug_id);
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
     },
     components: {

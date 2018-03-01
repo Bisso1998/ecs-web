@@ -40,13 +40,29 @@ export default {
             } else {
                 commit('setPratilipiDataLoadingError');    
             }
-
             if (userPratilipiData) {
                 commit('setPratilipiUserDataLoadingSuccess', userPratilipiData);
             } else {
                 commit('setPratilipiUserDataLoadingError');    
             }
         });
+    },
+
+    addToLibrary({ commit, state }, pratilipiId) {
+        console.log('hello');
+        DataAccessor.addOrRemoveFromLibrary(pratilipiId, true, (response) => {
+            commit('addPratilipiToLibrarySuccess', response);
+        }, (error) => {
+            commit('addPratilipiToLibraryError');
+        })
+    },
+
+    removeFromLibrary({ commit, state }, pratilipiId) {
+        DataAccessor.addOrRemoveFromLibrary(pratilipiId, false, (response) => {
+            commit('removePratilipiFromLibrarySuccess', response);
+        }, (error) => {
+            commit('removePratilipiFromLibraryError');
+        })
     },
 
     // This is an optimization currently not present in product stack
@@ -58,8 +74,15 @@ export default {
 
     },
 
-    fetchPratilipiRecommendation({ commit, state }, pratilipiId) {
-
+    fetchPratilipiRecommendation({ commit, state }, { pratilipiId, count }) {
+        commit('setRecommendationLoadingTrue');
+        DataAccessor.getPratilipiRecommendation( pratilipiId, 'summaryPage', count, function(data) {
+            if (data.status >= 200 && data.status <= 400) {
+                commit('setRecommendationLoadingSuccess', data.response.pratilipiList);
+            } else {
+                commit('setRecommendationLoadingError');
+            }
+        });
     },
 
     setCachedPratilipiData({ commit, state }, pratilipiData) {
