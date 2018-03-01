@@ -37,10 +37,11 @@
                         <i class="material-icons">account_circle</i>
                         {{ $t("user_sign_in") }}
                     </button>
-                    <router-link :to="{name: 'User', params: { user_id: userDetails.profilePageUrl.split('/user/')[1] }}" v-else class="btn btn-xs btn-outline-secondary logged-in">
+                    <router-link :to="{name: 'User', params: { user_id: userDetails.profilePageUrl.split('/').pop() }}" v-if="userDetails && !userDetails.isGuest && userDetails.profilePageUrl" class="btn btn-xs btn-outline-secondary logged-in">
                         <img :src="userDetails.profileImageUrl" alt="">
                         <span class="username">{{ userDetails.displayName }}</span>
-                    </router-link>
+                    </router-link> 
+                    
                 </div>
             </div>
             <div class="row secondary-header">
