@@ -1,15 +1,17 @@
 <template>
-    <div class="pratilipi-page">
-        Pratilipi ID : {{ pratilipi_id }}
-        <br>
-        Pratilipi Data : {{ pratilipiData }}
+    <MainLayout>
+        <div class="pratilipi-page">
+            Pratilipi ID : {{ pratilipi_id }}
+            <br>
+            Pratilipi Data : {{ pratilipiData }}
 
-        <br>
-        {{ $t("_pratilipi_type_books") }}
-    </div>
+            <br>
+        </div>
+    </MainLayout>
 </template>
 
 <script>
+import MainLayout from '@/layout/main-layout.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -40,7 +42,6 @@ export default {
     created() {
         const slug_id = this.$route.params.slug_id;
         const pratilipiData = this.$route.params.pratilipiData;
-        console.log(this.$route.params);
 
         if (pratilipiData) {
             this.setCachedPratilipiData(pratilipiData);
@@ -49,7 +50,7 @@ export default {
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
     },
     components: {
-        
+        MainLayout
     }
 }
 </script>
