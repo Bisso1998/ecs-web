@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomeComponent from '@/pages/Home.vue'
 import PratilipiComponent from '@/pages/Pratilipi.vue'
+import AuthorComponent from '@/pages/Author.vue'
+import NotificationComponent from '@/pages/Notification.vue'
+import ListPageComponent from '@/pages/ListPage.vue'
 
 Vue.use(Router)
 
@@ -18,6 +21,14 @@ export default new Router({
     }, {
         path: '/user/:user_id',
         name: 'User',
-        component: PratilipiComponent
-    }]
+        component: AuthorComponent
+    }, {
+        path: '/notification',
+        name: 'Notification',
+        component: NotificationComponent
+    }, {
+        path: '/:list_page_url',
+        name: 'List Page',
+        component: ListPageComponent
+    } ]
 })
