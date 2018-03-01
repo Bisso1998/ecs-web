@@ -26,7 +26,7 @@
                       :to="{ name: 'Home' }"
                       class="main-tabs">
                       <i class="material-icons">home</i>
-                      <span>Home</span>
+                      <span>{{ $t("goto_home") }}</span>
                     </router-link>
                     <router-link
                       :to="{ path: 'discover' }"
@@ -38,7 +38,7 @@
                       :to="{ path: 'write' }"
                       class="main-tabs">
                       <i class="material-icons">mode_edit</i>
-                      <span>Write</span>
+                      <span>{{ $t("write") }}</span>
                     </router-link>
                     <router-link
                       :to="{ path: 'profile' }"
@@ -168,47 +168,6 @@ export default {
                     line-height: 35px;
                     width: 33px;
                 }
-            }
-        }
-        .logged-in {
-            border: 0;
-            padding: 0;
-            max-width: 165px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            @media screen and (max-width: 768px ) {
-                max-width: 300px;
-            }
-            @media screen and (max-width: 768px ) {
-                max-width: 170px;
-            }
-            @media screen and (max-width: 576px ) {
-                overflow: hidden;
-                width: 40px;
-            }
-            img {
-                font-size: 20px;
-                height: 40px;
-                line-height: 40px;
-                width: 40px;
-                border: 1px solid;
-                border-radius: 50%;
-                @media screen and (max-width: 576px ) {
-                    height: 35px;
-                    width: 35px;
-                    line-height: 35px;
-                }
-            }
-            span {
-                margin-left: 5px;
-            }
-            img, span {
-                vertical-align: middle;
-            }
-            &:hover, &:active {
-                background: #fff !important;
-                color: #6c757d;
             }
         }
         a.dropdown-item.isActive {

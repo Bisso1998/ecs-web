@@ -56,7 +56,7 @@ export default {
 
 <style  lang="scss" scoped>
     .home-page {
-        margin-top: 75px;
+        margin-top: 85px;
         @media screen and (max-width: 992px ) {
             margin-top: 140px;
         }
