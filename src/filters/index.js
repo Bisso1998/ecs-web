@@ -50,3 +50,28 @@ Vue.filter('getPratilipiTypeInNativeLanguage', function(value, translator) {
             return translator('_pratilipi_type_magazine');
     }
 });
+
+Vue.filter('convertDate', function(value, translator) {
+    const d = new Date(value);
+
+    function day(d) { return (d < 10) ? '0' + d : d; }
+
+    function month(m) {
+        var months = [
+            translator('month_jan'), 
+            translator('month_feb'), 
+            translator('month_mar'),
+            translator('month_apr'), 
+            translator('month_may'), 
+            translator('month_jun'),
+            translator('month_jul'), 
+            translator('month_aug'), 
+            translator('month_sep'),
+            translator('month_oct'), 
+            translator('month_nov'), 
+            translator('month_dec')
+        ];
+        return months[m];
+    }
+    return [day(d.getDate()), month(d.getMonth()), d.getFullYear()].join(' ');
+});
