@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="alert alert-dark pratilipi-alert" role="alert">
-            <p>{{ getAlertMessage }}</p>
+            <p>{{ $t(getAlertMessage) }}</p>
         </div>
     </div>
 </template>
