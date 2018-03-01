@@ -33,6 +33,23 @@ export default {
         state.pratilipi.data = {};
     },
 
+
+    addPratilipiToLibrarySuccess(state) {
+        state.userPratilipi.data.addedToLib = true;
+    },
+    
+    addPratilipiToLibraryError(state) {
+
+    },
+
+    removePratilipiFromLibrarySuccess(state) {
+        state.userPratilipi.data.addedToLib = false;
+    },
+    
+    removePratilipiFromLibraryError(state) {
+
+    },
+
     setPratilipiUserDataLoadingTrue(state) {
         state.userPratilipi.loading_state = 'LOADING';
     },
@@ -45,5 +62,20 @@ export default {
     setPratilipiUserDataLoadingError(state) {
         state.userPratilipi.loading_state = 'LOADING_ERROR';
         state.userPratilipi.data = {};
+    },
+
+
+    setRecommendationLoadingTrue(state) {
+        state.recommendations.loading_state = 'LOADING';
+    },
+
+    setRecommendationLoadingSuccess(state, recommendations) {
+        state.recommendations.loading_state = 'LOADING_SUCCESS';
+        state.recommendations.data = recommendations;
+    },
+
+    setRecommendationLoadingError(state) {
+        state.recommendations.loading_state = 'LOADING_ERROR';
+        state.recommendations.data = [];
     },
 }
