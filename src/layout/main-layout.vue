@@ -45,8 +45,8 @@ export default {
     },
     mounted () {
         $(window).scroll(function() {
-            if ($(this).scrollTop() >= 50) {
-                $('#return-to-top').fadeIn(200);
+            if ($(this).scrollTop() >= 150) {
+                $('#return-to-top').fadeIn(500);
             } else {
                 $('#return-to-top').fadeOut(200);
             }
@@ -63,6 +63,7 @@ export default {
 <style lang="scss">
 #return-to-top {
     position: fixed;
+    z-index: 5;
     bottom: 20px;
     right: 20px;
     background: rgba(209, 2, 27, 0.7);
