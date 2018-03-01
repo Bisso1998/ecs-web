@@ -4,6 +4,7 @@
         <slot></slot>
         <LoginModal></LoginModal>
         <Footer></Footer>
+        <Alert></Alert>
         <a href="javascript:" id="return-to-top"><i class="material-icons">keyboard_arrow_up</i></a>
     </div>
 </template>
@@ -12,6 +13,7 @@
 import Header from '@/components/Header.vue';
 import LoginModal from '@/components/LoginModal.vue';
 import Footer from '@/components/Footer.vue';
+import Alert from '@/components/Alert.vue';
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -34,7 +36,8 @@ export default {
     components: {
         Header,
         LoginModal,
-        Footer
+        Footer,
+        Alert
     },
     created() {
         this.currentLocale = 'language-' + this.$i18n.locale;
