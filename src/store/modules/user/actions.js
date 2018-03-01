@@ -50,7 +50,7 @@ export default {
             commit('setUserDataLoadingSuccess', data);
         }, (error) => {
             console.log(error);
-            commit('setUserDataLoadingError');
+            commit('setUserDataLoadingError', error.message);
         })
     }
 }

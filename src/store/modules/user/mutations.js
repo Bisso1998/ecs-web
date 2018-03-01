@@ -21,14 +21,17 @@ export default {
     
     setUserDataLoadingTrue(state) {
         state.loading_state = 'LOADING';
+        state.loading_error_message = null;
     },
     
     setUserDataLoadingSuccess(state, userData) {
         state.loading_state = 'LOADING_SUCCESS';
         state.data = userData;
+        state.loading_error_message = null;
     },
     
-    setUserDataLoadingError(state) {
+    setUserDataLoadingError(state, errorMessage) {
         state.loading_state = 'LOADING_ERROR';
+        state.loading_error_message =  errorMessage;
     }
 }
