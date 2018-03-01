@@ -3,7 +3,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-2 col-sm-3 col-2">
-                    <div class="logo">{{ $t("pratilipi") }}</div>
+                    <router-link
+                      :to="{ name: 'Home' }"
+                      class="logo">
+                      {{ $t("pratilipi") }}
+                    </router-link>
                 </div>
                 <div class="col-sm-5 p-0 search-box d-none d-lg-block">
                     <div class="form-group has-feedback">
@@ -111,6 +115,11 @@ export default {
             font-size: 17px;
             font-weight: 700;
             max-width: 150px;
+            display: block;
+            color: #2c3e50;
+            &:hover {
+                text-decoration: none;
+            }
             @media screen and (max-width: 410px ) {
                 width: 40px;
                 overflow: hidden;
