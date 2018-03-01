@@ -102,9 +102,6 @@ export default {
         z-index: 5;
         width: 100%;
         background: #fff;
-        .menu__content .isActive a div {
-            color: red;
-        }
         .logo {
             background: url(../assets/pratilipi_logo.png) no-repeat left center;
             background-size: contain;
@@ -218,6 +215,21 @@ export default {
         }
         a.dropdown-item.isActive {
             color: #d00b12;
+            &:before {
+                content: "\e315";
+                font-family: 'Material Icons';
+                font-weight: normal;
+                font-style: normal;
+                font-size: 14px;
+                display: inline-block;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                transform: translate(0, 0);
+                vertical-align: middle;
+                margin-left: -15px;
+                padding-right: 5px;
+            }
         }
         .btn-outline-secondary:focus, .btn-outline-secondary:not(:disabled):not(.disabled):active:focus {
             box-shadow: none;
@@ -246,6 +258,10 @@ export default {
             }
             button {
                 margin-top: 10px;
+                background: none;
+                border: 0;
+                outline: none;
+                cursor: pointer;
             }
             .search-box {
                 margin-top: 7px;

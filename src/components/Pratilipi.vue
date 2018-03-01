@@ -121,8 +121,8 @@ export default {
                 position: absolute;
                 border-left: 0px solid transparent;
                 border-right: 10px solid transparent;
-                border-top: 18px solid #d1021b;
-                bottom: 0;
+                border-top: 21px solid #d1021b;
+                bottom: -3px;
                 left: 50%;
                 margin-left: 0px;
                 left: 100%;
@@ -153,7 +153,7 @@ export default {
                 background: #42bab0;
             }
             &.ARTICLE:before {
-                border-top: 18px solid #42bab0;
+                border-top: 21px solid #42bab0;
             }
             &.ARTICLE:after {
                 border-right: 10px solid #42bab0;
@@ -162,7 +162,7 @@ export default {
                 background: #FF9800;
             }
             &.POEM:before {
-                border-top: 18px solid #FF9800;
+                border-top: 21px solid #FF9800;
             }
             &.POEM:after {
                 border-right: 10px solid #FF9800;
