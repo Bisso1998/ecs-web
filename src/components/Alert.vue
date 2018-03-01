@@ -51,5 +51,6 @@ export default {
         border-radius: 0;
         text-align: left;
         display: none;
+        width: 100%;
     }
 </style>

@@ -15,48 +15,37 @@
                         <i class="material-icons">search</i>
                     </div>
                 </div>
-                <div class="col-lg-5 col-sm-9 col-10 pl-0 text-right">
-                    <button type="button" class="btn btn-xs btn-outline-secondary header-icon" id="languages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="material-icons">language</i>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="languages">
-                        <a
-                            class="dropdown-item"
-                            v-for="(language) in languages" 
-                            :href="'https://' + language.fullName + '.pratilipi.com'"
-                            :class="{ isActive: isCurrentLanguage(language.shortName) }"
-                            :key="language.shortName">{{ $t("language_" + language.shortName, language.shortName) }}
-                        </a>
-                    </div>
-                    <button type="button" class="btn btn-xs btn-outline-secondary header-icon">
-                      <i class="material-icons">create</i>
-                    </button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary header-icon">
-                      <i class="material-icons">library_books</i>
-                    </button>
-                    <button type="button" class="btn btn-xs btn-outline-secondary header-icon">
-                      <i class="material-icons">notifications</i>
-                    </button>
-                    <button v-if="userDetails.isGuest" type="button" class="btn btn-primary" data-toggle="modal" data-target="#login_modal">
-                        <i class="material-icons">account_circle</i>
-                        {{ $t("user_sign_in") }}
-                    </button>
-                    <router-link :to="{name: 'User', params: { user_id: userDetails.profilePageUrl.split('/').pop() }}" v-if="userDetails && !userDetails.isGuest && userDetails.profilePageUrl" class="btn btn-xs btn-outline-secondary logged-in">
-                        <img :src="userDetails.profileImageUrl" alt="">
-                        <span class="username">{{ userDetails.displayName }}</span>
-                    </router-link> 
-                    
-                </div>
-            </div>
-            <div class="row secondary-header">
-                <div class="col-sm-2 col-2 d-block d-lg-none text-left">
-                    <button><i class="material-icons">menu</i></button>
-                </div>
-                <div class="col-sm-10 col-10 d-block d-lg-none search-box text-right">
+                <div class="col-sm-8 col-8 d-block d-lg-none search-box search-box-2 text-right ml-auto">
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" id="search-box-small" v-bind:placeholder='$t("search")'/>
                         <i class="material-icons">search</i>
                     </div>
+                </div>
+                <div class="tabs-section col-md-12 col-12 col-lg-5">
+                    <router-link
+                      :to="{ name: 'Home' }"
+                      class="main-tabs">
+                      <i class="material-icons">home</i>
+                      <span>Home</span>
+                    </router-link>
+                    <router-link
+                      :to="{ path: 'discover' }"
+                      class="main-tabs">
+                      <i class="material-icons">all_out</i>
+                      <span>Discover</span>
+                    </router-link>
+                    <router-link
+                      :to="{ path: 'write' }"
+                      class="main-tabs">
+                      <i class="material-icons">mode_edit</i>
+                      <span>Write</span>
+                    </router-link>
+                    <router-link
+                      :to="{ path: 'profile' }"
+                      class="main-tabs">
+                      <i class="material-icons">account_circle</i>
+                      <span>Profile</span>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -145,6 +134,15 @@ export default {
                 }
                 &:focus-within {
                     box-shadow: 0 0 2px rgba(0,0,0,0.2);
+                }
+            }
+        }
+        .search-box-2 {
+            margin-top: 7px;
+            .form-group {
+                position: relative;
+                i {
+                    top: 5px;
                 }
             }
         }
@@ -252,24 +250,28 @@ export default {
                 padding-left: 0;
             }
         }
-        .secondary-header {
+        .tabs-section {
             @media screen and (max-width: 992px ) {
-                margin-top: 10px;
+                margin-top: 15px;
             }
-            button {
-                margin-top: 10px;
-                background: none;
-                border: 0;
-                outline: none;
-                cursor: pointer;
-            }
-            .search-box {
-                margin-top: 7px;
-                .form-group {
-                    position: relative;
-                    i {
-                        top: 5px;
-                    }
+            .main-tabs {
+                display: inline-block;
+                width: 24%;
+                color: #212121;
+                font-size: 18px;
+                border-bottom: 3px solid #fff;
+                padding-bottom: 4px;
+                span {
+                    display: block;
+                    font-size: 12px;
+                }
+                &:hover {
+                    text-decoration: none;
+                    color: #d00b12;
+                }
+                &.router-link-exact-active {
+                    color: #d00b12;
+                    border-bottom: 3px solid;
                 }
             }
         }
