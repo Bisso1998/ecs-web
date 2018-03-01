@@ -1,17 +1,39 @@
 <template>
     <div>
         <div class="alert alert-dark pratilipi-alert" role="alert">
-          <slot></slot>
+            <p>{{ getAlertMessage }}</p>
         </div>
     </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    method: {
-        closeAlert() {
-            
+    name: 'alert-dialog',
+    data() {
+        return {
+            currentAlertStatus: false
+        }
+    },
+    computed: {
+        ...mapGetters('alert', [
+            'getAlertMessage',
+            'getAlertDisplayStatus'
+        ])
+    },
+    watch:{
+        getAlertDisplayStatus(value) {
+            if (this.currentAlertStatus === value) {
+                return;
+            }
+            if (value) {
+                this.currentAlertStatus = true;
+                $(".alert.alert-dark.pratilipi-alert").slideDown();
+            } else {
+                this.currentAlertStatus = false;
+                $(".alert.alert-dark.pratilipi-alert").slideUp();
+            }
         }
     }
 }
@@ -28,5 +50,6 @@ export default {
         font-size: 14px;
         border-radius: 0;
         text-align: left;
+        display: none;
     }
 </style>
