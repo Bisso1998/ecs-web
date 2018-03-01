@@ -59,6 +59,7 @@
 
 <script>
 import Utils from '@/utils/Utils';
+import { mapActions } from 'vuex'
 
 export default {
     name: 'Pratilipi',
@@ -87,9 +88,16 @@ export default {
                 console.log('User is not logged in');
                 Utils.goToLogin();
             } else {
-                this.addToLibrary(pratilipiId);    
+                this.addToLibrary(pratilipiId);
+                this.triggerAlert({ 
+                    message: 'added_to_library', 
+                    timer: 3000 
+                });
             }
-        }
+        },
+        ...mapActions('alert', [
+            'triggerAlert'
+        ])
     }
 }
 </script>
