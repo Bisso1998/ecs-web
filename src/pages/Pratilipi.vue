@@ -23,10 +23,15 @@
                                 <span class="read-count">{{ $t("pratilipi_count_reads") }}: {{ getPratilipiData.readCount }}</span>
                                 <span class="date">{{ $t("pratilipi_listing_date") }}: {{ getPratilipiData.listingDateMillis | convertDate($t) }}</span>
                             </div>
-                            <div class="main-actions">
-                                <button class="library-btn" @click="addToLibrary(getPratilipiData.pratilipiId)">
+                            <div class="main-actions"  v-if="getUserPratilipiLoadingState === 'LOADING_SUCCESS'">
+                                <button v-if="!getUserPratilipiData.addedToLib" class="library-btn" @click="addToLibrary(getPratilipiData.pratilipiId)">
                                     <span>+ {{ $t("library") }}</span>
                                 </button>
+
+                                <button v-if="getUserPratilipiData.addedToLib" class="library-btn" @click="removeFromLibrary(getPratilipiData.pratilipiId)">
+                                    <span>- {{ $t("library") }}</span>
+                                </button>
+
                                 <router-link
                                   :to="getPratilipiData.readPageUrl"
                                   class="read-btn">
@@ -81,7 +86,8 @@ export default {
         ...mapGetters('pratilipipage', [
             'getPratilipiData',
             'getUserPratilipiData',
-            'getPratilipiLoadingState'
+            'getPratilipiLoadingState',
+            'getUserPratilipiLoadingState'
         ])
     },
     methods: {
