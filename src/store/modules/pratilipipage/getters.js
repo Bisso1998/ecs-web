@@ -19,7 +19,5 @@ export default {
     // }
     
     getPratilipiData: state => state.pratilipi.data,
-    getUserPratilipiData: state => state.userPratilipi.data,
-    getReviews: state => state.reviews.data,
-    getRecommendations: state => state.recommendations.data
+    getUserPratilipiData: state => state.userPratilipi.data
 }
