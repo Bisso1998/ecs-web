@@ -1,9 +1,10 @@
 <template>
-    <div class="home-page">
+    <div class="recommendation">
         <PratilipiListComponent 
             :pratilipiList="getRecommendationList" 
             :title="getRecommendationTitle"
             v-bind="{ addToLibrary, removeFromLibrary }"
+            v-if="getRecommendationLoadingState === 'LOADING_SUCCESS'"
         ></PratilipiListComponent>
     </div>
 </template>
@@ -37,6 +38,7 @@ export default {
     computed: {
         ...mapGetters('recommendation', [
             'getRecommendationList',
+            'getRecommendationLoadingState',
             'getRecommendationTitle'
         ])
     },
