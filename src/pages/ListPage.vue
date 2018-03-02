@@ -11,7 +11,7 @@ import MainLayout from '@/layout/main-layout.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    name: 'Pratilipi',
+    name: 'List-Page',
     data() {
         return {
             user_id: null,
