@@ -24,7 +24,7 @@
                 pratilipiData }}" :title="pratilipiData.title">
                 <div class="pratilipi-details">
                     <span class="title">{{ pratilipiData.title }}</span>
-                    <span class="author">{{ pratilipiData.author.displayName }}</span>
+                    <span class="author">{{ pratilipiData.author.name }}</span>
                 </div>
                 <div class="stats">
                     <div class="rating">
@@ -182,28 +182,21 @@ export default {
         .image-mask {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 288px;
-            height: 150px;
             margin: 5px;
-            background: rgba(0, 0, 0, 0.6);
-            opacity: 0;
             transition: all 0.5s, visibility 0s;
             -ms-transition: all 0.5s, visibility 0s;
             -webkit-transition: all 0.5s, visibility 0s;
             -moz-transition: all 0.5s, visibility 0s;
-            @media screen and (max-width: 768px ) {
-                opacity: 1;
-                background: none;
-                text-align: right;
-                width: auto;
-                height: auto;
-                right: 0;
-                left: auto;
-            }
+            opacity: 1;
+            background: none;
+            text-align: right;
+            width: auto;
+            height: auto;
+            right: 0;
+            left: auto;
             button {
                 padding: 0;
-                margin: 60px 4px 0;
+                margin: 10px 4px 0;
                 text-align: center;
                 width: 40px;
                 height: 40px;
@@ -221,17 +214,6 @@ export default {
                     font-size: 18px;
                     &.added-to-lib {
                         color: #007aff;
-                    }
-                }
-                &:hover {
-                    color: #fff;
-                    background: #9E9E9E;
-                }
-                @media screen and (max-width: 768px ) {
-                    margin: 10px 10px 0 0;
-                    &:hover {
-                        background: #fff;
-                        color: #2c3e50;
                     }
                 }
             }

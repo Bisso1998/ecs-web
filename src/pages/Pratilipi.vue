@@ -165,7 +165,7 @@ export default {
                 .auth-name {
                     text-align: left;
                     display: inline-block;
-                    margin: 0 10px;
+                    margin: 0 5px 0 10px;
                     font-size: 14px;
                     max-width: 110px;
                     vertical-align: middle;
@@ -178,7 +178,7 @@ export default {
                 color: #d0021b;
                 float: right;
                 margin: 4px 10px 0 0;
-                font-size: 14px;
+                font-size: 13px;
                 i {
                     vertical-align: middle;
                     padding-right: 5px;

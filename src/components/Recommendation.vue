@@ -60,5 +60,12 @@ export default {
 </script>
 
 <style  lang="scss" scoped>
-    
+    .recommendation {
+        .section {
+            background: #fff;
+            .section-title {
+                font-size: 14px;
+            }
+        }
+    }
 </style>

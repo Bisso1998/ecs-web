@@ -104,6 +104,20 @@ export default {
             }
         }
     }
+	.recommendation .section {
+		.container-fluid {
+			padding: 0;
+			text-align: center;
+			.section-title {
+				text-align: left;
+				font-weight: bold;
+				font-size: 18px;
+				border-left: 3px solid #d0021b;
+				padding-left: 10px;
+				margin: 10px 0;
+			}
+		}
+	}
     .pratilipi-list {
         position: relative;
         padding: 5px;

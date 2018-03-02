@@ -215,7 +215,7 @@ export default {
             }
             .main-tabs {
                 display: inline-block;
-                width: 24%;
+                width: 23.5%;
                 color: #212121;
                 font-size: 18px;
                 border-bottom: 3px solid #fff;
