@@ -5,7 +5,7 @@
                 {{ pratilipiData.type | getPratilipiTypeInNativeLanguage($t) }} <span></span>
             </div>
             <router-link :to="{ name: 'Pratilipi', params: { 
-                slug_id: pratilipiData.slug.split('/').pop(),
+                slug_id: pratilipiData.pageUrl.split('/').pop(),
                 pratilipiData }}" :title="pratilipiData.title">
                 <div 
                     class="pratilipi-image" 
@@ -20,7 +20,7 @@
                 </button>
             </div>
             <router-link :to="{ name: 'Pratilipi', params: { 
-                slug_id: pratilipiData.slug.split('/').pop(),
+                slug_id: pratilipiData.pageUrl.split('/').pop(),
                 pratilipiData }}" :title="pratilipiData.title">
                 <div class="pratilipi-details">
                     <span class="title">{{ pratilipiData.title }}</span>
