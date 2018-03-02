@@ -2,7 +2,7 @@
     <MainLayout>
         <div class="pratilipi-page">
             <div class="container">
-                <div class="row" v-if="getPratilipiData && getPratilipiData.author && getPratilipiData.author.pageUrl">
+                <div class="row" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <div class="book-details col-md-12 col-lg-5 p-0">
                         <div class="card">
                             <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getPratilipiData.coverImageUrl  + ')' }"></div>
@@ -83,8 +83,7 @@ export default {
         ...mapGetters('pratilipipage', [
             'getPratilipiData',
             'getUserPratilipiData',
-            'getReviews',
-            'getRecommendations'
+            'getPratilipiLoadingState'
         ])
     },
     methods: {
