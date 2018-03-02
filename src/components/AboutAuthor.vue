@@ -9,10 +9,8 @@
         </router-link>
         <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> {{ $t("author_follow") }}</button>
         <button class="btn btn-light follow-link following" style="display: none;">{{ $t("author_unfollow") }}</button>
-        <p class="text show-more-height">{{ getAuthorDetails.summary }}</p>
-        <div class="show-more-button">
-            <button class="show_more">{{ $t("show_more") }}</button>
-        </div>
+        <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
+        <button class="show_more_auth_desc">{{ $t("show_more") }}</button>
     </div>
 </template>
 
@@ -50,14 +48,15 @@ export default {
         this.fetchAuthorDetails(this.authorId);
     },
     mounted() {
-        $(".show_more").click(function () {
-            if($(".text").hasClass("show-more-height")) {
-                $(this).text("(Show Less)");
+        $(".show_more_auth_desc").click(function (e) {
+            e.preventDefault();
+            if($(".auth-desc").hasClass("show-more-height")) {
+                $(this).text("show_less");
             } else {
-                $(this).text("(Show More)");
+                $(this).text("show_more");
             }
 
-            $(".text").toggleClass("show-more-height");
+            $(".auth-desc").toggleClass("show-more-height");
         });
     }
 }
@@ -116,21 +115,19 @@ export default {
             font-size: 18px;
         }
     }
-    .text {
+    .auth-desc {
         text-align: left;
         margin-left: 10px;
     }
-    .show-more-button {
+    .show_more_auth_desc {
+        color: #d0021b;
+        width: 100%;
+        background: none;
+        border: 0;
+        outline: none;
         text-align: right;
-        .show_more {
-            color: #d0021b;
-            background: none;
-            border: 0;
-            outline: none;
-            text-align: right;
-            font-size: 14px;
-            margin: 0 10px 10px;
-            cursor: pointer;
-        }
+        font-size: 14px;
+        margin: 0 0 10px;
+        cursor: pointer;
     }
 </style>

@@ -40,9 +40,7 @@
                             <div v-if="getPratilipiData.summary">
                                 <div class="head-title">{{ $t("pratilipi_summary") }}</div>
                                 <p class="text show-more-height">{{ getPratilipiData.summary }}</p>
-                                <div class="show-more-button">
-                                    <button class="show_more">{{ $t("show_more") }}</button>
-                                </div>
+                                <button class="show_more">{{ $t("show_more") }}</button>
                             </div>
                             <AboutAuthor :authorId="getPratilipiData.author.authorId"></AboutAuthor>
                         </div>
@@ -116,9 +114,9 @@ export default {
     mounted() {
         $(".show_more").click(function () {
             if($(".text").hasClass("show-more-height")) {
-                $(this).text("(Show Less)");
+                $(this).text("show_less");
             } else {
-                $(this).text("(Show More)");
+                $(this).text("show_more");
             }
 
             $(".text").toggleClass("show-more-height");
@@ -157,18 +155,16 @@ export default {
                     overflow: hidden;
                 }
             }
-            .show-more-button {
+            .show_more {
+                color: #d0021b;
+                width: 100%;
+                background: none;
+                border: 0;
+                outline: none;
                 text-align: right;
-                .show_more {
-                    color: #d0021b;
-                    background: none;
-                    border: 0;
-                    outline: none;
-                    text-align: right;
-                    font-size: 14px;
-                    margin: 0 10px 10px;
-                    cursor: pointer;
-                }
+                font-size: 14px;
+                margin: 0 0 10px;
+                cursor: pointer;
             }
         }
         .book-details {
