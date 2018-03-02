@@ -1,0 +1,62 @@
+<template>
+    <div class="home-page">
+        <PratilipiListComponent 
+            :pratilipiList="getRecommendationList" 
+            :title="getRecommendationTitle"
+            v-bind="{ addToLibrary, removeFromLibrary }"
+        ></PratilipiListComponent>
+    </div>
+</template>
+
+<script>
+import PratilipiListComponent from '@/components/PratilipiList.vue';
+
+import { mapGetters, mapActions } from 'vuex'
+
+export default {
+    name: 'Home',
+    props: {
+        contextId: {
+            type: Number,
+            required: true
+        },
+        context: {
+            type: String,
+            required: true
+        },
+        resultCount: {
+            type: Number,
+            default: 6
+        }
+    },
+    data() {
+        return {
+            sectionList: []
+        }
+    },
+    computed: {
+        ...mapGetters('recommendation', [
+            'getRecommendationList',
+            'getRecommendationTitle'
+        ])
+    },
+    methods: {
+        ...mapActions('recommendation', [
+            'fetchRecommendation',
+            'addToLibrary',
+            'removeFromLibrary'
+        ]),
+    },
+    components: {
+        PratilipiListComponent,
+    },
+    created() {
+        const { contextId, context, resultCount } = this;
+        this.fetchRecommendation({ contextId, context, resultCount });
+    }
+}
+</script>
+
+<style  lang="scss" scoped>
+    
+</style>
