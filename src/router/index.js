@@ -6,6 +6,7 @@ import AuthorComponent from '@/pages/Author.vue'
 import NotificationComponent from '@/pages/Notification.vue'
 import ListPageComponent from '@/pages/ListPage.vue'
 import DiscoverPageComponent from '@/pages/Discovery.vue'
+import ReaderPageComponent from '@/pages/Reader.vue'
 
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({
         path: '/discover',
         name: 'Discovery_Page',
         component: DiscoverPageComponent
+    }, {
+        path: '/read',
+        name: 'Reader_Page',
+        component: ListPageComponent
     }, {
         path: '/:list_page_url',
         name: 'List_Page',
