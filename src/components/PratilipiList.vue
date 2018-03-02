@@ -1,20 +1,20 @@
 <template>
 	<div class="section">
 		<div class="container-fluid">
-	        <h2 class="section-title">{{sectionData.title}}</h2>
+	        <h2 class="section-title">{{title}}</h2>
 	        <div class="pratilipi-list">
 	            <div v-on:click="prev" class="back">
 					<i class="material-icons">keyboard_arrow_left</i>
 	            </div>
 	            <slick ref="slick" :options="slickOptions">
 	                <PratilipiComponent 
-	                v-for="eachPratilipi in sectionData.pratilipiList" 
-	                v-bind:key="eachPratilipi.pratilipiId"
+	                v-for="(eachPratilipi, index) in pratilipiList" 
+	                v-bind:key="eachPratilipi.pratilipiId + index"
 	                :pratilipiData="eachPratilipi"
                     :addToLibrary="addToLibrary"
                     :removeFromLibrary="removeFromLibrary"
                     ></PratilipiComponent>
-					<router-link :to="sectionData.listPageUrl" class="view_more">{{ $t("view_more") }}</router-link>
+					<router-link :to="listPageUrl" v-if="listPageUrl" class="view_more">{{ $t("view_more") }}</router-link>
 	            </slick>
 				
 	            <div v-on:click="next" class="forward">
@@ -32,13 +32,16 @@ import Slick from 'vue-slick'
 export default {
     name: 'PratilipiList',
     props: {
-    	sectionData: {
-    		type: Object,
+    	pratilipiList: {
+    		type: Array,
     		required: true
     	},
-        index: {
-            type: Number,
-            required: true
+        title: {
+            type: String,
+            require: true
+        },
+        listPageUrl: {
+            type: String
         },
         addToLibrary: {
             type: Function

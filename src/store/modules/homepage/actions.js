@@ -33,6 +33,10 @@ export default {
 
     addToLibrary({ commit, state }, pratilipiId) {
         DataAccessor.addOrRemoveFromLibrary(pratilipiId, true, (response) => {
+            commit('alert/triggerAlertView', 'added_to_library', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
             commit('addPratilipiToLibrarySuccess', response);
         }, (error) => {
             commit('addPratilipiToLibraryError');
@@ -41,6 +45,10 @@ export default {
 
     removeFromLibrary({ commit, state }, pratilipiId) {
         DataAccessor.addOrRemoveFromLibrary(pratilipiId, false, (response) => {
+            commit('alert/triggerAlertView', 'removed_from_library', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
             commit('removePratilipiFromLibrarySuccess', response);
         }, (error) => {
             commit('removePratilipiFromLibraryError');

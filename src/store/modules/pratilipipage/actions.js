@@ -70,21 +70,6 @@ export default {
 
     },
 
-    fetchUserReviews({ commit, state }, pratilipiId ) {
-
-    },
-
-    fetchPratilipiRecommendation({ commit, state }, { pratilipiId, count }) {
-        commit('setRecommendationLoadingTrue');
-        DataAccessor.getPratilipiRecommendation( pratilipiId, 'summaryPage', count, function(data) {
-            if (data.status >= 200 && data.status <= 400) {
-                commit('setRecommendationLoadingSuccess', data.response.pratilipiList);
-            } else {
-                commit('setRecommendationLoadingError');
-            }
-        });
-    },
-
     setCachedPratilipiData({ commit, state }, pratilipiData) {
         console.log(pratilipiData);
     }

@@ -65,7 +65,11 @@
                     </div>
                     <div class="book-recomendations col-md-12 p-0">
                         <div class="card">
-                            Recomendations
+                            <Recommendation
+                                :contextId="getPratilipiData.pratilipiId"
+                                :context="'summaryPage'"
+                                v-if="getPratilipiData && getPratilipiData.pratilipiId">
+                            </Recommendation>
                         </div>
                     </div>
                 </div>
@@ -76,6 +80,7 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import Recommendation from '@/components/Recommendation.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -117,7 +122,8 @@ export default {
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
     },
     components: {
-        MainLayout
+        MainLayout,
+        Recommendation
     }
 }
 </script>

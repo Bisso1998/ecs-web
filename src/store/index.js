@@ -5,6 +5,7 @@ import user from './modules/user'
 import alert from './modules/alert'
 import homepage from './modules/homepage'
 import pratilipipage from './modules/pratilipipage'
+import recommendation from './modules/recommendation'
 
 Vue.use(Vuex)
 
@@ -15,7 +16,8 @@ export default new Vuex.Store({
         user,
         alert,
         homepage,
-        pratilipipage
+        pratilipipage,
+        recommendation
     },
     strict: debug
 })
