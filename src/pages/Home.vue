@@ -1,10 +1,11 @@
 <template>
     <MainLayout>
         <div class="home-page">
-            <div v-bind:key="eachSection.listPageUrl" v-for="(eachSection, index) in getHomePageSections">
+            <div v-bind:key="eachSection.listPageUrl" v-for="eachSection in getHomePageSections">
                 <PratilipiListComponent 
-                    :sectionData="eachSection" 
-                    :index="index"
+                    :pratilipiList="eachSection.pratilipiList" 
+                    :title="eachSection.title"
+                    :listPageUrl="eachSection.listPageUrl"
                     v-bind="{ addToLibrary, removeFromLibrary }"
                 ></PratilipiListComponent>
             </div>
