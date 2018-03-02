@@ -6,6 +6,7 @@ import alert from './modules/alert'
 import homepage from './modules/homepage'
 import pratilipipage from './modules/pratilipipage'
 import recommendation from './modules/recommendation'
+import authordetails from './modules/authordetails'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,8 @@ export default new Vuex.Store({
         alert,
         homepage,
         pratilipipage,
-        recommendation
+        recommendation,
+        authordetails
     },
     strict: debug
 })
