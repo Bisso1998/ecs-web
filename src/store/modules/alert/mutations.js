@@ -24,7 +24,7 @@ export default {
         state.displayAlert = true;
     },
     
-    triggerAlertHide(state, userData) {
+    triggerAlertHide(state) {
         state.displayAlert = false;
     }
 }
