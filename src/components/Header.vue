@@ -29,7 +29,7 @@
                       <span>{{ $t("goto_home") }}</span>
                     </router-link>
                     <router-link
-                      :to="{ path: 'discover' }"
+                      :to="{ name: 'Discovery_Page' }"
                       class="main-tabs">
                       <i class="material-icons">all_out</i>
                       <span>Discover</span>
