@@ -88,9 +88,6 @@ export default {
         ...mapActions('pratilipipage', [
             'fetchPratilipiDetailsAndUserPratilipiData',
             'fetchUserPratilipiData',
-            'fetchUserReviews',
-            'fetchPratilipiRecommendation',
-            'setCachedPratilipiData',
             'addToLibrary',
             'removeFromLibrary'
         ]),
@@ -98,10 +95,6 @@ export default {
     created() {
         const slug_id = this.$route.params.slug_id;
         const pratilipiData = this.$route.params.pratilipiData;
-
-        if (pratilipiData) {
-            this.setCachedPratilipiData(pratilipiData);
-        }
 
         console.log(slug_id);
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
