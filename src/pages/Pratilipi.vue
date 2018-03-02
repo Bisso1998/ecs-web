@@ -46,8 +46,6 @@
                             </div>
                             <AboutAuthor :authorId="getPratilipiData.author.authorId"></AboutAuthor>
                         </div>
-                    </div>
-                    <div class="book-reviews col-md-12 p-0">
                         <div class="card">
                             <div class="head-title">{{ $t("pratilipi_count_reviews") }}</div>
                         </div>
