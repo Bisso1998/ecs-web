@@ -39,7 +39,7 @@
                         <div class="card">
                             <div v-if="getPratilipiData.summary">
                                 <div class="head-title">{{ $t("pratilipi_summary") }}</div>
-                                <p class="show-more-height">{{ getPratilipiData.summary }}</p>
+                                <p class="text show-more-height">{{ getPratilipiData.summary }}</p>
                                 <div class="show-more-button">
                                     <button class="show_more">{{ $t("show_more") }}</button>
                                 </div>
@@ -113,6 +113,17 @@ export default {
         MainLayout,
         Recommendation,
         AboutAuthor
+    },
+    mounted() {
+        $(".show_more").click(function () {
+            if($(".text").hasClass("show-more-height")) {
+                $(this).text("(Show Less)");
+            } else {
+                $(this).text("(Show More)");
+            }
+
+            $(".text").toggleClass("show-more-height");
+        });
     }
 }
 </script>
@@ -141,6 +152,7 @@ export default {
                 text-align: left;
                 margin: 10px;
                 font-size: 14px;
+                max-height: initial;
                 &.show-more-height {
                     max-height: 105px;
                     overflow: hidden;

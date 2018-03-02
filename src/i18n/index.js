@@ -28,6 +28,6 @@ Vue.use(VueI18n);
 
 // Create VueI18n instance with options
 export default new VueI18n({
-    locale: 'ml', // set locale
+    locale: 'hi', // set locale
     messages: translations, // set locale messages
 })

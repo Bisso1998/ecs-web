@@ -18,5 +18,6 @@ export default {
     //     }, 0)
     // }
     
-    getHomePageSections: state => state.sections.data
+    getHomePageSections: state => state.sections.data,
+    getHomePageLoadingState: state => state.sections.loading_state
 }

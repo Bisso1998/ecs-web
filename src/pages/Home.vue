@@ -1,7 +1,8 @@
 <template>
     <MainLayout>
         <div class="home-page">
-            <div v-bind:key="eachSection.listPageUrl" v-for="eachSection in getHomePageSections">
+            <Spinner v-if="getHomePageLoadingState === 'LOADING'"></Spinner>
+            <div v-if="getHomePageLoadingState === 'LOADING_SUCCESS'" v-bind:key="eachSection.listPageUrl" v-for="eachSection in getHomePageSections">
                 <PratilipiListComponent 
                     :pratilipiList="eachSection.pratilipiList" 
                     :title="eachSection.title"
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+import Spinner from '@/components/Spinner.vue';
 import PratilipiListComponent from '@/components/PratilipiList.vue';
 import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants'
@@ -29,7 +31,8 @@ export default {
     },
     computed: {
         ...mapGetters('homepage', [
-            'getHomePageSections'
+            'getHomePageSections',
+            'getHomePageLoadingState'
         ])
     },
     methods: {
@@ -40,6 +43,7 @@ export default {
         ]),
     },
     components: {
+        Spinner,
         PratilipiListComponent,
         MainLayout
     },

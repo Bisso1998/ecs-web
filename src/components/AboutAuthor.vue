@@ -9,7 +9,7 @@
         </router-link>
         <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> {{ $t("author_follow") }}</button>
         <button class="btn btn-light follow-link following" style="display: none;">{{ $t("author_unfollow") }}</button>
-        <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
+        <p class="text show-more-height">{{ getAuthorDetails.summary }}</p>
         <div class="show-more-button">
             <button class="show_more">{{ $t("show_more") }}</button>
         </div>
@@ -48,6 +48,17 @@ export default {
     },
     created() {
         this.fetchAuthorDetails(this.authorId);
+    },
+    mounted() {
+        $(".show_more").click(function () {
+            if($(".text").hasClass("show-more-height")) {
+                $(this).text("(Show Less)");
+            } else {
+                $(this).text("(Show More)");
+            }
+
+            $(".text").toggleClass("show-more-height");
+        });
     }
 }
 </script>
@@ -57,6 +68,11 @@ export default {
         text-align: left;
         margin: 10px;
         font-size: 14px;
+        max-height: initial;
+        &.show-more-height {
+            max-height: 105px;
+            overflow: hidden;
+        }
     }
     .head-title {
         text-align: left;
@@ -80,8 +96,10 @@ export default {
             display: inline-block;
             margin: 0 10px;
             font-size: 14px;
-            max-width: 110px;
             vertical-align: middle;
+            @media screen and (max-width: 992px ) {
+                max-width: 110px;
+            }
         }
         &:hover {
             text-decoration: none;
@@ -98,7 +116,7 @@ export default {
             font-size: 18px;
         }
     }
-    .auth-desc {
+    .text {
         text-align: left;
         margin-left: 10px;
     }
