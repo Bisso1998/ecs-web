@@ -2,7 +2,7 @@
 	<div class="section">
 		<div class="container-fluid">
 	        <h2 class="section-title">{{title}}</h2>
-	        <div class="pratilipi-list">
+	        <div class="pratilipi-list" v-if="pratilipiList.length > 0">
 	            <div v-on:click="prev" class="back">
 					<i class="material-icons">keyboard_arrow_left</i>
 	            </div>
@@ -78,6 +78,9 @@ export default {
             // Helpful if you have to deal with v-for to update dynamic lists
             this.$refs.slick.reSlick()
         }
+    },
+    mount(){
+        this.reInit();
     },
     components: {
         PratilipiComponent,
