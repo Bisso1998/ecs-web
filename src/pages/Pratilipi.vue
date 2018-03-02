@@ -111,6 +111,11 @@ export default {
         Recommendation,
         AboutAuthor
     },
+    watch: {
+        '$route.params.slug_id' (slug_id) {
+            this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
+        }
+    },
     mounted() {
         $(".show_more").click(function () {
             if($(".text").hasClass("show-more-height")) {
