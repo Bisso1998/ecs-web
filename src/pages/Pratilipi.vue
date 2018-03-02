@@ -152,6 +152,10 @@ export default {
                 text-align: left;
                 margin: 10px;
                 font-size: 14px;
+                &.show-more-height {
+                    max-height: 105px;
+                    overflow: hidden;
+                }
             }
             .author-link {
                 color: #d0021b;

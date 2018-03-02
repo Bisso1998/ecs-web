@@ -121,6 +121,9 @@ export default {
 				padding-left: 10px;
 				margin: 10px 0;
 			}
+			.pratilipi-list {
+				padding: 5px 10px;
+			}
 		}
 	}
     .pratilipi-list {

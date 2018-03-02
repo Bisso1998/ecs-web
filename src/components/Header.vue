@@ -15,7 +15,7 @@
                         <i class="material-icons">search</i>
                     </div>
                 </div>
-                <div class="col-sm-8 col-8 d-block d-lg-none search-box search-box-2 text-right ml-auto">
+                <div class="col-sm-8 col-8 d-block d-lg-none search-box search-box-2 text-right">
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" id="search-box-small" v-bind:placeholder='$t("search")'/>
                         <i class="material-icons">search</i>
@@ -140,6 +140,7 @@ export default {
         }
         .search-box-2 {
             margin-top: 7px;
+            margin-left: auto;
             .form-group {
                 position: relative;
                 i {
