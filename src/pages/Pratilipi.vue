@@ -37,25 +37,14 @@
                     </div>
                     <div class="book-synopsis col-md-12 col-lg-7 p-0">
                         <div class="card">
-                            <div class="head-title">{{ $t("pratilipi_summary") }}</div>
-                            <p class="show-more-height">{{ getPratilipiData.summary }}</p>
-                            <div class="show-more-button">
-                                <button class="show_more">{{ $t("show_more") }}</button>
+                            <div v-if="getPratilipiData.summary">
+                                <div class="head-title">{{ $t("pratilipi_summary") }}</div>
+                                <p class="show-more-height">{{ getPratilipiData.summary }}</p>
+                                <div class="show-more-button">
+                                    <button class="show_more">{{ $t("show_more") }}</button>
+                                </div>
                             </div>
-                            
-                            <div class="head-title">{{ $t("author_about") }}</div>
-                            <router-link
-                                :to="getPratilipiData.author.pageUrl"
-                                class="author-link">
-                                <img :src="getPratilipiData.author.profileImageUrl" alt="author" class="auth-img" >
-                                <div class="auth-name">{{ getPratilipiData.author.name }}</div>
-                            </router-link>
-                            <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> {{ $t("author_follow") }}</button>
-                            <button class="btn btn-light follow-link following" style="display: none;">{{ $t("author_unfollow") }}</button>
-                            <p class="auth-desc show-more-height">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            <div class="show-more-button">
-                                <button class="show_more">{{ $t("show_more") }}</button>
-                            </div>
+                            <AboutAuthor :authorId="getPratilipiData.author.authorId"></AboutAuthor>
                         </div>
                     </div>
                     <div class="book-reviews col-md-12 p-0">
@@ -81,6 +70,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Recommendation from '@/components/Recommendation.vue';
+import AboutAuthor from '@/components/AboutAuthor.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -123,7 +113,8 @@ export default {
     },
     components: {
         MainLayout,
-        Recommendation
+        Recommendation,
+        AboutAuthor
     }
 }
 </script>
@@ -156,42 +147,6 @@ export default {
                     max-height: 105px;
                     overflow: hidden;
                 }
-            }
-            .author-link {
-                color: #d0021b;
-                .auth-img {
-                    border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
-                    margin-left: 10px;
-                    display: inline-block;
-                }
-                .auth-name {
-                    text-align: left;
-                    display: inline-block;
-                    margin: 0 5px 0 10px;
-                    font-size: 14px;
-                    max-width: 110px;
-                    vertical-align: middle;
-                }
-                &:hover {
-                    text-decoration: none;
-                }
-            }
-            .follow-link {
-                color: #d0021b;
-                float: right;
-                margin: 4px 10px 0 0;
-                font-size: 13px;
-                i {
-                    vertical-align: middle;
-                    padding-right: 5px;
-                    font-size: 18px;
-                }
-            }
-            .auth-desc {
-                text-align: left;
-                margin-left: 10px;
             }
             .show-more-button {
                 text-align: right;
