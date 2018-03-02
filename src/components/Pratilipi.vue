@@ -89,10 +89,6 @@ export default {
                 Utils.goToLogin();
             } else {
                 this.addToLibrary(pratilipiId);
-                this.triggerAlert({ 
-                    message: 'added_to_library', 
-                    timer: 3000 
-                });
             }
         },
         ...mapActions('alert', [
