@@ -14,7 +14,12 @@
                     :addToLibrary="addToLibrary"
                     :removeFromLibrary="removeFromLibrary"
                     ></PratilipiComponent>
-					<router-link :to="listPageUrl" v-if="listPageUrl" class="view_more">{{ $t("view_more") }}</router-link>
+					<router-link :to="listPageUrl" v-if="listPageUrl" class="view_more">
+						<div class="view_more_card">
+							<i class="material-icons">keyboard_arrow_right</i>
+							<span>{{ $t("view_more") }}</span>
+						</div>
+					</router-link>
 	            </slick>
 				
 	            <div v-on:click="next" class="forward">
@@ -104,6 +109,20 @@ export default {
             }
         }
     }
+	.recommendation .section {
+		.container-fluid {
+			padding: 0;
+			text-align: center;
+			.section-title {
+				text-align: left;
+				font-weight: bold;
+				font-size: 18px;
+				border-left: 3px solid #d0021b;
+				padding-left: 10px;
+				margin: 10px 0;
+			}
+		}
+	}
     .pratilipi-list {
         position: relative;
         padding: 5px;
@@ -138,24 +157,29 @@ export default {
             right: 0;
         }
 		a.view_more {
-		    background: #d1021b;
-			color: #fff;
-			padding: 10px 35px;
-		    display: block !important;
-			width: auto !important;
-			border-radius: 40px;
-			position: absolute;
-			top: 42%;
-			margin-left: 20px;
-			font-size: 14px;
-			line-height: 22px;
-			transition: all .3s, visibility 0s;
-			-ms-transition: all .3s, visibility 0s;
-			-webkit-transition: all .3s, visibility 0s;
-			-moz-transition: all .3s, visibility 0s;
+			position: relative;
+			.view_more_card {
+				width: 300px;
+				background: #fff;
+				border: 1px solid #e9e9e9;
+				height: 252px;
+				margin: 10px;
+				color: #d0021b;
+				i {
+					height: 210px;
+					line-height: 210px;
+					width: 100%;
+					font-size: 50px;
+					border-bottom: 1px solid #e9e9e9;
+				}
+				span {
+					height: 41px;
+					line-height: 37px; 
+					display: block;
+				}
+			}
 			&:hover {
 				text-decoration: none;
-				background: #212121;
 			}
 		}
     }

@@ -37,12 +37,13 @@
                     </div>
                     <div class="book-synopsis col-md-12 col-lg-7 p-0">
                         <div class="card">
-                            <div class="head-title">{{ $t("pratilipi_summary") }}</div>
-                            <p class="show-more-height">{{ getPratilipiData.summary }}</p>
-                            <div class="show-more-button">
-                                <button class="show_more">{{ $t("show_more") }}</button>
+                            <div v-if="getPratilipiData.summary">
+                                <div class="head-title">{{ $t("pratilipi_summary") }}</div>
+                                <p class="show-more-height">{{ getPratilipiData.summary }}</p>
+                                <div class="show-more-button">
+                                    <button class="show_more">{{ $t("show_more") }}</button>
+                                </div>
                             </div>
-                            
                             <AboutAuthor :authorId="getPratilipiData.author.authorId"></AboutAuthor>
                         </div>
                     </div>

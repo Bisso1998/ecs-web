@@ -117,6 +117,7 @@ export default {
                 margin: 0;
                 border: 1px solid #ced4da;
                 border-radius: .25rem;
+                position: relative;
                 input {
                     font-size: 14px;
                     width: 95%;
@@ -215,7 +216,7 @@ export default {
             }
             .main-tabs {
                 display: inline-block;
-                width: 24%;
+                width: 23.5%;
                 color: #212121;
                 font-size: 18px;
                 border-bottom: 3px solid #fff;
