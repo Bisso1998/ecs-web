@@ -1,24 +1,4 @@
 export default {
-    // pushProductToCart(state, { id }) {
-    //     state.added.push({
-    //         id,
-    //         quantity: 1
-    //     })
-    // },
-
-    // incrementItemQuantity(state, { id }) {
-    //     const cartItem = state.added.find(item => item.id === id)
-    //     cartItem.quantity++
-    // },
-
-    // setCartItems(state, { items }) {
-    //     state.added = items
-    // },
-
-    // setCheckoutStatus(state, status) {
-    //     state.checkoutStatus = status
-    // }
-
     setRecommendationLoadingTrue(state) {
         state.loading_state = 'LOADING';
     },
@@ -37,7 +17,6 @@ export default {
     },
 
     addPratilipiToLibrarySuccess(state, data) {
-        console.log(data);
         const pratilipiAddedToLib = state.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
         if (pratilipiAddedToLib) {
             pratilipiAddedToLib.addedToLib = true
@@ -49,7 +28,6 @@ export default {
     },
 
     removePratilipiFromLibrarySuccess(state, data) {
-        console.log(data);
         const pratilipiAddedToLib = state.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
         if (pratilipiAddedToLib) {
             pratilipiAddedToLib.addedToLib = false
