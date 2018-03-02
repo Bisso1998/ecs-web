@@ -115,7 +115,7 @@ export default {
             font-weight: 700;
             color: #fff;
             padding: 0 20px 3px;
-            background: #d1021b;
+            background: #4CAF50;
             position: absolute;
             top: 15px;
             left: -10px;
@@ -125,7 +125,7 @@ export default {
                 position: absolute;
                 border-left: 0px solid transparent;
                 border-right: 10px solid transparent;
-                border-top: 21px solid #d1021b;
+                border-top: 21px solid #4CAF50;
                 bottom: -3px;
                 left: 50%;
                 margin-left: 0px;
@@ -137,7 +137,7 @@ export default {
                 position: absolute;
                 border-top: 0 solid transparent;
                 border-bottom: 10px solid transparent;
-                border-right: 10px solid #d1021b;
+                border-right: 10px solid #4CAF50;
                 top: 100%;
                 left: -10px;
                 left: 0;

@@ -117,6 +117,7 @@ export default {
                 margin: 0;
                 border: 1px solid #ced4da;
                 border-radius: .25rem;
+                position: relative;
                 input {
                     font-size: 14px;
                     width: 95%;

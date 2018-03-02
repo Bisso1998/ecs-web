@@ -48,7 +48,7 @@
                                 :to="getPratilipiData.author.pageUrl"
                                 class="author-link">
                                 <img :src="getPratilipiData.author.profileImageUrl" alt="author" class="auth-img" >
-                                <div class="auth-name">{{ getPratilipiData.author.displayName }}</div>
+                                <div class="auth-name">{{ getPratilipiData.author.name }}</div>
                             </router-link>
                             <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> {{ $t("author_follow") }}</button>
                             <button class="btn btn-light follow-link following" style="display: none;">{{ $t("author_unfollow") }}</button>
