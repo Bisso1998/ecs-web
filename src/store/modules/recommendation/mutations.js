@@ -38,14 +38,9 @@ export default {
 
     addPratilipiToLibrarySuccess(state, data) {
         console.log(data);
-        for (var i = 0; i < state.sections.data.length; i++) {
-            const eachSection = state.sections.data[i].pratilipiList;
-            console.log(eachSection);
-            const pratilipiAddedToLib = eachSection.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
-            if (pratilipiAddedToLib) {
-                pratilipiAddedToLib.addedToLib = true
-                break;
-            }
+        const pratilipiAddedToLib = state.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
+        if (pratilipiAddedToLib) {
+            pratilipiAddedToLib.addedToLib = true
         }
     },
 
@@ -55,14 +50,9 @@ export default {
 
     removePratilipiFromLibrarySuccess(state, data) {
         console.log(data);
-        for (var i = 0; i < state.sections.data.length; i++) {
-            const eachSection = state.sections.data[i].pratilipiList;
-            console.log(eachSection);
-            const pratilipiAddedToLib = eachSection.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
-            if (pratilipiAddedToLib) {
-                pratilipiAddedToLib.addedToLib = false
-                break;
-            }
+        const pratilipiAddedToLib = state.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
+        if (pratilipiAddedToLib) {
+            pratilipiAddedToLib.addedToLib = false
         }
     },
 
