@@ -10,10 +10,11 @@
                             <h4 class="category-section">{{ each_category_section.title }}</h4>
                             <ul>
                                 <li v-for="each_category in each_category_section.categories" :key="each_category.categoryUrl" v-if="each_category.pratilipiListData.listName">
-                                    <a :href="each_category.categoryUrl">
+                                    <router-link
+                                    :to="{ path: each_category.categoryUrl }">
                                         <span class="category-img" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/resource-all/android-category-banners/' + each_category.imageFileName  + ')' }"></span>
                                         <span class="category-name">{{ each_category.title }}</span>
-                                    </a>
+                                    </router-link>
                                 </li>
                             </ul>
                         </div>
