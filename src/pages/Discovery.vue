@@ -90,6 +90,11 @@ export default {
             margin: 10px;
             color: #d0021b;
             display: inline-block;
+            @media screen and (max-width: 768px ) {
+                width: 100%;
+                max-width: 340px;
+                height: 150px;
+            }
             a {
                 color: #212121;
                 &:hover {
@@ -102,6 +107,9 @@ export default {
                 display: block;
                 background-size: cover;
                 background-position: right center;
+                @media screen and (max-width: 768px ) {
+                    height: 100px;
+                }
             }
             .category-name {
                 text-align: center;
@@ -110,6 +118,10 @@ export default {
                 height: 40px;
                 line-height: 40px;
                 color: #d00b12;
+                @media screen and (max-width: 768px ) {
+                    height: 50px;
+                    line-height: 50px;
+                }
             }
         }
     }
