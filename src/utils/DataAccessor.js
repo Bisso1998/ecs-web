@@ -353,9 +353,9 @@ export default {
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 
-    getPratilipiListByListName: (listName, cursor, offset, resultCount, aCallBack) => {
+    getPratilipiListByListName: (listName, cursor, offset, resultCount, language, aCallBack) => {
         if (listName == null) return;
-        var params = { "listName": listName, "state": "PUBLISHED", "language": "${ language }" };
+        var params = { "listName": listName, "state": "PUBLISHED", "language": language };
         if (cursor != null) params["cursor"] = cursor;
         if (offset != null) params["offset"] = offset;
         if (resultCount != null) params["resultCount"] = resultCount;
@@ -365,9 +365,9 @@ export default {
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 
-    getPratilipiListBySearchQuery: (searchQuery, cursor, offset, resultCount, aCallBack) => {
+    getPratilipiListBySearchQuery: (searchQuery, cursor, offset, resultCount, language, aCallBack) => {
         if (searchQuery == null) return;
-        var params = { "searchQuery": searchQuery, "state": "PUBLISHED", "language": "${ language }" };
+        var params = { "searchQuery": searchQuery, "state": "PUBLISHED", "language": language };
         if (cursor != null) params["cursor"] = cursor;
         if (offset != null) params["offset"] = offset;
         if (resultCount != null) params["resultCount"] = resultCount;
