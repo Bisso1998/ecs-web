@@ -1,13 +1,25 @@
 <template>
     <MainLayout>
-        <div class="notification-page">
-            <h1>List Page</h1>
+        <div class="list-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>{{ getPratilipiListTitle }}</h2>
+                        <PratilipiComponent
+                        :pratilipiList="getPratilipiListData"
+                        v-bind="{ addToLibrary, removeFromLibrary }"
+                        v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS'"
+                        ></PratilipiComponent>
+                    </div>
+                </div>
+            </div>
         </div>
     </MainLayout>
 </template>
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import PratilipiComponent from '@/components/Pratilipi.vue';
 import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -22,7 +34,8 @@ export default {
         ...mapGetters('listpage', [
             'getPratilipiListLoadingState',
             'getPratilipiListData',
-            'getPratilipiListTotalCount'
+            'getPratilipiListTotalCount',
+            'getPratilipiListTitle'
         ])
     },
     methods: {
@@ -48,7 +61,8 @@ export default {
         });
     },
     components: {
-        MainLayout
+        MainLayout,
+        PratilipiComponent
     }
 }
 </script>
