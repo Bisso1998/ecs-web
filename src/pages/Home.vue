@@ -1,6 +1,9 @@
 <template>
     <MainLayout>
         <div class="home-page">
+            <Banners v-if="getHomePageBannersLoadingState === 'LOADING_SUCCESS'"
+                :banners="getHomePageBanners"
+            ></Banners>
             <Spinner v-if="getHomePageLoadingState === 'LOADING'"></Spinner>
             <div v-if="getHomePageLoadingState === 'LOADING_SUCCESS'" v-bind:key="eachSection.listPageUrl" v-for="eachSection in getHomePageSections">
                 <PratilipiListComponent 
@@ -18,6 +21,7 @@
 import Spinner from '@/components/Spinner.vue';
 import PratilipiListComponent from '@/components/PratilipiList.vue';
 import MainLayout from '@/layout/main-layout.vue';
+import Banners from '@/components/Banners.vue';
 import constants from '@/constants'
 
 import { mapGetters, mapActions } from 'vuex'
@@ -48,7 +52,8 @@ export default {
     components: {
         Spinner,
         PratilipiListComponent,
-        MainLayout
+        MainLayout,
+        Banners
     },
     created() {
         const currentLocale = process.env.LANGUAGE;
