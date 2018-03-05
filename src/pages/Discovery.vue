@@ -1,15 +1,24 @@
 <template>
     <MainLayout>
         <div class="discovery-page">
-            <h1>Discovery Page</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Discover</h2>
 
-            <div v-for="each_category_section in category_sections" :key="each_category_section.title">
-                <h4>{{ each_category_section.title }}</h4>
-                <ul>
-                    <li v-for="each_category in each_category_section.categories" :key="each_category.categoryUrl" v-if="each_category.pratilipiListData.listName">
-                        <a :href="each_category.categoryUrl">{{ each_category.title }}</a>
-                    </li>
-                </ul>
+                        <div class="category-list" v-for="each_category_section in category_sections" :key="each_category_section.title">
+                            <h4 class="category-section">{{ each_category_section.title }}</h4>
+                            <ul>
+                                <li v-for="each_category in each_category_section.categories" :key="each_category.categoryUrl" v-if="each_category.pratilipiListData.listName">
+                                    <a :href="each_category.categoryUrl">
+                                        <span class="category-img" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/resource-all/android-category-banners/' + each_category.imageFileName  + ')' }"></span>
+                                        <span class="category-name">{{ each_category.title }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </MainLayout>
@@ -45,8 +54,55 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .discovery-page {
-    margin-top: 150px;
+    margin-top: 85px;
+    @media screen and (max-width: 992px ) {
+        margin-top: 140px;
+    }
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: left;
+        border-left: 3px solid #d0021b;
+        padding-left: 10px;
+        margin: 10px 0;
+    }
+    .category-list {
+        text-align: left;
+        .category-section {
+            margin-left: 13px;
+            display: none;
+        }
+        li {
+            width: 300px;
+            background: #fff;
+            border: 1px solid #e9e9e9;
+            height: 252px;
+            margin: 10px;
+            color: #d0021b;
+            display: inline-block;
+            a {
+                color: #212121;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+            .category-img {
+                width: 100%;
+                height: 210px;
+                display: block;
+                background-size: cover;
+                background-position: right center;
+            }
+            .category-name {
+                text-align: center;
+                font-size: 14px;
+                display: block;
+                height: 40px;
+                line-height: 40px;
+            }
+        }
+    }
 }
 </style>
