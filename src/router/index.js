@@ -11,6 +11,9 @@ import CareerComponent from '@/pages/Career.vue'
 import AboutComponent from '@/pages/About.vue'
 import TermsComponent from '@/pages/Terms.vue'
 import PrivacyComponent from '@/pages/Privacy.vue'
+import EventPageComponent from '@/pages/Event.vue'
+
+import constants from '@/constants'
 
 Vue.use(Router)
 
@@ -56,6 +59,10 @@ export default new Router({
         path: '/privacy-policy',
         name: 'Privacy_Page',
         component: PrivacyComponent
+    }, {
+        path: '/event',
+        name: 'Event_Page',
+        component: EventPageComponent
     }, {
         path: '/:list_page_url',
         name: 'List_Page',
