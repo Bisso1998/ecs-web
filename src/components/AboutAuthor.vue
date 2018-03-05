@@ -1,16 +1,16 @@
 <template>
     <div class="about-author" v-if="getAuthorDetails.pageUrl">
-        <div class="head-title">{{ $t("author_about") }}</div>
+        <div class="head-title">__("author_about")</div>
         <router-link
             :to="getAuthorDetails.pageUrl"
             class="author-link">
             <img :src="getAuthorDetails.profileImageUrl" alt="author" class="auth-img" >
             <div class="auth-name">{{ getAuthorDetails.name }}</div>
         </router-link>
-        <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> {{ $t("author_follow") }}</button>
-        <button class="btn btn-light follow-link following" style="display: none;">{{ $t("author_unfollow") }}</button>
+        <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
+        <button class="btn btn-light follow-link following" style="display: none;">__("author_unfollow")</button>
         <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
-        <button class="show_more_auth_desc">{{ $t("show_more") }}</button>
+        <button class="show_more_auth_desc">__("show_more")</button>
     </div>
 </template>
 

@@ -2,7 +2,7 @@
     <div>
         <div class="pratilipi">
             <div class="book-type" :class="pratilipiData.type">
-                {{ pratilipiData.type | getPratilipiTypeInNativeLanguage($t) }} <span></span>
+                {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
             </div>
             <router-link :to="{ name: 'Pratilipi', params: { 
                 slug_id: pratilipiData.pageUrl.split('/').pop(),
@@ -48,7 +48,7 @@
                             <i class="material-icons">access_time</i>
                         </div>
                         <span>
-                            {{ pratilipiData.readingTime | showInMinutesOrHours($t) }}
+                            {{ pratilipiData.readingTime | showInMinutesOrHours }}
                         </span>
                     </div>
                 </div>
@@ -85,15 +85,11 @@ export default {
             console.log(this);
             if (this.$store.getters.getUserDetails.isGuest) {
                 // throw popup modal
-                console.log('User is not logged in');
                 Utils.goToLogin();
             } else {
                 this.addToLibrary(pratilipiId);
             }
         },
-        ...mapActions('alert', [
-            'triggerAlert'
-        ])
     }
 }
 </script>

@@ -14,28 +14,28 @@
                             </router-link>
                             <div class="book-stats">
                                 <span class="avg-rating stars-green"><span class="rating-text">{{ getPratilipiData.averageRating | round(1) }}</span> <i class="material-icons">star_rate</i></span>
-                                <span class="review-count">{{ getPratilipiData.reviewCount }} {{ $t("rating_ratings") }}</span>
+                                <span class="review-count">{{ getPratilipiData.reviewCount }} __("rating_ratings")</span>
                             </div>
                             <div class="book-stats">
-                                <span class="read-time">{{ $t("pratilipi_reading_time") }}: {{ getPratilipiData.readingTime | showInMinutesOrHours($t) }}</span>
+                                <span class="read-time">__("pratilipi_reading_time"): {{ getPratilipiData.readingTime | showInMinutesOrHours($t) }}</span>
                             </div>
                             <div class="book-stats">
-                                <span class="read-count">{{ $t("pratilipi_count_reads") }}: {{ getPratilipiData.readCount }}</span>
-                                <span class="date">{{ $t("pratilipi_listing_date") }}: {{ getPratilipiData.listingDateMillis | convertDate($t) }}</span>
+                                <span class="read-count">__("pratilipi_count_reads"): {{ getPratilipiData.readCount }}</span>
+                                <span class="date">__("pratilipi_listing_date"): {{ getPratilipiData.listingDateMillis | convertDate($t) }}</span>
                             </div>
                             <div class="main-actions"  v-if="getUserPratilipiLoadingState === 'LOADING_SUCCESS'">
                                 <button v-if="!getUserPratilipiData.addedToLib" class="library-btn" @click="addToLibrary(getPratilipiData.pratilipiId)">
-                                    <span>+ {{ $t("library") }}</span>
+                                    <span>+ __("library")</span>
                                 </button>
 
                                 <button v-if="getUserPratilipiData.addedToLib" class="library-btn" @click="removeFromLibrary(getPratilipiData.pratilipiId)">
-                                    <span>- {{ $t("library") }}</span>
+                                    <span>- __("library")</span>
                                 </button>
 
                                 <router-link
                                   :to="getPratilipiData.readPageUrl"
                                   class="read-btn">
-                                  <span>{{ $t("read") }}</span>
+                                  <span>__("read")</span>
                                 </router-link>
                             </div>
                         </div>
@@ -43,14 +43,14 @@
                     <div class="book-synopsis col-md-12 col-lg-7 p-0">
                         <div class="card">
                             <div v-if="getPratilipiData.summary">
-                                <div class="head-title">{{ $t("pratilipi_summary") }}</div>
+                                <div class="head-title">__("pratilipi_summary")</div>
                                 <p class="text show-more-height">{{ getPratilipiData.summary }}</p>
-                                <button class="show_more">{{ $t("show_more") }}</button>
+                                <button class="show_more">__("show_more")</button>
                             </div>
                             <AboutAuthor :authorId="getPratilipiData.author.authorId"></AboutAuthor>
                         </div>
                         <div class="card">
-                            <div class="head-title">{{ $t("pratilipi_count_reviews") }}</div>
+                            <div class="head-title">__("pratilipi_count_reviews")</div>
                         </div>
                     </div>
                     <div class="book-recomendations col-md-12 p-0">

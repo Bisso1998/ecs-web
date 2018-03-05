@@ -17,7 +17,7 @@
 					<router-link :to="listPageUrl" v-if="listPageUrl" class="view_more">
 						<div class="view_more_card">
 							<i class="material-icons">keyboard_arrow_right</i>
-							<span>{{ $t("view_more") }}</span>
+							<span>__("view_more")</span>
 						</div>
 					</router-link>
 	            </slick>

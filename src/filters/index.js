@@ -14,7 +14,7 @@ Vue.filter('round', function(value, decimals) {
 });
 
 
-Vue.filter('showInMinutesOrHours', function(value, translator) {
+Vue.filter('showInMinutesOrHours', function(value) {
     if (!value) {
         value = 0;
     }
@@ -24,52 +24,52 @@ Vue.filter('showInMinutesOrHours', function(value, translator) {
 
     let readingTimeInNativeLanguage;
     if (finalHours > 1) {
-        readingTimeInNativeLanguage = finalHours + ' ' + translator('hours');
+        readingTimeInNativeLanguage = finalHours + ' ' + __('hours');
     } else if (finalHours === 1) {
-        readingTimeInNativeLanguage = finalHours + ' ' + translator('hour');
+        readingTimeInNativeLanguage = finalHours + ' ' + __('hour');
     } else if (finalMinutes > 1) {
-        readingTimeInNativeLanguage = finalMinutes + ' ' + translator('minutes');
+        readingTimeInNativeLanguage = finalMinutes + ' ' + __('minutes');
     } else {
-        readingTimeInNativeLanguage = finalMinutes + ' ' + translator('minute');
+        readingTimeInNativeLanguage = finalMinutes + ' ' + __('minute');
     }
 
     return readingTimeInNativeLanguage;
 });
 
-Vue.filter('getPratilipiTypeInNativeLanguage', function(value, translator) {
+Vue.filter('getPratilipiTypeInNativeLanguage', function(value) {
     switch (value) {
         case 'STORY':
-            return translator('_pratilipi_type_story');
+            return __('_pratilipi_type_story');
         case 'POEM':
-            return translator('_pratilipi_type_poem');
+            return __('_pratilipi_type_poem');
         case 'ARTICLE':
-            return translator('_pratilipi_type_article');
+            return __('_pratilipi_type_article');
         case 'BOOK':
-            return translator('_pratilipi_type_book');
+            return __('_pratilipi_type_book');
         case 'MAGAZINE':
-            return translator('_pratilipi_type_magazine');
+            return __('_pratilipi_type_magazine');
     }
 });
 
-Vue.filter('convertDate', function(value, translator) {
+Vue.filter('convertDate', function(value) {
     const d = new Date(value);
 
     function day(d) { return (d < 10) ? '0' + d : d; }
 
     function month(m) {
         var months = [
-            translator('month_jan'), 
-            translator('month_feb'), 
-            translator('month_mar'),
-            translator('month_apr'), 
-            translator('month_may'), 
-            translator('month_jun'),
-            translator('month_jul'), 
-            translator('month_aug'), 
-            translator('month_sep'),
-            translator('month_oct'), 
-            translator('month_nov'), 
-            translator('month_dec')
+            __('month_jan'), 
+            __('month_feb'), 
+            __('month_mar'),
+            __('month_apr'), 
+            __('month_may'), 
+            __('month_jun'),
+            __('month_jul'), 
+            __('month_aug'), 
+            __('month_sep'),
+            __('month_oct'), 
+            __('month_nov'), 
+            __('month_dec')
         ];
         return months[m];
     }

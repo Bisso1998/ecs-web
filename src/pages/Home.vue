@@ -48,7 +48,7 @@ export default {
         MainLayout
     },
     created() {
-        const currentLocale = this._i18n.locale;
+        const currentLocale = process.env.LANGUAGE;
         constants.LANGUAGES.forEach((eachLanguage) => {
             if (eachLanguage.shortName === currentLocale) {
                 this.getListOfSections(eachLanguage.fullName.toUpperCase());

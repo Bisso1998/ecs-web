@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="foot-title">{{ $t("footer_mobile_app") }}</div>
+                        <div class="foot-title">__("footer_mobile_app")</div>
                         <div class="foot-items">
                             <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_footer&utm_campaign=app_download" target="_blank">
                                 <img src="https://www.ptlp.co/resource-all/image/google-play-badge.png" alt="google-play" class="google-play-badge">
@@ -12,26 +12,26 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="foot-title">{{ $t("footer_contact_us") }}</div>
+                        <div class="foot-title">__("footer_contact_us")</div>
                         <div class="foot-items">
-                            <a :href="'tel:' + $t('footer_contact_number').replace(' ', '')"><i class="material-icons material-icons-16 vertical-middle">phone</i>{{ $t("footer_contact_number") }}</a>
-                            <a :href="'mailto:' + $t('footer_contact_email')"><i class="material-icons material-icons-16 vertical-middle">mail</i>{{ $t("footer_contact_email") }}</a>
+                            <a :href="'tel:' + '__('footer_contact_number')'.replace(' ', '')"><i class="material-icons material-icons-16 vertical-middle">phone</i>__("footer_contact_number")</a>
+                            <a :href="'mailto:' + '__('footer_contact_email')'"><i class="material-icons material-icons-16 vertical-middle">mail</i>__("footer_contact_email")</a>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="foot-title">{{ $t("footer_about_us") }}</div>
+                        <div class="foot-title">__("footer_about_us")</div>
                         <div class="foot-items">
-                            <a href="/about/pratilipi">{{ $t("footer_about_us") }}</a>
-            				<a href="/work-with-us">{{ $t("footer_work_with_us") }}</a>
+                            <a href="/about/pratilipi">__("footer_about_us")</a>
+            				<a href="/work-with-us">__("footer_work_with_us")</a>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="foot-title">{{ $t("footer_follow_us_on_social_media") }}</div>
+                        <div class="foot-title">__("footer_follow_us_on_social_media")</div>
                         <div class="foot-items social">
-                            <a :href="$t('facebook_page')" class="fb" target="_blank"><icon name="facebook-f"></icon></a>
-                            <a :href="$t('twitter_page')" class="twitter" target="_blank"><icon name="twitter"></icon></a>
-                            <a :href="$t('googleplus_page')" class="google" target="_blank"><icon name="google-plus"></icon></a>
-                            <a :href="$t('linkedin_page')" class="linkedin" target="_blank"><icon name="linkedin"></icon></a>
+                            <a :href="'__('facebook_page')'" class="fb" target="_blank"><icon name="facebook-f"></icon></a>
+                            <a :href="'__('twitter_page')'" class="twitter" target="_blank"><icon name="twitter"></icon></a>
+                            <a :href="'__('googleplus_page')'" class="google" target="_blank"><icon name="google-plus"></icon></a>
+                            <a :href="'__('linkedin_page')'" class="linkedin" target="_blank"><icon name="linkedin"></icon></a>
                         </div>
                     </div>
                 </div>
@@ -43,8 +43,8 @@
                     <div class="col-sm-12">
                         <p>
                             © {{ new Date().getFullYear() }} Nasadiya Tech. Pvt. Ltd. | 
-                            <a href="/privacy-policy">{{ $t("footer_privacy_policy") }}</a> |
-                            <a href="/terms-of-service">{{ $t("footer_terms_of_service") }}</a>
+                            <a href="/privacy-policy">__("footer_privacy_policy")</a> |
+                            <a href="/terms-of-service">__("footer_terms_of_service")</a>
                         </p>
                     </div>
                 </div>

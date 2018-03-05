@@ -6,18 +6,18 @@
                     <router-link
                       :to="{ name: 'Home' }"
                       class="logo">
-                      {{ $t("pratilipi") }}
+                      __("pratilipi")
                     </router-link>
                 </div>
                 <div class="col-sm-5 p-0 search-box d-none d-lg-block">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="search-box-big" v-bind:placeholder='$t("search_bar_help")'/>
+                        <input type="text" class="form-control" id="search-box-big" v-bind:placeholder="'__("search_bar_help")'"/>
                         <i class="material-icons">search</i>
                     </div>
                 </div>
                 <div class="col-sm-8 col-8 d-block d-lg-none search-box search-box-2 text-right">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="search-box-small" v-bind:placeholder='$t("search")'/>
+                        <input type="text" class="form-control" id="search-box-small" v-bind:placeholder="'__("search")'"/>
                         <i class="material-icons">search</i>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                       :to="{ name: 'Home' }"
                       class="main-tabs">
                       <i class="material-icons">home</i>
-                      <span>{{ $t("goto_home") }}</span>
+                      <span>__("goto_home")</span>
                     </router-link>
                     <router-link
                       :to="{ name: 'Discovery_Page' }"
@@ -38,7 +38,7 @@
                       :to="{ path: 'write' }"
                       class="main-tabs">
                       <i class="material-icons">mode_edit</i>
-                      <span>{{ $t("write") }}</span>
+                      <span>__("write")</span>
                     </router-link>
                     <router-link
                       :to="{ path: 'profile' }"
@@ -66,7 +66,7 @@ export default {
         return {
             languages: constants.LANGUAGES,
             isCurrentLanguage: (language) => {
-                if (language === this._i18n.locale) {
+                if (language === process.env.LANGUAGE) {
                     return true;    
                 } else {
                     return false;

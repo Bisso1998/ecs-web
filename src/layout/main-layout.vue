@@ -40,7 +40,7 @@ export default {
         Alert
     },
     created() {
-        this.currentLocale = 'language-' + this.$i18n.locale;
+        this.currentLocale = 'language-' + process.env.LANGUAGE;
         this.fetchUserDetails();
     },
     mounted () {

@@ -5,7 +5,6 @@ import Vuex from 'vuex'
 
 import App from './App'
 import router from './router'
-import i18n from './i18n'
 // import './firebase'
 import './filters'
 import './bootstrap'
@@ -20,7 +19,6 @@ Vue.component('icon', Icon)
 
 /* eslint-disable no-new */
 new Vue({
-    i18n,
     store,
     el: '#app',
     router,

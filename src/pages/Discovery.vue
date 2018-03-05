@@ -35,7 +35,8 @@ export default {
         
     },
     created() {
-        this.category_sections = Constants.CATEGORY_DATA[this.$i18n.locale].sections;
+        this.category_sections = Constants.CATEGORY_DATA.sections;
+        console.log(Constants);
         console.log();
     },
     components: {
