@@ -10,6 +10,8 @@
                         :key="pratilipiData.pratilipiId"
                         v-for="pratilipiData in getPratilipiListData"
                         v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS'"
+                        :addToLibrary="addToLibrary"
+                        :removeFromLibrary="removeFromLibrary"
                         ></PratilipiComponent>
                     </div>
                 </div>
@@ -36,13 +38,15 @@ export default {
             'getPratilipiListLoadingState',
             'getPratilipiListData',
             'getPratilipiListTotalCount',
-            'getPratilipiListTitle'
+            'getPratilipiListTitle',
         ])
     },
     methods: {
         ...mapActions('listpage', [
             'fetchInitialListPagePratilipis',
-            'fetchMorePratilipisForListPage'
+            'fetchMorePratilipisForListPage',
+            'addToLibrary',
+            'removeFromLibrary'
         ]),
     },
     created() {

@@ -53,5 +53,27 @@ export default {
         state.loading_state = 'LOADING_SUCCESS';
         state.data = state.data.concat(data.pratilipiList);
         state.cursor = data.cursor;
+    },
+
+    addPratilipiToLibrarySuccess(state, data) {
+        const pratilipiAddedToLib = state.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
+        if (pratilipiAddedToLib) {
+            pratilipiAddedToLib.addedToLib = true
+        }
+    },
+
+    addPratilipiToLibraryError(state) {
+
+    },
+
+    removePratilipiFromLibrarySuccess(state, data) {
+        const pratilipiAddedToLib = state.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
+        if (pratilipiAddedToLib) {
+            pratilipiAddedToLib.addedToLib = false
+        }
+    },
+
+    removePratilipiFromLibraryError(state) {
+
     }
 }
