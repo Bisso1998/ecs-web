@@ -21,8 +21,10 @@
                     <div class="col-md-3">
                         <div class="foot-title">__("footer_about_us")</div>
                         <div class="foot-items">
-                            <a href="/about/pratilipi">__("footer_about_us")</a>
-            				<a href="/work-with-us">__("footer_work_with_us")</a>
+                            <router-link
+                              :to="{ name: 'About_Page' }">__("footer_about_us")</router-link>
+                            <router-link
+                              :to="{ name: 'Career_Page' }">__("footer_work_with_us")</router-link>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -43,8 +45,10 @@
                     <div class="col-sm-12">
                         <p>
                             © {{ new Date().getFullYear() }} Nasadiya Tech. Pvt. Ltd. | 
-                            <a href="/privacy-policy">__("footer_privacy_policy")</a> |
-                            <a href="/terms-of-service">__("footer_terms_of_service")</a>
+                            <router-link
+                              :to="{ name: 'Privacy_Page' }">__("footer_privacy_policy")</router-link> |
+                            <router-link
+                              :to="{ name: 'Terms_Page' }">__("footer_terms_of_service")</router-link>
                         </p>
                     </div>
                 </div>

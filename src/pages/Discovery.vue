@@ -109,6 +109,7 @@ export default {
                 display: block;
                 height: 40px;
                 line-height: 40px;
+                color: #d00b12;
             }
         }
     }
