@@ -7,10 +7,8 @@ let StringReplacePlugin = require('string-replace-webpack-plugin');
 
 const translation = require('./i18n');
 const navigation = require('./categories');
-const about = require('./about');
 const languageJSON = translation[process.env.LANGUAGE || 'hi'];
 const navigationJSON = navigation[process.env.LANGUAGE || 'hi'];
-const aboutUsJSON = about[process.env.LANGUAGE || 'hi'];
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -63,16 +61,6 @@ module.exports = {
               pattern: /__NAVIGATION_SECTION_LIST__/g,
               replacement: function (match) {
                 return JSON.stringify(navigationJSON)
-              }
-            }, {
-              pattern: /__ABOUT_US_TITLE__/g,
-              replacement: function (match) {
-                return aboutUsJSON['title']
-              }
-            }, {
-              pattern: /__ABOUT_US_BODY__/g,
-              replacement: function (match) {
-                return aboutUsJSON['body']
               }
             }]
           })
