@@ -12,6 +12,7 @@ import AboutComponent from '@/pages/About.vue'
 import TermsComponent from '@/pages/Terms.vue'
 import PrivacyComponent from '@/pages/Privacy.vue'
 import EventPageComponent from '@/pages/Event.vue'
+import WritePageComponent from '@/pages/Write.vue'
 
 import constants from '@/constants'
 
@@ -63,6 +64,10 @@ export default new Router({
         path: '/event',
         name: 'Event_Page',
         component: EventPageComponent
+    }, {
+        path: '/write',
+        name: 'Write_Page',
+        component: WritePageComponent
     }, {
         path: '/:list_page_url',
         name: 'List_Page',
