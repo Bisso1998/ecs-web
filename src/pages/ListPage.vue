@@ -6,8 +6,9 @@
                     <div class="col-md-12">
                         <h2>{{ getPratilipiListTitle }}</h2>
                         <PratilipiComponent
-                        :pratilipiList="getPratilipiListData"
-                        v-bind="{ addToLibrary, removeFromLibrary }"
+                        :pratilipiData="pratilipiData"
+                        :key="pratilipiData.pratilipiId"
+                        v-for="pratilipiData in getPratilipiListData"
                         v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS'"
                         ></PratilipiComponent>
                     </div>
@@ -67,8 +68,21 @@ export default {
 }
 </script>
 
-<style>
-.notification-page {
-    margin-top: 150px;
+<style lang="scss" scoped>
+.list-page {
+    margin-top: 85px;
+    text-align: left;
+    @media screen and (max-width: 992px ) {
+        margin-top: 140px;
+        text-align: center;
+    }
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: left;
+        border-left: 3px solid #d0021b;
+        padding-left: 10px;
+        margin: 10px 0;
+    }
 }
 </style>

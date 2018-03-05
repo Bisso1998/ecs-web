@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pratilipi-wrap">
         <div class="pratilipi">
             <div class="book-type" :class="pratilipiData.type">
                 {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
@@ -98,6 +98,9 @@ export default {
     a:hover, a:focus {
         text-decoration: none;
         outline: none;
+    }
+    .list-page .pratilipi-wrap {
+        display: inline-block;
     }
     .pratilipi {
         width: 300px;

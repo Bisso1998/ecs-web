@@ -1,6 +1,6 @@
 export default {
     loading_state: 'LOADING',
-	data : [],
+    data : [],
     cursor : null,
     numberFound : 0,
     title : '',
