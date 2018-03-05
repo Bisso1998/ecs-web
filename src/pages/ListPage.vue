@@ -8,6 +8,7 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -18,13 +19,33 @@ export default {
         }
     },
     computed: {
-        
+        ...mapGetters('listpage', [
+            'getPratilipiListLoadingState',
+            'getPratilipiListData',
+            'getPratilipiListTotalCount'
+        ])
     },
     methods: {
-        
+        ...mapActions('listpage', [
+            'fetchInitialListPagePratilipis',
+            'fetchMorePratilipisForListPage'
+        ]),
     },
     created() {
-        
+        console.log(this.$route)
+
+        const { list_page_url } = this.$route.params;
+
+        const currentLocale = process.env.LANGUAGE;
+        constants.LANGUAGES.forEach((eachLanguage) => {
+            if (eachLanguage.shortName === currentLocale) {
+                this.fetchInitialListPagePratilipis({
+                    language: eachLanguage.fullName.toUpperCase(),
+                    listName: list_page_url,
+                    resultCount: 20
+                });
+            }
+        });
     },
     components: {
         MainLayout
