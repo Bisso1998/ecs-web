@@ -66,5 +66,17 @@ export default {
 
     removePratilipiFromLibraryError(state) {
 
-    }
+    },
+
+    setHomePageBannerLoadingTrue(state){
+        state.banners.loading_state = 'LOADING';
+    },
+    setHomePageBannerLoadingSuccess(state, data){
+        state.banners.loading_state = 'LOADING_SUCCESS';
+        state.banners.data = data.bannerList;
+    },
+    setHomePageBannerLoadingError(state){
+        state.banners.loading_state = 'LOADING_ERROR';
+        state.banners.data = [];
+    },
 }

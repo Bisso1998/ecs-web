@@ -418,9 +418,9 @@ export default {
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 
-    getHomePageBanners: (aCallBack) => {
+    getHomePageBanners: (language, aCallBack) => {
         httpUtil.get(API_PREFIX + INIT_BANNER_LIST_API,
-            null, { "language": "${ language }" },
+            null, { "language": language },
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 

@@ -64,5 +64,16 @@ export default {
                 commit('setSectionDataLoadingError');
             }
         })
+    },
+
+    fetchBanners({ commit, state }, language) {
+        commit('setHomePageBannerLoadingTrue');
+        DataAccessor.getHomePageBanners(language, (data) => {
+            if (data.status === 200) {
+                commit('setHomePageBannerLoadingSuccess', data.response);
+            } else {
+                commit('setHomePageBannerLoadingError');
+            }
+        })
     }
 }

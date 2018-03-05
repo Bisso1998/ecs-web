@@ -32,14 +32,17 @@ export default {
     computed: {
         ...mapGetters('homepage', [
             'getHomePageSections',
-            'getHomePageLoadingState'
+            'getHomePageLoadingState',
+            'getHomePageBanners',
+            'getHomePageBannersLoadingState'
         ])
     },
     methods: {
         ...mapActions('homepage', [
             'getListOfSections',
             'addToLibrary',
-            'removeFromLibrary'
+            'removeFromLibrary',
+            'fetchBanners'
         ]),
     },
     components: {
@@ -51,6 +54,7 @@ export default {
         const currentLocale = process.env.LANGUAGE;
         constants.LANGUAGES.forEach((eachLanguage) => {
             if (eachLanguage.shortName === currentLocale) {
+                this.fetchBanners(eachLanguage.fullName.toUpperCase());
                 this.getListOfSections(eachLanguage.fullName.toUpperCase());
             }
         });
