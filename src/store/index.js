@@ -9,6 +9,7 @@ import recommendation from './modules/recommendation'
 import authordetails from './modules/authordetails'
 import eventspage from './modules/eventspage'
 import listpage from './modules/listpage'
+import staticpage from './modules/staticpage'
 
 Vue.use(Vuex)
 
@@ -23,7 +24,8 @@ export default new Vuex.Store({
         recommendation,
         authordetails,
         eventspage,
-        listpage
+        listpage,
+        staticpage
     },
     strict: debug
 })
