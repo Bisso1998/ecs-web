@@ -17,11 +17,11 @@
                                 <span class="review-count">{{ getPratilipiData.reviewCount }} __("rating_ratings")</span>
                             </div>
                             <div class="book-stats">
-                                <span class="read-time">__("pratilipi_reading_time"): {{ getPratilipiData.readingTime | showInMinutesOrHours($t) }}</span>
+                                <span class="read-time">__("pratilipi_reading_time"): {{ getPratilipiData.readingTime | showInMinutesOrHours }}</span>
                             </div>
                             <div class="book-stats">
                                 <span class="read-count">__("pratilipi_count_reads"): {{ getPratilipiData.readCount }}</span>
-                                <span class="date">__("pratilipi_listing_date"): {{ getPratilipiData.listingDateMillis | convertDate($t) }}</span>
+                                <span class="date">__("pratilipi_listing_date"): {{ getPratilipiData.listingDateMillis | convertDate }}</span>
                             </div>
                             <div class="main-actions"  v-if="getUserPratilipiLoadingState === 'LOADING_SUCCESS'">
                                 <button v-if="!getUserPratilipiData.addedToLib" class="library-btn" @click="addToLibrary(getPratilipiData.pratilipiId)">
