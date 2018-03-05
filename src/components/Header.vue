@@ -35,7 +35,7 @@
                       <span>Discover</span>
                     </router-link>
                     <router-link
-                      :to="{ path: 'write' }"
+                      :to="{ name: 'Write_Page' }"
                       class="main-tabs">
                       <i class="material-icons">mode_edit</i>
                       <span>__("write")</span>
