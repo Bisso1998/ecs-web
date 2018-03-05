@@ -4,9 +4,16 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Privacy Page Title</h2>
-                        <div class="page-content">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        <h2>__("event_events")</h2>
+                        <div class="page-content event-list">
+                            <ul>
+                                <li v-for="each_event in getEventsData" :key="each_event.eventId">
+                                    <a :href="each_event.pageUrl">
+                                        <span class="event-img" v-bind:style="{ backgroundImage: 'url(' + each_event.bannerImageUrl  + ')' }"></span>
+                                        <span class="event-name">{{ each_event.name }}</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -60,6 +67,63 @@ export default {
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
+    }
+    .event-list {
+        text-align: left;
+        @media screen and (max-width: 992px ) {
+            text-align: center;
+        }
+        .event-section {
+            margin-left: 13px;
+            display: none;
+        }
+        ul {
+            @media screen and (max-width: 992px ) {
+                padding: 0;
+            }
+        }
+        li {
+            width: 300px;
+            background: #fff;
+            border: 1px solid #e9e9e9;
+            height: 252px;
+            margin: 10px;
+            color: #d0021b;
+            display: inline-block;
+            @media screen and (max-width: 768px ) {
+                width: 100%;
+                max-width: 340px;
+                height: 150px;
+            }
+            a {
+                color: #212121;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+            .event-img {
+                width: 100%;
+                height: 210px;
+                display: block;
+                background-size: cover;
+                background-position: right center;
+                @media screen and (max-width: 768px ) {
+                    height: 100px;
+                }
+            }
+            .event-name {
+                text-align: center;
+                font-size: 14px;
+                display: block;
+                height: 40px;
+                line-height: 40px;
+                color: #d00b12;
+                @media screen and (max-width: 768px ) {
+                    height: 50px;
+                    line-height: 50px;
+                }
+            }
+        }
     }
 }
 </style>
