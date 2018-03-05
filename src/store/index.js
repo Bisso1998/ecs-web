@@ -8,6 +8,7 @@ import pratilipipage from './modules/pratilipipage'
 import recommendation from './modules/recommendation'
 import authordetails from './modules/authordetails'
 import eventspage from './modules/eventspage'
+import listpage from './modules/listpage'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ export default new Vuex.Store({
         pratilipipage,
         recommendation,
         authordetails,
-        eventspage
+        eventspage,
+        listpage
     },
     strict: debug
 })
