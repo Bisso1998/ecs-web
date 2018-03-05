@@ -12,6 +12,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const portfinder = require('portfinder')
 const cookie = require('cookie')
 const request = require('request');
+let StringReplacePlugin = require('string-replace-webpack-plugin');
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -60,10 +61,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     }
   },
   plugins: [
+    new StringReplacePlugin(),
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
-    new BundleAnalyzerPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",

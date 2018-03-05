@@ -3,6 +3,12 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+let StringReplacePlugin = require('string-replace-webpack-plugin');
+
+const translation = require('./i18n');
+const navigation = require('./categories');
+const languageJSON = translation[process.env.LANGUAGE || 'hi'];
+const navigationJSON = navigation[process.env.LANGUAGE || 'hi'];
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -41,6 +47,25 @@ module.exports = {
   module: {
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),
+      {
+        enforce: 'pre',
+        test: /\.(vue|js)$/,
+        use: [{
+          loader: StringReplacePlugin.replace({
+            replacements: [{
+              pattern: /__\(["|']([a-zA-Z]+(?:_[a-zA-Z]+)*)["|']\)/g,
+              replacement: function (match) {
+                return languageJSON[match.substring(4, match.length - 2)]
+              }
+            }, {
+              pattern: /__NAVIGATION_SECTION_LIST__/g,
+              replacement: function (match) {
+                return JSON.stringify(navigationJSON)
+              }
+            }]
+          })
+        }]
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
