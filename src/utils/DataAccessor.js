@@ -448,10 +448,10 @@ export default {
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 
-    getPageContent: (pageName, aCallBack) => {
+    getPageContent: (pageName, language, aCallBack) => {
         if (pageName == null) return;
         httpUtil.get(API_PREFIX + PAGE_CONTENT_API,
-            null, { "pageName": pageName, "language": "${ language }" },
+            null, { "pageName": pageName, "language": language },
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 

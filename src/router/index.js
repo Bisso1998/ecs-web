@@ -7,10 +7,7 @@ import NotificationComponent from '@/pages/Notification.vue'
 import ListPageComponent from '@/pages/ListPage.vue'
 import DiscoverPageComponent from '@/pages/Discovery.vue'
 import ReaderPageComponent from '@/pages/Reader.vue'
-import CareerComponent from '@/pages/Career.vue'
-import AboutComponent from '@/pages/About.vue'
-import TermsComponent from '@/pages/Terms.vue'
-import PrivacyComponent from '@/pages/Privacy.vue'
+import StaticComponent from '@/pages/Static.vue'
 import EventPageComponent from '@/pages/Event.vue'
 import WritePageComponent from '@/pages/Write.vue'
 
@@ -47,19 +44,19 @@ export default new Router({
     }, {
         path: '/work-with-us',
         name: 'Career_Page',
-        component: CareerComponent
+        component: StaticComponent
     }, {
         path: '/about/pratilipi',
         name: 'About_Page',
-        component: AboutComponent
+        component: StaticComponent
     }, {
         path: '/terms-of-service',
         name: 'Terms_Page',
-        component: TermsComponent
+        component: StaticComponent
     }, {
         path: '/privacy-policy',
         name: 'Privacy_Page',
-        component: PrivacyComponent
+        component: StaticComponent
     }, {
         path: '/event',
         name: 'Event_Page',
