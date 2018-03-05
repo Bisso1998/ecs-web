@@ -24,13 +24,13 @@ Vue.filter('showInMinutesOrHours', function(value) {
 
     let readingTimeInNativeLanguage;
     if (finalHours > 1) {
-        readingTimeInNativeLanguage = finalHours + ' ' + __('hours');
+        readingTimeInNativeLanguage = finalHours + ' ' + "__('hours')";
     } else if (finalHours === 1) {
-        readingTimeInNativeLanguage = finalHours + ' ' + __('hour');
+        readingTimeInNativeLanguage = finalHours + ' ' + "__('hour')";
     } else if (finalMinutes > 1) {
-        readingTimeInNativeLanguage = finalMinutes + ' ' + __('minutes');
+        readingTimeInNativeLanguage = finalMinutes + ' ' + "__('minutes')";
     } else {
-        readingTimeInNativeLanguage = finalMinutes + ' ' + __('minute');
+        readingTimeInNativeLanguage = finalMinutes + ' ' + "__('minute')";
     }
 
     return readingTimeInNativeLanguage;
@@ -39,15 +39,15 @@ Vue.filter('showInMinutesOrHours', function(value) {
 Vue.filter('getPratilipiTypeInNativeLanguage', function(value) {
     switch (value) {
         case 'STORY':
-            return __('_pratilipi_type_story');
+            return "__('_pratilipi_type_story')";
         case 'POEM':
-            return __('_pratilipi_type_poem');
+            return "__('_pratilipi_type_poem')";
         case 'ARTICLE':
-            return __('_pratilipi_type_article');
+            return "__('_pratilipi_type_article')";
         case 'BOOK':
-            return __('_pratilipi_type_book');
+            return "__('_pratilipi_type_book')";
         case 'MAGAZINE':
-            return __('_pratilipi_type_magazine');
+            return "__('_pratilipi_type_magazine')";
     }
 });
 
@@ -58,18 +58,18 @@ Vue.filter('convertDate', function(value) {
 
     function month(m) {
         var months = [
-            __('month_jan'), 
-            __('month_feb'), 
-            __('month_mar'),
-            __('month_apr'), 
-            __('month_may'), 
-            __('month_jun'),
-            __('month_jul'), 
-            __('month_aug'), 
-            __('month_sep'),
-            __('month_oct'), 
-            __('month_nov'), 
-            __('month_dec')
+            "__('month_jan')", 
+            "__('month_feb')", 
+            "__('month_mar')",
+            "__('month_apr')", 
+            "__('month_may')", 
+            "__('month_jun')",
+            "__('month_jul')", 
+            "__('month_aug')", 
+            "__('month_sep')",
+            "__('month_oct')", 
+            "__('month_nov')", 
+            "__('month_dec')"
         ];
         return months[m];
     }
