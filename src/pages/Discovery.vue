@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <div class="discovery-page">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Discover</h2>
@@ -70,9 +70,17 @@ export default {
     }
     .category-list {
         text-align: left;
+        @media screen and (max-width: 992px ) {
+            text-align: center;
+        }
         .category-section {
             margin-left: 13px;
             display: none;
+        }
+        ul {
+            @media screen and (max-width: 992px ) {
+                padding: 0;
+            }
         }
         li {
             width: 300px;
