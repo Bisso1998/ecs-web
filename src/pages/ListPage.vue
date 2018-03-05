@@ -2,6 +2,7 @@
     <MainLayout>
         <div class="list-page">
             <div class="container">
+                <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
                 <div class="row">
                     <div class="col-md-12">
                         <h2>{{ getPratilipiListTitle }}</h2>
@@ -22,6 +23,7 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import Spinner from '@/components/Spinner.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
@@ -67,7 +69,8 @@ export default {
     },
     components: {
         MainLayout,
-        PratilipiComponent
+        PratilipiComponent,
+        Spinner
     }
 }
 </script>
