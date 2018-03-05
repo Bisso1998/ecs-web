@@ -20,6 +20,7 @@ export default {
     
     getPratilipiListLoadingState: state => state.loading_state,
     getPratilipiListData: state => state.data,
-    getPratilipiListTotalCount: state => state.numberFound    
+    getPratilipiListTotalCount: state => state.numberFound,
+    getPratilipiListTitle: state => state.title
 
 }
