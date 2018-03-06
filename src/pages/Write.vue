@@ -2,60 +2,68 @@
     <MainLayout>
         <div class="static-page">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>__("write")</h2>
-                        <div class="page-content">
-                            <div class="col-lg-12 d-none d-lg-block d-xl-block"><!-- Desktop only -->
-                                <div class="card">
-                                    <div class="card-content">
-                                        <button type="button" class="btn">__("write_heading")</button>
+                <div class="page-content">
+                    <h2>__("write")</h2>
+                    <div class="row">
+                        <div class="col-lg-12 d-none d-lg-block d-xl-block"><!-- Desktop only -->
+                            <div class="card">
+                                <div class="card-content">
+                                    <button type="button" class="btn">__("write_heading")</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-block d-md-block d-lg-none"><!-- Android only -->
+                            <div class="card install-app">
+                                <div class="card-content">
+                                <p>Write your stories on Pratilipi App</p>
+                                    <button type="button" class="btn">Install the App</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"><!-- LoggedIn only and has drafts -->
+                            <div class="card">
+                                <div class="head-title">__("author_drafts")</div>
+                                <div class="card-content">
+                                    <p>Finish writing your stories</p>
+                                    <div class="draft" v-for="each_draft in 'writepage/getDraftedContents'" :key="each_draft.pratilipiId">
+                                        <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
+                                        <div class="draft-name">{{ each_draft.title }}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 d-block d-md-block d-lg-none"><!-- Android only -->
-                                <div class="card">
-                                    <div class="card-content">
-                                    <p>Write your stories on Pratilipi App</p>
-                                        <button type="button" class="btn">Install the App</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12"><!-- LoggedIn only and has drafts -->
-                                <div class="card">
-                                    <div class="head-title">__("author_drafts")</div>
-                                    <div class="card-content">
-                                        <p>Finish writing your stories</p>
-                                        <div class="draft" v-for="each_draft in 'writepage/getDraftedContents'" :key="each_draft.pratilipiId">
-                                            <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
-                                            <div class="draft-name">{{ each_draft.title }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="head-title">__("event_events")</div>
-                                    <div class="card-content">
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card">
+                                <div class="head-title">__("event_events")</div>
+                                <div class="card-content">
+                                    <router-link
+                                    :to="{ path: 'event' }">
                                         <p>Participate and win cash prizes</p>
                                         <img src="https://0.ptlp.co/resource-all/android-category-banners/events.jpg" alt="Events">
-                                    </div>
+                                    </router-link>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="card bg-image" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/init/banner?language=MALAYALAM&name=Jan-18-ml-5.jpg)' }">
-                                    <div class="head-title">Live Event</div>
-                                    <div class="card-content">
-                                        <p>Event Name</p>
-                                    </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card">
+                                <div class="head-title">Live Event</div>
+                                <div class="card-content">
+                                    <router-link
+                                    :to="{ path: eventData.categoryUrl }">
+                                        <p>{{ eventData.title}}</p>
+                                        <img :src="'https://0.ptlp.co/event/banner?eventId=' + eventData.pratilipiListData.eventId" alt="Events">
+                                    </router-link>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="head-title">Editorial</div>
-                                    <div class="card-content">
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card">
+                                <div class="head-title">Editorial</div>
+                                <div class="card-content">
+                                    <router-link
+                                    :to="{ path: 'blog' }">
                                         <img src="https://0.ptlp.co/resource-all/android-category-banners/blog.jpg" alt="Blog">
-                                    </div>
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +106,8 @@ export default {
         constants.CATEGORY_DATA.sections.forEach((eachSection) => {
             eachSection.categories.forEach((eachCategory) => {
                 if (eachCategory && eachCategory.pratilipiListData && eachCategory.pratilipiListData.eventId) {
-                    this.eventData = eachCategory
+                    this.eventData = eachCategory;
+                    console.log(this.eventData);
                 }
             })
         });
@@ -154,6 +163,12 @@ export default {
             img {
                 width: 100%;
             }
+            a {
+                color: #2c3e50;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
         }
         .draft {
             display: inline-block;
@@ -174,6 +189,21 @@ export default {
                 font-size: 14px;
                 font-weight: bold;
                 padding: 5px;
+            }
+        }
+        &.bg-image {
+            background-position: right center;
+        }
+        &.install-app {
+            background: url(https://0.ptlp.co/resource-all/android-category-banners/experiences.jpg) no-repeat right center;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            .card-content, p {
+                text-align: center;
+            }
+            .card-content {
+                background: rgba(0,0,0,0.6);
             }
         }
     }
