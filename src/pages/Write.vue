@@ -24,8 +24,9 @@
                         <div class="col-md-12" v-if="draftedContents.length > 0"><!-- LoggedIn only and has drafts -->
                             <div class="card">
                                 <div class="head-title">__("author_drafts")</div>
-                                <div class="card-content drafts">
-                                    <p>Finish writing your stories</p>
+                                <p>Finish writing your stories</p>
+                                <div class="card-content drafts" @scroll="updateScroll">
+                                    
                                     <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
                                         <a :href="each_draft.writePageUrl">
                                             <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
@@ -100,7 +101,8 @@ export default {
         ]),
         ...mapState({
             draftedContents: state => state.writepage.drafts.data,
-            draftedContentsLoadingState: state => state.writepage.drafts.loading_state
+            draftedContentsLoadingState: state => state.writepage.drafts.loading_state,
+            draftedContentsCursor: state => state.writepage.drafts.cursor
         })
     },
     methods: {
@@ -109,8 +111,17 @@ export default {
             'fetchMoreDraftedContents'
         ]),
         updateScroll() {
-            console.log('hello');
-            this.scrollPosition = $('.card-content.drafts').scrollX
+            const width = $('.card-content.drafts').outerWidth();
+            const newScrollLeft = $('.card-content.drafts').scrollLeft();
+            const scrollWidth = $('.card-content.drafts').get(0).scrollWidth
+            if (scrollWidth - newScrollLeft == width && 
+                this.draftedContentsLoadingState !== 'LOADING' &&
+                this.draftedContentsCursor) {
+                this.fetchMoreDraftedContents({ 
+                    authorId: this.getUserDetails.authorId,
+                    resultCount: 10
+                });
+            }
         }
     },
     components: {
@@ -121,40 +132,8 @@ export default {
         'getUserDetails.authorId'(newValue) {
             this.fetchInitialDraftedContents({ 
                 authorId: newValue,
-                resultCount: 5
+                resultCount: 10
             });
-        },
-        'draftedContentsLoadingState'(newValue) {
-            if (newValue === 'LOADING_SUCCESS') {
-                console.log('Attach event listener here');
-                $('.card-content.drafts').on('scroll', function () {
-                    console.log('Scrolling');
-                });
-
-                $('.card-content.drafts').scroll(function() {
-                    console.log('Scrolling 2')
-                });
-            }
-        },
-        'scrollPosition'(newScrollPosition){
-            const nintyPercentOfList = ( 90 / 100 ) * $('.card-content.drafts').innerHeight();
-            console.log($('.card-content.drafts').innerHeight());
-
-            // const { list_page_url } = this.$route.params;
-
-            // if (newScrollPosition > nintyPercentOfList && this.getPratilipiListLoadingState !== 'LOADING' && this.getPratilipiListCursor !== null) {
-                
-            //     const currentLocale = process.env.LANGUAGE;
-            //     constants.LANGUAGES.forEach((eachLanguage) => {
-            //         if (eachLanguage.shortName === currentLocale) {
-            //             this.fetchMorePratilipisForListPage({
-            //                 language: eachLanguage.fullName.toUpperCase(),
-            //                 listName: list_page_url,
-            //                 resultCount: 20
-            //             });
-            //         }
-            //     });
-            // }
         }
     },
     created() {
@@ -168,7 +147,7 @@ export default {
         });
         this.fetchInitialDraftedContents({ 
             authorId: this.getUserDetails.authorId,
-            resultCount: 5
+            resultCount: 10
         });
     }
 }
