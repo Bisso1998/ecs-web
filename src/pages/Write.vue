@@ -52,8 +52,14 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import { mapGetters, mapActions } from 'vuex'
+import constants from '@/constants';
 
 export default {
+    data() {
+        return {
+            eventData: {}
+        }
+    },
     computed: {
         ...mapGetters([
             'writepage/getDraftedContents',
@@ -72,7 +78,13 @@ export default {
         MainLayout
     },
     created() {
-        console.log('this');
+        constants.CATEGORY_DATA.sections.forEach((eachSection) => {
+            eachSection.categories.forEach((eachCategory) => {
+                if (eachCategory && eachCategory.pratilipiListData && eachCategory.pratilipiListData.eventId) {
+                    this.eventData = eachCategory
+                }
+            })
+        });
         this.fetchInitialDraftedContents({ 
             authorId: this.getUserDetails.authorId,
             resultCount: 20
