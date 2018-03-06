@@ -31,6 +31,7 @@
                                             <div class="draft-name">{{ each_draft.title }}</div>
                                         </a>
                                     </div>
+                                    <Spinner></Spinner>
                                 </div>
                             </div>
                         </div>
@@ -78,6 +79,7 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions, mapState } from 'vuex'
 import constants from '@/constants';
 
@@ -105,7 +107,8 @@ export default {
         ]),
     },
     components: {
-        MainLayout
+        MainLayout,
+        Spinner
     },
     watch: {
         'getUserDetails.authorId'(newValue) {
