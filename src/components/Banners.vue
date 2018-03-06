@@ -65,6 +65,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../node_modules/slick-carousel/slick/slick.css';
 .banner-section {
     position: relative;
     width: calc(100% - 20px);
