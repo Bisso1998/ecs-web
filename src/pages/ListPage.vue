@@ -2,7 +2,6 @@
     <MainLayout>
         <div class="list-page">
             <div class="container">
-                <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
                 <div class="row">
                     <div class="col-md-12">
                         <h2>{{ getPratilipiListTitle }}</h2>
@@ -10,10 +9,11 @@
                         :pratilipiData="pratilipiData"
                         :key="pratilipiData.pratilipiId"
                         v-for="pratilipiData in getPratilipiListData"
-                        v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS'"
+                        v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' || getPratilipiListData.length !== 0"
                         :addToLibrary="addToLibrary"
                         :removeFromLibrary="removeFromLibrary"
                         ></PratilipiComponent>
+                        <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
                     </div>
                 </div>
             </div>
@@ -33,6 +33,7 @@ export default {
     data() {
         return {
             user_id: null,
+            scrollPosition: null
         }
     },
     computed: {
@@ -41,6 +42,7 @@ export default {
             'getPratilipiListData',
             'getPratilipiListTotalCount',
             'getPratilipiListTitle',
+            'getPratilipiListCursor'
         ])
     },
     methods: {
@@ -50,6 +52,9 @@ export default {
             'addToLibrary',
             'removeFromLibrary'
         ]),
+        updateScroll() {
+            this.scrollPosition = window.scrollY
+        }
     },
     created() {
         console.log(this.$route)
@@ -66,6 +71,30 @@ export default {
                 });
             }
         });
+    },
+    watch: {
+        'scrollPosition'(newScrollPosition){
+            console.log(this);
+            const nintyPercentOfList = ( 90 / 100 ) * $('.list-page').innerHeight();
+            const { list_page_url } = this.$route.params;
+
+            if (newScrollPosition > nintyPercentOfList && this.getPratilipiListLoadingState !== 'LOADING' && this.getPratilipiListCursor !== null) {
+                
+                const currentLocale = process.env.LANGUAGE;
+                constants.LANGUAGES.forEach((eachLanguage) => {
+                    if (eachLanguage.shortName === currentLocale) {
+                        this.fetchMorePratilipisForListPage({
+                            language: eachLanguage.fullName.toUpperCase(),
+                            listName: list_page_url,
+                            resultCount: 20
+                        });
+                    }
+                });
+            }
+        }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.updateScroll);
     },
     components: {
         MainLayout,
