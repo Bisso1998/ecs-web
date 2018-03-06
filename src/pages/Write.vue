@@ -191,6 +191,14 @@ export default {
                 margin: 0 auto;
                 white-space: nowrap;
                 width: 100%;
+                .spinner {
+                    display: inline-block;
+                    width: 100px;
+                    height: 138px;
+                    line-height: 138px;
+                    vertical-align: middle;
+                    padding: 0;
+                }
             }
         }
         .draft {
@@ -200,6 +208,7 @@ export default {
             width: 150px;
             padding: 10px;
             margin: 10px 5px;
+            vertical-align: middle;
             .draft-img {
                 width: 75px;
                 height: 75px;
