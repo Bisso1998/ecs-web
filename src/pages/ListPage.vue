@@ -74,7 +74,6 @@ export default {
     },
     watch: {
         'scrollPosition'(newScrollPosition){
-            console.log(this);
             const nintyPercentOfList = ( 90 / 100 ) * $('.list-page').innerHeight();
             const { list_page_url } = this.$route.params;
 

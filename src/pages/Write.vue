@@ -31,7 +31,7 @@
                                             <div class="draft-name">{{ each_draft.title }}</div>
                                         </a>
                                     </div>
-                                    <Spinner></Spinner>
+                                    <Spinner v-if="draftedContentsLoadingState === 'LOADING'"></Spinner>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,8 @@ import constants from '@/constants';
 export default {
     data() {
         return {
-            eventData: {}
+            eventData: {},
+            scrollPosition: null
         }
     },
     computed: {
@@ -97,7 +98,8 @@ export default {
             'getUserDetails'
         ]),
         ...mapState({
-            draftedContents: state => state.writepage.drafts.data
+            draftedContents: state => state.writepage.drafts.data,
+            draftedContentsLoadingState: state => state.writepage.drafts.loading_state
         })
     },
     methods: {
@@ -105,6 +107,10 @@ export default {
             'fetchInitialDraftedContents',
             'fetchMoreDraftedContents'
         ]),
+        updateScroll() {
+            console.log('hello');
+            this.scrollPosition = $('.card-content.drafts').scrollX
+        }
     },
     components: {
         MainLayout,
@@ -116,6 +122,38 @@ export default {
                 authorId: newValue,
                 resultCount: 5
             });
+        },
+        'draftedContentsLoadingState'(newValue) {
+            if (newValue === 'LOADING_SUCCESS') {
+                console.log('Attach event listener here');
+                $('.card-content.drafts').on('scroll', function () {
+                    console.log('Scrolling');
+                });
+
+                $('.card-content.drafts').scroll(function() {
+                    console.log('Scrolling 2')
+                });
+            }
+        },
+        'scrollPosition'(newScrollPosition){
+            const nintyPercentOfList = ( 90 / 100 ) * $('.card-content.drafts').innerHeight();
+            console.log($('.card-content.drafts').innerHeight());
+
+            // const { list_page_url } = this.$route.params;
+
+            // if (newScrollPosition > nintyPercentOfList && this.getPratilipiListLoadingState !== 'LOADING' && this.getPratilipiListCursor !== null) {
+                
+            //     const currentLocale = process.env.LANGUAGE;
+            //     constants.LANGUAGES.forEach((eachLanguage) => {
+            //         if (eachLanguage.shortName === currentLocale) {
+            //             this.fetchMorePratilipisForListPage({
+            //                 language: eachLanguage.fullName.toUpperCase(),
+            //                 listName: list_page_url,
+            //                 resultCount: 20
+            //             });
+            //         }
+            //     });
+            // }
         }
     },
     created() {
@@ -187,7 +225,6 @@ export default {
             }
             &.drafts {
                 overflow: auto;
-                overflow-y: hidden;
                 margin: 0 auto;
                 white-space: nowrap;
                 width: 100%;
