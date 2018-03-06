@@ -26,9 +26,9 @@
                                     <div class="head-title">__("author_drafts")</div>
                                     <div class="card-content">
                                         <p>Finish writing your stories</p>
-                                        <div class="draft">
-                                            <div class="draft-img" v-bind:style="{ backgroundImage: 'url(https://1.ptlp.co/author/image?authorId=6211302301106176&version=&width=200&type=webp)' }"></div>
-                                            <div class="draft-name">Draft Name</div>
+                                        <div class="draft" v-for="each_draft in 'writepage/getDraftedContents'" :key="each_draft.pratilipiId">
+                                            <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
+                                            <div class="draft-name">{{ each_draft.title }}</div>
                                         </div>
                                     </div>
                                 </div>
