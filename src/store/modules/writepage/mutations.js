@@ -46,8 +46,8 @@ export default {
 
     setDraftedContentsDynamicLoadingSuccess(state, response) {
         state.drafts.loading_state = 'LOADING_SUCCESS';
-        state.drafts.data = state.data.concat(response.pratilipiList);
-        state.drafts.cursor = data.cursor;
+        state.drafts.data = state.drafts.data.concat(response.pratilipiList);
+        state.drafts.cursor = response.cursor;
     },
 
     setDraftedContentsDynamicLoadingError(state) {

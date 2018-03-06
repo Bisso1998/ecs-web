@@ -15,7 +15,7 @@ export default {
 
     fetchMoreDraftedContents({ commit, state }, { authorId, resultCount }) {
         commit('setDraftedContentsDynamicLoadingTrue');
-        DataAccessor.getPratilipiListByAuthor(authorId, 'DRAFTED', null, null, resultCount, (data) => {
+        DataAccessor.getPratilipiListByAuthor(authorId, 'DRAFTED', state.drafts.cursor, null, resultCount, (data) => {
             if (data.status === 200) {
                 commit('setDraftedContentsDynamicLoadingSuccess', data.response);
             } else {
