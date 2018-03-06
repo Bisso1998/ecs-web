@@ -19,6 +19,7 @@ export default {
     // }
     
     getPratilipiListLoadingState: state => state.loading_state,
+    getPratilipiListCursor: state => state.cursor,
     getPratilipiListData: state => state.data,
     getPratilipiListTotalCount: state => state.numberFound,
     getPratilipiListTitle: state => state.title

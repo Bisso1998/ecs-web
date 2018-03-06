@@ -51,8 +51,13 @@ export default {
     },
     setListPageDynamicLoadingSuccess(state, data) {
         state.loading_state = 'LOADING_SUCCESS';
-        state.data = state.data.concat(data.pratilipiList);
-        state.cursor = data.cursor;
+
+        if (!data.pratilipiList || data.pratilipiList.length === 0) {
+            state.cursor = null;
+        } else {
+            state.data = state.data.concat(data.pratilipiList);
+            state.cursor = data.cursor;
+        }
     },
 
     addPratilipiToLibrarySuccess(state, data) {
