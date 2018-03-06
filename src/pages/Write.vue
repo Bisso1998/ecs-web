@@ -51,10 +51,32 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    computed: {
+        ...mapGetters([
+            'writepage/getDraftedContents',
+            'writepage/getDraftedContentsLoadingState',
+            'writepage/getDraftedContentsTotalCount',
+            'getUserDetails'
+        ])
+    },
+    methods: {
+        ...mapActions('writepage', [
+            'fetchInitialDraftedContents',
+            'fetchMoreDraftedContents'
+        ]),
+    },
     components: {
         MainLayout
+    },
+    created() {
+        console.log('this');
+        this.fetchInitialDraftedContents({ 
+            authorId: this.getUserDetails.authorId,
+            resultCount: 20
+        })
     }
 }
 </script>
