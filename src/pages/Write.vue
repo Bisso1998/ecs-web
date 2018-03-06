@@ -23,11 +23,13 @@
                         <div class="col-md-12" v-if="draftedContents.length > 0"><!-- LoggedIn only and has drafts -->
                             <div class="card">
                                 <div class="head-title">__("author_drafts")</div>
-                                <div class="card-content">
+                                <div class="card-content drafts">
                                     <p>Finish writing your stories</p>
                                     <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
-                                        <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
-                                        <div class="draft-name">{{ each_draft.title }}</div>
+                                        <a :href="each_draft.writePageUrl">
+                                            <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
+                                            <div class="draft-name">{{ each_draft.title }}</div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -180,6 +182,13 @@ export default {
                     text-decoration: none;
                 }
             }
+            &.drafts {
+                overflow: auto;
+                overflow-y: hidden;
+                margin: 0 auto;
+                white-space: nowrap;
+                width: 100%;
+            }
         }
         .draft {
             display: inline-block;
@@ -187,7 +196,7 @@ export default {
             text-align: center;
             width: 150px;
             padding: 10px;
-            margin: 10px;
+            margin: 10px 5px;
             .draft-img {
                 width: 75px;
                 height: 75px;
