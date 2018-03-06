@@ -10,6 +10,7 @@ import authordetails from './modules/authordetails'
 import eventspage from './modules/eventspage'
 import listpage from './modules/listpage'
 import staticpage from './modules/staticpage'
+import writepage from './modules/writepage'
 
 Vue.use(Vuex)
 
@@ -25,7 +26,8 @@ export default new Vuex.Store({
         authordetails,
         eventspage,
         listpage,
-        staticpage
+        staticpage,
+        writepage
     },
     strict: debug
 })
