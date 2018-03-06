@@ -66,16 +66,12 @@ export default {
 .banner-section {
     position: relative;
     width: calc(100% - 20px);
+    max-width: 1000px;
     margin: 0 auto;
     .banners {
         img {
             max-width: 100%;
-        }
-    }
-    .slick-banner {
-        display: none;
-        &.slick-initialized {
-            display: block;
+            margin: 0 auto;
         }
     }
     .back,.forward {
@@ -104,6 +100,9 @@ export default {
             box-shadow: 0 0px 2px rgba(0,0,0,0.2);
             color: #fff;
         }
+    }
+    .back {
+        margin-left: -20px;
     }
     .forward {
         right: 0;
