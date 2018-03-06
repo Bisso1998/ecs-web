@@ -204,10 +204,10 @@ export default {
             margin: 10px 0 0;
         }
         .card-content {
-            padding: 10px;
+            padding: 5px 10px 10px;
             text-align: left;
             p {
-                margin: 5px 0;
+                margin: 0;
                 text-align: left;
             }
             button {
@@ -217,6 +217,7 @@ export default {
             }
             img {
                 width: 100%;
+                margin-top: 5px;
             }
             a {
                 color: #2c3e50;
