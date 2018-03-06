@@ -209,6 +209,9 @@ export default {
                 font-size: 14px;
                 font-weight: bold;
                 padding: 5px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
         &.bg-image {
