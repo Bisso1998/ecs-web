@@ -69,5 +69,6 @@ export default new Router({
         path: '/:list_page_url',
         name: 'List_Page',
         component: ListPageComponent
-    }]
+    }],
+    scrollBehavior: () => ({ y: 0 })
 })
