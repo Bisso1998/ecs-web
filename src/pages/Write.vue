@@ -26,7 +26,7 @@
                                     <div class="head-title">__("author_drafts")</div>
                                     <div class="card-content">
                                         <p>Finish writing your stories</p>
-                                        <div class="draft" v-for="each_draft in 'writepage/getDraftedContents'" :key="each_draft.pratilipiId">
+                                        <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
                                             <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
                                             <div class="draft-name">{{ each_draft.title }}</div>
                                         </div>
@@ -68,7 +68,7 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 import constants from '@/constants';
 
 export default {
@@ -83,7 +83,10 @@ export default {
             'writepage/getDraftedContentsLoadingState',
             'writepage/getDraftedContentsTotalCount',
             'getUserDetails'
-        ])
+        ]),
+        ...mapState({
+            draftedContents: state => state.writepage.drafts.data
+        })
     },
     methods: {
         ...mapActions('writepage', [
@@ -94,18 +97,26 @@ export default {
     components: {
         MainLayout
     },
+    watch: {
+        'getUserDetails.authorId'(newValue) {
+            this.fetchInitialDraftedContents({ 
+                authorId: newValue,
+                resultCount: 5
+            });
+        }
+    },
     created() {
         constants.CATEGORY_DATA.sections.forEach((eachSection) => {
             eachSection.categories.forEach((eachCategory) => {
                 if (eachCategory && eachCategory.pratilipiListData && eachCategory.pratilipiListData.eventId) {
                     this.eventData = eachCategory
                 }
-            })
+            });
         });
         this.fetchInitialDraftedContents({ 
             authorId: this.getUserDetails.authorId,
-            resultCount: 20
-        })
+            resultCount: 5
+        });
     }
 }
 </script>
