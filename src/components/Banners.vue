@@ -37,7 +37,9 @@ export default {
                 dots: false,
                 draggable: true,
                 edgeFriction: 0.30,
-                swipe: true
+                swipe: true,
+                autoplay: true,
+                autoplaySpeed: 4000,
             }
         }
     },
@@ -77,6 +79,9 @@ export default {
     .back,.forward {
         position: absolute;
         top: 45%;
+        @media screen and (max-width: 576px ) {
+            top: 37%;
+        }
         z-index: 2;
         background-color: #fff;
         border-radius: 50%;

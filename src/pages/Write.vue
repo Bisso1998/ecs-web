@@ -8,37 +8,54 @@
                         <div class="page-content">
                             <div class="col-lg-12 d-none d-lg-block d-xl-block"><!-- Desktop only -->
                                 <div class="card">
-                                    <button type="button" name="button">__("write_heading")</button>
+                                    <div class="card-content">
+                                        <button type="button" class="btn">__("write_heading")</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12 d-block d-md-block d-lg-none"><!-- Android only -->
                                 <div class="card">
+                                    <div class="card-content">
                                     <p>Write your stories on Pratilipi App</p>
-                                    <button type="button" name="button">Install the App</button>
+                                        <button type="button" class="btn">Install the App</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12"><!-- LoggedIn only and has drafts -->
                                 <div class="card">
                                     <div class="head-title">__("author_drafts")</div>
-                                    <p>Finish writing your stories</p>
-                                    <div class="draft">
-                                        <div class="draft-img"><img src="" alt="image"></div>
-                                        <div class="draft-name">Draft Name</div>
-                                        <button type="button" name="button">__("pratilipi_edit_content")</button>
+                                    <div class="card-content">
+                                        <p>Finish writing your stories</p>
+                                        <div class="draft">
+                                            <div class="draft-img" v-bind:style="{ backgroundImage: 'url(https://1.ptlp.co/author/image?authorId=6211302301106176&version=&width=200&type=webp)' }"></div>
+                                            <div class="draft-name">Draft Name</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="head-title">__("event_events")</div>
-                                    <p>Participate and win cash prizes</p>
-                                    <img src="" alt="Events">
+                                    <div class="card-content">
+                                        <p>Participate and win cash prizes</p>
+                                        <img src="https://0.ptlp.co/resource-all/android-category-banners/events.jpg" alt="Events">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="card bg-image">
+                                <div class="card bg-image" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/init/banner?language=MALAYALAM&name=Jan-18-ml-5.jpg)' }">
                                     <div class="head-title">Live Event</div>
-                                    <p>Event Name</p>
+                                    <div class="card-content">
+                                        <p>Event Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="head-title">Editorial</div>
+                                    <div class="card-content">
+                                        <img src="https://0.ptlp.co/resource-all/android-category-banners/blog.jpg" alt="Blog">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +80,7 @@ export default {
 .static-page {
     margin-top: 85px;
     text-align: left;
+    background: #f8f8f8;
     @media screen and (max-width: 992px ) {
         margin-top: 140px;
     }
@@ -73,6 +91,57 @@ export default {
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
+    }
+    .card {
+        border-radius: 0;
+        margin: 10px 0;
+        padding: 0;
+        text-align: center;
+        .head-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            border-left: 3px solid #d0021b;
+            padding-left: 10px;
+            margin: 10px 0 0;
+        }
+        .card-content {
+            padding: 10px;
+            text-align: left;
+            p {
+                margin: 5px 0;
+                text-align: left;
+            }
+            button {
+                background: #d00b12;
+                color: #fff;
+                margin: 10px;
+            }
+            img {
+                width: 100%;
+            }
+        }
+        .draft {
+            display: inline-block;
+            border: 1px solid #e9e9e9;
+            text-align: center;
+            width: 150px;
+            padding: 10px;
+            margin: 10px;
+            .draft-img {
+                width: 75px;
+                height: 75px;
+                border-radius: 50%;
+                background-size: cover;
+                background-position: center;
+                margin: 5px auto;
+            }
+            .draft-name {
+                font-size: 14px;
+                font-weight: bold;
+                padding: 5px;
+            }
+        }
     }
 }
 </style>
