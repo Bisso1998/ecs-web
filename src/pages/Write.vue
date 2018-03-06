@@ -3,7 +3,6 @@
         <div class="static-page">
             <div class="container">
                 <div class="page-content">
-                    <h2>__("write")</h2>
                     <div class="row">
                         <div class="col-lg-12 d-none d-lg-block d-xl-block"><!-- Desktop only -->
                             <div class="card">
@@ -15,8 +14,10 @@
                         <div class="col-md-12 d-block d-md-block d-lg-none"><!-- Android only -->
                             <div class="card install-app">
                                 <div class="card-content">
-                                <p>Write your stories on Pratilipi App</p>
-                                    <button type="button" class="btn">Install the App</button>
+                                <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_write&utm_campaign=app_download" target="_blank">
+                                    <p>Write your stories on Pratilipi App</p>
+                                    <img src="https://www.ptlp.co/resource-all/image/google-play-badge.png" alt="">
+                                </a>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +276,13 @@ export default {
                 text-align: center;
             }
             .card-content {
-                background: rgba(0,0,0,0.6);
+                background: rgba(0,0,0,0.5);
+            }
+            img {
+                width: 200px;
+            }
+            a {
+                color: #fff;
             }
         }
     }
