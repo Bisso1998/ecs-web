@@ -47,6 +47,13 @@
                       <i class="material-icons">account_circle</i>
                       <span>Profile</span>
                     </router-link>
+                    <router-link
+                      :to="{ path: 'login' }"
+                      v-else=""
+                      class="main-tabs">
+                      <i class="material-icons">account_circle</i>
+                      <span>Profile</span>
+                    </router-link>
                 </div>
             </div>
         </div>

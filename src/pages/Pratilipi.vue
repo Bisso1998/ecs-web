@@ -5,6 +5,7 @@
                 <div class="row" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <div class="book-details col-md-12 col-lg-5 p-0">
                         <div class="card">
+                            <button type="button" data-toggle="modal" @click="openShareModal" class="share-icon"><i class="material-icons">share</i></button>
                             <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getPratilipiData.coverImageUrl  + ')' }"></div>
                             <div class="book-title">{{ getPratilipiData.title }}</div>
                             <router-link
@@ -97,6 +98,9 @@ export default {
             'addToLibrary',
             'removeFromLibrary'
         ]),
+        openShareModal() {
+            $('#share_modal').modal('show');
+        }
     },
     created() {
         const slug_id = this.$route.params.slug_id;
@@ -141,6 +145,26 @@ export default {
             display: block;
             text-align: left;
             border-radius: 0;
+            .share-icon {
+                outline: none;
+                border: 0;
+                background: #9E9E9E;
+                color: #fff;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                padding: 0;
+                cursor: pointer;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                i {
+                    height: 40px;
+                    width: 40px;
+                    font-size: 18px;
+                    line-height: 40px;
+                }
+            }
             .head-title {
                 text-align: left;
                 font-weight: bold;
