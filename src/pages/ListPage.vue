@@ -95,6 +95,9 @@ export default {
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
     },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
+    },
     components: {
         MainLayout,
         PratilipiComponent,
