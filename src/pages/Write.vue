@@ -24,7 +24,7 @@
                         <div class="col-md-12" v-if="draftedContents.length > 0"><!-- LoggedIn only and has drafts -->
                             <div class="card">
                                 <div class="head-title">__("author_drafts")</div>
-                                <p>Finish writing your stories</p>
+                                <p class="left-w-p">Finish writing your stories</p>
                                 <div class="card-content drafts" @scroll="updateScroll">
                                     
                                     <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
@@ -181,6 +181,11 @@ export default {
             border-left: 3px solid #d0021b;
             padding-left: 10px;
             margin: 10px 0 0;
+        }
+        p.left-w-p {
+            text-align: left;
+            padding-left: 10px;
+            margin-bottom: 0;
         }
         .card-content {
             padding: 5px 10px 10px;
