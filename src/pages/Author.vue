@@ -16,7 +16,7 @@
                                 <img :src="getAuthorData.imageUrl + '?width=150'" alt="profile">
                                 <button class="update-img"><i class="material-icons">camera_alt</i></button>
                             </div>
-                            <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")></button>
+                            <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
                             <div class="profile-user-name">{{ getAuthorData.name }}</div>
                             <div class="profile-read-by">__("author_readby_count")</div>
                             <div class="profile-summary">
