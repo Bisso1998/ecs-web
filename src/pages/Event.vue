@@ -4,8 +4,15 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Event Details</h2>
-                        <div class="page-content event-list">
+                        <div class="card event-info">
+                            <div class="head-title">{{ getEventData.name }}</div>
+                            <img :src="getEventData.bannerImageUrl" alt="">
+                            <div class="desc" v-html="getEventData.description"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="page-content event-list card">
+                            <div class="head-title">__("event_entries")</div>
                             <PratilipiComponent
                                 :pratilipiData="pratilipiData"
                                 :key="pratilipiData.pratilipiId"
@@ -70,7 +77,7 @@ export default {
             }
         },
         'scrollPosition'(newScrollPosition){
-            const nintyPercentOfList = ( 90 / 100 ) * $('.event-page').innerHeight();
+            const nintyPercentOfList = ( 80 / 100 ) * $('.event-page').innerHeight();
             const { eventId } = this.getEventData;
 
             if (newScrollPosition > nintyPercentOfList && 
@@ -103,6 +110,7 @@ export default {
 .event-page {
     margin-top: 85px;
     text-align: left;
+    background: #f8f8f8;
     @media screen and (max-width: 992px ) {
         margin-top: 140px;
     }
@@ -114,61 +122,34 @@ export default {
         padding-left: 10px;
         margin: 10px 0;
     }
+    .card {
+        border-radius: 0;
+        margin: 10px 0;
+        padding: 0;
+        text-align: center;
+        .head-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            border-left: 3px solid #d0021b;
+            padding-left: 10px;
+            margin: 10px 0 0;
+        }
+        &.event-info img {
+            max-width: 100%;
+            margin: 10px;
+        }
+        .desc {
+            text-align: left;
+            padding: 10px;
+            font-size: 14px;
+        }
+    }
     .event-list {
         text-align: left;
+        display: block;
         @media screen and (max-width: 992px ) {
             text-align: center;
-        }
-        .event-section {
-            margin-left: 13px;
-            display: none;
-        }
-        ul {
-            @media screen and (max-width: 992px ) {
-                padding: 0;
-            }
-        }
-        li {
-            width: 300px;
-            background: #fff;
-            border: 1px solid #e9e9e9;
-            height: 252px;
-            margin: 10px;
-            color: #d0021b;
-            display: inline-block;
-            @media screen and (max-width: 768px ) {
-                width: 100%;
-                max-width: 340px;
-                height: 150px;
-            }
-            a {
-                color: #212121;
-                &:hover {
-                    text-decoration: none;
-                }
-            }
-            .event-img {
-                width: 100%;
-                height: 210px;
-                display: block;
-                background-size: cover;
-                background-position: right center;
-                @media screen and (max-width: 768px ) {
-                    height: 100px;
-                }
-            }
-            .event-name {
-                text-align: center;
-                font-size: 14px;
-                display: block;
-                height: 40px;
-                line-height: 40px;
-                color: #d00b12;
-                @media screen and (max-width: 768px ) {
-                    height: 50px;
-                    line-height: 50px;
-                }
-            }
         }
     }
 }

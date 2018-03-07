@@ -74,7 +74,7 @@ export default {
     },
     watch: {
         'scrollPosition'(newScrollPosition){
-            const nintyPercentOfList = ( 90 / 100 ) * $('.list-page').innerHeight();
+            const nintyPercentOfList = ( 75 / 100 ) * $('.list-page').innerHeight();
             const { list_page_url } = this.$route.params;
 
             if (newScrollPosition > nintyPercentOfList && this.getPratilipiListLoadingState !== 'LOADING' && this.getPratilipiListCursor !== null) {
