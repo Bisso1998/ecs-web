@@ -41,7 +41,7 @@
                       <span>__("write")</span>
                     </router-link>
                     <router-link
-                      :to="{ path: 'profile' }"
+                      :to="userDetails.profilePageUrl"
                       class="main-tabs">
                       <i class="material-icons">account_circle</i>
                       <span>Profile</span>
