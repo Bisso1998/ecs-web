@@ -63,7 +63,66 @@ export default {
     },
     setAuthorDataLoadingError(state) {
         state.author.loading_state = 'LOADING_ERROR';
+    },
+
+
+    setInitialAuthorFollowingDataLoadingTrue(state){
+        state.following.loading_state = 'LOADING';
+        state.following.data = [];
+        state.following.cursor = null;
+        state.following.numberFound = 0;
+    },
+
+    setInitialAuthorFollowingDataLoadingSuccess(state, data){
+        state.following.loading_state = 'LOADING_SUCCESS';
+        state.following.data = data.authorList;
+        state.following.cursor = data.cursor;
+        state.following.numberFound = data.numberFound;
+    },
+
+    setInitialAuthorFollowingDataLoadingError(state){
+        state.following.loading_state = 'LOADING_ERROR';
+    },
+
+    setInitialAuthorFollowersDataTrue(state){
+        state.followers.loading_state = 'LOADING';
+        state.followers.data = [];
+        state.followers.cursor = null;
+        state.followers.numberFound = 0;
+    },
+
+    setInitialAuthorFollowersDataSuccess(state, data){
+        state.followers.loading_state = 'LOADING_SUCCESS';
+        state.followers.data = data.userList;
+        state.followers.cursor = data.cursor;
+        state.followers.numberFound = data.numberFound;
+    },
+
+    setInitialAuthorFollowersDataError(state){
+        state.followers.loading_state = 'LOADING_ERROR';
+    },
+
+
+    setMoreAuthorFollowingDataLoadingTrue(state) {
+        state.following.loading_state = 'LOADING';
+    },
+    setMoreAuthorFollowingDataLoadingSuccess(state, response) {
+        state.following.loading_state = 'LOADING_SUCCESS';
+        state.following.data = state.following.data.concat(response.authorList);
+        state.following.cursor = response.cursor;
+    },
+    setMoreAuthorFollowingDataLoadingError(state) {
+        state.following.loading_state = 'LOADING_ERROR';
+    },
+    setMoreAuthorFollowersDataTrue(state) {
+        state.followers.loading_state = 'LOADING';
+    },
+    setMoreAuthorFollowersDataSuccess(state) {
+        state.followers.loading_state = 'LOADING_SUCCESS';
+        state.followers.data = state.followers.data.concat(response.userList);
+        state.followers.cursor = response.cursor;
+    },
+    setMoreAuthorFollowersDataError(state) {
+        state.followers.loading_state = 'LOADING_ERROR';
     }
-
-
 }

@@ -33,5 +33,49 @@ export default {
                 commit('setAuthorDataLoadingError');
             }
         });    
+    },
+
+    fetchInitialAuthorFollowingUsers({ commit, state }, { userId, resultCount }) {
+        commit('setInitialAuthorFollowingDataLoadingTrue');
+        DataAccessor.getUserFollowing(userId, null, null, resultCount, (data) => {
+            if (data.status === 200) {
+                commit('setInitialAuthorFollowingDataLoadingSuccess', data.response);    
+            } else {
+                commit('setInitialAuthorFollowingDataLoadingError');    
+            }
+        });    
+    },
+
+    fetchMoreAuthorFollowingUsers({ commit, state }, { userId, resultCount }) {
+        commit('setMoreAuthorFollowingDataLoadingTrue');
+        DataAccessor.getUserFollowing(userId, state.following.cursor, null, resultCount, (data) => {
+            if (data.status === 200) {
+                commit('setMoreAuthorFollowingDataLoadingSuccess', data.response);    
+            } else {
+                commit('setMoreAuthorFollowingDataLoadingError');    
+            }
+        });    
+    },
+
+    fetchInitialAuthorFollowerUsers({ commit, state }, { authorId, resultCount }) {
+        commit('setInitialAuthorFollowersDataTrue');
+        DataAccessor.getAuthorFollowers(authorId, null, null, resultCount, (data) => {
+            if (data.status === 200) {
+                commit('setInitialAuthorFollowersDataSuccess', data.response);    
+            } else {
+                commit('setInitialAuthorFollowersDataError');    
+            }
+        });    
+    },
+
+    fetchMoreAuthorFollowerUsers({ commit, state }, { authorId, resultCount }) {
+        commit('setMoreAuthorFollowersDataTrue');
+        DataAccessor.getAuthorFollowers(authorId, state.followers.cursor, null, resultCount, (data) => {
+            if (data.status === 200) {
+                commit('setMoreAuthorFollowersDataSuccess', data.response);    
+            } else {
+                commit('setMoreAuthorFollowersDataError');    
+            }
+        });    
     }
 }
