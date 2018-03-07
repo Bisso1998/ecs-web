@@ -8,6 +8,7 @@ import ListPageComponent from '@/pages/ListPage.vue'
 import DiscoverPageComponent from '@/pages/Discovery.vue'
 import ReaderPageComponent from '@/pages/Reader.vue'
 import StaticComponent from '@/pages/Static.vue'
+import EventsPageComponent from '@/pages/Events.vue'
 import EventPageComponent from '@/pages/Event.vue'
 import WritePageComponent from '@/pages/Write.vue'
 
@@ -59,6 +60,10 @@ export default new Router({
         component: StaticComponent
     }, {
         path: '/event',
+        name: 'Events_Page',
+        component: EventsPageComponent
+    }, {
+        path: '/event/:event_slug',
         name: 'Event_Page',
         component: EventPageComponent
     }, {
