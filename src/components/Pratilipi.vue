@@ -13,7 +13,7 @@
                 </div>
             </router-link>
             <div class="image-mask">
-                <button><i class="material-icons">share</i></button>
+                <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
                 <button>
                     <i v-if="!pratilipiData.addedToLib" class="material-icons" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">bookmark_border</i>
                     <i v-else class="material-icons added-to-lib" @click="removeFromLibrary(pratilipiData.pratilipiId)">bookmark</i>
@@ -90,6 +90,19 @@ export default {
                 this.addToLibrary(pratilipiId);
             }
         },
+        openShareModal() {
+            // if (navigator.share) {
+            //     navigator.share({
+            //         title: 'Web Fundamentals',
+            //         text: 'Check out Web Fundamentals — it rocks!',
+            //         url: 'https://developers.google.com/web',
+            //     })
+            //         .then(() => console.log('Successful share'))
+            //         .catch((error) => console.log('Error sharing', error));
+            // }
+            
+            $('#share_modal').modal('show');
+        }
     }
 }
 </script>

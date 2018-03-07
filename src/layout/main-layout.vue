@@ -3,6 +3,7 @@
         <Header :userDetails="getUserDetails"></Header>
         <slot></slot>
         <LoginModal></LoginModal>
+        <ShareModal></ShareModal>
         <Footer></Footer>
         <Alert></Alert>
         <a href="javascript:" id="return-to-top"><i class="material-icons">keyboard_arrow_up</i></a>
@@ -12,6 +13,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import LoginModal from '@/components/LoginModal.vue';
+import ShareModal from '@/components/Share.vue';
 import Footer from '@/components/Footer.vue';
 import Alert from '@/components/Alert.vue';
 
@@ -36,6 +38,7 @@ export default {
     components: {
         Header,
         LoginModal,
+        ShareModal,
         Footer,
         Alert
     },
