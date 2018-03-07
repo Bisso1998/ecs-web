@@ -12,6 +12,7 @@ import listpage from './modules/listpage'
 import staticpage from './modules/staticpage'
 import writepage from './modules/writepage'
 import eventpage from './modules/eventpage'
+import authorpage from './modules/authorpage'
 
 Vue.use(Vuex)
 
@@ -29,7 +30,8 @@ export default new Vuex.Store({
         eventpage,
         listpage,
         staticpage,
-        writepage
+        writepage,
+        authorpage
     },
     strict: debug
 })
