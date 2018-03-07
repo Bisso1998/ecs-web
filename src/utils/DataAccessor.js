@@ -190,7 +190,7 @@ export default {
             });
     },
 
-    getAuthorBySlug: (pageUri, includeUserAuthor, aCallBack) => {
+    getAuthorBySlug: (pageUri, aCallBack) => {
 
         var requests = [];
         requests.push(new request("req1", AUTHOR_NEW_API, { "slug": pageUri }));
