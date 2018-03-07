@@ -11,6 +11,7 @@ import eventspage from './modules/eventspage'
 import listpage from './modules/listpage'
 import staticpage from './modules/staticpage'
 import writepage from './modules/writepage'
+import eventpage from './modules/eventpage'
 
 Vue.use(Vuex)
 
@@ -25,6 +26,7 @@ export default new Vuex.Store({
         recommendation,
         authordetails,
         eventspage,
+        eventpage,
         listpage,
         staticpage,
         writepage
