@@ -56,7 +56,6 @@ export default {
     },
     watch:{
         getUserDetails(value) {
-            console.log(value);
             if (value && !value.isGuest) {
                 $('#login_modal').modal('hide');
             }
