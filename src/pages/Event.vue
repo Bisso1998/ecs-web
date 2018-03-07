@@ -1,19 +1,18 @@
 <template>
     <MainLayout>
-        <div class="static-page">
+        <div class="event-page">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>__("event_events")</h2>
+                        <h2>Event Details</h2>
                         <div class="page-content event-list">
-                            <ul>
-                                <li v-for="each_event in getEventsData" :key="each_event.eventId">
-                                    <a :href="each_event.pageUrl">
-                                        <span class="event-img" v-bind:style="{ backgroundImage: 'url(' + each_event.bannerImageUrl  + ')' }"></span>
-                                        <span class="event-name">{{ each_event.name }}</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <PratilipiComponent
+                                :pratilipiData="pratilipiData"
+                                :key="pratilipiData.pratilipiId"
+                                v-for="pratilipiData in getEventPratilipis"
+                                v-if="getEventPratilipisLoadingState === 'LOADING_SUCCESS' || getEventPratilipis.length !== 0"
+                                ></PratilipiComponent>
+                            <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner>
                         </div>
                     </div>
                 </div>
@@ -24,37 +23,80 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import PratilipiComponent from '@/components/Pratilipi.vue';
+import Spinner from '@/components/Spinner.vue';
 import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
-        MainLayout
+        MainLayout,
+        PratilipiComponent,
+        Spinner
+    },
+    data() {
+        return {
+            scrollPosition: null
+        }
     },
     computed: {
-        ...mapGetters('eventspage', [
-            'getEventsLoadingState',
-            'getEventsData'
+        ...mapGetters('eventpage', [
+            'getEventData',
+            'getEventDataLoadingState',
+            'getEventPratilipis',
+            'getEventPratilipisLoadingState',
+            'getEventPratilipisCursor'
         ])
     },
     methods: {
-        ...mapActions('eventspage', [
-            'fetchListOfEvents'
+        ...mapActions('eventpage', [
+            'cacheEventData',
+            'fetchEventDetails',
+            'fetchInitialEventPratilipis',
+            'fetchMorePratilipisForEvent'
         ]),
+        updateScroll() {
+            this.scrollPosition = window.scrollY;
+        }
+    },
+    watch: {
+        'getEventData.eventId' (eventId) {
+            if (eventId) {
+                this.fetchInitialEventPratilipis({ eventId, resultCount: 20 });
+            }
+        },
+        'scrollPosition'(newScrollPosition){
+            const nintyPercentOfList = ( 90 / 100 ) * $('.event-page').innerHeight();
+            const { eventId } = this.getEventData;
+
+            if (newScrollPosition > nintyPercentOfList && 
+                this.getEventPratilipisLoadingState !== 'LOADING' && 
+                this.getEventPratilipisCursor !== null) {
+
+                this.fetchMorePratilipisForEvent({ eventId, resultCount: 20 });
+            }
+        }
     },
     created() {
-        const currentLocale = process.env.LANGUAGE;
-        constants.LANGUAGES.forEach((eachLanguage) => {
-            if (eachLanguage.shortName === currentLocale) {
-                this.fetchListOfEvents(eachLanguage.fullName.toUpperCase())
-            }
-        });
-    }
+        const { event_data, event_slug } = this.$route.params;
+        if (event_data) {
+            this.cacheEventData(event_data);
+        } else {
+            this.fetchEventDetails(event_slug);
+        }
+        
+    },
+    mounted() {
+        window.addEventListener('scroll', this.updateScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-.static-page {
+.event-page {
     margin-top: 85px;
     text-align: left;
     @media screen and (max-width: 992px ) {
