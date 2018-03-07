@@ -11,6 +11,7 @@ import StaticComponent from '@/pages/Static.vue'
 import EventsPageComponent from '@/pages/Events.vue'
 import EventPageComponent from '@/pages/Event.vue'
 import WritePageComponent from '@/pages/Write.vue'
+import LibraryPageComponent from '@/pages/Library.vue'
 
 import constants from '@/constants'
 
@@ -70,6 +71,10 @@ export default new Router({
         path: '/write',
         name: 'Write_Page',
         component: WritePageComponent
+    }, {
+        path: '/library',
+        name: 'Library_Page',
+        component: LibraryPageComponent
     }, {
         path: '/:list_page_url',
         name: 'List_Page',
