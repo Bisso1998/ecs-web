@@ -10,14 +10,13 @@
                             <div class="desc" v-html="getEventData.description"></div>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-if="getEventPratilipisLoadingState === 'LOADING_SUCCESS' && getEventPratilipis.length !== 0">
                         <div class="page-content event-list card">
                             <div class="head-title">__("event_entries")</div>
                             <PratilipiComponent
                                 :pratilipiData="pratilipiData"
                                 :key="pratilipiData.pratilipiId"
                                 v-for="pratilipiData in getEventPratilipis"
-                                v-if="getEventPratilipisLoadingState === 'LOADING_SUCCESS' || getEventPratilipis.length !== 0"
                                 :addToLibrary="addToLibrary"
                                 :removeFromLibrary="removeFromLibrary"
                                 ></PratilipiComponent>
