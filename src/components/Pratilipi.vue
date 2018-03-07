@@ -99,7 +99,7 @@ export default {
         text-decoration: none;
         outline: none;
     }
-    .list-page .pratilipi-wrap {
+    .list-page .pratilipi-wrap, .event-list .pratilipi-wrap, .event-list .pratilipi-wrap .pratilipi {
         display: inline-block;
     }
     .pratilipi {
