@@ -75,7 +75,7 @@ export default {
     },
     
     addPratilipiToLibrarySuccess(state, data) {
-        const pratilipiAddedToLib = state.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
+        const pratilipiAddedToLib = state.pratilipiList.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
         if (pratilipiAddedToLib) {
             pratilipiAddedToLib.addedToLib = true
         }
@@ -86,7 +86,7 @@ export default {
     },
 
     removePratilipiFromLibrarySuccess(state, data) {
-        const pratilipiAddedToLib = state.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
+        const pratilipiAddedToLib = state.pratilipiList.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
         if (pratilipiAddedToLib) {
             pratilipiAddedToLib.addedToLib = false
         }

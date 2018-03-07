@@ -11,6 +11,8 @@
                                 :key="pratilipiData.pratilipiId"
                                 v-for="pratilipiData in getEventPratilipis"
                                 v-if="getEventPratilipisLoadingState === 'LOADING_SUCCESS' || getEventPratilipis.length !== 0"
+                                :addToLibrary="addToLibrary"
+                                :removeFromLibrary="removeFromLibrary"
                                 ></PratilipiComponent>
                             <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner>
                         </div>
@@ -53,7 +55,9 @@ export default {
             'cacheEventData',
             'fetchEventDetails',
             'fetchInitialEventPratilipis',
-            'fetchMorePratilipisForEvent'
+            'fetchMorePratilipisForEvent',
+            'addToLibrary',
+            'removeFromLibrary'
         ]),
         updateScroll() {
             this.scrollPosition = window.scrollY;
