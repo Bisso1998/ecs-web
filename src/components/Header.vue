@@ -42,6 +42,7 @@
                     </router-link>
                     <router-link
                       :to="userDetails.profilePageUrl"
+                      v-if="userDetails.profilePageUrl"
                       class="main-tabs">
                       <i class="material-icons">account_circle</i>
                       <span>Profile</span>
