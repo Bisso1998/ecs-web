@@ -23,5 +23,13 @@ export default {
 
     getPublishedContents: state => state.published_contents.data,
     getPublishedContentsLoadingState: state => state.published_contents.loading_state,
-    getPublishedContentsTotalCount: state => state.published_contents.numberFound
+    getPublishedContentsTotalCount: state => state.published_contents.numberFound,
+
+    getAuthorFollowing: state => state.following.data,
+    getAuthorFollowingLoadingState: state => state.following.loading_state,
+    getAuthorFollowingCursor: state => state.following.cursor,
+
+    getAuthorFollowers: state => state.followers.data,
+    getAuthorFollowersLoadingState: state => state.followers.loading_state,
+    getAuthorFollowersCursor: state => state.followers.cursor,
 }

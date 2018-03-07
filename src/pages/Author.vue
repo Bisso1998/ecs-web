@@ -50,19 +50,46 @@ export default {
         ...mapActions('authorpage', [
             'fetchInitialPublishedContents',
             'fetchMorePublishedContents',
-            'fetchAuthorDetails'
+            'fetchAuthorDetails',
+            'fetchInitialAuthorFollowingUsers',
+            'fetchMoreAuthorFollowingUsers',
+            'fetchInitialAuthorFollowerUsers',
+            'fetchMoreAuthorFollowerUsers'
         ])
     },
     watch: {
         'getUserDetails.authorId'(newValue) {
-            this.fetchInitialPublishedContents({ 
-                authorId: newValue,
-                resultCount: 10
-            });
+
+            if (newValue) {
+                this.fetchInitialPublishedContents({ 
+                    authorId: newValue,
+                    resultCount: 10
+                });
+
+                this.fetchInitialAuthorFollowingUsers({ 
+                    userId: this.getUserDetails.userId, 
+                    resultCount: 20 
+                });
+
+                this.fetchInitialAuthorFollowerUsers({ 
+                    authorId: newValue, 
+                    resultCount: 20 
+                });
+            }
         }
     },
     created() {
         this.fetchInitialPublishedContents({ 
+            authorId: this.getUserDetails.authorId, 
+            resultCount: 20 
+        });
+
+        this.fetchInitialAuthorFollowingUsers({ 
+            userId: this.getUserDetails.userId, 
+            resultCount: 20 
+        });
+
+        this.fetchInitialAuthorFollowerUsers({ 
             authorId: this.getUserDetails.authorId, 
             resultCount: 20 
         });
