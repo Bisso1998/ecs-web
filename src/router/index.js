@@ -27,7 +27,7 @@ export default new Router({
         name: 'Pratilipi',
         component: PratilipiComponent
     }, {
-        path: '/user/:user_id',
+        path: '/user/:user_slug',
         name: 'User',
         component: AuthorComponent
     }, {
