@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card event-info">
+                        <div class="card blog-info">
                             <div class="head-title">{{ getBlogData.title }}</div>
                             <div class="desc" v-html="getBlogData.content"></div>
                             <Spinner v-if="getBlogDataLoadingStatus === 'LOADING'"></Spinner>
@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .blog-page {
     margin-top: 85px;
     text-align: left;
@@ -60,42 +60,28 @@ export default {
     @media screen and (max-width: 992px ) {
         margin-top: 140px;
     }
-    h2 {
-        font-size: 24px;
-        font-weight: bold;
-        text-align: left;
-        border-left: 3px solid #d0021b;
-        padding-left: 10px;
-        margin: 10px 0;
-    }
     .card {
         border-radius: 0;
         margin: 10px 0;
         padding: 0;
-        text-align: center;
+        text-align: left;
         .head-title {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: bold;
             text-align: left;
             border-left: 3px solid #d0021b;
             padding-left: 10px;
             margin: 10px 0 0;
         }
-        &.event-info img {
-            max-width: 100%;
-            margin: 10px;
-        }
         .desc {
             text-align: left;
             padding: 10px;
             font-size: 14px;
-        }
-    }
-    .event-list {
-        text-align: left;
-        display: block;
-        @media screen and (max-width: 992px ) {
-            text-align: center;
+            img {
+                max-width: 100%;
+                margin: 10px;
+                height: auto !important;
+            }
         }
     }
 }

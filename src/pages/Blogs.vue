@@ -4,16 +4,18 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>__("seo_blog_page")</h2>
-                        <div class="page-content event-list">
+                        <div class="page-title">__("seo_blog_page")</div>
+                        <div class="page-content blog-section">
                             <ul>
-                                <li v-for="eachBlog in getBlogsData" :key="eachBlog.eventId">
+                                <li v-for="eachBlog in getBlogsData" :key="eachBlog.eventId" class="card">
                                     <router-link :to="{ name: 'Blog_Page', params: { blog_id: eachBlog.pageUrl.split('/').pop() } }">
-                                        <h1>{{ eachBlog.title }}</h1>
-                                        <p>{{ eachBlog.content }}</p>
+                                        <div class="head-title">{{ eachBlog.title }}</div>
+                                        <div class="blog-summary">{{ eachBlog.content }}</div>
+                                        <div class="view-more">__("view_more")</div>
                                     </router-link>
                                 </li>
                             </ul>
+                            <Spinner v-if="getBlogsLoadingState === 'LOADING'"></Spinner>
                         </div>
                     </div>
                 </div>
@@ -25,11 +27,13 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants'
+import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
-        MainLayout
+        MainLayout,
+        Spinner
     },
     computed: {
         ...mapGetters('blogspage', [
@@ -58,70 +62,47 @@ export default {
 .static-page {
     margin-top: 85px;
     text-align: left;
+    background: #f8f8f8;
     @media screen and (max-width: 992px ) {
         margin-top: 140px;
     }
-    h2 {
+    .page-title {
+        text-align: left;
         font-size: 24px;
         font-weight: bold;
-        text-align: left;
-        border-left: 3px solid #d0021b;
-        padding-left: 10px;
-        margin: 10px 0;
     }
-    .event-list {
-        text-align: left;
-        @media screen and (max-width: 992px ) {
-            text-align: center;
-        }
-        .event-section {
-            margin-left: 13px;
-            display: none;
-        }
+    .blog-section {
         ul {
-            @media screen and (max-width: 992px ) {
-                padding: 0;
-            }
+            padding: 0;
         }
-        li {
-            width: 300px;
-            background: #fff;
-            border: 1px solid #e9e9e9;
-            height: 252px;
+        .card {
+            border-radius: 0;
             margin: 10px;
-            color: #d0021b;
-            display: inline-block;
-            @media screen and (max-width: 768px ) {
-                width: 100%;
-                max-width: 340px;
-                height: 150px;
-            }
             a {
-                color: #212121;
+                color: #2c3e50;
+                .head-title {
+                    font-size: 18px;
+                    font-weight: bold;
+                    text-align: left;
+                    border-left: 3px solid #d0021b;
+                    padding-left: 10px;
+                    margin: 10px 0 0;
+                }
+                .blog-summary {
+                    font-size: 14px;
+                    padding: 0 10px;
+                    margin: 5px 0;
+                    height: 90px;
+                    overflow: hidden;
+                }
                 &:hover {
                     text-decoration: none;
                 }
-            }
-            .event-img {
-                width: 100%;
-                height: 210px;
-                display: block;
-                background-size: cover;
-                background-position: right center;
-                @media screen and (max-width: 768px ) {
-                    height: 100px;
-                }
-            }
-            .event-name {
-                text-align: center;
-                font-size: 14px;
-                display: block;
-                height: 40px;
-                line-height: 40px;
-                color: #d00b12;
-                @media screen and (max-width: 768px ) {
-                    height: 50px;
-                    line-height: 50px;
+                .view-more {
+                    color: #d0021b;
+                    padding: 0 10px 10px;
+                    font-size: 14px;
+                    text-align: right;
                 }
             }
         }
