@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>__("event_events")</h2>
+                        <h2>__("seo_blog_page")</h2>
                         <div class="page-content event-list">
                             <ul>
                                 <li v-for="eachBlog in getBlogsData" :key="eachBlog.eventId">
