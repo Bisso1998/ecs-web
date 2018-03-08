@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="event-page">
+        <div class="blog-page">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.event-page {
+.blog-page {
     margin-top: 85px;
     text-align: left;
     background: #f8f8f8;
