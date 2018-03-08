@@ -63,7 +63,6 @@
                                     :key="pratilipiData.pratilipiId"
                                     v-for="pratilipiData in getLibraryList"
                                     v-if="getLibraryListLoadingState === 'LOADING_SUCCESS' || getLibraryList.length !== 0"
-                                    :hideAddToLibrary="true"
                                     :hideAuthorName="true"
                                     ></PratilipiComponent>
                                     <router-link
@@ -197,8 +196,10 @@ export default {
 .author-page {
     background: #fff;
     margin-top: 85px;
+    text-align: left;
     @media screen and (max-width: 992px ) {
         margin-top: 135px;
+        text-align: center;
     }
     .profile-top {
         padding: 0;
