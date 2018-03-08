@@ -77,5 +77,28 @@ export default {
                 commit('setMoreAuthorFollowersDataError');    
             }
         });    
-    }
+    },
+
+    fetchInitialLibraryList({ commit, state }, resultCount) {
+        commit('setLibraryListInitialDataLoadingTrue');
+        DataAccessor.getUserLibraryList(null, resultCount, function(data) {
+            if (data.status === 200) {
+                commit('setLibraryListInitialDataLoadingSuccess', data.response);
+            } else {
+                commit('setLibraryListInitialDataLoadingError');
+            }
+        });
+    },
+
+    removeFromLibrary({ commit, state }, pratilipiId) {
+        DataAccessor.addOrRemoveFromLibrary(pratilipiId, false, (response) => {
+            commit('alert/triggerAlertView', '__('removed_from_library')', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
+            commit('removePratilipiFromLibrarySuccess', response);
+        }, (error) => {
+            commit('removePratilipiFromLibraryError');
+        })
+    },
 }

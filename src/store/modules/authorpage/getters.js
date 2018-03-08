@@ -25,6 +25,10 @@ export default {
     getPublishedContentsLoadingState: state => state.published_contents.loading_state,
     getPublishedContentsTotalCount: state => state.published_contents.numberFound,
 
+    getLibraryList: state => state.library.data,
+    getLibraryListLoadingState: state => state.library.loading_state,
+    getLibraryListTotalCount: state => state.library.numberFound,
+
     getAuthorFollowing: state => state.following.data,
     getAuthorFollowingLoadingState: state => state.following.loading_state,
     getAuthorFollowingCursor: state => state.following.cursor,
