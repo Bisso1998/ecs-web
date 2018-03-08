@@ -16,7 +16,6 @@
                                 <img :src="getAuthorData.imageUrl + '?width=150'" alt="profile">
                                 <button class="update-img"><i class="material-icons">camera_alt</i></button>
                             </div>
-                            <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
                             <div class="profile-user-name">{{ getAuthorData.name }}</div>
                             <div class="profile-read-by">__("author_readby_count")</div>
                             <div class="profile-summary">
@@ -38,13 +37,24 @@
                                 </div>
                               </div>
                             </div>
+                            <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
+                            <div class="stats-section">
+                                <div><span>{{ getAuthorData.contentPublished }}</span> __("author_published_contents")</div>
+                                <div><span>{{ getAuthorData.followCount }}</span> __("author_followers")</div>
+                                <div><span>{{ getAuthorData.user.followCount }}</span> __("author_following")</div>
+                            </div>
                         </div>
                         <div class="col-md-12 profile-bottom">
                             <div class="profile-menu">
-                                <a href="#">{{ getAuthorData.contentPublished }} Published</a>
-                                <a href="#">Library</a>
-                                <a href="#">{{ getAuthorData.followCount }} Followers</a>
-                                <a href="#">{{ getAuthorData.user.followCount }} Following</a>
+                                <a href="#" class="active">__("author_published_contents")</a>
+                                <a href="#">__("library")</a>
+                                <a href="#">__("author_followers")</a>
+                                <a href="#">__("author_following")</a>
+                            </div>
+                            <div class="bottom-contents">
+                                <div class="published-contents">
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,10 +158,10 @@ export default {
     }
     .profile-top {
         padding: 0;
-        text-align: left;
+        text-align: center;
         .profile-cover {
             width: 100%;
-            height: 200px;
+            height: 150px;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -177,18 +187,22 @@ export default {
             }
         }
         .profile-image {
-            width: 160px;
-            height: 160px;
+            width: 130px;
+            height: 130px;
             background: #fff;
             border: 1px solid #e9e9e9;
             padding: 4px;
-            margin: -80px 0 0 20px;
-            border-radius: 2px;
+            margin: -80px auto 0;
+            border-radius: 50%;
             position: relative;
-            display: inline-block;
             img {
-                width: 150px;
-                height: 150px;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+            }
+            .update-img { 
+                bottom: 5px;
+                left: 45px;
             }
         }
         .update-img {
@@ -207,10 +221,12 @@ export default {
             }
         }
         .follow-link {
-            color: #d0021b;
-            float: right;
-            margin: 10px 10px 0 0;
+            color: #fff;
+            background: #d0021b;
+            margin: 10px auto;
+            display: block;
             font-size: 14px;
+            clear: both;
             i {
                 vertical-align: middle;
                 padding-right: 5px;
@@ -219,18 +235,18 @@ export default {
         }
         .profile-user-name {
             font-weight: bold;
-            margin: 5px 0 0 25px;
-            text-align: left;
+            margin: 5px 0 0;
         }
         .profile-read-by {
             font-size: 12px;
-            margin: 5px 0 5px 25px;
-            text-align: left;
+            margin: 5px 0;
+            color: #555;
         }
         .profile-summary {    
             p {
                 margin: 5px;
                 font-size: 14px;
+                color: #555;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
@@ -245,6 +261,30 @@ export default {
                 outline: none;
                 cursor: pointer;
                 font-size: 12px;
+                float: right;
+                margin: 0 10px 5px;
+            }
+        }
+        .stats-section {
+            margin: 20px 0;
+            text-align: center;
+            border-top: 1px solid #e9e9e9;
+            border-bottom: 1px solid #e9e9e9;
+            font-size: 12px;
+            color: #555;
+            div {
+                display: inline-block;
+                width: 32%;
+                border-right: 1px solid #e9e9e9;
+                padding: 5px;
+                &:last-child {
+                    border-right: 0;
+                }
+                span {
+                    display: block;
+                    font-size: 14px;
+                    font-weight: bold;
+                }
             }
         }
         .summary-modal {
@@ -253,6 +293,22 @@ export default {
             margin: 50px 0 0;
             .modal-title {
                 font-size: 14px;
+            }
+        }
+    }
+    .profile-bottom {
+        margin: 10px 0;
+        .profile-menu {
+            a {
+                color: #555;
+                font-size: 13px;
+                border-bottom: 2px solid #fff;
+                padding: 5px 0;
+                margin: 0 5px;
+                &.active {
+                    color: #d0021b;
+                    border-color: #d0021b;
+                }
             }
         }
     }
