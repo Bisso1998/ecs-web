@@ -7,14 +7,14 @@
                         <div class="col-md-12 profile-top" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
                             <div class="profile-cover" :style="{ backgroundImage: 'url(' + getAuthorData.coverImageUrl + ')' }">
                                 <div class="cover-options">
-                                    <button type="button" name="button"><i class="material-icons">settings</i></button>
+                                    <button type="button" name="button" v-if="getUserDetails.userId === getAuthorData.user.userId"><i class="material-icons">settings</i></button>
                                     <button type="button" name="button"><i class="material-icons">share</i></button>
                                 </div>
-                                <button class="update-img"><i class="material-icons">camera_alt</i></button>
+                                <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId"><i class="material-icons">camera_alt</i></button>
                             </div>
                             <div class="profile-image">
                                 <img :src="getAuthorData.imageUrl + '?width=150'" alt="profile">
-                                <button class="update-img"><i class="material-icons">camera_alt</i></button>
+                                <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId"><i class="material-icons">camera_alt</i></button>
                             </div>
                             <div class="profile-user-name">{{ getAuthorData.name }}</div>
                             <div class="profile-read-by">__("author_readby_count")</div>
@@ -37,10 +37,10 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="follow-btn-w-count"><!-- Follow Button -->
+                            <div class="follow-btn-w-count" v-if="!getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="followOrUnfollowAuthor"><!-- Follow Button -->
                                 <button><i class="material-icons">person_add</i> __("author_follow")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                             </div>
-                            <div class="follow-btn-w-count" style="display: none;"><!-- Following Button -->
+                            <div class="follow-btn-w-count" v-if="getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="followOrUnfollowAuthor"><!-- Following Button -->
                                 <button><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                             </div>
                         </div>
@@ -69,6 +69,7 @@
                                     v-for="pratilipiData in getLibraryList"
                                     v-if="getLibraryListLoadingState === 'LOADING_SUCCESS' || getLibraryList.length !== 0"
                                     :hideAuthorName="true"
+                                    :removeFromLibrary="removeFromLibrary"
                                     ></PratilipiComponent>
                                     <router-link
                                     :to="{ name: 'Library_Page' }"
@@ -158,7 +159,8 @@ export default {
             'fetchInitialAuthorFollowerUsers',
             'fetchMoreAuthorFollowerUsers',
             'fetchInitialLibraryList',
-            'removeFromLibrary'
+            'removeFromLibrary',
+            'followOrUnfollowAuthor'
         ]),
         tabchange(event) {
             event.preventDefault();        

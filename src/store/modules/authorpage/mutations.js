@@ -163,11 +163,27 @@ export default {
     },
 
     removePratilipiFromLibrarySuccess(state, data) {
-        state.data = state.library.data.filter(eachPratilipi => eachPratilipi.pratilipiId !== data.referenceId);
-        state.cursor--;
+        state.library.data = state.library.data.filter(eachPratilipi => eachPratilipi.pratilipiId !== data.referenceId);
     },
 
     removePratilipiFromLibraryError() {
+
+    },
+
+    setFollowUnfollowLoadingDataLoadingTrue(state) {
+
+    },
+
+    setFollowUnfollowLoadingDataLoadingSuccess(state, data){
+        state.author.data.following = data.following;
+        if (data.following) {
+            state.author.data.followCount++;    
+        } else {
+            state.author.data.followCount--;
+        }
+    },
+
+    setFollowUnfollowLoadingDataLoadingError(state) {
 
     }
 }

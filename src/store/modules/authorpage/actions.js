@@ -99,6 +99,21 @@ export default {
             commit('removePratilipiFromLibrarySuccess', response);
         }, (error) => {
             commit('removePratilipiFromLibraryError');
-        })
+        });
     },
+
+    followOrUnfollowAuthor({ commit, state, dispatch }) {
+        commit('setFollowUnfollowLoadingDataLoadingTrue');
+        console.log(state.author.data.authorId);
+        console.log(state.author.data.following);
+        setTimeout(() => {
+            dispatch('fetchInitialAuthorFollowerUsers', { authorId: state.author.data.authorId, resultCount: 5 });    
+        }, 1200);
+        
+        DataAccessor.followOrUnfollowAuthor(state.author.data.authorId, !state.author.data.following, function(data) {
+            commit('setFollowUnfollowLoadingDataLoadingSuccess', data);
+        }, function (error) {
+            commit('setFollowUnfollowLoadingDataLoadingError');
+        });
+    }
 }
