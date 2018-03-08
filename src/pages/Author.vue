@@ -111,6 +111,7 @@ export default {
     data() {
         return {
             user_id: null,
+            scrollPosition: null
         }
     },
     computed: {
@@ -127,7 +128,10 @@ export default {
             'getAuthorFollowingLoadingState',
             'getAuthorFollowersLoadingState',
             'getLibraryList',
-            'getLibraryListLoadingState'
+            'getLibraryListLoadingState',
+            'getPublishedContentsCursor',
+            'getAuthorFollowingCursor',
+            'getAuthorFollowersCursor'
         ]),
         ...mapState({
             publishedContents: state => state.authorpage.published_contents.data,
@@ -154,6 +158,9 @@ export default {
             $(event.currentTarget).addClass("active");
             $(".bottom-contents .list").hide();
             $("#" + tab_id).show();
+        },
+        updateScroll() {
+            this.scrollPosition = window.scrollY
         }
     },
     watch: {
@@ -180,6 +187,37 @@ export default {
         },
         '$route.params.user_slug' (user_slug) {
             this.fetchAuthorDetails(user_slug);
+        },
+        'scrollPosition'(newScrollPosition){
+            const nintyPercentOfList = ( 75 / 100 ) * $('.author-page').innerHeight();
+
+
+            if (newScrollPosition > nintyPercentOfList 
+                && this.getAuthorFollowingLoadingState !== 'LOADING'  
+                && this.getAuthorFollowersLoadingState !== 'LOADING'  
+                && this.getLibraryListLoadingState !== 'LOADING') {
+                
+                if (this.getPublishedContentsCursor !== null) {
+                    this.fetchMorePublishedContents({ 
+                        authorId: this.getAuthorData.authorId,
+                        resultCount: 10
+                    });
+                }
+
+                if (this.getAuthorFollowingCursor !== null) {
+                    this.fetchMoreAuthorFollowingUsers({ 
+                        userId: this.getAuthorData.user.userId, 
+                        resultCount: 20
+                    });
+                }
+
+                if (this.getAuthorFollowersCursor !== null) {
+                    this.fetchMoreAuthorFollowerUsers({ 
+                        authorId: this.getAuthorData.authorId, 
+                        resultCount: 20 
+                    });
+                }
+            }
         }
     },
     created() {
@@ -189,7 +227,13 @@ export default {
     components: {
         MainLayout,
         PratilipiComponent
-    }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.updateScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
+    },
 }
 </script>
 
