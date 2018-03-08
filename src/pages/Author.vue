@@ -37,8 +37,11 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="follow-btn-w-count">
-                                <button class=""><i class="material-icons">person_add</i> __("author_follow")</button><span><b>{{ getAuthorData.followCount }}</b></span>
+                            <div class="follow-btn-w-count"><!-- Follow Button -->
+                                <button><i class="material-icons">person_add</i> __("author_follow")</button><span><b>{{ getAuthorData.followCount }}</b></span>
+                            </div>
+                            <div class="follow-btn-w-count" style="display: none;"><!-- Following Button -->
+                                <button><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                             </div>
                         </div>
                         <div class="col-md-12 profile-bottom" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
@@ -84,6 +87,7 @@
                                         </a>
                                         <div class="follow-count">__("author_followers"): <span>{{ each_follower.author.followCount }}</span></div>
                                         <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
+                                        <button style="display: none;" class="btn btn-light follow-link"><i class="material-icons">check</i> __("author_following")</button>
                                     </div>
                                 </div>
                                 <div class="list following" id="following">
@@ -94,6 +98,7 @@
                                         </a>
                                         <div class="follow-count">__("author_followers"): <span>{{ each_following.followCount }}</span></div>
                                         <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
+                                        <button style="display: none;" class="btn btn-light follow-link"><i class="material-icons">check</i> __("author_following")</button>
                                     </div>
                                 </div>
                             </div>
