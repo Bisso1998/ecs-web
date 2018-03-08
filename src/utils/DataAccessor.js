@@ -278,13 +278,13 @@ export default {
             });
     },
 
-    getBlogPostListByUri: (pageUri, state, cursor, resultCount, aCallBack) => {
+    getBlogPostListByUri: (language, state, cursor, resultCount, aCallBack) => {
         var requests = [];
-        requests.push(new request("req1", PAGE_API, { "uri": pageUri }));
+        requests.push(new request("req1", PAGE_API, { "uri": '/blog' }));
 
         var params = {
             "blogId": "$req1.primaryContentId",
-            "language": "${ language }"
+            "language": language
         };
         params["state"] = state != null ? state : "PUBLISHED";
         if (cursor != null) params["cursor"] = cursor;
@@ -314,8 +314,8 @@ export default {
             function(response, status) { processGetResponse(response, status, aCallBack) });
     },
 
-    getNotificationList: (cursor, resultCount, aCallBack) => {
-        var params = { "language": "${ language }" };
+    getNotificationList: (cursor, resultCount, language, aCallBack) => {
+        var params = { "language": language };
         if (cursor != null) params["cursor"] = cursor;
         if (resultCount != null) params["resultCount"] = resultCount;
         httpUtil.get(API_PREFIX + NOTIFICATION_LIST_API,

@@ -12,6 +12,8 @@ import EventsPageComponent from '@/pages/Events.vue'
 import EventPageComponent from '@/pages/Event.vue'
 import WritePageComponent from '@/pages/Write.vue'
 import LibraryPageComponent from '@/pages/Library.vue'
+import BlogsPageComponent from '@/pages/Blogs.vue'
+import BlogPageComponent from '@/pages/Blog.vue'
 
 import constants from '@/constants'
 
@@ -75,6 +77,14 @@ export default new Router({
         path: '/library',
         name: 'Library_Page',
         component: LibraryPageComponent
+    }, {
+        path: '/blog',
+        name: 'Blogs_Page',
+        component: BlogsPageComponent
+    }, {
+        path: '/blog/:blog_id',
+        name: 'Blog_Page',
+        component: BlogPageComponent
     }, {
         path: '/:list_page_url',
         name: 'List_Page',

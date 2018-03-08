@@ -42,7 +42,7 @@
                         <div class="col-md-12 profile-bottom" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
                             <div class="profile-menu">
                                 <a href="#" v-on:click="tabchange" class="active" data-tab="published"><span>{{ getAuthorData.contentPublished }}</span>__("author_published_contents")</a>
-                                <a href="#" v-on:click="tabchange" data-tab="library">__("library")</a>
+                                <a href="#" v-if="getUserDetails.userId === getAuthorData.user.userId" v-on:click="tabchange" data-tab="library">__("library")</a>
                                 <a href="#" v-on:click="tabchange" data-tab="followers"><span>{{ getAuthorData.followCount }}</span>__("author_followers")</a>
                                 <a href="#" v-on:click="tabchange" data-tab="following"><span>{{ getAuthorData.user.followCount }}</span>__("author_following")</a>
                             </div>
@@ -58,7 +58,19 @@
                                     ></PratilipiComponent>
                                 </div>
                                 <div class="list library" id="library">
-                                    
+                                    <PratilipiComponent
+                                    :pratilipiData="pratilipiData"
+                                    :key="pratilipiData.pratilipiId"
+                                    v-for="pratilipiData in getLibraryList"
+                                    v-if="getLibraryListLoadingState === 'LOADING_SUCCESS' || getLibraryList.length !== 0"
+                                    :hideAddToLibrary="true"
+                                    :hideAuthorName="true"
+                                    ></PratilipiComponent>
+                                    <router-link
+                                    :to="{ name: 'Library_Page' }"
+                                    class="view-more">
+                                        __("view_more")
+                                    </router-link>
                                 </div>
                                 <div class="list followers" id="followers">
                                     <div class="follow" v-for="each_follower in getAuthorFollowers" :key="each_follower.userId">
@@ -113,7 +125,9 @@ export default {
             'getAuthorFollowingCount',
             'getPublishedContents',
             'getAuthorFollowingLoadingState',
-            'getAuthorFollowersLoadingState'
+            'getAuthorFollowersLoadingState',
+            'getLibraryList',
+            'getLibraryListLoadingState'
         ]),
         ...mapState({
             publishedContents: state => state.authorpage.published_contents.data,
@@ -129,7 +143,9 @@ export default {
             'fetchInitialAuthorFollowingUsers',
             'fetchMoreAuthorFollowingUsers',
             'fetchInitialAuthorFollowerUsers',
-            'fetchMoreAuthorFollowerUsers'
+            'fetchMoreAuthorFollowerUsers',
+            'fetchInitialLibraryList',
+            'removeFromLibrary'
         ]),
         tabchange(event) {
             event.preventDefault();        
@@ -158,7 +174,12 @@ export default {
                     authorId: newValue, 
                     resultCount: 20 
                 });
+
+                this.fetchInitialLibraryList(10);
             }
+        },
+        '$route.params.user_slug' (user_slug) {
+            this.fetchAuthorDetails(user_slug);
         }
     },
     created() {

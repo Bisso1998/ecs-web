@@ -124,5 +124,36 @@ export default {
     },
     setMoreAuthorFollowersDataError(state) {
         state.followers.loading_state = 'LOADING_ERROR';
+    },
+
+
+    setLibraryListInitialDataLoadingTrue(state) {
+        state.library.loading_state = 'LOADING';
+        state.library.data = [];
+        state.library.cursor = null;
+        state.library.numberFound = 0;
+    },
+
+    setLibraryListInitialDataLoadingSuccess(state, data) {
+        state.library.loading_state = 'LOADING_SUCCESS';
+        state.library.data = data.pratilipiList;
+        state.library.cursor = data.cursor;
+        state.library.numberFound = data.numberFound;
+    },
+
+    setLibraryListInitialDataLoadingError(state) {
+        state.library.loading_state = 'LOADING_ERROR';
+        state.library.data = [];
+        state.library.cursor = null;
+        state.library.numberFound = 0;
+    },
+
+    removePratilipiFromLibrarySuccess(state, data) {
+        state.data = state.library.data.filter(eachPratilipi => eachPratilipi.pratilipiId !== data.referenceId);
+        state.cursor--;
+    },
+
+    removePratilipiFromLibraryError() {
+
     }
 }

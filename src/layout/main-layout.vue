@@ -17,6 +17,8 @@ import ShareModal from '@/components/Share.vue';
 import Footer from '@/components/Footer.vue';
 import Alert from '@/components/Alert.vue';
 
+import constants from '@/constants'
+
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -32,7 +34,8 @@ export default {
     },
     methods: {
         ...mapActions([
-            'fetchUserDetails'
+            'fetchUserDetails',
+            'fetchInitialNotifications'
         ])
     },
     components: {
@@ -41,6 +44,18 @@ export default {
         ShareModal,
         Footer,
         Alert
+    },
+    watch: {
+        'getUserDetails.userId'(newValue) {
+            if (newValue) {
+                const currentLocale = process.env.LANGUAGE;
+                constants.LANGUAGES.forEach((eachLanguage) => {
+                    if (eachLanguage.shortName === currentLocale) {
+                        this.fetchInitialNotifications(eachLanguage.fullName.toUpperCase(), 10);
+                    }
+                });
+            }
+        }
     },
     created() {
         this.currentLocale = 'language-' + process.env.LANGUAGE;

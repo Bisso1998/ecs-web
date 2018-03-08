@@ -20,5 +20,11 @@ export default {
     author: {
     	loading_state: 'LOADING',
     	data: {}
+    },
+    library: {
+        loading_state: 'LOADING',
+        data: [],
+        numberFound: 0,
+        cursor: null
     }
 }
