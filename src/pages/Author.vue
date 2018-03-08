@@ -164,7 +164,7 @@ export default {
             $("#" + tab_id).show();
         },
         updateScroll() {
-            this.scrollPosition = window.scrollY
+            this.scrollPosition = window.scrollY;
         }
     },
     watch: {
@@ -178,12 +178,12 @@ export default {
 
                 this.fetchInitialAuthorFollowingUsers({ 
                     userId: this.getAuthorData.user.userId, 
-                    resultCount: 20
+                    resultCount: 5
                 });
 
                 this.fetchInitialAuthorFollowerUsers({ 
                     authorId: newValue, 
-                    resultCount: 20 
+                    resultCount: 5 
                 });
 
                 this.fetchInitialLibraryList(10);
@@ -199,26 +199,26 @@ export default {
             if (newScrollPosition > nintyPercentOfList 
                 && this.getAuthorFollowingLoadingState !== 'LOADING'  
                 && this.getAuthorFollowersLoadingState !== 'LOADING'  
-                && this.getLibraryListLoadingState !== 'LOADING') {
+                && this.publishedContentsLoadingState !== 'LOADING') {
                 
-                if (this.getPublishedContentsCursor !== null) {
+                if (this.getPublishedContentsCursor) {
                     this.fetchMorePublishedContents({ 
                         authorId: this.getAuthorData.authorId,
                         resultCount: 10
                     });
                 }
 
-                if (this.getAuthorFollowingCursor !== null) {
+                if (this.getAuthorFollowingCursor) {
                     this.fetchMoreAuthorFollowingUsers({ 
                         userId: this.getAuthorData.user.userId, 
-                        resultCount: 20
+                        resultCount: 5
                     });
                 }
 
-                if (this.getAuthorFollowersCursor !== null) {
+                if (this.getAuthorFollowersCursor) {
                     this.fetchMoreAuthorFollowerUsers({ 
                         authorId: this.getAuthorData.authorId, 
-                        resultCount: 20 
+                        resultCount: 5 
                     });
                 }
             }

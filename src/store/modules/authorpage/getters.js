@@ -24,6 +24,7 @@ export default {
     getPublishedContents: state => state.published_contents.data,
     getPublishedContentsLoadingState: state => state.published_contents.loading_state,
     getPublishedContentsTotalCount: state => state.published_contents.numberFound,
+    getPublishedContentsCursor: state => state.published_contents.cursor,
 
     getLibraryList: state => state.library.data,
     getLibraryListLoadingState: state => state.library.loading_state,

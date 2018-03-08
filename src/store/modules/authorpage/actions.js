@@ -15,7 +15,7 @@ export default {
 
     fetchMorePublishedContents({ commit, state }, { authorId, resultCount }) {
         commit('setPublishedContentsDynamicLoadingTrue');
-        DataAccessor.getPratilipiListByAuthor(authorId, 'PUBLISHED', state.drafts.cursor, null, resultCount, (data) => {
+        DataAccessor.getPratilipiListByAuthor(authorId, 'PUBLISHED', state.published_contents.cursor, null, resultCount, (data) => {
             if (data.status === 200) {
                 commit('setPublishedContentsDynamicLoadingSuccess', data.response);
             } else {
