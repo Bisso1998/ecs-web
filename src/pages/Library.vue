@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Library</h2>
+                        <h2>__('my_library')</h2>
                         <PratilipiComponent
                         :pratilipiData="pratilipiData"
                         :key="pratilipiData.pratilipiId"
