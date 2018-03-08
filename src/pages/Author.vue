@@ -113,7 +113,7 @@ export default {
         ])
     },
     watch: {
-        'getUserDetails.authorId'(newValue) {
+        'getAuthorData.authorId'(newValue) {
 
             if (newValue) {
                 this.fetchInitialPublishedContents({ 
@@ -134,21 +134,6 @@ export default {
         }
     },
     created() {
-        this.fetchInitialPublishedContents({ 
-            authorId: this.getUserDetails.authorId, 
-            resultCount: 20 
-        });
-
-        this.fetchInitialAuthorFollowingUsers({ 
-            userId: this.getUserDetails.userId, 
-            resultCount: 20 
-        });
-
-        this.fetchInitialAuthorFollowerUsers({ 
-            authorId: this.getUserDetails.authorId, 
-            resultCount: 20 
-        });
-
         const { user_slug } = this.$route.params;
         this.fetchAuthorDetails(user_slug);
     },
