@@ -14,6 +14,8 @@ import staticpage from './modules/staticpage'
 import writepage from './modules/writepage'
 import eventpage from './modules/eventpage'
 import authorpage from './modules/authorpage'
+import blogspage from './modules/blogspage'
+import notification from './modules/notification'
 
 Vue.use(Vuex)
 
@@ -33,7 +35,9 @@ export default new Vuex.Store({
         staticpage,
         writepage,
         authorpage,
-        librarypage
+        librarypage,
+        blogspage,
+        notification
     },
     strict: debug
 })
