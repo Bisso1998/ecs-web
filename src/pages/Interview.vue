@@ -5,9 +5,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card blog-info">
-                            <div class="head-title">{{ getBlogData.title }}</div>
-                            <div class="desc" v-html="getBlogData.content"></div>
-                            <Spinner v-if="getBlogDataLoadingStatus === 'LOADING'"></Spinner>
+                            <div class="head-title">{{ getInterviewData.title }}</div>
+                            <div class="desc" v-html="getInterviewData.content"></div>
+                            <Spinner v-if="getInterviewDataLoadingStatus === 'LOADING'"></Spinner>
                         </div>
                     </div>
                 </div>
@@ -29,24 +29,24 @@ export default {
         Spinner
     },
     computed: {
-        ...mapGetters('blogpage', [
-            'getBlogData',
-            'getBlogDataLoadingStatus'
+        ...mapGetters('interviewpage', [
+            'getInterviewData',
+            'getInterviewDataLoadingStatus'
         ])
     },
     methods: {
-        ...mapActions('blogpage', [
-            'fetchBlogData'
+        ...mapActions('interviewpage', [
+            'fetchInterviewData'
         ])
     },
     watch: {
-        '$route.params.blog_id' (blog_id) {
-            this.fetchBlogData(blogId);
+        '$route.params.interview_id' (interview_id) {
+            this.fetchInterviewData(interview_id);
         }
     },
     created() {
-        const { blog_id } = this.$route.params;
-        this.fetchBlogData(`/blog/${blog_id}`);
+        const { interview_id } = this.$route.params;
+        this.fetchInterviewData(`/author-interviews/${interview_id}`);
         
     }
 }
