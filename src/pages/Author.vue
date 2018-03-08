@@ -38,31 +38,47 @@
                               </div>
                             </div>
                             <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
-                            <div class="stats-section">
-                                <div><span>{{ getAuthorData.contentPublished }}</span> __("author_published_contents")</div>
-                                <div><span>{{ getAuthorData.followCount }}</span> __("author_followers")</div>
-                                <div><span>{{ getAuthorData.user.followCount }}</span> __("author_following")</div>
-                            </div>
                         </div>
-                        <div class="col-md-12 profile-bottom">
+                        <div class="col-md-12 profile-bottom" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
                             <div class="profile-menu">
-                                <a href="#" class="active">__("author_published_contents")</a>
-                                <a href="#">__("library")</a>
-                                <a href="#">__("author_followers")</a>
-                                <a href="#">__("author_following")</a>
+                                <a href="#" v-on:click="tabchange" class="active" data-tab="published"><span>{{ getAuthorData.contentPublished }}</span>__("author_published_contents")</a>
+                                <a href="#" v-on:click="tabchange" data-tab="library">__("library")</a>
+                                <a href="#" v-on:click="tabchange" data-tab="followers"><span>{{ getAuthorData.followCount }}</span>__("author_followers")</a>
+                                <a href="#" v-on:click="tabchange" data-tab="following"><span>{{ getAuthorData.user.followCount }}</span>__("author_following")</a>
                             </div>
                             <div class="bottom-contents">
-                                <div class="list published-contents">
+                                <div class="list published-contents" id="published">
+                                    <PratilipiComponent
+                                    :pratilipiData="pratilipiData"
+                                    :key="pratilipiData.pratilipiId"
+                                    v-for="pratilipiData in getPublishedContents"
+                                    v-if="publishedContentsLoadingState === 'LOADING_SUCCESS' || getPublishedContents.length !== 0"
+                                    :hideAddToLibrary="true"
+                                    :hideAuthorName="true"
+                                    ></PratilipiComponent>
+                                </div>
+                                <div class="list library" id="library">
                                     
                                 </div>
-                                <div class="list library">
-                                    
+                                <div class="list followers" id="followers">
+                                    <div class="follow" v-for="each_follower in getAuthorFollowers" :key="each_follower.userId">
+                                        <a :href="each_follower.profilePageUrl">
+                                            <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + each_follower.profileImageUrl + '&width=100)' }"></div>
+                                            <div class="follow-name">{{ each_follower.author.name }}</div>
+                                        </a>
+                                        <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
+                                        
+                                    </div>
                                 </div>
-                                <div class="list followers">
-                                    
-                                </div>
-                                <div class="list following">
-                                    
+                                <div class="list following" id="following">
+                                    <div class="follow" v-for="each_following in getAuthorFollowing" :key="each_following.userId">
+                                        <a :href="each_following.pageUrl">
+                                            <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + each_following.profileImageUrl + '&width=100)' }"></div>
+                                            <div class="follow-name">{{ each_following.name }}</div>
+                                        </a>
+                                        <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -75,6 +91,7 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import PratilipiComponent from '@/components/Pratilipi.vue';
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
@@ -93,7 +110,10 @@ export default {
             'getAuthorDataLoadingState',
             'getAuthorFollowing',
             'getAuthorFollowers',
-            'getAuthorFollowingCount'
+            'getAuthorFollowingCount',
+            'getPublishedContents',
+            'getAuthorFollowingLoadingState',
+            'getAuthorFollowersLoadingState'
         ]),
         ...mapState({
             publishedContents: state => state.authorpage.published_contents.data,
@@ -110,7 +130,15 @@ export default {
             'fetchMoreAuthorFollowingUsers',
             'fetchInitialAuthorFollowerUsers',
             'fetchMoreAuthorFollowerUsers'
-        ])
+        ]),
+        tabchange(event) {
+            event.preventDefault();        
+            var tab_id = $(event.currentTarget).attr('data-tab');
+            $(".profile-menu a").removeClass("active");
+            $(event.currentTarget).addClass("active");
+            $(".bottom-contents .list").hide();
+            $("#" + tab_id).show();
+        }
     },
     watch: {
         'getAuthorData.authorId'(newValue) {
@@ -122,8 +150,8 @@ export default {
                 });
 
                 this.fetchInitialAuthorFollowingUsers({ 
-                    userId: this.getUserDetails.userId, 
-                    resultCount: 20 
+                    userId: this.getAuthorData.user.userId, 
+                    resultCount: 20
                 });
 
                 this.fetchInitialAuthorFollowerUsers({ 
@@ -138,7 +166,8 @@ export default {
         this.fetchAuthorDetails(user_slug);
     },
     components: {
-        MainLayout
+        MainLayout,
+        PratilipiComponent
     }
 }
 </script>
@@ -266,6 +295,7 @@ export default {
             border-bottom: 1px solid #e9e9e9;
             font-size: 12px;
             color: #555;
+            display: none;
             div {
                 display: inline-block;
                 width: 32%;
@@ -292,23 +322,86 @@ export default {
     }
     .profile-bottom {
         margin: 10px 0;
+        position: relative;
         .profile-menu {
+            border-bottom: 1px solid #e9e9e9;
+            padding: 8px 0 10px;
+            text-align: left;
+            overflow: hidden;
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
             a {
                 color: #555;
                 font-size: 13px;
                 border-bottom: 2px solid #fff;
-                padding: 5px 0;
-                margin: 0 5px;
+                padding: 5px 5px 11px;
+                span {
+                    font-size: 12px;
+                    font-weight: bold;
+                    padding: 0 2px;
+                    margin-right: 5px;
+                    display: inline-block;
+                    text-align: center;
+                }
                 &.active {
                     color: #d0021b;
                     border-color: #d0021b;
+                    span {
+                        color: #d0021b;
+                    }
+                }
+                &:hover {
+                    text-decoration: none;
+                    color: #d0021b;
                 }
             }
         }
         .list {
             display: none;
-            .published-contents {
+            margin: 20px 0;
+            &.published-contents {
                 display: block;
+            }
+            .follow {
+                border: 1px solid #e9e9e9;
+                width: 150px;
+                display: inline-block;
+                margin: 10px 5px;
+                position: relative;
+                
+                a {
+                    color: #d0021b;
+                }
+                .follow-img {
+                    display: block;
+                    width: 100px;
+                    height: 100px;
+                    margin: 10px auto;
+                    border-radius: 50%;
+                    background: #eee;
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                }
+                .follow-name {
+                    font-size: 12px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    max-width: 100%;
+                    overflow: hidden;
+                    padding: 0 5px 10px;
+                }
+                .follow-link {
+                    background: #d0021b;
+                    color: #fff;
+                    font-size: 12px;
+                    margin: 10px 0;
+                    i {
+                        font-size: 16px;
+                        vertical-align: middle;
+                    }
+                }
             }
         }
     }

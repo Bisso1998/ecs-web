@@ -14,7 +14,7 @@
             </router-link>
             <div class="image-mask">
                 <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
-                <button>
+                <button v-if="!hideAddToLibrary">
                     <i v-if="!pratilipiData.addedToLib" class="material-icons" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">bookmark_border</i>
                     <i v-else class="material-icons added-to-lib" @click="removeFromLibrary(pratilipiData.pratilipiId)">bookmark</i>
                 </button>
@@ -24,7 +24,7 @@
                 pratilipiData }}" :title="pratilipiData.title">
                 <div class="pratilipi-details">
                     <span class="title">{{ pratilipiData.title }}</span>
-                    <span class="author">{{ pratilipiData.author.name }}</span>
+                    <span  v-if="!hideAuthorName" class="author">{{ pratilipiData.author.name }}</span>
                 </div>
                 <div class="stats">
                     <div class="rating">
@@ -73,6 +73,12 @@ export default {
         },
         removeFromLibrary: {
             type: Function
+        },
+        hideAddToLibrary: {
+            type: Boolean
+        },
+        hideAuthorName: {
+            type: Boolean
         }
     },
     data() {
