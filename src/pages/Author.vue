@@ -37,7 +37,9 @@
                                 </div>
                               </div>
                             </div>
-                            <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
+                            <div class="follow-btn-w-count">
+                                <button class=""><i class="material-icons">person_add</i> __("author_follow")</button><span><b>{{ getAuthorData.followCount }}</b></span>
+                            </div>
                         </div>
                         <div class="col-md-12 profile-bottom" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
                             <div class="profile-menu">
@@ -67,28 +69,31 @@
                                     ></PratilipiComponent>
                                     <router-link
                                     :to="{ name: 'Library_Page' }"
-                                    class="view-more">
-                                        __("view_more")
+                                    class="view_more">
+                                        <div class="view_more_card">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                            <span>__("view_more")</span>
+                                        </div>
                                     </router-link>
                                 </div>
                                 <div class="list followers" id="followers">
                                     <div class="follow" v-for="each_follower in getAuthorFollowers" :key="each_follower.userId">
                                         <a :href="each_follower.profilePageUrl">
-                                            <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + each_follower.profileImageUrl + '&width=100)' }"></div>
+                                            <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + each_follower.profileImageUrl + (each_follower.profileImageUrl.endsWith('/author/image') ? '?' : '&')  + 'width=100)' }"></div>
                                             <div class="follow-name">{{ each_follower.author.name }}</div>
                                         </a>
+                                        <div class="follow-count">__("author_followers"): <span>{{ each_follower.author.followCount }}</span></div>
                                         <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
-                                        
                                     </div>
                                 </div>
                                 <div class="list following" id="following">
                                     <div class="follow" v-for="each_following in getAuthorFollowing" :key="each_following.userId">
                                         <a :href="each_following.pageUrl">
-                                            <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + each_following.profileImageUrl + '&width=100)' }"></div>
+                                            <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + each_following.profileImageUrl + (each_following.profileImageUrl.endsWith('/author/image') ? '?' : '&')  + 'width=100)' }"></div>
                                             <div class="follow-name">{{ each_following.name }}</div>
                                         </a>
+                                        <div class="follow-count">__("author_followers"): <span>{{ each_following.followCount }}</span></div>
                                         <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -265,17 +270,46 @@ export default {
                 font-size: 18px;
             }
         }
-        .follow-link {
+        .follow-btn-w-count {
             color: #fff;
-            background: #d0021b;
             margin: 10px auto;
-            display: block;
             font-size: 14px;
+            position: relative;
+            text-align: center;
+            display: block;
             clear: both;
+            overflow: hidden;
+            cursor: pointer;
+            button {
+                background: #d0021b;
+                border: 1px solid #d0021b;
+                border: 1px solid #d0021b;
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+                outline: none;
+                color: #fff;
+                margin: 0;
+                padding: 5px 10px;
+                display: inline-block;
+                clear: both;
+                cursor: pointer;
+            }
             i {
                 vertical-align: middle;
                 padding-right: 5px;
                 font-size: 18px;
+            }
+            span {
+                background: #fff;
+                color: #d0021b;
+                display: inline-block;
+                border: 1px solid #d0021b;
+                padding: 5px 10px;
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+                b {
+                    font-size: 12px;
+                }
             }
         }
         .profile-user-name {
@@ -391,7 +425,7 @@ export default {
                 display: inline-block;
                 margin: 10px 5px;
                 position: relative;
-                
+                text-align: center;
                 a {
                     color: #d0021b;
                 }
@@ -412,7 +446,7 @@ export default {
                     white-space: nowrap;
                     max-width: 100%;
                     overflow: hidden;
-                    padding: 0 5px 10px;
+                    padding: 0 5px 5px;
                 }
                 .follow-link {
                     background: #d0021b;
@@ -424,8 +458,45 @@ export default {
                         vertical-align: middle;
                     }
                 }
+                .follow-count {
+                    font-size: 11px;
+                    margin: 0;
+                    span {
+                        font-weight: bold;
+                    }
+                }
             }
         }
+        a.view_more {
+			position: relative;
+            display: inline-block;
+            vertical-align: text-bottom;
+			.view_more_card {
+				width: 300px;
+				background: #fff;
+				border: 1px solid #e9e9e9;
+				height: 233px;
+				margin: 0 10px;
+				color: #d0021b;
+                text-align: center;
+                display: inline-block;
+				i {
+					height: 190px;
+					line-height: 190px;
+					width: 100%;
+					font-size: 50px;
+					border-bottom: 1px solid #e9e9e9;
+				}
+				span {
+					height: 41px;
+					line-height: 37px; 
+					display: block;
+				}
+			}
+			&:hover {
+				text-decoration: none;
+			}
+		}
     }
 }
 </style>
