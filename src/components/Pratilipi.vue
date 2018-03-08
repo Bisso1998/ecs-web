@@ -118,7 +118,7 @@ export default {
         text-decoration: none;
         outline: none;
     }
-    .list-page .pratilipi-wrap, .event-list .pratilipi-wrap, .event-list .pratilipi-wrap .pratilipi {
+    .list-page .pratilipi-wrap, .event-list .pratilipi-wrap, .event-list .pratilipi-wrap .pratilipi, .author-page .pratilipi-wrap {
         display: inline-block;
     }
     .pratilipi {
