@@ -72,6 +72,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="card">
+                                <div class="head-title">__("seo_author_interview")</div>
+                                <div class="card-content">
+                                    <router-link
+                                    :to="{ path: 'author-interviews' }">
+                                        <img src="https://0.ptlp.co/resource-all/android-category-banners/authorinterviews.jpg" alt="Interviews">
+                                    </router-link>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

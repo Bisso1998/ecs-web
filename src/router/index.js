@@ -14,6 +14,8 @@ import WritePageComponent from '@/pages/Write.vue'
 import LibraryPageComponent from '@/pages/Library.vue'
 import BlogsPageComponent from '@/pages/Blogs.vue'
 import BlogPageComponent from '@/pages/Blog.vue'
+import InterviewsPageComponent from '@/pages/Interviews.vue'
+import InterviewPageComponent from '@/pages/Interview.vue'
 
 import constants from '@/constants'
 
@@ -85,6 +87,14 @@ export default new Router({
         path: '/blog/:blog_id',
         name: 'Blog_Page',
         component: BlogPageComponent
+    }, {
+        path: '/author-interviews',
+        name: 'Interviews_Page',
+        component: InterviewsPageComponent
+    }, {
+        path: '/author-interviews/:interview_id',
+        name: 'Interview_Page',
+        component: InterviewPageComponent
     }, {
         path: '/:list_page_url',
         name: 'List_Page',
