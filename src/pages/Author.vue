@@ -93,7 +93,8 @@ export default {
             'getAuthorDataLoadingState',
             'getAuthorFollowing',
             'getAuthorFollowers',
-            'getAuthorFollowingCount'
+            'getAuthorFollowingCount',
+            'getLibraryList'
         ]),
         ...mapState({
             publishedContents: state => state.authorpage.published_contents.data,
@@ -109,7 +110,9 @@ export default {
             'fetchInitialAuthorFollowingUsers',
             'fetchMoreAuthorFollowingUsers',
             'fetchInitialAuthorFollowerUsers',
-            'fetchMoreAuthorFollowerUsers'
+            'fetchMoreAuthorFollowerUsers',
+            'fetchInitialLibraryList',
+            'removeFromLibrary'
         ])
     },
     watch: {
@@ -130,6 +133,8 @@ export default {
                     authorId: newValue, 
                     resultCount: 20 
                 });
+
+                this.fetchInitialLibraryList(10);
             }
         }
     },
