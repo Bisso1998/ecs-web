@@ -300,6 +300,28 @@ export default {
             });
     },
 
+    getAuthorInterviewListByUri: (language, state, cursor, resultCount, aCallBack) => {
+        var requests = [];
+        requests.push(new request("req1", PAGE_API, { "uri": '/author-interviews' }));
+
+        var params = {
+            "blogId": "$req1.primaryContentId",
+            "language": language
+        };
+        params["state"] = state != null ? state : "PUBLISHED";
+        if (cursor != null) params["cursor"] = cursor;
+        if (resultCount != null) params["resultCount"] = resultCount;
+
+        requests.push(new request("req2", BLOG_POST_LIST_API, params));
+        httpUtil.get(API_PREFIX, null, { "requests": processRequests(requests) },
+            function(response, status) {
+                if (aCallBack != null) {
+                    var blogpost = response.req2.status == 200 ? response.req2.response : null;
+                    aCallBack(blogpost);
+                }
+            });
+    },
+
     getUser: (aCallBack) => {
         httpUtil.get(API_PREFIX + USER_API,
             null,

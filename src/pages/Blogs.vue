@@ -35,10 +35,16 @@ export default {
         MainLayout,
         Spinner
     },
+    data() {
+        return {
+            scrollPosition: null
+        }
+    },
     computed: {
         ...mapGetters('blogspage', [
             'getBlogsLoadingState',
-            'getBlogsData'
+            'getBlogsData',
+            'getBlogsDataCursor'
         ])
     },
     methods: {
@@ -46,6 +52,28 @@ export default {
             'fetchInitialListOfBlogs',
             'fetchMoreBlogs'
         ]),
+        updateScroll() {
+            this.scrollPosition = window.scrollY
+        }
+    },
+    watch: {
+        'scrollPosition'(newScrollPosition){
+            const nintyPercentOfList = ( 75 / 100 ) * $('.static-page').innerHeight();
+
+            console.log(nintyPercentOfList)
+            if (newScrollPosition > nintyPercentOfList && this.getBlogsLoadingState !== 'LOADING' && this.getBlogsDataCursor) {
+                
+                const currentLocale = process.env.LANGUAGE;
+                constants.LANGUAGES.forEach((eachLanguage) => {
+                    if (eachLanguage.shortName === currentLocale) {
+                        this.fetchMoreBlogs({ 
+                            language: eachLanguage.fullName.toUpperCase(), 
+                            resultCount: 20
+                        });
+                    }
+                });
+            }
+        }
     },
     created() {
         const currentLocale = process.env.LANGUAGE;
@@ -54,6 +82,12 @@ export default {
                 this.fetchInitialListOfBlogs({ language: eachLanguage.fullName.toUpperCase(), resultCount: 20 })
             }
         });
+    },
+    mounted() {
+        window.addEventListener('scroll', this.updateScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
     }
 }
 </script>

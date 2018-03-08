@@ -7,15 +7,15 @@
                         <div class="page-title">__("seo_author_interview")</div>
                         <div class="page-content blog-section">
                             <ul>
-                                <li v-for="eachBlog in getBlogsData" :key="eachBlog.eventId" class="card">
-                                    <router-link :to="{ name: 'Blog_Page', params: { blog_id: eachBlog.pageUrl.split('/').pop() } }">
-                                        <div class="head-title">{{ eachBlog.title }}</div>
-                                        <div class="blog-summary">{{ eachBlog.content }}</div>
+                                <li v-for="eachInterview in getInterviewsData" :key="eachInterview.eventId" class="card">
+                                    <router-link :to="{ name: 'Interview_Page', params: { interview_id: eachInterview.pageUrl.split('/').pop() } }">
+                                        <div class="head-title">{{ eachInterview.title }}</div>
+                                        <div class="blog-summary">{{ eachInterview.content }}</div>
                                         <div class="view-more">__("view_more")</div>
                                     </router-link>
                                 </li>
                             </ul>
-                            <Spinner v-if="getBlogsLoadingState === 'LOADING'"></Spinner>
+                            <Spinner v-if="getInterviewsLoadingState === 'LOADING'"></Spinner>
                         </div>
                     </div>
                 </div>
@@ -35,25 +35,62 @@ export default {
         MainLayout,
         Spinner
     },
+    data() {
+        return {
+            scrollPosition: null
+        }
+    },
     computed: {
-        ...mapGetters('blogspage', [
-            'getBlogsLoadingState',
-            'getBlogsData'
-        ])
+        ...mapGetters('interviewspage', [
+            'getInterviewsLoadingState',
+            'getInterviewsData',
+            'getInterviewsDataCursor'
+        ]),
     },
     methods: {
-        ...mapActions('blogspage', [
-            'fetchInitialListOfBlogs',
-            'fetchMoreBlogs'
+        ...mapActions('interviewspage', [
+            'fetchInitialListOfInterviews',
+            'fetchMoreInterviews'
         ]),
+        updateScroll() {
+            this.scrollPosition = window.scrollY
+        }
+    },
+    watch: {
+        'scrollPosition'(newScrollPosition){
+            const nintyPercentOfList = ( 75 / 100 ) * $('.static-page').innerHeight();
+
+            console.log(nintyPercentOfList)
+            if (newScrollPosition > nintyPercentOfList && this.getInterviewsLoadingState !== 'LOADING' && this.getInterviewsDataCursor) {
+                
+                const currentLocale = process.env.LANGUAGE;
+                constants.LANGUAGES.forEach((eachLanguage) => {
+                    if (eachLanguage.shortName === currentLocale) {
+                        this.fetchMoreInterviews({ 
+                            language: eachLanguage.fullName.toUpperCase(), 
+                            resultCount: 20
+                        })
+                    }
+                });
+            }
+        }
     },
     created() {
         const currentLocale = process.env.LANGUAGE;
         constants.LANGUAGES.forEach((eachLanguage) => {
             if (eachLanguage.shortName === currentLocale) {
-                this.fetchInitialListOfBlogs({ language: eachLanguage.fullName.toUpperCase(), resultCount: 20 })
+                this.fetchInitialListOfInterviews({ 
+                    language: eachLanguage.fullName.toUpperCase(), 
+                    resultCount: 20
+                })
             }
         });
+    },
+    mounted() {
+        window.addEventListener('scroll', this.updateScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
     }
 }
 </script>
