@@ -16,6 +16,8 @@ import eventpage from './modules/eventpage'
 import authorpage from './modules/authorpage'
 import blogspage from './modules/blogspage'
 import blogpage from './modules/blogpage'
+import interviewspage from './modules/interviewspage'
+import interviewpage from './modules/interviewpage'
 import notification from './modules/notification'
 
 Vue.use(Vuex)
@@ -39,6 +41,8 @@ export default new Vuex.Store({
         librarypage,
         blogspage,
         blogpage,
+        interviewspage,
+        interviewpage,
         notification
     },
     strict: debug
