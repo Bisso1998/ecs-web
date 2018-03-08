@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="page-content">
                     <div class="row">
-                        <div class="col-md-12 profile-top">
+                        <div class="col-md-12 profile-top" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
                             <div class="profile-cover" :style="{ backgroundImage: 'url(' + getAuthorData.coverImageUrl + ')' }">
                                 <div class="cover-options">
                                     <button type="button" name="button"><i class="material-icons">settings</i></button>
@@ -52,7 +52,16 @@
                                 <a href="#">__("author_following")</a>
                             </div>
                             <div class="bottom-contents">
-                                <div class="published-contents">
+                                <div class="list published-contents">
+                                    
+                                </div>
+                                <div class="list library">
+                                    
+                                </div>
+                                <div class="list followers">
+                                    
+                                </div>
+                                <div class="list following">
                                     
                                 </div>
                             </div>
@@ -309,6 +318,12 @@ export default {
                     color: #d0021b;
                     border-color: #d0021b;
                 }
+            }
+        }
+        .list {
+            display: none;
+            .published-contents {
+                display: block;
             }
         }
     }
