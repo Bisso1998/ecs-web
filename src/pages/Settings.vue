@@ -142,6 +142,8 @@
                                             <label for="pratilipi-settings-current-password">__('user_current_password') *</label>
                                             <input type="password" class="form-control" id="pratilipi-settings-current-password" placeholder="__('user_current_password')">
                                         </div>
+                                    </div>
+                                    <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-new-password">__('user_new_password') *</label>
                                             <input type="password" class="form-control" id="pratilipi-settings-new-password" placeholder="__('user_new_password')">
