@@ -26,18 +26,29 @@ export default {
         MainLayout
     },
     computed: {
-        ...mapGetters('settingsPage', [
+        ...mapGetters('settingspage', [
             'getAuthorData'
-        ])
-    },
-    methods: {
-        ...mapActions('settingsPage', [
-            'fetchStaticPageContent'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ]),
     },
+    methods: {
+        ...mapActions('settingspage', [
+            'fetchAuthorDetails'
+        ]),
+    },
+    watch: {
+        'getUserDetails.authorId'(newValue) {
+            if (newValue) {
+                this.fetchAuthorDetails(newValue);
+            }
+        }
+    },
     created() {
-        
-        
+        if (this.getUserDetails.authorId) {
+            this.fetchAuthorDetails(this.getUserDetails.authorId);    
+        }
     }
 }
 </script>
