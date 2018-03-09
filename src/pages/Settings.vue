@@ -1,10 +1,14 @@
 <template>
     <MainLayout>
-        <div class="static-page">
+        <div class="settings-page">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Settings page</h2>
+                        <div class="settings-menu">
+                            <a href="#" v-on:click="tabchange" class="active" data-tab="profile-setting"><span>{{ getAuthorData.contentPublished }}</span>__("author_published_contents")</a>
+                            <a href="#" v-on:click="tabchange" data-tab="notification-setting">__("library")</a>
+                            <a href="#" v-on:click="tabchange" data-tab="password-setting"><span>{{ getAuthorData.followCount }}</span>__("author_followers")</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.static-page {
+.settings-page {
     margin-top: 85px;
     text-align: left;
     @media screen and (max-width: 992px ) {
