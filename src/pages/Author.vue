@@ -14,8 +14,10 @@
                                     </router-link>
                                     <button type="button" name="button"><i class="material-icons">share</i></button>
                                 </div>
-                                <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId"><i class="material-icons">camera_alt</i></button>
+                                <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId" @click="uploadImage"><i class="material-icons">camera_alt</i></button>
+                                <input type="file" hidden name="coverimage" @change="triggerImageUpload($event)" accept="image/*" id="coverimage_uploader">    
                             </div>
+                            
                             <div class="profile-image">
                                 <img :src="getAuthorData.imageUrl + '?width=150'" alt="profile">
                                 <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId"><i class="material-icons">camera_alt</i></button>
@@ -164,7 +166,8 @@ export default {
             'fetchMoreAuthorFollowerUsers',
             'fetchInitialLibraryList',
             'removeFromLibrary',
-            'followOrUnfollowAuthor'
+            'followOrUnfollowAuthor',
+            'uploadCoverImage'
         ]),
         tabchange(event) {
             event.preventDefault();        
@@ -176,6 +179,15 @@ export default {
         },
         updateScroll() {
             this.scrollPosition = window.scrollY;
+        },
+        uploadImage() {
+            $('#coverimage_uploader').click();
+        },
+        triggerImageUpload(event) {
+            const formData = new FormData();
+            formData.append('ko_unique_2', event.target.files[0], event.target.files[0].name);
+            console.log(formData);
+            this.uploadCoverImage(formData);
         }
     },
     watch: {
