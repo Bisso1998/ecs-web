@@ -1,19 +1,27 @@
 <template>
     <div class="page-not-found">
-        <div class="title">__("page_not_found_heading")</div>
-        <div class="desc">__("page_not_found_description")</div>
-        
-        <div class="category-list" v-for="each_category_section in category_sections" :key="each_category_section.title">
-            <h4 class="category-section">{{ each_category_section.title }}</h4>
-            <ul>
-                <li v-for="each_category in each_category_section.categories" :key="each_category.categoryUrl" v-if="each_category.pratilipiListData.listName">
-                    <router-link
-                    :to="{ path: each_category.categoryUrl }">
-                        <span class="category-img" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/resource-all/android-category-banners/' + each_category.imageFileName  + ')' }"></span>
-                        <span class="category-name">{{ each_category.title }}</span>
-                    </router-link>
-                </li>
-            </ul>
+        <div class="container">
+            <div class="not-found-image">
+                <div class="title">__("page_not_found_heading")</div>
+                <router-link
+                :to="{ name: 'Home'}"
+                class="desc">
+                    __("page_not_found_description")
+                </router-link>
+            </div>
+            <div class="head-title">__("writer_select_category")</div>
+            <div class="category-list" v-for="each_category_section in category_sections" :key="each_category_section.title">
+                <h4 class="category-section">{{ each_category_section.title }}</h4>
+                <ul>
+                    <li v-for="each_category in each_category_section.categories" :key="each_category.categoryUrl" v-if="each_category.pratilipiListData.listName">
+                        <router-link
+                        :to="{ path: each_category.categoryUrl }">
+                            <span class="category-img" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/resource-all/android-category-banners/' + each_category.imageFileName  + ')' }"></span>
+                            <span class="category-name">{{ each_category.title }}</span>
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -43,9 +51,51 @@ export default {
 
 <style lang="scss" scoped>
 .page-not-found {
-    .title {
-        font-size: 24px;
+    background: #fff;
+    margin: 85px 0 10px;
+    text-align: left;
+    position: relative;
+    @media screen and (max-width: 992px ) {
+        margin-top: 140px;
+    }
+    .container {
+        padding: 0;
+    }
+    .not-found-image {
+        background: #fff url(../assets/404.jpg) no-repeat right top;
+        background-size: contain;
+        height: 275px;
+        width: 100%;
+        margin: -10px 0 30px;
+        position: relative;
+        .title {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 50px 10px 5px;
+            max-width: 500px;
+            @media screen and (max-width: 576px ) {
+                max-width: 300px;
+                padding-top: 20px;
+            }
+        }
+        .desc {
+            margin: 0 10px;
+            font-size: 14px;
+            max-width: 500px;
+            color: #2c3e50;
+            display: block;
+            @media screen and (max-width: 576px ) {
+                max-width: 300px;
+            }
+        }
+    }
+    .head-title {
+        font-size: 18px;
         font-weight: bold;
+        text-align: left;
+        border-left: 3px solid #d0021b;
+        padding-left: 10px;
+        margin: 10px 0 0 10px;
     }
 }
 .category-list {
