@@ -23,7 +23,7 @@ export default {
         });
     },
 
-    updateAuthorDetails({ commit, state }, authorData) {
+    updateAuthorDetails({ commit, state }) {
         commit('setUpdateAuthorLoadingTrue');
         DataAccessor.createOrUpdateAuthor(state.author.data, (response) => {
             commit('setUpdateAuthorLoadingSuccess', response);
