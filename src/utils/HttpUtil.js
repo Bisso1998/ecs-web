@@ -53,6 +53,34 @@ const httpUtil = {
         anHttpRequest.send(formatParams(params));
     },
 
+    postMultipart: (aUrl, headers, formData, aCallback) => {
+        if ('onLine' in navigator) {
+            if (!navigator['onLine']) {
+                aCallback({ "message": "${ _strings.could_not_connect_server }" }, 0);
+                return;
+            }
+        }
+        var anHttpRequest = new XMLHttpRequest();
+        anHttpRequest.onreadystatechange = function() {
+            if (anHttpRequest.readyState == 4 && aCallback != null)
+                aCallback(processResponseText(anHttpRequest.responseText), anHttpRequest.status);
+        };
+        anHttpRequest.open("POST", aUrl);
+
+        /**
+        Need to look for an alternative
+        **/
+        headers = headers || {};
+        headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
+
+        if (headers != null) {
+            for (var key in headers)
+                if (headers.hasOwnProperty(key))
+                    anHttpRequest.setRequestHeader(key, headers[key]);
+        }
+        anHttpRequest.send(formData);
+    },
+
     patch: (aUrl, headers, params, aCallback) => {
         if ('onLine' in navigator) {
             if (!navigator['onLine']) {
