@@ -303,6 +303,10 @@ export default {
     }
     .tabs {
         margin: 20px 0;
+        display: none;
+        &#profile-settings {
+            display: block;
+        }
         label {
             font-size: 12px;
         }

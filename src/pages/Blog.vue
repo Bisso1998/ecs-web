@@ -6,6 +6,7 @@
                     <div class="col-md-12">
                         <div class="card blog-info">
                             <div class="head-title">{{ getBlogData.title }}</div>
+                            <div class="date-published" v-if="getBlogDataLoadingStatus === 'LOADING_SUCCESS'">{{ getBlogData.creationDateMillis | convertDate }}</div>
                             <div class="desc" v-html="getBlogData.content"></div>
                             <Spinner v-if="getBlogDataLoadingStatus === 'LOADING'"></Spinner>
                         </div>
@@ -72,6 +73,10 @@ export default {
             border-left: 3px solid #d0021b;
             padding-left: 10px;
             margin: 10px 0 0;
+        }
+        .date-published {
+            font-size: 12px;
+            margin: 5px 0 5px 10px;
         }
         .desc {
             text-align: left;

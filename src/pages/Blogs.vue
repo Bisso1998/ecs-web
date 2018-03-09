@@ -10,6 +10,7 @@
                                 <li v-for="eachBlog in getBlogsData" :key="eachBlog.eventId" class="card">
                                     <router-link :to="{ name: 'Blog_Page', params: { blog_id: eachBlog.pageUrl.split('/').pop() } }">
                                         <div class="head-title">{{ eachBlog.title }}</div>
+                                        <div class="date-published">{{ eachBlog.creationDateMillis | convertDate }}</div>
                                         <div class="blog-summary">{{ eachBlog.content }}</div>
                                         <div class="view-more">__("view_more")</div>
                                     </router-link>
@@ -122,12 +123,21 @@ export default {
                     padding-left: 10px;
                     margin: 10px 0 0;
                 }
+                .date-published {
+                    font-size: 12px;
+                    margin: 5px 0 5px 10px;
+                }
                 .blog-summary {
                     font-size: 14px;
                     padding: 0 10px;
                     margin: 5px 0;
                     height: 90px;
+                    line-height: 22px;
                     overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
                 }
                 &:hover {
                     text-decoration: none;
