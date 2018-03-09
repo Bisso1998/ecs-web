@@ -241,6 +241,7 @@ export default {
         .section-title {
             font-size: 16px;
             margin: 10px 0;
+            font-weight: bold;
         }
         .update-btn {
             background: #d0021b;

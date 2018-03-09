@@ -7,7 +7,11 @@
                         <div class="col-md-12 profile-top" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
                             <div class="profile-cover" :style="{ backgroundImage: 'url(' + getAuthorData.coverImageUrl + ')' }">
                                 <div class="cover-options">
-                                    <button type="button" name="button" v-if="getUserDetails.userId === getAuthorData.user.userId"><i class="material-icons">settings</i></button>
+                                    <router-link
+                                    :to="{ name: 'Settings_Page'}"
+                                    v-if="getUserDetails.userId === getAuthorData.user.userId">
+                                        <i class="material-icons">settings</i>
+                                    </router-link>
                                     <button type="button" name="button"><i class="material-icons">share</i></button>
                                 </div>
                                 <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId"><i class="material-icons">camera_alt</i></button>
@@ -271,9 +275,11 @@ export default {
                 position: absolute;
                 top: 10px;
                 right: 10px;
-                button {
+                button, a {
                     background: rgba(255,255,255,0.4);
                     border: 0;
+                    display: inline-block;
+                    color: #2c3e50;
                     outline: none;
                     cursor: pointer;
                     padding: 5px 10px;
