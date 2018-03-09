@@ -115,5 +115,31 @@ export default {
         }, function (error) {
             commit('setFollowUnfollowLoadingDataLoadingError');
         });
+    },
+
+    uploadCoverImage({ commit, state }, formData ) {
+        console.log(formData);
+        commit('setCoverImageUploadingTrue');
+        DataAccessor.uploadCoverImage(formData, state.author.data.authorId, (successData) => {
+            console.log('Now I can die in peace');
+            commit('setCoverImageUploadingSuccess', successData);
+        }, (errorData) => {
+            console.log('My life is wasted');
+            commit('setCoverImageUploadingError');
+        });
+    },
+
+    uploadProfileImage({ commit, state }, formData ) {
+        console.log(formData);
+        commit('setProfileImageUploadingTrue');
+        DataAccessor.uploadProfileImage(formData, state.author.data.authorId, (successData) => {
+            console.log('Now I can die in peace');
+            commit('setProfileImageUploadingSuccess', successData);
+        }, (errorData) => {
+            console.log('My life is wasted');
+            commit('setProfileImageUploadingError');
+        });
     }
+
+
 }
