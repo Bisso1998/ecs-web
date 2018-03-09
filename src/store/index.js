@@ -19,6 +19,7 @@ import blogpage from './modules/blogpage'
 import interviewspage from './modules/interviewspage'
 import interviewpage from './modules/interviewpage'
 import notification from './modules/notification'
+import settingspage from './modules/settingspage'
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -43,7 +44,8 @@ export default new Vuex.Store({
         blogpage,
         interviewspage,
         interviewpage,
-        notification
+        notification,
+        settingspage
     },
     strict: debug
 })
