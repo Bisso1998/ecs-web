@@ -1,4 +1,6 @@
 export default {
-    loading_state: 'LOADING',
-    data: {}
+	author: {
+    	loading_state: 'LOADING',
+    	data: {}	
+	}
 }

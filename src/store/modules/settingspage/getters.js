@@ -18,7 +18,7 @@ export default {
     //     }, 0)
     // }
     
-    getStaticPageData: state => state.data,
-    getStaticPageLoadingStatus: state => state.loading_state,
+    getAuthorData: state => state.author.data,
+    getAuthorLoadingStatus: state => state.author.loading_state,
 
 }

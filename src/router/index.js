@@ -16,6 +16,7 @@ import BlogsPageComponent from '@/pages/Blogs.vue'
 import BlogPageComponent from '@/pages/Blog.vue'
 import InterviewsPageComponent from '@/pages/Interviews.vue'
 import InterviewPageComponent from '@/pages/Interview.vue'
+import SettingsPageComponent from '@/pages/Settings.vue'
 
 import constants from '@/constants'
 
@@ -79,6 +80,10 @@ export default new Router({
         path: '/library',
         name: 'Library_Page',
         component: LibraryPageComponent
+    }, {
+        path: '/settings',
+        name: 'Settings_Page',
+        component: SettingsPageComponent
     }, {
         path: '/blog',
         name: 'Blogs_Page',
