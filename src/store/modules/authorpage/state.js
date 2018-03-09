@@ -19,6 +19,8 @@ export default {
     },
     author: {
     	loading_state: 'LOADING',
+        cover_image_upload_state: 'LOADING_SUCCESS',
+        profile_image_upload_state: 'LOADING_SUCCESS',
     	data: {}
     },
     library: {

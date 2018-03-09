@@ -710,6 +710,30 @@ export default {
         httpUtil.post(API_PREFIX + USER_FCM_TOKEN_API,
             null, { "fcmToken": fcmToken },
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
-    }
+    },
+
+    uploadCoverImage: (formData, authorId, successCallBack, errorCallBack) => {
+        console.log(formData);
+        console.log(authorId);
+        if (formData == null) return;
+        if (authorId == null) return;
+        
+        httpUtil.postMultipart(API_PREFIX + '/author/cover?authorId=' + authorId,
+            null,
+            formData,
+            function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
+    },
+
+    uploadProfileImage: (formData, authorId, successCallBack, errorCallBack) => {
+        console.log(formData);
+        console.log(authorId);
+        if (formData == null) return;
+        if (authorId == null) return;
+        
+        httpUtil.postMultipart(API_PREFIX + '/author/image?authorId=' + authorId,
+            null,
+            formData,
+            function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
+    },
 
 };

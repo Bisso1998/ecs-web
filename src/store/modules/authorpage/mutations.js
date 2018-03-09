@@ -185,5 +185,27 @@ export default {
 
     setFollowUnfollowLoadingDataLoadingError(state) {
 
+    },
+
+    setCoverImageUploadingTrue(state) {
+        state.author.cover_image_upload_state = 'LOADING';
+    },
+    setCoverImageUploadingSuccess(state, data) {
+        state.author.cover_image_upload_state = 'LOADING_SUCCESS';
+        state.author.data.coverImageUrl = data.coverImageUrl;
+    },
+    setCoverImageUploadingError(state) {
+        state.author.cover_image_upload_state = 'LOADING_ERROR';
+    },
+
+    setProfileImageUploadingTrue(state) {
+        state.author.profile_image_upload_state = 'LOADING';
+    },
+    setProfileImageUploadingSuccess(state, data) {
+        state.author.profile_image_upload_state = 'LOADING_SUCCESS';
+        state.author.data.imageUrl = data.coverImageUrl;
+    },
+    setProfileImageUploadingError(state) {
+        state.author.profile_image_upload_state = 'LOADING_ERROR';
     }
 }
