@@ -85,7 +85,7 @@ export default {
             color: #2c3e50;
             display: block;
             @media screen and (max-width: 576px ) {
-                max-width: 300px;
+                max-width: 270px;
             }
         }
     }

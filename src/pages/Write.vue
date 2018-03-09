@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-md-12 col-lg-6">
                             <div class="card">
-                                <div class="head-title">Editorial</div>
+                                <div class="head-title">__("seo_blog_page")</div>
                                 <div class="card-content">
                                     <router-link
                                     :to="{ path: 'blog' }">
