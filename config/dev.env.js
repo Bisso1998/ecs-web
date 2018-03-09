@@ -9,5 +9,6 @@ module.exports = merge(prodEnv, {
   FIREBASE_DATABASE_URL: '"https://devo-pratilipi.firebaseio.com"',
   FIREBASE_PROJECT_ID: '"devo-pratilipi"',
   FIREBASE_STORAGE_BUCKET: '"devo-pratilipi.appspot.com"',
-  LANGUAGE: `"${process.env.LANGUAGE || 'hi'}"`
+  LANGUAGE: `"${process.env.LANGUAGE || 'hi'}"`,
+  FACEBOOK_APP_ID: '368844269953501'
 })
