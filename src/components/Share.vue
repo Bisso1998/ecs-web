@@ -9,26 +9,27 @@
             </button>
           </div>
           <div class="modal-body social">
-              <a href="#" class="fb" target="_blank">
+              <a :href="getFacebookShareUrl" class="fb" target="_blank">
                   <span class="social-icon"><icon name="facebook-f"></icon></span>
                   __("facebook")
               </a>
-              <a href="#" class="twitter" target="_blank">
+              <a :href="getTwitterUrl" class="twitter" target="_blank">
                  <span class="social-icon"><icon name="twitter"></icon></span>
                  __("twitter")
               </a>
-              <a href="#" class="google" target="_blank">
+              <a :href="getGooglePlusUrl" class="google" target="_blank">
                   <span class="social-icon"><icon name="google-plus"></icon></span>
                   __("google_plus")
               </a>
-              <a href="#" class="whatsapp" target="_blank">
+              <a :href="getWhatsAppUri" class="whatsapp" target="_blank">
                   <span class="social-icon"><icon name="whatsapp"></icon></span>
                   __("whatsapp")
               </a>
-              <a href="#" class="link">
+              <span class="link" @click="copyUrlToClipboard">
                   <span class="social-icon"><icon name="link"></icon></span>
                   copy link
-              </a>
+              </span>
+              <input type="text" :value="getContentUri" id="shareUri" hidden>
           </div>
         </div>
       </div>
@@ -41,8 +42,63 @@ import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/whatsapp'
 import 'vue-awesome/icons/link'
 
+import { mapGetters } from 'vuex'
+
 export default {
-    
+    name: 'Share-Modal',
+    computed: {
+        ...mapGetters([
+            'getFacebookShareUrl',
+            'getTwitterUrl',
+            'getGooglePlusUrl',
+            'getWhatsAppUri',
+            'getContentUri'
+        ]),
+    },
+    methods: {
+        copyUrlToClipboard() {
+            
+            var txt = $('#shareUri').val();
+            if(!txt || txt == ''){
+                return;
+            }
+            var textArea = document.createElement("textarea");
+
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            textArea.style.padding = 0;
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            textArea.style.background = 'transparent';
+            textArea.value = $('#shareUri').val();
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            console.log(textArea.value);
+            try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+                console.log('Copying text command was ' + msg);
+            } catch (err) {
+                console.log('Oops, unable to copy');
+            }
+            document.body.removeChild(textArea);
+
+            /* Select the text field */
+            // copyText.select();
+            // window.clipboardData.setData('Text', 'test hello');
+            // /* Copy the text inside the text field */
+            // document.execCommand("copy");
+        },
+        copyTextToClipboard(text) {
+            console.log(text);
+            
+        }
+    }
 }
 </script>
 

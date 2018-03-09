@@ -86,6 +86,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions([
+            'setShareDetails'
+        ]),
         addPratilipiToLibrary(pratilipiId) {
 
             console.log(this);
@@ -106,7 +109,7 @@ export default {
             //         .then(() => console.log('Successful share'))
             //         .catch((error) => console.log('Error sharing', error));
             // }
-            
+            this.setShareDetails({ data: this.pratilipiData, type: 'PRATILIPI' })
             $('#share_modal').modal('show');
         }
     }
