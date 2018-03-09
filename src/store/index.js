@@ -20,6 +20,7 @@ import interviewspage from './modules/interviewspage'
 import interviewpage from './modules/interviewpage'
 import notification from './modules/notification'
 import settingspage from './modules/settingspage'
+import sharemodal from './modules/sharemodal'
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -45,7 +46,8 @@ export default new Vuex.Store({
         interviewspage,
         interviewpage,
         notification,
-        settingspage
+        settingspage,
+        sharemodal
     },
     strict: debug
 })
