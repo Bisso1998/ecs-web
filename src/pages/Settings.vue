@@ -17,66 +17,66 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-first-name">__('edit_author_first_name') *</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-first-name" :value="getAuthorData.firstName" placeholder="__('edit_author_first_name')">
+                                            <input type="text" class="form-control" id="pratilipi-settings-first-name" :value="firstName" @input="updateFirstName" placeholder="__('edit_author_first_name')">
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-last-name">__('edit_author_last_name')</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-last-name" :value="getAuthorData.lastName" placeholder="__('edit_author_last_name')">
+                                            <input type="text" class="form-control" id="pratilipi-settings-last-name" :value="lastName" @input="updateLastName" placeholder="__('edit_author_last_name')">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-first-name-en">__('edit_author_first_name_en') *</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-first-name-en" :value="getAuthorData.firstNameEn" placeholder="__('edit_author_first_name_en')">
+                                            <input type="text" class="form-control" id="pratilipi-settings-first-name-en" :value="firstNameEn" @input="updateFirstNameEn" placeholder="__('edit_author_first_name_en')">
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-last-name-en">__('edit_author_last_name_en')</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-last-name-en" :value="getAuthorData.lastNameEn" placeholder="__('edit_author_last_name_en')">
+                                            <input type="text" class="form-control" id="pratilipi-settings-last-name-en" :value="lastNameEn" @input="updateLastNameEn" placeholder="__('edit_author_last_name_en')">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-pen-name">__('edit_author_pen_name') *</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-pen-name" :value="getAuthorData.penName" placeholder="__('edit_author_pen_name')">
+                                            <input type="text" class="form-control" id="pratilipi-settings-pen-name" :value="penName" @input="updatePenName" placeholder="__('edit_author_pen_name')">
                                         </div>
                                         <div class="form-group">
                                             <label for="pratilipi-settings-language">__("language_choose_language") *</label>
-                                            <select class="form-control" id="pratilipi-settings-language">
+                                            <select class="form-control" id="pratilipi-settings-language" @input="updateLanguage">
                                                 <option disabled selected>__("language_choose_language")</option>
-                                                <option v-for="eachLanguage in constants.LANGUAGES">{{ eachLanguage.fullName.toUpperCase() }}</option>
+                                                <option :selected="eachLanguage.fullName.toUpperCase() === language" :value="eachLanguage.fullName.toUpperCase()" v-for="eachLanguage in constants.LANGUAGES" :key="eachLanguage.shortName">{{ eachLanguage.fullName.toUpperCase() }}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-summary">__('edit_author_summary')</label>
-                                            <textarea class="form-control" id="pratilipi-settings-summary" rows="3"></textarea>
+                                            <textarea class="form-control" id="pratilipi-settings-summary" :value="summary" @input="updateSummary" rows="3"></textarea>
                                         </div>
                                     </div>
                                     <div class="section-title">Private Information</div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-email">__('user_email')</label>
-                                            <input type="email" class="form-control" id="pratilipi-settings-email" placeholder="__('user_email')">
+                                            <input type="email" class="form-control" id="pratilipi-settings-email" :value="email" @input="updateEmail" placeholder="__('user_email')">
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-phone">__('user_phone')</label>
-                                            <input type="tel" class="form-control" id="pratilipi-settings-phone" placeholder="__('user_phone')">
+                                            <input type="tel" class="form-control" id="pratilipi-settings-phone" :value="phone" @input="updatePhone" placeholder="__('user_phone')">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-gender">__('gender')</label>
-                                            <select class="form-control" id="pratilipi-settings-gender">
+                                            <select class="form-control" id="pratilipi-settings-gender" @input="updateGender">
                                                 <option disabled selected>__("gender")</option>
-                                                <option>__("gender_male")</option>
-                                                <option>__("gender_female")</option>
-                                                <option>__("gender_other")</option>
+                                                <option :selected="'MALE' === gender" :value="gender">__("gender_male")</option>
+                                                <option :selected="'FEMALE' === gender" :value="gender">__("gender_female")</option>
+                                                <option :selected="'OTHER' === gender" :value="gender">__("gender_other")</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-dateOfBirth">__('author_date_of_birth')</label>
-                                            <input type="date" class="form-control" id="pratilipi-settings-dateOfBirth" placeholder="__('author_date_of_birth')">
+                                            <input type="date" class="form-control" id="pratilipi-settings-dateOfBirth" :value="dateOfBirth" @input="updateDateOfBirth" placeholder="__('author_date_of_birth')">
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary update-btn">__("save_changes")</button>
@@ -99,7 +99,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants';
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
     components: {
@@ -114,13 +114,27 @@ export default {
         ...mapGetters('settingspage', [
             'getAuthorData'
         ]),
+        ...mapState({
+            email: state => state.user.data.email,
+            phone: state => state.user.data.phone,
+            firstName: state => state.settingspage.author.data.firstName,
+            language: state => state.settingspage.author.data.language,
+            lastName: state => state.settingspage.author.data.lastName,
+            firstNameEn: state => state.settingspage.author.data.firstNameEn,
+            lastNameEn: state => state.settingspage.author.data.lastNameEn,
+            penName: state => state.settingspage.author.data.penName,
+            summary: state => state.settingspage.author.data.summary,
+            gender: state => state.settingspage.author.data.gender,
+            dateOfBirth: state => state.settingspage.author.data.dateOfBirth
+        }),
         ...mapGetters([
             'getUserDetails'
         ]),
     },
     methods: {
         ...mapActions('settingspage', [
-            'fetchAuthorDetails'
+            'fetchAuthorDetails',
+            'updateUserDetails'
         ]),
         tabchange(event) {
             event.preventDefault();        
@@ -130,6 +144,17 @@ export default {
             $(".tabs").hide();
             $("#" + tab_id).show();
         },
+        updateEmail(e) { this.$store.commit('settingspage/updateEmail', e.target.value) },
+        updatePhone(e) { this.$store.commit('settingspage/updatePhone', e.target.value) },
+        updateFirstName(e) { this.$store.commit('settingspage/updateFirstName', e.target.value) },
+        updateLanguage(e) { this.$store.commit('settingspage/updateLanguage', e.target.selectedOptions[0].value) },
+        updateLastName(e) { this.$store.commit('settingspage/updateLastName', e.target.value) },
+        updateFirstNameEn(e) { this.$store.commit('settingspage/updateFirstNameEn', e.target.value) },
+        updateLastNameEn(e) { this.$store.commit('settingspage/updateLastNameEn', e.target.value) },
+        updatePenName(e) { this.$store.commit('settingspage/updatePenName', e.target.value) },
+        updateSummary(e) { this.$store.commit('settingspage/updateSummary', e.target.value) },
+        updateGender(e) { this.$store.commit('settingspage/updateGender', e.target.selectedOptions[0].value) },
+        updateDateOfBirth(e) { this.$store.commit('settingspage/updateDateOfBirth', e.target.value) },
     },
     watch: {
         'getUserDetails.authorId'(newValue) {
