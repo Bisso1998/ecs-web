@@ -20,6 +20,12 @@
                         <input type="text" class="form-control" id="search-box-small" v-bind:placeholder="'__("search")'"/>
                         <i class="material-icons">search</i>
                     </div>
+                    <router-link
+                    :to="{ name: 'Notification'}"
+                    class="notification-icon">
+                        <i class="material-icons">notifications</i>
+                        <span>2</span>
+                    </router-link>
                 </div>
                 <div class="tabs-section col-md-12 col-12 col-lg-5">
                     <router-link
@@ -151,6 +157,8 @@ export default {
             margin-left: auto;
             .form-group {
                 position: relative;
+                width: 85%;
+                display: inline-block;
                 i {
                     top: 5px;
                 }
@@ -159,25 +167,27 @@ export default {
         .btn {
             margin: 2px 4px;
         }
-        .header-icon {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            @media screen and (max-width: 576px ) {
-                width: 35px;
-                height: 35px;
+        .notification-icon {
+            color: #212121;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 5px 0 0 5px;
+            position: relative;
+            &:hover {
+                text-decoration: none;
             }
-            i {
-                font-size: 20px;
-                height: 40px;
-                line-height: 40px;
-                width: 38px;
-                @media screen and (max-width: 576px ) {
-                    height: 35px;
-                    line-height: 35px;
-                    width: 33px;
-                }
+            span {
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                background: #d00b12;
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                color: #fff;
+                text-align: center;
+                font-size: 11px;
+                line-height: 22px;
             }
         }
         a.dropdown-item.isActive {
