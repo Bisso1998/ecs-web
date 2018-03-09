@@ -1,5 +1,5 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
+import Vue from 'vue'
 
 import user from './modules/user'
 import alert from './modules/alert'
@@ -20,9 +20,9 @@ import interviewspage from './modules/interviewspage'
 import interviewpage from './modules/interviewpage'
 import notification from './modules/notification'
 
-Vue.use(Vuex)
-
 const debug = process.env.NODE_ENV !== 'production'
+
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
