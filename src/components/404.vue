@@ -87,6 +87,9 @@ export default {
             @media screen and (max-width: 576px ) {
                 max-width: 270px;
             }
+            &:hover {
+                text-decoration: none;
+            }
         }
     }
     .head-title {
