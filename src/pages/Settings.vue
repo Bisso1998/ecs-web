@@ -79,11 +79,61 @@
                                             <input type="date" class="form-control" id="pratilipi-settings-dateOfBirth" :value="dateOfBirth" @input="updateDateOfBirth" placeholder="__('author_date_of_birth')">
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary update-btn">__("save_changes")</button>
+                                    <button type="submit" class="btn btn-primary update-btn" disabled>__("save_changes")</button>
                                 </form>
                             </div>
                             <div class="tabs" id="notification-settings">
-                                
+                                <form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 col-sm-12">
+                                            <label for="pratilipi-settings-email-frequency">__('email_frequency')</label>
+                                            <select class="form-control" id="pratilipi-settings-email-frequency">
+                                                <option disabled selected>__("email_frequency")</option>
+                                                <option>__("email_frequency_immediate")</option>
+                                                <option>__("email_frequency_daily")</option>
+                                                <option>__("email_frequency_weekly")</option>
+                                                <option>__("email_frequency_monthly")</option>
+                                                <option>__("email_frequency_never")</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="section-title">__("notification_group_content")</div>
+                                    <div class="form-row">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="notif_option_new_review">
+                                            <label class="form-check-label" for="notif_option_new_review">__("option_new_review")</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="notif_option_new_comment">
+                                            <label class="form-check-label" for="notif_option_new_comment">__("option_new_comment")</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="notif_option_like_review">
+                                            <label class="form-check-label" for="notif_option_like_review">__("option_like_review")</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="notif_option_like_comment">
+                                            <label class="form-check-label" for="notif_option_like_comment">__("option_like_comment")</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="section-title">__("notification_group_network")</div>
+                                    <div class="form-row">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="notif_option_new_follower">
+                                            <label class="form-check-label" for="notif_option_new_follower">__("option_new_follower")</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="notif_option_pratilipi_published_follower">
+                                            <label class="form-check-label" for="notif_option_pratilipi_published_follower">__("option_pratilipi_published_follower")</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="notif_option_pratilipi_updates">
+                                            <label class="form-check-label" for="notif_option_pratilipi_updates">__("option_pratilipi_updates")</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary update-btn" disabled>__("save_changes")</button>
+                                </form>
                             </div>
                             <div class="tabs" id="password-settings">
                                 
@@ -243,12 +293,21 @@ export default {
             margin: 10px 0;
             font-weight: bold;
         }
+        .form-check {
+            width: 100%;
+            margin: 0 10px 5px 15px;
+            label {
+                font-size: 14px;
+                vertical-align: text-bottom;
+            }
+        }
         .update-btn {
             background: #d0021b;
             border: 0;
             outline: none;
             font-size: 14px;
             float: right;
+            margin: 10px 0;
         }
     }
 }
