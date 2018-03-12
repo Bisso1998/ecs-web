@@ -9,29 +9,33 @@
                       __("pratilipi")
                     </router-link>
                 </div>
-                <div class="col-sm-5 p-0 search-box d-none d-lg-block">
-                    <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="search-box-big" v-bind:placeholder="'__("search_bar_help")'"/>
-                        <i class="material-icons">search</i>
+                <div class="col-lg-5 col-sm-8 col-8 search-box-wrap">
+                    <div class="search-box d-none d-lg-block">
+                        <div class="form-group has-feedback" id="search-box-big">
+                            <input type="text" class="form-control" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
+                            <i class="material-icons">search</i>
+                            <SearchBox></SearchBox>
+                        </div>
+                        <router-link
+                        :to="{ name: 'Notification'}"
+                        class="notification-icon">
+                            <i class="material-icons">notifications</i>
+                            <span>2</span>
+                        </router-link>
                     </div>
-                    <router-link
-                    :to="{ name: 'Notification'}"
-                    class="notification-icon">
-                        <i class="material-icons">notifications</i>
-                        <span>2</span>
-                    </router-link>
-                </div>
-                <div class="col-sm-8 col-8 d-block d-lg-none search-box search-box-2 text-right">
-                    <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="search-box-small" v-bind:placeholder="'__("search")'"/>
-                        <i class="material-icons">search</i>
+                    <div class="d-block d-lg-none search-box search-box-2 text-right">
+                        <div class="form-group has-feedback" id="search-box-small">
+                            <input type="text" class="form-control" @click="openmobilesearch" v-bind:placeholder="'__("search")'"/>
+                            <i class="material-icons">search</i>
+                            <SearchBox></SearchBox>
+                        </div>
+                        <router-link
+                        :to="{ name: 'Notification'}"
+                        class="notification-icon">
+                            <i class="material-icons">notifications</i>
+                            <span>2</span>
+                        </router-link>
                     </div>
-                    <router-link
-                    :to="{ name: 'Notification'}"
-                    class="notification-icon">
-                        <i class="material-icons">notifications</i>
-                        <span>2</span>
-                    </router-link>
                 </div>
                 <div class="tabs-section col-md-12 col-12 col-lg-5">
                     <router-link
@@ -74,6 +78,7 @@
 
 <script>
 import constants from '@/constants'
+import SearchBox from '@/components/SearchBox.vue'
 
 export default {
     props: {
@@ -95,8 +100,32 @@ export default {
             }
         }
     },
+    components: {
+        SearchBox
+    },
     methods: {
+        opendesktopsearch() {
+            $("#search-box-big .search-dropdown").show();
+            $('#search-box-big input').keyup(function(event) {
+                var newText = event.target.value;
+                $('.search-options li a').text(newText);
+            });
+        },
+        openmobilesearch() {
+            $("#search-box-small .search-dropdown").show();
+            $('#search-box-small input').keyup(function(event) {
+                var newText = event.target.value;
+                $('.search-options li a').text(newText);
+            });
+            
+            $(document).mouseup(function(e) {
+                var container = $(".search-dropdown");
 
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    container.hide();
+                }
+            });
+        }
     }
 }
 </script>
@@ -131,6 +160,10 @@ export default {
                 overflow: hidden;
             }
         }
+        .search-box-wrap {
+            padding: 0;
+            margin-left: auto;
+        }
         .search-box {
             margin-top: 4px;
             padding: 0;
@@ -139,7 +172,7 @@ export default {
                 border: 1px solid #ced4da;
                 border-radius: .25rem;
                 position: relative;
-                width: 91%;
+                width: 89%;
                 display: inline-block;
                 input {
                     font-size: 14px;
@@ -166,10 +199,10 @@ export default {
             margin-left: auto;
             .form-group {
                 position: relative;
-                width: 85%;
+                width: 83%;
                 display: inline-block;
                 @media screen and (max-width: 410px ) {
-                    width: 81%;
+                    width: 78%;
                 }
                 i {
                     top: 5px;
@@ -183,7 +216,7 @@ export default {
             color: #212121;
             display: inline-block;
             vertical-align: middle;
-            margin: 5px 0 0 5px;
+            margin: 5px 12px 0 5px;
             position: relative;
             &:hover {
                 text-decoration: none;
