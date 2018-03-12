@@ -17,6 +17,7 @@ import BlogPageComponent from '@/pages/Blog.vue'
 import InterviewsPageComponent from '@/pages/Interviews.vue'
 import InterviewPageComponent from '@/pages/Interview.vue'
 import SettingsPageComponent from '@/pages/Settings.vue'
+import SearchPageComponent from '@/pages/Search.vue'
 
 import constants from '@/constants'
 
@@ -84,6 +85,10 @@ export default new Router({
         path: '/settings',
         name: 'Settings_Page',
         component: SettingsPageComponent
+    }, {
+        path: '/search',
+        name: 'Search_Page',
+        component: SearchPageComponent
     }, {
         path: '/blog',
         name: 'Blogs_Page',

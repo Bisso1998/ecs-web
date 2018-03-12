@@ -1,13 +1,24 @@
 <template>
     <div class="search-dropdown">
         <ul class="search-options">
-            <li><a href="#"></a></li>
+            <li>
+                <router-link
+                :to="{ name: 'Search_Page' }">
+                    
+                </router-link>
+            </li>
         </ul>
         <div class="trending">
             <div class="title">__("search_trending_heading")</div>
             <div class="tags">
-                <a href="#">#trendingtag1</a>
-                <a href="#">#trendingtag2</a>
+                <router-link
+                :to="{ path: 'search?trending1' }">
+                    #trending1
+                </router-link>
+                <router-link
+                :to="{ path: 'search?trending2' }">
+                    #trending2
+                </router-link>
             </div>
         </div>
     </div>
@@ -47,11 +58,11 @@ export default {
             }
         }
         .title {
-            font-size: 16px;
+            font-size: 12px;
             font-weight: bold;
             text-align: left;
             border-left: 3px solid #d0021b;
-            padding-left: 10px;
+            padding-left: 5px;
             margin: 10px 0 0 5px;
         }
         .tags {
