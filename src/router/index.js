@@ -18,6 +18,7 @@ import InterviewsPageComponent from '@/pages/Interviews.vue'
 import InterviewPageComponent from '@/pages/Interview.vue'
 import SettingsPageComponent from '@/pages/Settings.vue'
 import SearchPageComponent from '@/pages/Search.vue'
+import LoginPageComponent from '@/pages/Login.vue'
 
 import constants from '@/constants'
 
@@ -89,6 +90,10 @@ export default new Router({
         path: '/search',
         name: 'Search_Page',
         component: SearchPageComponent
+    }, {
+        path: '/login',
+        name: 'Login_Page',
+        component: LoginPageComponent
     }, {
         path: '/blog',
         name: 'Blogs_Page',
