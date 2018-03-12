@@ -14,6 +14,12 @@
                         <input type="text" class="form-control" id="search-box-big" v-bind:placeholder="'__("search_bar_help")'"/>
                         <i class="material-icons">search</i>
                     </div>
+                    <router-link
+                    :to="{ name: 'Notification'}"
+                    class="notification-icon">
+                        <i class="material-icons">notifications</i>
+                        <span>2</span>
+                    </router-link>
                 </div>
                 <div class="col-sm-8 col-8 d-block d-lg-none search-box search-box-2 text-right">
                     <div class="form-group has-feedback">
@@ -127,11 +133,14 @@ export default {
         }
         .search-box {
             margin-top: 4px;
+            padding: 0;
             .form-group {
                 margin: 0;
                 border: 1px solid #ced4da;
                 border-radius: .25rem;
                 position: relative;
+                width: 91%;
+                display: inline-block;
                 input {
                     font-size: 14px;
                     width: 95%;
@@ -159,6 +168,9 @@ export default {
                 position: relative;
                 width: 85%;
                 display: inline-block;
+                @media screen and (max-width: 410px ) {
+                    width: 81%;
+                }
                 i {
                     top: 5px;
                 }
