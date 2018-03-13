@@ -53,7 +53,7 @@ module.exports = {
         use: [{
           loader: StringReplacePlugin.replace({
             replacements: [{
-              pattern: /__\(["|'](_*[a-zA-Z]+(?:_[a-zA-Z]+)*)["|']\)/g,
+              pattern: /__\(["|'](_*[a-zA-Z0-9]+(?:_[a-zA-Z0-9]+)*)["|']\)/g,
               replacement: function (match) {
                 return languageJSON[match.substring(4, match.length - 2)]
               }
