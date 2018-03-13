@@ -9,9 +9,8 @@
                     <div class="col-lg-6 col-md-12">
                         <div class="card">
                             <div class="login-menu">
-                                <a href="#" v-on:click="tabchange" data-tab="signin" class="active">__("user_sign_in")</a>
-                                <a href="#" v-on:click="tabchange" data-tab="signup">__("user_sign_up")</a>
-                                <a href="#" v-on:click="tabchange" data-tab="password_reset">__("user_forgot_password")</a>
+                                <a href="#" v-on:click="tabchange" data-tab="signup" class="active">__("user_sign_up")</a>
+                                <a href="#" v-on:click="tabchange" data-tab="signin">__("user_sign_in")</a>
                             </div>
                             <div class="forms" id="signin">
                                 <div class="social-login">
@@ -27,6 +26,7 @@
                                         <input type="password" class="form-control" id="signinPassword" :placeholder="'__("user_password")'">
                                     </div>
                                     <button type="button" @click="loginUser({email, password})" class="btn sign-in">__("user_sign_in")</button>
+                                    <a href="#" class="forgot-pass">__("user_forgot_password")</a>
                                 </form>
                             </div>
                             
@@ -47,6 +47,7 @@
                                         <input type="password" class="form-control" id="signupPassword" :placeholder="'__("user_password")'">
                                     </div>
                                     <button type="button" @click="loginUser({email, password})" class="btn sign-in">__("user_sign_up")</button>
+                                    <span class="terms-section">__("register_part_1") <a href="/privacy-policy" target="_blank">__("footer_privacy_policy")</a> __("register_part_2") <a href="/terms-of-service" target="_blank">__("footer_terms_of_service")</a> __("register_part_3")</span>
                                 </form>
                             </div>
                             
@@ -173,12 +174,15 @@ export default {
         margin: 15px 10px;
         text-align: left;
         display: none;
-        &#signin {
+        &#signup {
             display: block;
         }
         .sign-in {
             background: #d00b12;
             color: #fff;
+            &:hover {
+                opacity: 0.9;
+            }
         }
         .or {
             display: flex;
@@ -203,6 +207,17 @@ export default {
         .or::after {
             margin-right: 0;
         }
+        .forgot-pass {
+            font-size: 12px;
+            margin: 0 10px;
+            color: #212529;
+        }
+        .terms-section {
+            font-size: 12px;
+            display: block;
+            margin: 10px 0;
+            color: #212529;
+        }
     }
     .social-login {
         button.fb, button.google {
@@ -218,6 +233,10 @@ export default {
             outline: none;
             text-align: left;
             font-size: 14px;
+            cursor: pointer;
+            &:hover {
+                opacity: 0.9;
+            }
             .fa-icon {
                 vertical-align: middle;
                 margin: 0 15px;
