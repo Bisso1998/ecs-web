@@ -25,10 +25,20 @@ export default {
 
     updateAuthorDetails({ commit, state }) {
         commit('setUpdateAuthorLoadingTrue');
-        DataAccessor.createOrUpdateAuthor(state.author.data, (response) => {
+        const authorData = { ...state.author.data };
+        console.log(authorData);
+        DataAccessor.createOrUpdateAuthor(authorData, (response) => {
             commit('setUpdateAuthorLoadingSuccess', response);
         }, () => {
             commit('setUpdateAuthorLoadingError');
         });
+    },
+
+    updateUserPassword({ commit, state }, { oldPassword, newPassword }) {
+        DataAccessor.updateUserPassword(oldPassword, newPassword, (response) => {
+            commit('setUpdateAuthorLoadingSuccess', response);
+        }, () => {
+            commit('setUpdateAuthorLoadingError');
+        });  
     }
 }

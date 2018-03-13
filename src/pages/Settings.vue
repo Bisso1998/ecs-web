@@ -69,9 +69,9 @@
                                             <label for="pratilipi-settings-gender">__('gender')</label>
                                             <select class="form-control" id="pratilipi-settings-gender" @input="updateGender">
                                                 <option disabled selected>__("gender")</option>
-                                                <option :selected="'MALE' === gender" :value="gender">__("gender_male")</option>
-                                                <option :selected="'FEMALE' === gender" :value="gender">__("gender_female")</option>
-                                                <option :selected="'OTHER' === gender" :value="gender">__("gender_other")</option>
+                                                <option :selected="'MALE' === gender" value="MALE">__("gender_male")</option>
+                                                <option :selected="'FEMALE' === gender" value="FEMALE">__("gender_female")</option>
+                                                <option :selected="'OTHER' === gender" value="OTHER">__("gender_other")</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
@@ -79,7 +79,7 @@
                                             <input type="date" class="form-control" id="pratilipi-settings-dateOfBirth" :value="dateOfBirth" @input="updateDateOfBirth" placeholder="__('author_date_of_birth')">
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary update-btn" disabled>__("save_changes")</button>
+                                    <button type="button" class="btn btn-primary update-btn" @click="updateProfileSettings">__("save_changes")</button>
                                 </form>
                             </div>
                             <div class="tabs" id="notification-settings">
@@ -202,7 +202,8 @@ export default {
     methods: {
         ...mapActions('settingspage', [
             'fetchAuthorDetails',
-            'updateUserDetails'
+            'updateUserDetails',
+            'updateAuthorDetails'
         ]),
         tabchange(event) {
             event.preventDefault();        
@@ -223,6 +224,10 @@ export default {
         updateSummary(e) { this.$store.commit('settingspage/updateSummary', e.target.value) },
         updateGender(e) { this.$store.commit('settingspage/updateGender', e.target.selectedOptions[0].value) },
         updateDateOfBirth(e) { this.$store.commit('settingspage/updateDateOfBirth', e.target.value) },
+        updateProfileSettings() {
+            this.updateUserDetails();
+            this.updateAuthorDetails();
+        }
     },
     watch: {
         'getUserDetails.authorId'(newValue) {
