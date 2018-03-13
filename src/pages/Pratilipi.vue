@@ -8,6 +8,8 @@
                             <button type="button" data-toggle="modal" @click="openShareModal" class="share-icon"><i class="material-icons">share</i></button>
                             <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getPratilipiData.coverImageUrl  + ')' }"></div>
                             <div class="book-title">{{ getPratilipiData.title }}</div>
+                            <button class="update-img" v-if="getPratilipiData.hasAccessToUpdate" @click="uploadImage('pratilipi-image')"><i class="material-icons">camera_alt</i></button>
+                            <input type="file" hidden name="pratilipiimage" @change="triggerPratilipiImageUpload($event)" accept="image/*" id="pratilipiimage-uploader">    
                             <router-link
                               :to="getPratilipiData.author.pageUrl"
                               class="author-name">
@@ -96,7 +98,8 @@ export default {
             'fetchPratilipiDetailsAndUserPratilipiData',
             'fetchUserPratilipiData',
             'addToLibrary',
-            'removeFromLibrary'
+            'removeFromLibrary',
+            'uploadPratilipiImage'
         ]),
         ...mapActions([
             'setShareDetails'
@@ -104,7 +107,21 @@ export default {
         openShareModal() {
             this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
             $('#share_modal').modal('show');
-        }
+        },
+        uploadImage(imageType) {
+            console.log('imageType', imageType);
+            switch(imageType) {
+                case 'pratilipi-image':
+                    $('#pratilipiimage-uploader').click();
+                    break;
+            }
+            
+        },
+        triggerPratilipiImageUpload(event) {
+            const formData = new FormData();
+            formData.append('ko_unique_6', event.target.files[0], event.target.files[0].name);
+            this.uploadPratilipiImage(formData);
+        },
     },
     created() {
         const slug_id = this.$route.params.slug_id;
