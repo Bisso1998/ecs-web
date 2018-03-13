@@ -49,7 +49,7 @@ export default new Router({
     }, {
         path: '/read',
         name: 'Reader_Page',
-        component: ListPageComponent
+        component: ReaderPageComponent
     }, {
         path: '/work-with-us',
         name: 'Career_Page',
