@@ -19,5 +19,6 @@ export default {
     // }
     
     getUserDetails: state => state.data,
-    getNotificationCount: state => state.notification_count
+    getNotificationCount: state => state.notification_count,
+    getLogoutStatus: state => state.logout_user
 }

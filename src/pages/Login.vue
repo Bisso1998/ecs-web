@@ -122,9 +122,7 @@ export default {
     },
     created() {
         if (!this.getUserDetails.isGuest) {
-            this.$router.push({ 
-                to: this.getUserDetails.profilePageUrl 
-            })
+            this.$router.push(this.getUserDetails.profilePageUrl)
         }
     }
 }

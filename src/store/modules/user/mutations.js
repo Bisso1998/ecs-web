@@ -37,5 +37,18 @@ export default {
 
     setNotificationCount(state, notificationCount) {
         state.notification_count = notificationCount;
+    },
+
+    setUserLogoutInProgressTrue(state) {
+        state.loading_state = 'LOADING';
+    },
+    
+    setUserLogoutInProgressSuccess(state, data) {
+        state.loading_state = 'LOADING_SUCCESS';
+        state.logout_user = true;
+    },
+    
+    setUserLogoutInProgressError(state) {
+        state.loading_state = 'LOADING_ERROR';
     }
 }

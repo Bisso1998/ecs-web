@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="head-title">Settings</div>
-                        <button type="button" class="sign-out btn btn-light" name="button"><i class="material-icons">power_settings_new</i> __("user_sign_out")</button>
+                        <button type="button" class="sign-out btn btn-light" name="button" @click="logoutUser"><i class="material-icons">power_settings_new</i> __("user_sign_out")</button>
                         <div class="settings-menu">
                             <a href="#" v-on:click="tabchange" class="active" data-tab="profile-settings">Profile</a>
                             <a href="#" v-on:click="tabchange" data-tab="notification-settings">__("notification_notifications")</a>
@@ -198,7 +198,8 @@ export default {
             dateOfBirth: state => state.settingspage.author.data.dateOfBirth
         }),
         ...mapGetters([
-            'getUserDetails'
+            'getUserDetails',
+            'getLogoutStatus'
         ]),
     },
     methods: {
@@ -207,6 +208,9 @@ export default {
             'updateUserDetails',
             'updateAuthorDetails',
             'updateUserPassword'
+        ]),
+        ...mapActions([
+            'logoutUser'
         ]),
         tabchange(event) {
             event.preventDefault();        
@@ -237,9 +241,23 @@ export default {
             if (newValue) {
                 this.fetchAuthorDetails(newValue);
             }
+        },
+        'getUserDetails.isGuest'(isGuest) {
+            if (isGuest) {
+                this.$router.push('login');
+            }
+        },
+        'getLogoutStatus'(loggedOut) {
+            if (loggedOut) {
+                location.reload()    
+            }
         }
     },
     created() {
+        if (this.getUserDetails.isGuest) {
+            this.$router.push('login');
+        }
+
         if (this.getUserDetails.authorId) {
             this.fetchAuthorDetails(this.getUserDetails.authorId);    
         }
