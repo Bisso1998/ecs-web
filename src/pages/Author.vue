@@ -15,13 +15,19 @@
                                     <button type="button" name="button"><i class="material-icons">share</i></button>
                                 </div>
                                 <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId" @click="uploadImage('cover-image')"><i class="material-icons">camera_alt</i></button>
-                                <input type="file" hidden name="coverimage" @change="triggerCoverImageUpload($event)" accept="image/*" id="coverimage_uploader">    
+                                <input type="file" hidden name="coverimage" @change="triggerCoverImageUpload($event)" accept="image/*" id="coverimage_uploader">
+                                <div class="uploading" v-if="getCoverImageLoadingState === 'LOADING'">
+                                    <Spinner></Spinner> 
+                                </div>
                             </div>
                             
                             <div class="profile-image">
                                 <img :src="getAuthorData.imageUrl + '?width=150'" alt="profile">
                                 <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId" @click="uploadImage('profile-image')"><i class="material-icons">camera_alt</i></button>
                                 <input type="file" hidden name="profileimage" @change="triggerProfileImageUpload($event)" accept="image/*" id="profile_uploader">
+                                <div class="uploading" v-if="getProfileImageLoadingState === 'LOADING'">
+                                    <Spinner></Spinner> 
+                                </div>
                             </div>
                             <div class="profile-user-name">{{ getAuthorData.name }}</div>
                             <div class="profile-read-by">__("author_readby_count")</div>
@@ -121,6 +127,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
+import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
@@ -148,7 +155,9 @@ export default {
             'getLibraryListLoadingState',
             'getPublishedContentsCursor',
             'getAuthorFollowingCursor',
-            'getAuthorFollowersCursor'
+            'getAuthorFollowersCursor',
+            'getProfileImageLoadingState',
+            'getCoverImageLoadingState'
         ]),
         ...mapState({
             publishedContents: state => state.authorpage.published_contents.data,
@@ -268,7 +277,8 @@ export default {
     },
     components: {
         MainLayout,
-        PratilipiComponent
+        PratilipiComponent,
+        Spinner
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
@@ -352,6 +362,17 @@ export default {
             i {
                 vertical-align: middle;
                 font-size: 18px;
+            }
+        }
+        .uploading {
+            background: rgba(0,0,0,0.7);
+            height: 100%;
+            z-index: 3;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            .spinner {
+                padding-top: 80px;
             }
         }
         .follow-btn-w-count {

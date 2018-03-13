@@ -37,4 +37,7 @@ export default {
     getAuthorFollowers: state => state.followers.data,
     getAuthorFollowersLoadingState: state => state.followers.loading_state,
     getAuthorFollowersCursor: state => state.followers.cursor,
+    
+    getCoverImageLoadingState: state => state.author.cover_image_upload_state,
+    getProfileImageLoadingState: state => state.author.profile_image_upload_state,
 }
