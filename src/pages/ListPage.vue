@@ -18,6 +18,7 @@
                 </div>
             </div>
         </div>
+        <PageNotFound v-if="getPratilipiListLoadingState === 'LOADING_ERROR' || getPratilipiListData.length === 0"></PageNotFound>
     </MainLayout>
 </template>
 
@@ -25,6 +26,7 @@
 import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
+import PageNotFound from '@/components/404.vue';
 import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -101,7 +103,8 @@ export default {
     components: {
         MainLayout,
         PratilipiComponent,
-        Spinner
+        Spinner,
+        PageNotFound
     }
 }
 </script>
