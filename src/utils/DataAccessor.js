@@ -506,7 +506,16 @@ export default {
     },
 
     createOrUpdateAuthor: (author, successCallBack, errorCallBack) => {
-        if (author == null || isEmpty(author) || author.authorId == null) return;
+        if (author == null || author.authorId == null) return;
+
+        // const authorDataToSend = ...author;
+        const dateObj = new Date(author.dateOfBirth);
+        let date = dateObj.getDate();
+        let month = dateObj.getMonth();
+        month++;
+        let year = dateObj.getFullYear();
+        author.dateOfBirth = date + "-" + month + "-" + year;
+
         httpUtil.post(API_PREFIX + AUTHOR_API,
             null,
             author,
