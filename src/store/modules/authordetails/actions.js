@@ -16,5 +16,16 @@ export default {
                 commit('setUserAuthorDataLoadingError');    
             }
         });
+    },
+
+    followOrUnfollowAuthor({ commit, state }) {
+        commit('setFollowUnfollowLoadingDataLoadingTrue');
+        console.log(state.author.data.authorId);
+        console.log(state.author.data.following);
+        DataAccessor.followOrUnfollowAuthor(state.author.data.authorId, !state.author.data.following, function(data) {
+            commit('setFollowUnfollowLoadingDataLoadingSuccess', data);
+        }, function (error) {
+            commit('setFollowUnfollowLoadingDataLoadingError');
+        });
     }
 }
