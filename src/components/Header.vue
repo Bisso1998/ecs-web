@@ -172,7 +172,7 @@ export default {
                 border: 1px solid #ced4da;
                 border-radius: .25rem;
                 position: relative;
-                width: 89%;
+                width: 88%;
                 display: inline-block;
                 input {
                     font-size: 14px;
