@@ -52,5 +52,9 @@ export default {
             console.log(error);
             commit('setUserDataLoadingError', error.message);
         })
+    },
+
+    setNotificationCount({ commit, state }, notificationCount) {
+        commit('setNotificationCount', notificationCount);
     }
 }

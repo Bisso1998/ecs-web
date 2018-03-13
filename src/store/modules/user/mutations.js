@@ -33,5 +33,9 @@ export default {
     setUserDataLoadingError(state, errorMessage) {
         state.loading_state = 'LOADING_ERROR';
         state.loading_error_message =  errorMessage;
+    },
+
+    setNotificationCount(state, notificationCount) {
+        state.notification_count = notificationCount;
     }
 }
