@@ -140,7 +140,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-current-password">__('user_current_password') *</label>
-                                            <input type="password" class="form-control" id="pratilipi-settings-current-password" placeholder="__('user_current_password')">
+                                            <input type="password" class="form-control" v-model="oldPassword" id="pratilipi-settings-current-password" placeholder="__('user_current_password')">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -150,10 +150,10 @@
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-confirm-password">__('user_confirm_password') *</label>
-                                            <input type="password" class="form-control" id="pratilipi-settings-confirm-password" placeholder="__('user_confirm_password')">
+                                            <input type="password" class="form-control" v-model="newPassword" id="pratilipi-settings-confirm-password" placeholder="__('user_confirm_password')">
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary update-btn" disabled>__("save_changes")</button>
+                                    <button type="button" class="btn btn-primary update-btn" @click="updateUserPassword({ oldPassword, newPassword })">__("save_changes")</button>
                                 </form>
                             </div>
                         </div>
@@ -175,7 +175,9 @@ export default {
     },
     data() {
         return {
-            constants
+            constants,
+            oldPassword: '',
+            newPassword: ''
         }
     },
     computed: {
@@ -203,7 +205,8 @@ export default {
         ...mapActions('settingspage', [
             'fetchAuthorDetails',
             'updateUserDetails',
-            'updateAuthorDetails'
+            'updateAuthorDetails',
+            'updateUserPassword'
         ]),
         tabchange(event) {
             event.preventDefault();        

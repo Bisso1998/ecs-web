@@ -36,8 +36,18 @@ export default {
 
     updateUserPassword({ commit, state }, { oldPassword, newPassword }) {
         DataAccessor.updateUserPassword(oldPassword, newPassword, (response) => {
+            commit('alert/triggerAlertView', '__('password_change_success')', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
+
             commit('setUpdateAuthorLoadingSuccess', response);
         }, () => {
+            commit('alert/triggerAlertView', 'Password reset failed', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
+
             commit('setUpdateAuthorLoadingError');
         });  
     }
