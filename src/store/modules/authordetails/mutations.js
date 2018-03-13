@@ -43,5 +43,22 @@ export default {
     
     setUserAuthorDataLoadingError(state) {
         state.userAuthor.loading_state = 'LOADING_ERROR';
-    }
+    },
+
+    setFollowUnfollowLoadingDataLoadingTrue(state) {
+
+    },
+
+    setFollowUnfollowLoadingDataLoadingSuccess(state, data){
+        state.author.data.following = data.following;
+        if (data.following) {
+            state.author.data.followCount++;    
+        } else {
+            state.author.data.followCount--;
+        }
+    },
+
+    setFollowUnfollowLoadingDataLoadingError(state) {
+
+    },
 }

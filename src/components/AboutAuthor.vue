@@ -7,8 +7,8 @@
             <img :src="getAuthorDetails.profileImageUrl" alt="author" class="auth-img" >
             <div class="auth-name">{{ getAuthorDetails.name }}</div>
         </router-link>
-        <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
-        <button class="btn btn-light follow-link following" style="display: none;">__("author_unfollow")</button>
+        <button class="btn btn-light follow-link" @click="followOrUnfollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow")</button>
+        <button class="btn btn-light follow-link following" @click="followOrUnfollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
         <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
         <button class="show_more_auth_desc">__("show_more")</button>
     </div>
@@ -32,13 +32,17 @@ export default {
         }
     },
     computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ]),
         ...mapGetters('authordetails', [
             'getAuthorDetails'
         ])
     },
     methods: {
         ...mapActions('authordetails', [
-            'fetchAuthorDetails'
+            'fetchAuthorDetails',
+            'followOrUnfollowAuthor'
         ]),
     },
     components: {

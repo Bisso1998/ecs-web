@@ -52,5 +52,18 @@ export default {
             console.log(error);
             commit('setUserDataLoadingError', error.message);
         })
+    },
+
+    logoutUser({ commit, state }) {
+        commit('setUserLogoutInProgressTrue');
+        DataAccessor.logoutUser((data) => {
+            commit('setUserLogoutInProgressSuccess', data);
+        }, () => {
+            commit('setUserLogoutInProgressError');
+        })
+    },
+
+    setNotificationCount({ commit, state }, notificationCount) {
+        commit('setNotificationCount', notificationCount);
     }
 }

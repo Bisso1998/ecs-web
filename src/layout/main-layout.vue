@@ -1,6 +1,6 @@
 <template>
     <div :class="currentLocale">
-        <Header :userDetails="getUserDetails"></Header>
+        <Header :userDetails="getUserDetails" :notificationCount="getNotificationCount" ></Header>
         <slot></slot>
         <LoginModal></LoginModal>
         <ShareModal></ShareModal>
@@ -24,7 +24,8 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     computed: {
         ...mapGetters([
-            'getUserDetails'
+            'getUserDetails',
+            'getNotificationCount'
         ])
     },
     data() {
@@ -59,7 +60,6 @@ export default {
     },
     created() {
         this.currentLocale = 'language-' + process.env.LANGUAGE;
-        this.fetchUserDetails();
     },
     mounted () {
         $(window).scroll(function() {

@@ -11,20 +11,17 @@
                 </div>
             </div>
         </div>
-        <PageNotFound></PageNotFound>
     </MainLayout>
 </template>
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
-import PageNotFound from '@/components/404.vue';
 import constants from '@/constants';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
-        MainLayout,
-        PageNotFound
+        MainLayout
     },
     computed: {
         ...mapGetters('staticpage', [

@@ -78,4 +78,15 @@ export default {
         state.recommendations.loading_state = 'LOADING_ERROR';
         state.recommendations.data = [];
     },
+
+    setPratilipiImageUploadingTrue(state) {
+        state.pratilipi.pratilipi_image_upload_state = 'LOADING';
+    },
+    setPratilipiImageUploadingSuccess(state, data) {
+        state.pratilipi.pratilipi_image_upload_state = 'LOADING_SUCCESS';
+        state.pratilipi.data.coverImageUrl = data.coverImageUrl;
+    },
+    setPratilipiImageUploadingError(state) {
+        state.pratilipi.pratilipi_image_upload_state = 'LOADING_ERROR';
+    }
 }

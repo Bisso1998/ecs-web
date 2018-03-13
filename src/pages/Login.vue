@@ -20,10 +20,10 @@
                                 <div class="or">__("or")</div>
                                 <form>
                                     <div class="form-group">
-                                        <input type="email" class="form-control" id="signinEmail" :placeholder="'__("user_email")'">
+                                        <input type="email" class="form-control" v-model="email" id="signinEmail" :placeholder="'__("user_email")'">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" id="signinPassword" :placeholder="'__("user_password")'">
+                                        <input type="password" class="form-control" v-model="password" id="signinPassword" :placeholder="'__("user_password")'">
                                     </div>
                                     <button type="button" @click="loginUser({email, password})" class="btn sign-in">__("user_sign_in")</button>
                                     <a href="#" class="forgot-pass">__("user_forgot_password")</a>
@@ -46,7 +46,7 @@
                                     <div class="form-group">
                                         <input type="password" class="form-control" id="signupPassword" :placeholder="'__("user_password")'">
                                     </div>
-                                    <button type="button" @click="loginUser({email, password})" class="btn sign-in">__("user_sign_up")</button>
+                                    <button type="button" @click="signupUser({name, email, password})" class="btn sign-in">__("user_sign_up")</button>
                                     <span class="terms-section">__("register_part_1") <a href="/privacy-policy" target="_blank">__("footer_privacy_policy")</a> __("register_part_2") <a href="/terms-of-service" target="_blank">__("footer_terms_of_service")</a> __("register_part_3")</span>
                                 </form>
                             </div>
@@ -81,12 +81,36 @@ import Spinner from '@/components/Spinner.vue';
 import 'vue-awesome/icons/facebook-f'
 import 'vue-awesome/icons/google'
 
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
     components: {
         MainLayout,
         Spinner
     },
+    data() {
+        return {
+            email: '',
+            password: ''
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
+    watch:{
+        'getUserDetails.isGuest'(isGuest) {
+            if (!isGuest) {
+                console.log('need to go from here')
+                this.$router.push(this.getUserDetails.profilePageUrl)
+            }
+        }
+    },
     methods: {
+        ...mapActions([
+            'loginUser'
+        ]),
         tabchange(event) {
             event.preventDefault();        
             var tab_id = $(event.currentTarget).attr('data-tab');
@@ -94,6 +118,11 @@ export default {
             $(event.currentTarget).addClass("active");
             $(".forms").hide();
             $("#" + tab_id).show();
+        }
+    },
+    created() {
+        if (!this.getUserDetails.isGuest) {
+            this.$router.push(this.getUserDetails.profilePageUrl)
         }
     }
 }

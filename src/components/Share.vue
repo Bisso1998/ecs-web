@@ -25,10 +25,10 @@
                   <span class="social-icon"><icon name="whatsapp"></icon></span>
                   __("whatsapp")
               </a>
-              <span class="link" @click="copyUrlToClipboard">
+              <a class="link" @click="copyUrlToClipboard">
                   <span class="social-icon"><icon name="link"></icon></span>
                   copy link
-              </span>
+              </a>
               <input type="text" :value="getContentUri" id="shareUri" hidden>
           </div>
         </div>

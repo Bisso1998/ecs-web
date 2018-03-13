@@ -20,7 +20,7 @@
                         :to="{ name: 'Notification'}"
                         class="notification-icon">
                             <i class="material-icons">notifications</i>
-                            <span>2</span>
+                            <span v-if="notificationCount > 0">{{ notificationCount }}</span>
                         </router-link>
                     </div>
                     <div class="d-block d-lg-none search-box search-box-2 text-right">
@@ -85,6 +85,9 @@ export default {
         userDetails: {
             type: Object,
             required: true
+        },
+        notificationCount: {
+            type: Number
         }
     },
     data(){

@@ -745,4 +745,16 @@ export default {
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 
+    uploadPratilipiImage: (formData, pratilipiId, successCallBack, errorCallBack) => {
+        console.log(formData);
+        console.log(pratilipiId);
+        if (formData == null) return;
+        if (pratilipiId == null) return;
+        
+        httpUtil.postMultipart(API_PREFIX + '/pratilipi/cover?pratilipiId=' + pratilipiId,
+            null,
+            formData,
+            function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
+    }
+
 };

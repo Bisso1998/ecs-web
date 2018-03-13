@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="head-title">Settings</div>
-                        <button type="button" class="sign-out btn btn-light" name="button"><i class="material-icons">power_settings_new</i> __("user_sign_out")</button>
+                        <button type="button" class="sign-out btn btn-light" name="button" @click="logoutUser"><i class="material-icons">power_settings_new</i> __("user_sign_out")</button>
                         <div class="settings-menu">
                             <a href="#" v-on:click="tabchange" class="active" data-tab="profile-settings">Profile</a>
                             <a href="#" v-on:click="tabchange" data-tab="notification-settings">__("notification_notifications")</a>
@@ -140,7 +140,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-current-password">__('user_current_password') *</label>
-                                            <input type="password" class="form-control" id="pratilipi-settings-current-password" placeholder="__('user_current_password')">
+                                            <input type="password" class="form-control" v-model="oldPassword" id="pratilipi-settings-current-password" placeholder="__('user_current_password')">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -150,10 +150,10 @@
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-confirm-password">__('user_confirm_password') *</label>
-                                            <input type="password" class="form-control" id="pratilipi-settings-confirm-password" placeholder="__('user_confirm_password')">
+                                            <input type="password" class="form-control" v-model="newPassword" id="pratilipi-settings-confirm-password" placeholder="__('user_confirm_password')">
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary update-btn" disabled>__("save_changes")</button>
+                                    <button type="button" class="btn btn-primary update-btn" @click="updateUserPassword({ oldPassword, newPassword })">__("save_changes")</button>
                                 </form>
                             </div>
                         </div>
@@ -175,7 +175,9 @@ export default {
     },
     data() {
         return {
-            constants
+            constants,
+            oldPassword: '',
+            newPassword: ''
         }
     },
     computed: {
@@ -196,14 +198,19 @@ export default {
             dateOfBirth: state => state.settingspage.author.data.dateOfBirth
         }),
         ...mapGetters([
-            'getUserDetails'
+            'getUserDetails',
+            'getLogoutStatus'
         ]),
     },
     methods: {
         ...mapActions('settingspage', [
             'fetchAuthorDetails',
             'updateUserDetails',
-            'updateAuthorDetails'
+            'updateAuthorDetails',
+            'updateUserPassword'
+        ]),
+        ...mapActions([
+            'logoutUser'
         ]),
         tabchange(event) {
             event.preventDefault();        
@@ -234,9 +241,23 @@ export default {
             if (newValue) {
                 this.fetchAuthorDetails(newValue);
             }
+        },
+        'getUserDetails.isGuest'(isGuest) {
+            if (isGuest) {
+                this.$router.push('login');
+            }
+        },
+        'getLogoutStatus'(loggedOut) {
+            if (loggedOut) {
+                location.reload()    
+            }
         }
     },
     created() {
+        if (this.getUserDetails.isGuest) {
+            this.$router.push('login');
+        }
+
         if (this.getUserDetails.authorId) {
             this.fetchAuthorDetails(this.getUserDetails.authorId);    
         }

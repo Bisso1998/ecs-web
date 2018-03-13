@@ -72,5 +72,17 @@ export default {
 
     setCachedPratilipiData({ commit, state }, pratilipiData) {
         console.log(pratilipiData);
+    },
+
+    uploadPratilipiImage({ commit, state }, formData ) {
+        console.log(formData);
+        commit('setPratilipiImageUploadingTrue');
+        DataAccessor.uploadPratilipiImage(formData, state.pratilipi.data.pratilipiId, (successData) => {
+            console.log('Now I can die in peace');
+            commit('setPratilipiImageUploadingSuccess', successData);
+        }, (errorData) => {
+            console.log('My life is wasted');
+            commit('setPratilipiImageUploadingError');
+        });
     }
 }
