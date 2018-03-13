@@ -6,10 +6,11 @@
                     <div class="book-details col-md-12 col-lg-5 p-0">
                         <div class="card">
                             <button type="button" data-toggle="modal" @click="openShareModal" class="share-icon"><i class="material-icons">share</i></button>
-                            <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getPratilipiData.coverImageUrl  + ')' }"></div>
-                            <div class="book-title">{{ getPratilipiData.title }}</div>
-                            <button class="update-img" v-if="getPratilipiData.hasAccessToUpdate" @click="uploadImage('pratilipi-image')"><i class="material-icons">camera_alt</i></button>
-                            <input type="file" hidden name="pratilipiimage" @change="triggerPratilipiImageUpload($event)" accept="image/*" id="pratilipiimage-uploader">    
+                            <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getPratilipiData.coverImageUrl  + ')' }">
+                                <button class="update-img" v-if="getPratilipiData.hasAccessToUpdate" @click="uploadImage('pratilipi-image')"><i class="material-icons">camera_alt</i></button>
+                                <input type="file" hidden name="pratilipiimage" @change="triggerPratilipiImageUpload($event)" accept="image/*" id="pratilipiimage-uploader">  
+                            </div>
+                            <div class="book-title">{{ getPratilipiData.title }}</div>  
                             <router-link
                               :to="getPratilipiData.author.pageUrl"
                               class="author-name">
@@ -227,6 +228,22 @@ export default {
                 margin: 10px 0;
                 width: 100%;
                 height: 200px;
+                position: relative;
+            }
+            .update-img {
+                position: absolute;
+                bottom: 0;
+                left: 45%;
+                background: rgba(255,255,255,0.4);
+                border: 0;
+                outline: none;
+                cursor: pointer;
+                padding: 5px 10px;
+                text-align: center;
+                i {
+                    vertical-align: middle;
+                    font-size: 18px;
+                }
             }
             .book-title {
                 font-size: 18px;
