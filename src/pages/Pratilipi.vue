@@ -8,7 +8,10 @@
                             <button type="button" data-toggle="modal" @click="openShareModal" class="share-icon"><i class="material-icons">share</i></button>
                             <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getPratilipiData.coverImageUrl  + ')' }">
                                 <button class="update-img" v-if="getPratilipiData.hasAccessToUpdate" @click="uploadImage('pratilipi-image')"><i class="material-icons">camera_alt</i></button>
-                                <input type="file" hidden name="pratilipiimage" @change="triggerPratilipiImageUpload($event)" accept="image/*" id="pratilipiimage-uploader">  
+                                <input type="file" hidden name="pratilipiimage" @change="triggerPratilipiImageUpload($event)" accept="image/*" id="pratilipiimage-uploader">
+                                <div class="uploading" v-if="getImageUploadLoadingState === 'LOADING'">
+                                    <Spinner></Spinner> 
+                                </div>
                             </div>
                             <div class="book-title">{{ getPratilipiData.title }}</div>  
                             <router-link
@@ -76,6 +79,7 @@
 import MainLayout from '@/layout/main-layout.vue';
 import Recommendation from '@/components/Recommendation.vue';
 import AboutAuthor from '@/components/AboutAuthor.vue';
+import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -91,7 +95,8 @@ export default {
             'getPratilipiData',
             'getUserPratilipiData',
             'getPratilipiLoadingState',
-            'getUserPratilipiLoadingState'
+            'getUserPratilipiLoadingState',
+            'getImageUploadLoadingState'
         ])
     },
     methods: {
@@ -134,7 +139,8 @@ export default {
     components: {
         MainLayout,
         Recommendation,
-        AboutAuthor
+        AboutAuthor,
+        Spinner
     },
     watch: {
         '$route.params.slug_id' (slug_id) {
@@ -180,6 +186,7 @@ export default {
                 position: absolute;
                 top: 10px;
                 right: 10px;
+                z-index: 2;
                 i {
                     height: 40px;
                     width: 40px;
@@ -243,6 +250,15 @@ export default {
                 i {
                     vertical-align: middle;
                     font-size: 18px;
+                }
+            }
+            .uploading {
+                background: rgba(0,0,0,0.7);
+                height: 100%;
+                z-index: 3;
+                position: relative;
+                .spinner {
+                    padding-top: 80px;
                 }
             }
             .book-title {

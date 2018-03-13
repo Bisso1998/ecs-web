@@ -21,6 +21,7 @@ export default {
     getPratilipiData: state => state.pratilipi.data,
     getPratilipiLoadingState: state => state.pratilipi.loading_state,
     getUserPratilipiData: state => state.userPratilipi.data,
-    getUserPratilipiLoadingState: state => state.userPratilipi.loading_state
+    getUserPratilipiLoadingState: state => state.userPratilipi.loading_state,
+    getImageUploadLoadingState: state => state.pratilipi.pratilipi_image_upload_state
 
 }
