@@ -98,7 +98,11 @@ export default {
             'addToLibrary',
             'removeFromLibrary'
         ]),
+        ...mapActions([
+            'setShareDetails'
+        ]),
         openShareModal() {
+            this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
             $('#share_modal').modal('show');
         }
     },
