@@ -19,7 +19,7 @@
                             {{ eachReview.review }}
                         </div>
                         <div class="comment-footer">
-                            <button type="button" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
+                            <button type="button" :class="{ 'active': eachReview.isLiked }" @click="likeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
                             <button type="button" name="button" @click="loadCommentsOfReview({ resultCount: eachReview.commentCount, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                         <div class="comment-avatar"><img :src="eachComment.user.profileImageUrl" alt="author"></div>
                         <div class="comment-box">
                             <div class="comment-head">
-                                <h6 class="comment-name" v-bind:class="{ 'by-author': eachComment.user.author.authorId === authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
+                                <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
                                 <span> {{ eachComment.creationDateMillis | convertDate }} </span>
 
                             </div>
@@ -38,7 +38,7 @@
                                 {{ eachComment.content }}
                             </div>
                             <div class="comment-footer">
-                                <button type="button" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
+                                <button type="button" :class="{ 'active': eachComment.isLiked}" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
                                 <button type="button" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
                             </div>
                         </div>
@@ -76,7 +76,8 @@ export default {
         ...mapActions('reviews', [
             'fetchPratilipiReviews',
             'loadMoreReviews',
-            'loadCommentsOfReview'
+            'loadCommentsOfReview',
+            'likeOrDislikeReview'
         ])
     },
     created() {

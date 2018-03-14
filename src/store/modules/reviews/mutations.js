@@ -67,5 +67,10 @@ export default {
     setCommentLoadingError(state, parentId) {
         const reviewToAddComment = state.data.find(eachReview => eachReview.userPratilipiId === parentId);
         reviewToAddComment.comments.loading_state = 'LOADING_ERROR';
+    },
+
+    setReviewLikeSuccess(state, { userPratilipiId, isLiked }) {
+        const concernedReview = state.data.find((eachReview) => eachReview.userPratilipiId ===  userPratilipiId);
+        concernedReview.isLiked = isLiked;
     }
 }
