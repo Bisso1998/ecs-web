@@ -38,8 +38,6 @@ export default {
     likeOrDislikeReview({ commit, state }, userPratilipiId) {
 
         const concernedReview = state.data.find((eachReview) => eachReview.userPratilipiId ===  userPratilipiId);
-        // console.log(userPratilipiId);
-        // console.log(concernedReview);
         DataAccessor.likeOrDislikeReview(userPratilipiId, !concernedReview.isLiked, function(data) {
             commit('setReviewLikeSuccess', { userPratilipiId, isLiked: !concernedReview.isLiked });
         });

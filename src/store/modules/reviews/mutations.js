@@ -72,5 +72,10 @@ export default {
     setReviewLikeSuccess(state, { userPratilipiId, isLiked }) {
         const concernedReview = state.data.find((eachReview) => eachReview.userPratilipiId ===  userPratilipiId);
         concernedReview.isLiked = isLiked;
+        if (isLiked) {
+            concernedReview.likeCount++;
+        } else {
+            concernedReview.likeCount--;
+        }
     }
 }
