@@ -58,6 +58,7 @@
                         </div>
                         <div class="card">
                             <div class="head-title">__("pratilipi_count_reviews")</div>
+                            <Reviews></Reviews>
                         </div>
                     </div>
                     <div class="book-recomendations col-md-12 p-0">
@@ -80,6 +81,7 @@ import MainLayout from '@/layout/main-layout.vue';
 import Recommendation from '@/components/Recommendation.vue';
 import AboutAuthor from '@/components/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
+import Reviews from '@/components/Reviews.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -140,7 +142,8 @@ export default {
         MainLayout,
         Recommendation,
         AboutAuthor,
-        Spinner
+        Spinner,
+        Reviews
     },
     watch: {
         '$route.params.slug_id' (slug_id) {
