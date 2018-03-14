@@ -58,7 +58,7 @@
                         </div>
                         <div class="card">
                             <div class="head-title">__("pratilipi_count_reviews")</div>
-                            <Reviews :reviews="getReviewsData" v-if="getReviewsLoadingState === 'LOADING_SUCCESS'"></Reviews>
+                            <Reviews :pratilipiId="getPratilipiData.pratilipiId" :authorId="getPratilipiData.author.authorId" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'"></Reviews>
                         </div>
                     </div>
                     <div class="book-recomendations col-md-12 p-0">
@@ -98,9 +98,7 @@ export default {
             'getUserPratilipiData',
             'getPratilipiLoadingState',
             'getUserPratilipiLoadingState',
-            'getImageUploadLoadingState',
-            'getReviewsLoadingState',
-            'getReviewsData'
+            'getImageUploadLoadingState'
         ])
     },
     methods: {
@@ -109,8 +107,7 @@ export default {
             'fetchUserPratilipiData',
             'addToLibrary',
             'removeFromLibrary',
-            'uploadPratilipiImage',
-            'fetchPratilipiReviews'
+            'uploadPratilipiImage'
         ]),
         ...mapActions([
             'setShareDetails'
@@ -154,7 +151,7 @@ export default {
         },
         'getPratilipiData.pratilipiId'(pratilipiId) {
             if (pratilipiId) {
-                this.fetchPratilipiReviews(3);
+                
             }
         }
     },
