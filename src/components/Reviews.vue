@@ -271,5 +271,7 @@ export default {
     width: 100%;
     display: block;
     color: #d0021b;
+    background: none;
+    border: 0;
 }
 </style>
