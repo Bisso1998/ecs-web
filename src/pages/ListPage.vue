@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <PageNotFound v-if="getPratilipiListLoadingState === 'LOADING_ERROR' || getPratilipiListData.length === 0"></PageNotFound>
+        <PageNotFound v-if="(getPratilipiListLoadingState === 'LOADING_ERROR' || getPratilipiListData.length === 0 ) && getPratilipiListLoadingState !== 'LOADING'"></PageNotFound>
     </MainLayout>
 </template>
 
