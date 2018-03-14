@@ -755,6 +755,33 @@ export default {
             null,
             formData,
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
+    },
+
+    getTrendingSearchKeywords: function( aCallBack ) {
+        httpUtil.get( API_PREFIX + SEARCH_PREFIX + SEARCH_TRENDING_API,
+            null,
+            { "language": "${ language }" },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+    },
+
+    getInitialSearchResults: function( searchQuery, language, aCallBack ) {
+        if( searchQuery == null ) return;
+        httpUtil.get( API_PREFIX + SEARCH_PREFIX + SEARCH_CORE_API,
+            null,
+            { "language": language, "text": searchQuery.trim() },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+    },
+
+    getPratilipiSearchResults: function( searchQuery, cursor, resultCount, language, aCallBack ) {
+        if( searchQuery == null || cursor == null ) return;
+        httpUtil.get( API_PREFIX + SEARCH_PREFIX + SEARCH_CORE_API,
+            null,
+            { "language": language,
+                "text": searchQuery.trim(),
+                "pratilipiCursor": cursor,
+                "pratilipiResultCount": resultCount != null ? resultCount : 20,
+                "authorResultCount": 0 },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) } );
     }
 
 };

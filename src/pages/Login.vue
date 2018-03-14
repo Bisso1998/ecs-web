@@ -102,7 +102,6 @@ export default {
     watch:{
         'getUserDetails.isGuest'(isGuest) {
             if (!isGuest) {
-                console.log('need to go from here')
                 this.$router.push(this.getUserDetails.profilePageUrl)
             }
         }

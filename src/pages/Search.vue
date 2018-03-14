@@ -7,14 +7,14 @@
                         <h2>__("search_results")</h2>
                         <div class="head-title">__("search_results_authors")</div>
                         <div class="author-section">
-                            <div class="follow">
-                                <a>
-                                    <div class="follow-img"></div>
-                                    <div class="follow-name"><!-- {{ each_follower.author.name }} --></div>
+                            <div class="follow" v-for="eachAuthor in getAuthorListData" :key="eachAuthor.authorId">
+                                <a :href="eachAuthor.pageUrl">
+                                    <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + eachAuthor.profileImageUrl + (eachAuthor.profileImageUrl.endsWith('/author/image') ? '?' : '&')  + 'width=100)' }"></div>
+                                    <div class="follow-name">{{ eachAuthor.name }}</div>
                                 </a>
-                                <div class="follow-count">__("author_followers"): <span><!-- {{ each_follower.author.followCount }} --></span></div>
-                                <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
-                                <button style="display: none;" class="btn btn-light follow-link"><i class="material-icons">check</i> __("author_following")</button>
+                                <div class="follow-count">__("author_followers"): <span>{{ eachAuthor.followCount }}</span></div>
+                                <button v-if="!eachAuthor.following" class="btn btn-light follow-link" @click="followOrUnfollowAuthor({ authorId: eachAuthor.authorId, following: eachAuthor.following })"><i class="material-icons">person_add</i> __("author_follow")</button>
+                                <button v-if="eachAuthor.following" class="btn btn-light follow-link" @click="followOrUnfollowAuthor({ authorId: eachAuthor.authorId, following: eachAuthor.following })"><i class="material-icons">check</i> __("author_following")</button>
                             </div>
                         </div>
                         <div class="books-section">
@@ -40,12 +40,93 @@
 import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
+import constants from '@/constants'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
         MainLayout,
         Spinner,
         PratilipiComponent
+    },
+    data() {
+        return {
+            scrollPosition: null
+        }
+    },
+    computed: {
+        ...mapGetters('searchpage', [
+            'getPratilipiListLoadingState',
+            'getPratilipiListCursor',
+            'getPratilipiListData',
+            'getAuthorListLoadingState',
+            'getAuthorListCursor',
+            'getAuthorListData'
+        ])
+    },
+    methods: {
+        ...mapActions('searchpage', [
+            'fetchInitialSearchResult',
+            'fetchMorePratilipisForSearchPage',
+            'addToLibrary',
+            'removeFromLibrary',
+            'followOrUnfollowAuthor'
+        ]),
+        updateScroll() {
+            this.scrollPosition = window.scrollY
+        }
+    },
+    watch: {
+        'scrollPosition'(newScrollPosition){
+            const nintyPercentOfList = ( 75 / 100 ) * $('.search-page').innerHeight();
+            const { list_page_url } = this.$route.params;
+
+            if (newScrollPosition > nintyPercentOfList && this.getPratilipiListLoadingState !== 'LOADING' && this.getPratilipiListCursor !== null) {
+                
+                const currentLocale = process.env.LANGUAGE;
+                constants.LANGUAGES.forEach((eachLanguage) => {
+                    if (eachLanguage.shortName === currentLocale) {
+                        this.fetchMorePratilipisForSearchPage({ 
+                            searchQuery: this.$route.query.searchText,
+                            language: eachLanguage.fullName.toUpperCase(),
+                            resultCount: 10
+                        });
+                    }
+                });
+            }
+        },
+        '$route.query.searchText'(newValue) {
+            console.log(newValue)
+
+            const currentLocale = process.env.LANGUAGE;
+            constants.LANGUAGES.forEach((eachLanguage) => {
+                if (eachLanguage.shortName === currentLocale) {
+                    this.fetchInitialSearchResult({ 
+                        searchQuery: this.$route.query.searchText,
+                        language: eachLanguage.fullName.toUpperCase(),
+                    });
+                }
+            });
+        }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.updateScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
+    },
+    created() {
+        if (this.$route.query.searchText) {
+            const currentLocale = process.env.LANGUAGE;
+            constants.LANGUAGES.forEach((eachLanguage) => {
+                if (eachLanguage.shortName === currentLocale) {
+                    this.fetchInitialSearchResult({ 
+                        searchQuery: this.$route.query.searchText,
+                        language: eachLanguage.fullName.toUpperCase(),
+                    });
+                }
+            });
+        }
     }
 }
 </script>
