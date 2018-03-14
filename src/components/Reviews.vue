@@ -9,6 +9,20 @@
                             <div class="comment-meta">
                                 <h6 class="comment-name"><router-link :to="eachReview.userProfilePageUrl">{{ eachReview.userName }}</router-link></h6>
                                 <span>{{ eachReview.reviewDateMillis | convertDate }}</span>
+                                <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="moreOptions">
+                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                                        __("review_edit_review")
+                                    </button>
+                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                                        __("review_delete_review")
+                                    </button>
+                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                                        __("report_button")
+                                    </button>
+                                </div>
                             </div>
                             <div class="rating">
                                 <i class="material-icons" v-for="index in eachReview.rating" :key="index + Math.random()">star</i>
@@ -32,7 +46,20 @@
                             <div class="comment-head">
                                 <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
                                 <span> {{ eachComment.creationDateMillis | convertDate }} </span>
-
+                                <button class="btn more-options" type="button" id="moreOptions2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="moreOptions2">
+                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                                        __("review_edit_review")
+                                    </button>
+                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                                        __("review_delete_review")
+                                    </button>
+                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                                        __("report_button")
+                                    </button>
+                                </div>
                             </div>
                             <div class="comment-content">
                                 {{ eachComment.content }}
@@ -172,7 +199,7 @@ export default {
             -moz-border-radius: 4px 4px 0 0;
             border-radius: 4px 4px 0 0;
             @media screen and (max-width: 768px ) {
-                padding: 4px 12px;
+                padding: 4px 5px 4px 10px;
             }
             .comment-meta {
                 float: left;
@@ -197,6 +224,20 @@ export default {
                 font-size: 12px;
                 position: relative;
                 top: 2px;
+            }
+            .more-options {
+                float: right;
+                padding: 0;
+                i {
+                    font-size: 18px;
+                }
+            }
+            .dropdown-menu {
+                .options-btn {
+                    font-size: 12px;
+                    display: block;
+                    padding: 5px 10px;
+                }
             }
             .rating {
                 float: left;
