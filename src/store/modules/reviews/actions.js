@@ -33,5 +33,13 @@ export default {
                 commit('setCommentLoadingError', parentId);
             }
         });
+    },
+
+    likeOrDislikeReview({ commit, state }, userPratilipiId) {
+
+        const concernedReview = state.data.find((eachReview) => eachReview.userPratilipiId ===  userPratilipiId);
+        DataAccessor.likeOrDislikeReview(userPratilipiId, !concernedReview.isLiked, function(data) {
+            commit('setReviewLikeSuccess', { userPratilipiId, isLiked: !concernedReview.isLiked });
+        });
     }
 }
