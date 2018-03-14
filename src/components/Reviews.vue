@@ -218,6 +218,15 @@ export default {
                 background: none;
                 border: 0;
                 padding: 2px 0;
+                &:focus {
+                    outline: none;
+                }
+                &.active {
+                    color: #d0021b;
+                    i {
+                        color: #d0021b;
+                    }
+                }
             }
             span {
                 font-size: 12px;
@@ -255,7 +264,7 @@ export default {
     width: calc(100% - 60px);
 }
 .comment-box .comment-name.by-author:after {
-    content: 'author';
+    content: '__("author_author")';
     background: #283035;
     color: #FFF;
     font-size: 12px;
@@ -274,5 +283,8 @@ export default {
     color: #d0021b;
     background: none;
     border: 0;
+    &:focus {
+        outline: none;
+    }
 }
 </style>
