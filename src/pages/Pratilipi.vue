@@ -80,7 +80,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <Reviews></Reviews>
+                            <Reviews :pratilipiId="getPratilipiData.pratilipiId" :authorId="getPratilipiData.author.authorId" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'"></Reviews>
                         </div>
                     </div>
                     <div class="book-recomendations col-md-12 p-0">
@@ -176,6 +176,11 @@ export default {
     watch: {
         '$route.params.slug_id' (slug_id) {
             this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
+        },
+        'getPratilipiData.pratilipiId'(pratilipiId) {
+            if (pratilipiId) {
+                
+            }
         }
     },
     mounted() {

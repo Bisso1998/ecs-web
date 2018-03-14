@@ -1,43 +1,41 @@
 <template>
     <div class="comments-container">
-        <ul id="comments-list" class="comments-list">
-            <li>
+        <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
+            <li v-for="eachReview in getReviewsData" :key="eachReview.userPratilipiId">
                 <div class="comment-main-level">
-                    <div class="comment-avatar"><img src="https://4.ptlp.co/author/image?width=150" alt="author"></div>
+                    <div class="comment-avatar"><img :src="eachReview.userImageUrl" alt="author"></div>
                     <div class="comment-box">
                         <div class="comment-head">
                             <div class="comment-meta">
-                                <h6 class="comment-name"><a href="#">Agustin Ortiz</a></h6>
-                                <span>20/12/2017</span>
+                                <h6 class="comment-name"><router-link :to="eachReview.userProfilePageUrl">{{ eachReview.userName }}</router-link></h6>
+                                <span>{{ eachReview.reviewDateMillis | convertDate }}</span>
                             </div>
                             <div class="rating">
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star_border</i>
+                                <i class="material-icons" v-for="index in eachReview.rating" :key="index + Math.random()">star</i>
+                                <i class="material-icons" v-for="index in 5 - eachReview.rating" :key="index + Math.random()">star_border</i>
                             </div>
                         </div>
                         <div class="comment-content">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                            {{ eachReview.review }}
                         </div>
                         <div class="comment-footer">
-                            <button type="button" name="button"><span class="counter">3</span><i class="material-icons">thumb_up</i></button>
-                            <button type="button" name="button"><span class="counter">1</span><i class="material-icons">message</i></button>
+                            <button type="button" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
+                            <button type="button" name="button" @click="loadCommentsOfReview({ resultCount: eachReview.commentCount, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
                         </div>
                     </div>
                 </div>
-                <ul class="comments-list reply-list">
-                    <li>
-                        <div class="comment-avatar"><img src="https://4.ptlp.co/author/image?width=100" alt="author"></div>
+                <Spinner v-if="eachReview.comments.loading_state === 'LOADING'"></Spinner>
+                <ul class="comments-list reply-list"  v-if="eachReview.comments && eachReview.comments.data && eachReview.comments.data.length > 0 && eachReview.comments.loading_state === 'LOADING_SUCCESS'">
+                    <li v-for="eachComment in eachReview.comments.data" :key="eachComment.commentId">
+                        <div class="comment-avatar"><img :src="eachComment.user.profileImageUrl" alt="author"></div>
                         <div class="comment-box">
                             <div class="comment-head">
-                                <h6 class="comment-name by-author"><a href="#">Lorena Rojero</a></h6>
-                                <span>21/12/2017</span>
+                                <h6 class="comment-name" v-bind:class="{ 'by-author': eachComment.user.author.authorId === authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
+                                <span> {{ eachComment.creationDateMillis | convertDate }} </span>
 
                             </div>
                             <div class="comment-content">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                                {{ eachComment.content }}
                             </div>
                             <div class="comment-footer">
                                 <button type="button" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
@@ -45,62 +43,48 @@
                             </div>
                         </div>
                     </li>
-
-                    <li>
-                        <div class="comment-avatar"><img src="https://4.ptlp.co/author/image?width=100" alt=""></div>
-                        <div class="comment-box">
-                            <div class="comment-head">
-                                <h6 class="comment-name"><a href="#">Agustin Ortiz</a></h6>
-                                <span>21/12/2017</span>
-                            </div>
-                            <div class="comment-content">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                            </div>
-                            <div class="comment-footer">
-                                <button type="button" name="button"><span class="counter">1</span><i class="material-icons">thumb_up</i></button>
-                                <button type="button" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
-                            </div>
-                        </div>
-                    </li>
                 </ul>
             </li>
-
-            <li>
-                <div class="comment-main-level">
-                    <div class="comment-avatar"><img src="https://4.ptlp.co/author/image?width=150" alt=""></div>
-                    <div class="comment-box">
-                        <div class="comment-head">
-                            <div class="comment-meta">
-                                <h6 class="comment-name"><a href="#">Abhishek Sharma</a></h6>
-                                <span>20/12/2017</span>
-                            </div>
-                            <div class="rating">
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star_border</i>
-                            </div>
-                        </div>
-                        <div class="comment-content">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                        </div>
-                        <div class="comment-footer">
-                            <button type="button" name="button"><span class="counter">3</span><i class="material-icons">thumb_up</i></button>
-                            <button type="button" name="button"><span class="counter">1</span><i class="material-icons">message</i></button>
-                        </div>
-                    </div>
-                </div>
-            </li>
         </ul>
-        <a href="#" class="show-more">__("show_more")</a>
+        <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
+        <button v-if="getReviewsCursor !== null" @click="loadMoreReviews({ resultCount: 3, pratilipiId })" class="show-more">__("show_more")</button>
     </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Spinner from '@/components/Spinner.vue';
 
 export default {
-
+    props: {
+        pratilipiId: {
+            type: Number,
+            required: true
+        },
+        authorId: {
+            type: Number,
+            required: true
+        }
+    },
+    computed: {
+        ...mapGetters('reviews', [
+            'getReviewsLoadingState',
+            'getReviewsData',
+            'getReviewsCursor'
+        ])
+    },
+    methods: {
+        ...mapActions('reviews', [
+            'fetchPratilipiReviews',
+            'loadMoreReviews',
+            'loadCommentsOfReview'
+        ])
+    },
+    created() {
+        this.fetchPratilipiReviews({ pratilipiId: this.pratilipiId, resultCount: 3 });
+    },
+    components: {
+        Spinner
+    }
 }
 
 </script>
@@ -270,7 +254,7 @@ export default {
     width: calc(100% - 60px);
 }
 .comment-box .comment-name.by-author:after {
-    content: 'autor';
+    content: 'author';
     background: #283035;
     color: #FFF;
     font-size: 12px;
