@@ -35,6 +35,7 @@
                         <div class="comment-footer">
                             <button type="button" :class="{ 'active': eachReview.isLiked }" @click="likeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
                             <button type="button" name="button" @click="loadCommentsOfReview({ resultCount: eachReview.commentCount, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
+                            <button type="button" class="write-reply" name="button">__("comment_reply_to_comment")</button>
                         </div>
                     </div>
                 </div>
@@ -67,6 +68,25 @@
                             <div class="comment-footer">
                                 <button type="button" :class="{ 'active': eachComment.isLiked}" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
                                 <button type="button" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
+                                <button type="button" class="write-reply" name="button">__("comment_reply_to_comment")</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="add-reply">
+                        <div class="comment-avatar"><img src="" alt="author"></div>
+                        <div class="comment-box">
+                            <div class="comment-head">
+                                <h6 class="comment-name"><a href="#">Author Name</a></h6>
+                            </div>
+                            <div class="comment-content">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="writeReply">__("comment_reply_to_comment")</label>
+                                        <textarea class="form-control" id="writeReply" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
+                                    </div>
+                                    <button class="btn btn-primary">__("save")</button>
+                                    <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
+                                </form>
                             </div>
                         </div>
                     </li>
@@ -294,6 +314,10 @@ export default {
                 vertical-align: middle;
                 cursor: pointer;
             }
+            .write-reply {
+                font-size: 12px;
+                padding: 0 5px;
+            }
         }
     }
 }
@@ -328,6 +352,22 @@ export default {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+}
+.add-reply {
+    textarea, label {
+        font-size: 13px;
+    }
+    .btn {
+        font-size: 12px;
+        float: right;
+        padding: 4px 7px;
+        margin-bottom: 5px;
+        &.btn-primary {
+            background: #d0021b;
+            border: 0;
+            margin-left: 5px;
+        }
+    }
 }
 .show-more {
     text-align: center;
