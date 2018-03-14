@@ -45,8 +45,6 @@ export default {
                             var userPreferencesNode = firebase.database().ref( "PREFERENCE" ).child( fbUser.uid );
                             userPreferencesNode.on( 'value', function( snapshot ) {
                                 var userPreferences = snapshot.val() != null ? snapshot.val() : {};
-                                
-                                console.log(userPreferences);
                             });
                         } else {
                             firebase.auth().signInWithCustomToken( that.getUserDetails.firebaseToken );
