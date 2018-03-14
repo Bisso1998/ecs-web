@@ -58,6 +58,28 @@
                         </div>
                         <div class="card">
                             <div class="head-title">__("pratilipi_count_reviews")</div>
+                            <div class="add-review">
+                                <div class="rating-box">
+                                    <span class="text">__("rating_your_rating"):</span>
+                                    <fieldset class="rating" @click="openReview">
+                                        <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5"></label>
+                                        <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4"></label>
+                                        <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3"></label>
+                                        <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2"></label>
+                                        <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1"></label>
+                                    </fieldset>
+                                </div>
+                                <div class="review-box">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="writeReview">__("review_write_a_review")</label>
+                                            <textarea class="form-control" id="writeReview" rows="2"></textarea>
+                                        </div>
+                                        <button class="btn btn-primary">__("save")</button>
+                                        <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
+                                    </form>
+                                </div>
+                            </div>
                             <Reviews></Reviews>
                         </div>
                     </div>
@@ -130,6 +152,12 @@ export default {
             formData.append('ko_unique_6', event.target.files[0], event.target.files[0].name);
             this.uploadPratilipiImage(formData);
         },
+        openReview() {
+            $(".review-box").fadeIn();
+        },
+        cancelReview(e) {
+            $(".review-box").fadeOut();
+        }
     },
     created() {
         const slug_id = this.$route.params.slug_id;
@@ -353,6 +381,60 @@ export default {
                 }
                 .read-btn {
                     background: #d0021b;
+                }
+            }
+        }
+        .add-review {
+            display: block;
+            margin: 4px 10px;
+            clear: both;
+            overflow: hidden;
+            .rating-box span.text {
+                float: left;
+                margin: 6px 10px 0 0;
+                font-size: 14px;
+                font-weight: bold;
+            }
+            .rating {
+              border: none;
+              float: left;
+              input {
+                  display: none;
+              }
+              label:before { 
+                margin: 2px 4px;
+                font-size: 1.25em;
+                font-family: 'Material Icons';
+                display: inline-block;
+                content: "\e83a";
+              }
+              label { 
+                color: #9e9e9e; 
+                float: right;
+                margin: 0;
+              }
+              input:checked ~ label, &:not(:checked) > label:hover, &:not(:checked) > label:hover ~ label {
+                  color: #d0021b;
+              }
+              input:checked ~ label:before { 
+                  content: "\e838";
+              }
+            }
+            .review-box {
+                clear: both;
+                margin: 4px 10px;
+                display: none;
+                label {
+                    font-size: 14px;
+                }
+                button {
+                    float: right;
+                    font-size: 14px;
+                    margin-left: 10px;
+                    &.btn-primary {
+                        background: #d0021b;
+                        border: 0;
+                    }
                 }
             }
         }

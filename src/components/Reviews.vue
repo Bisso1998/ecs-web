@@ -205,7 +205,7 @@ export default {
                 color: #999;
                 font-size: 12px;
                 position: relative;
-                top: 1px;
+                top: 2px;
             }
             .rating {
                 float: left;
