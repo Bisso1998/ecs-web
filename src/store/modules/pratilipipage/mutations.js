@@ -88,5 +88,25 @@ export default {
     },
     setPratilipiImageUploadingError(state) {
         state.pratilipi.pratilipi_image_upload_state = 'LOADING_ERROR';
+    },
+
+
+    setReviewLoadingTrue(state) {
+        state.reviews.loading_state = 'LOADING';
+        state.reviews.data = [];
+        state.reviews.cursor = null;
+    },
+    setReviewLoadingSuccess(state, data) {
+        state.reviews.loading_state = 'LOADING_SUCCESS';
+        state.reviews.data = data.reviewList;
+        state.reviews.cursor = data.cursor;
+        state.reviews.numberFound = data.numberFound;
+
+        if (data.reviewList.length === 0) {
+            state.reviews.cursor = null;
+        }
+    },
+    setReviewLoadingError(state) {
+        state.reviews.loading_state = 'LOADING_ERROR';
     }
 }

@@ -7,5 +7,11 @@ export default {
     userPratilipi: {
     	loading_state: 'LOADING',
     	data: {}
+    },
+    reviews: {
+    	loading_state: 'LOADING',
+    	data: [],
+    	cursor: 0,
+    	numberFound: null
     }
 }

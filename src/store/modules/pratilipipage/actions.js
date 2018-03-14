@@ -75,7 +75,6 @@ export default {
     },
 
     uploadPratilipiImage({ commit, state }, formData ) {
-        console.log(formData);
         commit('setPratilipiImageUploadingTrue');
         DataAccessor.uploadPratilipiImage(formData, state.pratilipi.data.pratilipiId, (successData) => {
             console.log('Now I can die in peace');
@@ -84,5 +83,16 @@ export default {
             console.log('My life is wasted');
             commit('setPratilipiImageUploadingError');
         });
+    },
+
+    fetchPratilipiReviews({ commit, state }, resultCount) {
+        commit('setReviewLoadingTrue');
+        DataAccessor.getReviewList(state.pratilipi.data.pratilipiId, state.reviews.cursor, null, resultCount, function(data) {
+            if (data.status === 200) {
+                commit('setReviewLoadingSuccess', data.response);
+            } else {
+                commit('setReviewLoadingError');
+            }
+        }); 
     }
 }

@@ -22,6 +22,8 @@ export default {
     getPratilipiLoadingState: state => state.pratilipi.loading_state,
     getUserPratilipiData: state => state.userPratilipi.data,
     getUserPratilipiLoadingState: state => state.userPratilipi.loading_state,
-    getImageUploadLoadingState: state => state.pratilipi.pratilipi_image_upload_state
-
+    getImageUploadLoadingState: state => state.pratilipi.pratilipi_image_upload_state,
+    getReviewsData: state => state.reviews.data,
+    getReviewsLoadingState: state => state.reviews.loading_state,
+    getReviewsCursor: state => state.reviews.cursor,
 }
