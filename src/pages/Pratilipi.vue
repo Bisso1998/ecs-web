@@ -435,10 +435,10 @@ export default {
                 button {
                     float: right;
                     font-size: 14px;
-                    margin-left: 10px;
                     &.btn-primary {
                         background: #d0021b;
                         border: 0;
+                        margin-left: 5px;
                     }
                 }
             }
