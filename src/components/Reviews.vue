@@ -2,32 +2,29 @@
     <div class="comments-container">
         <ul id="comments-list" class="comments-list">
             <li>
-                <div class="comment-main-level">
-                    <div class="comment-avatar"><img src="https://4.ptlp.co/author/image?width=150" alt="author"></div>
+                <div class="comment-main-level" v-for="eachReview in reviews" :key="eachReview.userPratilipiId">
+                    <div class="comment-avatar"><img :src="eachReview.userImageUrl" alt="author"></div>
                     <div class="comment-box">
                         <div class="comment-head">
                             <div class="comment-meta">
-                                <h6 class="comment-name"><a href="#">Agustin Ortiz</a></h6>
-                                <span>20/12/2017</span>
+                                <h6 class="comment-name"><a :href="eachReview.userProfilePageUrl">{{ eachReview.userName }}</a></h6>
+                                <span>{{ eachReview.reviewDateMillis | convertDate }}</span>
                             </div>
                             <div class="rating">
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star_border</i>
+                                <i class="material-icons" v-for="index in eachReview.rating" :key="index + Math.random()">star</i>
+                                <i class="material-icons" v-for="index in 5 - eachReview.rating" :key="index + Math.random()">star_border</i>
                             </div>
                         </div>
                         <div class="comment-content">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                            {{ eachReview.review }}
                         </div>
                         <div class="comment-footer">
-                            <button type="button" name="button"><span class="counter">3</span><i class="material-icons">thumb_up</i></button>
-                            <button type="button" name="button"><span class="counter">1</span><i class="material-icons">message</i></button>
+                            <button type="button" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
+                            <button type="button" name="button"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
                         </div>
                     </div>
                 </div>
-                <ul class="comments-list reply-list">
+                <!-- <ul class="comments-list reply-list">
                     <li>
                         <div class="comment-avatar"><img src="https://4.ptlp.co/author/image?width=100" alt="author"></div>
                         <div class="comment-box">
@@ -62,35 +59,7 @@
                             </div>
                         </div>
                     </li>
-                </ul>
-            </li>
-
-            <li>
-                <div class="comment-main-level">
-                    <div class="comment-avatar"><img src="https://4.ptlp.co/author/image?width=150" alt=""></div>
-                    <div class="comment-box">
-                        <div class="comment-head">
-                            <div class="comment-meta">
-                                <h6 class="comment-name"><a href="#">Abhishek Sharma</a></h6>
-                                <span>20/12/2017</span>
-                            </div>
-                            <div class="rating">
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star</i>
-                                <i class="material-icons">star_border</i>
-                            </div>
-                        </div>
-                        <div class="comment-content">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-                        </div>
-                        <div class="comment-footer">
-                            <button type="button" name="button"><span class="counter">3</span><i class="material-icons">thumb_up</i></button>
-                            <button type="button" name="button"><span class="counter">1</span><i class="material-icons">message</i></button>
-                        </div>
-                    </div>
-                </div>
+                </ul> -->
             </li>
         </ul>
     </div>
@@ -99,7 +68,12 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-
+    props: {
+        reviews: {
+            type: Array,
+            required: true
+        }
+    }
 }
 
 </script>

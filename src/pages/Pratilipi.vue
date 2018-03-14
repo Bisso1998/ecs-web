@@ -58,7 +58,7 @@
                         </div>
                         <div class="card">
                             <div class="head-title">__("pratilipi_count_reviews")</div>
-                            <Reviews></Reviews>
+                            <Reviews :reviews="getReviewsData" v-if="getReviewsLoadingState === 'LOADING_SUCCESS'"></Reviews>
                         </div>
                     </div>
                     <div class="book-recomendations col-md-12 p-0">
@@ -98,7 +98,9 @@ export default {
             'getUserPratilipiData',
             'getPratilipiLoadingState',
             'getUserPratilipiLoadingState',
-            'getImageUploadLoadingState'
+            'getImageUploadLoadingState',
+            'getReviewsLoadingState',
+            'getReviewsData'
         ])
     },
     methods: {
@@ -152,7 +154,7 @@ export default {
         },
         'getPratilipiData.pratilipiId'(pratilipiId) {
             if (pratilipiId) {
-                this.fetchPratilipiReviews(5);
+                this.fetchPratilipiReviews(3);
             }
         }
     },
