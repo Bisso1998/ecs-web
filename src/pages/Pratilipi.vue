@@ -68,6 +68,8 @@
                                         <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2"></label>
                                         <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1"></label>
                                     </fieldset>
+                                    <button class="btn btn-primary write-review-btn" @click="openReview">__("review_write_a_review")</button>
+                                    <button class="btn btn-primary write-review-btn" style="display: none;">__("review_edit_review")</button>
                                 </div>
                                 <div class="review-box">
                                     <form>
@@ -394,11 +396,25 @@ export default {
             margin: 4px 10px;
             clear: both;
             overflow: hidden;
-            .rating-box span.text {
-                float: left;
-                margin: 6px 10px 0 0;
-                font-size: 14px;
-                font-weight: bold;
+            .rating-box {
+                span.text {
+                    float: left;
+                    margin: 6px 10px 0 0;
+                    font-size: 14px;
+                    font-weight: bold;
+                    display: block;
+                    width: 100%;
+                }
+                .write-review-btn {
+                    background: #d0021b;
+                    border: 0;
+                    font-size: 14px;
+                    float: right;
+                    &:focus {
+                        outline: none;
+                        box-shadow: none;
+                    }
+                }
             }
             .rating {
               border: none;
@@ -407,11 +423,12 @@ export default {
                   display: none;
               }
               label:before { 
-                margin: 2px 4px;
-                font-size: 1.25em;
+                margin: 2px 5px 0 0;
+                font-size: 26px;
                 font-family: 'Material Icons';
                 display: inline-block;
                 content: "\e83a";
+                color: #d0021b;
               }
               label { 
                 color: #9e9e9e; 
