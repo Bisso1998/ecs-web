@@ -170,16 +170,22 @@ export default {
             -webkit-border-radius: 4px 4px 0 0;
             -moz-border-radius: 4px 4px 0 0;
             border-radius: 4px 4px 0 0;
+            @media screen and (max-width: 768px ) {
+                padding: 4px 12px;
+            }
             .comment-meta {
                 float: left;
                 width: 100%;
             }
             .comment-name {
                 color: #283035;
-                font-size: 14px;
+                font-size: 13px;
                 font-weight: 700;
                 float: left;
                 margin: 0 10px 5px 0;
+                @media screen and (max-width: 768px ) {
+                    margin: 0 10px 2px 0;
+                }
                 a {
                     color: #283035;
                 }
@@ -195,7 +201,7 @@ export default {
                 float: left;
                 i {
                     float: left;
-                    color: #d0021b;
+                    color: #aeadae;
                     font-size: 18px;
                     margin: 0;
                 }
@@ -209,10 +215,17 @@ export default {
             -webkit-border-radius: 0 0 4px 4px;
             -moz-border-radius: 0 0 4px 4px;
             border-radius: 0 0 4px 4px;
+            @media screen and (max-width: 768px ) {
+                padding: 4px 7px;
+                font-size: 13px;
+            }
         }
         .comment-footer {
             border-top: 1px solid #e5e5e5;
             padding: 5px;
+            @media screen and (max-width: 768px ) {
+                padding: 0px 5px;
+            }
             button {
                 background: none;
                 border: 0;
@@ -244,7 +257,7 @@ export default {
 }
 .reply-list:before, .reply-list:after {display: none;}
 .reply-list {
-    padding-left: 60px;
+    padding-left: 40px;
     clear: both;
     margin-top: 15px;
     .comment-avatar {
