@@ -7,7 +7,7 @@
                     <div class="comment-box">
                         <div class="comment-head">
                             <div class="comment-meta">
-                                <h6 class="comment-name"><a :href="eachReview.userProfilePageUrl">{{ eachReview.userName }}</a></h6>
+                                <h6 class="comment-name"><router-link :to="eachReview.userProfilePageUrl">{{ eachReview.userName }}</router-link></h6>
                                 <span>{{ eachReview.reviewDateMillis | convertDate }}</span>
                             </div>
                             <div class="rating">
