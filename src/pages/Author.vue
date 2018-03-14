@@ -348,6 +348,12 @@ export default {
                 bottom: 5px;
                 left: 45px;
             }
+            .uploading {
+                margin: -1px 0 0 -3px;
+                .spinner {
+                    padding-top: 50px;
+                }
+            }
         }
         .update-img {
             position: absolute;
