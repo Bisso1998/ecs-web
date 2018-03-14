@@ -3,8 +3,8 @@
         <ul class="search-options">
             <li>
                 <router-link
-                :to="{ name: 'Search_Page' }">
-                    
+                :to="{ name: 'Search_Page', query: { searchText: searchText } }">
+                    {{ searchText }}
                 </router-link>
             </li>
         </ul>
@@ -28,7 +28,15 @@
 
 
 export default {
-    
+    props: {
+        searchText: {
+            type: String,
+            required: true
+        }
+    },
+    methods: {
+
+    }
 }
 </script>
 

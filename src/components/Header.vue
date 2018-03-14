@@ -12,9 +12,9 @@
                 <div class="col-lg-5 col-sm-8 col-8 search-box-wrap">
                     <div class="search-box d-none d-lg-block">
                         <div class="form-group has-feedback" id="search-box-big">
-                            <input type="text" class="form-control" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
+                            <input type="text" class="form-control" v-model="searchText" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
                             <i class="material-icons">search</i>
-                            <SearchBox></SearchBox>
+                            <SearchBox :searchText="searchText"></SearchBox>
                         </div>
                         <router-link
                         :to="{ name: 'Notification'}"
@@ -25,9 +25,9 @@
                     </div>
                     <div class="d-block d-lg-none search-box search-box-2 text-right">
                         <div class="form-group has-feedback" id="search-box-small">
-                            <input type="text" class="form-control" @click="openmobilesearch" v-bind:placeholder="'__("search")'"/>
+                            <input type="text" class="form-control" v-model="searchText" @click="openmobilesearch" v-bind:placeholder="'__("search")'"/>
                             <i class="material-icons">search</i>
-                            <SearchBox></SearchBox>
+                            <SearchBox :searchText="searchText"></SearchBox>
                         </div>
                         <router-link
                         :to="{ name: 'Notification'}"
@@ -64,8 +64,8 @@
                       <span>Profile</span>
                     </router-link>
                     <router-link
-                      :to="{ path: 'login' }"
-                      v-else=""
+                      :to="{ name: 'Login_Page'}"
+                      v-else
                       class="main-tabs">
                       <i class="material-icons">account_circle</i>
                       <span>Profile</span>
@@ -100,7 +100,8 @@ export default {
                     return false;
                 }
                 
-            }
+            },
+            searchText: ''
         }
     },
     components: {
@@ -109,21 +110,18 @@ export default {
     methods: {
         opendesktopsearch() {
             $("#search-box-big .search-dropdown").show();
-            $('#search-box-big input').keyup(function(event) {
-                var newText = event.target.value;
-                $('.search-options li a').text(newText);
+            $(document).mouseup(function(e) {
+                var container = $(".search-dropdown");
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    container.hide();
+                }
             });
         },
         openmobilesearch() {
             $("#search-box-small .search-dropdown").show();
-            $('#search-box-small input').keyup(function(event) {
-                var newText = event.target.value;
-                $('.search-options li a').text(newText);
-            });
             
             $(document).mouseup(function(e) {
                 var container = $(".search-dropdown");
-
                 if (!container.is(e.target) && container.has(e.target).length === 0) {
                     container.hide();
                 }
