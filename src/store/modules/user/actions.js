@@ -65,5 +65,12 @@ export default {
 
     setNotificationCount({ commit, state }, notificationCount) {
         commit('setNotificationCount', notificationCount);
+    },
+
+    resetNotificationCount({ commit, state }) {
+        import('firebase').then((firebase) => {
+            const node = firebase.database().ref( "NOTIFICATION" ).child( state.data.userId ).child( "newNotificationCount" );
+            node.set( 0 );
+        });
     }
 }

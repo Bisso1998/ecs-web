@@ -18,7 +18,8 @@
                         </div>
                         <router-link
                         :to="{ name: 'Notification'}"
-                        class="notification-icon">
+                        class="notification-icon"
+                        @click.native="resetNotificationCount">
                             <i class="material-icons">notifications</i>
                             <span v-if="notificationCount">{{ notificationCount }}</span>
                         </router-link>
@@ -31,6 +32,7 @@
                         </div>
                         <router-link
                         :to="{ name: 'Notification'}"
+                        @click.native="resetNotificationCount"
                         class="notification-icon">
                             <i class="material-icons">notifications</i>
                             <span v-if="notificationCount">{{ notificationCount }}</span>
@@ -79,6 +81,7 @@
 <script>
 import constants from '@/constants'
 import SearchBox from '@/components/SearchBox.vue'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     props: {
@@ -126,7 +129,10 @@ export default {
                     container.hide();
                 }
             });
-        }
+        },
+        ...mapActions([
+            'resetNotificationCount'
+        ])
     }
 }
 </script>
