@@ -22,8 +22,8 @@
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
                         </div>
                         <div class="comment-footer">
-                            <i class="material-icons">message</i>
-                            <i class="material-icons">thumb_up</i>
+                            <button type="button" name="button"><span class="counter">3</span><i class="material-icons">thumb_up</i></button>
+                            <button type="button" name="button"><span class="counter">1</span><i class="material-icons">message</i></button>
                         </div>
                     </div>
                 </div>
@@ -40,8 +40,8 @@
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
                             </div>
                             <div class="comment-footer">
-                                <i class="material-icons">message</i>
-                                <i class="material-icons">thumb_up</i>
+                                <button type="button" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
+                                <button type="button" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
                             </div>
                         </div>
                     </li>
@@ -57,8 +57,8 @@
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
                             </div>
                             <div class="comment-footer">
-                                <i class="material-icons">message</i>
-                                <i class="material-icons">thumb_up</i>
+                                <button type="button" name="button"><span class="counter">1</span><i class="material-icons">thumb_up</i></button>
+                                <button type="button" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
                             </div>
                         </div>
                     </li>
@@ -86,8 +86,8 @@
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
                         </div>
                         <div class="comment-footer">
-                            <i class="material-icons">message</i>
-                            <i class="material-icons">thumb_up</i>
+                            <button type="button" name="button"><span class="counter">3</span><i class="material-icons">thumb_up</i></button>
+                            <button type="button" name="button"><span class="counter">1</span><i class="material-icons">message</i></button>
                         </div>
                     </div>
                 </div>
@@ -225,6 +225,27 @@ export default {
             -moz-border-radius: 0 0 4px 4px;
             border-radius: 0 0 4px 4px;
         }
+        .comment-footer {
+            border-top: 1px solid #e5e5e5;
+            padding: 5px;
+            button {
+                background: none;
+                border: 0;
+                padding: 2px 0;
+            }
+            span {
+                font-size: 12px;
+                vertical-align: middle;
+                padding: 0 4px;
+            }
+            i {
+                font-size: 16px;
+                color: #6c757d;
+                margin: 0 8px 0 4px;
+                vertical-align: middle;
+                cursor: pointer;
+            }
+        }
     }
 }
 
@@ -249,7 +270,7 @@ export default {
 }
 
 .reply-list .comment-box {
-    width: calc(100% - 55px);
+    width: calc(100% - 60px);
 }
 
 .comment-box .comment-name.by-author:after {
