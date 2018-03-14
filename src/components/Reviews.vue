@@ -62,6 +62,7 @@
                 </ul> -->
             </li>
         </ul>
+        <a href="#" class="show-more">__("show_more")</a>
     </div>
 </template>
 <script>
@@ -222,9 +223,7 @@ export default {
         }
     }
 }
-
 .reply-list:before, .reply-list:after {display: none;}
-
 .reply-list {
     padding-left: 60px;
     clear: both;
@@ -234,7 +233,6 @@ export default {
         height: 35px;
     }
 }
-
 .comment-main-level:after {
     content: '';
     width: 0;
@@ -242,11 +240,9 @@ export default {
     display: block;
     clear: both;
 }
-
 .reply-list .comment-box {
     width: calc(100% - 60px);
 }
-
 .comment-box .comment-name.by-author:after {
     content: 'autor';
     background: #283035;
@@ -259,5 +255,11 @@ export default {
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
-
+.show-more {
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+    display: block;
+    color: #d0021b;
+}
 </style>
