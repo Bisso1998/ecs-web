@@ -105,7 +105,8 @@ export default {
             'fetchUserPratilipiData',
             'addToLibrary',
             'removeFromLibrary',
-            'uploadPratilipiImage'
+            'uploadPratilipiImage',
+            'fetchPratilipiReviews'
         ]),
         ...mapActions([
             'setShareDetails'
@@ -145,6 +146,11 @@ export default {
     watch: {
         '$route.params.slug_id' (slug_id) {
             this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
+        },
+        'getPratilipiData.pratilipiId'(pratilipiId) {
+            if (pratilipiId) {
+                this.fetchPratilipiReviews(5);
+            }
         }
     },
     mounted() {
