@@ -1,14 +1,13 @@
 <template>
-    <span>
+    <span class="translate-input-wrapper">
         <input type="text" class="form-control" 
             :value="value" 
             @keyup.up="goUpInSuggestions"
             @keyup.down="goDownInSuggestions"
             @input="getTranslation"
             @keyup.enter="selectSuggestion"
-            @blur="suggestions = 0; selectedSuggestion = 0"
             name="" >
-        <ul>
+        <ul class="translations">
             <li v-for="(eachSuggestion, index) in suggestions" :class="{ 'active': index === selectedSuggestion }" :key="index" @click="selectTranslatedWord(eachSuggestion)">{{ eachSuggestion }}</li>
         </ul>
     </span>
@@ -98,18 +97,26 @@ export default {
 }
 </script>
 
-<style>
-    .pratilipi-alert {
-        margin: 10px 0 0;
-        position: fixed;
-        bottom: 0;
-        z-index: 5;
-        background: #323232;
-        color: #fff;
-        font-size: 14px;
-        border-radius: 0;
-        text-align: left;
-        display: none;
+<style lang="scss" scoped>
+.translate-input-wrapper {
+    position: relative;
+    display: block;
+}
+    .translations {
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        background: #fff;
+        z-index: 100;
         width: 100%;
+        li {
+            list-style: none;
+            padding: 3px 10px;
+            border-left: 1px solid #e9e9e9;
+            border-right: 1px solid #e9e9e9;
+            &.active {
+                background: #e9e9e9;
+            }
+        }
     }
 </style>
