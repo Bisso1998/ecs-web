@@ -64,30 +64,6 @@
                         </div>
                         <div class="card">
                             <div class="head-title">__("pratilipi_count_reviews")</div>
-                            <div class="add-review">
-                                <div class="rating-box">
-                                    <span class="text">__("rating_your_rating"):</span>
-                                    <fieldset class="rating" @click="openReview">
-                                        <input type="radio" id="star5" name="rating" value="5" :checked="getUserPratilipiData.rating == 5" @change="changeRating"/><label class = "full" for="star5"></label>
-                                        <input type="radio" id="star4" name="rating" value="4" :checked="getUserPratilipiData.rating == 4" @change="changeRating"/><label class = "full" for="star4"></label>
-                                        <input type="radio" id="star3" name="rating" value="3" :checked="getUserPratilipiData.rating == 3" @change="changeRating"/><label class = "full" for="star3"></label>
-                                        <input type="radio" id="star2" name="rating" value="2" :checked="getUserPratilipiData.rating == 2" @change="changeRating"/><label class = "full" for="star2"></label>
-                                        <input type="radio" id="star1" name="rating" value="1" :checked="getUserPratilipiData.rating == 1" @change="changeRating"/><label class = "full" for="star1"></label>
-                                    </fieldset>
-                                    <button class="btn btn-primary write-review-btn" @click="openReview">__("review_write_a_review")</button>
-                                    <button class="btn btn-primary write-review-btn" style="display: none;">__("review_edit_review")</button>
-                                </div>
-                                <div class="review-box">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="writeReview">__("review_write_a_review")</label>
-                                            <textarea class="form-control" id="writeReview" :value="getUserPratilipiData.review" @change="newReview = $event.target.value" rows="2"></textarea>
-                                        </div>
-                                        <button type="button" class="btn btn-primary" @click="saveOrUpdateReview(newReview)">__("save")</button>
-                                        <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
-                                    </form>
-                                </div>
-                            </div>
                             <Reviews 
                                 :pratilipiId="getPratilipiData.pratilipiId" 
                                 :authorId="getPratilipiData.author.authorId" 
@@ -163,20 +139,10 @@ export default {
             }
             
         },
-        changeRating(e) {
-            const newRating = e.target.value;
-            this.setPratilipiRating(newRating);
-        },
         triggerPratilipiImageUpload(event) {
             const formData = new FormData();
             formData.append('ko_unique_6', event.target.files[0], event.target.files[0].name);
             this.uploadPratilipiImage(formData);
-        },
-        openReview() {
-            $(".review-box").fadeIn();
-        },
-        cancelReview(e) {
-            $(".review-box").fadeOut();
         }
     },
     created() {
@@ -439,69 +405,6 @@ export default {
             margin: 4px 10px;
             clear: both;
             overflow: hidden;
-            .rating-box {
-                span.text {
-                    float: left;
-                    margin: 6px 10px 0 0;
-                    font-size: 14px;
-                    font-weight: bold;
-                    display: block;
-                    width: 100%;
-                }
-                .write-review-btn {
-                    background: #d0021b;
-                    border: 0;
-                    font-size: 14px;
-                    float: right;
-                    &:focus {
-                        outline: none;
-                        box-shadow: none;
-                    }
-                }
-            }
-            .rating {
-              border: none;
-              float: left;
-              input {
-                  display: none;
-              }
-              label:before { 
-                margin: 2px 5px 0 0;
-                font-size: 26px;
-                font-family: 'Material Icons';
-                display: inline-block;
-                content: "\e83a";
-                color: #d0021b;
-              }
-              label { 
-                color: #9e9e9e; 
-                float: right;
-                margin: 0;
-              }
-              input:checked ~ label, &:not(:checked) > label:hover, &:not(:checked) > label:hover ~ label {
-                  color: #d0021b;
-              }
-              input:checked ~ label:before { 
-                  content: "\e838";
-              }
-            }
-            .review-box {
-                clear: both;
-                margin: 4px 10px;
-                display: none;
-                label {
-                    font-size: 14px;
-                }
-                button {
-                    float: right;
-                    font-size: 14px;
-                    margin-left: 10px;
-                    &.btn-primary {
-                        background: #d0021b;
-                        border: 0;
-                    }
-                }
-            }
         }
     }
 </style>

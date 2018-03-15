@@ -3,29 +3,51 @@
         <div class="comment-main-level">
             <div class="comment-avatar"><img :src="userPratilipiData.userImageUrl" alt="author"></div>
             <div class="comment-box">
-                <div class="comment-head">
+                <div class="already-rated" style="display: none;">
+                    <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">more_vert</i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="moreOptions">
+                        <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                            __("review_edit_review")
+                        </button>
+                        <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                            __("review_delete_review")
+                        </button>
+                    </div>
                     <div class="comment-meta">
                         <h6 class="comment-name"><router-link :to="userPratilipiData.userProfilePageUrl">{{ userPratilipiData.userName }}</router-link></h6>
                         <span>{{ userPratilipiData.reviewDateMillis | convertDate }}</span>
-                        <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="moreOptions">
-                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                __("review_edit_review")
-                            </button>
-                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                __("review_delete_review")
-                            </button>
-                        </div>
                     </div>
                     <div class="rating">
                         <i class="material-icons" v-for="index in Number(userPratilipiData.rating)" :key="index + Math.random()">star</i>
                         <i class="material-icons" v-for="index in 5 - Number(userPratilipiData.rating)" :key="index + Math.random()">star_border</i>
                     </div>
+                    <div class="comment-content">
+                        {{ userPratilipiData.review }}
+                    </div>
+                    <button class="btn btn-primary write-review-btn" @click="openReview" style="display:none;">__("review_write_a_review")</button>
                 </div>
-                <div class="comment-content">
-                    {{ userPratilipiData.review }}
+                <div class="rate-now">
+                    <span class="text">__("rating_your_rating")</span>
+                    <fieldset class="rating" @click="openReview">
+                        <input type="radio" id="star5" name="rating" value="5" :checked="userPratilipiData.rating == 5" @change="changeRating"/><label class = "full" for="star5"></label>
+                        <input type="radio" id="star4" name="rating" value="4" :checked="userPratilipiData.rating == 4" @change="changeRating"/><label class = "full" for="star4"></label>
+                        <input type="radio" id="star3" name="rating" value="3" :checked="userPratilipiData.rating == 3" @change="changeRating"/><label class = "full" for="star3"></label>
+                        <input type="radio" id="star2" name="rating" value="2" :checked="userPratilipiData.rating == 2" @change="changeRating"/><label class = "full" for="star2"></label>
+                        <input type="radio" id="star1" name="rating" value="1" :checked="userPratilipiData.rating == 1" @change="changeRating"/><label class = "full" for="star1"></label>
+                    </fieldset>
+                    <button class="btn btn-primary write-review-btn" @click="openReview">__("review_write_a_review")</button>
+                    <button class="btn btn-primary write-review-btn" style="display: none;">__("review_edit_review")</button>
+                    <div class="review-box">
+                        <form>
+                            <div class="form-group">
+                                <textarea class="form-control" id="writeReview" rows="2" placeholder="__('review_write_a_review')"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary">__("save")</button>
+                            <button type="button" class="btn btn-light">__("cancel")</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -41,253 +63,148 @@ export default {
             type: Object,
             required: true
         }
+    },
+    methods: {
+        changeRating(e) {
+            const newRating = e.target.value;
+            this.setPratilipiRating(newRating);
+        },
+        openReview() {
+            $(".review-box").fadeIn();
+        },
+        cancelReview(e) {
+            $(".review-box").fadeOut();
+        }
     }
 }
 
 </script>
 
 <style lang="scss" scoped>
-.comments-container {
-    margin: 0 0 15px;
-    width: 100%;
-    max-width: 700px;
-    h1 {
-        font-size: 36px;
-        color: #283035;
-        font-weight: 400;
-    }
-    h1 a {
-        font-size: 18px;
-        font-weight: 700;
-    }
-}
-.comments-list {
-    margin-top: 20px;
+.comment-main-level {
+    margin: 0 5px 10px;
+    text-align: center;
     position: relative;
-    padding-left: 5px;
-    li {
-        margin-bottom: 15px;
-        display: block;
-        position: relative;
-        &:after {
-            content: '';
-            display: block;
-            clear: both;
-            height: 0;
-            width: 0;
-        }
-    }
+    font-size: 14px;
     .comment-avatar {
-        width: 45px;
-        height: 45px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         position: relative;
         z-index: 1;
-        float: left;
         border: 3px solid #FFF;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
         box-shadow: 0 1px 2px rgba(0,0,0,0.2);
         overflow: hidden;
+        margin: 0 auto 20px;
         img {
             width: 100%;
             height: 100%;
         }
     }
     .comment-box {
-        width: calc(100% - 70px);
-        margin-right: 10px;
-        float: right;
-        position: relative;
-        -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-        -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-        box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-        &:before, &:after {
-            content: '';
-            height: 0;
-            width: 0;
-            position: absolute;
-            display: block;
-            border-width: 10px 12px 10px 0;
-            border-style: solid;
-            border-color: transparent #FCFCFC;
-            top: 8px;
-            left: -11px;
+        background: #e9e9e9;
+        margin-top: -50px;
+        padding: 40px 5px 10px;
+        overflow: hidden;
+        .write-review-btn {
+            background: #d0021b;
+            border: 0;
+            font-size: 14px;
+            margin: 10px 0;
+            &:focus {
+                outline: none;
+                box-shadow: none;
+            }
         }
-        &:before {
-            border-width: 11px 13px 11px 0;
-            border-color: transparent rgba(0,0,0,0.05);
-            left: -12px;
-        }
-        .comment-head {
-            background: #FCFCFC;
-            padding: 10px 12px;
-            border-bottom: 1px solid #E5E5E5;
-            overflow: hidden;
-            -webkit-border-radius: 4px 4px 0 0;
-            -moz-border-radius: 4px 4px 0 0;
-            border-radius: 4px 4px 0 0;
-            @media screen and (max-width: 768px ) {
-                padding: 4px 5px 4px 10px;
-            }
-            .comment-meta {
-                float: left;
-                width: 100%;
-            }
-            .comment-name {
-                color: #283035;
-                font-size: 13px;
-                font-weight: 700;
-                float: left;
-                margin: 0 10px 5px 0;
-                @media screen and (max-width: 768px ) {
-                    margin: 0 10px 2px 0;
-                }
-                a {
-                    color: #283035;
-                }
-            }
-            span {
-                float: left;
-                color: #999;
-                font-size: 12px;
-                position: relative;
-                top: 2px;
-            }
+        .already-rated {
+            text-align: center;
             .more-options {
-                float: right;
-                padding: 0;
+                position: absolute;
+                right: 0;
+                top: 30px;
+                background: none;
                 i {
                     font-size: 18px;
                 }
             }
-            .dropdown-menu {
-                .options-btn {
+            .dropdown-menu .options-btn {
+                font-size: 12px;
+                display: block;
+                padding: 5px 10px;
+            }
+            .comment-meta {
+                .comment-name {
+                    margin: 0;
+                    a {
+                        font-size: 14px;
+                        color: #2c3e50;
+                    }
+                }
+                span {
                     font-size: 12px;
+                    margin: 5px 0;
                     display: block;
-                    padding: 5px 10px;
                 }
             }
             .rating {
-                float: left;
                 i {
-                    float: left;
-                    color: #aeadae;
                     font-size: 18px;
+                    color: #6c757d
+                }
+            }
+        }
+        .rate-now {
+            text-align: center;
+            span.text {
+                display: block;
+                margin: 0;
+                font-size: 14px;
+            }
+            .rating {
+                border: none;
+                width: 160px;
+                margin: 0 auto;
+                input {
+                    display: none;
+                }
+                label:before { 
+                    margin: 2px 5px 0 0;
+                    font-size: 26px;
+                    font-family: 'Material Icons';
+                    display: inline-block;
+                    content: "\e83a";
+                    color: #d0021b;
+                }
+                label { 
+                    color: #9e9e9e; 
+                    float: right;
                     margin: 0;
                 }
-            }
-        }
-        .comment-content {
-            background: #FFF;
-            padding: 12px;
-            font-size: 14px;
-            color: #595959;
-            -webkit-border-radius: 0 0 4px 4px;
-            -moz-border-radius: 0 0 4px 4px;
-            border-radius: 0 0 4px 4px;
-            @media screen and (max-width: 768px ) {
-                padding: 4px 7px;
-                font-size: 13px;
-            }
-        }
-        .comment-footer {
-            border-top: 1px solid #e5e5e5;
-            padding: 5px;
-            @media screen and (max-width: 768px ) {
-                padding: 0px 5px;
-            }
-            button {
-                background: none;
-                border: 0;
-                padding: 2px 0;
-                &:focus {
-                    outline: none;
-                }
-                &.active {
+                input:checked ~ label, &:not(:checked) > label:hover, &:not(:checked) > label:hover ~ label {
                     color: #d0021b;
-                    i {
-                        color: #d0021b;
+                }
+                input:checked ~ label:before { 
+                    content: "\e838";
+                }
+            }
+            .review-box {
+                clear: both;
+                margin: 4px 10px;
+                display: none;
+                label {
+                    font-size: 14px;
+                }
+                button {
+                    float: right;
+                    font-size: 14px;
+                    margin-left: 10px;
+                    &.btn-primary {
+                        background: #d0021b;
+                        border: 0;
                     }
                 }
             }
-            span {
-                font-size: 12px;
-                vertical-align: middle;
-                padding: 0 4px;
-            }
-            i {
-                font-size: 16px;
-                color: #6c757d;
-                margin: 0 8px 0 4px;
-                vertical-align: middle;
-                cursor: pointer;
-            }
-            .write-reply {
-                font-size: 12px;
-                padding: 0 5px;
-            }
         }
-    }
-}
-.reply-list:before, .reply-list:after {display: none;}
-.reply-list {
-    padding-left: 40px;
-    clear: both;
-    margin-top: 15px;
-    .comment-avatar {
-        width:35px;
-        height: 35px;
-    }
-}
-.comment-main-level:after {
-    content: '';
-    width: 0;
-    height: 0;
-    display: block;
-    clear: both;
-}
-.reply-list .comment-box {
-    width: calc(100% - 60px);
-}
-.comment-box .comment-name.by-author:after {
-    content: '__("author_author")';
-    background: #283035;
-    color: #FFF;
-    font-size: 12px;
-    padding: 3px 5px;
-    font-weight: 700;
-    margin-left: 10px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-}
-.add-reply {
-    textarea, label {
-        font-size: 13px;
-    }
-    .btn {
-        font-size: 12px;
-        float: right;
-        padding: 4px 7px;
-        margin-bottom: 5px;
-        &.btn-primary {
-            background: #d0021b;
-            border: 0;
-            margin-left: 5px;
-        }
-    }
-}
-.show-more {
-    text-align: center;
-    font-size: 14px;
-    width: 100%;
-    display: block;
-    color: #d0021b;
-    background: none;
-    border: 0;
-    &:focus {
-        outline: none;
     }
 }
 </style>

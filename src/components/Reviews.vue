@@ -2,6 +2,7 @@
     <div class="comments-container">
         <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS'">
             <OwnReview :userPratilipiData="userPratilipiData"></OwnReview>
+            <li class="all-reviews">All Reviews</li>
             <Review 
                 v-for="eachReview in getReviewsData" 
                 :loadCommentsOfReview="loadCommentsOfReview"
@@ -89,6 +90,12 @@ export default {
             height: 0;
             width: 0;
         }
+    }
+    li.all-reviews {
+        font-size: 12px;
+        font-weight: bold;
+        color: #6c757d;
+        margin: 0 0 10px 5px;
     }
     .comment-avatar {
         width: 45px;
