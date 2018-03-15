@@ -138,7 +138,7 @@ export default {
     }
 }
 .comments-list {
-    margin-top: 20px;
+    margin-top: 10px;
     position: relative;
     padding-left: 5px;
     li {

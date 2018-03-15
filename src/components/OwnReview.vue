@@ -81,6 +81,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+li {
+    list-style: none;
+}
 .comment-main-level {
     margin: 0 5px 10px;
     text-align: center;
