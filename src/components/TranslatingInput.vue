@@ -6,6 +6,7 @@
             @keyup.down="goDownInSuggestions"
             @input="getTranslation"
             @keyup.enter="selectSuggestion"
+            @blur="suggestions = 0; selectedSuggestion = 0"
             name="" >
         <ul class="translations">
             <li v-for="(eachSuggestion, index) in suggestions" :class="{ 'active': index === selectedSuggestion }" :key="index" @click="selectTranslatedWord(eachSuggestion)">{{ eachSuggestion }}</li>
