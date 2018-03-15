@@ -43,12 +43,21 @@ export default {
         if (!data.notificationList || data.notificationList.length === 0) {
             state.cursor = null;    
         } else {
-            state.data = data.notificationList;
+            state.data = state.data.concat(data.notificationList);
             state.cursor = data.cursor;    
         }
     },
 
     setMoreNotificationLoadingError(state) {
         state.loading_state = 'LOADING_ERROR';
+    },
+
+    setNotificationReadStateSuccess(state, notificationId) {
+        const notification = state.data.find(eachNotification => eachNotification.notificationId === notificationId);
+        notification.state = 'READ';
+    },
+
+    setNotificationReadStateError() {
+
     }
 }

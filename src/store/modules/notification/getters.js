@@ -19,5 +19,6 @@ export default {
     // }
     
     getNotifications: state => state.data,
-    getNotificationLoadingState: state => state.loading_state
+    getNotificationLoadingState: state => state.loading_state,
+    getNotificationCursor: state => state.cursor
 }
