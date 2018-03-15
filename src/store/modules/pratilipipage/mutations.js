@@ -88,5 +88,27 @@ export default {
     },
     setPratilipiImageUploadingError(state) {
         state.pratilipi.pratilipi_image_upload_state = 'LOADING_ERROR';
-    }
+    },
+
+    setPratilipiRatingUpdateLoading(state) {
+
+    },
+    setPratilipiRatingUpdateSuccess(state, value) {
+        state.userPratilipi.data.rating = value;
+    },
+    setPratilipiRatingUpdateError(state) {
+
+    },
+
+
+    setPratilipiReviewUpdateLoading(state){
+
+    },
+    setPratilipiReviewUpdateSuccess(state, value){
+        state.userPratilipi.data.review = value;
+        state.userPratilipi.data.reviewDateMillis = Date.now();
+    },
+    setPratilipiReviewUpdateError(state){
+
+    },
 }

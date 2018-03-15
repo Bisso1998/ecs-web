@@ -83,5 +83,23 @@ export default {
             console.log('My life is wasted');
             commit('setPratilipiImageUploadingError');
         });
+    },
+
+    setPratilipiRating({ commit, state }, ratingValue) {
+        commit('setPratilipiRatingUpdateLoading');
+        DataAccessor.createOrUpdateReview(state.pratilipi.data.pratilipiId, ratingValue, null, function(successData) {
+            commit('setPratilipiRatingUpdateSuccess', ratingValue);
+        }, (errorData) => {
+            commit('setPratilipiRatingUpdateError');
+        });
+    },
+
+    saveOrUpdateReview({ commit, state }, review) {
+        commit('setPratilipiReviewUpdateLoading');
+        DataAccessor.createOrUpdateReview(state.pratilipi.data.pratilipiId, state.userPratilipi.rating, review, function(successData) {
+            commit('setPratilipiReviewUpdateSuccess', review);
+        }, (errorData) => {
+            commit('setPratilipiReviewUpdateError');
+        });
     }
 }

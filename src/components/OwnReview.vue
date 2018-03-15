@@ -1,59 +1,46 @@
 <template>
-    <div class="comments-container">
-        <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS'">
-            <OwnReview :userPratilipiData="userPratilipiData"></OwnReview>
-            <Review 
-                v-for="eachReview in getReviewsData" 
-                :loadCommentsOfReview="loadCommentsOfReview"
-                :likeOrDislikeReview="likeOrDislikeReview" 
-                :eachReview="eachReview" :key="eachReview.userPratilipiId"></Review>
-        </ul>
-        <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
-        <button v-if="getReviewsCursor !== null" @click="loadMoreReviews({ resultCount: 3, pratilipiId })" class="show-more">__("show_more")</button>
-    </div>
+    <li v-if="userPratilipiData.review">
+        <div class="comment-main-level">
+            <div class="comment-avatar"><img :src="userPratilipiData.userImageUrl" alt="author"></div>
+            <div class="comment-box">
+                <div class="comment-head">
+                    <div class="comment-meta">
+                        <h6 class="comment-name"><router-link :to="userPratilipiData.userProfilePageUrl">{{ userPratilipiData.userName }}</router-link></h6>
+                        <span>{{ userPratilipiData.reviewDateMillis | convertDate }}</span>
+                        <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="moreOptions">
+                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                                __("review_edit_review")
+                            </button>
+                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                                __("review_delete_review")
+                            </button>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <i class="material-icons" v-for="index in Number(userPratilipiData.rating)" :key="index + Math.random()">star</i>
+                        <i class="material-icons" v-for="index in 5 - Number(userPratilipiData.rating)" :key="index + Math.random()">star_border</i>
+                    </div>
+                </div>
+                <div class="comment-content">
+                    {{ userPratilipiData.review }}
+                </div>
+            </div>
+        </div>
+    </li>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Spinner from '@/components/Spinner.vue';
-import Review from '@/components/Review.vue';
-import OwnReview from '@/components/OwnReview.vue';
 
 export default {
     props: {
-        pratilipiId: {
-            type: Number,
-            required: true
-        },
-        authorId: {
-            type: Number,
-            required: true
-        },
         userPratilipiData: {
-            type: Object
+            type: Object,
+            required: true
         }
-    },
-    computed: {
-        ...mapGetters('reviews', [
-            'getReviewsLoadingState',
-            'getReviewsData',
-            'getReviewsCursor'
-        ])
-    },
-    methods: {
-        ...mapActions('reviews', [
-            'fetchPratilipiReviews',
-            'loadMoreReviews',
-            'loadCommentsOfReview',
-            'likeOrDislikeReview'
-        ])
-    },
-    created() {
-        this.fetchPratilipiReviews({ pratilipiId: this.pratilipiId, resultCount: 3 });
-    },
-    components: {
-        Spinner,
-        Review,
-        OwnReview
     }
 }
 

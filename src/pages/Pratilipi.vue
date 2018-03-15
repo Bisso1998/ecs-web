@@ -68,11 +68,11 @@
                                 <div class="rating-box">
                                     <span class="text">__("rating_your_rating"):</span>
                                     <fieldset class="rating" @click="openReview">
-                                        <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5"></label>
-                                        <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4"></label>
-                                        <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3"></label>
-                                        <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2"></label>
-                                        <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1"></label>
+                                        <input type="radio" id="star5" name="rating" value="5" :checked="getUserPratilipiData.rating == 5" @change="changeRating"/><label class = "full" for="star5"></label>
+                                        <input type="radio" id="star4" name="rating" value="4" :checked="getUserPratilipiData.rating == 4" @change="changeRating"/><label class = "full" for="star4"></label>
+                                        <input type="radio" id="star3" name="rating" value="3" :checked="getUserPratilipiData.rating == 3" @change="changeRating"/><label class = "full" for="star3"></label>
+                                        <input type="radio" id="star2" name="rating" value="2" :checked="getUserPratilipiData.rating == 2" @change="changeRating"/><label class = "full" for="star2"></label>
+                                        <input type="radio" id="star1" name="rating" value="1" :checked="getUserPratilipiData.rating == 1" @change="changeRating"/><label class = "full" for="star1"></label>
                                     </fieldset>
                                     <button class="btn btn-primary write-review-btn" @click="openReview">__("review_write_a_review")</button>
                                     <button class="btn btn-primary write-review-btn" style="display: none;">__("review_edit_review")</button>
@@ -81,14 +81,19 @@
                                     <form>
                                         <div class="form-group">
                                             <label for="writeReview">__("review_write_a_review")</label>
-                                            <textarea class="form-control" id="writeReview" rows="2"></textarea>
+                                            <textarea class="form-control" id="writeReview" :value="getUserPratilipiData.review" @change="newReview = $event.target.value" rows="2"></textarea>
                                         </div>
-                                        <button class="btn btn-primary">__("save")</button>
+                                        <button type="button" class="btn btn-primary" @click="saveOrUpdateReview(newReview)">__("save")</button>
                                         <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
                                     </form>
                                 </div>
                             </div>
-                            <Reviews :pratilipiId="getPratilipiData.pratilipiId" :authorId="getPratilipiData.author.authorId" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'"></Reviews>
+                            <Reviews 
+                                :pratilipiId="getPratilipiData.pratilipiId" 
+                                :authorId="getPratilipiData.author.authorId" 
+                                :userPratilipiData="getUserPratilipiData"
+                                v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
+                            </Reviews>
                         </div>
                     </div>
                     <div class="book-recomendations col-md-12 p-0">
@@ -119,7 +124,8 @@ export default {
     data() {
         return {
             pratilipi_id: null,
-            pratilipiData: null
+            pratilipiData: null,
+            newReview: null
         }
     },
     computed: {
@@ -137,7 +143,9 @@ export default {
             'fetchUserPratilipiData',
             'addToLibrary',
             'removeFromLibrary',
-            'uploadPratilipiImage'
+            'uploadPratilipiImage',
+            'setPratilipiRating',
+            'saveOrUpdateReview'
         ]),
         ...mapActions([
             'setShareDetails'
@@ -154,6 +162,10 @@ export default {
                     break;
             }
             
+        },
+        changeRating(e) {
+            const newRating = e.target.value;
+            this.setPratilipiRating(newRating);
         },
         triggerPratilipiImageUpload(event) {
             const formData = new FormData();
@@ -483,10 +495,10 @@ export default {
                 button {
                     float: right;
                     font-size: 14px;
+                    margin-left: 10px;
                     &.btn-primary {
                         background: #d0021b;
                         border: 0;
-                        margin-left: 5px;
                     }
                 }
             }
