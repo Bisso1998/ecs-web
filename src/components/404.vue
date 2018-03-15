@@ -52,11 +52,11 @@ export default {
 <style lang="scss" scoped>
 .page-not-found {
     background: #fff;
-    margin: 85px 0 10px;
+    margin: 0 0 10px;
     text-align: left;
     position: relative;
     @media screen and (max-width: 992px ) {
-        margin-top: 140px;
+        margin-top: 0;
     }
     .container {
         padding: 0;
