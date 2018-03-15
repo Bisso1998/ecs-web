@@ -85,18 +85,18 @@ export default {
         });
     },
 
-    setPratilipiRating({ commit, state }, ratingValue) {
+    setPratilipiRating({ commit, state }, { rating, pratilipiId }) {
         commit('setPratilipiRatingUpdateLoading');
-        DataAccessor.createOrUpdateReview(state.pratilipi.data.pratilipiId, ratingValue, null, function(successData) {
-            commit('setPratilipiRatingUpdateSuccess', ratingValue);
+        DataAccessor.createOrUpdateReview(pratilipiId, rating, null, function(successData) {
+            commit('setPratilipiRatingUpdateSuccess', rating);
         }, (errorData) => {
             commit('setPratilipiRatingUpdateError');
         });
     },
 
-    saveOrUpdateReview({ commit, state }, review) {
+    saveOrUpdateReview({ commit, state }, { review, pratilipiId }) {
         commit('setPratilipiReviewUpdateLoading');
-        DataAccessor.createOrUpdateReview(state.pratilipi.data.pratilipiId, state.userPratilipi.rating, review, function(successData) {
+        DataAccessor.createOrUpdateReview(pratilipiId, null, review, function(successData) {
             commit('setPratilipiReviewUpdateSuccess', review);
         }, (errorData) => {
             commit('setPratilipiReviewUpdateError');

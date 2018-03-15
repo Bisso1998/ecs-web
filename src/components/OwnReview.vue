@@ -1,17 +1,17 @@
 <template>
-    <li v-if="userPratilipiData.review">
+    <li>
         <div class="comment-main-level">
             <div class="comment-avatar"><img :src="userPratilipiData.userImageUrl" alt="author"></div>
             <div class="comment-box">
-                <div class="already-rated" style="display: none;">
+                <div class="already-rated"  v-if="userPratilipiData.rating">
                     <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">more_vert</i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="moreOptions">
-                        <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                        <button type="button" class="btn options-btn" data-toggle="modal" @click="openReview" data-target="#reportModal">
                             __("review_edit_review")
                         </button>
-                        <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                        <button type="button" class="btn options-btn" data-toggle="modal" @click="deleteReview" data-target="#reportModal">
                             __("review_delete_review")
                         </button>
                     </div>
@@ -26,9 +26,18 @@
                     <div class="comment-content">
                         {{ userPratilipiData.review }}
                     </div>
-                    <button class="btn btn-primary write-review-btn" @click="openReview" style="display:none;">__("review_write_a_review")</button>
+                    <button class="btn btn-primary write-review-btn" v-if="userPratilipiData.review === '' || !userPratilipiData.review" @click="openReview" >__("review_write_a_review")</button>
+                    <div class="review-box">
+                        <form>
+                            <div class="form-group">
+                                <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" id="writeReview" rows="2" placeholder="__('review_write_a_review')"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary" @click="() => {cancelReview(); saveOrUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })}">__("save")</button>
+                            <button type="button" @click="cancelReview" class="btn btn-light">__("cancel")</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="rate-now">
+                <div class="rate-now" v-if="!userPratilipiData.rating">
                     <span class="text">__("rating_your_rating")</span>
                     <fieldset class="rating" @click="openReview">
                         <input type="radio" id="star5" name="rating" value="5" :checked="userPratilipiData.rating == 5" @change="changeRating"/><label class = "full" for="star5"></label>
@@ -37,15 +46,15 @@
                         <input type="radio" id="star2" name="rating" value="2" :checked="userPratilipiData.rating == 2" @change="changeRating"/><label class = "full" for="star2"></label>
                         <input type="radio" id="star1" name="rating" value="1" :checked="userPratilipiData.rating == 1" @change="changeRating"/><label class = "full" for="star1"></label>
                     </fieldset>
-                    <button class="btn btn-primary write-review-btn" @click="openReview">__("review_write_a_review")</button>
-                    <button class="btn btn-primary write-review-btn" style="display: none;">__("review_edit_review")</button>
+                    <button class="btn btn-primary write-review-btn" v-if="userPratilipiData.review === ''" @click="openReview">__("review_write_a_review")</button>
+                    <button class="btn btn-primary write-review-btn" @click="openReview" v-else>__("review_edit_review")</button>
                     <div class="review-box">
                         <form>
                             <div class="form-group">
-                                <textarea class="form-control" id="writeReview" rows="2" placeholder="__('review_write_a_review')"></textarea>
+                                <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" id="writeReview" rows="2" placeholder="__('review_write_a_review')"></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary">__("save")</button>
-                            <button type="button" class="btn btn-light">__("cancel")</button>
+                            <button type="button" class="btn btn-primary" @click="() => {cancelReview(); saveOrUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })}">__("save")</button>
+                            <button type="button" @click="cancelReview" class="btn btn-light">__("cancel")</button>
                         </form>
                     </div>
                 </div>
@@ -64,10 +73,23 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            newReview: ''
+        }
+    },
     methods: {
+        ...mapActions('reviews', [
+            'setPratilipiRating',
+            'saveOrUpdateReview'
+        ]),
         changeRating(e) {
             const newRating = e.target.value;
-            this.setPratilipiRating(newRating);
+            this.setPratilipiRating({ rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId });
+        },
+        deleteReview(e) {
+            this.setPratilipiRating({ rating: null, pratilipiId: this.userPratilipiData.pratilipiId });
+            this.saveOrUpdateReview({ review: null, pratilipiId: this.userPratilipiData.pratilipiId })
         },
         openReview() {
             $(".review-box").fadeIn();
@@ -153,6 +175,23 @@ li {
                 i {
                     font-size: 18px;
                     color: #6c757d
+                }
+            }
+            .review-box {
+                clear: both;
+                margin: 4px 10px;
+                display: none;
+                label {
+                    font-size: 14px;
+                }
+                button {
+                    float: right;
+                    font-size: 14px;
+                    margin-left: 10px;
+                    &.btn-primary {
+                        background: #d0021b;
+                        border: 0;
+                    }
                 }
             }
         }

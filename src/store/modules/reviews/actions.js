@@ -41,5 +41,13 @@ export default {
         DataAccessor.likeOrDislikeReview(userPratilipiId, !concernedReview.isLiked, function(data) {
             commit('setReviewLikeSuccess', { userPratilipiId, isLiked: !concernedReview.isLiked });
         });
+    },
+
+    setPratilipiRating({ commit, state, dispatch }, { rating, pratilipiId }) {
+        dispatch('pratilipipage/setPratilipiRating', { rating, pratilipiId }, { root: true });
+    },
+
+    saveOrUpdateReview({ commit, state, dispatch }, { review, pratilipiId }) {
+        dispatch('pratilipipage/saveOrUpdateReview', { review, pratilipiId }, { root: true });
     }
 }
