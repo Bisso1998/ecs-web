@@ -5,10 +5,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2>__("notification_notifications")</h2>
-                        <ul v-if="getNotificationLoadingState === 'LOADING_SUCCESS'" class="notifications">
+                        <ul v-if="getNotificationLoadingState === 'LOADING_SUCCESS' || getNotifications.length > 0" class="notifications">
                             <li v-for="each_notification in getNotifications" :key="each_notification.notificationId" :class="each_notification.state.toLowerCase()">
                                 <router-link
-                                :to="each_notification.sourceUrl">
+                                :to="each_notification.sourceUrl"
+                                @click.native="changeNotificationStatusToRead(each_notification.notificationId)">
                                     <span class="notif-display-image"><img :src="each_notification.displayImageUrl" alt="notification"></span>
                                     <span class="message-wrap">
                                         <span class="notif-message" v-html="each_notification.message"></span>
@@ -27,26 +28,62 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
+import constants from '@/constants';
 
 export default {
     name: 'Pratilipi',
     data() {
         return {
             user_id: null,
+            scrollPosition: null
         }
     },
     computed: {
         ...mapGetters([
             'getNotifications',
-            'getNotificationLoadingState'
+            'getNotificationLoadingState',
+            'getNotificationCursor'
         ])
     },
     methods: {
-
+        ...mapActions([
+            'changeNotificationStatusToRead',
+            'fetchMoreNotifications'
+        ]),
+        updateScroll() {
+            this.scrollPosition = window.scrollY
+        }
     },
     created() {
         
+    },
+    watch: {
+        'scrollPosition'(newScrollPosition){
+            const nintyPercentOfList = ( 40 / 100 ) * $('.notification-page').innerHeight();
+            console.log(nintyPercentOfList)
+            // const { list_page_url } = this.$route.params;
+
+            if (newScrollPosition > nintyPercentOfList && this.getNotificationLoadingState !== 'LOADING' && this.getNotificationCursor !== null) {
+                
+                const currentLocale = process.env.LANGUAGE;
+                constants.LANGUAGES.forEach((eachLanguage) => {
+                    if (eachLanguage.shortName === currentLocale) {
+                        this.fetchMoreNotifications({
+                            language: eachLanguage.fullName.toUpperCase(),
+                            resultCount: 20
+                        });
+                    }
+                });
+                
+            }
+        }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.updateScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
     },
     components: {
         MainLayout
