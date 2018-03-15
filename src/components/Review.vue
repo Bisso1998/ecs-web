@@ -233,6 +233,7 @@ export default {
             .more-options {
                 float: right;
                 padding: 0;
+                background: none;
                 i {
                     font-size: 18px;
                 }
@@ -242,6 +243,7 @@ export default {
                     font-size: 12px;
                     display: block;
                     padding: 5px 10px;
+                    background: none;
                 }
             }
             .rating {

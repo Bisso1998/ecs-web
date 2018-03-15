@@ -139,6 +139,41 @@
                     </div>
                 </nav>
                 
+                <div class="review-popout">
+                    <Reviews 
+                        :pratilipiId="5340181303918592" 
+                        :authorId="5175011076734976" 
+                        :userPratilipiData='{  
+                             "userPratilipiId":"6755388384056771-5340181303918592",
+                             "userId":6755388384056771,
+                             "pratilipiId":5340181303918592,
+                             "userName":"Libin V Babu \"libi\"",
+                             "userImageUrl":"https://0.ptlp.co/author/image?authorId=6800000000164605&version=86d66d88-b859-45a9-814e-17a3d9938e64",
+                             "userProfilePageUrl":"/user/libin-v-babu-l3h5v33s7d",
+                             "user":{  
+                                "fullName":"Libin V Babu \"libi\"",
+                                "fullNameEn":"Libin V Babu",
+                                "displayName":"Libin V Babu \"libi\"",
+                                "profileImageUrl":"https://0.ptlp.co/author/image?authorId=6800000000164605&version=86d66d88-b859-45a9-814e-17a3d9938e64",
+                                "author":{  
+                                   "authorId":6800000000164605
+                                },
+                                "userId":6755388384056771,
+                                "profilePageUrl":"/user/libin-v-babu-l3h5v33s7d"
+                             },
+                             "rating":5,
+                             "review":"Good one.",
+                             "reviewState":"PUBLISHED",
+                             "reviewDateMillis":1521094962000,
+                             "likeCount":0,
+                             "commentCount":0,
+                             "addedToLib":false,
+                             "hasAccessToReview":true,
+                             "isLiked":false
+                          }'>
+                    </Reviews>
+                </div>
+                
                 <div class="overlay"></div>
             </div>
         </div>
@@ -150,11 +185,13 @@ import ReadLayout from '@/layout/Reader-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import 'vue-awesome/icons/file-text'
 import 'vue-awesome/icons/file-text-o'
+import Reviews from '@/components/Reviews.vue';
 
 export default {
     components: {
         ReadLayout,
-        Spinner
+        Spinner,
+        Reviews
     },
     data() {
         return {
@@ -555,6 +592,11 @@ export default {
             font-size: 12px;
             line-height: 33px;
         }
+    }
+    .review-popout {
+        height: 50vh;
+        position: fixed;
+        bottom: 50px;
     }
 }
 .theme-white {
