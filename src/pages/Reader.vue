@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="row footer-section">
-                    <div class="review-count col-3">
+                    <div class="review-count col-3" @click="openReviewModal">
                         <i class="material-icons">comment</i>
                         <span>11</span>
                     </div>
@@ -139,7 +139,44 @@
                     </div>
                 </nav>
                 
+                <div class="review-popout">
+                    <button type="button" class="close-review" name="button" @click="closeReviewModal"><i class="material-icons">close</i></button>
+                    <Reviews 
+                        :pratilipiId="5340181303918592" 
+                        :authorId="5175011076734976" 
+                        :userPratilipiData='{  
+                             "userPratilipiId":"6755388384056771-5340181303918592",
+                             "userId":6755388384056771,
+                             "pratilipiId":5340181303918592,
+                             "userName":"Libin V Babu \"libi\"",
+                             "userImageUrl":"https://0.ptlp.co/author/image?authorId=6800000000164605&version=86d66d88-b859-45a9-814e-17a3d9938e64",
+                             "userProfilePageUrl":"/user/libin-v-babu-l3h5v33s7d",
+                             "user":{  
+                                "fullName":"Libin V Babu \"libi\"",
+                                "fullNameEn":"Libin V Babu",
+                                "displayName":"Libin V Babu \"libi\"",
+                                "profileImageUrl":"https://0.ptlp.co/author/image?authorId=6800000000164605&version=86d66d88-b859-45a9-814e-17a3d9938e64",
+                                "author":{  
+                                   "authorId":6800000000164605
+                                },
+                                "userId":6755388384056771,
+                                "profilePageUrl":"/user/libin-v-babu-l3h5v33s7d"
+                             },
+                             "rating":5,
+                             "review":"Good one.",
+                             "reviewState":"PUBLISHED",
+                             "reviewDateMillis":1521094962000,
+                             "likeCount":0,
+                             "commentCount":0,
+                             "addedToLib":false,
+                             "hasAccessToReview":true,
+                             "isLiked":false
+                          }'>
+                    </Reviews>
+                </div>
+                
                 <div class="overlay"></div>
+                <div class="overlay-2" @click="closeReviewModal"></div>
             </div>
         </div>
     </ReadLayout>
@@ -150,11 +187,13 @@ import ReadLayout from '@/layout/Reader-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import 'vue-awesome/icons/file-text'
 import 'vue-awesome/icons/file-text-o'
+import Reviews from '@/components/Reviews.vue';
 
 export default {
     components: {
         ReadLayout,
-        Spinner
+        Spinner,
+        Reviews
     },
     data() {
         return {
@@ -213,6 +252,14 @@ export default {
             
             $(".footer-section").removeClass("theme-white theme-black theme-yellow");
             $(".footer-section").addClass("theme-yellow");
+        },
+        openReviewModal() {
+            $(".review-popout").toggleClass("show");
+            $('.overlay-2').fadeToggle();
+        },
+        closeReviewModal() {
+            $(".review-popout").removeClass("show");
+            $('.overlay-2').fadeOut();
         }
     },
     computed: {
@@ -284,7 +331,7 @@ export default {
         padding: 10px 0;
         position: fixed;
         bottom: 0;
-        z-index: 2;
+        z-index: 11;
         width: 100%;
         background: #fff;
         i {
@@ -294,12 +341,16 @@ export default {
         span {
             font-size: 14px;
         }
+        .col-3 {
+            cursor: pointer;
+            padding: 0 5px;
+        }
     }
     #sidebar {
         width: 300px;
         position: fixed;
         top: 0;
-        left: -300px;
+        left: -310px;
         height: 100vh;
         z-index: 999;
         background: #fff;
@@ -423,7 +474,7 @@ export default {
             }
         }
     }
-    .overlay {
+    .overlay, .overlay-2 {
         position: fixed;
         width: 100vw;
         height: 100vh;
@@ -432,6 +483,9 @@ export default {
         display: none;
         top: 0;
         left: 0;
+    }
+    .overlay-2 {
+        z-index: 9;
     }
     #readerOptions {
         max-width: 350px;
@@ -554,6 +608,33 @@ export default {
             float: right;
             font-size: 12px;
             line-height: 33px;
+        }
+    }
+    .review-popout {
+        height: 60vh;
+        width: 96%;
+        max-width: 700px;
+        position: fixed;
+        margin-bottom: 46px;
+        margin-left: -7px;
+        bottom: -75vh;
+        overflow: hidden;
+        overflow-y: auto;
+        text-align: left;
+        background: #fff;
+        box-shadow: 0 -1px 2px rgba(0,0,0,0.5);
+        transition: all 0.5s;
+        z-index: 10;
+        .close-review {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 9;
+            background: none;
+            border: 0;
+        }
+        &.show {
+            bottom: 0;
         }
     }
 }
