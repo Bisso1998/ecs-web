@@ -46,6 +46,12 @@
                                 </router-link>
                             </div>
                         </div>
+                        <div class="card tags-section">
+                            <div class="head-title">__("tags_categories") <button class="edit"><i class="material-icons">mode_edit</i></button></div>
+                            <div class="tags">
+                                <span v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="book-synopsis col-md-12 col-lg-7 p-0">
                         <div class="card">
@@ -260,6 +266,31 @@ export default {
                 font-size: 14px;
                 margin: 0 0 10px;
                 cursor: pointer;
+            }
+            button.edit {
+                background: none;
+                border: 0;
+                i {
+                    font-size: 18px;
+                    vertical-align: middle;
+                }
+                &:focus {
+                    outline: none;
+                }
+            }
+            &.tags-section {
+                .tags {
+                    text-align: left;
+                    span {
+                        display: inline-block;
+                        border: 1px solid #e9e9e9;
+                        border-radius: 2px;
+                        color: #6c757d;
+                        margin: 5px 0 10px 10px;
+                        padding: 5px 10px;
+                        font-size: 14px;
+                    }
+                }
             }
         }
         .book-details {
