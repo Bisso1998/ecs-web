@@ -1,97 +1,12 @@
 <template>
     <div class="comments-container">
-        <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
-            <li v-for="eachReview in getReviewsData" :key="eachReview.userPratilipiId">
-                <div class="comment-main-level">
-                    <div class="comment-avatar"><img :src="eachReview.userImageUrl" alt="author"></div>
-                    <div class="comment-box">
-                        <div class="comment-head">
-                            <div class="comment-meta">
-                                <h6 class="comment-name"><router-link :to="eachReview.userProfilePageUrl">{{ eachReview.userName }}</router-link></h6>
-                                <span>{{ eachReview.reviewDateMillis | convertDate }}</span>
-                                <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="moreOptions">
-                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                        __("review_edit_review")
-                                    </button>
-                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                        __("review_delete_review")
-                                    </button>
-                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                        __("report_button")
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="rating">
-                                <i class="material-icons" v-for="index in eachReview.rating" :key="index + Math.random()">star</i>
-                                <i class="material-icons" v-for="index in 5 - eachReview.rating" :key="index + Math.random()">star_border</i>
-                            </div>
-                        </div>
-                        <div class="comment-content">
-                            {{ eachReview.review }}
-                        </div>
-                        <div class="comment-footer">
-                            <button type="button" :class="{ 'active': eachReview.isLiked }" @click="likeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
-                            <button type="button" name="button" @click="loadCommentsOfReview({ resultCount: eachReview.commentCount, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
-                            <button type="button" class="write-reply" name="button">__("comment_reply_to_comment")</button>
-                        </div>
-                    </div>
-                </div>
-                <Spinner v-if="eachReview.comments.loading_state === 'LOADING'"></Spinner>
-                <ul class="comments-list reply-list"  v-if="eachReview.comments && eachReview.comments.data && eachReview.comments.data.length > 0 && eachReview.comments.loading_state === 'LOADING_SUCCESS'">
-                    <li v-for="eachComment in eachReview.comments.data" :key="eachComment.commentId">
-                        <div class="comment-avatar"><img :src="eachComment.user.profileImageUrl" alt="author"></div>
-                        <div class="comment-box">
-                            <div class="comment-head">
-                                <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
-                                <span> {{ eachComment.creationDateMillis | convertDate }} </span>
-                                <button class="btn more-options" type="button" id="moreOptions2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="moreOptions2">
-                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                        __("review_edit_review")
-                                    </button>
-                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                        __("review_delete_review")
-                                    </button>
-                                    <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                        __("report_button")
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="comment-content">
-                                {{ eachComment.content }}
-                            </div>
-                            <div class="comment-footer">
-                                <button type="button" :class="{ 'active': eachComment.isLiked}" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
-                                <button type="button" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
-                                <button type="button" class="write-reply" name="button">__("comment_reply_to_comment")</button>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="add-reply">
-                        <div class="comment-avatar"><img src="" alt="author"></div>
-                        <div class="comment-box">
-                            <div class="comment-head">
-                                <h6 class="comment-name"><a href="#">Author Name</a></h6>
-                            </div>
-                            <div class="comment-content">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="writeReply">__("comment_reply_to_comment")</label>
-                                        <textarea class="form-control" id="writeReply" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
-                                    </div>
-                                    <button class="btn btn-primary">__("save")</button>
-                                    <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
-                                </form>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </li>
+        <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS'">
+            <OwnReview :userPratilipiData="userPratilipiData"></OwnReview>
+            <Review 
+                v-for="eachReview in getReviewsData" 
+                :loadCommentsOfReview="loadCommentsOfReview"
+                :likeOrDislikeReview="likeOrDislikeReview" 
+                :eachReview="eachReview" :key="eachReview.userPratilipiId"></Review>
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
         <button v-if="getReviewsCursor !== null" @click="loadMoreReviews({ resultCount: 3, pratilipiId })" class="show-more">__("show_more")</button>
@@ -100,6 +15,8 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Spinner from '@/components/Spinner.vue';
+import Review from '@/components/Review.vue';
+import OwnReview from '@/components/OwnReview.vue';
 
 export default {
     props: {
@@ -110,6 +27,9 @@ export default {
         authorId: {
             type: Number,
             required: true
+        },
+        userPratilipiData: {
+            type: Object
         }
     },
     computed: {
@@ -131,7 +51,9 @@ export default {
         this.fetchPratilipiReviews({ pratilipiId: this.pratilipiId, resultCount: 3 });
     },
     components: {
-        Spinner
+        Spinner,
+        Review,
+        OwnReview
     }
 }
 
