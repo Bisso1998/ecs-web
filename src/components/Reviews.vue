@@ -78,6 +78,10 @@ export default {
         font-weight: 700;
     }
 }
+.read-page .comments-container {
+    max-height: none;
+    overflow: visible;
+}
 .comments-list {
     margin-top: 10px;
     position: relative;
