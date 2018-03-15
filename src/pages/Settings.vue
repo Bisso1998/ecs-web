@@ -17,11 +17,13 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-first-name">__('edit_author_first_name') *</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-first-name" :value="firstName" @input="updateFirstName" placeholder="__('edit_author_first_name')">
+                                            <!-- <input type="text" class="form-control" id="pratilipi-settings-first-name" :value="firstName" @input="updateFirstName" placeholder="__('edit_author_first_name')"> -->
+                                            <TranslatingInput :value="firstName" :oninput="updateFirstName"></TranslatingInput>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-last-name">__('edit_author_last_name')</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-last-name" :value="lastName" @input="updateLastName" placeholder="__('edit_author_last_name')">
+                                            <!-- <input type="text" class="form-control" id="pratilipi-settings-last-name" :value="lastName" @input="updateLastName" placeholder="__('edit_author_last_name')"> -->
+                                            <TranslatingInput :value="lastName" :oninput="updateLastName"></TranslatingInput>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -166,12 +168,14 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import TranslatingInput from '@/components/TranslatingInput.vue';
 import constants from '@/constants';
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
     components: {
-        MainLayout
+        MainLayout,
+        TranslatingInput
     },
     data() {
         return {
@@ -222,9 +226,9 @@ export default {
         },
         updateEmail(e) { this.$store.commit('settingspage/updateEmail', e.target.value) },
         updatePhone(e) { this.$store.commit('settingspage/updatePhone', e.target.value) },
-        updateFirstName(e) { this.$store.commit('settingspage/updateFirstName', e.target.value) },
+        updateFirstName(value) { this.$store.commit('settingspage/updateFirstName', value) },
         updateLanguage(e) { this.$store.commit('settingspage/updateLanguage', e.target.selectedOptions[0].value) },
-        updateLastName(e) { this.$store.commit('settingspage/updateLastName', e.target.value) },
+        updateLastName(value) { this.$store.commit('settingspage/updateLastName', value) },
         updateFirstNameEn(e) { this.$store.commit('settingspage/updateFirstNameEn', e.target.value) },
         updateLastNameEn(e) { this.$store.commit('settingspage/updateLastNameEn', e.target.value) },
         updatePenName(e) { this.$store.commit('settingspage/updatePenName', e.target.value) },
