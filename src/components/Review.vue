@@ -6,7 +6,6 @@
                 <div class="comment-head">
                     <div class="comment-meta">
                         <h6 class="comment-name"><router-link :to="eachReview.userProfilePageUrl">{{ eachReview.userName }}</router-link></h6>
-                        <span>{{ eachReview.reviewDateMillis | convertDate }}</span>
                         <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
@@ -26,6 +25,7 @@
                         <i class="material-icons" v-for="index in eachReview.rating" :key="index + Math.random()">star</i>
                         <i class="material-icons" v-for="index in 5 - eachReview.rating" :key="index + Math.random()">star_border</i>
                     </div>
+                    <span class="review-date">{{ eachReview.reviewDateMillis | convertDate }}</span>
                 </div>
                 <div class="comment-content">
                     {{ eachReview.review }}
@@ -44,7 +44,6 @@
                 <div class="comment-box">
                     <div class="comment-head">
                         <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
-                        <span> {{ eachComment.creationDateMillis | convertDate }} </span>
                         <button class="btn more-options" type="button" id="moreOptions2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
@@ -59,6 +58,7 @@
                                 __("report_button")
                             </button>
                         </div>
+                        <span class="review-date"> {{ eachComment.creationDateMillis | convertDate }} </span>
                     </div>
                     <div class="comment-content">
                         {{ eachComment.content }}
@@ -215,15 +215,19 @@ export default {
                 font-size: 13px;
                 font-weight: 700;
                 float: left;
-                margin: 0 10px 5px 0;
+                margin: 0 5px 5px 0;
+                width: calc(100% - 25px);
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
                 @media screen and (max-width: 768px ) {
-                    margin: 0 10px 2px 0;
+                    margin: 0 5px 2px 0;
                 }
                 a {
                     color: #283035;
                 }
             }
-            span {
+            span.review-date {
                 float: left;
                 color: #999;
                 font-size: 12px;
@@ -248,6 +252,7 @@ export default {
             }
             .rating {
                 float: left;
+                margin-right: 10px;
                 i {
                     float: left;
                     color: #aeadae;
@@ -270,7 +275,7 @@ export default {
             }
         }
         .comment-footer {
-            border-top: 1px solid #e5e5e5;
+            border-top: 0px solid #e5e5e5;
             padding: 5px;
             @media screen and (max-width: 768px ) {
                 padding: 0px 5px;

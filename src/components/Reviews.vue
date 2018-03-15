@@ -1,6 +1,6 @@
 <template>
     <div class="comments-container">
-        <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS'">
+        <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
             <OwnReview :userPratilipiData="userPratilipiData"></OwnReview>
             <li class="all-reviews">All Reviews</li>
             <Review 

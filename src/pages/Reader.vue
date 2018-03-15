@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="row footer-section">
-                    <div class="review-count col-3">
+                    <div class="review-count col-3" @click="openReviewModal">
                         <i class="material-icons">comment</i>
                         <span>11</span>
                     </div>
@@ -140,6 +140,7 @@
                 </nav>
                 
                 <div class="review-popout">
+                    <button type="button" class="close-review" name="button" @click="closeReviewModal"><i class="material-icons">close</i></button>
                     <Reviews 
                         :pratilipiId="5340181303918592" 
                         :authorId="5175011076734976" 
@@ -175,6 +176,7 @@
                 </div>
                 
                 <div class="overlay"></div>
+                <div class="overlay-2" @click="closeReviewModal"></div>
             </div>
         </div>
     </ReadLayout>
@@ -250,6 +252,14 @@ export default {
             
             $(".footer-section").removeClass("theme-white theme-black theme-yellow");
             $(".footer-section").addClass("theme-yellow");
+        },
+        openReviewModal() {
+            $(".review-popout").toggleClass("show");
+            $('.overlay-2').fadeToggle();
+        },
+        closeReviewModal() {
+            $(".review-popout").removeClass("show");
+            $('.overlay-2').fadeOut();
         }
     },
     computed: {
@@ -321,7 +331,7 @@ export default {
         padding: 10px 0;
         position: fixed;
         bottom: 0;
-        z-index: 2;
+        z-index: 11;
         width: 100%;
         background: #fff;
         i {
@@ -331,12 +341,16 @@ export default {
         span {
             font-size: 14px;
         }
+        .col-3 {
+            cursor: pointer;
+            padding: 0 5px;
+        }
     }
     #sidebar {
         width: 300px;
         position: fixed;
         top: 0;
-        left: -300px;
+        left: -310px;
         height: 100vh;
         z-index: 999;
         background: #fff;
@@ -460,7 +474,7 @@ export default {
             }
         }
     }
-    .overlay {
+    .overlay, .overlay-2 {
         position: fixed;
         width: 100vw;
         height: 100vh;
@@ -469,6 +483,9 @@ export default {
         display: none;
         top: 0;
         left: 0;
+    }
+    .overlay-2 {
+        z-index: 9;
     }
     #readerOptions {
         max-width: 350px;
@@ -594,9 +611,31 @@ export default {
         }
     }
     .review-popout {
-        height: 50vh;
+        height: 60vh;
+        width: 96%;
+        max-width: 700px;
         position: fixed;
-        bottom: 50px;
+        margin-bottom: 46px;
+        margin-left: -7px;
+        bottom: -75vh;
+        overflow: hidden;
+        overflow-y: auto;
+        text-align: left;
+        background: #fff;
+        box-shadow: 0 -1px 2px rgba(0,0,0,0.5);
+        transition: all 0.5s;
+        z-index: 10;
+        .close-review {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 9;
+            background: none;
+            border: 0;
+        }
+        &.show {
+            bottom: 0;
+        }
     }
 }
 .theme-white {
