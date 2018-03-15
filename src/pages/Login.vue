@@ -102,10 +102,7 @@ export default {
     watch:{
         'getUserDetails.isGuest'(isGuest) {
             if (!isGuest) {
-                this.$router.push({
-                    path: this.getUserDetails.profilePageUrl,
-                    name: 'User'
-                });
+                this.$router.push(this.getUserDetails.profilePageUrl);
             }
         }
     },
