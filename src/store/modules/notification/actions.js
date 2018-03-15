@@ -43,12 +43,24 @@ export default {
 
     fetchMoreNotifications({ commit, state }, { language, resultCount }) {
         commit('setMoreNotificationLoadingTrue');
-        DataAccessor.getNotificationList(state.notifications.cursor, resultCount, language, (data) => {
+        DataAccessor.getNotificationList(state.cursor, resultCount, language, (data) => {
             if (data.status === 200) {
                 commit('setMoreNotificationLoadingSuccess', data.response);
             } else {
                 commit('setMoreNotificationLoadingError');
             }
+        })
+    },
+
+    changeNotificationStatusToRead({ commit, state }, notificationId) {
+        const notification = state.data.find(eachNotification => eachNotification.notificationId === notificationId);
+        if (notification.state === 'READ') {
+            return;
+        }
+        DataAccessor.updateNotificationState(notificationId, 'READ', (successData) => {
+            commit('setNotificationReadStateSuccess', notificationId);
+        }, (failure) => {
+            commit('setNotificationReadStateError');
         })
     }
 }

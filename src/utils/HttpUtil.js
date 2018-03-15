@@ -96,11 +96,12 @@ const httpUtil = {
         anHttpRequest.open("PATCH", aUrl, true);
         anHttpRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-        /**
+        /*
         Need to look for an alternative
+        */
         headers = headers || {};
         headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
-        **/
+        
 
         if (headers != null) {
             for (var key in headers)

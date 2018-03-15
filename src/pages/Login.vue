@@ -102,7 +102,7 @@ export default {
     watch:{
         'getUserDetails.isGuest'(isGuest) {
             if (!isGuest) {
-                this.$router.push(this.getUserDetails.profilePageUrl)
+                this.$router.push(this.getUserDetails.profilePageUrl);
             }
         }
     },
@@ -120,7 +120,7 @@ export default {
         }
     },
     created() {
-        if (!this.getUserDetails.isGuest) {
+        if ( this.getUserDetails && this.getUserDetails.isGuest !== undefined && this.getUserDetails.isGuest !== true) {
             this.$router.push(this.getUserDetails.profilePageUrl)
         }
     }
