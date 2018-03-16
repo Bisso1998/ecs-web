@@ -71,6 +71,7 @@ export default {
     width: calc(100% - 20px);
     max-width: 1000px;
     margin: 0 auto;
+    padding-bottom: 5px;
     .banners {
         img {
             max-width: 100%;
@@ -91,6 +92,11 @@ export default {
         color: #000;
         border: 1px solid #e9e9e9;
         cursor: pointer;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -o-user-select: none;
         transition: all .3s, visibility 0s;
         -ms-transition: all .3s, visibility 0s;
         -webkit-transition: all .3s, visibility 0s;

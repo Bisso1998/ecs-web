@@ -277,7 +277,7 @@ export default {
             .rating, .read-count, .read-time {
                 float: left;
                 width: 32%;
-                padding: 10px 4px;
+                padding: 10px 2px;
                 font-size: 12px;
                 color: #212121;
                 .icons {

@@ -96,23 +96,20 @@ export default {
 <style lang="scss" scoped>
     .section {
         background: #fff;
-		border-top: 6px solid #fff;
+		border-top: 6px solid #e9e9e9;
 		margin-left: -10px;
-		& ~ .section {
-			border-top-color: #e9e9e9;
-		}
 		.section-title {
             margin: 0;
             padding: 0 0 0 10px;
 			font-size: 22px;
-			margin: 5px 0 5px 15px;
+			margin: 10px 0 5px 15px;
 			color: #212121;
 			text-align: left;
 			border-left: 3px solid #d0021b;
 			line-height: 24px;
 			@media screen and (max-width: 576px ) {
                 font-size: 18px;
-				margin-bottom: 5px;
+				margin-bottom: 0;
             }
         }
     }
@@ -147,6 +144,11 @@ export default {
             color: #000;
 			border: 1px solid #e9e9e9;
 			cursor: pointer;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			-o-user-select: none;
 			transition: all .3s, visibility 0s;
 			-ms-transition: all .3s, visibility 0s;
 			-webkit-transition: all .3s, visibility 0s;
