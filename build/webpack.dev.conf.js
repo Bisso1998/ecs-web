@@ -54,7 +54,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           url: 'https://gamma.pratilipi.com/user/accesstoken?accessToken=' + access_token,
           json: true
         }, function(errorInResponse, response, data) {
-          res.setHeader('set-cookie', 'access_token=' + data.accessToken);
+          res.cookie('access_token', data.accessToken, {
+            domain: process.env.DOMAIN || 'localhost',
+            path: '/',
+            httpOnly: false,
+            maxAge: 60 * 60 * 1000,
+          });
           next();
         });
       });
