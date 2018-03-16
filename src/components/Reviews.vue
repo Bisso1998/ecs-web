@@ -7,6 +7,7 @@
                 v-for="eachReview in getReviewsData" 
                 :loadCommentsOfReview="loadCommentsOfReview"
                 :likeOrDislikeReview="likeOrDislikeReview" 
+                :userPratilipiData="userPratilipiData"
                 :eachReview="eachReview" :key="eachReview.userPratilipiId"></Review>
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>

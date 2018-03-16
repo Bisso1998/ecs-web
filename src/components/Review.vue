@@ -11,12 +11,6 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="moreOptions">
                             <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                __("review_edit_review")
-                            </button>
-                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
-                                __("review_delete_review")
-                            </button>
-                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
                                 __("report_button")
                             </button>
                         </div>
@@ -38,8 +32,10 @@
             </div>
         </div>
         <Spinner v-if="eachReview.comments.loading_state === 'LOADING'"></Spinner>
-        <ul class="comments-list reply-list"  v-if="eachReview.comments && eachReview.comments.data && eachReview.comments.data.length > 0 && eachReview.comments.loading_state === 'LOADING_SUCCESS'">
-            <li v-for="eachComment in eachReview.comments.data" :key="eachComment.commentId">
+        <ul class="comments-list reply-list">
+            <li 
+                v-for="eachComment in eachReview.comments.data" :key="eachComment.commentId"
+                v-if="eachReview.comments && eachReview.comments.data && eachReview.comments.data.length > 0 && eachReview.comments.loading_state === 'LOADING_SUCCESS'">
                 <div class="comment-avatar"><img :src="eachComment.user.profileImageUrl" alt="author"></div>
                 <div class="comment-box">
                     <div class="comment-head">
@@ -71,16 +67,16 @@
                 </div>
             </li>
             <li class="add-reply">
-                <div class="comment-avatar"><img src="" alt="author"></div>
+                <div class="comment-avatar"><img :src="userPratilipiData.userImageUrl" alt="author"></div>
                 <div class="comment-box">
                     <div class="comment-head">
-                        <h6 class="comment-name"><a href="#">Author Name</a></h6>
+                        <h6 class="comment-name"><a href="#">{{userPratilipiData.userName}}</a></h6>
                     </div>
                     <div class="comment-content">
                         <form>
                             <div class="form-group">
                                 <label for="writeReply">__("comment_reply_to_comment")</label>
-                                <textarea class="form-control" id="writeReply" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
+                                <textarea class="form-control" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
                             </div>
                             <button class="btn btn-primary">__("save")</button>
                             <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
@@ -107,6 +103,10 @@ export default {
         },
         loadCommentsOfReview: {
             type: Function,
+            required: true
+        },
+        userPratilipiData: {
+            type: Object,
             required: true
         }
     },

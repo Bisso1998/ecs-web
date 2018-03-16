@@ -95,6 +95,7 @@ export default {
     },
     setPratilipiRatingUpdateSuccess(state, value) {
         state.userPratilipi.data.rating = value;
+        state.userPratilipi.data.reviewDateMillis = value ? Date.now() : null;
     },
     setPratilipiRatingUpdateError(state) {
 
@@ -106,7 +107,7 @@ export default {
     },
     setPratilipiReviewUpdateSuccess(state, value){
         state.userPratilipi.data.review = value;
-        state.userPratilipi.data.reviewDateMillis = Date.now();
+        state.userPratilipi.data.reviewDateMillis = value ? Date.now() : null;
     },
     setPratilipiReviewUpdateError(state){
 

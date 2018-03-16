@@ -3,7 +3,7 @@
         <div class="comment-main-level">
             <div class="comment-avatar"><img :src="userPratilipiData.userImageUrl" alt="author"></div>
             <div class="comment-box">
-                <div class="already-rated"  v-if="userPratilipiData.rating">
+                <div class="already-rated"  v-if="userPratilipiData.reviewDateMillis != null">
                     <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">more_vert</i>
                     </button>
@@ -37,7 +37,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="rate-now" v-if="!userPratilipiData.rating">
+                <div class="rate-now" v-if="!userPratilipiData.reviewDateMillis">
                     <span class="text">__("rating_your_rating")</span>
                     <fieldset class="rating" @click="openReview">
                         <input type="radio" id="star5" name="rating" value="5" :checked="userPratilipiData.rating == 5" @change="changeRating"/><label class = "full" for="star5"></label>
