@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const cookie = require('cookie');
 const request = require('request');
 const path = require('path');
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 
 })
 
+app.use(compression({ level: 9 }));
 app.use(serveStatic(__dirname + `/dist/${process.env.LANGUAGE}/`));
 
 app.use((req, res) => {
