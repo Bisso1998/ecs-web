@@ -131,7 +131,7 @@ li {
         }
     }
     .comment-box {
-        background: #e9e9e9;
+        background: #f8f8f8;
         margin-top: -50px;
         padding: 40px 5px 10px;
         overflow: hidden;
