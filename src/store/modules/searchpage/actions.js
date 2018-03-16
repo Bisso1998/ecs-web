@@ -48,6 +48,17 @@ export default {
         })
     },
 
+    fetchTrendingSearch({ commit, state }, language) {
+        commit('setTrendingSearchLoadingTrue');
+        DataAccessor.getTrendingSearchKeywords( language, (data) => {
+            if (data.status === 200) {
+                commit('setTrendingSearchLoadingSuccess', data.response);
+            } else {
+                commit('setTrendingSearchLoadingError');
+            }
+        });
+    },
+
     followOrUnfollowAuthor({ commit, state }, { authorId, following }) {
         console.log(authorId);
         console.log(following);

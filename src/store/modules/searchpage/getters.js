@@ -24,5 +24,5 @@ export default {
     getAuthorListLoadingState: state => state.author.loading_state,
     getAuthorListCursor: state => state.author.cursor,
     getAuthorListData: state => state.author.data,
-
+    getTrendingWords: state => state.trending.data
 }
