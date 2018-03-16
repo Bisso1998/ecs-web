@@ -67,7 +67,7 @@
                 </div>
             </li>
             <li class="add-reply">
-                <div class="comment-avatar"><img :src="userPratilipiData.userImageUrl" alt="author"></div>
+                <div class="comment-avatar"><img :src="userPratilipiData.userId == 0 ? defaultAuthorImage : userPratilipiData.userImageUrl" alt="author"></div>
                 <div class="comment-box">
                     <div class="comment-head">
                         <h6 class="comment-name"><a href="#">{{userPratilipiData.userName}}</a></h6>
@@ -89,9 +89,13 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import mixins from '@/mixins'
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+    mixins: [
+        mixins
+    ],
     props: {
         eachReview: {
             type: Object,
