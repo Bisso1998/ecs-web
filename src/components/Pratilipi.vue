@@ -7,10 +7,7 @@
             <router-link :to="{ name: 'Pratilipi', params: { 
                 slug_id: pratilipiData.pageUrl.split('/').pop(),
                 pratilipiData }}" :title="pratilipiData.title">
-                <div 
-                    class="pratilipi-image" 
-                    :style="{ 'background-image': 'url(' + pratilipiData.coverImageUrl + ')' }">
-                </div>
+                <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
             </router-link>
             <div class="image-mask">
                 <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
@@ -59,6 +56,7 @@
 
 <script>
 import Utils from '@/utils/Utils';
+import PratilipiImage from '@/components/PratilipiImage';
 import { mapActions } from 'vuex'
 
 export default {
@@ -99,6 +97,9 @@ export default {
                 this.addToLibrary(pratilipiId);
             }
         },
+        imageHasBeenRendered() {
+            console.log('has been rendered');
+        },
         openShareModal() {
             // if (navigator.share) {
             //     navigator.share({
@@ -112,6 +113,9 @@ export default {
             this.setShareDetails({ data: this.pratilipiData, type: 'PRATILIPI' })
             $('#share_modal').modal('show');
         }
+    },
+    components: {
+        PratilipiImage
     }
 }
 </script>
