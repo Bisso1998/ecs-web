@@ -28,7 +28,7 @@
                                 <div class="card-content drafts" @scroll="updateScroll">
                                     
                                     <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
-                                        <a :href="each_draft.writePageUrl">
+                                        <a :href="each_draft.pageUrl">
                                             <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
                                             <div class="draft-name">{{ each_draft.title }}</div>
                                         </a>

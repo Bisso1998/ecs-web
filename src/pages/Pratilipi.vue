@@ -13,7 +13,7 @@
                                     <Spinner></Spinner> 
                                 </div>
                             </div>
-                            <div class="book-title">{{ getPratilipiData.title }}</div>  
+                            <div class="book-title">{{ getPratilipiData.title }} <button class="edit" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
                             <router-link
                               :to="getPratilipiData.author.pageUrl"
                               class="author-name">
@@ -31,22 +31,41 @@
                                 <span class="date">__("pratilipi_listing_date"): {{ getPratilipiData.listingDateMillis | convertDate }}</span>
                             </div>
                             <div class="main-actions"  v-if="getUserPratilipiLoadingState === 'LOADING_SUCCESS'">
-                                <button v-if="!getUserPratilipiData.addedToLib" class="library-btn" @click="addToLibrary(getPratilipiData.pratilipiId)">
-                                    <span>+ __("library")</span>
-                                </button>
+                                <div class="book-edit-actions" v-if="getPratilipiData.hasAccessToUpdate">
+                                    <span v-if="getPratilipiData.state === 'PUBLISHED'">
+                                        <button>__("pratilipi_move_to_drafts")</button>
+                                        <button><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button>
+                                    </span>
+                                    <span v-if="getPratilipiData.state === 'DRAFTED'">
+                                        <button>__("pratilipi_publish_it")</button>
+                                        <button><i class="material-icons">delete</i> __("pratilipi_delete_content")</button>
+                                    </span>
+                                </div>
+                                <span v-if="!getPratilipiData.hasAccessToUpdate">
+                                    <button v-if="!getUserPratilipiData.addedToLib" class="library-btn" @click="addToLibrary(getPratilipiData.pratilipiId)">
+                                        <span>+ __("library")</span>
+                                    </button>
 
-                                <button v-if="getUserPratilipiData.addedToLib" class="library-btn" @click="removeFromLibrary(getPratilipiData.pratilipiId)">
-                                    <span>- __("library")</span>
-                                </button>
+                                    <button v-if="getUserPratilipiData.addedToLib" class="library-btn" @click="removeFromLibrary(getPratilipiData.pratilipiId)">
+                                        <span>- __("library")</span>
+                                    </button>
+                                </span>
 
                                 <router-link
+                                  v-if="getPratilipiData.hasAccessToUpdate && getPratilipiData.state === 'DRAFTED'"
+                                  :to="getPratilipiData.readPageUrl"
+                                  class="read-btn">
+                                  <span>__("writer_preview")</span>
+                                </router-link>
+                                <router-link
+                                  v-else
                                   :to="getPratilipiData.readPageUrl"
                                   class="read-btn">
                                   <span>__("read")</span>
                                 </router-link>
                             </div>
                         </div>
-                        <div class="card tags-section">
+                        <div class="card tags-section" v-if="getPratilipiData.hasAccessToUpdate">
                             <div class="head-title">__("tags_categories") <button class="edit"><i class="material-icons">mode_edit</i></button></div>
                             <div class="tags">
                                 <span v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span>
@@ -56,7 +75,7 @@
                     <div class="book-synopsis col-md-12 col-lg-7 p-0">
                         <div class="card">
                             <div v-if="getPratilipiData.summary">
-                                <div class="head-title">__("pratilipi_summary")</div>
+                                <div class="head-title">__("pratilipi_summary") <button class="edit" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
                                 <p class="text show-more-height">{{ getPratilipiData.summary }}</p>
                                 <button class="show_more">__("show_more")</button>
                             </div>
@@ -372,6 +391,22 @@ export default {
             .main-actions {
                 width: 100%;
                 background: #fff;
+                .book-edit-actions {
+                    display: block;
+                    margin: 10px 0 0;
+                    button {
+                        background: #e9e9e9;
+                        color: #212121;
+                        border: 0;
+                        font-size: 12px;
+                        padding: 5px 10px;
+                        margin: 0 5px;
+                        i {
+                            font-size: 16px;
+                            vertical-align: middle;
+                        }
+                    }
+                }
                 .library-btn, .read-btn {
                     display: inline-block;
                     width: 48%;
