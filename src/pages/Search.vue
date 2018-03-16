@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2>__("search_results")</h2>
-                        <div class="head-title">__("search_results_authors")</div>
+                        <div class="head-title" v-if="getAuthorListData.length !== 0">__("search_results_authors")</div>
                         <div class="author-section">
                             <div class="follow" v-for="eachAuthor in getAuthorListData" :key="eachAuthor.authorId">
                                 <a :href="eachAuthor.pageUrl">
@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div class="books-section">
-                            <div class="head-title">__("search_results_contents")</div>
+                            <div class="head-title" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' || getPratilipiListData.length !== 0">__("search_results_contents")</div>
                             <PratilipiComponent
                             :pratilipiData="pratilipiData"
                             :key="pratilipiData.pratilipiId"
@@ -140,12 +140,15 @@ export default {
         text-align: center;
     }
     h2 {
-        font-size: 20px;
+        font-size: 22px;
         font-weight: bold;
         text-align: left;
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
+        @media screen and (max-width: 768px ) {
+            font-size: 18px;
+        }
     }
     .head-title {
         font-size: 16px;
