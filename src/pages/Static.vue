@@ -4,10 +4,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <Spinner v-if="getStaticPageLoadingStatus === 'LOADING'"></Spinner>
-                        <h2>{{ getStaticPageData.title }}</h2>
-                        <div class="page-content" v-html="getStaticPageData.content">
+                        <h2 v-if="getStaticPageLoadingStatus === 'LOADING_SUCCESS'">{{ getStaticPageData.title }}</h2>
+                        <div class="page-content" v-if="getStaticPageLoadingStatus === 'LOADING_SUCCESS'" v-html="getStaticPageData.content">
                         </div>
+                        <Spinner v-if="getStaticPageLoadingStatus === 'LOADING'"></Spinner>
                     </div>
                 </div>
             </div>
