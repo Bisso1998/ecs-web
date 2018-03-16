@@ -127,6 +127,9 @@ export default {
 			position: relative;
 			.view_more_card {
 				width: 300px;
+                @media screen and (max-width: 768px ) {
+                    width: 260px;
+                }
 				background: #fff;
 				border: 1px solid #e9e9e9;
 				height: 252px;
