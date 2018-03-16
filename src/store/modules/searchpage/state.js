@@ -8,5 +8,9 @@ export default {
         loading_state: 'LOADING',
         data: [],
         cursor: null
+    },
+    trending: {
+        loading_state: 'LOADING',
+        data: []
     }
 }

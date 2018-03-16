@@ -99,4 +99,15 @@ export default {
     setFollowUnfollowLoadingDataLoadingError(state) {
 
     },
+
+    setTrendingSearchLoadingTrue(state) {
+        state.trending.loading_state = 'LOADING';
+    },
+    setTrendingSearchLoadingSuccess(state, data) {
+        state.trending.loading_state = 'LOADING_SUCCESS';
+        state.trending.data = data.trending_keywords;
+    },
+    setTrendingSearchLoadingError(state) {
+        state.trending.loading_state = 'LOADING_ERROR';
+    }
 }

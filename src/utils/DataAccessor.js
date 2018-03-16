@@ -757,10 +757,10 @@ export default {
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 
-    getTrendingSearchKeywords: function( aCallBack ) {
+    getTrendingSearchKeywords: function( language, aCallBack ) {
         httpUtil.get( API_PREFIX + SEARCH_PREFIX + SEARCH_TRENDING_API,
             null,
-            { "language": "${ language }" },
+            { "language": language },
             function( response, status ) { processGetResponse( response, status, aCallBack ) } );
     },
 

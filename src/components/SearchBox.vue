@@ -12,12 +12,9 @@
             <div class="title">__("search_trending_heading")</div>
             <div class="tags">
                 <router-link
-                :to="{ path: 'search?trending1' }">
-                    #trending1
-                </router-link>
-                <router-link
-                :to="{ path: 'search?trending2' }">
-                    #trending2
+                :to="{ name: 'Search_Page', query: { searchText: eachTrendingWord } }"
+                 v-for="(eachTrendingWord, index) in getTrendingWords" :key="index">
+                    #{{ eachTrendingWord }}
                 </router-link>
             </div>
         </div>
@@ -25,7 +22,8 @@
 </template>
 
 <script>
-
+import { mapGetters, mapActions } from 'vuex'
+import constants from '@/constants'
 
 export default {
     props: {
@@ -34,8 +32,23 @@ export default {
             required: true
         }
     },
+    computed: {
+        ...mapGetters('searchpage', [
+            'getTrendingWords'
+        ])
+    },
     methods: {
-
+        ...mapActions('searchpage', [
+            'fetchTrendingSearch'
+        ])
+    },
+    created() {
+        const currentLocale = process.env.LANGUAGE;
+        constants.LANGUAGES.forEach((eachLanguage) => {
+            if (eachLanguage.shortName === currentLocale) {
+                this.fetchTrendingSearch(eachLanguage.fullName.toUpperCase());
+            }
+        });
     }
 }
 </script>

@@ -12,7 +12,7 @@
                 <div class="col-lg-5 col-sm-8 col-8 search-box-wrap">
                     <div class="search-box d-none d-lg-block">
                         <div class="form-group has-feedback" id="search-box-big">
-                            <input type="text" class="form-control" v-model="searchText" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
+                            <input type="text" class="form-control" v-model="searchText" @keyup.enter="goToSearchPage" @change="opendesktopsearch" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
                             <i class="material-icons">search</i>
                             <SearchBox :searchText="searchText"></SearchBox>
                         </div>
@@ -111,6 +111,9 @@ export default {
         SearchBox
     },
     methods: {
+        goToSearchPage() {
+            this.$router.push({ name: 'Search_Page', query: { searchText: this.searchText } });
+        },
         opendesktopsearch() {
             $("#search-box-big .search-dropdown").show();
             $(document).mouseup(function(e) {
