@@ -1,7 +1,7 @@
 <template>
     <li>
         <div class="comment-main-level">
-            <div class="comment-avatar"><img :src="userPratilipiData.userImageUrl" alt="author"></div>
+            <div class="comment-avatar"><img :src="userPratilipiData.userId == 0 ? defaultAuthorImage : userPratilipiData.userImageUrl" alt="author"></div>
             <div class="comment-box">
                 <div class="already-rated"  v-if="userPratilipiData.reviewDateMillis != null">
                     <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,10 +63,14 @@
     </li>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
+import mixins from '@/mixins'
 import Spinner from '@/components/Spinner.vue';
 
 export default {
+    mixins: [
+        mixins
+    ],
     props: {
         userPratilipiData: {
             type: Object,
