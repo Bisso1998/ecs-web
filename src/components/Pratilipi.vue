@@ -297,7 +297,7 @@ export default {
             }
         }
     }
-    .language-ta .pratilipi .stats .read-time {
+    .language-ta .pratilipi .stats .read-time, .language-te .pratilipi .stats .read-time {
         font-size: 10px;
     }
 </style>

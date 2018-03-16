@@ -556,6 +556,7 @@ export default {
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     max-width: 100%;
+                    min-height: 23px;
                     overflow: hidden;
                     padding: 0 5px 5px;
                 }

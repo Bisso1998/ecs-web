@@ -7,7 +7,7 @@
             <div class="banners" v-for="each_banner in banners" v-bind:key="each_banner.bannerId">
                 <router-link
                     :to="{ path: each_banner.actionUrl }">
-                    <img :src="each_banner.imageUrl" alt="">
+                    <img :src="each_banner.imageUrl + '&quality=high&type=webp'" alt="">
                 </router-link>
             </div>
         </slick>
