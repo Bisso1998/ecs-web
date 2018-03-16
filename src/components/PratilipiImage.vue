@@ -54,9 +54,10 @@ export default {
     background-position: center;
     position: relative;
     overflow: hidden;
+    transition: all 0.5s;
     &.blur {
-        filter: blur(10px);
-        padding: 10px;
+        filter: blur(5px);
+        padding: 5px;
     }
 }
 </style>
