@@ -5,14 +5,12 @@
                 :banners="getHomePageBanners"
             ></Banners>
             <Spinner v-if="getHomePageLoadingState === 'LOADING'"></Spinner>
-            <div v-if="getHomePageLoadingState === 'LOADING_SUCCESS'" v-bind:key="eachSection.listPageUrl" v-for="eachSection in getHomePageSections">
-                <PratilipiListComponent 
-                    :pratilipiList="eachSection.pratilipiList" 
-                    :title="eachSection.title"
-                    :listPageUrl="eachSection.listPageUrl"
-                    v-bind="{ addToLibrary, removeFromLibrary }"
-                ></PratilipiListComponent>
-            </div>
+            <PratilipiListComponent v-if="getHomePageLoadingState === 'LOADING_SUCCESS'" v-bind:key="eachSection.listPageUrl" v-for="eachSection in getHomePageSections"
+                :pratilipiList="eachSection.pratilipiList" 
+                :title="eachSection.title"
+                :listPageUrl="eachSection.listPageUrl"
+                v-bind="{ addToLibrary, removeFromLibrary }"
+            ></PratilipiListComponent>
         </div>
     </MainLayout>
 </template>
