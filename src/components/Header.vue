@@ -205,7 +205,7 @@ export default {
             }
         }
         .search-box-2 {
-            margin-top: 7px;
+            margin-top: 3px;
             margin-left: auto;
             .form-group {
                 position: relative;
@@ -286,7 +286,7 @@ export default {
         }
         .tabs-section {
             @media screen and (max-width: 992px ) {
-                margin-top: 15px;
+                margin-top: 10px;
             }
             .main-tabs {
                 display: inline-block;
@@ -294,7 +294,7 @@ export default {
                 color: #212121;
                 font-size: 18px;
                 border-bottom: 3px solid #fff;
-                padding-bottom: 4px;
+                padding-bottom: 2px;
                 span {
                     display: block;
                     font-size: 12px;
@@ -305,7 +305,7 @@ export default {
                 }
                 &.router-link-exact-active {
                     color: #d00b12;
-                    border-bottom: 3px solid;
+                    border-bottom-color: #d00b12;
                 }
             }
         }

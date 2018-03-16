@@ -4,6 +4,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+                        <Spinner v-if="getStaticPageLoadingStatus === 'LOADING'"></Spinner>
                         <h2>{{ getStaticPageData.title }}</h2>
                         <div class="page-content" v-html="getStaticPageData.content">
                         </div>
@@ -17,11 +18,13 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants';
+import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
-        MainLayout
+        MainLayout,
+        Spinner
     },
     computed: {
         ...mapGetters('staticpage', [
@@ -97,12 +100,18 @@ export default {
         margin-top: 140px;
     }
     h2 {
-        font-size: 24px;
+        font-size: 22px;
         font-weight: bold;
         text-align: left;
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
+        @media screen and (max-width: 992px ) {
+            font-size: 18px;
+        }
+    }
+    p {
+        word-break: break-word;
     }
 }
 </style>

@@ -134,6 +134,10 @@ export default {
         background: #fff;
         border: 1px solid #e9e9e9;
         position: relative;
+        @media screen and (max-width: 768px ) {
+            width: 260px;
+            margin: 10px 8px;
+        }
         .book-type {
             font-size: 11px;
             line-height: 18px;
@@ -273,8 +277,8 @@ export default {
             .rating, .read-count, .read-time {
                 float: left;
                 width: 32%;
-                padding: 10px 4px;
-                font-size: 13px;
+                padding: 10px 2px;
+                font-size: 12px;
                 color: #212121;
                 .icons {
                     display: inline-block;
@@ -293,7 +297,10 @@ export default {
             }
         }
     }
-    .language-ta .pratilipi .stats .read-time {
+    .language-ta .pratilipi .stats .read-time, .language-te .pratilipi .stats .read-time {
         font-size: 10px;
+        @media screen and (max-width: 768px ) {
+            font-size: 9px;
+        }
     }
 </style>

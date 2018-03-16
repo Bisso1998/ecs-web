@@ -62,12 +62,15 @@ export default {
         margin-top: 140px;
     }
     h2 {
-        font-size: 24px;
+        font-size: 22px;
         font-weight: bold;
         text-align: left;
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
+        @media screen and (max-width: 768px ) {
+            font-size: 18px;
+        }
     }
     .category-list {
         text-align: left;
@@ -95,6 +98,7 @@ export default {
                 width: 100%;
                 max-width: 340px;
                 height: 150px;
+                margin: 10px 2px;
             }
             a {
                 color: #212121;

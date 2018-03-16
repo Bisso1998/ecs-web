@@ -7,7 +7,7 @@
                         <div class="foot-title">__("footer_mobile_app")</div>
                         <div class="foot-items">
                             <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_footer&utm_campaign=app_download" target="_blank">
-                                <img src="https://www.ptlp.co/resource-all/image/google-play-badge.png" alt="google-play" class="google-play-badge">
+                                <img src="../assets/google-play-badge.png" alt="google-play" class="google-play-badge">
                             </a>
                         </div>
                     </div>
