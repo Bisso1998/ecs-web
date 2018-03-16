@@ -22,16 +22,16 @@ export default {
     methods: {
         getLowResolutionImage(imageUrl) {
             if (imageUrl.indexOf('?') === -1) {
-                return imageUrl + '?quality=low';
+                return imageUrl + '?quality=low&type=webp&width=50';
             } else {
-                return imageUrl + '&quality=low';
+                return imageUrl + '&quality=low&type=webp&width=50';
             }
         },
         getHighResolutionImage(imageUrl) {
             if (imageUrl.indexOf('?') === -1) {
-                return imageUrl + '?quality=high';
+                return imageUrl + '?quality=high&type=webp';
             } else {
-                return imageUrl + '&quality=high';
+                return imageUrl + '&quality=high&type=webp';
             }
         },
     },
@@ -53,5 +53,10 @@ export default {
     background-size: cover;
     background-position: center;
     position: relative;
+    overflow: hidden;
+    &.blur {
+        filter: blur(10px);
+        padding: 10px;
+    }
 }
 </style>
