@@ -1,8 +1,5 @@
 <template>
     <div class="banner-section container">
-        <div v-on:click="prev" class="back">
-            <i class="material-icons">keyboard_arrow_left</i>
-        </div>
         <slick ref="slick" :options="slickOptions" class="slick-banner">
             <div class="banners" v-for="each_banner in banners" v-bind:key="each_banner.bannerId">
                 <router-link
@@ -11,9 +8,6 @@
                 </router-link>
             </div>
         </slick>
-        <div v-on:click="next" class="forward">
-            <i class="material-icons">keyboard_arrow_right</i>
-        </div>
     </div>
 </template>
 
@@ -33,13 +27,15 @@ export default {
                 infinite: false,
                 adaptiveHeight: false,
                 variableWidth: false,
-                arrows: false,
+                arrows: true,
                 dots: false,
                 draggable: true,
                 edgeFriction: 0.30,
                 swipe: true,
                 autoplay: true,
                 autoplaySpeed: 4000,
+                prevArrow: '<div class="back"><i class="material-icons" aria-hidden="true">keyboard_arrow_left</i></div>',
+                nextArrow: '<div class="forward"><i class="material-icons" aria-hidden="true">keyboard_arrow_right</i></div>',
             }
         }
     },
@@ -106,18 +102,32 @@ export default {
             line-height: 40px;
             font-size: 26px;
         }
-        &:hover {
-            background: #9E9E9E;
-            border-color: #9E9E9E;
-            box-shadow: 0 0px 2px rgba(0,0,0,0.2);
-            color: #fff;
+        @media screen and (min-width: 768px ) {
+            &:hover {
+                background: #9E9E9E;
+                border-color: #9E9E9E;
+                box-shadow: 0 0px 2px rgba(0,0,0,0.2);
+                color: #fff;
+            }
+        }
+        &.slick-disabled {
+            i {
+                opacity: 0.2;
+            }
+            &:hover {
+                background: #fff;
+                border-color: #fff;
+                i {
+                    color: #212121;
+                }
+            }
         }
     }
     .back {
-        margin-left: -20px;
+        margin-left: -18px;
     }
     .forward {
-        right: 0;
+        right: -18px;
     }
 }
 </style>
