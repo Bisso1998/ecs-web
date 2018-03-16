@@ -280,11 +280,11 @@ export default {
                     text-align: left;
                     span {
                         display: inline-block;
-                        border: 1px solid #e9e9e9;
-                        border-radius: 2px;
+                        background: #e9e9e9;
+                        border-radius: 15px;
                         color: #6c757d;
                         margin: 5px 0 10px 10px;
-                        padding: 5px 10px;
+                        padding: 5px 12px;
                         font-size: 14px;
                     }
                 }
