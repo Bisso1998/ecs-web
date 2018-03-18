@@ -66,9 +66,6 @@ export default {
     margin: 0 0 15px;
     width: 100%;
     max-width: 700px;
-    max-height: 400px;
-    overflow: hidden;
-    overflow-y: scroll;
     h1 {
         font-size: 36px;
         color: #283035;

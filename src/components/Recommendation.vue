@@ -62,7 +62,8 @@ export default {
 <style  lang="scss" scoped>
     .recommendation {
         .section {
-            background: #fff;
+            border: 0;
+            margin-left: 0;
             .section-title {
                 font-size: 14px;
             }
