@@ -111,7 +111,8 @@
                         <span>20</span>
                     </div>
                     <div class="add-to-lib col-3">
-                        <i class="material-icons">bookmark_border</i>
+                        <i class="material-icons" v-if="getUserPratilipiData.addedToLib" @click="removeFromLibrary">bookmark</i>
+                        <i class="material-icons" v-else @click="addToLibrary">bookmark_border</i>
                     </div>
                     <div class="share-btn col-3">
                         <i class="material-icons">share</i>
@@ -123,7 +124,7 @@
                         <i class="material-icons">close</i>
                     </div>
                     <div class="book-info">
-                        <div class="book-cover"><img src="https://0.ptlp.co/pratilipi/cover" alt=""></div>
+                        <div class="book-cover"><img :src="getPratilipiData.coverImageUrl" alt=""></div>
                         <div class="book-name">{{ getPratilipiData.title }}</div>
                         <a :href="getPratilipiData.author.pageUrl" class="author-link">
                             <span class="auth-name">{{ getPratilipiData.author.displayName }}</span>
@@ -189,7 +190,9 @@ export default {
         ...mapActions('readerpage', [
             'fetchPratilipiDetails',
             'fetchPratilipiContentForHTML',
-            'clearCachedContents'
+            'clearCachedContents',
+            'addToLibrary',
+            'removeFromLibrary'
         ]),
         increaseFont() {
             if (this.fontSize !== 32) {
@@ -274,6 +277,10 @@ export default {
     },
     created() {
         this.fetchPratilipiDetails(this.$route.query.id);
+
+        if (this.$route.query.chapterNo) {
+            this.selectedChapter = Number(this.$route.query.chapterNo);
+        }
     },
     mounted() {
         $('#dismiss, .overlay').on('click', function () {
@@ -290,7 +297,7 @@ export default {
                 return;
             }
             if (this.getPratilipiData.contentType === 'PRATILIPI') {
-                this.fetchPratilipiContentForHTML({ pratilipiId: this.getPratilipiData.pratilipiId, chapterNo: newValue });    
+                this.fetchPratilipiContentForHTML({ pratilipiId: this.getPratilipiData.pratilipiId, chapterNo: Number(newValue) });    
                 this.selectedChapter = newValue;
             }
         },
@@ -299,8 +306,8 @@ export default {
             console.log('Old: ', oldId);
             this.clearCachedContents();
             if (this.getPratilipiData.contentType === 'PRATILIPI') {
-                console.log({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? this.$route.query.chapterNo : 1 })
-                this.fetchPratilipiContentForHTML({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? this.$route.query.chapterNo : 1 });
+                console.log({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? Number(this.$route.query.chapterNo) : 1 })
+                this.fetchPratilipiContentForHTML({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? Number(this.$route.query.chapterNo) : 1 });
             }
         }
     }

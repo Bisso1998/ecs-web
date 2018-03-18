@@ -44,6 +44,8 @@ export default {
     },
 
     fetchPratilipiContentForHTMLNextChapter({ commit, state }, { pratilipiId, chapterNo }) {
+        console.log(chapterNo);
+        console.log(state.index);
         if (state.index.data.length < chapterNo) {
             return;
         }
@@ -62,5 +64,21 @@ export default {
 
     clearCachedContents({ commit, state }) {
         commit('clearCachedContents');
-    }
+    },
+
+    addToLibrary({ commit, state }) {
+        DataAccessor.addOrRemoveFromLibrary(state.pratilipi.data.pratilipiId, true, (response) => {
+            commit('addPratilipiToLibrarySuccess', response);
+        }, (error) => {
+            commit('addPratilipiToLibraryError');
+        })
+    },
+
+    removeFromLibrary({ commit, state }) {
+        DataAccessor.addOrRemoveFromLibrary(state.pratilipi.data.pratilipiId, false, (response) => {
+            commit('removePratilipiFromLibrarySuccess', response);
+        }, (error) => {
+            commit('removePratilipiFromLibraryError');
+        })
+    },
 }
