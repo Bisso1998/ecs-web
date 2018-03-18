@@ -2,14 +2,14 @@
     <ReadLayout>
         <div class="read-page">
             <div class="container-fluid">
-                <div class="row header-section">
+                <div class="row header-section" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <div class="exit-reader col-1">
                         <a href="#"><i class="material-icons">arrow_back</i></a>
                     </div>
-                    <div class="col-1" id="sidebarCollapse">
+                    <div class="col-1" id="sidebarCollapse" @click="openSidebar">
                         <i class="material-icons">list</i>
                     </div>
-                    <div class="book-name col-7">Book Name</div>
+                    <div class="book-name col-7">{{ getPratilipiData.title }}</div>
                     <div class="settings col-1">
                         <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions">
                             <i class="material-icons">settings</i>
@@ -90,9 +90,14 @@
                 </div>
                 
                 <div class="row book-content">
-                    <div class="col-12">
-                        <div class="content-section lh-md" v-bind:class="fontStyleObject">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <div class="col-12" v-if="getPratilipiContent.length > 0">
+                        <div class="content-section lh-md" 
+                            :class="fontStyleObject" 
+                            v-for="eachChapter in getPratilipiContent"
+                            v-if="eachChapter.chapterNo === selectedChapter" 
+                            :key="eachChapter.chapterNo"
+                            v-html="eachChapter.content">
+                            
                         </div>
                     </div>
                 </div>
@@ -113,15 +118,15 @@
                     </div>
                 </div>
                 
-                <nav id="sidebar">
+                <nav id="sidebar" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <div id="dismiss">
                         <i class="material-icons">close</i>
                     </div>
                     <div class="book-info">
                         <div class="book-cover"><img src="https://0.ptlp.co/pratilipi/cover" alt=""></div>
-                        <div class="book-name">Book Name</div>
-                        <a href="" class="author-link">
-                            <span class="auth-name">Author Name</span>
+                        <div class="book-name">{{ getPratilipiData.title }}</div>
+                        <a :href="getPratilipiData.author.pageUrl" class="author-link">
+                            <span class="auth-name">{{ getPratilipiData.author.displayName }}</span>
                         </a>
                         <div class="follow-btn-w-count"><!-- Follow Button -->
                             <button><i class="material-icons">person_add</i> __("author_follow")</button><span><b>1234</b></span>
@@ -132,46 +137,24 @@
                     </div>
                     <div class="book-index">
                         <ul>
-                            <li><a href="#">__("writer_chapter") 1</a></li>
-                            <li><a href="#">__("writer_chapter") 2</a></li>
-                            <li><a href="#">__("writer_chapter") 3</a></li>
+                            <li 
+                                v-for="eachIndex in getIndexData" 
+                                :key="eachIndex.chapterId">
+                                    <router-link
+                                        :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }">
+                                        __("writer_chapter") {{ eachIndex.title || eachIndex.chapterNo }}
+                                    </router-link>
+                            </li>
                         </ul>
                     </div>
                 </nav>
                 
-                <div class="review-popout">
+                <div class="review-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <button type="button" class="close-review" name="button" @click="closeReviewModal"><i class="material-icons">close</i></button>
                     <Reviews 
-                        :pratilipiId="5340181303918592" 
-                        :authorId="5175011076734976" 
-                        :userPratilipiData='{  
-                             "userPratilipiId":"6755388384056771-5340181303918592",
-                             "userId":6755388384056771,
-                             "pratilipiId":5340181303918592,
-                             "userName":"Libin V Babu \"libi\"",
-                             "userImageUrl":"https://0.ptlp.co/author/image?authorId=6800000000164605&version=86d66d88-b859-45a9-814e-17a3d9938e64",
-                             "userProfilePageUrl":"/user/libin-v-babu-l3h5v33s7d",
-                             "user":{  
-                                "fullName":"Libin V Babu \"libi\"",
-                                "fullNameEn":"Libin V Babu",
-                                "displayName":"Libin V Babu \"libi\"",
-                                "profileImageUrl":"https://0.ptlp.co/author/image?authorId=6800000000164605&version=86d66d88-b859-45a9-814e-17a3d9938e64",
-                                "author":{  
-                                   "authorId":6800000000164605
-                                },
-                                "userId":6755388384056771,
-                                "profilePageUrl":"/user/libin-v-babu-l3h5v33s7d"
-                             },
-                             "rating":5,
-                             "review":"Good one.",
-                             "reviewState":"PUBLISHED",
-                             "reviewDateMillis":1521094962000,
-                             "likeCount":0,
-                             "commentCount":0,
-                             "addedToLib":false,
-                             "hasAccessToReview":true,
-                             "isLiked":false
-                          }'>
+                        :pratilipiId="getPratilipiData.pratilipiId" 
+                        :authorId="getPratilipiData.author.authorId" 
+                        :userPratilipiData='getUserPratilipiData'>
                     </Reviews>
                 </div>
                 
@@ -188,6 +171,7 @@ import Spinner from '@/components/Spinner.vue';
 import 'vue-awesome/icons/file-text'
 import 'vue-awesome/icons/file-text-o'
 import Reviews from '@/components/Reviews.vue';
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
     components: {
@@ -197,10 +181,16 @@ export default {
     },
     data() {
         return {
-            fontSize: 16
+            fontSize: 16,
+            selectedChapter: 1
         }
     },
     methods: {
+        ...mapActions('readerpage', [
+            'fetchPratilipiDetails',
+            'fetchPratilipiContentForHTML',
+            'clearCachedContents'
+        ]),
         increaseFont() {
             if (this.fontSize !== 32) {
                 this.fontSize += 2;
@@ -260,6 +250,10 @@ export default {
         closeReviewModal() {
             $(".review-popout").removeClass("show");
             $('.overlay-2').fadeOut();
+        },
+        openSidebar() {
+            $('#sidebar').addClass('active');
+            $('.overlay').fadeIn();   
         }
     },
     computed: {
@@ -267,18 +261,48 @@ export default {
             const fontStyleObject = {};
             fontStyleObject['font-' + this.fontSize] = true
             return fontStyleObject
-        }
+        },
+        ...mapGetters('readerpage', [
+            'getPratilipiData',
+            'getPratilipiLoadingState',
+            'getUserPratilipiData',
+            'getUserPratilipiLoadingState',
+            'getIndexData',
+            'getIndexLoadingState',
+            'getPratilipiContent'
+        ])
+    },
+    created() {
+        this.fetchPratilipiDetails(this.$route.query.id);
     },
     mounted() {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').addClass('active');
-            $('.overlay').fadeIn();
-        });
-
         $('#dismiss, .overlay').on('click', function () {
             $('#sidebar').removeClass('active');
             $('.overlay').fadeOut();
         });
+    },
+    watch: {
+        '$route.query.id'(newValue) {
+            this.fetchPratilipiDetails(newValue);
+        },
+        '$route.query.chapterNo'(newValue) {
+            if (!newValue) {
+                return;
+            }
+            if (this.getPratilipiData.contentType === 'PRATILIPI') {
+                this.fetchPratilipiContentForHTML({ pratilipiId: this.getPratilipiData.pratilipiId, chapterNo: newValue });    
+                this.selectedChapter = newValue;
+            }
+        },
+        'getPratilipiData.pratilipiId'(newId, oldId) {
+            console.log('New: ', newId);
+            console.log('Old: ', oldId);
+            this.clearCachedContents();
+            if (this.getPratilipiData.contentType === 'PRATILIPI') {
+                console.log({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? this.$route.query.chapterNo : 1 })
+                this.fetchPratilipiContentForHTML({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? this.$route.query.chapterNo : 1 });
+            }
+        }
     }
 }
 </script>
