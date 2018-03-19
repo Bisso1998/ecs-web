@@ -270,6 +270,9 @@ export default {
                 font-size: 11px;
                 line-height: 22px;
             }
+            &.router-link-exact-active {
+                color: #d00b12;
+            }
         }
         a.dropdown-item.isActive {
             color: #d00b12;
