@@ -43,10 +43,10 @@
                             <i class="material-icons">more_vert</i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="moreOptions2">
-                            <button type="button" @click="editComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                            <button type="button" @click="editComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="">
                                 __("review_edit_review")
                             </button>
-                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="">
                                 __("review_delete_review")
                             </button>
                             <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
@@ -93,12 +93,14 @@
                 </div>
             </li>
         </ul>
+        <ReviewReport></ReviewReport>
     </li>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import mixins from '@/mixins'
 import Spinner from '@/components/Spinner.vue';
+import ReviewReport from '@/components/ReviewReport.vue';
 
 export default {
     mixins: [
@@ -162,7 +164,8 @@ export default {
         ])
     },
     components: {
-        Spinner
+        Spinner,
+        ReviewReport
     }
 }
 
@@ -288,11 +291,14 @@ export default {
                 }
             }
             .dropdown-menu {
+                padding: 0;
                 .options-btn {
                     font-size: 12px;
                     display: block;
-                    padding: 5px 10px;
+                    padding: 10px;
                     background: none;
+                    width: 100%;
+                    text-align: left;
                 }
             }
             .rating {
