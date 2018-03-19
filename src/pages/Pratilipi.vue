@@ -154,9 +154,7 @@ export default {
             'setAfterLoginAction'
         ]),
         addPratilipiToLibrary(pratilipiId) {
-            if (this.$store.getters.getUserDetails.isGuest) {
-                // throw popup modal
-                console.log(this.$route);
+            if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
                 this.openLoginModal();
             } else {
