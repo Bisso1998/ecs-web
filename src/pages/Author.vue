@@ -103,6 +103,7 @@
                                         <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
                                         <button style="display: none;" class="btn btn-light follow-link"><i class="material-icons">check</i> __("author_following")</button>
                                     </div>
+                                    <Spinner v-if="getAuthorFollowersLoadingState === 'LOADING'"></Spinner>
                                 </div>
                                 <div class="list following" id="following">
                                     <div class="follow" v-for="each_following in getAuthorFollowing" :key="each_following.userId">
@@ -114,6 +115,7 @@
                                         <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
                                         <button style="display: none;" class="btn btn-light follow-link"><i class="material-icons">check</i> __("author_following")</button>
                                     </div>
+                                    <Spinner v-if="getAuthorFollowingLoadingState === 'LOADING'"></Spinner>
                                 </div>
                             </div>
                         </div>
@@ -437,6 +439,7 @@ export default {
                 margin: 5px;
                 font-size: 14px;
                 color: #555;
+                height: 61px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
