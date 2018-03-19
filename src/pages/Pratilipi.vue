@@ -145,9 +145,7 @@ export default {
             'fetchUserPratilipiData',
             'addToLibrary',
             'removeFromLibrary',
-            'uploadPratilipiImage',
-            'setPratilipiRating',
-            'saveOrUpdateReview'
+            'uploadPratilipiImage'
         ]),
         ...mapActions([
             'setShareDetails',
