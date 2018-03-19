@@ -2,7 +2,7 @@
     <div class="comments-container">
         <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
             <OwnReview :userPratilipiData="userPratilipiData"></OwnReview>
-            <li class="all-reviews">All Reviews</li>
+            <li class="all-reviews">__("pratilipi_count_reviews")</li>
             <Review 
                 v-for="eachReview in getReviewsData" 
                 :loadCommentsOfReview="loadCommentsOfReview"
