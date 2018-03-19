@@ -177,7 +177,7 @@ export default {
             display: inline-block;
             vertical-align: middle;
             float: left;
-            margin-left: 10px;
+            margin-left: 5px;
             button {
                 padding: 0;
                 margin: 0;
