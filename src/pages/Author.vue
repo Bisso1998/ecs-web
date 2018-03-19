@@ -12,7 +12,7 @@
                                     v-if="getUserDetails.userId === getAuthorData.user.userId">
                                         <i class="material-icons">settings</i>
                                     </router-link>
-                                    <button type="button" name="button"><i class="material-icons">share</i></button>
+                                    <button type="button" name="button" @click="openShareModal"><i class="material-icons">share</i></button>
                                 </div>
                                 <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId" @click="uploadImage('cover-image')"><i class="material-icons">camera_alt</i></button>
                                 <input type="file" hidden name="coverimage" @change="triggerCoverImageUpload($event)" accept="image/*" id="coverimage_uploader">
@@ -182,6 +182,9 @@ export default {
             'uploadCoverImage',
             'uploadProfileImage'
         ]),
+        ...mapActions([
+            'setShareDetails'
+        ]),
         tabchange(event) {
             event.preventDefault();        
             var tab_id = $(event.currentTarget).attr('data-tab');
@@ -204,6 +207,10 @@ export default {
                     break;
             }
             
+        },
+        openShareModal() {
+            this.setShareDetails({ data: this.getAuthorData, type: 'AUTHOR' })
+            $('#share_modal').modal('show');
         },
         triggerCoverImageUpload(event) {
             const formData = new FormData();
