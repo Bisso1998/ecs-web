@@ -105,7 +105,8 @@ export default {
 <style lang="scss" scoped>
     .share-modal {
         max-width: 320px;
-        margin: 50px auto 0;
+        margin: -196px auto 0;
+        top: 50%;
         .social a {
             vertical-align: middle;
             color: #2c3e50;

@@ -2,14 +2,23 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-lg-2 col-sm-3 col-2">
+                <div class="col-lg-2 col-sm-3 col-5 p-r-0">
                     <router-link
                       :to="{ name: 'Home' }"
                       class="logo">
-                      __("pratilipi")
                     </router-link>
+                    <div class="language-dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        __("pratilipi")
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                            <a class="dropdown-item" href="#">Hindi</a>
+                            <a class="dropdown-item" href="#">Tamil</a>
+                            <a class="dropdown-item" href="#">Malayalam</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-5 col-sm-8 col-8 search-box-wrap">
+                <div class="col-lg-5 col-sm-8 col-7 search-box-wrap">
                     <div class="search-box d-none d-lg-block">
                         <div class="form-group has-feedback" id="search-box-big">
                             <input type="text" class="form-control" v-model="searchText" @keyup.enter="goToSearchPage" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
@@ -150,10 +159,13 @@ export default {
         z-index: 5;
         width: 100%;
         background: #fff;
+        .p-r-0 {
+            padding-right: 0;
+        }
         .logo {
             background: url(../assets/pratilipi_logo.png) no-repeat left center;
             background-size: contain;
-            text-indent: 50px;
+            text-indent: 45px;
             height: 40px;
             text-align: left;
             line-height: 40px;
@@ -165,9 +177,12 @@ export default {
             &:hover {
                 text-decoration: none;
             }
-            @media screen and (max-width: 410px ) {
-                width: 40px;
-                overflow: hidden;
+        }
+        .language-dropdown {
+            button {
+                padding: 0;
+                background: none;
+                font-weight: bold;
             }
         }
         .search-box-wrap {
@@ -207,12 +222,13 @@ export default {
         .search-box-2 {
             margin-top: 3px;
             margin-left: auto;
+            text-align: right;
             .form-group {
                 position: relative;
                 width: 83%;
                 display: inline-block;
                 @media screen and (max-width: 410px ) {
-                    width: 78%;
+                    width: 70%;
                 }
                 i {
                     top: 5px;

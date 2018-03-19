@@ -26,8 +26,7 @@
                 </div>
                 <div class="comment-footer">
                     <button type="button" :class="{ 'active': eachReview.isLiked }" @click="likeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
-                    <button type="button" name="button" @click="loadCommentsOfReview({ resultCount: eachReview.commentCount, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
-                    <button type="button" class="write-reply" name="button">__("comment_reply_to_comment")</button>
+                    <button type="button" name="button" @click="toggleComments({ resultCount: eachReview.commentCount, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
                 </div>
             </div>
         </div>
@@ -62,7 +61,6 @@
                     <div class="comment-footer">
                         <button type="button" :class="{ 'active': eachComment.isLiked}" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
                         <button type="button" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
-                        <button type="button" class="write-reply" name="button">__("comment_reply_to_comment")</button>
                     </div>
                 </div>
             </li>
@@ -117,6 +115,10 @@ export default {
     methods: {
         cancelReview(e) {
             $(".review-box").fadeOut();
+        },
+        toggleComments(data) {
+            $(this.$el).find(".reply-list").toggle();
+            this.loadCommentsOfReview(data);
         }
     },
     components: {
@@ -322,6 +324,7 @@ export default {
     padding-left: 40px;
     clear: both;
     margin-top: 15px;
+    display: none;
     .comment-avatar {
         width:35px;
         height: 35px;
@@ -349,7 +352,8 @@ export default {
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
-.add-reply {
+.comments-list li .add-reply {
+    list-style: none;
     textarea, label {
         font-size: 13px;
     }

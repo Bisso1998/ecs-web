@@ -135,7 +135,7 @@ export default {
         }
         .book-type {
             font-size: 11px;
-            line-height: 18px;
+            line-height: 20px;
             font-weight: 700;
             color: #fff;
             padding: 0 20px 3px;
@@ -144,6 +144,7 @@ export default {
             top: 15px;
             left: -10px;
             z-index: 1;
+            height: 21px;
             &:before {
                 content: '';
                 position: absolute;

@@ -3,7 +3,7 @@
         <div class="top-footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="foot-title">__("footer_mobile_app")</div>
                         <div class="foot-items">
                             <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_footer&utm_campaign=app_download" target="_blank">
@@ -11,23 +11,14 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="foot-title">__("footer_contact_us")</div>
                         <div class="foot-items">
                             <a :href="'tel:' + '__('footer_contact_number')'.replace(' ', '')"><i class="material-icons material-icons-16 vertical-middle">phone</i>__("footer_contact_number")</a>
                             <a :href="'mailto:' + '__('footer_contact_email')'"><i class="material-icons material-icons-16 vertical-middle">mail</i>__("footer_contact_email")</a>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="foot-title">__("footer_about_us")</div>
-                        <div class="foot-items">
-                            <router-link
-                              :to="{ name: 'About_Page' }">__("footer_about_us")</router-link>
-                            <router-link
-                              :to="{ name: 'Career_Page' }">__("footer_work_with_us")</router-link>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="foot-title">__("footer_follow_us_on_social_media")</div>
                         <div class="foot-items social">
                             <a :href="'__('facebook_page')'" class="fb" target="_blank"><icon name="facebook-f"></icon></a>
@@ -45,6 +36,10 @@
                     <div class="col-sm-12">
                         <p>
                             © {{ new Date().getFullYear() }} Nasadiya Tech. Pvt. Ltd. | 
+                            <router-link
+                              :to="{ name: 'About_Page' }">__("footer_about_us")</router-link> | 
+                            <router-link
+                                :to="{ name: 'Career_Page' }">__("footer_work_with_us")</router-link> | 
                             <router-link
                               :to="{ name: 'Privacy_Page' }">__("footer_privacy_policy")</router-link> |
                             <router-link
@@ -72,7 +67,7 @@ export default {
     .top-footer {
         background: #212121;
         color: #fff;
-        padding: 15px 0;
+        padding: 15px 0 5px;
         text-align: left;
         margin-top: 20px;
         .foot-title {
@@ -92,7 +87,7 @@ export default {
         .foot-items {
             margin: 20px 0;
             @media screen and (max-width: 768px ) {
-                margin: 10px 0 40px;
+                margin: 10px 0 20px;
             }
             a {
                 display: block;

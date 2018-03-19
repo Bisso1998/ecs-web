@@ -64,10 +64,10 @@ export default {
 @import '../../node_modules/slick-carousel/slick/slick.css';
 .banner-section {
     position: relative;
-    width: calc(100% - 20px);
+    width: calc(100% - 40px);
     max-width: 1000px;
     margin: 0 auto;
-    padding-bottom: 5px;
+    padding: 0 0 5px;
     .banners {
         img {
             max-width: 100%;
@@ -124,10 +124,10 @@ export default {
         }
     }
     .back {
-        margin-left: -18px;
+        margin-left: -15px;
     }
     .forward {
-        right: -18px;
+        right: -15px;
     }
 }
 </style>

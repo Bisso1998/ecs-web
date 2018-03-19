@@ -96,6 +96,9 @@ export default {
     -ms-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
+    @media screen and (max-width: 768px ) {
+        bottom: 50px;
+    }
     i {
         color: #fff;
         margin: 0;
