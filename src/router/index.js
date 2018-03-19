@@ -19,6 +19,7 @@ import InterviewPageComponent from '@/pages/Interview.vue'
 import SettingsPageComponent from '@/pages/Settings.vue'
 import SearchPageComponent from '@/pages/Search.vue'
 import LoginPageComponent from '@/pages/Login.vue'
+import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
 
 import constants from '@/constants'
 
@@ -30,7 +31,18 @@ export default new Router({
         path: '/',
         name: 'Home',
         component: HomeComponent,
-        meta: { 'store': 'homepage' }
+        meta: { 'store': 'homepage' },
+        beforeEnter: (to, from, next) => {
+            if (to.query.email && to.query.token && to.query.passwordReset) {
+                next({ path: '/password-reset', query: { 
+                    email: to.query.email,
+                    token: to.query.token
+                }});    
+            } else {
+                next();
+            }
+            
+        }
     }, {
         path: '/story/:slug_id',
         name: 'Pratilipi',
@@ -124,6 +136,10 @@ export default new Router({
         name: 'Interview_Page',
         component: InterviewPageComponent,
         meta: { 'store': 'interviewpage' }
+    }, {
+        path: '/password-reset',
+        name: 'Password_Reset',
+        component: PasswordResetPageComponent
     }, {
         path: '/:list_page_url',
         name: 'List_Page',

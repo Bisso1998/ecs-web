@@ -97,5 +97,15 @@ export default {
                 commit('alert/triggerAlertHide', null, { root: true });
             }, 3000);
         });
+    },
+
+    resetUserPassword({ commit, state }, { email, idToken, newPassword }) {
+        console.log(email, idToken, newPassword)
+        DataAccessor.resetUserPassword(email, idToken, newPassword, (userDetails) => {
+            commit('setUserDataLoadingSuccess', userDetails);
+            window.location = '/';
+        }, (error) => {
+            console.log(error);
+        });
     }
 }
