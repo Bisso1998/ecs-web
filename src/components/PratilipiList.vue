@@ -92,6 +92,7 @@ export default {
             margin: 0;
             padding: 0 0 0 10px;
 			font-size: 22px;
+            font-weight: bold;
 			margin: 10px 0 5px 15px;
 			color: #212121;
 			text-align: left;
