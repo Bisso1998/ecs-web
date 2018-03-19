@@ -146,7 +146,8 @@
                         <ul>
                             <li 
                                 v-for="eachIndex in getIndexData" 
-                                :key="eachIndex.chapterId">
+                                :key="eachIndex.chapterId"
+                                :class="{ isActive: eachIndex.chapterNo === selectedChapter }">
                                     <router-link
                                         :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }"
                                         @click.native="closeSidebar">
