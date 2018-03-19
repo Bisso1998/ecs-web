@@ -34,7 +34,7 @@ export default new Router({
         meta: { 'store': 'homepage' },
         beforeEnter: (to, from, next) => {
             if (to.query.email && to.query.token && to.query.passwordReset) {
-                next({ path: '/password-reset', query: { 
+                next({ path: '/reset-password', query: { 
                     email: to.query.email,
                     token: to.query.token
                 }});    
@@ -137,7 +137,7 @@ export default new Router({
         component: InterviewPageComponent,
         meta: { 'store': 'interviewpage' }
     }, {
-        path: '/password-reset',
+        path: '/reset-password',
         name: 'Password_Reset',
         component: PasswordResetPageComponent
     }, {

@@ -1,22 +1,25 @@
 <template>
     <MainLayout>
-        <div class="blog-page">
+        <div class="static-page">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-sm-12">
-                                    <label for="pratilipi-settings-new-password">__('user_new_password') *</label>
-                                    <input type="password" class="form-control" @input="newPasswordVerify = $event.target.value" id="pratilipi-settings-new-password" placeholder="__('user_new_password')">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="card">
+                            <div class="head-title">__("user_reset_password")</div>
+                            <form>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="pratilipi-settings-new-password">__('user_new_password') *</label>
+                                        <input type="password" class="form-control" @input="newPasswordVerify = $event.target.value" id="pratilipi-settings-new-password" placeholder="__('user_new_password')">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="pratilipi-settings-confirm-password">__('user_confirm_password') *</label>
+                                        <input type="password" class="form-control" @input="newPassword = $event.target.value" id="pratilipi-settings-confirm-password" placeholder="__('user_confirm_password')">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6 col-sm-12">
-                                    <label for="pratilipi-settings-confirm-password">__('user_confirm_password') *</label>
-                                    <input type="password" class="form-control" @input="newPassword = $event.target.value" id="pratilipi-settings-confirm-password" placeholder="__('user_confirm_password')">
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-primary update-btn" @click="verifyAndResetPassword(newPasswordVerify, newPassword)">__("save_changes")</button>
-                        </form>
+                                <button type="button" class="btn btn-primary update-btn" @click="verifyAndResetPassword(newPasswordVerify, newPassword)">__("save_changes")</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,13 +65,16 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.blog-page {
+<style lang="scss" scoped>
+.static-page {
     margin-top: 85px;
     text-align: left;
     background: #f8f8f8;
     @media screen and (max-width: 992px ) {
         margin-top: 140px;
+    }
+    .col-lg-8 {
+        margin: 0 auto;
     }
     .card {
         border-radius: 0;
@@ -82,19 +88,18 @@ export default {
             border-left: 3px solid #d0021b;
             padding-left: 10px;
             margin: 10px 0 0;
+            @media screen and (max-width: 992px ) {
+                    font-size: 18px;
+            }
         }
-        .date-published {
-            font-size: 12px;
-            margin: 5px 0 5px 10px;
-        }
-        .desc {
-            text-align: left;
+        form {
             padding: 10px;
             font-size: 14px;
-            img {
-                max-width: 100%;
-                margin: 10px;
-                height: auto !important;
+            .update-btn {
+                background: #d00b12;
+                color: #fff;
+                margin-right: 10px;
+                border: 0;
             }
         }
     }
