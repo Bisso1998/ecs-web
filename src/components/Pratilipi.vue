@@ -57,7 +57,7 @@
 <script>
 import mixins from '@/mixins';
 import PratilipiImage from '@/components/PratilipiImage';
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: 'Pratilipi',
@@ -85,6 +85,11 @@ export default {
     data() {
         return {
         }
+    },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
     },
     methods: {
         ...mapActions([
