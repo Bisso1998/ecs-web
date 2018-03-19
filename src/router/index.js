@@ -29,7 +29,8 @@ export default new Router({
     routes: [{
         path: '/',
         name: 'Home',
-        component: HomeComponent
+        component: HomeComponent,
+        meta: { 'store': 'homepage' }
     }, {
         path: '/story/:slug_id',
         name: 'Pratilipi',
