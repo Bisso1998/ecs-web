@@ -67,9 +67,9 @@
                                             <div id="password_reset">
                                                 <form>
                                                     <div class="form-group">
-                                                        <input type="email" class="form-control" id="forgotEmail" :placeholder="'__("user_email")'">
+                                                        <input type="email" @input="forgotten_password_email = $event.target.value" class="form-control" id="forgotEmail" :placeholder="'__("user_email")'">
                                                     </div>
-                                                    <button type="button" class="btn sign-in">__("user_reset_password")</button>
+                                                    <button type="button" @click="sendPasswordResetEmail(forgotten_password_email)" class="btn sign-in">__("user_reset_password")</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -126,7 +126,8 @@ export default {
     },
     methods: {
         ...mapActions([
-            'loginUser'
+            'loginUser',
+            'sendPasswordResetEmail'
         ]),
         tabsignup(event) {
             event.preventDefault();        
