@@ -165,24 +165,34 @@ export default {
         .logo {
             background: url(../assets/pratilipi_logo.png) no-repeat left center;
             background-size: contain;
-            text-indent: 45px;
             height: 40px;
-            text-align: left;
-            line-height: 40px;
-            font-size: 17px;
-            font-weight: 700;
-            max-width: 150px;
-            display: block;
-            color: #2c3e50;
+            float: left;
+            width: 40px;
+            display: inline-block;
             &:hover {
                 text-decoration: none;
             }
         }
         .language-dropdown {
+            display: inline-block;
+            vertical-align: middle;
+            float: left;
+            margin-left: 10px;
             button {
                 padding: 0;
+                margin: 0;
                 background: none;
-                font-weight: bold;
+                line-height: 40px;
+                font-size: 16px;
+                font-weight: 700;
+                color: #212121;
+                &:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+            }
+            .dropdown-menu a {
+                font-size: 14px;
             }
         }
         .search-box-wrap {

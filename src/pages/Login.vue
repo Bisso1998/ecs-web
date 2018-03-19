@@ -9,8 +9,8 @@
                     <div class="col-lg-6 col-md-12">
                         <div class="card">
                             <div class="login-menu">
-                                <a href="#" v-on:click="tabchange" data-tab="signup" class="active">__("user_sign_up")</a>
-                                <a href="#" v-on:click="tabchange" data-tab="signin">__("user_sign_in")</a>
+                                <a href="#" class="signup active" v-on:click="tabsignup" data-tab="signup">__("user_sign_up")</a>
+                                <a href="#" class="signin" v-on:click="tabsignin" data-tab="signin">__("user_sign_in")</a>
                             </div>
                             <div class="forms" id="signin">
                                 <div class="social-login">
@@ -26,7 +26,8 @@
                                         <input type="password" class="form-control" v-model="password" id="signinPassword" :placeholder="'__("user_password")'">
                                     </div>
                                     <button type="button" @click="loginUser({email, password})" class="btn sign-in">__("user_sign_in")</button>
-                                    <a href="#" class="forgot-pass">__("user_forgot_password")</a>
+                                    <a href="#" class="forgot-pass" data-toggle="modal" data-target="#forgotPassModal">__("user_forgot_password")</a>
+                                    <a href="#" class="footlink" v-on:click="tabsignup" data-tab="signup">__("user_sign_up")</a>
                                 </form>
                             </div>
                             
@@ -47,18 +48,35 @@
                                         <input autocomplete="new-password" type="password" class="form-control" id="signupPassword" :placeholder="'__("user_password")'">
                                     </div>
                                     <button type="button" @click="signupUser({name, email, password})" class="btn sign-in">__("user_sign_up")</button>
+                                    <a href="#" class="footlink" v-on:click="tabsignin" data-tab="signin">__("user_sign_in")</a>
                                     <span class="terms-section">__("register_part_1") <a href="/privacy-policy" target="_blank">__("footer_privacy_policy")</a> __("register_part_2") <a href="/terms-of-service" target="_blank">__("footer_terms_of_service")</a> __("register_part_3")</span>
                                 </form>
                             </div>
                             
-                            <div class="forms" id="password_reset">
-                                <form>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="forgotEmail" :placeholder="'__("user_email")'">
+                            <!-- Modal -->
+                            <div class="modal fade" id="forgotPassModal" tabindex="-1" role="dialog" aria-labelledby="forgotPassModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="forgotPassModalLabel">__("user_forgot_password")</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="password_reset">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <input type="email" class="form-control" id="forgotEmail" :placeholder="'__("user_email")'">
+                                                    </div>
+                                                    <button type="button" class="btn sign-in">__("user_reset_password")</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button type="button" @click="loginUser({email, password})" class="btn sign-in">__("user_reset_password")</button>
-                                </form>
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
                     
@@ -110,11 +128,19 @@ export default {
         ...mapActions([
             'loginUser'
         ]),
-        tabchange(event) {
+        tabsignup(event) {
             event.preventDefault();        
             var tab_id = $(event.currentTarget).attr('data-tab');
             $(".login-menu a").removeClass("active");
-            $(event.currentTarget).addClass("active");
+            $(".signup").addClass("active");
+            $(".forms").hide();
+            $("#" + tab_id).show();
+        },
+        tabsignin(event) {
+            event.preventDefault();        
+            var tab_id = $(event.currentTarget).attr('data-tab');
+            $(".login-menu a").removeClass("active");
+            $(".signin").addClass("active");
             $(".forms").hide();
             $("#" + tab_id).show();
         }
@@ -205,13 +231,6 @@ export default {
         &#signup {
             display: block;
         }
-        .sign-in {
-            background: #d00b12;
-            color: #fff;
-            &:hover {
-                opacity: 0.9;
-            }
-        }
         .or {
             display: flex;
             flex: 1;
@@ -235,10 +254,14 @@ export default {
         .or::after {
             margin-right: 0;
         }
-        .forgot-pass {
+        .forgot-pass, .footlink {
             font-size: 12px;
-            margin: 0 10px;
+            margin-right: 10px;
             color: #212529;
+        }
+        .footlink {
+            display: inline-block;
+            margin: 10px 0;
         }
         .terms-section {
             font-size: 12px;
@@ -246,6 +269,18 @@ export default {
             margin: 10px 0;
             color: #212529;
         }
+    }
+    .sign-in {
+        background: #d00b12;
+        color: #fff;
+        margin-right: 10px;
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+    #forgotPassModal {
+        text-align: left;
+        margin-top: 150px;
     }
     .social-login {
         button.fb, button.google {

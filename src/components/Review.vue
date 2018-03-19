@@ -278,7 +278,6 @@ export default {
                 color: #999;
                 font-size: 12px;
                 position: relative;
-                top: 2px;
             }
             .more-options {
                 float: right;
@@ -302,7 +301,7 @@ export default {
                 i {
                     float: left;
                     color: #aeadae;
-                    font-size: 18px;
+                    font-size: 14px;
                     margin: 0;
                 }
             }

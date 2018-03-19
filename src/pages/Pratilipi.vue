@@ -82,7 +82,7 @@
                             <AboutAuthor :authorId="getPratilipiData.author.authorId"></AboutAuthor>
                         </div>
                         <div class="card">
-                            <div class="head-title">__("pratilipi_count_reviews")</div>
+                            <div class="head-title">__("review_heading")</div>
                             <Reviews 
                                 :pratilipiId="getPratilipiData.pratilipiId" 
                                 :authorId="getPratilipiData.author.authorId" 
