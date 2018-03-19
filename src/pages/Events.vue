@@ -14,6 +14,7 @@
                                     </router-link>
                                 </li>
                             </ul>
+                            <Spinner v-if="getEventsLoadingState === 'LOADING'"></Spinner>
                         </div>
                     </div>
                 </div>
@@ -25,11 +26,13 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants'
+import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
-        MainLayout
+        MainLayout,
+        Spinner
     },
     computed: {
         ...mapGetters('eventspage', [

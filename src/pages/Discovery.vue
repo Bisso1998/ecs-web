@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Discover</h2>
+                        <h2>__('search_explore_categories')</h2>
 
                         <div class="category-list" v-for="each_category_section in category_sections" :key="each_category_section.title">
                             <h4 class="category-section">{{ each_category_section.title }}</h4>

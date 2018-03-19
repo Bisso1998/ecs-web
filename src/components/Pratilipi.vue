@@ -57,7 +57,7 @@
 <script>
 import mixins from '@/mixins';
 import PratilipiImage from '@/components/PratilipiImage';
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     name: 'Pratilipi',
@@ -86,13 +86,18 @@ export default {
         return {
         }
     },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
     methods: {
         ...mapActions([
             'setShareDetails',
             'setAfterLoginAction'
         ]),
         addPratilipiToLibrary(pratilipiId) {
-            if (this.$store.getters.getUserDetails.isGuest) {
+            if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 console.log(this.$route);
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });

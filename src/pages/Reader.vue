@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row header-section" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <div class="exit-reader col-1">
-                        <a href="#"><i class="material-icons">arrow_back</i></a>
+                        <router-link :to="getPratilipiData.pageUrl"><i class="material-icons">arrow_back</i></router-link>
                     </div>
                     <div class="col-1" id="sidebarCollapse" @click="openSidebar">
                         <i class="material-icons">list</i>
@@ -90,7 +90,7 @@
                 </div>
                 
                 <div class="row book-content">
-                    <div class="col-12" v-if="getPratilipiContent.length > 0">
+                    <div class="col-12" v-if="getPratilipiContent.length > 0 && getPratilipiData.pratilipiId == $route.query.id">
                         <div class="content-section lh-md" 
                             :class="fontStyleObject" 
                             v-for="eachChapter in getPratilipiContent"
@@ -100,6 +100,7 @@
                             
                         </div>
                     </div>
+                    <Spinner v-if="getPratilipiContent.length === 0 || getPratilipiData.pratilipiId != $route.query.id"></Spinner>
                 </div>
                 <div class="row footer-section">
                     <div class="review-count col-3" @click="openReviewModal">
@@ -142,7 +143,8 @@
                                 v-for="eachIndex in getIndexData" 
                                 :key="eachIndex.chapterId">
                                     <router-link
-                                        :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }">
+                                        :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }"
+                                        @click.native="closeSidebar">
                                         __("writer_chapter") {{ eachIndex.title || eachIndex.chapterNo }}
                                     </router-link>
                             </li>
@@ -159,7 +161,7 @@
                     </Reviews>
                 </div>
                 
-                <div class="rating-popout">
+                <div class="rating-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <button type="button" class="close-review" name="button" @click="closeRatingModal"><i class="material-icons">close</i></button>
                     <Reviews 
                         :pratilipiId="getPratilipiData.pratilipiId" 
@@ -303,7 +305,6 @@ export default {
     },
     created() {
         this.fetchPratilipiDetails(this.$route.query.id);
-
         if (this.$route.query.chapterNo) {
             this.selectedChapter = Number(this.$route.query.chapterNo);
         }

@@ -30,7 +30,7 @@
                     <div class="review-box">
                         <form>
                             <div class="form-group">
-                                <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" id="writeReview" rows="2" placeholder="__('review_write_a_review')"></textarea>
+                                <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" rows="2" placeholder="__('review_write_a_review')"></textarea>
                             </div>
                             <button type="button" class="btn btn-primary" @click="() => {cancelReview(); saveOrUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })}">__("save")</button>
                             <button type="button" @click="cancelReview" class="btn btn-light">__("cancel")</button>
@@ -51,7 +51,7 @@
                     <div class="review-box">
                         <form>
                             <div class="form-group">
-                                <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" id="writeReview" rows="2" placeholder="__('review_write_a_review')"></textarea>
+                                <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" rows="2" placeholder="__('review_write_a_review')"></textarea>
                             </div>
                             <button type="button" class="btn btn-primary" @click="() => {cancelReview(); saveOrUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })}">__("save")</button>
                             <button type="button" @click="cancelReview" class="btn btn-light">__("cancel")</button>
@@ -82,14 +82,28 @@ export default {
             newReview: ''
         }
     },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
     methods: {
         ...mapActions('reviews', [
             'setPratilipiRating',
             'saveOrUpdateReview'
         ]),
+        ...mapActions([
+            'setAfterLoginAction'
+        ]),
         changeRating(e) {
-            const newRating = e.target.value;
-            this.setPratilipiRating({ rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId });
+            if (this.getUserDetails.isGuest) {
+                const newRating = e.target.value;
+                this.setAfterLoginAction({ action: `reviews/setPratilipiRating`, data: { rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId } });
+                this.openLoginModal();
+            } else {
+                const newRating = e.target.value;
+                this.setPratilipiRating({ rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId });
+            }
         },
         deleteReview(e) {
             this.setPratilipiRating({ rating: null, pratilipiId: this.userPratilipiData.pratilipiId });
