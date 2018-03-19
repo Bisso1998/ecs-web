@@ -39,7 +39,7 @@
                 <div class="comment-avatar"><img :src="eachComment.user.profileImageUrl" alt="author"></div>
                 <div class="comment-box">
                     <div class="comment-head">
-                        <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
+                        <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === getUserDetails.authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
                         <button class="btn more-options" type="button" id="moreOptions2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
@@ -118,6 +118,11 @@ export default {
         cancelReview(e) {
             $(".review-box").fadeOut();
         }
+    },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
     },
     components: {
         Spinner
