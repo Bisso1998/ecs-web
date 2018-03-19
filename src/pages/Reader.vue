@@ -356,6 +356,9 @@ export default {
         font-size: 16px;
         padding: 10px;
         text-align: left;
+        .content-section {
+            margin-bottom: 50px;
+        }
     }
     .footer-section {
         box-shadow: 0 -1px 1px rgba(0,0,0,0.2);
