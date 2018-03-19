@@ -309,6 +309,11 @@ export default {
             this.selectedChapter = Number(this.$route.query.chapterNo);
         }
     },
+    mounted() {
+        $('.read-page').bind("contextmenu",function(e){
+            e.preventDefault();
+        });
+    },
     watch: {
         '$route.query.id'(newValue) {
             this.fetchPratilipiDetails(newValue);
@@ -378,6 +383,15 @@ export default {
         font-size: 16px;
         padding: 10px;
         text-align: left;
+
+        -moz-user-select: -moz-none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        
         .content-section {
             margin-bottom: 50px;
         }
