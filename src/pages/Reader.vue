@@ -143,7 +143,8 @@
                                 v-for="eachIndex in getIndexData" 
                                 :key="eachIndex.chapterId">
                                     <router-link
-                                        :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }">
+                                        :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }"
+                                        @click.native="closeSidebar">
                                         __("writer_chapter") {{ eachIndex.title || eachIndex.chapterNo }}
                                     </router-link>
                             </li>
