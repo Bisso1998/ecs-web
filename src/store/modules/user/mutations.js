@@ -50,5 +50,15 @@ export default {
     
     setUserLogoutInProgressError(state) {
         state.loading_state = 'LOADING_ERROR';
+    },
+
+    setAfterLoginAction(state, { action, data }) {
+        state.post_login_action.action = action;
+        state.post_login_action.data = data;
+    },
+
+    clearPostLoginAction(state) {
+        state.post_login_action.action = null;
+        state.post_login_action.data = null;
     }
 }
