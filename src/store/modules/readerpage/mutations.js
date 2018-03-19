@@ -75,9 +75,6 @@ export default {
     },
 
 
-
-
-
     addPratilipiToLibrarySuccess(state) {
         state.userPratilipi.data.addedToLib = true;
     },
@@ -93,6 +90,13 @@ export default {
     removePratilipiFromLibraryError(state) {
 
     },
+
+
+
+
+
+
+
 
 
     setRecommendationLoadingTrue(state) {
