@@ -46,7 +46,7 @@ export default {
         DataAccessor.loginUser(email, password, (data) => {
             commit('setUserDataLoadingSuccess', data);
 
-            if (state.post_login_action) {
+            if (state.post_login_action.action) {
                 dispatch(state.post_login_action.action, state.post_login_action.data, { root: true });
                 commit('clearPostLoginAction');
             }
