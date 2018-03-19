@@ -77,5 +77,30 @@ export default {
         } else {
             concernedReview.likeCount--;
         }
+    },
+
+
+    addNewCommentSuccess(state, { userPratilipiId, data }) {
+        const concernedReview = state.data.find((eachReview) => eachReview.userPratilipiId ===  userPratilipiId);
+        concernedReview.comments.data.push(data);
+        concernedReview.commentCount++;
+    },
+    
+    addNewCommentError() {
+
+    },
+
+    updateCommentSuccess(state, { commentId, data }){
+        state.data.forEach(( eachReview ) => {
+            let requiredComment = eachReview.comments.data.find(( eachComment ) => eachComment.commentId === commentId);
+            console.log(requiredComment);
+            if (requiredComment) {
+                requiredComment.content = data.content;
+                requiredComment.lastUpdatedMillis = data.lastUpdatedMillis;
+            }
+        });
+    },
+    updateCommentError(state){
+
     }
 }

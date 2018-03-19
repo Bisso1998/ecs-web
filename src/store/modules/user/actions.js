@@ -82,5 +82,20 @@ export default {
             action,
             data
         });
+    },
+
+    sendPasswordResetEmail({ commit, state }, email) {
+        DataAccessor.forgotPassword(email, () => {
+            commit('alert/triggerAlertView', '__('password_reset_request_success')', { root: true });
+            $('#forgotPassModal').modal('hide');
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
+        }, () => {
+            commit('alert/triggerAlertView', '__('server_error_message')', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
+        });
     }
 }

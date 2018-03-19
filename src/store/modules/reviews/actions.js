@@ -49,5 +49,21 @@ export default {
 
     saveOrUpdateReview({ commit, state, dispatch }, { review, pratilipiId }) {
         dispatch('pratilipipage/saveOrUpdateReview', { review, pratilipiId }, { root: true });
-    }
+    },
+
+    createComment({ commit, state }, { userPratilipiId, content }){
+        DataAccessor.createOrUpdateReviewComment(userPratilipiId, null, content, function(data) {
+            commit('addNewCommentSuccess', { userPratilipiId, data });
+        }, () => {
+            commit('addNewCommentError');
+        });
+    },
+
+    updateComment({ commit, state }, { commentId, content }){
+        DataAccessor.createOrUpdateReviewComment(null, commentId, content, function(data) {
+            commit('updateCommentSuccess', { commentId, data });
+        }, () => {
+            commit('updateCommentError');
+        });
+    },
 }
