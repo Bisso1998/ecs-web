@@ -42,7 +42,7 @@
                                     </span>
                                 </div>
                                 <span v-if="!getPratilipiData.hasAccessToUpdate">
-                                    <button v-if="!getUserPratilipiData.addedToLib" class="library-btn" @click="addToLibrary(getPratilipiData.pratilipiId)">
+                                    <button v-if="!getUserPratilipiData.addedToLib" class="library-btn" @click="addPratilipiToLibrary(getPratilipiData.pratilipiId)">
                                         <span>+ __("library")</span>
                                     </button>
 
@@ -112,6 +112,7 @@ import Recommendation from '@/components/Recommendation.vue';
 import AboutAuthor from '@/components/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
 import Reviews from '@/components/Reviews.vue';
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -123,6 +124,9 @@ export default {
             newReview: null
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('pratilipipage', [
             'getPratilipiData',
@@ -130,6 +134,9 @@ export default {
             'getPratilipiLoadingState',
             'getUserPratilipiLoadingState',
             'getImageUploadLoadingState'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     methods: {
@@ -143,8 +150,19 @@ export default {
             'saveOrUpdateReview'
         ]),
         ...mapActions([
-            'setShareDetails'
+            'setShareDetails',
+            'setAfterLoginAction'
         ]),
+        addPratilipiToLibrary(pratilipiId) {
+            if (this.$store.getters.getUserDetails.isGuest) {
+                // throw popup modal
+                console.log(this.$route);
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
+                this.openLoginModal();
+            } else {
+                this.addToLibrary(pratilipiId);
+            }
+        },
         openShareModal() {
             this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
             $('#share_modal').modal('show');
@@ -186,6 +204,9 @@ export default {
             if (pratilipiId) {
                 
             }
+        },
+        'getUserDetails.userId'() {
+            this.fetchPratilipiDetailsAndUserPratilipiData(this.$route.params.slug_id);
         }
     },
     mounted() {
