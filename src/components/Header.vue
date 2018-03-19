@@ -50,7 +50,7 @@
                       :to="{ name: 'Discovery_Page' }"
                       class="main-tabs">
                       <i class="material-icons">all_out</i>
-                      <span>Discover</span>
+                      <span>__('search_explore_categories')</span>
                     </router-link>
                     <router-link
                       :to="{ name: 'Write_Page' }"
