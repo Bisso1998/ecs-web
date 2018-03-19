@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row header-section" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <div class="exit-reader col-1">
-                        <a href="#"><i class="material-icons">arrow_back</i></a>
+                        <a href="#" @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
                     </div>
                     <div class="col-1" id="sidebarCollapse" @click="openSidebar">
                         <i class="material-icons">list</i>
@@ -303,7 +303,6 @@ export default {
     },
     created() {
         this.fetchPratilipiDetails(this.$route.query.id);
-
         if (this.$route.query.chapterNo) {
             this.selectedChapter = Number(this.$route.query.chapterNo);
         }
