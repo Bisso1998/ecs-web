@@ -4,7 +4,7 @@
             <div class="container-fluid">
                 <div class="row header-section" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <div class="exit-reader col-1">
-                        <a href="#" @click="$router.go(-1)"><i class="material-icons">arrow_back</i></a>
+                        <router-link :to="getPratilipiData.pageUrl"><i class="material-icons">arrow_back</i></router-link>
                     </div>
                     <div class="col-1" id="sidebarCollapse" @click="openSidebar">
                         <i class="material-icons">list</i>
@@ -161,7 +161,7 @@
                     </Reviews>
                 </div>
                 
-                <div class="rating-popout">
+                <div class="rating-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <button type="button" class="close-review" name="button" @click="closeRatingModal"><i class="material-icons">close</i></button>
                     <Reviews 
                         :pratilipiId="getPratilipiData.pratilipiId" 
