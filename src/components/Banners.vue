@@ -64,7 +64,7 @@ export default {
 @import '../../node_modules/slick-carousel/slick/slick.css';
 .banner-section {
     position: relative;
-    width: calc(100% - 40px);
+    width: calc(100% - 50px);
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 0 5px;
