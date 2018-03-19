@@ -1,7 +1,7 @@
 <template>
 	<div class="section">
 		<div class="container-fluid">
-	        <h2 class="section-title">{{title}}</h2>
+	        <h2 class="section-title"><a :href="listPageUrl">{{title}}</a></h2>
 	        <div class="pratilipi-list" v-if="pratilipiList.length > 0">
 	            <slick ref="slick" :options="slickOptions">
 	                <PratilipiComponent 
@@ -94,10 +94,16 @@ export default {
 			font-size: 22px;
             font-weight: bold;
 			margin: 10px 0 5px 15px;
-			color: #212121;
 			text-align: left;
 			border-left: 3px solid #d0021b;
 			line-height: 24px;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            a {
+                color: #212121;
+            }
 			@media screen and (max-width: 576px ) {
                 font-size: 18px;
 				margin-bottom: 0;

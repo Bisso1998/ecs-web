@@ -73,7 +73,10 @@ export default {
         .foot-title {
             font-size: 15px;
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 7px;
+            @media screen and (max-width: 768px ) {
+                font-size: 13px;
+            }
             &:before {
                 position: absolute;
                 left: 0;
@@ -87,13 +90,16 @@ export default {
         .foot-items {
             margin: 20px 0;
             @media screen and (max-width: 768px ) {
-                margin: 10px 0 20px;
+                margin: 5px 0 20px;
             }
             a {
                 display: block;
                 color: #fff;
                 font-size: 14px;
                 margin-top: 10px;
+                @media screen and (max-width: 768px ) {
+                    font-size: 12px;
+                }
                 i {
                     font-size: 14px;
                     vertical-align: middle;
@@ -102,12 +108,12 @@ export default {
             }
             &.social a {
                 display: inline-block;
-                width: 40px;
-                height: 40px;
+                width: 30px;
+                height: 30px;
                 background: #3b5998;
                 border-radius: 50%;
                 text-align: center;
-                line-height: 40px;
+                line-height: 30px;
                 margin-right: 5px;
                 .fa-icon {
                     vertical-align: middle;
@@ -129,6 +135,9 @@ export default {
             img.google-play-badge {
                 width: 150px;
                 margin-left: -10px;
+                @media screen and (max-width: 768px ) {
+                    width: 110px;
+                }
             }
         }
     }
