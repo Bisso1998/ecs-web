@@ -112,4 +112,47 @@ export default {
     setPratilipiReviewUpdateError(state){
 
     },
+
+    setAuthorDetailsLoadingTrue(state) {
+        state.author.loading_state = 'LOADING';
+    },
+    
+    setAuthorDetailsLoadingSuccess(state, authorData) {
+        state.author.data = authorData;
+        state.author.loading_state = 'LOADING_SUCCESS';
+    },
+    
+    setAuthorDetailsLoadingError(state) {
+        state.author.loading_state = 'LOADING_ERROR';
+    },
+
+    setUserAuthorDataLoadingTrue(state) {
+        state.userAuthor.loading_state = 'LOADING';
+    },
+    
+    setUserAuthorDataLoadingSuccess(state, authorData) {
+        state.userAuthor.data = authorData;
+        state.userAuthor.loading_state = 'LOADING_SUCCESS';
+    },
+    
+    setUserAuthorDataLoadingError(state) {
+        state.userAuthor.loading_state = 'LOADING_ERROR';
+    },
+
+    setFollowUnfollowLoadingDataLoadingTrue(state) {
+
+    },
+
+    setFollowUnfollowLoadingDataLoadingSuccess(state, data){
+        state.author.data.following = data.following;
+        if (data.following) {
+            state.author.data.followCount++;    
+        } else {
+            state.author.data.followCount--;
+        }
+    },
+
+    setFollowUnfollowLoadingDataLoadingError(state) {
+
+    },
 }
