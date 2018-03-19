@@ -11,6 +11,7 @@
 import LoginModal from '@/components/LoginModal.vue';
 import ShareModal from '@/components/Share.vue';
 import Alert from '@/components/Alert.vue';
+import constants from '@/constants';
 
 import { mapGetters, mapActions } from 'vuex'
 
