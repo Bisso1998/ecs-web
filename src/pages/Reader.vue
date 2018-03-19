@@ -91,13 +91,18 @@
                 
                 <div class="row book-content">
                     <div class="col-12" v-if="getPratilipiContent.length > 0 && getPratilipiData.pratilipiId == $route.query.id">
+                        <h2 
+                            v-for="eachIndex in getIndexData" 
+                            :key="eachIndex.chapterId"
+                            v-if="eachIndex.chapterNo === selectedChapter">
+                                {{ eachIndex.title || eachIndex.chapterNo }}
+                        </h2>
                         <div class="content-section lh-md" 
                             :class="fontStyleObject" 
                             v-for="eachChapter in getPratilipiContent"
                             v-if="eachChapter.chapterNo === selectedChapter" 
                             :key="eachChapter.chapterNo"
                             v-html="eachChapter.content">
-                            
                         </div>
                     </div>
                     <Spinner v-if="getPratilipiContent.length === 0 || getPratilipiData.pratilipiId != $route.query.id"></Spinner>
