@@ -91,13 +91,18 @@
                 
                 <div class="row book-content">
                     <div class="col-12" v-if="getPratilipiContent.length > 0 && getPratilipiData.pratilipiId == $route.query.id">
+                        <h2 
+                            v-for="eachIndex in getIndexData" 
+                            :key="eachIndex.chapterId"
+                            v-if="eachIndex.chapterNo === selectedChapter">
+                                {{ eachIndex.title || eachIndex.chapterNo }}
+                        </h2>
                         <div class="content-section lh-md" 
                             :class="fontStyleObject" 
                             v-for="eachChapter in getPratilipiContent"
                             v-if="eachChapter.chapterNo === selectedChapter" 
                             :key="eachChapter.chapterNo"
                             v-html="eachChapter.content">
-                            
                         </div>
                     </div>
                     <Spinner v-if="getPratilipiContent.length === 0 || getPratilipiData.pratilipiId != $route.query.id"></Spinner>
@@ -309,6 +314,11 @@ export default {
             this.selectedChapter = Number(this.$route.query.chapterNo);
         }
     },
+    mounted() {
+        $('.read-page').bind("contextmenu",function(e){
+            e.preventDefault();
+        });
+    },
     watch: {
         '$route.query.id'(newValue) {
             this.fetchPratilipiDetails(newValue);
@@ -385,6 +395,15 @@ export default {
         font-size: 16px;
         padding: 10px;
         text-align: left;
+
+        -moz-user-select: -moz-none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        
         .content-section {
             margin-bottom: 50px;
         }
