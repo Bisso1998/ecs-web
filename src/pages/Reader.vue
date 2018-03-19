@@ -90,7 +90,7 @@
                 </div>
                 
                 <div class="row book-content">
-                    <div class="col-12" v-if="getPratilipiContent.length > 0">
+                    <div class="col-12" v-if="getPratilipiContent.length > 0 && getPratilipiData.pratilipiId == $route.query.id">
                         <div class="content-section lh-md" 
                             :class="fontStyleObject" 
                             v-for="eachChapter in getPratilipiContent"
@@ -100,6 +100,7 @@
                             
                         </div>
                     </div>
+                    <Spinner v-if="getPratilipiContent.length === 0 || getPratilipiData.pratilipiId != $route.query.id"></Spinner>
                 </div>
                 <div class="row footer-section">
                     <div class="review-count col-3" @click="openReviewModal">
