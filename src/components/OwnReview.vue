@@ -82,14 +82,30 @@ export default {
             newReview: ''
         }
     },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
     methods: {
         ...mapActions('reviews', [
             'setPratilipiRating',
             'saveOrUpdateReview'
         ]),
+        ...mapActions([
+            'setAfterLoginAction'
+        ]),
         changeRating(e) {
-            const newRating = e.target.value;
-            this.setPratilipiRating({ rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId });
+            console.log('here')
+            console.log(this.getUserDetails);
+            if (this.getUserDetails.isGuest) {
+                const newRating = e.target.value;
+                this.setAfterLoginAction({ action: `reviews/setPratilipiRating`, data: { rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId } });
+                this.openLoginModal();
+            } else {
+                const newRating = e.target.value;
+                this.setPratilipiRating({ rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId });
+            }
         },
         deleteReview(e) {
             this.setPratilipiRating({ rating: null, pratilipiId: this.userPratilipiData.pratilipiId });
