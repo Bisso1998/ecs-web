@@ -1,4 +1,4 @@
-import { translateWord } from '@/mixins/methods'
+import { translateWord, openLoginModal } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
 export default {
@@ -8,6 +8,7 @@ export default {
         }
     },
     methods: {
-        translateWord
+        translateWord,
+        openLoginModal
     }
 }

@@ -41,13 +41,16 @@ export default {
         })
     },
 
-    loginUser({ commit, state }, { email, password }) {
-        console.log(email);
-        console.log(password);
+    loginUser({ commit, state, dispatch }, { email, password }) {
         commit('setUserDataLoadingTrue');
         DataAccessor.loginUser(email, password, (data) => {
-            console.log(data);
             commit('setUserDataLoadingSuccess', data);
+
+            if (state.post_login_action) {
+                dispatch(state.post_login_action.action, state.post_login_action.data, { root: true });
+                commit('clearPostLoginAction');
+            }
+            
         }, (error) => {
             console.log(error);
             commit('setUserDataLoadingError', error.message);
@@ -71,6 +74,13 @@ export default {
         import('firebase').then((firebase) => {
             const node = firebase.database().ref( "NOTIFICATION" ).child( state.data.userId ).child( "newNotificationCount" );
             node.set( 0 );
+        });
+    },
+
+    setAfterLoginAction({ commit, state }, { action, data }) {
+        commit('setAfterLoginAction', {
+            action,
+            data
         });
     }
 }

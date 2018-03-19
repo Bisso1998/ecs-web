@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import Utils from '@/utils/Utils';
+import mixins from '@/mixins';
 import PratilipiImage from '@/components/PratilipiImage';
 import { mapActions } from 'vuex'
 
@@ -79,20 +79,24 @@ export default {
             type: Boolean
         }
     },
+    mixins: [
+        mixins
+    ],
     data() {
         return {
         }
     },
     methods: {
         ...mapActions([
-            'setShareDetails'
+            'setShareDetails',
+            'setAfterLoginAction'
         ]),
         addPratilipiToLibrary(pratilipiId) {
-
-            console.log(this);
             if (this.$store.getters.getUserDetails.isGuest) {
                 // throw popup modal
-                Utils.goToLogin();
+                console.log(this.$route);
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
+                this.openLoginModal();
             } else {
                 this.addToLibrary(pratilipiId);
             }
@@ -101,15 +105,6 @@ export default {
             console.log('has been rendered');
         },
         openShareModal() {
-            // if (navigator.share) {
-            //     navigator.share({
-            //         title: 'Web Fundamentals',
-            //         text: 'Check out Web Fundamentals — it rocks!',
-            //         url: 'https://developers.google.com/web',
-            //     })
-            //         .then(() => console.log('Successful share'))
-            //         .catch((error) => console.log('Error sharing', error));
-            // }
             this.setShareDetails({ data: this.pratilipiData, type: 'PRATILIPI' })
             $('#share_modal').modal('show');
         }

@@ -29,19 +29,23 @@ export default new Router({
     routes: [{
         path: '/',
         name: 'Home',
-        component: HomeComponent
+        component: HomeComponent,
+        meta: { 'store': 'homepage' }
     }, {
         path: '/story/:slug_id',
         name: 'Pratilipi',
-        component: PratilipiComponent
+        component: PratilipiComponent,
+        meta: { 'store': 'pratilipipage' }
     }, {
         path: '/user/:user_slug',
         name: 'User',
-        component: AuthorComponent
+        component: AuthorComponent,
+        meta: { 'store': 'authorpage' }
     }, {
         path: '/notification',
         name: 'Notification',
-        component: NotificationComponent
+        component: NotificationComponent,
+        meta: { 'store': 'notification' }
     }, {
         path: '/discover',
         name: 'Discovery_Page',
@@ -49,7 +53,8 @@ export default new Router({
     }, {
         path: '/read',
         name: 'Reader_Page',
-        component: ReaderPageComponent
+        component: ReaderPageComponent,
+        meta: { 'store': 'readerpage' }
     }, {
         path: '/work-with-us',
         name: 'Career_Page',
@@ -69,19 +74,23 @@ export default new Router({
     }, {
         path: '/event',
         name: 'Events_Page',
-        component: EventsPageComponent
+        component: EventsPageComponent,
+        meta: { 'store': 'eventspage' }
     }, {
         path: '/event/:event_slug',
         name: 'Event_Page',
-        component: EventPageComponent
+        component: EventPageComponent,
+        meta: { 'store': 'eventpage' }
     }, {
         path: '/write',
         name: 'Write_Page',
-        component: WritePageComponent
+        component: WritePageComponent,
+        meta: { 'store': 'writepage' }
     }, {
         path: '/library',
         name: 'Library_Page',
-        component: LibraryPageComponent
+        component: LibraryPageComponent,
+        meta: { 'store': 'librarypage' }
     }, {
         path: '/settings',
         name: 'Settings_Page',
@@ -89,7 +98,8 @@ export default new Router({
     }, {
         path: '/search',
         name: 'Search_Page',
-        component: SearchPageComponent
+        component: SearchPageComponent,
+        meta: { 'store': 'searchpage' }
     }, {
         path: '/login',
         name: 'Login_Page',
@@ -97,23 +107,28 @@ export default new Router({
     }, {
         path: '/blog',
         name: 'Blogs_Page',
-        component: BlogsPageComponent
+        component: BlogsPageComponent,
+        meta: { 'store': 'blogspage' }
     }, {
         path: '/blog/:blog_id',
         name: 'Blog_Page',
-        component: BlogPageComponent
+        component: BlogPageComponent,
+        meta: { 'store': 'blogpage' }
     }, {
         path: '/author-interviews',
         name: 'Interviews_Page',
-        component: InterviewsPageComponent
+        component: InterviewsPageComponent,
+        meta: { 'store': 'interviewspage' }
     }, {
         path: '/author-interviews/:interview_id',
         name: 'Interview_Page',
-        component: InterviewPageComponent
+        component: InterviewPageComponent,
+        meta: { 'store': 'interviewpage' }
     }, {
         path: '/:list_page_url',
         name: 'List_Page',
-        component: ListPageComponent
+        component: ListPageComponent,
+        meta: { 'store': 'listpage' }
     }],
     scrollBehavior: () => ({ y: 0 })
 })

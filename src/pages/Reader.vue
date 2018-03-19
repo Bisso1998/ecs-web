@@ -120,7 +120,7 @@
                 </div>
                 
                 <nav id="sidebar" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
-                    <div id="dismiss">
+                    <div id="dismiss" @click="closeSidebar">
                         <i class="material-icons">close</i>
                     </div>
                     <div class="book-info">
@@ -168,7 +168,7 @@
                     </Reviews>
                 </div>
                 
-                <div class="overlay"></div>
+                <div class="overlay" @click="closeSidebar"></div>
                 <div class="overlay-1" @click="closeReviewModal"></div>
                 <div class="overlay-2" @click="closeRatingModal"></div>
             </div>
@@ -279,6 +279,10 @@ export default {
         openSidebar() {
             $('#sidebar').addClass('active');
             $('.overlay').fadeIn();   
+        },
+        closeSidebar() {
+            $('#sidebar').removeClass('active');
+            $('.overlay').fadeOut();
         }
     },
     computed: {
@@ -304,12 +308,6 @@ export default {
             this.selectedChapter = Number(this.$route.query.chapterNo);
         }
     },
-    mounted() {
-        $('#dismiss, .overlay').on('click', function () {
-            $('#sidebar').removeClass('active');
-            $('.overlay').fadeOut();
-        });
-    },
     watch: {
         '$route.query.id'(newValue) {
             this.fetchPratilipiDetails(newValue);
@@ -324,11 +322,8 @@ export default {
             }
         },
         'getPratilipiData.pratilipiId'(newId, oldId) {
-            console.log('New: ', newId);
-            console.log('Old: ', oldId);
             this.clearCachedContents();
             if (this.getPratilipiData.contentType === 'PRATILIPI') {
-                console.log({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? Number(this.$route.query.chapterNo) : 1 })
                 this.fetchPratilipiContentForHTML({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? Number(this.$route.query.chapterNo) : 1 });
             }
         }

@@ -12,3 +12,7 @@ export function translateWord(word, callback) {
             callback(json[1][0][1])
         });
 }
+
+export function openLoginModal(actionToTrigger, dataForAction) {
+    $('#login_modal').modal('show');
+}
