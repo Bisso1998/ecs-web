@@ -42,11 +42,8 @@ export default {
     },
 
     loginUser({ commit, state, dispatch }, { email, password }) {
-        console.log(email);
-        console.log(password);
         commit('setUserDataLoadingTrue');
         DataAccessor.loginUser(email, password, (data) => {
-            console.log(data);
             commit('setUserDataLoadingSuccess', data);
 
             if (state.post_login_action) {
