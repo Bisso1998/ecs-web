@@ -8,6 +8,7 @@
                             <div class="head-title">{{ getEventData.name }}</div>
                             <img :src="getEventData.bannerImageUrl" alt="">
                             <div class="desc" v-html="getEventData.description"></div>
+                            <Spinner v-if="getEventDataLoadingState === 'LOADING'"></Spinner>
                         </div>
                     </div>
                     <div class="col-md-12" v-if="getEventPratilipisLoadingState === 'LOADING_SUCCESS' && getEventPratilipis.length !== 0">
