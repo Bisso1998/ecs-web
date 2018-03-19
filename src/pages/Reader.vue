@@ -106,7 +106,7 @@
                         <i class="material-icons">comment</i>
                         <span>11</span>
                     </div>
-                    <div class="rating-count col-3">
+                    <div class="rating-count col-3" @click="openRatingModal">
                         <i class="material-icons">star_rate</i>
                         <span>20</span>
                     </div>
@@ -159,8 +159,18 @@
                     </Reviews>
                 </div>
                 
+                <div class="rating-popout">
+                    <button type="button" class="close-review" name="button" @click="closeRatingModal"><i class="material-icons">close</i></button>
+                    <Reviews 
+                        :pratilipiId="getPratilipiData.pratilipiId" 
+                        :authorId="getPratilipiData.author.authorId" 
+                        :userPratilipiData='getUserPratilipiData'>
+                    </Reviews>
+                </div>
+                
                 <div class="overlay"></div>
-                <div class="overlay-2" @click="closeReviewModal"></div>
+                <div class="overlay-1" @click="closeReviewModal"></div>
+                <div class="overlay-2" @click="closeRatingModal"></div>
             </div>
         </div>
     </ReadLayout>
@@ -248,10 +258,22 @@ export default {
         },
         openReviewModal() {
             $(".review-popout").toggleClass("show");
+            $('.overlay-1').fadeToggle();
+            $('.overlay-2').fadeOut();
+            $(".rating-popout").removeClass("show");
+        },
+        openRatingModal() {
+            $(".rating-popout").toggleClass("show");
             $('.overlay-2').fadeToggle();
+            $('.overlay-1').fadeOut();
+            $(".review-popout").removeClass("show");
         },
         closeReviewModal() {
             $(".review-popout").removeClass("show");
+            $('.overlay-1').fadeOut();
+        },
+        closeRatingModal() {
+            $(".rating-popout").removeClass("show");
             $('.overlay-2').fadeOut();
         },
         openSidebar() {
@@ -365,7 +387,7 @@ export default {
         padding: 10px 0;
         position: fixed;
         bottom: 0;
-        z-index: 11;
+        z-index: 12;
         width: 100%;
         background: #fff;
         i {
@@ -427,6 +449,7 @@ export default {
                 margin: 10px auto;
                 img {
                     max-width: 100%;
+                    max-height: 100%;
                 }
             }
             .book-name {
@@ -508,7 +531,7 @@ export default {
             }
         }
     }
-    .overlay, .overlay-2 {
+    .overlay, .overlay-1, .overlay-2 {
         position: fixed;
         width: 100vw;
         height: 100vh;
@@ -518,7 +541,7 @@ export default {
         top: 0;
         left: 0;
     }
-    .overlay-2 {
+    .overlay-1, .overlay-2 {
         z-index: 9;
     }
     #readerOptions {
@@ -644,14 +667,14 @@ export default {
             line-height: 33px;
         }
     }
-    .review-popout {
+    .review-popout, .rating-popout {
         height: 60vh;
         width: 96%;
         max-width: 700px;
         position: fixed;
         margin-bottom: 46px;
         margin-left: -7px;
-        bottom: -75vh;
+        bottom: -100vh;
         overflow: hidden;
         overflow-y: auto;
         text-align: left;
@@ -670,6 +693,11 @@ export default {
         &.show {
             bottom: 0;
         }
+    }
+    .rating-popout {
+        height: auto;
+        z-index: 11;
+        min-height: 150px;
     }
 }
 .theme-white {
@@ -693,5 +721,24 @@ export default {
 .theme-yellow {
     background: #F4ECD8 !important;
     color: #2c3e50 !important;
+}
+</style>
+<style lang="scss">
+.rating-popout {
+    .all-reviews, .show-more, .write-review-btn {
+        display: none !important;
+    }
+    .comments-list li {
+        display: none !important;
+        &:first-child {
+            display: block !important;
+        }
+        .comment-box .rate-now .rating {
+            width: 200px;
+            label:before {
+                font-size: 35px;
+            }
+        }
+    }
 }
 </style>

@@ -160,6 +160,7 @@ li {
                 font-size: 12px;
                 display: block;
                 padding: 5px 10px;
+                background: none;
             }
             .comment-meta {
                 .comment-name {
