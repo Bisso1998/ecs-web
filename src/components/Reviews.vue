@@ -8,7 +8,10 @@
                 :loadCommentsOfReview="loadCommentsOfReview"
                 :likeOrDislikeReview="likeOrDislikeReview" 
                 :userPratilipiData="userPratilipiData"
-                :eachReview="eachReview" :key="eachReview.userPratilipiId"></Review>
+                :eachReview="eachReview" :key="eachReview.userPratilipiId"
+                :authorId="authorId"
+                :createComment="createComment"
+                :updateComment="updateComment"></Review>
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
         <button v-if="getReviewsCursor !== null" @click="loadMoreReviews({ resultCount: 3, pratilipiId })" class="show-more">__("show_more")</button>
@@ -46,7 +49,9 @@ export default {
             'fetchPratilipiReviews',
             'loadMoreReviews',
             'loadCommentsOfReview',
-            'likeOrDislikeReview'
+            'likeOrDislikeReview',
+            'createComment',
+            'updateComment'
         ])
     },
     created() {

@@ -38,12 +38,12 @@
                 <div class="comment-avatar"><img :src="eachComment.user.profileImageUrl" alt="author"></div>
                 <div class="comment-box">
                     <div class="comment-head">
-                        <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === getUserDetails.authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
+                        <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
                         <button class="btn more-options" type="button" id="moreOptions2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="moreOptions2">
-                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                            <button type="button" @click="editComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
                                 __("review_edit_review")
                             </button>
                             <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
@@ -55,8 +55,18 @@
                         </div>
                         <span class="review-date"> {{ eachComment.creationDateMillis | convertDate }} </span>
                     </div>
-                    <div class="comment-content">
+                    <div class="comment-content non-editable">
                         {{ eachComment.content }}
+                    </div>
+                    <div style="display: none" :class="['comment-content editable', String(eachComment.commentId)]">
+                        <form>
+                            <div class="form-group">
+                                <label for="writeReply">__("comment_reply_to_comment")</label>
+                                <textarea class="form-control" :value='eachComment.content' @input="updatedComment = $event.target.value" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary" @click="updateCommentAndToggle({ commentId: eachComment.commentId, content: updatedComment })">__("save")</button>
+                            <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
+                        </form>
                     </div>
                     <div class="comment-footer">
                         <button type="button" :class="{ 'active': eachComment.isLiked}" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
@@ -74,9 +84,9 @@
                         <form>
                             <div class="form-group">
                                 <label for="writeReply">__("comment_reply_to_comment")</label>
-                                <textarea class="form-control" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
+                                <textarea class="form-control" :value='newComment' @input="newComment = $event.target.value" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
                             </div>
-                            <button class="btn btn-primary">__("save")</button>
+                            <button type="button" class="btn btn-primary" @click="() => {createComment({ userPratilipiId: eachReview.userPratilipiId, content: newComment }); newComment = ''; }">__("save")</button>
                             <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
                         </form>
                     </div>
@@ -94,6 +104,12 @@ export default {
     mixins: [
         mixins
     ],
+    data() {
+        return {
+            newComment: '',
+            x: ''
+        }
+    },
     props: {
         eachReview: {
             type: Object,
@@ -110,6 +126,18 @@ export default {
         userPratilipiData: {
             type: Object,
             required: true
+        },
+        createComment: {
+            type: Function,
+            required: true
+        },
+        updateComment: {
+            type: Function,
+            required: true
+        },
+        authorId: {
+            type: Number,
+            required: true
         }
     },
     methods: {
@@ -119,6 +147,13 @@ export default {
         toggleComments(data) {
             $(this.$el).find(".reply-list").toggle();
             this.loadCommentsOfReview(data);
+        },
+        editComment(commentId) {
+            $(this.$el).find(".comment-content.editable." + commentId).toggle();
+        },
+        updateCommentAndToggle(data) {
+            $(this.$el).find(".comment-content.editable." + data.commentId).toggle();
+            this.updateComment(data);
         }
     },
     computed: {
