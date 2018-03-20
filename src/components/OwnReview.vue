@@ -183,6 +183,11 @@ li {
                 outline: none;
                 box-shadow: none;
             }
+            &:focus, &:active {
+                background: #d0021b;
+                outline: none;
+                box-shadow: none !important;
+            }
         }
         .already-rated {
             text-align: center;

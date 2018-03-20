@@ -147,7 +147,7 @@ export default {
         font-size: 13px;
         padding: 15px 0;
         @media screen and (max-width: 992px ) {
-            margin-bottom: 55px;
+            margin-bottom: 48px;
         }
         p {
             margin: 0;

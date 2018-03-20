@@ -96,6 +96,7 @@ export default {
 .static-page {
     margin-top: 85px;
     text-align: left;
+    min-height: 600px;
     @media screen and (max-width: 992px ) {
         margin-top: 65px;
     }
@@ -110,8 +111,10 @@ export default {
             font-size: 18px;
         }
     }
-    p {
-        word-break: break-word;
-    }
+}
+</style>
+<style>
+p {
+    word-break: break-word !important;
 }
 </style>
