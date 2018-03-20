@@ -206,6 +206,7 @@
             <div class="overlay" @click="closeSidebar"></div>
             <div class="overlay-1" @click="closeReviewModal"></div>
             <div class="overlay-2" @click="closeRatingModal"></div>
+            <div class="reader-progress"><div class="progress-bar"></div></div>
         </div>
     </ReadLayout>
 </template>
@@ -372,6 +373,12 @@ export default {
     mounted() {
         $('.read-page').bind("contextmenu",function(e){
             e.preventDefault();
+        }),
+        $(window).scroll(function() {
+            var wintop = $(window).scrollTop(), docheight = $('.book-content').height(), winheight = $(window).height();
+            var totalScroll = (wintop/(docheight-winheight))*100;
+            $(".reader-progress .progress-bar").css("width",totalScroll+"%");
+            console.log($(".progress-bar"));
         });
     },
     watch: {
@@ -445,8 +452,33 @@ export default {
             vertical-align: middle;
         }
     }
+    .reader-progress {
+        left:0;
+        width: 100%;
+        height: 4px;
+        margin-bottom: 0px;
+        position: fixed;
+        top: 48px;
+        overflow: hidden;
+        background-color: white;
+        content: "";
+        display: table;
+        table-layout: fixed;
+        z-index: 1;
+        .progress-bar {
+            width: 0%;
+            float: left;
+            height: 100%;
+            z-index:9;
+            max-width: 100%;
+            background-color:#d0021b;
+            -webkit-transition: width .3s ease;
+            -o-transition: width .3s ease;
+            transition: width .3s ease;
+        }
+    }
     .book-content {
-        margin-top: 50px;
+        margin-top: 54px;
         font-size: 16px;
         padding: 10px;
         text-align: justify;
