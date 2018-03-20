@@ -90,7 +90,7 @@ export default {
 		margin-left: -10px;
 		.section-title {
             margin: 0;
-            padding: 2px 0 0 10px;
+            padding: 0;
 			font-size: 22px;
             font-weight: bold;
 			margin: 10px 0 5px 15px;
@@ -103,6 +103,7 @@ export default {
             white-space: nowrap;
             a {
                 color: #212121;
+                padding: 2px 0 2px 10px;
             }
 			@media screen and (max-width: 576px ) {
                 font-size: 18px;
@@ -129,7 +130,7 @@ export default {
 	}
     .pratilipi-list {
         position: relative;
-        padding: 5px;
+        padding: 2px 5px;
 		a.view_more {
 			position: relative;
 			.view_more_card {
