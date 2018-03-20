@@ -348,7 +348,6 @@ export default {
                 i {
                     display: block;
                     margin-bottom: 2px;
-                    font-size: 20px;
                 }
             }
         }
