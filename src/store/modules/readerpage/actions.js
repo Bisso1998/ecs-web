@@ -49,9 +49,8 @@ export default {
             if (data.status === 200) {
                 console.log(data);
                 commit('setImageContentLoadingSuccess', data.response);
-                // dispatch('fetchPratilipiContentForHTMLNextChapter', { pratilipiId, chapterNo: chapterNo + 1 })
             } else {
-                // commit('setContentLoadingError');
+                commit('setContentLoadingError');
             }
         });
     },
