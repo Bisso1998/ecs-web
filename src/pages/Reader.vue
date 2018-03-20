@@ -110,7 +110,10 @@
                                 :key="eachChapter.chapterNo"
                                 v-html="eachChapter.content">
                             </div>
-                            
+                            <div class="book-navigation">
+                                <div class="prev">Previous Chapter</div>
+                                <div class="next">__("reader_next_chapter")</div>
+                            </div>
                             <div class="book-recomendations col-md-12 p-0" v-if="selectedChapter == getIndexData.length">
                                 <div class="card">
                                     <Recommendation
@@ -470,7 +473,7 @@ export default {
     .reader-progress {
         left:0;
         width: 100%;
-        height: 4px;
+        height: 2px;
         margin-bottom: 0px;
         position: fixed;
         top: 48px;
@@ -514,6 +517,26 @@ export default {
         }
         .content-section {
             margin-bottom: 50px;
+        }
+        .book-navigation {
+            display: block;
+            clear: both;
+            width: 100%;
+            overflow: hidden;
+            margin: 10px 0 30px;
+            div {
+                display: block;
+                float: left;
+                color: #212121;
+                background: #e9e9e9;
+                font-size: 14px;
+                padding: 5px 10px;
+                border-radius: 15px;
+                cursor: pointer;
+                &.next {
+                    float: right;
+                }
+            }
         }
     }
     .footer-section {
