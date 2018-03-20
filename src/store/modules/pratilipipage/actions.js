@@ -103,6 +103,16 @@ export default {
         });
     },
 
+    deleteReview({ commit, state }, pratilipiId) {
+        commit('setPratilipiReviewUpdateLoading');
+        DataAccessor.deleteReview(pratilipiId, function(successData) {
+            commit('setPratilipiReviewUpdateSuccess', '');
+            commit('setPratilipiRatingUpdateLoading', null);
+        }, (errorData) => {
+            commit('setPratilipiReviewUpdateError');
+        });
+    },
+
     fetchAuthorDetails({ commit, state }, authorId) {
         commit('setAuthorDetailsLoadingTrue');
         commit('setUserAuthorDataLoadingTrue');
