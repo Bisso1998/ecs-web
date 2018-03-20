@@ -43,12 +43,24 @@ export default {
         });
     },
 
-    setPratilipiRating({ commit, state, dispatch }, { rating, pratilipiId }) {
-        dispatch('pratilipipage/setPratilipiRating', { rating, pratilipiId }, { root: true });
+    setPratilipiRating({ commit, state, dispatch }, { rating, pratilipiId, pageName }) {
+        if (pageName === 'pratilipipage') {
+            dispatch('pratilipipage/setPratilipiRating', { rating, pratilipiId }, { root: true });
+        }
+
+        if (pageName === 'readerpage') {
+            dispatch('readerpage/setPratilipiRating', { rating, pratilipiId }, { root: true });
+        }
     },
 
-    saveOrUpdateReview({ commit, state, dispatch }, { review, pratilipiId }) {
-        dispatch('pratilipipage/saveOrUpdateReview', { review, pratilipiId }, { root: true });
+    saveOrUpdateReview({ commit, state, dispatch }, { review, pratilipiId, pageName }) {
+        if (pageName === 'pratilipipage') {
+            dispatch('pratilipipage/saveOrUpdateReview', { review, pratilipiId }, { root: true });    
+        }
+
+        if (pageName === 'readerpage') {
+            dispatch('readerpage/saveOrUpdateReview', { review, pratilipiId }, { root: true });    
+        }
     },
 
     createComment({ commit, state }, { userPratilipiId, content }){
@@ -57,6 +69,16 @@ export default {
         }, () => {
             commit('addNewCommentError');
         });
+    },
+
+    deleteReview({ commit, state, dispatch }, { pratilipiId, pageName }) {
+        if (pageName === 'pratilipipage') {
+            dispatch('pratilipipage/deleteReview', pratilipiId, { root: true });    
+        }
+
+        if (pageName === 'readerpage') {
+            dispatch('readerpage/deleteReview', pratilipiId, { root: true });    
+        }
     },
 
     updateComment({ commit, state }, { commentId, content }){

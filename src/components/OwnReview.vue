@@ -8,10 +8,10 @@
                         <i class="material-icons">more_vert</i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="moreOptions">
-                        <button type="button" class="btn options-btn" data-toggle="modal" @click="openReview" data-target="#reportModal">
+                        <button type="button" class="btn options-btn" data-toggle="modal" @click="openReview">
                             __("review_edit_review")
                         </button>
-                        <button type="button" class="btn options-btn" data-toggle="modal" @click="deleteReview" data-target="#reportModal">
+                        <button type="button" class="btn options-btn" data-toggle="modal" @click="checkAndDeleteReview" >
                             __("review_delete_review")
                         </button>
                     </div>
@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" rows="2" placeholder="__('review_write_a_review')"></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary" @click="() => {cancelReview(); saveOrUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })}">__("save")</button>
+                            <button type="button" class="btn btn-primary" @click="checkAndUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })">__("save")</button>
                             <button type="button" @click="cancelReview" class="btn btn-light">__("cancel")</button>
                         </form>
                     </div>
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" rows="2" placeholder="__('review_write_a_review')"></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary" @click="() => {cancelReview(); saveOrUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })}">__("save")</button>
+                            <button type="button" class="btn btn-primary" @click="checkAndUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })">__("save")</button>
                             <button type="button" @click="cancelReview" class="btn btn-light">__("cancel")</button>
                         </form>
                     </div>
@@ -90,7 +90,8 @@ export default {
     methods: {
         ...mapActions('reviews', [
             'setPratilipiRating',
-            'saveOrUpdateReview'
+            'saveOrUpdateReview',
+            'deleteReview'
         ]),
         ...mapActions([
             'setAfterLoginAction'
@@ -103,16 +104,35 @@ export default {
                 $('#star3').prop('checked', false);
                 $('#star4').prop('checked', false);
                 $('#star5').prop('checked', false);
-                this.setAfterLoginAction({ action: `reviews/setPratilipiRating`, data: { rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId } });
+                this.setAfterLoginAction({ action: `reviews/setPratilipiRating`, data: { 
+                    rating: newRating, 
+                    pratilipiId: this.userPratilipiData.pratilipiId,
+                    pageName: this.$route.meta.store
+                } });
                 this.openLoginModal();
             } else {
                 const newRating = e.target.value;
-                this.setPratilipiRating({ rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId });
+                this.setPratilipiRating({ 
+                    rating: newRating, 
+                    pratilipiId: this.userPratilipiData.pratilipiId,
+                    pageName: this.$route.meta.store
+                });
             }
         },
-        deleteReview(e) {
-            this.setPratilipiRating({ rating: null, pratilipiId: this.userPratilipiData.pratilipiId });
-            this.saveOrUpdateReview({ review: null, pratilipiId: this.userPratilipiData.pratilipiId })
+        checkAndUpdateReview(data) {
+            if (this.getUserDetails.isGuest) {
+                data.pageName = this.$route.meta.store;
+                this.saveOrUpdateReview(data)
+                this.openLoginModal();
+                this.cancelReview();
+            } else {
+                data.pageName = this.$route.meta.store;
+                this.saveOrUpdateReview(data)
+                this.cancelReview();
+            }
+        },
+        checkAndDeleteReview(e) {
+            this.deleteReview({ pratilipiId: this.userPratilipiData.pratilipiId, pageName: this.$route.meta.store });
         },
         openReview() {
             $(".review-box").fadeIn();

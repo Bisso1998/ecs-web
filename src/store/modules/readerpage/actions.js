@@ -81,4 +81,32 @@ export default {
             commit('removePratilipiFromLibraryError');
         })
     },
+
+    setPratilipiRating({ commit, state }, { rating, pratilipiId }) {
+        commit('setPratilipiRatingUpdateLoading');
+        DataAccessor.createOrUpdateReview(pratilipiId, rating, null, function(successData) {
+            commit('setPratilipiRatingUpdateSuccess', rating);
+        }, (errorData) => {
+            commit('setPratilipiRatingUpdateError');
+        });
+    },
+
+    saveOrUpdateReview({ commit, state }, { review, pratilipiId }) {
+        commit('setPratilipiReviewUpdateLoading');
+        DataAccessor.createOrUpdateReview(pratilipiId, null, review, function(successData) {
+            commit('setPratilipiReviewUpdateSuccess', review);
+        }, (errorData) => {
+            commit('setPratilipiReviewUpdateError');
+        });
+    },
+
+    deleteReview({ commit, state }, pratilipiId) {
+        commit('setPratilipiReviewUpdateLoading');
+        DataAccessor.deleteReview(pratilipiId, function(successData) {
+            commit('setPratilipiReviewUpdateSuccess', '');
+            commit('setPratilipiRatingUpdateLoading', null);
+        }, (errorData) => {
+            commit('setPratilipiReviewUpdateError');
+        });
+    }
 }
