@@ -27,7 +27,7 @@
                     {{ eachReview.review }}
                 </div>
                 <div class="comment-footer">
-                    <button type="button" :class="{ 'active': eachReview.isLiked }" @click="likeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
+                    <button type="button" :class="{ 'active': eachReview.isLiked }" @click="checkUserAndlikeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
                     <button type="button" name="button" @click="toggleComments({ resultCount: eachReview.commentCount, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
                 </div>
             </div>
@@ -160,7 +160,20 @@ export default {
         updateCommentAndToggle(data) {
             $(this.$el).find(".comment-content.editable." + data.commentId).toggle();
             this.updateComment(data);
-        }
+        },
+        checkUserAndlikeOrDislikeReview(data) {
+            if (this.getUserDetails.isGuest) {
+                // throw popup modal
+                this.setAfterLoginAction({ action: `reviews/likeOrDislikeReview`, data });
+                this.openLoginModal();
+            } else {
+                this.likeOrDislikeReview(data);
+            }
+            
+        },
+        ...mapActions([
+            'setAfterLoginAction'
+        ])
     },
     computed: {
         ...mapGetters([
