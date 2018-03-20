@@ -86,7 +86,10 @@ export default {
                 }
                 
             },
-            searchText: ''
+            searchText: '',
+            scrollPosition: null,
+            scrollDirection: null,
+            counter: 0
         }
     },
     components: {
@@ -118,7 +121,37 @@ export default {
         },
         ...mapActions([
             'resetNotificationCount'
-        ])
+        ]),
+        updateScroll() {
+            this.scrollPosition = window.scrollY
+        }
+    },
+    watch: {
+        'scrollPosition'(newScrollPosition, prevScrollPosition){
+            if (newScrollPosition > 70 && this.scrollDirection === 'DOWN') {
+                $('header').addClass('nav-up');
+            } else if(newScrollPosition <= 70) {
+                $('header').removeClass('nav-up');
+            }
+            
+            if (newScrollPosition < prevScrollPosition) {
+                this.counter++;
+                this.scrollDirection = 'UP';
+            } else {
+                this.scrollDirection = 'DOWN';
+            }
+            
+            if (this.counter > 20) {
+                $('header').removeClass('nav-up');
+                this.counter = 0;
+            }
+        }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.updateScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
     }
 }
 </script>
@@ -133,6 +166,9 @@ export default {
         z-index: 5;
         width: 100%;
         background: #fff;
+        -webkit-transition: .3s ease;
+        -o-transition: .3s ease;
+        transition: .3s ease;
         .p-r-0 {
             padding-right: 0;
         }
@@ -287,6 +323,9 @@ export default {
                 padding-left: 0;
             }
         }
+        &.nav-up {
+            top: -75px;
+        }
     }
     .footer-menu {
         position: fixed;
@@ -305,6 +344,11 @@ export default {
                 border: 0 !important;
                 &.router-link-exact-active {
                     border: 0;
+                }
+                i {
+                    display: block;
+                    margin-bottom: 2px;
+                    font-size: 20px;
                 }
             }
         }
