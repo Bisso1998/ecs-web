@@ -1,7 +1,9 @@
 <template>
     <li>
         <div class="comment-main-level">
-            <div class="comment-avatar"><img :src="eachReview.userImageUrl" alt="author"></div>
+            <div class="comment-avatar">
+                <router-link :to="eachReview.userProfilePageUrl"><img :src="eachReview.userImageUrl" alt="author"></router-link>
+            </div>
             <div class="comment-box">
                 <div class="comment-head">
                     <div class="comment-meta">
@@ -35,10 +37,14 @@
             <li 
                 v-for="eachComment in eachReview.comments.data" :key="eachComment.commentId"
                 v-if="eachReview.comments && eachReview.comments.data && eachReview.comments.data.length > 0 && eachReview.comments.loading_state === 'LOADING_SUCCESS'">
-                <div class="comment-avatar"><img :src="eachComment.user.profileImageUrl" alt="author"></div>
+                <div class="comment-avatar">
+                    <router-link :to="eachComment.user.profilePageUrl"><img :src="eachComment.user.profileImageUrl" alt="author"></router-link>
+                </div>
                 <div class="comment-box">
                     <div class="comment-head">
-                        <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }"><a href="#">{{ eachComment.user.displayName }}</a></h6>
+                        <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }">
+                            <router-link :to="eachComment.user.profilePageUrl">{{ eachComment.user.displayName }}</router-link>
+                        </h6>
                         <button class="btn more-options" type="button" id="moreOptions2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
@@ -93,14 +99,12 @@
                 </div>
             </li>
         </ul>
-        <ReviewReport></ReviewReport>
     </li>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import mixins from '@/mixins'
 import Spinner from '@/components/Spinner.vue';
-import ReviewReport from '@/components/ReviewReport.vue';
 
 export default {
     mixins: [
@@ -164,8 +168,7 @@ export default {
         ])
     },
     components: {
-        Spinner,
-        ReviewReport
+        Spinner
     }
 }
 
