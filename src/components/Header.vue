@@ -302,7 +302,7 @@ export default {
         .tabs-section {
             margin-top: 5px;
             .main-tabs {
-                border: 0;
+                border: 0 !important;
                 &.router-link-exact-active {
                     border: 0;
                 }
