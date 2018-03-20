@@ -91,7 +91,8 @@
                 
                 <div class="row book-content">
                     <div class="col-12" v-if="getPratilipiContent.length > 0 && getPratilipiData.pratilipiId == $route.query.id">
-                        <h2 
+                        <h2
+                            class="chapter-title"
                             v-for="eachIndex in getIndexData" 
                             :key="eachIndex.chapterId"
                             v-if="eachIndex.chapterNo === selectedChapter">
@@ -403,7 +404,12 @@ export default {
         -webkit-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        
+        h2.chapter-title {
+            font-size: 24px;
+            @media screen and (max-width: 768px ) {
+                font-size: 18px;
+            }
+        }
         .content-section {
             margin-bottom: 50px;
         }
@@ -509,7 +515,10 @@ export default {
                 li {
                     padding: 5px;
                     a {
-                        color: #d0021b;
+                        color: #212121;
+                        &.router-link-exact-active {
+                            font-weight: bold;
+                        }
                     }
                 }
             }

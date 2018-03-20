@@ -13,7 +13,7 @@
                     <form>
                         <div class="form-group">
                             <label for="reportModalTextarea">__("report_issue")</label>
-                            <textarea class="form-control" id="reportModalTextarea" rows="3" placeholder="__('report_issue')"></textarea>
+                            <textarea class="form-control" rows="3" placeholder="__('report_issue')"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-submit">__("submit")</button>
                         <button type="button" class="cancel" data-dismiss="modal" aria-label="Close">__("cancel")</button>
