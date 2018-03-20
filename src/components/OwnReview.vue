@@ -98,6 +98,11 @@ export default {
         changeRating(e) {
             if (this.getUserDetails.isGuest) {
                 const newRating = e.target.value;
+                $('#star1').prop('checked', false);
+                $('#star2').prop('checked', false);
+                $('#star3').prop('checked', false);
+                $('#star4').prop('checked', false);
+                $('#star5').prop('checked', false);
                 this.setAfterLoginAction({ action: `reviews/setPratilipiRating`, data: { rating: newRating, pratilipiId: this.userPratilipiData.pratilipiId } });
                 this.openLoginModal();
             } else {
