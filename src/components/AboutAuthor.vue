@@ -7,8 +7,8 @@
             <img :src="getAuthorDetails.profileImageUrl" alt="author" class="auth-img" >
             <div class="auth-name">{{ getAuthorDetails.name }}</div>
         </router-link>
-        <button class="btn btn-light follow-link" @click="followOrUnfollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow")</button>
-        <button class="btn btn-light follow-link following" @click="followOrUnfollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
+        <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow")</button>
+        <button class="btn btn-light follow-link following" @click="checkUserAndFollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
         <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
         <button class="show_more_auth_desc">__("show_more")</button>
     </div>
@@ -17,6 +17,7 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex'
+import mixins from '@/mixins';
 
 export default {
     name: 'About-Author',
@@ -26,6 +27,9 @@ export default {
             required: true
         }
     },
+    mixins: [
+        mixins
+    ],
     data() {
         return {
             
@@ -35,15 +39,26 @@ export default {
         ...mapGetters([
             'getUserDetails'
         ]),
-        ...mapGetters('authordetails', [
+        ...mapGetters('pratilipipage', [
             'getAuthorDetails'
         ])
     },
     methods: {
-        ...mapActions('authordetails', [
+        ...mapActions('pratilipipage', [
             'fetchAuthorDetails',
             'followOrUnfollowAuthor'
         ]),
+        ...mapActions([
+            'setAfterLoginAction'
+        ]),
+        checkUserAndFollowAuthor() {
+            if (this.getUserDetails.isGuest) {
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor`});
+                this.openLoginModal();
+            } else {
+                this.followOrUnfollowAuthor();
+            }
+        }
     },
     components: {
         

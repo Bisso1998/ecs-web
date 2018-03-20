@@ -7,5 +7,13 @@ export default {
     userPratilipi: {
     	loading_state: 'LOADING',
     	data: {}
+    },
+    author: {
+    	loading_state: 'LOADING',
+    	data: {}
+    },
+    userAuthor: {
+    	loading_state: 'LOADING',
+    	data: {}
     }
 }

@@ -7,7 +7,6 @@ import homepage from './modules/homepage'
 import pratilipipage from './modules/pratilipipage'
 import recommendation from './modules/recommendation'
 import reviews from './modules/reviews'
-import authordetails from './modules/authordetails'
 import eventspage from './modules/eventspage'
 import listpage from './modules/listpage'
 import librarypage from './modules/librarypage'
@@ -36,7 +35,6 @@ export default new Vuex.Store({
         homepage,
         pratilipipage,
         recommendation,
-        authordetails,
         eventspage,
         eventpage,
         listpage,
