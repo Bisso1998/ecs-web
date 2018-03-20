@@ -1,186 +1,200 @@
 <template>
     <ReadLayout>
         <div class="read-page">
-            <div class="container-fluid">
-                <div class="row header-section" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
-                    <div class="exit-reader col-1">
-                        <router-link :to="getPratilipiData.pageUrl"><i class="material-icons">arrow_back</i></router-link>
-                    </div>
-                    <div class="col-1" id="sidebarCollapse" @click="openSidebar">
-                        <i class="material-icons">list</i>
-                    </div>
-                    <div class="book-name col-7">{{ getPratilipiData.title }}</div>
-                    <div class="settings col-1">
-                        <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions">
-                            <i class="material-icons">settings</i>
-                        </button>
-                    </div>
-                    <div class="more-options col-1">
-                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">more_vert</i>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <button type="button" class="btn report-btn" data-toggle="modal" data-target="#reportModal">
-                                __("report_button")
+            <div class="header-section" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
+                <div class="container">
+                    <div class="row">
+                        <div class="exit-reader col-1">
+                            <router-link :to="getPratilipiData.pageUrl"><i class="material-icons">arrow_back</i></router-link>
+                        </div>
+                        <div class="col-1" id="sidebarCollapse" @click="openSidebar">
+                            <i class="material-icons">list</i>
+                        </div>
+                        <div class="book-name col-7">{{ getPratilipiData.title }}</div>
+                        <div class="settings col-1">
+                            <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions">
+                                <i class="material-icons">settings</i>
                             </button>
+                        </div>
+                        <div class="more-options col-1">
+                            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#reportModal">
+                                    __("report_button")
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Reader Options Modal -->
-                <div class="modal fade" id="readerOptions" tabindex="-1" role="dialog" aria-labelledby="readerOptionsLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <i class="material-icons">close</i>
-                                </button>
-                                <div class="options">
-                                    <div class="option">
-                                        <span>__("reader_font_size"):</span>
-                                        <div class="buttons">
-                                            <button type="button" name="button" @click="increaseFont"><i class="material-icons">add</i></button>
-                                            <button type="button" name="button" @click="decreaseFont"><i class="material-icons">remove</i></button>
-                                        </div>
+            </div>
+            
+            <!-- Reader Options Modal -->
+            <div class="modal fade" id="readerOptions" tabindex="-1" role="dialog" aria-labelledby="readerOptionsLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="material-icons">close</i>
+                            </button>
+                            <div class="options">
+                                <div class="option">
+                                    <span>__("reader_font_size"):</span>
+                                    <div class="buttons">
+                                        <button type="button" name="button" @click="increaseFont"><i class="material-icons">add</i></button>
+                                        <button type="button" name="button" @click="decreaseFont"><i class="material-icons">remove</i></button>
                                     </div>
-                                    <div class="option">
-                                        <span>__("reader_background"):</span>
-                                        <div class="buttons">
-                                            <button type="button" name="button" @click="themeWhite"><icon name="file-text-o" scale="1.5"></icon></button>
-                                            <button type="button" name="button" @click="themeBlack"><icon name="file-text" scale="1.5"></icon></button>
-                                            <button type="button" name="button" @click="themeYellow" class="yellow"><icon name="file-text-o" scale="1.5"></icon></button>
-                                        </div>
+                                </div>
+                                <div class="option">
+                                    <span>__("reader_background"):</span>
+                                    <div class="buttons">
+                                        <button type="button" name="button" @click="themeWhite"><icon name="file-text-o" scale="1.5"></icon></button>
+                                        <button type="button" name="button" @click="themeBlack"><icon name="file-text" scale="1.5"></icon></button>
+                                        <button type="button" name="button" @click="themeYellow" class="yellow"><icon name="file-text-o" scale="1.5"></icon></button>
                                     </div>
-                                    <div class="option">
-                                        <span>__("reader_line_spacing"):</span>
-                                        <div class="buttons">
-                                            <button type="button" name="button" @click="lineHeightSm"><span class="lh-icon lh-sm-icon"></span></button>
-                                            <button type="button" name="button" @click="lineHeightMd"><span class="lh-icon lh-md-icon"></span></button>
-                                            <button type="button" name="button" @click="lineHeightLg"><span class="lh-icon lh-lg-icon"></span></button>
-                                        </div>
+                                </div>
+                                <div class="option">
+                                    <span>__("reader_line_spacing"):</span>
+                                    <div class="buttons">
+                                        <button type="button" name="button" @click="lineHeightSm"><span class="lh-icon lh-sm-icon"></span></button>
+                                        <button type="button" name="button" @click="lineHeightMd"><span class="lh-icon lh-md-icon"></span></button>
+                                        <button type="button" name="button" @click="lineHeightLg"><span class="lh-icon lh-lg-icon"></span></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Report Modal -->
-                <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="reportModalLabel">__("report_title")</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <i class="material-icons">close</i>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="reportModalTextarea">__("report_issue")</label>
-                                        <textarea class="form-control" id="reportModalTextarea" rows="3" placeholder="__('report_issue')"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-submit">__("submit")</button>
-                                    <button type="button" class="cancel" data-dismiss="modal" aria-label="Close">__("cancel")</button>
-                                </form>
-                            </div>
+            </div>
+            
+            <!-- Report Modal -->
+            <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="reportModalLabel">__("report_title")</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="material-icons">close</i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="reportModalTextarea">__("report_issue")</label>
+                                    <textarea class="form-control" id="reportModalTextarea" rows="3" placeholder="__('report_issue')"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-submit">__("submit")</button>
+                                <button type="button" class="cancel" data-dismiss="modal" aria-label="Close">__("cancel")</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-                
-                <div class="row book-content">
-                    <div class="col-12" v-if="getPratilipiContent.length > 0 && getPratilipiData.pratilipiId == $route.query.id">
-                        <h2
-                            class="chapter-title"
-                            v-for="eachIndex in getIndexData" 
-                            :key="eachIndex.chapterId"
-                            v-if="eachIndex.chapterNo === selectedChapter">
-                                {{ eachIndex.title || eachIndex.chapterNo }}
-                        </h2>
-                        <div class="content-section lh-md" 
-                            :class="fontStyleObject" 
-                            v-for="eachChapter in getPratilipiContent"
-                            v-if="eachChapter.chapterNo === selectedChapter" 
-                            :key="eachChapter.chapterNo"
-                            v-html="eachChapter.content">
-                        </div>
-                    </div>
-                    <Spinner v-if="getPratilipiContent.length === 0 || getPratilipiData.pratilipiId != $route.query.id"></Spinner>
-                </div>
-                <div class="row footer-section">
-                    <div class="review-count col-3" @click="openReviewModal">
-                        <i class="material-icons">comment</i>
-                        <span>11</span>
-                    </div>
-                    <div class="rating-count col-3" @click="openRatingModal">
-                        <i class="material-icons">star_rate</i>
-                        <span>20</span>
-                    </div>
-                    <div class="add-to-lib col-3">
-                        <i class="material-icons" v-if="getUserPratilipiData.addedToLib" @click="removeFromLibrary">bookmark</i>
-                        <i class="material-icons" v-else @click="addToLibrary">bookmark_border</i>
-                    </div>
-                    <div class="share-btn col-3">
-                        <i class="material-icons">share</i>
-                    </div>
-                </div>
-                
-                <nav id="sidebar" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
-                    <div id="dismiss" @click="closeSidebar">
-                        <i class="material-icons">close</i>
-                    </div>
-                    <div class="book-info">
-                        <div class="book-cover"><img :src="getPratilipiData.coverImageUrl" alt=""></div>
-                        <div class="book-name">{{ getPratilipiData.title }}</div>
-                        <a :href="getPratilipiData.author.pageUrl" class="author-link">
-                            <span class="auth-name">{{ getPratilipiData.author.displayName }}</span>
-                        </a>
-                        <div class="follow-btn-w-count"><!-- Follow Button -->
-                            <button><i class="material-icons">person_add</i> __("author_follow")</button><span><b>1234</b></span>
-                        </div>
-                        <div class="follow-btn-w-count" style="display: none;"><!-- Following Button -->
-                            <button><i class="material-icons">check</i> __("author_following")</button><span><b>1235</b></span>
-                        </div>
-                    </div>
-                    <div class="book-index">
-                        <ul>
-                            <li 
+            </div>
+            
+            <div class="book-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12" v-if="getPratilipiContent.length > 0 && getPratilipiData.pratilipiId == $route.query.id">
+                            <h2
+                                class="chapter-title"
                                 v-for="eachIndex in getIndexData" 
                                 :key="eachIndex.chapterId"
-                                :class="{ isActive: eachIndex.chapterNo === selectedChapter }">
-                                    <router-link
-                                        :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }"
-                                        @click.native="closeSidebar">
-                                        __("writer_chapter") {{ eachIndex.title || eachIndex.chapterNo }}
-                                    </router-link>
-                            </li>
-                        </ul>
+                                v-if="eachIndex.chapterNo === selectedChapter">
+                                    {{ eachIndex.title || eachIndex.chapterNo }}
+                            </h2>
+                            <div class="content-section lh-md" 
+                                :class="fontStyleObject" 
+                                v-for="eachChapter in getPratilipiContent"
+                                v-if="eachChapter.chapterNo === selectedChapter" 
+                                :key="eachChapter.chapterNo"
+                                v-html="eachChapter.content">
+                            </div>
+                        </div>
                     </div>
-                </nav>
-                
-                <div class="review-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
-                    <button type="button" class="close-review" name="button" @click="closeReviewModal"><i class="material-icons">close</i></button>
-                    <Reviews 
-                        :pratilipiId="getPratilipiData.pratilipiId" 
-                        :authorId="getPratilipiData.author.authorId" 
-                        :userPratilipiData='getUserPratilipiData'>
-                    </Reviews>
                 </div>
-                
-                <div class="rating-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
-                    <button type="button" class="close-review" name="button" @click="closeRatingModal"><i class="material-icons">close</i></button>
-                    <Reviews 
-                        :pratilipiId="getPratilipiData.pratilipiId" 
-                        :authorId="getPratilipiData.author.authorId" 
-                        :userPratilipiData='getUserPratilipiData'>
-                    </Reviews>
-                </div>
-                
-                <div class="overlay" @click="closeSidebar"></div>
-                <div class="overlay-1" @click="closeReviewModal"></div>
-                <div class="overlay-2" @click="closeRatingModal"></div>
+                <Spinner v-if="getPratilipiContent.length === 0 || getPratilipiData.pratilipiId != $route.query.id"></Spinner>
             </div>
+            
+            <div class="footer-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="review-count col-3" @click="openReviewModal">
+                            <i class="material-icons">comment</i>
+                            <span>11</span>
+                        </div>
+                        <div class="rating-count col-3" @click="openRatingModal">
+                            <i class="material-icons">star_rate</i>
+                            <span>20</span>
+                        </div>
+                        <div class="add-to-lib col-3">
+                            <i class="material-icons" v-if="getUserPratilipiData.addedToLib" @click="removeFromLibrary">bookmark</i>
+                            <i class="material-icons" v-else @click="addToLibrary">bookmark_border</i>
+                        </div>
+                        <div class="share-btn col-3">
+                            <i class="material-icons">share</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav id="sidebar" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
+                <div id="dismiss" @click="closeSidebar">
+                    <i class="material-icons">close</i>
+                </div>
+                <div class="book-info">
+                    <div class="book-cover"><img :src="getPratilipiData.coverImageUrl" alt=""></div>
+                    <div class="book-name">{{ getPratilipiData.title }}</div>
+                    <a :href="getPratilipiData.author.pageUrl" class="author-link">
+                        <span class="auth-name">{{ getPratilipiData.author.displayName }}</span>
+                    </a>
+                    <div class="follow-btn-w-count"><!-- Follow Button -->
+                        <button><i class="material-icons">person_add</i> __("author_follow")</button><span><b>1234</b></span>
+                    </div>
+                    <div class="follow-btn-w-count" style="display: none;"><!-- Following Button -->
+                        <button><i class="material-icons">check</i> __("author_following")</button><span><b>1235</b></span>
+                    </div>
+                </div>
+                <div class="book-index">
+                    <ul>
+                        <li 
+                            v-for="eachIndex in getIndexData" 
+                            :key="eachIndex.chapterId"
+                            :class="{ isActive: eachIndex.chapterNo === selectedChapter }">
+                                <router-link
+                                    :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }"
+                                    @click.native="closeSidebar">
+                                    __("writer_chapter") {{ eachIndex.title || eachIndex.chapterNo }}
+                                </router-link>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="container">
+                <div class="row">
+                    <div class="review-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
+                        <button type="button" class="close-review" name="button" @click="closeReviewModal"><i class="material-icons">close</i></button>
+                        <Reviews 
+                            :pratilipiId="getPratilipiData.pratilipiId" 
+                            :authorId="getPratilipiData.author.authorId" 
+                            :userPratilipiData='getUserPratilipiData'>
+                        </Reviews>
+                    </div>
+                    
+                    <div class="rating-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
+                        <button type="button" class="close-review" name="button" @click="closeRatingModal"><i class="material-icons">close</i></button>
+                        <Reviews 
+                            :pratilipiId="getPratilipiData.pratilipiId" 
+                            :authorId="getPratilipiData.author.authorId" 
+                            :userPratilipiData='getUserPratilipiData'>
+                        </Reviews>
+                    </div>
+                </div>
+            </div>
+            <div class="overlay" @click="closeSidebar"></div>
+            <div class="overlay-1" @click="closeReviewModal"></div>
+            <div class="overlay-2" @click="closeRatingModal"></div>
         </div>
     </ReadLayout>
 </template>
@@ -517,9 +531,9 @@ export default {
                     padding: 5px;
                     a {
                         color: #212121;
-                        &.router-link-exact-active {
-                            font-weight: bold;
-                        }
+                    }
+                    &.isActive a {
+                        font-weight: bold;
                     }
                 }
             }
@@ -709,7 +723,7 @@ export default {
         max-width: 700px;
         position: fixed;
         margin-bottom: 46px;
-        margin-left: -7px;
+        margin-left: 7px;
         bottom: -100vh;
         overflow: hidden;
         overflow-y: auto;
