@@ -399,6 +399,9 @@ export default {
             if (this.getPratilipiData.contentType === 'PRATILIPI') {
                 this.fetchPratilipiContentForHTML({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? Number(this.$route.query.chapterNo) : 1 });
             }
+        },
+        'getUserDetails.userId'() {
+            this.fetchPratilipiDetails(this.$route.query.id);
         }
     }
 }
