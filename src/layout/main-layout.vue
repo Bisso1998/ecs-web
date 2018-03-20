@@ -81,7 +81,7 @@ export default {
 <style lang="scss">
 #return-to-top {
     position: fixed;
-    z-index: 5;
+    z-index: 10;
     bottom: 20px;
     right: 20px;
     background: rgba(209, 2, 27, 0.7);

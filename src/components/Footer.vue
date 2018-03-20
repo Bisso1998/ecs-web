@@ -146,6 +146,9 @@ export default {
         color: #fefefe;
         font-size: 13px;
         padding: 15px 0;
+        @media screen and (max-width: 992px ) {
+            margin-bottom: 55px;
+        }
         p {
             margin: 0;
             a {

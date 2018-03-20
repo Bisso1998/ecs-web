@@ -1,93 +1,68 @@
 <template>
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 col-sm-3 col-5 p-r-0">
-                    <router-link
-                      :to="{ name: 'Home' }"
-                      class="logo">
-                    </router-link>
-                    <div class="language-dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        __("pratilipi")
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="languageDropdown">
-                            <a class="dropdown-item" :href="'https://' + eachLanguage.fullName + '.pratilipi.com'" :key="index" v-for="(eachLanguage, index) in languages">{{ eachLanguage.nativeWord }}</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5 col-sm-8 col-7 search-box-wrap">
-                    <div class="search-box d-none d-lg-block">
-                        <div class="form-group has-feedback" id="search-box-big">
-                            <input type="text" class="form-control" v-model="searchText" @keyup.enter="goToSearchPage" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
-                            <i class="material-icons">search</i>
-                            <SearchBox :searchText="searchText"></SearchBox>
-                        </div>
+    <div>
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2 col-sm-3 col-5 p-r-0">
                         <router-link
-                        :to="{ name: 'Notification'}"
-                        class="notification-icon"
-                        @click.native="resetNotificationCount">
-                            <i class="material-icons">notifications</i>
-                            <span v-if="notificationCount">{{ notificationCount }}</span>
+                          :to="{ name: 'Home' }"
+                          class="logo">
                         </router-link>
-                    </div>
-                    <div class="d-block d-lg-none search-box search-box-2 text-right">
-                        <div class="form-group has-feedback" id="search-box-small">
-                            <input type="text" class="form-control" v-model="searchText" @keyup.enter="goToSearchPage" @click="openmobilesearch" v-bind:placeholder="'__("search")'"/>
-                            <i class="material-icons">search</i>
-                            <SearchBox :searchText="searchText"></SearchBox>
+                        <div class="language-dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            __("pratilipi")
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <a class="dropdown-item" :href="'https://' + eachLanguage.fullName + '.pratilipi.com'" :key="index" v-for="(eachLanguage, index) in languages">{{ eachLanguage.nativeWord }}</a>
+                            </div>
                         </div>
-                        <router-link
-                        :to="{ name: 'Notification'}"
-                        @click.native="resetNotificationCount"
-                        class="notification-icon">
-                            <i class="material-icons">notifications</i>
-                            <span v-if="notificationCount">{{ notificationCount }}</span>
-                        </router-link>
                     </div>
-                </div>
-                <div class="tabs-section col-md-12 col-12 col-lg-5">
-                    <router-link
-                      :to="{ name: 'Home' }"
-                      class="main-tabs">
-                      <i class="material-icons">home</i>
-                      <span>__("goto_home")</span>
-                    </router-link>
-                    <router-link
-                      :to="{ name: 'Discovery_Page' }"
-                      class="main-tabs">
-                      <i class="material-icons">all_out</i>
-                      <span>__('search_explore_categories')</span>
-                    </router-link>
-                    <router-link
-                      :to="{ name: 'Write_Page' }"
-                      class="main-tabs">
-                      <i class="material-icons">mode_edit</i>
-                      <span>__("write")</span>
-                    </router-link>
-                    <router-link
-                      :to="userDetails.profilePageUrl"
-                      v-if="userDetails.profilePageUrl"
-                      class="main-tabs">
-                      <i class="material-icons">account_circle</i>
-                      <span>__('user_my_profile')</span>
-                    </router-link>
-                    <router-link
-                      :to="{ name: 'Login_Page'}"
-                      v-else
-                      class="main-tabs">
-                      <i class="material-icons">account_circle</i>
-                      <span>__('user_sign_in')</span>
-                    </router-link>
+                    <div class="col-lg-5 col-sm-8 col-7 search-box-wrap">
+                        <div class="search-box d-none d-lg-block">
+                            <div class="form-group has-feedback" id="search-box-big">
+                                <input type="text" class="form-control" v-model="searchText" @keyup.enter="goToSearchPage" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
+                                <i class="material-icons">search</i>
+                                <SearchBox :searchText="searchText"></SearchBox>
+                            </div>
+                            <router-link
+                            :to="{ name: 'Notification'}"
+                            class="notification-icon"
+                            @click.native="resetNotificationCount">
+                                <i class="material-icons">notifications</i>
+                                <span v-if="notificationCount">{{ notificationCount }}</span>
+                            </router-link>
+                        </div>
+                        <div class="d-block d-lg-none search-box search-box-2 text-right">
+                            <div class="form-group has-feedback" id="search-box-small">
+                                <input type="text" class="form-control" v-model="searchText" @keyup.enter="goToSearchPage" @click="openmobilesearch" v-bind:placeholder="'__("search")'"/>
+                                <i class="material-icons">search</i>
+                                <SearchBox :searchText="searchText"></SearchBox>
+                            </div>
+                            <router-link
+                            :to="{ name: 'Notification'}"
+                            @click.native="resetNotificationCount"
+                            class="notification-icon">
+                                <i class="material-icons">notifications</i>
+                                <span v-if="notificationCount">{{ notificationCount }}</span>
+                            </router-link>
+                        </div>
+                    </div>
+                    <div class="d-none d-lg-block col-lg-5">
+                        <MainMenu :userDetails="userDetails"></MainMenu>
+                    </div>
                 </div>
             </div>
+        </header>
+        <div class="d-block d-lg-none footer-menu">
+            <MainMenu :userDetails="userDetails"></MainMenu>
         </div>
-    </header>
+    </div>
 </template>
 
 <script>
 import constants from '@/constants'
 import SearchBox from '@/components/SearchBox.vue'
+import MainMenu from '@/components/MainMenu.vue'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -115,7 +90,8 @@ export default {
         }
     },
     components: {
-        SearchBox
+        SearchBox,
+        MainMenu
     },
     methods: {
         goToSearchPage() {
@@ -311,28 +287,24 @@ export default {
                 padding-left: 0;
             }
         }
+    }
+    .footer-menu {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 10;
+        box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.2);
+    }
+</style>
+<style lang="scss">
+    .footer-menu {
         .tabs-section {
-            @media screen and (max-width: 992px ) {
-                margin-top: 10px;
-            }
+            margin-top: 5px;
             .main-tabs {
-                display: inline-block;
-                width: 23.5%;
-                color: #212121;
-                font-size: 18px;
-                border-bottom: 3px solid #fff;
-                padding-bottom: 2px;
-                span {
-                    display: block;
-                    font-size: 12px;
-                }
-                &:hover {
-                    text-decoration: none;
-                    color: #d00b12;
-                }
+                border: 0 !important;
                 &.router-link-exact-active {
-                    color: #d00b12;
-                    border-bottom-color: #d00b12;
+                    border: 0;
                 }
             }
         }

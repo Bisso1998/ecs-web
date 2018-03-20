@@ -70,7 +70,7 @@ export default {
     .home-page {
         margin-top: 85px;
         @media screen and (max-width: 992px ) {
-            margin-top: 140px;
+            margin-top: 65px;
         }
     }
 </style>

@@ -99,7 +99,7 @@ export default {
     text-align: left;
     background: #f8f8f8;
     @media screen and (max-width: 992px ) {
-        margin-top: 140px;
+        margin-top: 65px;
     }
     .page-title {
         text-align: left;
