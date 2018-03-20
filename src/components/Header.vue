@@ -70,14 +70,14 @@
                       v-if="userDetails.profilePageUrl"
                       class="main-tabs">
                       <i class="material-icons">account_circle</i>
-                      <span>Profile</span>
+                      <span>__('user_my_profile')</span>
                     </router-link>
                     <router-link
                       :to="{ name: 'Login_Page'}"
                       v-else
                       class="main-tabs">
                       <i class="material-icons">account_circle</i>
-                      <span>Profile</span>
+                      <span>__('user_sign_in')</span>
                     </router-link>
                 </div>
             </div>
