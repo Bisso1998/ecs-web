@@ -304,8 +304,7 @@ export default {
     margin-top: 85px;
     text-align: left;
     @media screen and (max-width: 992px ) {
-        margin-top: 135px;
-        text-align: center;
+        margin-top: 65px;
     }
     .profile-top {
         padding: 0;

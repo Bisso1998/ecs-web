@@ -136,7 +136,7 @@ export default {
     margin-top: 85px;
     text-align: left;
     @media screen and (max-width: 992px ) {
-        margin-top: 140px;
+        margin-top: 65px;
         text-align: center;
     }
     h2 {

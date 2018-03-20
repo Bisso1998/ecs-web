@@ -224,7 +224,7 @@ export default {
         background: #f8f8f8;
         margin-top: 85px;
         @media screen and (max-width: 992px ) {
-            margin-top: 140px;
+            margin-top: 65px;
         }
         .card {
             margin: 10px;
