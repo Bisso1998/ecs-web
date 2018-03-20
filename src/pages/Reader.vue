@@ -110,6 +110,17 @@
                                 :key="eachChapter.chapterNo"
                                 v-html="eachChapter.content">
                             </div>
+                            
+                            <div class="book-recomendations col-md-12 p-0" v-if="selectedChapter == getIndexData.length">
+                                <div class="card">
+                                    <Recommendation
+                                        :contextId="getPratilipiData.pratilipiId"
+                                        :context="'summaryPage'"
+                                        v-if="getPratilipiData && getPratilipiData.pratilipiId">
+                                    </Recommendation>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -121,17 +132,17 @@
                     <div class="row">
                         <div class="review-count col-3" @click="openReviewModal">
                             <i class="material-icons">comment</i>
-                            <span>11</span>
+                            <span>{{ getPratilipiData.reviewCount }}</span>
                         </div>
                         <div class="rating-count col-3" @click="openRatingModal">
                             <i class="material-icons">star_rate</i>
-                            <span>20</span>
+                            <span>{{ getPratilipiData.ratingCount }}</span>
                         </div>
                         <div class="add-to-lib col-3">
                             <i class="material-icons" v-if="getUserPratilipiData.addedToLib" @click="removeFromLibrary">bookmark</i>
-                            <i class="material-icons" v-else @click="addToLibrary">bookmark_border</i>
+                            <i class="material-icons" v-else @click="addPratilipiToLibrary(getPratilipiData.pratilipiId)">bookmark_border</i>
                         </div>
-                        <div class="share-btn col-3">
+                        <div class="share-btn col-3" @click="openShareModal">
                             <i class="material-icons">share</i>
                         </div>
                     </div>
@@ -202,17 +213,23 @@
 <script>
 import ReadLayout from '@/layout/Reader-layout.vue';
 import Spinner from '@/components/Spinner.vue';
+import mixins from '@/mixins';
 import 'vue-awesome/icons/file-text'
 import 'vue-awesome/icons/file-text-o'
 import Reviews from '@/components/Reviews.vue';
+import Recommendation from '@/components/Recommendation.vue';
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
     components: {
         ReadLayout,
         Spinner,
-        Reviews
+        Reviews,
+        Recommendation
     },
+    mixins: [
+        mixins
+    ],
     data() {
         return {
             fontSize: 16,
@@ -227,6 +244,20 @@ export default {
             'addToLibrary',
             'removeFromLibrary'
         ]),
+        ...mapActions([
+            'setShareDetails',
+            'setAfterLoginAction'
+        ]),
+        addPratilipiToLibrary(pratilipiId) {
+            if (this.getUserDetails.isGuest) {
+                // throw popup modal
+                console.log(this.$route);
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
+                this.openLoginModal();
+            } else {
+                this.addToLibrary(pratilipiId);
+            }
+        },
         increaseFont() {
             if (this.fontSize !== 32) {
                 this.fontSize += 2;
@@ -306,6 +337,11 @@ export default {
         closeSidebar() {
             $('#sidebar').removeClass('active');
             $('.overlay').fadeOut();
+        },
+        openShareModal() {
+            this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
+            console.log('test')
+            $('#share_modal').modal('show');
         }
     },
     computed: {
@@ -322,6 +358,9 @@ export default {
             'getIndexData',
             'getIndexLoadingState',
             'getPratilipiContent'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     created() {
@@ -410,7 +449,7 @@ export default {
         margin-top: 50px;
         font-size: 16px;
         padding: 10px;
-        text-align: left;
+        text-align: justify;
 
         -moz-user-select: -moz-none;
         -moz-user-select: none;
@@ -421,6 +460,7 @@ export default {
         user-select: none;
         h2.chapter-title {
             font-size: 24px;
+            text-align: center;
             @media screen and (max-width: 768px ) {
                 font-size: 18px;
             }
