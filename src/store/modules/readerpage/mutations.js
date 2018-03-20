@@ -91,6 +91,21 @@ export default {
 
     },
 
+    setImageContentLoadingSuccess(state, data) {
+        const { chapters } = data.content;
+
+        const contents = [];
+        chapters.forEach((eachChapter, index) => {
+            const chapterNo = index + 1;
+            const eachContentObject = {
+                chapterNo,
+                chapterTitle: null,
+                content: `<img alt='story' src='https://hindi.pratilipi.com/api/pratilipi/content/image?pratilipiId=${data.pratilipiId}&name=${chapterNo}'/>`
+            }
+            state.content.data.push(eachContentObject);
+        });
+        console.log(state.content.data);
+    },
 
 
 

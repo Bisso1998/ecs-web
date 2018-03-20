@@ -43,6 +43,19 @@ export default {
         });
     },
 
+    fetchPratilipiContentForIMAGE({ commit, state, dispatch }, { pratilipiId, chapterNo }) {
+        DataAccessor.getPratilipiContent(pratilipiId, null, true, (data) => {
+            console.log(data);
+            if (data.status === 200) {
+                console.log(data);
+                commit('setImageContentLoadingSuccess', data.response);
+                // dispatch('fetchPratilipiContentForHTMLNextChapter', { pratilipiId, chapterNo: chapterNo + 1 })
+            } else {
+                // commit('setContentLoadingError');
+            }
+        });
+    },
+
     fetchPratilipiContentForHTMLNextChapter({ commit, state }, { pratilipiId, chapterNo }) {
         console.log(chapterNo);
         console.log(state.index);

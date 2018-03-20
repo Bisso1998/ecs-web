@@ -243,7 +243,8 @@ export default {
             'fetchPratilipiContentForHTML',
             'clearCachedContents',
             'addToLibrary',
-            'removeFromLibrary'
+            'removeFromLibrary',
+            'fetchPratilipiContentForIMAGE'
         ]),
         ...mapActions([
             'setShareDetails',
@@ -378,7 +379,6 @@ export default {
             var wintop = $(window).scrollTop(), docheight = $('.book-content').height(), winheight = $(window).height();
             var totalScroll = (wintop/(docheight-winheight))*100;
             $(".reader-progress .progress-bar").css("width",totalScroll+"%");
-            console.log($(".progress-bar"));
         });
     },
     watch: {
@@ -393,11 +393,23 @@ export default {
                 this.fetchPratilipiContentForHTML({ pratilipiId: this.getPratilipiData.pratilipiId, chapterNo: Number(newValue) });    
                 this.selectedChapter = newValue;
             }
+
+            if (this.getPratilipiData.contentType === 'IMAGE') {
+                if (this.getPratilipiData.pratilipiId != this.$route.query.id) {
+                    this.fetchPratilipiContentForIMAGE({ pratilipiId: this.getPratilipiData.pratilipiId, chapterNo: Number(newValue) });
+                }
+                this.selectedChapter = newValue;
+                
+                
+            }
         },
         'getPratilipiData.pratilipiId'(newId, oldId) {
             this.clearCachedContents();
             if (this.getPratilipiData.contentType === 'PRATILIPI') {
                 this.fetchPratilipiContentForHTML({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? Number(this.$route.query.chapterNo) : 1 });
+            } 
+            if (this.getPratilipiData.contentType === 'IMAGE') {
+                this.fetchPratilipiContentForIMAGE({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? Number(this.$route.query.chapterNo) : 1 });
             }
         },
         'getUserDetails.userId'() {
