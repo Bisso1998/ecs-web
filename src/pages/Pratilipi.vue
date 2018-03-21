@@ -77,8 +77,25 @@
                             <div v-if="getPratilipiData.summary">
                                 <div class="head-title">__("pratilipi_summary") <button class="edit" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
                                 <p class="text show-more-height">{{ getPratilipiData.summary }}</p>
-                                <button class="show_more">__("show_more")</button>
+                                <button type="button" class="show_more" name="button" data-toggle="modal" data-target="#summary_modal">__("view_more")</button>
                             </div>
+                            <!-- SUMMARY MODAL -->
+                            <div class="modal fade summary-modal" id="summary_modal" tabindex="-1" role="dialog" aria-labelledby="summary-modalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">__("pratilipi_summary")</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body social">
+                                     <p>{{ getPratilipiData.summary }}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            
                             <AboutAuthor :authorId="getPratilipiData.author.authorId"></AboutAuthor>
                         </div>
                         <div class="card">
@@ -204,17 +221,6 @@ export default {
         'getUserDetails.userId'() {
             this.fetchPratilipiDetailsAndUserPratilipiData(this.$route.params.slug_id);
         }
-    },
-    mounted() {
-        $(".show_more").click(function () {
-            if($(".text").hasClass("show-more-height")) {
-                $(this).text("show_less");
-            } else {
-                $(this).text("show_more");
-            }
-
-            $(".text").toggleClass("show-more-height");
-        });
     }
 }
 </script>
@@ -262,11 +268,11 @@ export default {
             }
             p {
                 text-align: left;
-                margin: 10px;
+                margin: 10px 10px 5px;
                 font-size: 14px;
                 max-height: initial;
                 &.show-more-height {
-                    max-height: 105px;
+                    max-height: 65px;
                     overflow: hidden;
                 }
             }

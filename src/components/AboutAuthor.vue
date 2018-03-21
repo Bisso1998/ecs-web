@@ -10,7 +10,23 @@
         <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow")</button>
         <button class="btn btn-light follow-link following" @click="checkUserAndFollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
         <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
-        <button class="show_more_auth_desc">__("show_more")</button>
+        <button type="button" class="show_more_auth_desc" name="button" data-toggle="modal" data-target="#summary_modal">__("view_more")</button>
+        <!-- SUMMARY MODAL -->
+        <div class="modal fade summary-modal" id="summary_modal" tabindex="-1" role="dialog" aria-labelledby="summary-modalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">__("pratilipi_summary")</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body social">
+                 <p>{{ getAuthorDetails.summary }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 
@@ -65,18 +81,6 @@ export default {
     },
     created() {
         this.fetchAuthorDetails(this.authorId);
-    },
-    mounted() {
-        $(".show_more_auth_desc").click(function (e) {
-            e.preventDefault();
-            if($(".auth-desc").hasClass("show-more-height")) {
-                $(this).text("show_less");
-            } else {
-                $(this).text("show_more");
-            }
-
-            $(".auth-desc").toggleClass("show-more-height");
-        });
     }
 }
 </script>
@@ -84,11 +88,11 @@ export default {
 <style  lang="scss" scoped>
     p {
         text-align: left;
-        margin: 10px;
+        margin: 10px 10px 5px;
         font-size: 14px;
         max-height: initial;
         &.show-more-height {
-            max-height: 105px;
+            max-height: 65px;
             overflow: hidden;
         }
     }
@@ -118,6 +122,9 @@ export default {
             @media screen and (max-width: 992px ) {
                 max-width: 110px;
             }
+            @media screen and (max-width: 768px ) {
+                max-width: 70px;
+            }
         }
         &:hover {
             text-decoration: none;
@@ -137,6 +144,7 @@ export default {
     .auth-desc {
         text-align: left;
         margin-left: 10px;
+        clear: both;
     }
     .show_more_auth_desc {
         color: #d0021b;
