@@ -12,46 +12,9 @@
                                 <a href="#" class="signup active" v-on:click="tabsignup" data-tab="signup">__("user_sign_up")</a>
                                 <a href="#" class="signin" v-on:click="tabsignin" data-tab="signin">__("user_sign_in")</a>
                             </div>
-                            <div class="forms" id="signin">
-                                <div class="social-login">
-                                    <button type="button" name="button" class="fb"><icon name="facebook-f"></icon>__("user_sign_in_with_facebook")</button>
-                                    <button type="button" name="button" class="google"><icon name="google"></icon>__("user_sign_in_with_google")</button>
-                                </div>
-                                <div class="or">__("or")</div>
-                                <form>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" v-model="email" id="signinEmail" :placeholder="'__("user_email")'">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" v-model="password" id="signinPassword" :placeholder="'__("user_password")'">
-                                    </div>
-                                    <button type="button" @click="loginUser({email, password})" class="btn sign-in">__("user_sign_in")</button>
-                                    <a href="#" class="forgot-pass" data-toggle="modal" data-target="#forgotPassModal">__("user_forgot_password")</a>
-                                    <a href="#" class="footlink" v-on:click="tabsignup" data-tab="signup">__("user_sign_up")</a>
-                                </form>
-                            </div>
                             
-                            <div class="forms" id="signup">
-                                <form>
-                                    <div class="social-login">
-                                        <button type="button" name="button" class="fb"><icon name="facebook-f"></icon>__("user_sign_in_with_facebook")</button>
-                                        <button type="button" name="button" class="google"><icon name="google"></icon>__("user_sign_in_with_google")</button>
-                                    </div>
-                                    <div class="or">__("or")</div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="signupName" :placeholder="'__("user_full_name")'">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="signupEmail" :placeholder="'__("user_email")'">
-                                    </div>
-                                    <div class="form-group">
-                                        <input autocomplete="new-password" type="password" class="form-control" id="signupPassword" :placeholder="'__("user_password")'">
-                                    </div>
-                                    <button type="button" @click="signupUser({name, email, password})" class="btn sign-in">__("user_sign_up")</button>
-                                    <a href="#" class="footlink" v-on:click="tabsignin" data-tab="signin">__("user_sign_in")</a>
-                                    <span class="terms-section">__("register_part_1") <a href="/privacy-policy" target="_blank">__("footer_privacy_policy")</a> __("register_part_2") <a href="/terms-of-service" target="_blank">__("footer_terms_of_service")</a> __("register_part_3")</span>
-                                </form>
-                            </div>
+                            <Login></Login>
+                            <Register></Register>
                             
                             <!-- Modal -->
                             <div class="modal fade" id="forgotPassModal" tabindex="-1" role="dialog" aria-labelledby="forgotPassModalLabel" aria-hidden="true">
@@ -96,6 +59,9 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
+import Login from '@/components/Login.vue';
+import Register from '@/components/Register.vue';
+import mixins from '@/mixins';
 import 'vue-awesome/icons/facebook-f'
 import 'vue-awesome/icons/google'
 
@@ -104,8 +70,13 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     components: {
         MainLayout,
-        Spinner
+        Spinner,
+        Login,
+        Register
     },
+    mixins: [
+        mixins
+    ],
     data() {
         return {
             email: '',
@@ -121,6 +92,13 @@ export default {
         'getUserDetails.isGuest'(isGuest) {
             if (!isGuest) {
                 this.$router.push(this.getUserDetails.profilePageUrl);
+            }
+        },
+        '$route.hash'(newHash) {
+            console.log(newHash);
+
+            if (newHash === '#forgot-pass') {
+                this.openForgotPasswordModal();
             }
         }
     },
@@ -149,6 +127,11 @@ export default {
     created() {
         if ( this.getUserDetails && this.getUserDetails.isGuest !== undefined && this.getUserDetails.isGuest !== true) {
             this.$router.push(this.getUserDetails.profilePageUrl)
+        }
+    },
+    mounted() {
+        if (this.$route.hash === '#forgot-pass') {
+            this.openForgotPasswordModal();
         }
     }
 }
