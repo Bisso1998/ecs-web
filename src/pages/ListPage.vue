@@ -54,7 +54,7 @@ export default {
             'addToLibrary',
             'removeFromLibrary'
         ]),
-        updateScroll() {
+        updateScroll(e) {
             this.scrollPosition = window.scrollY
         }
     },
@@ -76,10 +76,15 @@ export default {
     },
     watch: {
         'scrollPosition'(newScrollPosition){
-            const nintyPercentOfList = ( 75 / 100 ) * $('.list-page').innerHeight();
+            const sbHeight = window.innerHeight * (window.innerHeight / document.body.offsetHeight)
+            const nintyPercentOfList = ( 50 / 100 ) * $('.list-page').innerHeight();
+            console.log($('.list-page').innerHeight());
+            console.log(sbHeight);
+            console.log(nintyPercentOfList);
+            console.log(newScrollPosition);
             const { list_page_url } = this.$route.params;
 
-            if (newScrollPosition > nintyPercentOfList && this.getPratilipiListLoadingState !== 'LOADING' && this.getPratilipiListCursor !== null) {
+            if (newScrollPosition + sbHeight > nintyPercentOfList && this.getPratilipiListLoadingState !== 'LOADING' && this.getPratilipiListCursor !== null) {
                 
                 const currentLocale = process.env.LANGUAGE;
                 constants.LANGUAGES.forEach((eachLanguage) => {
