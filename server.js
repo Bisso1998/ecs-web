@@ -207,9 +207,13 @@ app.get( '/*', (req, res, next) => {
 	// 	variation = 'build/product/';
 	// }
 
-	// if (req.query.customVariation && fs.existsSync('build/' + req.query.customVariation)) {
-	// 	variation = 'build/' + req.query.customVariation + '/';
-	// }
+	if (req.query.customVariation && fs.existsSync('build/' + req.query.customVariation)) {
+		variation = 'build/' + req.query.customVariation + '/';
+	}
+    const parsedUrl = parse(req.header('Referer'), true);
+    if (parsedUrl.query && fs.existsSync('build/' + parsedUrl.query.customVariation)) {
+        variation = 'build/' + parsedUrl.query.customVariation + '/';
+    }
 
 	// if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
 	// 	variation = 'build/growth/';
