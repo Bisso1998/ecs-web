@@ -4,6 +4,7 @@
         <slot></slot>
         <LoginModal></LoginModal>
         <ShareModal></ShareModal>
+        <InputModal></InputModal>
         <Footer></Footer>
         <Alert></Alert>
     </div>
@@ -13,6 +14,7 @@
 import Header from '@/components/Header.vue';
 import LoginModal from '@/components/LoginModal.vue';
 import ShareModal from '@/components/Share.vue';
+import InputModal from '@/components/InputModal.vue';
 import Footer from '@/components/Footer.vue';
 import Alert from '@/components/Alert.vue';
 
@@ -42,6 +44,7 @@ export default {
         Header,
         LoginModal,
         ShareModal,
+        InputModal,
         Footer,
         Alert
     },
