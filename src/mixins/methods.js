@@ -20,3 +20,7 @@ export function openLoginModal() {
 export function openInputModal() {
     $('#reportModal').modal('show');
 }
+
+export function openMultiInputModal() {
+    $('#multiinput').modal('show');
+}

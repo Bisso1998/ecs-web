@@ -1,10 +1,10 @@
 <template>
     <!-- Report Modal -->
-    <div class="modal fade reportModal" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal fade multiinput" id="multiinput" tabindex="-1" role="dialog" aria-labelledby="multiinputLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModalLabel">{{ getInputModalTitle }}</h5>
+                    <h5 class="modal-title" id="reportModalLabel">__("pratilipi_edit_info")</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="material-icons">close</i>
                     </button>
@@ -12,10 +12,14 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="reportModalTextarea">{{ getInputModalTitle }}</label>
-                            <textarea :value="getInputModalActionAndData.prefilled_value" @input="updatePrefilledValue($event.target.value)" class="form-control" rows="3"></textarea>
+                            <label>__("writer_input_title")</label>
+                            <input type="text" class="form-control" :placeholder="'__("writer_input_title")'">
                         </div>
-                        <button type="button" class="btn btn-submit" @click="dispatchActionAndCloseModal">__("submit")</button>
+                        <div class="form-group">
+                            <label>__("writer_input_title_en")</label>
+                            <input type="text" class="form-control" :placeholder="'__("writer_input_title_en")'">
+                        </div>
+                        <button type="button" class="btn btn-submit">__("submit")</button>
                         <button type="button" class="cancel" data-dismiss="modal" aria-label="Close">__("cancel")</button>
                     </form>
                 </div>
@@ -54,7 +58,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.reportModal {
+.multiinput {
     text-align: left;
     max-width: 350px;
     margin: 50px auto;

@@ -13,7 +13,7 @@
                                     <Spinner></Spinner> 
                                 </div>
                             </div>
-                            <div class="book-title">{{ getPratilipiData.title }} <button class="edit" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
+                            <div class="book-title">{{ getPratilipiData.title }} <button class="edit" @click="editPratilipiTitle" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
                             <router-link
                               :to="getPratilipiData.author.pageUrl"
                               class="author-name">
@@ -225,6 +225,9 @@ export default {
                 }
             });
             this.openInputModal();
+        },
+        editPratilipiTitle() {
+            this.openMultiInputModal();
         },
         addPratilipiToLibrary(pratilipiId) {
             if (this.getUserDetails.isGuest) {
