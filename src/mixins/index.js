@@ -3,6 +3,7 @@ import {
     openLoginModal, 
     openInputModal, 
     openMultiInputModal,
+    openConfirmationModal,
     isMobile,
     isAndroid,
     isChrome
@@ -20,6 +21,7 @@ export default {
         openLoginModal,
         openInputModal,
         openMultiInputModal,
+        openConfirmationModal,
         isMobile,
         isAndroid,
         isChrome
