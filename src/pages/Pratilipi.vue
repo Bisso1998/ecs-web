@@ -33,15 +33,15 @@
                             <div class="main-actions"  v-if="getUserPratilipiLoadingState === 'LOADING_SUCCESS'">
                                 <div class="book-edit-actions" v-if="getPratilipiData.hasAccessToUpdate">
                                     <span v-if="getPratilipiData.state === 'PUBLISHED'">
-                                        <button>__("pratilipi_move_to_drafts")</button>
+                                        <button @click="unpublishOrPublishBook('DRAFTED')">__("pratilipi_move_to_drafts")</button>
                                     </span>
                                     <span>
                                         <button v-if="isMobile()" @click="showAlertToGoToDesktop"><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button>
                                         <a v-else :href="getPratilipiData.writePageUrl"><button ><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button></a>
                                     </span>
                                     <span v-if="getPratilipiData.state === 'DRAFTED'">
-                                        <button>__("pratilipi_publish_it")</button>
-                                        <button @click="deletePratilipi"><i class="material-icons">delete</i> __("pratilipi_delete_content")</button>
+                                        <button @click="unpublishOrPublishBook('PUBLISHED')">__("pratilipi_publish_it")</button>
+                                        <button @click="confirmAndDeletePratilipi"><i class="material-icons">delete</i> __("pratilipi_delete_content")</button>
                                     </span>
                                 </div>
                                 <span v-if="!getPratilipiData.hasAccessToUpdate">
@@ -211,12 +211,14 @@ export default {
             'addToLibrary',
             'removeFromLibrary',
             'uploadPratilipiImage',
-            'fetchSystemTags'
+            'fetchSystemTags',
+            'unpublishOrPublishBook'
         ]),
         ...mapActions([
             'setShareDetails',
             'setAfterLoginAction',
-            'setInputModalSaveAction'
+            'setInputModalSaveAction',
+            'setConfirmModalAction'
         ]),
         ...mapActions('alert', [
             'triggerAlert'
@@ -247,7 +249,15 @@ export default {
             });
             this.openMultiInputModal();
         },
-        deletePratilipi() {
+        confirmAndDeletePratilipi() {
+            this.setConfirmModalAction({ 
+                action: `${this.$route.meta.store}/deletePratilipi`, 
+                heading: 'pratilipi_delete_content',
+                message: 'pratilipi_confirm_delete_content',
+                data: {
+                    pratilipiId: this.getPratilipiData.pratilipiId
+                }
+            });
             this.openConfirmationModal();
         },
         addPratilipiToLibrary(pratilipiId) {
@@ -263,7 +273,6 @@ export default {
             $('#share_modal').modal('show');
         },
         uploadImage(imageType) {
-            console.log('imageType', imageType);
             switch(imageType) {
                 case 'pratilipi-image':
                     $('#pratilipiimage-uploader').click();
@@ -311,9 +320,9 @@ export default {
         '$route.params.slug_id' (slug_id) {
             this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
         },
-        'getPratilipiData.pratilipiId'(pratilipiId) {
-            if (pratilipiId) {
-                
+        'getPratilipiData.state'(state) {
+            if (state === 'DELETED') {
+                this.$router.push('/login');
             }
         },
         'getUserDetails.userId'() {
