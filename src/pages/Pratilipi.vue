@@ -118,6 +118,7 @@
                         </div>
                     </div>
                 </div>
+                <Spinner v-if="getPratilipiLoadingState === 'LOADING'"></Spinner>
             </div>
         </div>
     </MainLayout>
