@@ -133,6 +133,7 @@ import AboutAuthor from '@/components/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
 import Reviews from '@/components/Reviews.vue';
 import mixins from '@/mixins';
+import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -153,7 +154,9 @@ export default {
             'getUserPratilipiData',
             'getPratilipiLoadingState',
             'getUserPratilipiLoadingState',
-            'getImageUploadLoadingState'
+            'getImageUploadLoadingState',
+            'getSystemTags',
+            'getSystemTagsLoadingState'
         ]),
         ...mapGetters([
             'getUserDetails'
@@ -165,7 +168,8 @@ export default {
             'fetchUserPratilipiData',
             'addToLibrary',
             'removeFromLibrary',
-            'uploadPratilipiImage'
+            'uploadPratilipiImage',
+            'fetchSystemTags'
         ]),
         ...mapActions([
             'setShareDetails',
@@ -216,6 +220,14 @@ export default {
 
         console.log(slug_id);
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
+
+
+        const currentLocale = process.env.LANGUAGE;
+        constants.LANGUAGES.forEach((eachLanguage) => {
+            if (eachLanguage.shortName === currentLocale) {
+                this.fetchSystemTags(eachLanguage.fullName.toUpperCase());
+            }
+        });
     },
     components: {
         MainLayout,
