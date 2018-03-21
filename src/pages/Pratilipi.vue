@@ -236,6 +236,15 @@ export default {
             this.openInputModal();
         },
         editPratilipiTitle() {
+            this.setInputModalSaveAction({ 
+                action: `${this.$route.meta.store}/saveOrUpdateTitle`, 
+                heading: 'edit_pratilipi_title',
+                prefilled_value: this.getPratilipiData.title,
+                prefilled_value_title: this.getPratilipiData.titleEn,
+                data: {
+                    pratilipiId: this.getPratilipiData.pratilipiId
+                }
+            });
             this.openMultiInputModal();
         },
         addPratilipiToLibrary(pratilipiId) {
