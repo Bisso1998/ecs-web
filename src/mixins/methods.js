@@ -24,3 +24,15 @@ export function openInputModal() {
 export function openMultiInputModal() {
     $('#multiinput').modal('show');
 }
+
+export function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent );
+}
+
+export function isAndroid() {
+    return /Android/i.test( navigator.userAgent );
+}
+
+export function isChrome() {
+    return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+}
