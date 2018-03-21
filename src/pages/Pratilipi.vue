@@ -75,7 +75,9 @@
                     <div class="book-synopsis col-md-12 col-lg-7 p-0">
                         <div class="card">
                             <div v-if="getPratilipiData.summary">
-                                <div class="head-title">__("pratilipi_summary") <button class="edit" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
+                                <div class="head-title">__("pratilipi_summary") 
+                                    <button class="edit" @click="editPratilipiSummary" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button>
+                                </div>
                                 <p class="text show-more-height">{{ getPratilipiData.summary }}</p>
                                 <button class="show_more">__("show_more")</button>
                             </div>
@@ -149,8 +151,20 @@ export default {
         ]),
         ...mapActions([
             'setShareDetails',
-            'setAfterLoginAction'
+            'setAfterLoginAction',
+            'setInputModalSaveAction'
         ]),
+        editPratilipiSummary() {
+            this.setInputModalSaveAction({ 
+                action: `${this.$route.meta.store}/saveOrUpdateSummary`, 
+                heading: 'edit_pratilipi_summary',
+                prefilled_value: this.getPratilipiData.summary,
+                data: {
+                    pratilipiId: this.getPratilipiData.pratilipiId
+                }
+            });
+            this.openInputModal();
+        },
         addPratilipiToLibrary(pratilipiId) {
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
