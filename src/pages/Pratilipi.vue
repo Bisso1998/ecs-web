@@ -106,8 +106,8 @@
                                         </form>
                                     </div>
                                 </div>
-                                <button type="button" @click="cancelTags" class="btn btn-light">__("cancel")</button>
                                 <button type="button" class="btn btn-save">__("save")</button>
+                                <button type="button" @click="cancelTags" class="btn btn-light">__("cancel")</button>
                             </div>
                         </div>
                     </div>
@@ -389,6 +389,7 @@ export default {
                     font-size: 14px;
                     padding: 10px;
                     display: none;
+                    overflow: hidden;
                     .desc {
                         font-size: 13px;
                         color: #212121;
@@ -437,6 +438,7 @@ export default {
                     button {
                         font-size: 14px;
                         margin: 5px 4px 10px 0;
+                        float: right;
                         &.btn-save {
                             background: #d0021b;
                             color: #fff;
