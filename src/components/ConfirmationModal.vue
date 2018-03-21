@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label>{{ getModalActionAndData.message }}</label>
+                            <label>{{ getModalMessage }}</label>
                         </div>
                         <button type="button" class="btn btn-submit" data-dismiss="modal" aria-label="Close">__("cancel")</button>
                         <button type="button" @click="dispatchActionAndCloseModal" class="cancel">__("pratilipi_confirm_delete_content_okay")</button>
@@ -35,7 +35,8 @@ export default {
     computed: {
         ...mapGetters([
             'getModalTitle',
-            'getModalActionAndData'
+            'getModalActionAndData',
+            'getModalMessage'
         ])
     },
     methods: {
