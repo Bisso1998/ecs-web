@@ -4,26 +4,25 @@
             <div class="header-section" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                 <div class="container">
                     <div class="row">
-                        <div class="exit-reader col-1">
+                        <div class="exit-reader tool-icon-1">
                             <router-link :to="getPratilipiData.pageUrl"><i class="material-icons">arrow_back</i></router-link>
                         </div>
-                        <div class="col-1" id="sidebarCollapse" @click="openSidebar">
-                            <i class="material-icons">list</i>
-                        </div>
-                        <div class="book-name col-7">{{ getPratilipiData.title }}</div>
-                        <div class="settings col-1">
-                            <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions">
-                                <i class="material-icons">settings</i>
-                            </button>
-                        </div>
-                        <div class="more-options col-1">
-                            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#reportModal">
-                                    __("report_button")
+                        <div class="book-name tool-icon-8" @click="openSidebar"><span>{{ getPratilipiData.title }}</span> <i class="material-icons">arrow_drop_down</i></div>
+                        <div class="right-icons">
+                            <div class="settings tool-icon-1">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions">
+                                    <i class="material-icons">settings</i>
                                 </button>
+                            </div>
+                            <div class="more-options tool-icon-1">
+                                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button type="button" class="btn report-btn" data-toggle="modal" data-target="#reportModal">
+                                        __("report_button")
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -436,8 +435,41 @@ export default {
         z-index: 2;
         width: 100%;
         background: #fff;
-        .exit-reader a {
-            color: #2c3e50;
+        .row {
+            display: block;
+        }
+        .tool-icon-1 {
+            width: 40px;
+            float: left;
+            padding: 0 5px;
+            i {
+                vertical-align: middle;
+            }
+        }
+        .tool-icon-8 {
+            max-width: 700px;
+            float: left;
+            width: 80%;
+            cursor: pointer;
+            span, i {
+                vertical-align: middle;
+            }
+            @media screen and (max-width: 768px ) {
+                width: 68%;
+            }
+            @media screen and (max-width: 410px ) {
+                width: 59%;
+            }
+        }
+        .right-icons {
+            float: right;
+            width: 90px;
+        }
+        .exit-reader {
+            margin-right: 5px;
+            a {
+                color: #2c3e50;
+            }
         }
         .book-name {
             text-align: left;
@@ -445,9 +477,6 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap
-        }
-        #sidebarCollapse {
-            cursor: pointer;
         }
         .more-options .btn, .settings .btn {
             padding: 0;
