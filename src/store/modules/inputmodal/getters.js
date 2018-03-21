@@ -10,6 +10,8 @@ export default {
             	return '__("edit_pratilipi_summary")';
             case 'edit_pratilipi_title':
             	return '__("edit_pratilipi_title")';
+            case 'pratilipi_delete_content':
+                return '__("pratilipi_delete_content")';
         }
     },
 
@@ -24,5 +26,12 @@ export default {
             default:
             	return []
         }	
+    },
+
+    getModalMessage: state => {
+        switch (state.message) {
+            case 'pratilipi_confirm_delete_content':
+                return '__("pratilipi_confirm_delete_content")';
+        }
     }
 }

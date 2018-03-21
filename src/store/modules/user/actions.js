@@ -57,6 +57,22 @@ export default {
         })
     },
 
+    signupUser({ commit, state, dispatch }, { email, name, password }) {
+        commit('setUserDataLoadingTrue');
+        DataAccessor.registerUser(name, email, password, (data) => {
+            commit('setUserDataLoadingSuccess', data);
+
+            if (state.post_login_action.action) {
+                dispatch(state.post_login_action.action, state.post_login_action.data, { root: true });
+                commit('clearPostLoginAction');
+            }
+            
+        }, (error) => {
+            console.log(error);
+            commit('setUserDataLoadingError', error.message);
+        })
+    },
+
     logoutUser({ commit, state }) {
         commit('setUserLogoutInProgressTrue');
         DataAccessor.logoutUser((data) => {
