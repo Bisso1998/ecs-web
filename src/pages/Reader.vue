@@ -476,7 +476,7 @@ export default {
         height: 2px;
         margin-bottom: 0px;
         position: fixed;
-        top: 48px;
+        top: 47px;
         overflow: hidden;
         background-color: white;
         content: "";
