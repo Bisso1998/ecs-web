@@ -110,8 +110,8 @@
                                 v-html="eachChapter.content">
                             </div>
                             <div class="book-navigation">
-                                <div class="prev">Previous Chapter</div>
-                                <div class="next">__("reader_next_chapter")</div>
+                                <div class="prev" v-if="selectedChapter !== 1" @click="goToPreviousChapter">Previous Chapter</div>
+                                <div class="next" v-if="selectedChapter !== getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
                             <div class="book-recomendations col-md-12 p-0" v-if="selectedChapter == getIndexData.length">
                                 <div class="card">
@@ -261,6 +261,12 @@ export default {
             } else {
                 this.addToLibrary(pratilipiId);
             }
+        },
+        goToPreviousChapter() {
+            this.$router.push({ path: '/read', query: { id: this.getPratilipiData.pratilipiId, chapterNo: this.selectedChapter - 1 } });
+        },
+        goToNextChapter() {
+            this.$router.push({ path: '/read', query: { id: this.getPratilipiData.pratilipiId, chapterNo: this.selectedChapter + 1 } });
         },
         increaseFont() {
             if (this.fontSize !== 32) {
