@@ -13,7 +13,7 @@
                                     <Spinner></Spinner> 
                                 </div>
                             </div>
-                            <div class="book-title">{{ getPratilipiData.title }} <button class="edit" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
+                            <div class="book-title">{{ getPratilipiData.title }} <button class="edit" @click="editPratilipiTitle" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
                             <router-link
                               :to="getPratilipiData.author.pageUrl"
                               class="author-name">
@@ -106,8 +106,8 @@
                                         </form>
                                     </div>
                                 </div>
-                                <button type="button" @click="cancelTags" class="btn btn-light">__("cancel")</button>
                                 <button type="button" class="btn btn-save">__("save")</button>
+                                <button type="button" @click="cancelTags" class="btn btn-light">__("cancel")</button>
                             </div>
                         </div>
                     </div>
@@ -225,6 +225,9 @@ export default {
                 }
             });
             this.openInputModal();
+        },
+        editPratilipiTitle() {
+            this.openMultiInputModal();
         },
         addPratilipiToLibrary(pratilipiId) {
             if (this.getUserDetails.isGuest) {
@@ -389,6 +392,7 @@ export default {
                     font-size: 14px;
                     padding: 10px;
                     display: none;
+                    overflow: hidden;
                     .desc {
                         font-size: 13px;
                         color: #212121;
@@ -437,6 +441,7 @@ export default {
                     button {
                         font-size: 14px;
                         margin: 5px 4px 10px 0;
+                        float: right;
                         &.btn-save {
                             background: #d0021b;
                             color: #fff;
