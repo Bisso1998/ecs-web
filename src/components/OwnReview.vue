@@ -1,5 +1,5 @@
 <template>
-    <li>
+    <li v-if="authorId !== getUserDetails.authorId">
         <div class="comment-main-level">
             <div class="comment-avatar"><img :src="userPratilipiData.userId == 0 ? defaultAuthorImage : userPratilipiData.userImageUrl" alt="author"></div>
             <div class="comment-box">
@@ -74,6 +74,10 @@ export default {
     props: {
         userPratilipiData: {
             type: Object,
+            required: true
+        },
+        authorId: {
+            type: Number,
             required: true
         }
     },
