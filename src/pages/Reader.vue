@@ -113,6 +113,14 @@
                                 <div class="prev" v-if="selectedChapter !== 1" @click="goToPreviousChapter">Previous Chapter</div>
                                 <div class="next" v-if="selectedChapter !== getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
+
+                            <Reviews 
+                                :pratilipiId="getPratilipiData.pratilipiId" 
+                                :authorId="getPratilipiData.author.authorId" 
+                                :userPratilipiData='getUserPratilipiData'
+                                v-if="selectedChapter == getIndexData.length">
+                            </Reviews>                                
+
                             <div class="book-recomendations col-md-12 p-0" v-if="selectedChapter == getIndexData.length">
                                 <div class="card">
                                     <Recommendation
@@ -255,7 +263,6 @@ export default {
         addPratilipiToLibrary(pratilipiId) {
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
-                console.log(this.$route);
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
                 this.openLoginModal();
             } else {
