@@ -22,6 +22,8 @@ Vue.filter('showInMinutesOrHours', function(value) {
     let finalMinutes = Math.round(value / 60);
     let finalHours = Math.round(finalMinutes / 60);
 
+    if (finalMinutes === 0) finalMinutes = 1;
+
     let readingTimeInNativeLanguage;
     if (finalHours > 1) {
         readingTimeInNativeLanguage = finalHours + ' ' + "__('hours')";
