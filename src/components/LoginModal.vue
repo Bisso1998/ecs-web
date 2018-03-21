@@ -11,47 +11,8 @@
                         <a href="#" class="signup active" v-on:click="tabsignup" data-tab="signup">__("user_sign_up")</a>
                         <a href="#" class="signin" v-on:click="tabsignin" data-tab="signin">__("user_sign_in")</a>
                     </div>
-                    <div class="forms" id="signin">
-                        <div class="social-login">
-                            <button type="button" name="button" class="fb"><icon name="facebook-f"></icon>__("user_sign_in_with_facebook")</button>
-                            <button type="button" name="button" class="google"><icon name="google"></icon>__("user_sign_in_with_google")</button>
-                        </div>
-                        <div class="or">__("or")</div>
-                        <form>
-                            <div class="form-group">
-                                <input type="email" class="form-control" v-model="email" id="signinEmail" :placeholder="'__("user_email")'">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" v-model="password" id="signinPassword" :placeholder="'__("user_password")'">
-                            </div>
-                            <button type="button" @click="loginUser({email, password})" class="btn sign-in">__("user_sign_in")</button>
-                            <a href="/forgot-password" target="_blank" class="forgot-pass">__("user_forgot_password")</a>
-                            <a href="#" class="footlink" v-on:click="tabsignup" data-tab="signup">__("user_sign_up")</a>
-                        </form>
-                    </div>
-                    
-                    <div class="forms" id="signup">
-                        <form>
-                            <div class="social-login">
-                                <button type="button" name="button" class="fb"><icon name="facebook-f"></icon>__("user_sign_in_with_facebook")</button>
-                                <button type="button" name="button" class="google"><icon name="google"></icon>__("user_sign_in_with_google")</button>
-                            </div>
-                            <div class="or">__("or")</div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="signupName" :placeholder="'__("user_full_name")'">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="signupEmail" :placeholder="'__("user_email")'">
-                            </div>
-                            <div class="form-group">
-                                <input autocomplete="new-password" type="password" class="form-control" id="signupPassword" :placeholder="'__("user_password")'">
-                            </div>
-                            <button type="button" @click="signupUser({name, email, password})" class="btn sign-in">__("user_sign_up")</button>
-                            <a href="#" class="footlink" v-on:click="tabsignin" data-tab="signin">__("user_sign_in")</a>
-                            <span class="terms-section">__("register_part_1") <a href="/privacy-policy" target="_blank">__("footer_privacy_policy")</a> __("register_part_2") <a href="/terms-of-service" target="_blank">__("footer_terms_of_service")</a> __("register_part_3")</span>
-                        </form>
-                    </div>
-                    
+                    <Login :openForgotPasswordInTab="true"></Login>
+                    <Register></Register>
                 </div>
             </div>
         </div>
@@ -59,6 +20,8 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Login from '@/components/Login';
+import Register from '@/components/Register';
 
 export default {
     name: 'login-modal',
@@ -100,6 +63,10 @@ export default {
             $(".forms").hide();
             $("#" + tab_id).show();
         }
+    },
+    components: {
+        Login,
+        Register
     }
 }
 
