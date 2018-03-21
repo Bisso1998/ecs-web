@@ -17,28 +17,7 @@
                             <Register></Register>
                             
                             <!-- Modal -->
-                            <div class="modal fade" id="forgotPassModal" tabindex="-1" role="dialog" aria-labelledby="forgotPassModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="forgotPassModalLabel">__("user_forgot_password")</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div id="password_reset">
-                                                <form>
-                                                    <div class="form-group">
-                                                        <input type="email" @input="forgotten_password_email = $event.target.value" class="form-control" id="forgotEmail" :placeholder="'__("user_email")'">
-                                                    </div>
-                                                    <button type="button" @click="sendPasswordResetEmail(forgotten_password_email)" class="btn sign-in">__("user_reset_password")</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <ForgetPasswordModal></ForgetPasswordModal>
                             
                         </div>
                     </div>
@@ -61,6 +40,7 @@ import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
+import ForgetPasswordModal from '@/components/ForgetPasswordModal.vue';
 import mixins from '@/mixins';
 import 'vue-awesome/icons/facebook-f'
 import 'vue-awesome/icons/google'
@@ -72,7 +52,8 @@ export default {
         MainLayout,
         Spinner,
         Login,
-        Register
+        Register,
+        ForgetPasswordModal
     },
     mixins: [
         mixins
