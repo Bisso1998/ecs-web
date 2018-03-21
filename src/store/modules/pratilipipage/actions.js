@@ -139,5 +139,15 @@ export default {
         }, function (error) {
             commit('setFollowUnfollowLoadingDataLoadingError');
         });
+    },
+
+    saveOrUpdateSummary({ commit, state }, data) {
+        data.summary = data.value;
+        delete data.value;
+        DataAccessor.createOrUpdatePratilipi(data, (data) => {
+            commit('setPratilipiSummaryUpdateSuccess', data);
+        }, (error) => {
+            commit('setPratilipiSummaryUpdateError');
+        });
     }
 }

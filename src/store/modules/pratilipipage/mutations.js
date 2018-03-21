@@ -152,6 +152,15 @@ export default {
         }
     },
 
+    setPratilipiSummaryUpdateSuccess(state, data) {
+        console.log(data);
+        state.pratilipi.data.summary = data.summary;
+    },
+    
+    setPratilipiSummaryUpdateError(state) {
+
+    },
+
     setFollowUnfollowLoadingDataLoadingError(state) {
 
     },

@@ -22,6 +22,7 @@ import notification from './modules/notification'
 import settingspage from './modules/settingspage'
 import searchpage from './modules/searchpage'
 import sharemodal from './modules/sharemodal'
+import inputmodal from './modules/inputmodal'
 import readerpage from './modules/readerpage'
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -51,7 +52,8 @@ export default new Vuex.Store({
         sharemodal,
         searchpage,
         reviews,
-        readerpage
+        readerpage,
+        inputmodal
     },
     strict: debug
 })
