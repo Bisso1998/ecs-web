@@ -105,6 +105,13 @@ export default {
         text-align: left;
         font-size: 24px;
         font-weight: bold;
+        text-align: left;
+        border-left: 3px solid #d0021b;
+        padding-left: 10px;
+        margin: 10px 0;
+        @media screen and (max-width: 768px ) {
+            font-size: 18px;
+        }
     }
     .blog-section {
         ul {

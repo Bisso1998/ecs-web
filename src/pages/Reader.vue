@@ -496,7 +496,7 @@ export default {
         }
     }
     .book-content {
-        margin-top: 54px;
+        margin: 54px 0;
         font-size: 16px;
         padding: 10px;
         text-align: justify;
@@ -514,9 +514,6 @@ export default {
             @media screen and (max-width: 768px ) {
                 font-size: 18px;
             }
-        }
-        .content-section {
-            margin-bottom: 50px;
         }
         .book-navigation {
             display: block;

@@ -141,7 +141,7 @@ export default {
                 this.scrollDirection = 'DOWN';
             }
             
-            if (this.counter > 20) {
+            if (this.counter > 5) {
                 $('header').removeClass('nav-up');
                 this.counter = 0;
             }
@@ -166,9 +166,9 @@ export default {
         z-index: 5;
         width: 100%;
         background: #fff;
-        -webkit-transition: .3s ease;
-        -o-transition: .3s ease;
-        transition: .3s ease;
+        -webkit-transition: .2s ease;
+        -o-transition: .2s ease;
+        transition: .2s ease;
         .p-r-0 {
             padding-right: 0;
         }
@@ -245,7 +245,7 @@ export default {
             text-align: right;
             .form-group {
                 position: relative;
-                width: 83%;
+                width: 81%;
                 display: inline-block;
                 @media screen and (max-width: 410px ) {
                     width: 70%;

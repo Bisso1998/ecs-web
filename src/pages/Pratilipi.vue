@@ -21,7 +21,7 @@
                             </router-link>
                             <div class="book-stats">
                                 <span class="avg-rating stars-green"><span class="rating-text">{{ getPratilipiData.averageRating | round(1) }}</span> <i class="material-icons">star_rate</i></span>
-                                <span class="review-count">{{ getPratilipiData.reviewCount }} __("rating_ratings")</span>
+                                <span class="review-count">{{ getPratilipiData.ratingCount }} __("rating_ratings")</span>
                             </div>
                             <div class="book-stats">
                                 <span class="read-time">__("pratilipi_reading_time"): {{ getPratilipiData.readingTime | showInMinutesOrHours }}</span>
