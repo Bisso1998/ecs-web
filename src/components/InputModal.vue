@@ -4,7 +4,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModalLabel">{{ getInputModalTitle }}</h5>
+                    <h5 class="modal-title" id="reportModalLabel">{{ getModalTitle }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="material-icons">close</i>
                     </button>
@@ -12,8 +12,8 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="reportModalTextarea">{{ getInputModalTitle }}</label>
-                            <textarea :value="getInputModalActionAndData.prefilled_value" @input="updatePrefilledValue($event.target.value)" class="form-control" rows="3"></textarea>
+                            <label for="reportModalTextarea">{{ getModalTitle }}</label>
+                            <textarea :value="getModalActionAndData.prefilled_value" @input="updatePrefilledValue($event.target.value)" class="form-control" rows="3"></textarea>
                         </div>
                         <button type="button" class="btn btn-submit" @click="dispatchActionAndCloseModal">__("submit")</button>
                         <button type="button" class="cancel" data-dismiss="modal" aria-label="Close">__("cancel")</button>
@@ -35,8 +35,8 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getInputModalTitle',
-            'getInputModalActionAndData'
+            'getModalTitle',
+            'getModalActionAndData'
         ])
     },
     methods: {

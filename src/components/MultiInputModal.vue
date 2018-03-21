@@ -4,7 +4,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModalLabel">{{ getInputModalTitle }}</h5>
+                    <h5 class="modal-title" id="reportModalLabel">{{ getModalTitle }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="material-icons">close</i>
                     </button>
@@ -13,11 +13,11 @@
                     <form>
                         <div class="form-group">
                             <label>{{ getInputModalSubheadings[0] }}</label>
-                            <TranslatingInput :value="getInputModalActionAndData.prefilled_value" :oninput="updatePrefilledValue"></TranslatingInput>
+                            <TranslatingInput :value="getModalActionAndData.prefilled_value" :oninput="updatePrefilledValue"></TranslatingInput>
                         </div>
                         <div class="form-group">
                             <label>{{ getInputModalSubheadings[1] }}</label>
-                            <input type="text" :value="getInputModalActionAndData.prefilled_value_two" class="form-control" @input="updatePrefilledValueTwo($event.target.value)" :placeholder="'__("writer_input_title_en")'">
+                            <input type="text" :value="getModalActionAndData.prefilled_value_two" class="form-control" @input="updatePrefilledValueTwo($event.target.value)" :placeholder="'__("writer_input_title_en")'">
                         </div>
                         <button type="button" class="btn btn-submit" @click="dispatchMultipleInputActionAndCloseModal">__("submit")</button>
                         <button type="button" class="cancel" data-dismiss="modal" aria-label="Close">__("cancel")</button>
@@ -40,8 +40,8 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getInputModalTitle',
-            'getInputModalActionAndData',
+            'getModalTitle',
+            'getModalActionAndData',
             'getInputModalSubheadings'
         ])
     },

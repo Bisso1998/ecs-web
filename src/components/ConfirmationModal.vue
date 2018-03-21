@@ -4,7 +4,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModalLabel">__("review_delete_review")</h5>
+                    <h5 class="modal-title" id="reportModalLabel">{{ getModalTitle }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="material-icons">close</i>
                     </button>
@@ -12,10 +12,10 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label>__("pratilipi_confirm_delete_content")</label>
+                            <label>{{ getModalActionAndData.message }}</label>
                         </div>
                         <button type="button" class="btn btn-submit" data-dismiss="modal" aria-label="Close">__("cancel")</button>
-                        <button type="button" class="cancel">__("pratilipi_confirm_delete_content_okay")</button>
+                        <button type="button" @click="dispatchActionAndCloseModal" class="cancel">__("pratilipi_confirm_delete_content_okay")</button>
                     </form>
                 </div>
             </div>
@@ -34,8 +34,8 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getInputModalTitle',
-            'getInputModalActionAndData'
+            'getModalTitle',
+            'getModalActionAndData'
         ])
     },
     methods: {
