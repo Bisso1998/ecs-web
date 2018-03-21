@@ -66,9 +66,48 @@
                             </div>
                         </div>
                         <div class="card tags-section" v-if="getPratilipiData.hasAccessToUpdate">
-                            <div class="head-title">__("tags_categories") <button class="edit"><i class="material-icons">mode_edit</i></button></div>
+                            <div class="head-title">__("tags_categories") <button class="edit" @click="showTags"><i class="material-icons">mode_edit</i></button></div>
                             <div class="tags">
                                 <span v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span>
+                            </div>
+                            <div class="edit-tags">
+                                <div class="desc">__("tags_select_for_max_people")</div>
+                                <div class="tag-sections">
+                                    <div class="tag-section-title">__("tags_content_type")</div>
+                                    <div class="tag-section-body">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="pratilipi-type" id="radio-POEM" value="POEM">
+                                            <label class="form-check-label" for="radio-POEM">__("_pratilipi_type_poem")</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="pratilipi-type" id="radio-STORY" value="STORY">
+                                            <label class="form-check-label" for="radio-STORY">__("_pratilipi_type_story")</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="pratilipi-type" id="radio-ARTICLE" value="ARTICLE">
+                                            <label class="form-check-label" for="radio-ARTICLE">__("_pratilipi_type_article")</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tag-sections">
+                                    <div class="tag-section-title">__("tags_categories")</div>
+                                    <div class="tag-section-body">
+                                        <span class="all-tags active" v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span>
+                                    </div>
+                                </div>
+                                <div class="tag-sections">
+                                    <div class="tag-section-title">__("tags_add_custom_category")</div>
+                                    <div class="tag-section-body">
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" :placeholder="'__("tags_type_here")'">
+                                            </div>
+                                            <button type="submit" class="btn add-category"><i class="material-icons">send</i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <button type="button" @click="cancelTags" class="btn btn-light">__("cancel")</button>
+                                <button type="button" class="btn btn-save">__("save")</button>
                             </div>
                         </div>
                     </div>
@@ -194,6 +233,14 @@ export default {
             const formData = new FormData();
             formData.append('ko_unique_6', event.target.files[0], event.target.files[0].name);
             this.uploadPratilipiImage(formData);
+        },
+        showTags() {
+            $(".edit-tags").fadeIn();
+            $(".tags").hide();
+        },
+        cancelTags() {
+            $(".edit-tags").hide();
+            $(".tags").fadeIn();
         }
     },
     created() {
@@ -310,6 +357,64 @@ export default {
                         margin: 5px 0 10px 10px;
                         padding: 5px 12px;
                         font-size: 14px;
+                    }
+                }
+                .edit-tags {
+                    font-size: 14px;
+                    padding: 10px;
+                    display: none;
+                    .desc {
+                        font-size: 13px;
+                        color: #212121;
+                        text-align: left;
+                    }
+                    .tag-sections {
+                        margin: 10px 0;
+                        text-align: left;
+                        .tag-section-title {
+                            font-size: 16px;
+                            font-weight: bold;
+                            padding: 10px 0;
+                        }
+                        .tag-section-body {
+                            font-size: 16px;
+                            .all-tags {
+                                display: inline-block;
+                                background: #fff;
+                                border: 1px solid #e9e9e9;
+                                border-radius: 15px;
+                                color: #212121;
+                                margin: 5px 4px;
+                                padding: 5px 10px;
+                                font-size: 14px;
+                                cursor: pointer;
+                                &.active {
+                                    background: #e9e9e9;
+                                }
+                            }
+                            .form-group {
+                                margin-bottom: 0;
+                            }
+                            .form-control {
+                                font-size: 14px;
+                            }
+                            .add-category {
+                                background: none;
+                                padding: 0;
+                                margin-left: 10px;
+                                i {
+                                    vertical-align: middle;
+                                }
+                            }
+                        }
+                    }
+                    button {
+                        font-size: 14px;
+                        margin: 5px 4px 10px 0;
+                        &.btn-save {
+                            background: #d0021b;
+                            color: #fff;
+                        }
                     }
                 }
             }
