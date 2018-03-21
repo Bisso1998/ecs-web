@@ -7,15 +7,10 @@
                         <h2>__("search_results")</h2>
                         <div class="head-title" v-if="getAuthorListData.length !== 0">__("search_results_authors")</div>
                         <div class="author-section">
-                            <div class="follow" v-for="eachAuthor in getAuthorListData" :key="eachAuthor.authorId">
-                                <a :href="eachAuthor.pageUrl">
-                                    <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + eachAuthor.profileImageUrl + (eachAuthor.profileImageUrl.endsWith('/author/image') ? '?' : '&')  + 'width=100)' }"></div>
-                                    <div class="follow-name">{{ eachAuthor.name }}</div>
-                                </a>
-                                <div class="follow-count">__("author_followers"): <span>{{ eachAuthor.followCount }}</span></div>
-                                <button v-if="!eachAuthor.following" class="btn btn-light follow-link" @click="followOrUnfollowAuthor({ authorId: eachAuthor.authorId, following: eachAuthor.following })"><i class="material-icons">person_add</i> __("author_follow")</button>
-                                <button v-if="eachAuthor.following" class="btn btn-light follow-link" @click="followOrUnfollowAuthor({ authorId: eachAuthor.authorId, following: eachAuthor.following })"><i class="material-icons">check</i> __("author_following")</button>
-                            </div>
+                            <AuthorCard v-for="eachAuthor in getAuthorListData" 
+                                :key="eachAuthor.authorId" 
+                                :authorData="eachAuthor"
+                                :followOrUnfollowAuthor="followOrUnfollowAuthor"></AuthorCard>
                         </div>
                         <div class="books-section">
                             <div class="head-title" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' || getPratilipiListData.length !== 0">__("search_results_contents")</div>
@@ -39,6 +34,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
+import AuthorCard from '@/components/AuthorCard.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
@@ -47,6 +43,7 @@ export default {
     components: {
         MainLayout,
         Spinner,
+        AuthorCard,
         PratilipiComponent
     },
     data() {
@@ -165,54 +162,6 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
         text-align: left;
-    }
-    .follow {
-        border: 1px solid #e9e9e9;
-        width: 150px;
-        display: inline-block;
-        margin: 10px 5px;
-        position: relative;
-        text-align: center;
-        a {
-            color: #d0021b;
-        }
-        .follow-img {
-            display: block;
-            width: 100px;
-            height: 100px;
-            margin: 10px auto;
-            border-radius: 50%;
-            background: #eee;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .follow-name {
-            font-size: 12px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 100%;
-            min-height: 23px;
-            overflow: hidden;
-            padding: 0 5px 5px;
-        }
-        .follow-link {
-            background: #d0021b;
-            color: #fff;
-            font-size: 12px;
-            margin: 10px 0;
-            i {
-                font-size: 16px;
-                vertical-align: middle;
-            }
-        }
-        .follow-count {
-            font-size: 11px;
-            margin: 0;
-            span {
-                font-weight: bold;
-            }
-        }
     }
 }
 </style>
