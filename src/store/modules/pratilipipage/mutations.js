@@ -160,6 +160,14 @@ export default {
 
     },
 
+    setPratilipiTitleUpdateSuccess(state, data) {
+        state.pratilipi.data.title = data.title;
+        state.pratilipi.data.titleEn = data.titleEn;
+    },
+    setPratilipiTitleUpdateError(state) {
+
+    },
+
     setFollowUnfollowLoadingDataLoadingError(state) {
 
     },

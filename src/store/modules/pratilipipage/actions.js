@@ -151,6 +151,18 @@ export default {
         });
     },
 
+    saveOrUpdateTitle({ commit, state }, data) {
+        data.title = data.value;
+        data.titleEn = data.value_two;
+        delete data.value;
+        delete data.value_two;
+        DataAccessor.createOrUpdatePratilipi(data, (data) => {
+            commit('setPratilipiTitleUpdateSuccess', data);
+        }, (error) => {
+            commit('setPratilipiTitleUpdateError');
+        });
+    },
+
     fetchSystemTags({ commit, state }, language) {
         commit('setSystemTagsLoadingTrue');
         DataAccessor.getTags(language, (data) => {
