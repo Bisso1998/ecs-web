@@ -140,9 +140,11 @@ export default {
         },
         openReview() {
             $(".review-box").fadeIn();
+            $(".write-review-btn").hide();
         },
         cancelReview(e) {
-            $(".review-box").fadeOut();
+            $(".review-box").hide();
+            $(".write-review-btn").fadeIn();
         }
     }
 }
@@ -240,7 +242,7 @@ li {
                 button {
                     float: right;
                     font-size: 14px;
-                    margin-left: 10px;
+                    margin-left: 5px;
                     &.btn-primary {
                         background: #d0021b;
                         border: 0;
@@ -292,7 +294,7 @@ li {
                 button {
                     float: right;
                     font-size: 14px;
-                    margin-left: 10px;
+                    margin-left: 5px;
                     &.btn-primary {
                         background: #d0021b;
                         border: 0;
