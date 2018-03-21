@@ -59,8 +59,8 @@
                         </div>
                         <div class="col-md-12 profile-bottom" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
                             <div class="profile-menu">
-                                <a href="#" v-on:click="tabchange" class="active" data-tab="published"><span>{{ getAuthorData.contentPublished }}</span>__("author_published_contents")</a>
-                                <a href="#" v-if="getUserDetails.userId === getAuthorData.user.userId" v-on:click="tabchange" data-tab="library">__("library")</a>
+                                <a href="#" v-if="getUserDetails.userId === getAuthorData.user.userId" v-on:click="tabchange" class="active" data-tab="library">__("library")</a>
+                                <a href="#" v-on:click="tabchange" data-tab="published"><span>{{ getAuthorData.contentPublished }}</span>__("author_published_contents")</a>
                                 <a href="#" v-on:click="tabchange" data-tab="followers"><span>{{ getAuthorData.followCount }}</span>__("author_followers")</a>
                                 <a href="#" v-on:click="tabchange" data-tab="following"><span>{{ getAuthorData.user.followCount }}</span>__("author_following")</a>
                             </div>
@@ -82,6 +82,7 @@
                                     v-for="pratilipiData in getLibraryList"
                                     v-if="getLibraryListLoadingState === 'LOADING_SUCCESS' || getLibraryList.length !== 0"
                                     :hideAuthorName="true"
+                                    :redirectToReader="true"
                                     :removeFromLibrary="removeFromLibrary"
                                     ></PratilipiComponent>
                                     <router-link
@@ -317,7 +318,7 @@ export default {
                 top: 10px;
                 right: 10px;
                 button, a {
-                    background: rgba(255,255,255,0.4);
+                    background: rgba(255,255,255,0.7);
                     border: 0;
                     display: inline-block;
                     color: #2c3e50;
@@ -531,8 +532,11 @@ export default {
         }
         .list {
             display: none;
-            margin: 20px 0;
-            &.published-contents {
+            margin: 10px 0;
+            @media screen and (max-width: 768px ) {
+                text-align: center;
+            }
+            &#library {
                 display: block;
             }
         }
@@ -541,7 +545,7 @@ export default {
             display: inline-block;
             vertical-align: text-bottom;
 			.view_more_card {
-				width: 300px;
+				width: 260px;
 				background: #fff;
 				border: 1px solid #e9e9e9;
 				height: 233px;

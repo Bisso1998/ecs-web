@@ -406,9 +406,10 @@ export default {
     background: #283035;
     color: #FFF;
     font-size: 12px;
-    padding: 3px 5px;
+    padding: 2px 5px;
     font-weight: 700;
     margin-left: 10px;
+    display: inline-block;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;

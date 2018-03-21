@@ -4,26 +4,25 @@
             <div class="header-section" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                 <div class="container">
                     <div class="row">
-                        <div class="exit-reader col-1">
+                        <div class="exit-reader tool-icon-1">
                             <router-link :to="getPratilipiData.pageUrl"><i class="material-icons">arrow_back</i></router-link>
                         </div>
-                        <div class="col-1" id="sidebarCollapse" @click="openSidebar">
-                            <i class="material-icons">list</i>
-                        </div>
-                        <div class="book-name col-7">{{ getPratilipiData.title }}</div>
-                        <div class="settings col-1">
-                            <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions">
-                                <i class="material-icons">settings</i>
-                            </button>
-                        </div>
-                        <div class="more-options col-1">
-                            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#reportModal">
-                                    __("report_button")
+                        <div class="book-name tool-icon-8" @click="openSidebar"><span>{{ getPratilipiData.title }}</span> <i class="material-icons">arrow_drop_down</i></div>
+                        <div class="right-icons">
+                            <div class="settings tool-icon-1">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions">
+                                    <i class="material-icons">settings</i>
                                 </button>
+                            </div>
+                            <div class="more-options tool-icon-1">
+                                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button type="button" class="btn report-btn" data-toggle="modal" data-target="#reportModal">
+                                        __("report_button")
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -110,7 +109,10 @@
                                 :key="eachChapter.chapterNo"
                                 v-html="eachChapter.content">
                             </div>
-                            
+                            <div class="book-navigation">
+                                <div class="prev">Previous Chapter</div>
+                                <div class="next">__("reader_next_chapter")</div>
+                            </div>
                             <div class="book-recomendations col-md-12 p-0" v-if="selectedChapter == getIndexData.length">
                                 <div class="card">
                                     <Recommendation
@@ -433,8 +435,41 @@ export default {
         z-index: 2;
         width: 100%;
         background: #fff;
-        .exit-reader a {
-            color: #2c3e50;
+        .row {
+            display: block;
+        }
+        .tool-icon-1 {
+            width: 40px;
+            float: left;
+            padding: 0 5px;
+            i {
+                vertical-align: middle;
+            }
+        }
+        .tool-icon-8 {
+            max-width: 700px;
+            float: left;
+            width: 80%;
+            cursor: pointer;
+            span, i {
+                vertical-align: middle;
+            }
+            @media screen and (max-width: 768px ) {
+                width: 68%;
+            }
+            @media screen and (max-width: 410px ) {
+                width: 59%;
+            }
+        }
+        .right-icons {
+            float: right;
+            width: 90px;
+        }
+        .exit-reader {
+            margin-right: 5px;
+            a {
+                color: #2c3e50;
+            }
         }
         .book-name {
             text-align: left;
@@ -442,9 +477,6 @@ export default {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap
-        }
-        #sidebarCollapse {
-            cursor: pointer;
         }
         .more-options .btn, .settings .btn {
             padding: 0;
@@ -470,10 +502,10 @@ export default {
     .reader-progress {
         left:0;
         width: 100%;
-        height: 4px;
+        height: 2px;
         margin-bottom: 0px;
         position: fixed;
-        top: 48px;
+        top: 47px;
         overflow: hidden;
         background-color: white;
         content: "";
@@ -493,7 +525,7 @@ export default {
         }
     }
     .book-content {
-        margin-top: 54px;
+        margin: 54px 0;
         font-size: 16px;
         padding: 10px;
         text-align: justify;
@@ -512,8 +544,25 @@ export default {
                 font-size: 18px;
             }
         }
-        .content-section {
-            margin-bottom: 50px;
+        .book-navigation {
+            display: block;
+            clear: both;
+            width: 100%;
+            overflow: hidden;
+            margin: 10px 0 30px;
+            div {
+                display: block;
+                float: left;
+                color: #212121;
+                background: #e9e9e9;
+                font-size: 14px;
+                padding: 5px 10px;
+                border-radius: 15px;
+                cursor: pointer;
+                &.next {
+                    float: right;
+                }
+            }
         }
     }
     .footer-section {
@@ -877,5 +926,9 @@ export default {
             }
         }
     }
+}
+.book-content img {
+    width: 100%;
+    max-width: 1200px;
 }
 </style>

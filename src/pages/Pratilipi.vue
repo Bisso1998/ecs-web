@@ -21,7 +21,7 @@
                             </router-link>
                             <div class="book-stats">
                                 <span class="avg-rating stars-green"><span class="rating-text">{{ getPratilipiData.averageRating | round(1) }}</span> <i class="material-icons">star_rate</i></span>
-                                <span class="review-count">{{ getPratilipiData.reviewCount }} __("rating_ratings")</span>
+                                <span class="review-count">{{ getPratilipiData.ratingCount }} __("rating_ratings")</span>
                             </div>
                             <div class="book-stats">
                                 <span class="read-time">__("pratilipi_reading_time"): {{ getPratilipiData.readingTime | showInMinutesOrHours }}</span>
@@ -310,12 +310,13 @@ export default {
         .book-details {
             .card {
                 text-align: center;
+                margin: 5px 10px 0;
             }
             .book-image {
                 background-size: contain;
                 background-repeat: no-repeat;
                 background-position: center;
-                margin: 10px 0;
+                margin: 10px 0 5px;
                 width: 100%;
                 height: 200px;
                 position: relative;
@@ -349,14 +350,14 @@ export default {
                 font-weight: bold;
             }
             .author-name {
-                margin: 4px 0;
+                margin: 2px 0;
                 display: inline-block;
                 color: #d0021b;
                 font-size: 15px;
             }
             .book-stats {
                 font-size: 13px;
-                margin: 4px 0;
+                margin: 2px 0;
                 .avg-rating {
                     background-color: #37be5f;
                     color: #fff;
@@ -437,7 +438,7 @@ export default {
                     border: 0;
                     outline: none;
                     padding: 0;
-                    margin: 10px 0;
+                    margin: 5px 0 10px;
                     cursor: pointer;
                     &:hover {
                         text-decoration: none;
