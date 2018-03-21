@@ -153,7 +153,6 @@ export default {
     },
 
     setPratilipiSummaryUpdateSuccess(state, data) {
-        console.log(data);
         state.pratilipi.data.summary = data.summary;
     },
     
@@ -164,4 +163,15 @@ export default {
     setFollowUnfollowLoadingDataLoadingError(state) {
 
     },
+
+    setSystemTagsLoadingTrue(state) {
+        state.system_tags.loading_state = 'LOADING';
+    },
+    setSystemTagsLoadingSuccess(state, data) {
+        state.system_tags.loading_state = 'LOADING_SUCCESS';
+        state.system_tags.data = data;
+    },
+    setSystemTagsLoadingError(state) {
+        state.system_tags.loading_state = 'LOADING_ERROR';
+    }
 }

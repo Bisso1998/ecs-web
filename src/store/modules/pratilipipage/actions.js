@@ -149,5 +149,16 @@ export default {
         }, (error) => {
             commit('setPratilipiSummaryUpdateError');
         });
+    },
+
+    fetchSystemTags({ commit, state }, language) {
+        commit('setSystemTagsLoadingTrue');
+        DataAccessor.getTags(language, (data) => {
+            if (data.status === 200) {
+                commit('setSystemTagsLoadingSuccess', data.response);
+            } else {
+                commit('setSystemTagsLoadingError');
+            }
+        });
     }
 }

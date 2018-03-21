@@ -24,5 +24,7 @@ export default {
     getUserPratilipiLoadingState: state => state.userPratilipi.loading_state,
     getImageUploadLoadingState: state => state.pratilipi.pratilipi_image_upload_state,
     getAuthorDetails: state => state.author.data,
-    getUserAuthorDetails: state => state.userAuthor.data
+    getUserAuthorDetails: state => state.userAuthor.data,
+    getSystemTags: state => state.system_tags.data,
+    getSystemTagsLoadingState: state => state.system_tags.loading_state
 }

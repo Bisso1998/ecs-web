@@ -15,5 +15,9 @@ export default {
     userAuthor: {
     	loading_state: 'LOADING',
     	data: {}
+    },
+    system_tags: {
+        loading_state: 'LOADING',
+        data: {}
     }
 }
