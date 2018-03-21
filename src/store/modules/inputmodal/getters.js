@@ -1,8 +1,8 @@
 export default {
     
-    getInputModalActionAndData: state =>  state,
+    getModalActionAndData: state =>  state,
 
-    getInputModalTitle: state => {
+    getModalTitle: state => {
         switch (state.heading) {
             case 'report_title':
                 return '__("report_title")';

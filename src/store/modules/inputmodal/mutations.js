@@ -20,13 +20,19 @@ export default {
     // }
     
     setInputModalSaveAction(state, { action, data, prefilled_value, prefilled_value_two }) {
-        state.save_action = action;
-        state.save_data = data;
+        state.action = action;
+        state.data = data;
         state.prefilled_value = prefilled_value;
         state.prefilled_value_two = prefilled_value_two;
     },
 
-    setInputModalHeading(state, heading) {
+    setConfirmModalAction(state, { action, data, message }) {
+        state.action = action;
+        state.data = data;
+        state.message = message;
+    },
+
+    setModalHeading(state, heading) {
         state.heading = heading;
     },
 

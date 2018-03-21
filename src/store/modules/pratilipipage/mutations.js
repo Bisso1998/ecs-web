@@ -168,7 +168,21 @@ export default {
 
     },
 
+    setPratilipiStateUpdateSuccess(state, data) {
+        state.pratilipi.data.state = data.state;
+    },
+    setPratilipiStateUpdateError(state) {
+
+    },
+
     setFollowUnfollowLoadingDataLoadingError(state) {
+
+    },
+
+    setPratilipiDeleteSuccess(state) {
+        state.pratilipi.data.state = 'DELETED';
+    },
+    setPratilipiDeleteError(state) {
 
     },
 

@@ -3,5 +3,6 @@ export default {
     save_data: null,
     heading: null,
     prefilled_value: null,
-    prefilled_value_two: null
+    prefilled_value_two: null,
+    message: null
 }

@@ -163,6 +163,28 @@ export default {
         });
     },
 
+    deletePratilipi({ commit, state }, data) {
+        const dataToSend = {
+            state: 'DELETED',
+            pratilipiId: data.pratilipiId
+        };
+        console.log(dataToSend);
+        DataAccessor.createOrUpdatePratilipi(dataToSend, (data) => {
+            commit('setPratilipiDeleteSuccess', data);
+        }, (error) => {
+            commit('setPratilipiDeleteError');
+        });
+    },
+
+    unpublishOrPublishBook({ commit, state }, bookState) {
+
+        DataAccessor.createOrUpdatePratilipi({ pratilipiId: state.pratilipi.data.pratilipiId, state: bookState }, (data) => {
+            commit('setPratilipiStateUpdateSuccess', data);
+        }, (error) => {
+            commit('setPratilipiStateUpdateError');
+        });
+    },
+
     fetchSystemTags({ commit, state }, language) {
         commit('setSystemTagsLoadingTrue');
         DataAccessor.getTags(language, (data) => {
