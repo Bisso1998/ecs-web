@@ -3,7 +3,7 @@
         <header>
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-2 col-sm-3 col-5 p-r-0">
+                    <div class="col-lg-2 col-sm-4 col-5 p-r-0">
                         <router-link
                           :to="{ name: 'Home' }"
                           class="logo">
@@ -179,6 +179,9 @@ export default {
             float: left;
             width: 40px;
             display: inline-block;
+            @media screen and (max-width: 350px ) {
+                width: 29px
+            }
             &:hover {
                 text-decoration: none;
             }

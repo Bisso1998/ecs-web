@@ -46,7 +46,7 @@
                         <input type="radio" id="star2" name="rating" value="2" :checked="userPratilipiData.rating == 2" @change="changeRating"/><label class = "full" for="star2"></label>
                         <input type="radio" id="star1" name="rating" value="1" :checked="userPratilipiData.rating == 1" @change="changeRating"/><label class = "full" for="star1"></label>
                     </fieldset>
-                    <button class="btn btn-primary write-review-btn" v-if="userPratilipiData.review === ''" @click="openReview">__("review_write_a_review")</button>
+                    <button class="btn btn-primary write-review-btn" v-if="!userPratilipiData.review || userPratilipiData.review === ''" @click="openReview">__("review_write_a_review")</button>
                     <button class="btn btn-primary write-review-btn" @click="openReview" v-else>__("review_edit_review")</button>
                     <div class="review-box">
                         <form>
@@ -140,9 +140,11 @@ export default {
         },
         openReview() {
             $(".review-box").fadeIn();
+            $(".write-review-btn").hide();
         },
         cancelReview(e) {
-            $(".review-box").fadeOut();
+            $(".review-box").hide();
+            $(".write-review-btn").fadeIn();
         }
     }
 }
@@ -240,7 +242,7 @@ li {
                 button {
                     float: right;
                     font-size: 14px;
-                    margin-left: 10px;
+                    margin-left: 5px;
                     &.btn-primary {
                         background: #d0021b;
                         border: 0;
@@ -292,7 +294,7 @@ li {
                 button {
                     float: right;
                     font-size: 14px;
-                    margin-left: 10px;
+                    margin-left: 5px;
                     &.btn-primary {
                         background: #d0021b;
                         border: 0;
