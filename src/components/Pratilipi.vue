@@ -4,9 +4,7 @@
             <div class="book-type" :class="pratilipiData.type">
                 {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
             </div>
-            <router-link :to="{ name: 'Pratilipi', params: { 
-                slug_id: pratilipiData.pageUrl.split('/').pop(),
-                pratilipiData }}" :title="pratilipiData.title">
+            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" :title="pratilipiData.title">
                 <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
             </router-link>
             <div class="image-mask">
@@ -16,9 +14,7 @@
                     <i v-else class="material-icons added-to-lib" @click="removeFromLibrary(pratilipiData.pratilipiId)">bookmark</i>
                 </button>
             </div>
-            <router-link :to="{ name: 'Pratilipi', params: { 
-                slug_id: pratilipiData.pageUrl.split('/').pop(),
-                pratilipiData }}" :title="pratilipiData.title">
+            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" :title="pratilipiData.title">
                 <div class="pratilipi-details">
                     <span class="title">{{ pratilipiData.title }}</span>
                     <span  v-if="!hideAuthorName" class="author">{{ pratilipiData.author.name }}</span>
@@ -77,6 +73,11 @@ export default {
         },
         hideAuthorName: {
             type: Boolean
+        },
+        redirectToReader: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
     mixins: [
