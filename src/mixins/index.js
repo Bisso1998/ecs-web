@@ -1,4 +1,12 @@
-import { translateWord, openLoginModal, openInputModal, openMultiInputModal } from '@/mixins/methods'
+import { 
+    translateWord, 
+    openLoginModal, 
+    openInputModal, 
+    openMultiInputModal,
+    isMobile,
+    isAndroid,
+    isChrome
+} from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
 export default {
@@ -11,6 +19,9 @@ export default {
         translateWord,
         openLoginModal,
         openInputModal,
-        openMultiInputModal
+        openMultiInputModal,
+        isMobile,
+        isAndroid,
+        isChrome
     }
 }

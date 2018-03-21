@@ -34,7 +34,10 @@
                                 <div class="book-edit-actions" v-if="getPratilipiData.hasAccessToUpdate">
                                     <span v-if="getPratilipiData.state === 'PUBLISHED'">
                                         <button>__("pratilipi_move_to_drafts")</button>
-                                        <button><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button>
+                                    </span>
+                                    <span>
+                                        <button v-if="isMobile()" @click="showAlertToGoToDesktop"><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button>
+                                        <a v-else :href="getPratilipiData.writePageUrl"><button ><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button></a>
                                     </span>
                                     <span v-if="getPratilipiData.state === 'DRAFTED'">
                                         <button>__("pratilipi_publish_it")</button>
@@ -215,6 +218,12 @@ export default {
             'setAfterLoginAction',
             'setInputModalSaveAction'
         ]),
+        ...mapActions('alert', [
+            'triggerAlert'
+        ]),
+        showAlertToGoToDesktop() {
+            this.triggerAlert('__("write_on_desktop_only")');
+        },
         editPratilipiSummary() {
             this.setInputModalSaveAction({ 
                 action: `${this.$route.meta.store}/saveOrUpdateSummary`, 
