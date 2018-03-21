@@ -13,6 +13,10 @@ export function translateWord(word, callback) {
         });
 }
 
-export function openLoginModal(actionToTrigger, dataForAction) {
+export function openLoginModal() {
     $('#login_modal').modal('show');
+}
+
+export function openInputModal() {
+    $('#reportModal').modal('show');
 }
