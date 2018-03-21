@@ -6,12 +6,14 @@
                     <div class="col-md-12">
                         <h2>__("search_results")</h2>
                         <div class="head-title" v-if="getAuthorListData.length !== 0">__("search_results_authors")</div>
-                        <div class="author-section">
+                        <div class="author-section" @scroll="updateXScroll">
                             <AuthorCard v-for="eachAuthor in getAuthorListData" 
                                 :key="eachAuthor.authorId" 
                                 :authorData="eachAuthor"
                                 :followOrUnfollowAuthor="followOrUnfollowAuthor"></AuthorCard>
                         </div>
+                        <button @click="scrollLeft" :disabled="isAtLeftEnd">left</button>
+                        <button @click="scrollRight" :disabled="isAtRightEnd">right</button>
                         <div class="books-section">
                             <div class="head-title" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' || getPratilipiListData.length !== 0">__("search_results_contents")</div>
                             <PratilipiComponent
@@ -48,7 +50,9 @@ export default {
     },
     data() {
         return {
-            scrollPosition: null
+            scrollPosition: null,
+            isAtRightEnd: false,
+            isAtLeftEnd: true
         }
     },
     computed: {
@@ -71,6 +75,32 @@ export default {
         ]),
         updateScroll() {
             this.scrollPosition = window.scrollY
+        },
+        updateXScroll() {
+            const $elem = $('.author-section');
+            const newScrollLeft = $elem.scrollLeft(),
+                width = $elem.width(),
+                scrollWidth = $elem.get(0).scrollWidth;
+            if (scrollWidth - newScrollLeft - width === 0) {
+                this.isAtRightEnd = true;
+                this.isAtLeftEnd = false;
+            } else if (newScrollLeft === 0) {
+                this.isAtRightEnd = false;
+                this.isAtLeftEnd = true;
+            } else {
+                this.isAtRightEnd = false;
+                this.isAtLeftEnd = false;
+            }
+        },
+        scrollRight() {
+            $('.author-section').animate({
+                scrollLeft: "+=200px"
+            }, "slow");
+        },
+        scrollLeft() {
+            $('.author-section').animate({
+                scrollLeft: "-=200px"
+            }, "slow");
         }
     },
     watch: {
