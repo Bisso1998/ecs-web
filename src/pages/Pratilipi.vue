@@ -77,10 +77,10 @@
                             <div v-if="getPratilipiData.summary">
                                 <div class="head-title">__("pratilipi_summary") <button class="edit" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
                                 <p class="text show-more-height">{{ getPratilipiData.summary }}</p>
-                                <button type="button" class="show_more" name="button" data-toggle="modal" data-target="#summary_modal">__("view_more")</button>
+                                <button type="button" class="show_more" name="button" data-toggle="modal" data-target="#book_summary_modal">__("view_more")</button>
                             </div>
                             <!-- SUMMARY MODAL -->
-                            <div class="modal fade summary-modal" id="summary_modal" tabindex="-1" role="dialog" aria-labelledby="summary-modalLabel" aria-hidden="true">
+                            <div class="modal fade summary-modal" id="book_summary_modal" tabindex="-1" role="dialog" aria-labelledby="summary-modalLabel" aria-hidden="true">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
