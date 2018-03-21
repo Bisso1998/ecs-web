@@ -103,7 +103,8 @@ export default {
             white-space: nowrap;
             a {
                 color: #212121;
-                padding: 2px 0 2px 10px;
+                padding: 5px 0 5px 10px;
+                display: block;
             }
 			@media screen and (max-width: 576px ) {
                 font-size: 18px;
