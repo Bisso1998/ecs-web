@@ -187,6 +187,37 @@ export default {
 
     },
 
+    setFollowUnfollowFollowingLoadingDataLoadingTrue(state) {
+
+    },
+    setFollowUnfollowFollowingLoadingDataLoadingSuccess(state, data) {
+        const authorFollowedOrUnfollowed = state.following.data.find(eachAuthor => eachAuthor.author.authorId === data.authorId);
+        authorFollowedOrUnfollowed.author.following = data.following;
+        if (data.following) {
+            authorFollowedOrUnfollowed.author.followCount++;    
+        } else {
+            authorFollowedOrUnfollowed.author.followCount--;
+        }
+    },
+    setFollowUnfollowFollowingLoadingDataLoadingError(state) {
+
+    },
+    setFollowUnfollowFollowersLoadingDataLoadingTrue(state) {
+
+    },
+    setFollowUnfollowFollowersLoadingDataLoadingSuccess(state, data) {
+        const authorFollowedOrUnfollowed = state.followers.data.find(eachAuthor => eachAuthor.author.authorId === data.authorId);
+        authorFollowedOrUnfollowed.author.following = data.following;
+        if (data.following) {
+            authorFollowedOrUnfollowed.author.followCount++;    
+        } else {
+            authorFollowedOrUnfollowed.author.followCount--;
+        }
+    },
+    setFollowUnfollowFollowersLoadingDataLoadingError(state) {
+
+    },
+
     setCoverImageUploadingTrue(state) {
         state.author.cover_image_upload_state = 'LOADING';
     },

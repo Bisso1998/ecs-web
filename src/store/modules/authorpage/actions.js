@@ -139,6 +139,28 @@ export default {
             console.log('My life is wasted');
             commit('setProfileImageUploadingError');
         });
+    },
+
+    followOrUnfollowFollowing({ commit, state }, { authorId, following }) {
+        console.log(authorId);
+        console.log(following);
+        commit('setFollowUnfollowFollowingLoadingDataLoadingTrue');
+        DataAccessor.followOrUnfollowAuthor(authorId, !following, function(data) {
+            commit('setFollowUnfollowFollowingLoadingDataLoadingSuccess', data);
+        }, function (error) {
+            commit('setFollowUnfollowFollowingLoadingDataLoadingError');
+        });
+    },
+
+    followOrUnfollowFollowers({ commit, state }, { authorId, following }) {
+        console.log(authorId);
+        console.log(following);
+        commit('setFollowUnfollowFollowersLoadingDataLoadingTrue');
+        DataAccessor.followOrUnfollowAuthor(authorId, !following, function(data) {
+            commit('setFollowUnfollowFollowersLoadingDataLoadingSuccess', data);
+        }, function (error) {
+            commit('setFollowUnfollowFollowersLoadingDataLoadingError');
+        });
     }
 
 
