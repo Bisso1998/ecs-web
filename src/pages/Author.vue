@@ -94,27 +94,19 @@
                                     </router-link>
                                 </div>
                                 <div class="list followers" id="followers">
-                                    <div class="follow" v-for="each_follower in getAuthorFollowers" :key="each_follower.userId">
-                                        <a :href="each_follower.profilePageUrl">
-                                            <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + each_follower.profileImageUrl + (each_follower.profileImageUrl.endsWith('/author/image') ? '?' : '&')  + 'width=100)' }"></div>
-                                            <div class="follow-name">{{ each_follower.author.name }}</div>
-                                        </a>
-                                        <div class="follow-count">__("author_followers"): <span>{{ each_follower.author.followCount }}</span></div>
-                                        <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
-                                        <button style="display: none;" class="btn btn-light follow-link"><i class="material-icons">check</i> __("author_following")</button>
-                                    </div>
+                                    <AuthorCard  v-for="each_follower in getAuthorFollowers" 
+                                        :authorData="each_follower" 
+                                        :key="each_follower.userId"
+                                        :followOrUnfollowAuthor="followOrUnfollowFollowers"
+                                        :inFollowersTab="true"></AuthorCard>
                                     <Spinner v-if="getAuthorFollowersLoadingState === 'LOADING'"></Spinner>
                                 </div>
                                 <div class="list following" id="following">
-                                    <div class="follow" v-for="each_following in getAuthorFollowing" :key="each_following.userId">
-                                        <a :href="each_following.pageUrl">
-                                            <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + each_following.profileImageUrl + (each_following.profileImageUrl.endsWith('/author/image') ? '?' : '&')  + 'width=100)' }"></div>
-                                            <div class="follow-name">{{ each_following.name }}</div>
-                                        </a>
-                                        <div class="follow-count">__("author_followers"): <span>{{ each_following.followCount }}</span></div>
-                                        <button class="btn btn-light follow-link"><i class="material-icons">person_add</i> __("author_follow")</button>
-                                        <button style="display: none;" class="btn btn-light follow-link"><i class="material-icons">check</i> __("author_following")</button>
-                                    </div>
+                                    <AuthorCard v-for="each_following in getAuthorFollowing" 
+                                        :authorData="each_following" 
+                                        :key="each_following.userId"
+                                        :followOrUnfollowAuthor="followOrUnfollowFollowing"
+                                        :inFollowingTab="true"></AuthorCard>
                                     <Spinner v-if="getAuthorFollowingLoadingState === 'LOADING'"></Spinner>
                                 </div>
                             </div>
@@ -129,6 +121,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
+import AuthorCard from '@/components/AuthorCard.vue';
 import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions, mapState } from 'vuex'
 
@@ -179,6 +172,8 @@ export default {
             'fetchInitialLibraryList',
             'removeFromLibrary',
             'followOrUnfollowAuthor',
+            'followOrUnfollowFollowing',
+            'followOrUnfollowFollowers',
             'uploadCoverImage',
             'uploadProfileImage'
         ]),
@@ -234,12 +229,12 @@ export default {
 
                 this.fetchInitialAuthorFollowingUsers({ 
                     userId: this.getAuthorData.user.userId, 
-                    resultCount: 5
+                    resultCount: 20
                 });
 
                 this.fetchInitialAuthorFollowerUsers({ 
                     authorId: newValue, 
-                    resultCount: 5 
+                    resultCount: 20
                 });
 
                 this.fetchInitialLibraryList(10);
@@ -249,7 +244,7 @@ export default {
             this.fetchAuthorDetails(user_slug);
         },
         'scrollPosition'(newScrollPosition){
-            const nintyPercentOfList = ( 75 / 100 ) * $('.author-page').innerHeight();
+            const nintyPercentOfList = ( 50 / 100 ) * $('.author-page').innerHeight();
 
 
             if (newScrollPosition > nintyPercentOfList 
@@ -287,6 +282,7 @@ export default {
     components: {
         MainLayout,
         PratilipiComponent,
+        AuthorCard,
         Spinner
     },
     mounted() {
@@ -538,54 +534,6 @@ export default {
             margin: 20px 0;
             &.published-contents {
                 display: block;
-            }
-            .follow {
-                border: 1px solid #e9e9e9;
-                width: 150px;
-                display: inline-block;
-                margin: 10px 5px;
-                position: relative;
-                text-align: center;
-                a {
-                    color: #d0021b;
-                }
-                .follow-img {
-                    display: block;
-                    width: 100px;
-                    height: 100px;
-                    margin: 10px auto;
-                    border-radius: 50%;
-                    background: #eee;
-                    background-size: cover;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                }
-                .follow-name {
-                    font-size: 12px;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    max-width: 100%;
-                    min-height: 23px;
-                    overflow: hidden;
-                    padding: 0 5px 5px;
-                }
-                .follow-link {
-                    background: #d0021b;
-                    color: #fff;
-                    font-size: 12px;
-                    margin: 10px 0;
-                    i {
-                        font-size: 16px;
-                        vertical-align: middle;
-                    }
-                }
-                .follow-count {
-                    font-size: 11px;
-                    margin: 0;
-                    span {
-                        font-weight: bold;
-                    }
-                }
             }
         }
         a.view_more {
