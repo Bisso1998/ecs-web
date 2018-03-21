@@ -322,7 +322,7 @@ export default {
         },
         'getPratilipiData.state'(state) {
             if (state === 'DELETED') {
-                this.$router.push('/login');
+                this.$router.push(this.getUserDetails.profilePageUrl);
             }
         },
         'getUserDetails.userId'() {
