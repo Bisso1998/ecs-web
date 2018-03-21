@@ -25,6 +25,11 @@ export function openMultiInputModal() {
     $('#multiinput').modal('show');
 }
 
+export function openForgotPasswordModal() {
+    console.log('hi')
+    $('#forgotPassModal').modal('show');
+}
+
 export function openConfirmationModal() {
     $('#confirmation').modal('show');
 }
