@@ -139,5 +139,26 @@ export default {
         }, function (error) {
             commit('setFollowUnfollowLoadingDataLoadingError');
         });
+    },
+
+    saveOrUpdateSummary({ commit, state }, data) {
+        data.summary = data.value;
+        delete data.value;
+        DataAccessor.createOrUpdatePratilipi(data, (data) => {
+            commit('setPratilipiSummaryUpdateSuccess', data);
+        }, (error) => {
+            commit('setPratilipiSummaryUpdateError');
+        });
+    },
+
+    fetchSystemTags({ commit, state }, language) {
+        commit('setSystemTagsLoadingTrue');
+        DataAccessor.getTags(language, (data) => {
+            if (data.status === 200) {
+                commit('setSystemTagsLoadingSuccess', data.response);
+            } else {
+                commit('setSystemTagsLoadingError');
+            }
+        });
     }
 }

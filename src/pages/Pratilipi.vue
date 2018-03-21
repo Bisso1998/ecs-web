@@ -114,7 +114,9 @@
                     <div class="book-synopsis col-md-12 col-lg-7 p-0">
                         <div class="card">
                             <div v-if="getPratilipiData.summary">
-                                <div class="head-title">__("pratilipi_summary") <button class="edit" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
+                                <div class="head-title">__("pratilipi_summary") 
+                                    <button class="edit" @click="editPratilipiSummary" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button>
+                                </div>
                                 <p class="text show-more-height">{{ getPratilipiData.summary }}</p>
                                 <button type="button" class="show_more" name="button" data-toggle="modal" data-target="#book_summary_modal">__("view_more")</button>
                             </div>
@@ -170,6 +172,7 @@ import AboutAuthor from '@/components/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
 import Reviews from '@/components/Reviews.vue';
 import mixins from '@/mixins';
+import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -190,7 +193,9 @@ export default {
             'getUserPratilipiData',
             'getPratilipiLoadingState',
             'getUserPratilipiLoadingState',
-            'getImageUploadLoadingState'
+            'getImageUploadLoadingState',
+            'getSystemTags',
+            'getSystemTagsLoadingState'
         ]),
         ...mapGetters([
             'getUserDetails'
@@ -202,12 +207,25 @@ export default {
             'fetchUserPratilipiData',
             'addToLibrary',
             'removeFromLibrary',
-            'uploadPratilipiImage'
+            'uploadPratilipiImage',
+            'fetchSystemTags'
         ]),
         ...mapActions([
             'setShareDetails',
-            'setAfterLoginAction'
+            'setAfterLoginAction',
+            'setInputModalSaveAction'
         ]),
+        editPratilipiSummary() {
+            this.setInputModalSaveAction({ 
+                action: `${this.$route.meta.store}/saveOrUpdateSummary`, 
+                heading: 'edit_pratilipi_summary',
+                prefilled_value: this.getPratilipiData.summary,
+                data: {
+                    pratilipiId: this.getPratilipiData.pratilipiId
+                }
+            });
+            this.openInputModal();
+        },
         addPratilipiToLibrary(pratilipiId) {
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
@@ -249,6 +267,14 @@ export default {
 
         console.log(slug_id);
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
+
+
+        const currentLocale = process.env.LANGUAGE;
+        constants.LANGUAGES.forEach((eachLanguage) => {
+            if (eachLanguage.shortName === currentLocale) {
+                this.fetchSystemTags(eachLanguage.fullName.toUpperCase());
+            }
+        });
     },
     components: {
         MainLayout,
