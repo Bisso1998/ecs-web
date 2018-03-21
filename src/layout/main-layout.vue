@@ -6,6 +6,7 @@
         <ShareModal></ShareModal>
         <InputModal></InputModal>
         <MultiInputModal></MultiInputModal>
+        <ConfirmationModal></ConfirmationModal>
         <Footer></Footer>
         <Alert></Alert>
     </div>
@@ -17,6 +18,7 @@ import LoginModal from '@/components/LoginModal.vue';
 import ShareModal from '@/components/Share.vue';
 import InputModal from '@/components/InputModal.vue';
 import MultiInputModal from '@/components/MultiInputModal.vue';
+import ConfirmationModal from '@/components/ConfirmationModal.vue';
 import Footer from '@/components/Footer.vue';
 import Alert from '@/components/Alert.vue';
 
@@ -48,6 +50,7 @@ export default {
         ShareModal,
         InputModal,
         MultiInputModal,
+        ConfirmationModal,
         Footer,
         Alert
     },

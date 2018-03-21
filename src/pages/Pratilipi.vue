@@ -41,7 +41,7 @@
                                     </span>
                                     <span v-if="getPratilipiData.state === 'DRAFTED'">
                                         <button>__("pratilipi_publish_it")</button>
-                                        <button><i class="material-icons">delete</i> __("pratilipi_delete_content")</button>
+                                        <button @click="deletePratilipi"><i class="material-icons">delete</i> __("pratilipi_delete_content")</button>
                                     </span>
                                 </div>
                                 <span v-if="!getPratilipiData.hasAccessToUpdate">
@@ -237,6 +237,9 @@ export default {
         },
         editPratilipiTitle() {
             this.openMultiInputModal();
+        },
+        deletePratilipi() {
+            this.openConfirmationModal();
         },
         addPratilipiToLibrary(pratilipiId) {
             if (this.getUserDetails.isGuest) {
@@ -570,7 +573,7 @@ export default {
                         border: 0;
                         font-size: 12px;
                         padding: 5px 10px;
-                        margin: 0 5px;
+                        margin: 2px 5px;
                         i {
                             font-size: 16px;
                             vertical-align: middle;

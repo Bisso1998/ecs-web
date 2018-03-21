@@ -25,6 +25,10 @@ export function openMultiInputModal() {
     $('#multiinput').modal('show');
 }
 
+export function openConfirmationModal() {
+    $('#confirmation').modal('show');
+}
+
 export function isMobile() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent );
 }
