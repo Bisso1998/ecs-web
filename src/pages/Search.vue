@@ -12,8 +12,8 @@
                                 :authorData="eachAuthor"
                                 :followOrUnfollowAuthor="followOrUnfollowAuthor"></AuthorCard>
                         </div>
-                        <button @click="scrollLeft" :disabled="isAtLeftEnd">left</button>
-                        <button @click="scrollRight" :disabled="isAtRightEnd">right</button>
+                        <button @click="scrollLeft" :class="{ disabled: isAtLeftEnd }">left</button>
+                        <button @click="scrollRight" :class="{ disabled: isAtRightEnd }">right</button>
                         <div class="books-section">
                             <div class="head-title" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' || getPratilipiListData.length !== 0">__("search_results_contents")</div>
                             <PratilipiComponent
