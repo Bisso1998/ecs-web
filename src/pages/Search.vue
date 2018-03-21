@@ -6,14 +6,14 @@
                     <div class="col-md-12">
                         <h2>__("search_results")</h2>
                         <div class="head-title" v-if="getAuthorListData.length !== 0">__("search_results_authors")</div>
-                        <div class="author-section" @scroll="updateXScroll">
-                            <AuthorCard v-for="eachAuthor in getAuthorListData" 
-                                :key="eachAuthor.authorId" 
-                                :authorData="eachAuthor"
-                                :followOrUnfollowAuthor="followOrUnfollowAuthor"></AuthorCard>
+                        <div class="author-section" v-if="getAuthorListData.length !== 0">
+                            <slick ref="slick" :options="slickOptions">
+                                <AuthorCard v-for="eachAuthor in getAuthorListData" 
+                                    :key="eachAuthor.authorId" 
+                                    :authorData="eachAuthor"
+                                    :followOrUnfollowAuthor="followOrUnfollowAuthor"></AuthorCard>
+                            </slick>
                         </div>
-                        <button @click="scrollLeft" :class="{ disabled: isAtLeftEnd }">left</button>
-                        <button @click="scrollRight" :class="{ disabled: isAtRightEnd }">right</button>
                         <div class="books-section">
                             <div class="head-title" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' || getPratilipiListData.length !== 0">__("search_results_contents")</div>
                             <PratilipiComponent
@@ -39,6 +39,7 @@ import Spinner from '@/components/Spinner.vue';
 import AuthorCard from '@/components/AuthorCard.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import constants from '@/constants'
+import Slick from 'vue-slick'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -46,13 +47,21 @@ export default {
         MainLayout,
         Spinner,
         AuthorCard,
-        PratilipiComponent
+        PratilipiComponent,
+        Slick
     },
     data() {
         return {
-            scrollPosition: null,
-            isAtRightEnd: false,
-            isAtLeftEnd: true
+            slickOptions: {
+                infinite: false,
+                adaptiveHeight: false,
+                variableWidth: true,
+                draggable: true,
+                edgeFriction: 0.30,
+                swipe: true,
+                prevArrow: '<div class="back"><i class="material-icons" aria-hidden="true">keyboard_arrow_left</i></div>',
+                nextArrow: '<div class="forward"><i class="material-icons" aria-hidden="true">keyboard_arrow_right</i></div>'
+            }
         }
     },
     computed: {
@@ -75,32 +84,6 @@ export default {
         ]),
         updateScroll() {
             this.scrollPosition = window.scrollY
-        },
-        updateXScroll() {
-            const $elem = $('.author-section');
-            const newScrollLeft = $elem.scrollLeft(),
-                width = $elem.width(),
-                scrollWidth = $elem.get(0).scrollWidth;
-            if (scrollWidth - newScrollLeft - width === 0) {
-                this.isAtRightEnd = true;
-                this.isAtLeftEnd = false;
-            } else if (newScrollLeft === 0) {
-                this.isAtRightEnd = false;
-                this.isAtLeftEnd = true;
-            } else {
-                this.isAtRightEnd = false;
-                this.isAtLeftEnd = false;
-            }
-        },
-        scrollRight() {
-            $('.author-section').animate({
-                scrollLeft: "+=200px"
-            }, "slow");
-        },
-        scrollLeft() {
-            $('.author-section').animate({
-                scrollLeft: "-=200px"
-            }, "slow");
         }
     },
     watch: {
@@ -187,11 +170,66 @@ export default {
     }
     .author-section {
         width: 100%;
-        overflow: hidden;
-        overflow-x: auto;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         text-align: left;
+        position: relative;
     }
 }
+</style>
+<style lang="scss">
+	.back, .forward {
+		position: absolute;
+		top: 45%;
+		z-index: 2;
+		background-color: #fff;
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		color: #000;
+		border: 1px solid #e9e9e9;
+        text-align: center;
+		cursor: pointer;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		-o-user-select: none;
+		transition: all .3s, visibility 0s;
+		-ms-transition: all .3s, visibility 0s;
+		-webkit-transition: all .3s, visibility 0s;
+		-moz-transition: all .3s, visibility 0s;
+		i {
+			height: 40px;
+			line-height: 40px;
+			font-size: 26px;
+		}
+		@media screen and (min-width: 768px ) {
+			&:hover {
+				background: #9E9E9E;
+				border-color: #9E9E9E;
+				box-shadow: 0 0px 2px rgba(0,0,0,0.2);
+				color: #fff;
+			}
+		}
+		&.slick-disabled {
+			i {
+				opacity: 0.2;
+			}
+            &:hover {
+                background: #fff;
+                border-color: #fff;
+                i {
+                    color: #212121;
+                }
+            }
+		}
+	}
+	.back {
+		margin-left: -5px;
+	}
+	.forward {
+		right: -15px;
+	}
+</style>
+<style lang="scss">
+    @import '../../node_modules/slick-carousel/slick/slick.css';
 </style>
