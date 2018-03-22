@@ -72,6 +72,7 @@
                             <div class="head-title">__("tags_categories") <button class="edit" @click="showTags"><i class="material-icons">mode_edit</i></button></div>
                             <div class="tags">
                                 <span v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span>
+                                <span v-for="(each_tag, index) in getPratilipiData.suggestedTags" :key="index">{{ each_tag }}</span>
                             </div>
                             <div class="edit-tags">
                                 <div class="desc">__("tags_select_for_max_people")</div>
@@ -107,25 +108,26 @@
                                     <div class="tag-section-title">__("tags_add_custom_category")</div>
                                     <div class="tag-section-body">
                                         <div class="new-tags">
-                                            <span class="all-tags active new-tag">test <i class="material-icons">remove_circle</i></span>
-                                            <span class="all-tags active new-tag">test again<i class="material-icons">remove_circle</i></span>
+                                            <span class="all-tags active new-tag" 
+                                                v-for="(eachSuggestedTags, index) in suggestedTags"
+                                                :key="index">{{ eachSuggestedTags }}
+                                                <i class="material-icons" @click="removeSuggestedTag(index)">remove_circle</i>
+                                            </span>
                                         </div>
-                                        <form class="form-inline">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" :placeholder="'__("tags_type_here")'">
-                                            </div>
-                                            <button type="button" class="btn add-category"><i class="material-icons">send</i></button>
-                                        </form>
+                                        <div class="form-group">
+                                            <TranslatingInput :value="newSuggestedTag" :oninput="updateNewSuggestedTag"></TranslatingInput>
+                                        </div>
+                                        <button type="button" class="btn add-category" @click="addToSuggestedTag"><i class="material-icons">send</i></button>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-save">__("save")</button>
+                                <button type="button" @click="saveTypeAndCategoriesAndCloseSection({ suggestedTags, type: selectedPratilipiType, tags: selectedTags })" class="btn btn-save">__("save")</button>
                                 <button type="button" @click="cancelTags" class="btn btn-light">__("cancel")</button>
                             </div>
                         </div>
                     </div>
                     <div class="book-synopsis col-md-12 col-lg-7 p-0">
                         <div class="card">
-                            <div v-if="getPratilipiData.summary">
+                            <div v-if="getPratilipiData.summary || getPratilipiData.state === 'DRAFTED'">
                                 <div class="head-title">__("pratilipi_summary") 
                                     <button class="edit" @click="editPratilipiSummary" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button>
                                 </div>
@@ -180,6 +182,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Recommendation from '@/components/Recommendation.vue';
+import TranslatingInput from '@/components/TranslatingInput.vue';
 import AboutAuthor from '@/components/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
 import Reviews from '@/components/Reviews.vue';
@@ -195,7 +198,9 @@ export default {
             pratilipiData: null,
             newReview: null,
             selectedPratilipiType: null,
-            selectedTags: []
+            selectedTags: [],
+            suggestedTags: [],
+            newSuggestedTag: '',
         }
     },
     mixins: [
@@ -225,7 +230,8 @@ export default {
             'fetchSystemTags',
             'unpublishOrPublishBook',
             'removeTagsFromPratilipi',
-            'addTagsToPratilipi'
+            'addTagsToPratilipi',
+            'saveTypeAndCategories'
         ]),
         ...mapActions([
             'setShareDetails',
@@ -238,6 +244,10 @@ export default {
         ]),
         showAlertToGoToDesktop() {
             this.triggerAlert({ message: '__("write_on_desktop_only")', timer: 3000 });
+        },
+        saveTypeAndCategoriesAndCloseSection(data) {
+            this.saveTypeAndCategories(data);
+            this.cancelTags();
         },
         editPratilipiSummary() {
             this.setInputModalSaveAction({ 
@@ -263,6 +273,18 @@ export default {
             });
 
             return isSelected;
+        },
+        addToSuggestedTag() {
+            if (this.newSuggestedTag && this.newSuggestedTag.trim().length > 0) {
+                this.suggestedTags.push(this.newSuggestedTag);    
+                this.newSuggestedTag = '';
+            }
+        },
+        updateNewSuggestedTag(value) {
+            this.newSuggestedTag = value;
+        },
+        removeSuggestedTag(indexToRemove){
+            this.suggestedTags.splice(indexToRemove, 1);
         },
         addOrRemoveFromListOfSelectedTag(tagData, isDeselectOperation) {
             console.log(isDeselectOperation);
@@ -350,6 +372,7 @@ export default {
         const pratilipiData = this.$route.params.pratilipiData;
         this.selectedPratilipiType = this.getPratilipiData.type;
         this.selectedTags = this.getPratilipiData.tags;
+        this.suggestedTags = this.getPratilipiData.suggestedTags;
 
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
 
@@ -362,6 +385,7 @@ export default {
         Recommendation,
         AboutAuthor,
         Spinner,
+        TranslatingInput,
         Reviews
     },
     watch: {
@@ -376,6 +400,7 @@ export default {
         'getPratilipiData.pratilipiId'(newId){
             this.selectedPratilipiType = this.getPratilipiData.type;
             this.selectedTags = this.getPratilipiData.tags;
+            this.suggestedTags = this.getPratilipiData.suggestedTags;
             this.fetchSystemTags(this.getPratilipiData.language);
         },
         'getUserDetails.userId'() {
