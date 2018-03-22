@@ -88,4 +88,12 @@ export default {
             commit('updateCommentError');
         });
     },
+
+    deleteComment({ commit, state }, commentId) {
+        DataAccessor.deleteComment(commentId, (data) => {
+            commit('deleteCommentSuccess', { commentId });
+        }, (error) => {
+            console.log('failed to delete comment');
+        });
+    }
 }

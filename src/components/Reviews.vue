@@ -11,6 +11,7 @@
                 :eachReview="eachReview" :key="eachReview.userPratilipiId"
                 :authorId="authorId"
                 :createComment="createComment"
+                :deleteComment="deleteComment"
                 :updateComment="updateComment"></Review>
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
@@ -51,7 +52,8 @@ export default {
             'loadCommentsOfReview',
             'likeOrDislikeReview',
             'createComment',
-            'updateComment'
+            'updateComment',
+            'deleteComment'
         ])
     },
     created() {
