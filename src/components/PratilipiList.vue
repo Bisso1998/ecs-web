@@ -128,6 +128,9 @@ export default {
 				padding: 5px 10px;
 			}
 		}
+        .section-title a {
+            padding-left: 0;
+        }
 	}
     .pratilipi-list {
         position: relative;
