@@ -246,7 +246,10 @@ export default {
     data() {
         return {
             fontSize: 16,
-            selectedChapter: 1
+            selectedChapter: 1,
+            scrollPosition: null,
+            scrollDirection: null,
+            counter: 0
         }
     },
     methods: {
@@ -363,6 +366,9 @@ export default {
             this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
             console.log('test')
             $('#share_modal').modal('show');
+        },
+        updateScroll() {
+            this.scrollPosition = window.scrollY
         }
     },
     computed: {
@@ -404,7 +410,8 @@ export default {
             var wintop = $(window).scrollTop(), docheight = $('.book-content').height(), winheight = $(window).height();
             var totalScroll = (wintop/(docheight-winheight))*100;
             $(".reader-progress .progress-bar").css("width",totalScroll+"%");
-        });
+        }),
+        window.addEventListener('scroll', this.updateScroll);
     },
     watch: {
         '$route.query.id'(newValue) {
@@ -438,7 +445,32 @@ export default {
         },
         'getUserDetails.userId'() {
             this.fetchPratilipiDetails(this.$route.query.id);
+        },
+        'scrollPosition'(newScrollPosition, prevScrollPosition){
+            if (newScrollPosition > 60 && this.scrollDirection === 'DOWN') {
+                $('.header-section').addClass('nav-up');
+                $('.reader-progress').addClass('progress-up');
+            } else if(newScrollPosition <= 60) {
+                $('.header-section').removeClass('nav-up');
+                $('.reader-progress').removeClass('progress-up');
+            }
+            
+            if (newScrollPosition < prevScrollPosition) {
+                this.counter++;
+                this.scrollDirection = 'UP';
+            } else {
+                this.scrollDirection = 'DOWN';
+            }
+            
+            if (this.counter > 5) {
+                $('.header-section').removeClass('nav-up');
+                $('.reader-progress').removeClass('progress-up');
+                this.counter = 0;
+            }
         }
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
     }
 }
 </script>
@@ -520,6 +552,9 @@ export default {
         .col-1 i {
             vertical-align: middle;
         }
+        &.nav-up {
+            top: -75px;
+        }
     }
     .reader-progress {
         left:0;
@@ -544,6 +579,9 @@ export default {
             -webkit-transition: width .3s ease;
             -o-transition: width .3s ease;
             transition: width .3s ease;
+        }
+        &.progress-up {
+            top: 0;
         }
     }
     .book-content {
