@@ -157,6 +157,7 @@ export default {
     .card {
         border-radius: 0;
         margin: 10px;
+        padding-bottom: 10px;
         p {
             text-align: left;
             font-size: 14px;
