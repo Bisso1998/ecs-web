@@ -101,6 +101,10 @@
                                 <div class="tag-sections">
                                     <div class="tag-section-title">__("tags_add_custom_category")</div>
                                     <div class="tag-section-body">
+                                        <div class="new-tags">
+                                            <span class="all-tags active new-tag">test <i class="material-icons">remove_circle</i></span>
+                                            <span class="all-tags active new-tag">test again<i class="material-icons">remove_circle</i></span>
+                                        </div>
                                         <form class="form-inline">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" :placeholder="'__("tags_type_here")'">
@@ -450,6 +454,13 @@ export default {
                                 cursor: pointer;
                                 &.active {
                                     background: #e9e9e9;
+                                }
+                                &.new-tag {
+                                    i {
+                                        font-size: 18px;
+                                        vertical-align: middle;
+                                        padding-left: 5px;
+                                    }
                                 }
                             }
                             .form-group {
