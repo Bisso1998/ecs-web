@@ -7,7 +7,7 @@
                         <div class="col-lg-12 d-none d-lg-block d-xl-block"><!-- Desktop only -->
                             <div class="card">
                                 <div class="card-content">
-                                    <button type="button" class="btn" data-toggle="modal" data-target="#writermodal">__("write_heading")</button>
+                                    <button @click="alertOrOpenWriteModal" type="button" class="btn">__("write_heading")</button>
                                 </div>
                             </div>
                         </div>
@@ -95,6 +95,7 @@
 import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import WriterModal from '@/components/WriterModal.vue';
+import mixins from '@/mixins';
 import { mapGetters, mapActions, mapState } from 'vuex'
 import constants from '@/constants';
 
@@ -105,6 +106,9 @@ export default {
             scrollPosition: null
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters([
             'writepage/getDraftedContents',
@@ -135,6 +139,9 @@ export default {
                     resultCount: 10
                 });
             }
+        },
+        alertOrOpenWriteModal() {
+            this.openWritePratilipiModal();
         }
     },
     components: {
