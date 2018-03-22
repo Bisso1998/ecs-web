@@ -114,10 +114,12 @@
                                                 <i class="material-icons" @click="removeSuggestedTag(index)">remove_circle</i>
                                             </span>
                                         </div>
-                                        <div class="form-group">
-                                            <TranslatingInput :value="newSuggestedTag" :oninput="updateNewSuggestedTag"></TranslatingInput>
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <TranslatingInput :value="newSuggestedTag" :oninput="updateNewSuggestedTag"></TranslatingInput>
+                                            </div>
+                                            <button type="button" class="btn add-category" @click="addToSuggestedTag"><i class="material-icons">send</i></button>
                                         </div>
-                                        <button type="button" class="btn add-category" @click="addToSuggestedTag"><i class="material-icons">send</i></button>
                                     </div>
                                 </div>
                                 <button type="button" @click="saveTypeAndCategoriesAndCloseSection({ suggestedTags, type: selectedPratilipiType, tags: selectedTags })" class="btn btn-save">__("save")</button>
