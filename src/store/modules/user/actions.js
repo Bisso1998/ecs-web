@@ -57,9 +57,9 @@ export default {
         })
     },
 
-    signupUser({ commit, state, dispatch }, { email, name, password }) {
+    signupUser({ commit, state, dispatch }, { email, name, password, language }) {
         commit('setUserDataLoadingTrue');
-        DataAccessor.registerUser(name, email, password, (data) => {
+        DataAccessor.registerUser(name, email, password, language, (data) => {
             commit('setUserDataLoadingSuccess', data);
 
             if (state.post_login_action.action) {
