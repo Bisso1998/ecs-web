@@ -33,14 +33,14 @@
                             <div class="main-actions"  v-if="getUserPratilipiLoadingState === 'LOADING_SUCCESS'">
                                 <div class="book-edit-actions" v-if="getPratilipiData.hasAccessToUpdate">
                                     <span v-if="getPratilipiData.state === 'PUBLISHED'">
-                                        <button @click="unpublishOrPublishBook('DRAFTED')">__("pratilipi_move_to_drafts")</button>
+                                        <button @click="askConfirmationAndUnpublishOrPublishBook({ bookState: 'DRAFTED' })">__("pratilipi_move_to_drafts")</button>
                                     </span>
                                     <span>
                                         <button v-if="isMobile()" @click="showAlertToGoToDesktop"><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button>
                                         <a v-else :href="getPratilipiData.writePageUrl"><button ><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button></a>
                                     </span>
                                     <span v-if="getPratilipiData.state === 'DRAFTED'">
-                                        <button @click="unpublishOrPublishBook('PUBLISHED')">__("pratilipi_publish_it")</button>
+                                        <button @click="unpublishOrPublishBook({ bookState: 'PUBLISHED' })">__("pratilipi_publish_it")</button>
                                         <button @click="confirmAndDeletePratilipi"><i class="material-icons">delete</i> __("pratilipi_delete_content")</button>
                                     </span>
                                 </div>
@@ -329,6 +329,18 @@ export default {
                 message: 'pratilipi_confirm_delete_content',
                 data: {
                     pratilipiId: this.getPratilipiData.pratilipiId
+                }
+            });
+            this.openConfirmationModal();
+        },
+        askConfirmationAndUnpublishOrPublishBook({bookState}) {
+            this.setConfirmModalAction({ 
+                action: `${this.$route.meta.store}/unpublishOrPublishBook`, 
+                heading: 'pratilipi_delete_content',
+                message: 'pratilipi_confirm_delete_content',
+                data: {
+                    pratilipiId: this.getPratilipiData.pratilipiId,
+                    bookState
                 }
             });
             this.openConfirmationModal();

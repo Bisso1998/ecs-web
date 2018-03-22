@@ -176,8 +176,7 @@ export default {
         });
     },
 
-    unpublishOrPublishBook({ commit, state }, bookState) {
-
+    unpublishOrPublishBook({ commit, state }, { bookState }) {
         DataAccessor.createOrUpdatePratilipi({ pratilipiId: state.pratilipi.data.pratilipiId, state: bookState }, (data) => {
             commit('setPratilipiStateUpdateSuccess', data);
         }, (error) => {
