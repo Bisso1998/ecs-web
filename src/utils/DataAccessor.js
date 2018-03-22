@@ -625,10 +625,10 @@ export default {
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 
-    registerUser: (name, email, password, successCallBack, errorCallBack) => {
+    registerUser: (name, email, password, language, successCallBack, errorCallBack) => {
         if (name == null || email == null || password == null) return;
         httpUtil.post(API_PREFIX + USER_REGISTER_API,
-            null, { "name": name, "email": email, "password": password, "language": "${ language }" },
+            null, { "name": name, "email": email, "password": password, "language": language },
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 
