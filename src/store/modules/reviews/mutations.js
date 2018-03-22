@@ -102,5 +102,20 @@ export default {
     },
     updateCommentError(state){
 
+    },
+
+    deleteCommentSuccess(state, { commentId }) {
+        state.data.forEach(( eachReview ) => {
+            let indexToRemove = null;
+            eachReview.comments.data.forEach(( eachComment, index ) => {
+                if(eachComment.commentId === commentId) {
+                    indexToRemove = index;
+                }
+            });
+
+            if (indexToRemove !== null) {
+                eachReview.comments.data.splice(indexToRemove, 1);
+            }
+        });  
     }
 }

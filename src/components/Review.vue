@@ -49,13 +49,13 @@
                             <i class="material-icons">more_vert</i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="moreOptions2">
-                            <button type="button" @click="editComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="">
+                            <button v-if="eachComment.user.userId === getUserDetails.userId" type="button" @click="editComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="">
                                 __("review_edit_review")
                             </button>
-                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="">
+                            <button v-if="eachComment.user.userId === getUserDetails.userId" type="button" @click="deleteComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="">
                                 __("review_delete_review")
                             </button>
-                            <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
+                            <button v-if="eachComment.user.userId !== getUserDetails.userId" type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
                                 __("report_button")
                             </button>
                         </div>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="comment-footer">
                         <button type="button" :class="{ 'active': eachComment.isLiked}" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
-                        <button type="button" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
+                        <button type="button" @click="replyToComment(eachComment)" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
                     </div>
                 </div>
             </li>
@@ -144,6 +144,10 @@ export default {
         authorId: {
             type: Number,
             required: true
+        },
+        deleteComment: {
+            type: Function,
+            required: true
         }
     },
     methods: {
@@ -160,6 +164,11 @@ export default {
         updateCommentAndToggle(data) {
             $(this.$el).find(".comment-content.editable." + data.commentId).toggle();
             this.updateComment(data);
+        },
+        replyToComment(eachComment) {
+            console.log(eachComment);
+            this.newComment = `@${eachComment.user.displayName} `;
+            $(this.$el).find(".add-reply .comment-content textarea").focus();
         },
         checkUserAndlikeOrDislikeReview(data) {
             if (this.getUserDetails.isGuest) {
