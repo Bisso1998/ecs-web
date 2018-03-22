@@ -47,7 +47,6 @@ export default {
             const lastWord = fullString.split(' ').pop();
 
             const that = this;
-            console.log(lastWord)
             if (lastWord === '') {
                 this.suggestions = [];
                 this.selectedSuggestion = 0;
@@ -79,7 +78,6 @@ export default {
                 return;
             }
             this.selectedSuggestion--;
-            console.log('One should go up - ', this.selectedSuggestion);
         },
         goDownInSuggestions() {
             if (this.suggestions.length === 0) {
@@ -91,7 +89,6 @@ export default {
                 return;
             }
             this.selectedSuggestion++;
-            console.log('You should go down down down - ', this.selectedSuggestion);
         },
         selectSuggestion() {
             this.selectTranslatedWord(this.suggestions[this.selectedSuggestion]);
