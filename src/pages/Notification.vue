@@ -5,6 +5,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2>__("notification_notifications")</h2>
+                        <div class="card" v-if="getUserDetails.isGuest">
+                            <div class="head-title">__("seo_login_page")</div>
+                            <div class="card-content">
+                                <p><i class="material-icons">check_circle</i> __("user_login_to_view_notifications")</p>
+                                <p><i class="material-icons">check_circle</i> __("android_banner_notification_1")</p>
+                                <p><i class="material-icons">check_circle</i> __("android_banner_notification_2")</p>
+                                <button type="button" class="btn" data-toggle="modal" data-target="#login_modal">__("user_sign_in") / __("user_sign_up")</button>
+                            </div>
+                        </div>
                         <ul v-if="getNotificationLoadingState === 'LOADING_SUCCESS' || getNotifications.length > 0" class="notifications">
                             <li v-for="each_notification in getNotifications" :key="each_notification.notificationId" :class="each_notification.state.toLowerCase()">
                                 <router-link
@@ -43,7 +52,8 @@ export default {
         ...mapGetters([
             'getNotifications',
             'getNotificationLoadingState',
-            'getNotificationCursor'
+            'getNotificationCursor',
+            'getUserDetails'
         ])
     },
     methods: {
@@ -61,7 +71,6 @@ export default {
     watch: {
         'scrollPosition'(newScrollPosition){
             const nintyPercentOfList = ( 40 / 100 ) * $('.notification-page').innerHeight();
-            console.log(nintyPercentOfList)
             // const { list_page_url } = this.$route.params;
 
             if (newScrollPosition > nintyPercentOfList && this.getNotificationLoadingState !== 'LOADING' && this.getNotificationCursor !== null) {
@@ -92,7 +101,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.notification-page{
+.notification-page {
     margin-top: 85px;
     text-align: left;
     @media screen and (max-width: 992px ) {
@@ -105,6 +114,40 @@ export default {
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
+    }
+    .card {
+        border-radius: 0;
+        margin: 20px 0;
+        padding: 0;
+        text-align: center;
+        .head-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            border-left: 3px solid #d0021b;
+            padding-left: 10px;
+            margin: 10px 0 0;
+        }
+        .card-content {
+            padding: 5px 10px 10px;
+            text-align: left;
+            p {
+                text-align: left;
+                font-size: 14px;
+                margin: 10px 0;
+                i {
+                    font-size: 16px;
+                    vertical-align: middle;
+                    color: #9E9E9E;
+                    padding-right: 5px;
+                }
+            }
+            button {
+                background: #d00b12;
+                color: #fff;
+                margin: 10px 0;
+            }
+        }
     }
     .notifications {
         padding: 0;
