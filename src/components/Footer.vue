@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="footer-wrap">
         <div class="top-footer">
             <div class="container">
                 <div class="row">
@@ -34,6 +34,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
+                        <button class="show-more" @click="toggleTopFooter"><i class="material-icons">arrow_drop_down</i></button>
                         <p>
                             © {{ new Date().getFullYear() }} Nasadiya Tech. Pvt. Ltd. | 
                             <router-link
@@ -59,11 +60,20 @@ import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/linkedin'
 
 export default {
-    
+    methods: {
+        toggleTopFooter() {
+            $(".show-more").toggleClass("shown");
+            $(".top-footer").toggleClass("shown");
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
+    .footer-wrap {
+        position: relative;
+    }
     .top-footer {
         background: #212121;
         color: #fff;
@@ -140,12 +150,56 @@ export default {
                 }
             }
         }
+        @media screen and (max-width: 992px ) {
+            display: none;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        &.shown {
+            @media screen and (max-width: 992px ) {
+                display: block;
+            }
+        }
+    }
+    .show-more {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background: rgba(255,255,255,0.1);
+        border: 0;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        float: right;
+        margin-left: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        i {
+            color: #fff;
+            vertical-align: middle;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+        }
+        &:focus {
+            outline: none;
+        }
+        &.shown {
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+        @media screen and (min-width: 992px ) {
+            display: none;
+        }
     }
     footer {
         background: #191919;
         color: #fefefe;
         font-size: 13px;
-        padding: 15px 0;
+        padding: 10px 0;
         @media screen and (max-width: 992px ) {
             margin-bottom: 48px;
         }
