@@ -113,6 +113,25 @@
                                 <div class="prev" v-if="selectedChapter !== 1" @click="goToPreviousChapter">Previous Chapter</div>
                                 <div class="next" v-if="selectedChapter !== getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
+                            
+                            <div class="social-share">
+                                <a href="" class="fb" target="_blank">
+                                    <span class="social-icon"><icon name="facebook-f"></icon></span>
+                                </a>
+                                <a href="" class="twitter" target="_blank">
+                                   <span class="social-icon"><icon name="twitter"></icon></span>
+                                </a>
+                                <a href="" class="google" target="_blank">
+                                    <span class="social-icon"><icon name="google-plus"></icon></span>
+                                </a>
+                                <a href="" class="whatsapp" target="_blank">
+                                    <span class="social-icon"><icon name="whatsapp"></icon></span>
+                                </a>
+                                <a class="link">
+                                    <span class="social-icon"><icon name="link"></icon></span>
+                                </a>
+                                <input type="text" id="inlineShareUri" hidden>
+                            </div>
 
                             <Reviews 
                                 :pratilipiId="getPratilipiData.pratilipiId" 
@@ -229,6 +248,11 @@ import Spinner from '@/components/Spinner.vue';
 import mixins from '@/mixins';
 import 'vue-awesome/icons/file-text'
 import 'vue-awesome/icons/file-text-o'
+import 'vue-awesome/icons/facebook-f'
+import 'vue-awesome/icons/twitter'
+import 'vue-awesome/icons/google-plus'
+import 'vue-awesome/icons/whatsapp'
+import 'vue-awesome/icons/link'
 import Reviews from '@/components/Reviews.vue';
 import Recommendation from '@/components/Recommendation.vue';
 import { mapGetters, mapActions, mapState } from 'vuex'
@@ -246,7 +270,10 @@ export default {
     data() {
         return {
             fontSize: 16,
-            selectedChapter: 1
+            selectedChapter: 1,
+            scrollPosition: null,
+            scrollDirection: null,
+            counter: 0
         }
     },
     methods: {
@@ -363,6 +390,9 @@ export default {
             this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
             console.log('test')
             $('#share_modal').modal('show');
+        },
+        updateScroll() {
+            this.scrollPosition = window.scrollY
         }
     },
     computed: {
@@ -404,7 +434,8 @@ export default {
             var wintop = $(window).scrollTop(), docheight = $('.book-content').height(), winheight = $(window).height();
             var totalScroll = (wintop/(docheight-winheight))*100;
             $(".reader-progress .progress-bar").css("width",totalScroll+"%");
-        });
+        }),
+        window.addEventListener('scroll', this.updateScroll);
     },
     watch: {
         '$route.query.id'(newValue) {
@@ -438,7 +469,32 @@ export default {
         },
         'getUserDetails.userId'() {
             this.fetchPratilipiDetails(this.$route.query.id);
+        },
+        'scrollPosition'(newScrollPosition, prevScrollPosition){
+            if (newScrollPosition > 60 && this.scrollDirection === 'DOWN') {
+                $('.header-section').addClass('nav-up');
+                $('.reader-progress').addClass('progress-up');
+            } else if(newScrollPosition <= 60) {
+                $('.header-section').removeClass('nav-up');
+                $('.reader-progress').removeClass('progress-up');
+            }
+            
+            if (newScrollPosition < prevScrollPosition) {
+                this.counter++;
+                this.scrollDirection = 'UP';
+            } else {
+                this.scrollDirection = 'DOWN';
+            }
+            
+            if (this.counter > 5) {
+                $('.header-section').removeClass('nav-up');
+                $('.reader-progress').removeClass('progress-up');
+                this.counter = 0;
+            }
         }
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
     }
 }
 </script>
@@ -520,6 +576,9 @@ export default {
         .col-1 i {
             vertical-align: middle;
         }
+        &.nav-up {
+            top: -75px;
+        }
     }
     .reader-progress {
         left:0;
@@ -544,6 +603,9 @@ export default {
             -webkit-transition: width .3s ease;
             -o-transition: width .3s ease;
             transition: width .3s ease;
+        }
+        &.progress-up {
+            top: 0;
         }
     }
     .book-content {
@@ -585,6 +647,47 @@ export default {
                     float: right;
                 }
             }
+        }
+        .social-share {
+            width: 220px;
+            margin: 0 auto;
+            a {
+                vertical-align: middle;
+                color: #2c3e50;
+                display: inline-block;
+                text-align: left;
+                margin: 0 0 5px;
+                font-size: 14px;
+                .social-icon {
+                    display: inline-block;
+                    width: 35px;
+                    height: 35px;
+                    background: #3b5998;
+                    color: #fff;
+                    border-radius: 50%;
+                    text-align: center;
+                    line-height: 35px;
+                    margin-right: 5px;
+                }
+                .fa-icon {
+                    vertical-align: middle;
+                }
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+        .social-share a.twitter .social-icon  {
+            background: #00aced;
+        }
+        .social-share a.google .social-icon { 
+            background: #dd4b39;
+        }
+        .social-share a.whatsapp .social-icon {
+            background: #48C631;
+        }
+        .social-share a.link .social-icon {
+            background: #2c3e50;
         }
     }
     .footer-section {

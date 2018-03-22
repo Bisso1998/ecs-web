@@ -32,6 +32,12 @@
                             <div class="profile-user-name">{{ getAuthorData.name }}</div>
                             <div class="profile-read-by">__("author_readby_count")</div>
                             <div class="profile-summary">
+                                <div class="head-title">
+                                    <span>__("author_about")</span>
+                                    <button class="edit" @click="editAuthorSummary" v-if="getUserDetails.userId === getAuthorData.user.userId">
+                                        <i class="material-icons">mode_edit</i>
+                                    </button>
+                                </div>
                                 <p>{{ getAuthorData.summary }}</p>
                                 <button type="button" class="view-more" name="button" data-toggle="modal" data-target="#summary_modal">__("view_more")</button>
                             </div>
@@ -125,10 +131,14 @@ import MainLayout from '@/layout/main-layout.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import AuthorCard from '@/components/AuthorCard.vue';
 import Spinner from '@/components/Spinner.vue';
+import mixins from '@/mixins';
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
     name: 'Pratilipi',
+    mixins: [
+        mixins
+    ],
     data() {
         return {
             user_id: null,
@@ -225,7 +235,10 @@ export default {
             const formData = new FormData();
             formData.append('ko_unique_4', event.target.files[0], event.target.files[0].name);
             this.uploadProfileImage(formData);
-        }
+        },
+        editAuthorSummary() {
+            this.openInputModal();
+        },
     },
     watch: {
         'getAuthorData.authorId'(newValue) {
@@ -463,12 +476,38 @@ export default {
             margin: 5px 0;
             color: #555;
         }
-        .profile-summary {    
+        .profile-summary {
+            overflow: hidden;
+            .head-title {
+                text-align: left;
+                font-weight: bold;
+                font-size: 16px;
+                margin-left: 10px;
+                span {
+                    vertical-align: middle;
+                }
+                button{
+                    vertical-align: baseline;
+                    background: none;
+                    border: 0;
+                    padding: 0 10px;
+                    &:focus {
+                        outline: none;
+                    }
+                    i {
+                        font-size: 18px;
+                        vertical-align: middle;
+                        line-height: 19px;
+                    }
+                }
+                
+            }
             p {
-                margin: 5px;
+                margin: 2px 5px 5px 10px;
                 font-size: 14px;
                 color: #555;
                 height: 61px;
+                text-align: left;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;

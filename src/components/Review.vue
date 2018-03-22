@@ -67,7 +67,7 @@
                     <div style="display: none" :class="['comment-content editable', String(eachComment.commentId)]">
                         <form>
                             <div class="form-group">
-                                <label for="writeReply">__("comment_reply_to_comment")</label>
+                                <label for="writeReply">__("review_edit_review")</label>
                                 <textarea class="form-control" :value='eachComment.content' @input="updatedComment = $event.target.value" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
                             </div>
                             <button type="button" class="btn btn-primary" @click="updateCommentAndToggle({ commentId: eachComment.commentId, content: updatedComment })">__("save")</button>
@@ -355,6 +355,20 @@ export default {
             @media screen and (max-width: 768px ) {
                 padding: 4px 7px;
                 font-size: 13px;
+            }
+            &.editable {
+                overflow: hidden;
+                .btn {
+                    font-size: 12px;
+                    float: right;
+                    padding: 4px 7px;
+                    margin-bottom: 5px;
+                    &.btn-primary {
+                        background: #d0021b;
+                        border: 0;
+                        margin-left: 5px;
+                    }
+                }
             }
         }
         .comment-footer {
