@@ -28,7 +28,7 @@
                 </div>
                 <div class="comment-footer">
                     <button type="button" :class="{ 'active': eachReview.isLiked }" @click="checkUserAndlikeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
-                    <button type="button" name="button" @click="toggleComments({ resultCount: eachReview.commentCount, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
+                    <button type="button" name="button" @click="toggleComments({ resultCount: eachReview.commentCount * 2, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
                 </div>
             </div>
         </div>
@@ -71,11 +71,11 @@
                                 <textarea class="form-control" :value='eachComment.content' @input="updatedComment = $event.target.value" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
                             </div>
                             <button type="button" class="btn btn-primary" @click="updateCommentAndToggle({ commentId: eachComment.commentId, content: updatedComment })">__("save")</button>
-                            <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
+                            <button type="button" class="btn btn-light" @click="cancelCommentInput(eachComment.commentId)">__("cancel")</button>
                         </form>
                     </div>
                     <div class="comment-footer">
-                        <button type="button" :class="{ 'active': eachComment.isLiked}" name="button"><span class="counter"></span><i class="material-icons">thumb_up</i></button>
+                        <button type="button" :class="{ 'active': eachComment.isLiked}" @click="likeOrDislikeComment({ commentId: eachComment.commentId, isLiked: eachComment.isLiked })" name="button"><span class="counter">{{ eachComment.likeCount }}</span><i class="material-icons">thumb_up</i></button>
                         <button type="button" @click="replyToComment(eachComment)" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
                     </div>
                 </div>
@@ -125,6 +125,10 @@ export default {
             type: Function,
             required: true
         },
+        likeOrDislikeComment: {
+            type: Function,
+            required: true
+        },
         loadCommentsOfReview: {
             type: Function,
             required: true
@@ -153,6 +157,9 @@ export default {
     methods: {
         cancelReview(e) {
             $(".review-box").fadeOut();
+        },
+        cancelCommentInput(commentId) {
+            $(this.$el).find(".comment-content.editable." + commentId).toggle();
         },
         toggleComments(data) {
             $(this.$el).find(".reply-list").toggle();

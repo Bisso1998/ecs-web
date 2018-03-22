@@ -10,8 +10,9 @@
                 :userPratilipiData="userPratilipiData"
                 :eachReview="eachReview" :key="eachReview.userPratilipiId"
                 :authorId="authorId"
-                :createComment="createComment"
+                :createComment="verifyAndCreateComment"
                 :deleteComment="deleteComment"
+                :likeOrDislikeComment="verifyAndLikeComment"
                 :updateComment="updateComment"></Review>
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
@@ -22,6 +23,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import Spinner from '@/components/Spinner.vue';
 import Review from '@/components/Review.vue';
+import mixins from '@/mixins';
 import OwnReview from '@/components/OwnReview.vue';
 
 export default {
@@ -38,11 +40,17 @@ export default {
             type: Object
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('reviews', [
             'getReviewsLoadingState',
             'getReviewsData',
             'getReviewsCursor'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     methods: {
@@ -53,8 +61,30 @@ export default {
             'likeOrDislikeReview',
             'createComment',
             'updateComment',
-            'deleteComment'
-        ])
+            'deleteComment',
+            'likeOrDislikeComment'
+        ]),
+        ...mapActions([
+            'setAfterLoginAction'
+        ]),
+        verifyAndCreateComment(data) {
+            if (this.getUserDetails.isGuest) {
+                // throw popup modal
+                this.setAfterLoginAction({ action: `reviews/createComment`, data });
+                this.openLoginModal();
+            } else {
+                this.createComment(data);
+            }
+        },
+        verifyAndLikeComment(data) {
+            if (this.getUserDetails.isGuest) {
+                // throw popup modal
+                this.setAfterLoginAction({ action: `reviews/likeOrDislikeComment`, data });
+                this.openLoginModal();
+            } else {
+                this.likeOrDislikeComment(data);
+            }
+        }
     },
     created() {
         this.fetchPratilipiReviews({ pratilipiId: this.pratilipiId, resultCount: 2 });
