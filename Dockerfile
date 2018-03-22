@@ -13,7 +13,8 @@ COPY static static
 COPY util util
 COPY .babelrc .babelrc
 COPY .eslintignore .eslintignore
-COPY .eslintrc .eslintrc
+COPY .eslintrc.js .eslintrc.js
+COPY .postcssrc.js .postcssrc.js
 COPY index.html index.html
 
 COPY server.js .
