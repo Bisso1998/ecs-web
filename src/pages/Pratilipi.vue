@@ -114,7 +114,7 @@
                                             <div class="form-group">
                                                 <input type="text" class="form-control" :placeholder="'__("tags_type_here")'">
                                             </div>
-                                            <button type="submit" class="btn add-category"><i class="material-icons">send</i></button>
+                                            <button type="button" class="btn add-category"><i class="material-icons">send</i></button>
                                         </form>
                                     </div>
                                 </div>
