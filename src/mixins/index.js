@@ -5,6 +5,7 @@ import {
     openMultiInputModal,
     openConfirmationModal,
     openForgotPasswordModal,
+    getCurrentLanguage,
     isMobile,
     isAndroid,
     isChrome
@@ -24,6 +25,7 @@ export default {
         openMultiInputModal,
         openConfirmationModal,
         openForgotPasswordModal,
+        getCurrentLanguage,
         isMobile,
         isAndroid,
         isChrome

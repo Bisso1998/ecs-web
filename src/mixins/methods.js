@@ -1,3 +1,5 @@
+import constants from '@/constants';
+
 export function translateWord(word, callback) {
     $.ajax({
         url: "https://www.google.com/inputtools/request?ime=transliteration_en_" + process.env.LANGUAGE + "&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi",
@@ -26,7 +28,6 @@ export function openMultiInputModal() {
 }
 
 export function openForgotPasswordModal() {
-    console.log('hi')
     $('#forgotPassModal').modal('show');
 }
 
@@ -44,4 +45,13 @@ export function isAndroid() {
 
 export function isChrome() {
     return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+}
+
+export function getCurrentLanguage() {
+    const currentLocale = process.env.LANGUAGE;
+    constants.LANGUAGES.forEach((eachLanguage) => {
+        if (eachLanguage.shortName === currentLocale) {
+            return eachLanguage;
+        }
+    });
 }
