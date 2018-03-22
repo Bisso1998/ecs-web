@@ -169,11 +169,13 @@
                     <a :href="getPratilipiData.author.pageUrl" class="author-link">
                         <span class="auth-name">{{ getPratilipiData.author.displayName }}</span>
                     </a>
-                    <div class="follow-btn-w-count"><!-- Follow Button -->
-                        <button><i class="material-icons">person_add</i> __("author_follow")</button><span><b>1234</b></span>
+                    <div class="follow-btn-w-count" v-if="!getAuthorData.following"><!-- Follow Button -->
+                        <button @click="followOrUnfollowAuthor" >
+                            <i class="material-icons">person_add</i>__("author_follow")
+                        </button><span><b>{{ getAuthorData.followCount }}</b></span>
                     </div>
-                    <div class="follow-btn-w-count" style="display: none;"><!-- Following Button -->
-                        <button><i class="material-icons">check</i> __("author_following")</button><span><b>1235</b></span>
+                    <div class="follow-btn-w-count" v-else><!-- Following Button -->
+                        <button @click="followOrUnfollowAuthor"><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                     </div>
                 </div>
                 <div class="book-index">
@@ -254,7 +256,9 @@ export default {
             'clearCachedContents',
             'addToLibrary',
             'removeFromLibrary',
-            'fetchPratilipiContentForIMAGE'
+            'fetchPratilipiContentForIMAGE',
+            'fetchAuthorDetails',
+            'followOrUnfollowAuthor'
         ]),
         ...mapActions([
             'setShareDetails',
@@ -374,7 +378,9 @@ export default {
             'getUserPratilipiLoadingState',
             'getIndexData',
             'getIndexLoadingState',
-            'getPratilipiContent'
+            'getPratilipiContent',
+            'getAuthorData',
+            'getAuthorDataLoadingState'
         ]),
         ...mapGetters([
             'getUserDetails'
@@ -382,6 +388,10 @@ export default {
     },
     created() {
         this.fetchPratilipiDetails(this.$route.query.id);
+        if (this.getPratilipiData && this.getPratilipiData.author) {
+            this.fetchAuthorDetails();    
+        }
+        
         if (this.$route.query.chapterNo) {
             this.selectedChapter = Number(this.$route.query.chapterNo);
         }
@@ -414,8 +424,6 @@ export default {
                     this.fetchPratilipiContentForIMAGE({ pratilipiId: this.getPratilipiData.pratilipiId, chapterNo: Number(newValue) });
                 }
                 this.selectedChapter = newValue;
-                
-                
             }
         },
         'getPratilipiData.pratilipiId'(newId, oldId) {
@@ -426,6 +434,7 @@ export default {
             if (this.getPratilipiData.contentType === 'IMAGE') {
                 this.fetchPratilipiContentForIMAGE({ pratilipiId: newId, chapterNo: this.$route.query.chapterNo ? Number(this.$route.query.chapterNo) : 1 });
             }
+            this.fetchAuthorDetails();
         },
         'getUserDetails.userId'() {
             this.fetchPratilipiDetails(this.$route.query.id);
