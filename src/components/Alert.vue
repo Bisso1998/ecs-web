@@ -43,7 +43,7 @@ export default {
     .pratilipi-alert {
         margin: 10px 0 0;
         position: fixed;
-        bottom: 51px;
+        bottom: 0;
         z-index: 5;
         background: #323232;
         color: #fff;
@@ -52,6 +52,9 @@ export default {
         text-align: left;
         display: none;
         width: 100%;
+        @media screen and (max-width: 992px ) {
+            bottom: 51px;
+        }
         p {
             margin-bottom: 0;
         }
