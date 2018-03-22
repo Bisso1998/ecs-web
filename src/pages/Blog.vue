@@ -58,6 +58,7 @@ export default {
     margin-top: 85px;
     text-align: left;
     background: #f8f8f8;
+    min-height: 700px;
     @media screen and (max-width: 992px ) {
         margin-top: 65px;
     }

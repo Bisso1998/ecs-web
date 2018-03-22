@@ -433,6 +433,7 @@ export default {
     .pratilipi-page {
         background: #f8f8f8;
         margin-top: 85px;
+        min-height: 700px;
         @media screen and (max-width: 992px ) {
             margin-top: 65px;
         }
