@@ -26,9 +26,9 @@
                     <div class="col-lg-6 col-md-12">
                         <div class="card">
                             <div class="head-title">Login Features</div>
-                            <p>1) Add stories and read anywhere, anytime.  </p>
-                            <p>2) Write and win prizes!</p>
-                            <p>3) Connect with friends and read stories together.</p>
+                            <p><i class="material-icons">check_circle</i> Add stories and read anywhere, anytime.  </p>
+                            <p><i class="material-icons">check_circle</i> Write and win prizes!</p>
+                            <p><i class="material-icons">check_circle</i> Connect with friends and read stories together.</p>
                         </div>
                     </div>
                 </div>
@@ -159,8 +159,14 @@ export default {
         margin: 10px;
         p {
             text-align: left;
-            margin: 5px 10px;
             font-size: 14px;
+            margin: 10px 10px 0;
+            i {
+                font-size: 16px;
+                vertical-align: middle;
+                color: #9E9E9E;
+                padding-right: 5px;
+            }
         }
     }
     .login-menu {
