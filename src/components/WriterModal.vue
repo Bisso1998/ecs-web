@@ -13,25 +13,24 @@
                     <form>
                         <div class="form-group">
                             <label for="pratilipi_write_language">__("writer_select_language")</label>
-                            <select class="form-control" id="pratilipi_write_language">
-                                <option>HINDI</option>
-                                <option>MALAYALAM</option>
+                            <select class="form-control" id="pratilipi_write_language" v-model="language">
+                                <option :value="eachLanguage.fullName.toUpperCase()"  v-for="eachLanguage in constants.LANGUAGES" :key="eachLanguage.shortName">{{ eachLanguage.languageNative }}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="pratilipi_write_title_input">__("writer_input_title") *</label>
-                            <input type="text" class="form-control" id="pratilipi_write_title_input" :placeholder="'__("writer_input_title")'">
+                            <TranslatingInput :value="title" :oninput="updatePrefilledValue"></TranslatingInput>
                         </div>
                         <div class="form-group">
                             <label for="pratilipi_write_title_en_input">__("writer_input_title_en")</label>
-                            <input type="text" class="form-control" id="pratilipi_write_title_en_input" :placeholder="'__("writer_input_title_en")'">
+                            <input type="text" :value="titleEn" @input="($event) => { titleEn = $event.target.value}" class="form-control" id="pratilipi_write_title_en_input" :placeholder="'__("writer_input_title_en")'">
                         </div>
                         <div class="form-group">
                             <label for="pratilipi_write_type">__("write_type")</label>
-                            <select class="form-control" id="pratilipi_write_type">
-                                <option>POEM</option>
-                                <option>STORY</option>
-                                <option>ARTICLE</option>
+                            <select class="form-control" id="pratilipi_write_type" v-model="type">
+                                <option value="POEM">__('_pratilipi_type_poem')</option>
+                                <option value="STORY">__('_pratilipi_type_story')</option>
+                                <option value="ARTICLE">__('_pratilipi_type_article')</option>
                             </select>
                         </div>
                         <div class="form-check">
@@ -39,7 +38,7 @@
                             <label class="form-check-label" for="agree-terms-conditions">__("writer_accept_copyright")</label>
                         </div>
                         <a href="/terms-of-service" class="terms-link" target="_blank">__("writer_read_copyright")</a>
-                        <button type="button" class="btn btn-submit" disabled>__("writer_to_next_screen")</button>
+                        <button type="button" @click="createPratilipiAndGoToWriter({ title, titleEn, type, language })" class="btn btn-submit">__("writer_to_next_screen")</button>
                     </form>
                 </div>
             </div>
@@ -48,9 +47,31 @@
 </template>
 
 <script>
+import constants from '@/constants';
+import { mapGetters, mapActions } from 'vuex'
+import TranslatingInput from '@/components/TranslatingInput.vue';
 
 export default {
-    
+    data() {
+        return {
+            constants,
+            title: '',
+            titleEn: '',
+            language: null,
+            type: null
+        }
+    },
+    methods: {
+        updatePrefilledValue(value) {
+            this.title = value;
+        },
+        ...mapActions('writepage', [
+            'createPratilipiAndGoToWriter'
+        ])
+    },
+    components: {
+        TranslatingInput
+    }
 }
 </script>
 

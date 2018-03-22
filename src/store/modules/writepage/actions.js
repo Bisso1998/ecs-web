@@ -22,5 +22,21 @@ export default {
                 commit('setDraftedContentsDynamicLoadingError');
             }
         });  
+    },
+
+    createPratilipiAndGoToWriter({ commit, state }, { title, titleEn, language, type }) {
+        console.log(titleEn)
+        DataAccessor.createOrUpdatePratilipi({ 
+            title,
+            titleEn,
+            language,
+            type,
+            state: 'DRAFTED'
+        }, (data) => {
+            console.log(data);
+            window.location = data.writePageUrl;
+        }, (error) => {
+            console.log(error);
+        })
     }
 }
