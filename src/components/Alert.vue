@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
     .pratilipi-alert {
         margin: 10px 0 0;
         position: fixed;
@@ -52,5 +52,11 @@ export default {
         text-align: left;
         display: none;
         width: 100%;
+        @media screen and (max-width: 992px ) {
+            bottom: 51px;
+        }
+        p {
+            margin-bottom: 0;
+        }
     }
 </style>
