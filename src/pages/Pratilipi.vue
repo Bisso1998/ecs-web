@@ -79,15 +79,15 @@
                                     <div class="tag-section-title">__("tags_content_type")</div>
                                     <div class="tag-section-body">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pratilipi-type" id="radio-POEM" value="POEM">
+                                            <input class="form-check-input" type="radio" name="pratilipi-type" :checked="selectedPratilipiType === 'POEM'" @change="changePratilipiType" id="radio-POEM" value="POEM">
                                             <label class="form-check-label" for="radio-POEM">__("_pratilipi_type_poem")</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pratilipi-type" id="radio-STORY" value="STORY">
+                                            <input class="form-check-input" type="radio" name="pratilipi-type" :checked="selectedPratilipiType === 'STORY'" @change="changePratilipiType" id="radio-STORY" value="STORY">
                                             <label class="form-check-label" for="radio-STORY">__("_pratilipi_type_story")</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pratilipi-type" id="radio-ARTICLE" value="ARTICLE">
+                                            <input class="form-check-input" type="radio" name="pratilipi-type" :checked="selectedPratilipiType === 'ARTICLE'" @change="changePratilipiType" id="radio-ARTICLE" value="ARTICLE">
                                             <label class="form-check-label" for="radio-ARTICLE">__("_pratilipi_type_article")</label>
                                         </div>
                                     </div>
@@ -95,7 +95,12 @@
                                 <div class="tag-sections">
                                     <div class="tag-section-title">__("tags_categories")</div>
                                     <div class="tag-section-body">
-                                        <span class="all-tags active" v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span>
+                                        <!-- <span class="all-tags active" v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span> -->
+                                        <span class="all-tags" 
+                                            :class="{'active': isTagSelected(each_tag.id)}" 
+                                            v-for="each_tag in getSystemTags[selectedPratilipiType || 'POEM'].categories" 
+                                            :key="each_tag.id"
+                                            @click="addOrRemoveFromListOfSelectedTag(each_tag, isTagSelected(each_tag.id))">{{ each_tag.name }}</span>
                                     </div>
                                 </div>
                                 <div class="tag-sections">
@@ -188,7 +193,9 @@ export default {
         return {
             pratilipi_id: null,
             pratilipiData: null,
-            newReview: null
+            newReview: null,
+            selectedPratilipiType: null,
+            selectedTags: []
         }
     },
     mixins: [
@@ -216,7 +223,9 @@ export default {
             'removeFromLibrary',
             'uploadPratilipiImage',
             'fetchSystemTags',
-            'unpublishOrPublishBook'
+            'unpublishOrPublishBook',
+            'removeTagsFromPratilipi',
+            'addTagsToPratilipi'
         ]),
         ...mapActions([
             'setShareDetails',
@@ -228,7 +237,7 @@ export default {
             'triggerAlert'
         ]),
         showAlertToGoToDesktop() {
-            this.triggerAlert('__("write_on_desktop_only")');
+            this.triggerAlert({ message: '__("write_on_desktop_only")', timer: 3000 });
         },
         editPratilipiSummary() {
             this.setInputModalSaveAction({ 
@@ -240,6 +249,44 @@ export default {
                 }
             });
             this.openInputModal();
+        },
+        changePratilipiType(event) {
+            this.selectedPratilipiType = event.target.value;
+        },
+        isTagSelected(tagId) {
+            let isSelected = false;
+            const that = this;
+            this.selectedTags.forEach((eachTag) => {
+                if (eachTag.id === tagId) {
+                    isSelected = true;
+                }
+            });
+
+            return isSelected;
+        },
+        addOrRemoveFromListOfSelectedTag(tagData, isDeselectOperation) {
+            console.log(isDeselectOperation);
+            if (this.selectedTags.length === 3 && !isDeselectOperation) {
+                this.triggerAlert({ message: '__("tags_select_best_three")', timer: 3000 });
+                return;
+            }
+
+            if (isDeselectOperation) {
+                const currentTags = this.selectedTags;
+
+                let indexToRemove = null;
+                currentTags.forEach((eachTag, index) => {
+                    if (eachTag.id === tagData.id) {
+                        indexToRemove = index;
+                    }
+                });
+
+                if (indexToRemove != null) {
+                    currentTags.splice(indexToRemove, 1);
+                }
+            } else {
+                this.selectedTags.push(tagData);
+            }
         },
         editPratilipiTitle() {
             this.setInputModalSaveAction({ 
@@ -301,17 +348,14 @@ export default {
     created() {
         const slug_id = this.$route.params.slug_id;
         const pratilipiData = this.$route.params.pratilipiData;
+        this.selectedPratilipiType = this.getPratilipiData.type;
+        this.selectedTags = this.getPratilipiData.tags;
 
-        console.log(slug_id);
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
 
-
-        const currentLocale = process.env.LANGUAGE;
-        constants.LANGUAGES.forEach((eachLanguage) => {
-            if (eachLanguage.shortName === currentLocale) {
-                this.fetchSystemTags(eachLanguage.fullName.toUpperCase());
-            }
-        });
+        if (this.getPratilipiData.language) {
+            this.fetchSystemTags(this.getPratilipiData.language);
+        }
     },
     components: {
         MainLayout,
@@ -329,8 +373,20 @@ export default {
                 this.$router.push(this.getUserDetails.profilePageUrl);
             }
         },
+        'getPratilipiData.pratilipiId'(newId){
+            this.selectedPratilipiType = this.getPratilipiData.type;
+            this.selectedTags = this.getPratilipiData.tags;
+            this.fetchSystemTags(this.getPratilipiData.language);
+        },
         'getUserDetails.userId'() {
             this.fetchPratilipiDetailsAndUserPratilipiData(this.$route.params.slug_id);
+        },
+        selectedPratilipiType(newType) {
+            if (newType === this.getPratilipiData.type) {
+                this.selectedTags = this.getPratilipiData.tags;
+            } else {
+                this.selectedTags = [];
+            }
         }
     }
 }
