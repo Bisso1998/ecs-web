@@ -24,7 +24,7 @@
                                         <span class="notif-message" v-html="each_notification.message"></span>
                                         <span class="notif-date">{{ each_notification.lastUpdatedMillis | convertDate }}</span>
                                     </span>
-                                    <span class="notif-source-image"><img :src="each_notification.sourceImageUrl" alt="notification"></span>
+                                    <span class="notif-source-image" v-if="each_notification.sourceImageUrl"><img :src="each_notification.sourceImageUrl" alt="notification"></span>
                                 </router-link>
                             </li>
                         </ul>
