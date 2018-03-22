@@ -33,10 +33,10 @@
                                             <div class="draft-name">{{ each_draft.title }}</div>
                                         </a>
                                     </div>
-                                    <Spinner v-if="draftedContentsLoadingState === 'LOADING'"></Spinner>
                                 </div>
                             </div>
                         </div>
+                        <Spinner v-if="draftedContentsLoadingState === 'LOADING'"></Spinner>
                         <div class="col-md-12 col-lg-6">
                             <div class="card">
                                 <div class="head-title">__("event_events")</div>
