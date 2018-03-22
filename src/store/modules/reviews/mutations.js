@@ -104,6 +104,20 @@ export default {
 
     },
 
+    setCommentLikeSuccess(state, { commentId, isLiked }) {
+        state.data.forEach(( eachReview ) => {
+            let requiredComment = eachReview.comments.data.find(( eachComment ) => eachComment.commentId === commentId);
+            if (requiredComment) {
+                requiredComment.isLiked = isLiked;
+                if (isLiked) {
+                    requiredComment.likeCount++;    
+                } else {
+                    requiredComment.likeCount--;    
+                }
+            }
+        });
+    },
+
     deleteCommentSuccess(state, { commentId }) {
         state.data.forEach(( eachReview ) => {
             let indexToRemove = null;

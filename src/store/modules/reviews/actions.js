@@ -43,6 +43,12 @@ export default {
         });
     },
 
+    likeOrDislikeComment({ commit, state }, { commentId, isLiked }) {
+        DataAccessor.likeOrDislikeComment(commentId, !isLiked, function(data) {
+            commit('setCommentLikeSuccess', { commentId, isLiked: !isLiked });
+        });
+    },
+
     setPratilipiRating({ commit, state, dispatch }, { rating, pratilipiId, pageName }) {
         if (pageName === 'pratilipipage') {
             dispatch('pratilipipage/setPratilipiRating', { rating, pratilipiId }, { root: true });
