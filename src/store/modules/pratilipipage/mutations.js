@@ -195,5 +195,33 @@ export default {
     },
     setSystemTagsLoadingError(state) {
         state.system_tags.loading_state = 'LOADING_ERROR';
+    },
+
+    removeTagsFromPratilipi(state, data) {
+        const currentTags = state.pratilipi.data.tags;
+
+        let indexToRemove = null;
+        currentTags.forEach((eachTag, index) => {
+            if (eachTag.id === data.id) {
+                indexToRemove = index;
+            }
+        });
+
+        if (indexToRemove != null) {
+            currentTags.splice(indexToRemove, 1);
+        }
+    },
+
+    addTagsToPratilipi(state, data) {
+        state.pratilipi.data.tags.push(data);
+    },
+
+    setUpdatedTypeAndCategoriesSuccess(state, data) {
+        state.pratilipi.data.tags = data.tags;
+        state.pratilipi.data.suggestedTags = data.suggestedTags;
+        state.pratilipi.data.type = data.type;
+    },
+    setUpdatedTypeAndCategoriesError(state) {
+
     }
 }

@@ -194,5 +194,14 @@ export default {
                 commit('setSystemTagsLoadingError');
             }
         });
+    },
+
+    saveTypeAndCategories({ commit, state }, { tags, type, suggestedTags}) {
+        const tagIds = tags.map((eachTag) => eachTag.id);
+        DataAccessor.updatePratilipiTags(state.pratilipi.data.pratilipiId, type, tagIds, suggestedTags, (data) => {
+            commit('setUpdatedTypeAndCategoriesSuccess', data);
+        }, (error) => {
+            commit('setUpdatedTypeAndCategoriesError');
+        })
     }
 }
