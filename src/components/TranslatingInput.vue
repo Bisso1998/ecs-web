@@ -6,7 +6,6 @@
             @keyup.down="goDownInSuggestions"
             @input="getTranslation"
             @keyup.enter="selectSuggestion"
-            @blur="suggestions = 0; selectedSuggestion = 0"
             name="" >
         <ul class="translations">
             <li v-for="(eachSuggestion, index) in suggestions" :class="{ 'active': index === selectedSuggestion }" :key="index" @click="selectTranslatedWord(eachSuggestion)">{{ eachSuggestion }}</li>
@@ -48,6 +47,7 @@ export default {
             const lastWord = fullString.split(' ').pop();
 
             const that = this;
+            console.log(lastWord)
             if (lastWord === '') {
                 this.suggestions = [];
                 this.selectedSuggestion = 0;
@@ -66,6 +66,8 @@ export default {
             words.push(selectedWord);
             const textWithoutLastWord = words.join(' ');
             this.oninput(textWithoutLastWord);
+            this.suggestions = [];
+            this.selectedSuggestion = 0;
         },
         goUpInSuggestions() {
             if (this.suggestions.length === 0) {

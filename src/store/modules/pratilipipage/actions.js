@@ -176,8 +176,7 @@ export default {
         });
     },
 
-    unpublishOrPublishBook({ commit, state }, bookState) {
-
+    unpublishOrPublishBook({ commit, state }, { bookState }) {
         DataAccessor.createOrUpdatePratilipi({ pratilipiId: state.pratilipi.data.pratilipiId, state: bookState }, (data) => {
             commit('setPratilipiStateUpdateSuccess', data);
         }, (error) => {
@@ -194,5 +193,14 @@ export default {
                 commit('setSystemTagsLoadingError');
             }
         });
+    },
+
+    saveTypeAndCategories({ commit, state }, { tags, type, suggestedTags}) {
+        const tagIds = tags.map((eachTag) => eachTag.id);
+        DataAccessor.updatePratilipiTags(state.pratilipi.data.pratilipiId, type, tagIds, suggestedTags, (data) => {
+            commit('setUpdatedTypeAndCategoriesSuccess', data);
+        }, (error) => {
+            commit('setUpdatedTypeAndCategoriesError');
+        })
     }
 }
