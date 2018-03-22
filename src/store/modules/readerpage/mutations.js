@@ -107,7 +107,33 @@ export default {
         console.log(state.content.data);
     },
 
+    setAuthorDataLoadingTrue(state) {
+        state.author.loading_state = 'LOADING';
+    },
+    setAuthorDataLoadingSuccess(state, authorData) {
+        state.author.loading_state = 'LOADING_SUCCESS';
+        state.author.data = authorData;
+    },
+    setAuthorDataLoadingError(state) {
+        state.author.loading_state = 'LOADING_ERROR';
+    },
 
+    setFollowUnfollowLoadingDataLoadingTrue(state) {
+
+    },
+
+    setFollowUnfollowLoadingDataLoadingSuccess(state, data){
+        state.author.data.following = data.following;
+        if (data.following) {
+            state.author.data.followCount++;    
+        } else {
+            state.author.data.followCount--;
+        }
+    },
+
+    setFollowUnfollowLoadingDataLoadingError(state) {
+
+    },
 
 
 

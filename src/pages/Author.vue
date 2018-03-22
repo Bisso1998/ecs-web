@@ -60,7 +60,7 @@
                         <div class="col-md-12 profile-bottom" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
                             <div class="profile-menu">
                                 <a href="#" v-if="getUserDetails.userId === getAuthorData.user.userId" v-on:click="tabchange" class="active" data-tab="library">__("library")</a>
-                                <a href="#" v-on:click="tabchange" data-tab="published"><span>{{ getAuthorData.contentPublished }}</span>__("author_published_contents")</a>
+                                <a href="#" id="menu-published" v-on:click="tabchange" data-tab="published"><span>{{ getAuthorData.contentPublished }}</span>__("author_published_contents")</a>
                                 <a href="#" v-on:click="tabchange" data-tab="followers"><span>{{ getAuthorData.followCount }}</span>__("author_followers")</a>
                                 <a href="#" v-on:click="tabchange" data-tab="following"><span>{{ getAuthorData.user.followCount }}</span>__("author_following")</a>
                             </div>
@@ -189,6 +189,13 @@ export default {
             $(".bottom-contents .list").hide();
             $("#" + tab_id).show();
         },
+        goToPublishedContentsTab() {
+            console.log($('#menu-published'))
+            $(".profile-menu a").removeClass("active");
+            $('#menu-published').addClass("active");
+            $(".bottom-contents .list").hide();
+            $("#published").show();
+        },
         updateScroll() {
             this.scrollPosition = window.scrollY;
         },
@@ -274,6 +281,17 @@ export default {
                     });
                 }
             }
+        },
+        getAuthorDataLoadingState(state) {
+            if (state === 'LOADING_SUCCESS') {
+                if (decodeURI(this.$route.path) !== this.getUserDetails.profilePageUrl) {
+                    setTimeout(() => {
+                        console.log($('#published'));
+                        this.goToPublishedContentsTab();    
+                    }, 0);
+                    
+                }
+            }
         }
     },
     created() {
@@ -288,6 +306,12 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
+        console.log(this.getUserDetails.profilePageUrl)
+        console.log(decodeURI(this.$route.path))
+        if (decodeURI(this.$route.path) !== this.getUserDetails.profilePageUrl && this.getUserDetails.profilePageUrl !== undefined) {
+            console.log('here 2');
+            this.goToPublishedContentsTab();
+        }
     },
     destroyed() {
         window.removeEventListener('scroll', this.updateScroll);
