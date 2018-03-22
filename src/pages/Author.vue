@@ -34,7 +34,7 @@
                             <div class="profile-summary">
                                 <div class="head-title">
                                     <span>__("author_about")</span>
-                                    <button class="edit" v-if="getUserDetails.userId === getAuthorData.user.userId">
+                                    <button class="edit" @click="editAuthorSummary" v-if="getUserDetails.userId === getAuthorData.user.userId">
                                         <i class="material-icons">mode_edit</i>
                                     </button>
                                 </div>
@@ -131,10 +131,14 @@ import MainLayout from '@/layout/main-layout.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import AuthorCard from '@/components/AuthorCard.vue';
 import Spinner from '@/components/Spinner.vue';
+import mixins from '@/mixins';
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
     name: 'Pratilipi',
+    mixins: [
+        mixins
+    ],
     data() {
         return {
             user_id: null,
@@ -231,7 +235,10 @@ export default {
             const formData = new FormData();
             formData.append('ko_unique_4', event.target.files[0], event.target.files[0].name);
             this.uploadProfileImage(formData);
-        }
+        },
+        editAuthorSummary() {
+            this.openInputModal();
+        },
     },
     watch: {
         'getAuthorData.authorId'(newValue) {
