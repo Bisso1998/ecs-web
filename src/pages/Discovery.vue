@@ -58,6 +58,7 @@ export default {
 <style lang="scss" scoped>
 .discovery-page {
     margin-top: 85px;
+    min-height: 700px;
     @media screen and (max-width: 992px ) {
         margin-top: 65px;
     }

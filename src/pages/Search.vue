@@ -145,6 +145,7 @@ export default {
 .search-page {
     margin-top: 85px;
     text-align: left;
+    min-height: 700px;
     @media screen and (max-width: 992px ) {
         margin-top: 65px;
         text-align: center;
