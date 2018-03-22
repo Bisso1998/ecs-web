@@ -15,7 +15,7 @@
             <div class="form-group">
                 <input autocomplete="new-password" type="password" class="form-control" :placeholder="'__("user_password")'">
             </div>
-            <button type="button" @click="signupUser({name, email, password})" class="btn sign-in">__("user_sign_up")</button>
+            <button type="button" @click="signupUser({ name, email, password, language: getCurrentLanguage() })" class="btn sign-in">__("user_sign_up")</button>
             <a href="#" class="footlink" v-on:click="tabsignin" data-tab="signin">__("user_sign_in")</a>
             <span class="terms-section">__("register_part_1") <a href="/privacy-policy" target="_blank">__("footer_privacy_policy")</a> __("register_part_2") <a href="/terms-of-service" target="_blank">__("footer_terms_of_service")</a> __("register_part_3")</span>
         </form>
