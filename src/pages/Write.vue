@@ -7,7 +7,7 @@
                         <div class="col-lg-12 d-none d-lg-block d-xl-block"><!-- Desktop only -->
                             <div class="card">
                                 <div class="card-content">
-                                    <button type="button" class="btn">__("write_heading")</button>
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#writermodal">__("write_heading")</button>
                                 </div>
                             </div>
                         </div>
@@ -33,10 +33,10 @@
                                             <div class="draft-name">{{ each_draft.title }}</div>
                                         </a>
                                     </div>
-                                    <Spinner v-if="draftedContentsLoadingState === 'LOADING'"></Spinner>
                                 </div>
                             </div>
                         </div>
+                        <Spinner v-if="draftedContentsLoadingState === 'LOADING'"></Spinner>
                         <div class="col-md-12 col-lg-6">
                             <div class="card">
                                 <div class="head-title">__("event_events")</div>
@@ -85,6 +85,7 @@
                         </div>
                     </div>
                 </div>
+                <WriterModal></WriterModal>
             </div>
         </div>
     </MainLayout>
@@ -93,6 +94,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
+import WriterModal from '@/components/WriterModal.vue';
 import { mapGetters, mapActions, mapState } from 'vuex'
 import constants from '@/constants';
 
@@ -137,7 +139,8 @@ export default {
     },
     components: {
         MainLayout,
-        Spinner
+        Spinner,
+        WriterModal
     },
     watch: {
         'getUserDetails.authorId'(newValue) {

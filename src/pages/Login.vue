@@ -4,7 +4,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Join with Pratilipi</h2>
+                        <h2>Join Pratilipi</h2>
+                        <p class="subtitle">25,000 authors. 1,50,000 stories. 13,00,000 readers.</p>
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <div class="card">
@@ -24,9 +25,10 @@
                     
                     <div class="col-lg-6 col-md-12">
                         <div class="card">
-                            <div class="head-title">Logged In user Features</div>
-                            <p>__("user_login_to_view_library")</p>
-                            <p>__("user_login_to_view_notifications")</p>
+                            <div class="head-title">Login Features</div>
+                            <p>1) Add stories and read anywhere, anytime.  </p>
+                            <p>2) Write and win prizes!</p>
+                            <p>3) Connect with friends and read stories together.</p>
                         </div>
                     </div>
                 </div>
@@ -134,6 +136,12 @@ export default {
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
+    }
+    p.subtitle {
+        text-align: left;
+        font-size: 14px;
+        padding: 0 10px;
+        margin-bottom: 5px;
     }
     .head-title {
         font-size: 16px;
