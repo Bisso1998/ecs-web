@@ -22,24 +22,22 @@
                                 </div>
                             </div>
                         </div>
-                        <span v-if="!getUserDetails.isGuest">
-                            <div class="col-md-12" v-if="draftedContents.length > 0"><!-- LoggedIn only and has drafts -->
-                                <div class="card">
-                                    <div class="head-title">__("author_drafts")</div>
-                                    <p class="left-w-p">Finish writing your stories</p>
-                                    <div class="card-content drafts" @scroll="updateScroll">
-                                        
-                                        <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
-                                            <a :href="each_draft.pageUrl">
-                                                <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
-                                                <div class="draft-name">{{ each_draft.title }}</div>
-                                            </a>
-                                        </div>
+                        <div class="col-md-12" v-if="draftedContents.length > 0 && !getUserDetails.isGuest"><!-- LoggedIn only and has drafts -->
+                            <div class="card">
+                                <div class="head-title">__("author_drafts")</div>
+                                <p class="left-w-p">Finish writing your stories</p>
+                                <div class="card-content drafts" @scroll="updateScroll">
+                                    
+                                    <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
+                                        <a :href="each_draft.pageUrl">
+                                            <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
+                                            <div class="draft-name">{{ each_draft.title }}</div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <Spinner v-if="draftedContentsLoadingState === 'LOADING'"></Spinner>
-                        </span>
+                        </div>
+                        <Spinner v-if="draftedContentsLoadingState === 'LOADING' && !getUserDetails.isGuest"></Spinner>
                         <div class="col-md-12 col-lg-6">
                             <div class="card">
                                 <div class="head-title">__("event_events")</div>
