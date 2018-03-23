@@ -81,7 +81,7 @@
                                             <input type="date" class="form-control" id="pratilipi-settings-dateOfBirth" :value="dateOfBirth" @input="updateDateOfBirth" placeholder="__('author_date_of_birth')">
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary update-btn" @click="updateProfileSettings">__("save_changes")</button>
+                                    <button type="button" class="btn update-btn" @click="updateProfileSettings">__("save_changes")</button>
                                 </form>
                             </div>
                             <div class="tabs" id="notification-settings">
@@ -134,7 +134,7 @@
                                             <label class="form-check-label" for="notif_option_pratilipi_updates">__("option_pratilipi_updates")</label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary update-btn" disabled>__("save_changes")</button>
+                                    <button type="submit" class="btn update-btn" disabled>__("save_changes")</button>
                                 </form>
                             </div>
                             <div class="tabs" id="password-settings">
@@ -155,7 +155,7 @@
                                             <input type="password" class="form-control" v-model="newPassword" id="pratilipi-settings-confirm-password" placeholder="__('user_confirm_password')">
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary update-btn" @click="updateUserPassword({ oldPassword, newPassword })">__("save_changes")</button>
+                                    <button type="button" class="btn update-btn" @click="updateUserPassword({ oldPassword, newPassword })">__("save_changes")</button>
                                 </form>
                             </div>
                         </div>
@@ -355,11 +355,16 @@ export default {
         }
         .update-btn {
             background: #d0021b;
+            color: #fff;
             border: 0;
             outline: none;
             font-size: 14px;
             float: right;
             margin: 10px 0;
+            &:active, &:focus {
+                outline: none;
+                box-shadow: none;
+            }
         }
     }
 }
