@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import '@/static_scripts/google_analytics.js'
+import '@/static_scripts/amplitude_analytics.js'
+import '@/static_scripts/facebook_analytics.js'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {

@@ -2,7 +2,7 @@
     <div class="forms" id="signin">
         <div class="social-login">
             <button type="button" name="button" class="fb"><icon name="facebook-f"></icon>__("user_sign_in_with_facebook")</button>
-            <button type="button" name="button" class="google"><icon name="google"></icon>__("user_sign_in_with_google")</button>
+            <GoogleLogin></GoogleLogin>
         </div>
         <div class="or">__("or")</div>
         <form>
@@ -24,6 +24,7 @@
 
 import { mapGetters, mapActions } from 'vuex'
 import mixins from '@/mixins';
+import GoogleLogin from '@/components/GoogleLogin';
 
 export default {
     name: 'Login-Form',
@@ -57,7 +58,7 @@ export default {
         }
     },
     components: {
-        
+        GoogleLogin
     },
     created() {
     }
