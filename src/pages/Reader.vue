@@ -140,7 +140,7 @@
                                 v-if="selectedChapter == getIndexData.length">
                             </Reviews>                                
 
-                            <div class="book-recomendations col-md-12 p-0" v-if="selectedChapter == getIndexData.length">
+                            <div class="book-recomendations" v-if="selectedChapter == getIndexData.length">
                                 <div class="card">
                                     <Recommendation
                                         :contextId="getPratilipiData.pratilipiId"
@@ -363,20 +363,24 @@ export default {
             $('.overlay-1').fadeToggle();
             $('.overlay-2').fadeOut();
             $(".rating-popout").removeClass("show");
+            $("body").addClass("modal-open");
         },
         openRatingModal() {
             $(".rating-popout").toggleClass("show");
             $('.overlay-2').fadeToggle();
             $('.overlay-1').fadeOut();
             $(".review-popout").removeClass("show");
+            $("body").addClass("modal-open");
         },
         closeReviewModal() {
             $(".review-popout").removeClass("show");
             $('.overlay-1').fadeOut();
+            $("body").removeClass("modal-open");
         },
         closeRatingModal() {
             $(".rating-popout").removeClass("show");
             $('.overlay-2').fadeOut();
+            $("body").removeClass("modal-open");
         },
         openSidebar() {
             $('#sidebar').addClass('active');
@@ -577,7 +581,9 @@ export default {
             vertical-align: middle;
         }
         &.nav-up {
-            top: -75px;
+            @media screen and (max-width: 768px ) {
+                top: -75px;
+            }
         }
     }
     .reader-progress {
@@ -605,13 +611,15 @@ export default {
             transition: width .3s ease;
         }
         &.progress-up {
-            top: 0;
+            @media screen and (max-width: 768px ) {
+                top: 0;
+            }
         }
     }
     .book-content {
         margin: 54px 0;
         font-size: 16px;
-        padding: 10px;
+        padding: 0;
         text-align: justify;
 
         -moz-user-select: -moz-none;
