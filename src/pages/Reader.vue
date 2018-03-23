@@ -547,7 +547,7 @@ export default {
         }
         .right-icons {
             float: right;
-            width: 90px;
+            width: 86px;
         }
         .exit-reader {
             margin-right: 5px;
@@ -714,6 +714,7 @@ export default {
         }
         span {
             font-size: 14px;
+            vertical-align: middle;
         }
         .col-3 {
             cursor: pointer;
