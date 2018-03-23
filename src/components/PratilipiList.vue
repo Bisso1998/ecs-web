@@ -119,7 +119,7 @@ export default {
 			.section-title {
 				text-align: left;
 				font-weight: bold;
-				font-size: 18px;
+				font-size: 16px;
 				border-left: 3px solid #d0021b;
 				padding-left: 10px;
 				margin: 10px 0;
@@ -129,7 +129,7 @@ export default {
 			}
 		}
         .section-title a {
-            padding-left: 0;
+            padding: 0;
         }
 	}
     .pratilipi-list {

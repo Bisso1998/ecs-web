@@ -439,6 +439,9 @@ export default {
         @media screen and (max-width: 992px ) {
             margin-top: 65px;
         }
+        .col-md-12.p-0 {
+            padding: 0;
+        }
         .card {
             margin: 10px;
             display: block;
