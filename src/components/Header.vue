@@ -179,7 +179,7 @@ export default {
             float: left;
             width: 40px;
             display: inline-block;
-            @media screen and (max-width: 350px ) {
+            @media screen and (max-width: 370px ) {
                 width: 29px
             }
             &:hover {
