@@ -133,12 +133,14 @@
                                 <input type="text" id="inlineShareUri" hidden>
                             </div>
 
-                            <Reviews 
-                                :pratilipiId="getPratilipiData.pratilipiId" 
-                                :authorId="getPratilipiData.author.authorId" 
-                                :userPratilipiData='getUserPratilipiData'
-                                v-if="selectedChapter == getIndexData.length">
-                            </Reviews>                                
+                            <div class="book-bottom-ratings">
+                                <Reviews 
+                                    :pratilipiId="getPratilipiData.pratilipiId" 
+                                    :authorId="getPratilipiData.author.authorId" 
+                                    :userPratilipiData='getUserPratilipiData'
+                                    v-if="selectedChapter == getIndexData.length">
+                                </Reviews>
+                            </div>                                
 
                             <div class="book-recomendations" v-if="selectedChapter == getIndexData.length">
                                 <div class="card">
@@ -1067,8 +1069,19 @@ export default {
         }
     }
 }
-.book-content img {
-    width: 100%;
-    max-width: 1200px;
+.book-content {
+    img {
+        width: 100%;
+        max-width: 1200px;
+    }
+    .book-bottom-ratings {
+        margin: 10px 0;
+        .write-review-btn, .all-reviews, .comments-list li, .show-more {
+            display: none !important;
+        }
+        .comments-list li:first-child {
+            display: block !important;
+        }
+    }
 }
 </style>
