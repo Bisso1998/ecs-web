@@ -507,5 +507,7 @@
     "hour": "hr",
     "hours": "hrs",
     "minute": "min",
-    "minutes": "mins"
+    "minutes": "mins",
+    "menu_category": "Category",
+    "menu_profile": "Profile"
 }

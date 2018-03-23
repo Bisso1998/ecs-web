@@ -10,7 +10,7 @@
           :to="{ name: 'Discovery_Page' }"
           class="main-tabs">
           <i class="material-icons">all_out</i>
-          <span>__('search_explore_categories')</span>
+          <span>__('menu_category')</span>
         </router-link>
         <router-link
           :to="{ name: 'Write_Page' }"
@@ -23,7 +23,7 @@
           v-if="userDetails.profilePageUrl"
           class="main-tabs">
           <i class="material-icons">account_circle</i>
-          <span>__('user_my_profile')</span>
+          <span>__('menu_profile')</span>
         </router-link>
         <router-link
           :to="{ name: 'Login_Page'}"

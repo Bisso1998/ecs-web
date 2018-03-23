@@ -507,5 +507,7 @@
     "hour": "तास",
     "hours": "तास",
     "minute": "मिनिट",
-    "minutes": "मिनिटे"
+    "minutes": "मिनिटे",
+    "menu_category": "श्रेणी",
+    "menu_profile": "प्रोफाइल"
 }
