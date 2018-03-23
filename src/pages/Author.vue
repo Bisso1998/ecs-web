@@ -81,6 +81,7 @@
                                     :hideAddToLibrary="true"
                                     :hideAuthorName="true"
                                     ></PratilipiComponent>
+                                    <p class="message" v-if="publishedContentsLoadingState === 'LOADING_SUCCESS' && getPublishedContents.length == 0">__("author_no_contents_published")</p>
                                 </div>
                                 <div class="list library" id="library">
                                     <PratilipiComponent
@@ -603,6 +604,11 @@ export default {
             }
             &#library {
                 display: block;
+            }
+            p.message {
+                margin: 15px 15px 15px 0;
+                font-size: 14px;
+                color: #555;
             }
         }
         a.view_more {
