@@ -190,13 +190,13 @@ export default {
             display: inline-block;
             vertical-align: middle;
             float: left;
-            margin-left: 5px;
+            margin-left: 4px;
             button {
                 padding: 0;
                 margin: 0;
                 background: none;
                 line-height: 40px;
-                font-size: 16px;
+                font-size: 15px;
                 font-weight: 700;
                 color: #212121;
                 &:focus {
