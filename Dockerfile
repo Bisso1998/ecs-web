@@ -28,6 +28,4 @@ RUN LANGUAGE=mr npm run build
 RUN LANGUAGE=ta npm run build
 RUN LANGUAGE=te npm run build
 
-COPY dist dist
-
 EXPOSE 80
