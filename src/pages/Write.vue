@@ -25,7 +25,6 @@
                         <div class="col-md-12" v-if="draftedContents.length > 0 && !getUserDetails.isGuest"><!-- LoggedIn only and has drafts -->
                             <div class="card">
                                 <div class="head-title">__("author_drafts")</div>
-                                <p class="left-w-p">Finish writing your stories</p>
                                 <div class="card-content drafts" @scroll="updateScroll">
                                     
                                     <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
@@ -44,7 +43,6 @@
                                 <div class="card-content">
                                     <router-link
                                     :to="{ path: 'event' }">
-                                        <p>Participate and win cash prizes</p>
                                         <img src="https://0.ptlp.co/resource-all/android-category-banners/events.jpg" alt="Events">
                                     </router-link>
                                 </div>
@@ -52,11 +50,10 @@
                         </div>
                         <div class="col-md-12 col-lg-6">
                             <div class="card">
-                                <div class="head-title">Live Event</div>
+                                <div class="head-title">{{ eventData.title}}</div>
                                 <div class="card-content">
                                     <router-link
                                     :to="{ path: eventData.categoryUrl }">
-                                        <p>{{ eventData.title}}</p>
                                         <img :src="'https://0.ptlp.co/event/banner?eventId=' + eventData.pratilipiListData.eventId" alt="Events">
                                     </router-link>
                                 </div>
