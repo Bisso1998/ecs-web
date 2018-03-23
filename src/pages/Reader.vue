@@ -716,6 +716,13 @@ export default {
         .col-3 {
             cursor: pointer;
             padding: 0 5px;
+            -moz-user-select: -moz-none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
     }
     #sidebar {
