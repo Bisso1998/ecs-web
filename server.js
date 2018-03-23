@@ -2,7 +2,6 @@
 
 const express = require( 'express' );
 const compression = require( 'compression' );
-const parse = require('url-parse');
 const morgan = require('morgan');
 
 var fs = require( 'fs' );
