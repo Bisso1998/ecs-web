@@ -4,14 +4,15 @@
             <div class="container">
                 <div class="page-content">
                     <div class="row">
-                        <div class="col-lg-12 d-none d-lg-block d-xl-block"><!-- Desktop only -->
-                            <div class="card">
+                        <div class="col-lg-12 d-none d-lg-block d-xl-block" v-if="!isMobile()"><!-- Desktop only -->
+                            <div class="card write-now">
                                 <div class="card-content">
+                                    <p>__("write_help")</p>
                                     <button @click="alertOrOpenWriteModal" type="button" class="btn">__("write_heading")</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 d-block d-md-block d-lg-none"><!-- Android only -->
+                        <div class="col-md-12 d-block d-md-block d-lg-none" v-if="isMobile()"><!-- Android only -->
                             <div class="card install-app">
                                 <div class="card-content">
                                 <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_write&utm_campaign=app_download" target="_blank">
@@ -274,7 +275,7 @@ export default {
         &.bg-image {
             background-position: right center;
         }
-        &.install-app {
+        &.install-app, &.write-now {
             background: url(https://0.ptlp.co/resource-all/android-category-banners/experiences.jpg) no-repeat right center;
             background-size: cover;
             color: #fff;
@@ -290,6 +291,15 @@ export default {
             }
             a {
                 color: #fff;
+            }
+        }
+        &.write-now {
+            .card-content {
+                padding: 20px;
+                .btn {
+                    padding: 10px 25px;
+                    margin-top: 20px;
+                }
             }
         }
     }
