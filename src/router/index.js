@@ -94,7 +94,7 @@ export default new Router({
         component: EventPageComponent,
         meta: { 'store': 'eventpage' }
     }, {
-        path: '/write',
+        path: '/create',
         name: 'Write_Page',
         component: WritePageComponent,
         meta: { 'store': 'writepage' }
