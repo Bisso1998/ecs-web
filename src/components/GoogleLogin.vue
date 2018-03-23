@@ -17,10 +17,10 @@ export default {
         ]),
         loginToGoogle() {
             console.log('hi')
+            const that = this;
             const GoogleAuth = gapi.auth2.getAuthInstance();
-            console.log(GoogleAuth);
             GoogleAuth.signIn().then( function( googleUser ) {
-                this.loginUserWithGoogleToken(googleUser.getAuthResponse().id_token);
+                that.loginUserWithGoogleToken(googleUser.getAuthResponse().id_token);
             }, function( error ) {
                 console.log( JSON.stringify( error, undefined, 2 ) );
             });
