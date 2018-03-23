@@ -32,7 +32,6 @@ export default {
     created() {
 
         const googleClientId = process.env.GOOGLE_CLIENT_ID;
-        console.log();
         if (document.getElementById('google-client-jssdk')) {
             return;
         }

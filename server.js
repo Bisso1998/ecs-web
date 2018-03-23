@@ -169,7 +169,7 @@ const UNEXPECTED_SERVER_EXCEPTION = { "message": "Some exception occurred at ser
 const app = express();
 
 // gzip all responses
-app.use( compression() );
+app.use( compression({ level: 9 }) );
 app.use( morgan('short') );
 
 // Health
