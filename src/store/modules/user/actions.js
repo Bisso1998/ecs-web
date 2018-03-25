@@ -115,6 +115,20 @@ export default {
         });
     },
 
+    loginUserWithFacebookAccessToken({ commit, state }, {facebookAccessToken, language}) {
+        console.log(language);
+        DataAccessor.loginFacebookUser( facebookAccessToken, language, ( data ) => {
+            commit('setUserDataLoadingSuccess', data);
+
+            if (state.post_login_action.action) {
+                dispatch(state.post_login_action.action, state.post_login_action.data, { root: true });
+                commit('clearPostLoginAction');
+            }
+        }, function( error ) {
+            commit('setUserDataLoadingError', error.message || error.fbUserAccessToken);
+        });
+    },
+
     resetUserPassword({ commit, state }, { email, idToken, newPassword }) {
         console.log(email, idToken, newPassword)
         DataAccessor.resetUserPassword(email, idToken, newPassword, (userDetails) => {
