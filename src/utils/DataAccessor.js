@@ -618,10 +618,10 @@ export default {
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 
-    loginFacebookUser: (fbUserAccessToken, successCallBack, errorCallBack) => {
+    loginFacebookUser: (fbUserAccessToken, language, successCallBack, errorCallBack) => {
         if (fbUserAccessToken == null) return;
         httpUtil.post(API_PREFIX + USER_LOGIN_FACEBOOK_API,
-            null, { "fbUserAccessToken": fbUserAccessToken, "language": "${ language }" },
+            null, { "fbUserAccessToken": fbUserAccessToken, "language": language },
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 
