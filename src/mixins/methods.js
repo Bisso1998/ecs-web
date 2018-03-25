@@ -53,9 +53,11 @@ export function isChrome() {
 
 export function getCurrentLanguage() {
     const currentLocale = process.env.LANGUAGE;
+    let language;
     constants.LANGUAGES.forEach((eachLanguage) => {
         if (eachLanguage.shortName === currentLocale) {
-            return eachLanguage;
+            language = eachLanguage;
         }
     });
+    return language;
 }
