@@ -29,29 +29,6 @@ export default {
         
     },
     created() {
-
-        // const googleClientId = process.env.GOOGLE_CLIENT_ID;
-        // if (document.getElementById('google-client-jssdk')) {
-        //     return;
-        // }
-        // (function(d, s, id) {
-        //     var js, fjs = d.getElementsByTagName(s)[0];
-        //     if (d.getElementById(id)) { return; }
-        //     js = d.createElement(s);
-        //     js.id = id;
-        //     js.src = "//apis.google.com/js/api.js";
-        //     fjs.parentNode.insertBefore(js, fjs);
-        // }(document, 'script', 'google-client-jssdk'));
-        // document.getElementById('google-client-jssdk').onload = () => {
-        //     gapi.load( 'auth2', function() {
-        //         gapi.auth2.init({
-        //             client_id: `${googleClientId}`,
-        //             cookiepolicy: 'single_host_origin'
-        //         }).then(() => {
-        //             console.log('google api initialized')
-        //         });
-        //     });
-        // }
     }
 }
 </script>

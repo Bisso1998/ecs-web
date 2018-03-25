@@ -611,10 +611,10 @@ export default {
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 
-    loginGoogleUser: (googleIdToken, successCallBack, errorCallBack) => {
+    loginGoogleUser: (googleIdToken, language, successCallBack, errorCallBack) => {
         if (googleIdToken == null) return;
         httpUtil.post(API_PREFIX + USER_LOGIN_GOOGLE_API,
-            null, { "googleIdToken": googleIdToken, "language": "${ language }" },
+            null, { "googleIdToken": googleIdToken, "language": language },
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 

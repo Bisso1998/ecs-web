@@ -16,11 +16,11 @@ export default {
             'loginUserWithGoogleToken'
         ]),
         loginToGoogle() {
-            console.log('hi')
             const that = this;
             const GoogleAuth = gapi.auth2.getAuthInstance();
             GoogleAuth.signIn().then( function( googleUser ) {
-                that.loginUserWithGoogleToken(googleUser.getAuthResponse().id_token);
+                console.log(GoogleAuth.currentUser.get());
+                that.loginUserWithGoogleToken({ googleIdToken: googleUser.getAuthResponse().id_token, language: that.getCurrentLanguage().fullName.toUpperCase() });
             }, function( error ) {
                 console.log( JSON.stringify( error, undefined, 2 ) );
             });
@@ -48,6 +48,8 @@ export default {
                 gapi.auth2.init({
                     client_id: `${googleClientId}`,
                     cookiepolicy: 'single_host_origin'
+                }).then(() => {
+                    console.log('google api initialized')
                 });
             });
         }

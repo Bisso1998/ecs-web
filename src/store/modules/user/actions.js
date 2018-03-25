@@ -129,6 +129,20 @@ export default {
         });
     },
 
+    loginUserWithGoogleToken({ commit, state, dispatch }, { googleIdToken, language}) {
+        commit('setUserDataLoadingTrue');
+        DataAccessor.loginGoogleUser(googleIdToken, language, (data) => {
+            commit('setUserDataLoadingSuccess', data);
+            if (state.post_login_action.action) {
+                dispatch(state.post_login_action.action, state.post_login_action.data, { root: true });
+                commit('clearPostLoginAction');
+            }
+        }, (error) => {
+            console.log(error);
+            commit('setUserDataLoadingError', error.message);
+        })
+    },
+
     resetUserPassword({ commit, state }, { email, idToken, newPassword }) {
         console.log(email, idToken, newPassword)
         DataAccessor.resetUserPassword(email, idToken, newPassword, (userDetails) => {
