@@ -3,7 +3,7 @@
         <slot></slot>
         <LoginModal></LoginModal>
         <ShareModal></ShareModal>
-        <Alert></Alert>
+        <Alert :isReader="true"></Alert>
     </div>
 </template>
 

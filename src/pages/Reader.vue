@@ -110,7 +110,7 @@
                                 v-html="eachChapter.content">
                             </div>
                             <Spinner v-if="getPratilipiContentLoadingState !== 'LOADING_SUCCESS'"></Spinner>
-                            <div class="book-navigation">
+                            <div class="book-navigation" v-if="getPratilipiContentLoadingState === 'LOADING_SUCCESS'">
                                 <div class="prev" v-if="selectedChapter !== 1" @click="goToPreviousChapter">Previous Chapter</div>
                                 <div class="next" v-if="selectedChapter !== getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
@@ -157,8 +157,14 @@
                             <span>{{ getPratilipiData.ratingCount }}</span>
                         </div>
                         <div class="add-to-lib col-3">
-                            <i class="material-icons" v-if="getUserPratilipiData.addedToLib" @click="removeFromLibrary">bookmark</i>
-                            <i class="material-icons" v-else @click="addPratilipiToLibrary(getPratilipiData.pratilipiId)">bookmark_border</i>
+                            <span v-if="getUserPratilipiData.addedToLib" @click="removeFromLibrary">
+                                <i class="material-icons">bookmark</i>
+                                <i class="material-icons stacked">check</i>
+                            </span>
+                            <span v-else @click="addPratilipiToLibrary(getPratilipiData.pratilipiId)">
+                                <i class="material-icons">bookmark_border</i>
+                                <i class="material-icons stacked grey">add</i>
+                            </span>
                         </div>
                         <div class="share-btn col-3" @click="openShareModal">
                             <i class="material-icons">share</i>
@@ -682,6 +688,23 @@ export default {
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
+        }
+        .add-to-lib {
+            span {
+                position: relative;
+                .stacked {
+                    position: absolute;
+                    top: 3px;
+                    left: 0;
+                    margin-left: 7px;
+                    font-size: 11px;
+                    color: #fff;
+                    font-weight: bold;
+                    &.grey {
+                        color: #212121;
+                    }
+                }
+            }
         }
     }
     #sidebar {

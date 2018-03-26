@@ -10,11 +10,13 @@
             <div class="image-mask">
                 <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
                 <span v-if="!hideAddToLibrary">
-                    <button v-if="!pratilipiData.addedToLib" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">
+                    <button class="add-library" v-if="!pratilipiData.addedToLib" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">
                         <i class="material-icons">bookmark_border</i>
+                        <i class="material-icons stacked grey">add</i>
                     </button>
-                    <button v-else @click="removeFromLibrary(pratilipiData.pratilipiId)">
+                    <button class="add-library" v-else @click="removeFromLibrary(pratilipiData.pratilipiId)">
                         <i class="material-icons added-to-lib">bookmark</i>
+                        <i class="material-icons stacked">check</i>
                     </button>
                 </span>
             </div>
@@ -243,12 +245,28 @@ export default {
                 outline: none;
                 border: 1px solid #e9e9e9;
                 z-index: 2;
+                position: relative;
+                &.add-library i {
+                    font-size: 22px;
+                }
                 i {
                     height: 40px;
                     line-height: 40px;
                     font-size: 18px;
-                    &.added-to-lib {
-                        color: #007aff;
+                    &.stacked {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        margin-left: 14px;
+                        font-size: 11px;
+                        color: #fff;
+                        font-weight: bold;
+                        &.grey {
+                            color: #212121;
+                            margin-left: 13.5px;
+                            
+                            margin-top: -1px
+                        }
                     }
                 }
             }
