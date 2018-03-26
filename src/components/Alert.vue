@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="alert alert-dark pratilipi-alert" role="alert">
+        <div :class="{ isReader: isReader }" class="alert alert-dark pratilipi-alert" role="alert">
             <p>{{ getAlertMessage }}</p>
         </div>
     </div>
@@ -14,6 +14,12 @@ export default {
     data() {
         return {
             currentAlertStatus: false
+        }
+    },
+    props: {
+        isReader: {
+            type: Boolean,
+            required: false
         }
     },
     computed: {
@@ -44,7 +50,7 @@ export default {
         margin: 10px 0 0;
         position: fixed;
         bottom: 0;
-        z-index: 5;
+        z-index: 15;
         background: #323232;
         color: #fff;
         font-size: 14px;
@@ -57,6 +63,11 @@ export default {
         }
         p {
             margin-bottom: 0;
+        }
+        &.isReader {
+            @media screen and (max-width: 992px ) {
+                bottom: 46px;
+            }
         }
     }
 </style>
