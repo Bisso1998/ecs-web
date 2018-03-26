@@ -55,6 +55,10 @@ const router = new Router({
         component: AuthorComponent,
         meta: { 'store': 'authorpage' }
     }, {
+        path: '/followers',
+        name: 'Login_Page',
+        component: LoginPageComponent
+    }, {
         path: '/notifications',
         name: 'Notification',
         component: NotificationComponent,
