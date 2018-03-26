@@ -33,6 +33,7 @@ export default {
         if (chapterToFind) {
             return;
         }
+        commit('setContentLoadingTrue');
         DataAccessor.getPratilipiContent(pratilipiId, chapterNo, false, (data) => {
             if (data.status === 200) {
                 commit('setContentLoadingSuccess', data.response);

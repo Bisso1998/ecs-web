@@ -12,7 +12,8 @@ export default {
     	data: []
     },
     content: {
-        data: []
+        data: [],
+        loading_state: 'LOADING'
     },
     author: {
         loading_state: 'LOADING',

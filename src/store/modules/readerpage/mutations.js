@@ -63,12 +63,18 @@ export default {
     clearCachedContents(state) {
         state.content.data = [];
     },
+
+    setContentLoadingTrue(state) {
+        state.content.loading_state = 'LOADING';
+    },
+
     setContentLoadingSuccess(state, data) {
         const chapterToFind = state.content.data.find((eachChapter) => eachChapter.chapterNo === data.chapterNo);
         if (chapterToFind) {
             return;
         }
         state.content.data.push(data);
+        state.content.loading_state = 'LOADING_SUCCESS';
     },
     setContentLoadingError(state) {
         state.content.loading_state = 'LOADING_ERROR';

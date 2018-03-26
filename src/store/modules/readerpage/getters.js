@@ -25,6 +25,7 @@ export default {
     getIndexData: state => state.index.data,
     getIndexLoadingState: state => state.index.loading_state,
     getPratilipiContent: state => state.content.data,
+    getPratilipiContentLoadingState: state => state.content.loading_state,
     getAuthorData: state => state.author.data,
     getAuthorDataLoadingState: state => state.author.loading_state,
 }
