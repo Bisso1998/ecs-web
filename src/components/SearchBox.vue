@@ -1,5 +1,6 @@
 <template>
     <div class="search-dropdown">
+        <span class="close-search" @click="closeDropdown"><i class="material-icons">close</i></span>
         <ul class="search-options">
             <li>
                 <router-link
@@ -40,7 +41,10 @@ export default {
     methods: {
         ...mapActions('searchpage', [
             'fetchTrendingSearch'
-        ])
+        ]),
+        closeDropdown() {
+            $(".search-dropdown").hide();
+        }
     },
     created() {
         const currentLocale = process.env.LANGUAGE;
@@ -76,6 +80,18 @@ export default {
             a {
                 padding: 5px 10px;
                 display: block;
+            }
+        }
+        .close-search {
+            position: absolute;
+            top: 11px;
+            right: 3px;
+            background: #fff;
+            height: 18px;
+            padding: 0 4px;
+            cursor: pointer;
+            i {
+                font-size: 16px;
             }
         }
         .title {

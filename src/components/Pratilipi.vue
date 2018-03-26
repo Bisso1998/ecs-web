@@ -307,7 +307,7 @@ export default {
     .language-ta .pratilipi .stats .read-time, .language-te .pratilipi .stats .read-time, .language-ml .pratilipi .stats .read-time, .language-kn .pratilipi .stats .read-time {
         font-size: 10px;
         @media screen and (max-width: 768px ) {
-            font-size: 9px;
+            font-size: 8.5px;
         }
     }
 </style>
