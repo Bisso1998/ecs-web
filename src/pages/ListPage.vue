@@ -93,6 +93,18 @@ export default {
                     }
                 });
             }
+        },
+        '$route.params.list_page_url'(list_page_url) {
+            const currentLocale = process.env.LANGUAGE;
+            constants.LANGUAGES.forEach((eachLanguage) => {
+                if (eachLanguage.shortName === currentLocale) {
+                    this.fetchInitialListPagePratilipis({
+                        language: eachLanguage.fullName.toUpperCase(),
+                        listName: list_page_url,
+                        resultCount: 20
+                    });
+                }
+            });
         }
     },
     mounted() {
