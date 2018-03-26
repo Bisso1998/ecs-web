@@ -98,7 +98,7 @@ export default {
     },
     methods: {
         goToSearchPage() {
-            this.$router.push({ name: 'Search_Page', query: { searchText: this.searchText } });
+            this.$router.push({ name: 'Search_Page', query: { q: this.searchText } });
         },
         opendesktopsearch() {
             $("#search-box-big .search-dropdown").show();

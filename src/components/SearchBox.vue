@@ -3,7 +3,7 @@
         <ul class="search-options">
             <li>
                 <router-link
-                :to="{ name: 'Search_Page', query: { searchText: searchText } }">
+                :to="{ name: 'Search_Page', query: { q: searchText } }">
                     {{ searchText }}
                 </router-link>
             </li>
@@ -12,7 +12,7 @@
             <div class="title">__("search_trending_heading")</div>
             <div class="tags">
                 <router-link
-                :to="{ name: 'Search_Page', query: { searchText: eachTrendingWord } }"
+                :to="{ name: 'Search_Page', query: { q: eachTrendingWord } }"
                  v-for="(eachTrendingWord, index) in getTrendingWords" :key="index">
                     #{{ eachTrendingWord }}
                 </router-link>
