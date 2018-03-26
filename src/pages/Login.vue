@@ -4,8 +4,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Join Pratilipi</h2>
-                        <p class="subtitle">25,000 authors. 1,50,000 stories. 13,00,000 readers.</p>
+                        <h2>__("join_pratilipi")</h2>
+                        <p class="subtitle">__("about_pratilipi")</p>
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <div class="card">
@@ -26,9 +26,9 @@
                     <div class="col-lg-6 col-md-12">
                         <div class="card">
                             <div class="head-title">Login Features</div>
-                            <p><i class="material-icons">check_circle</i> Add stories and read anywhere, anytime.  </p>
-                            <p><i class="material-icons">check_circle</i> Write and win prizes!</p>
-                            <p><i class="material-icons">check_circle</i> Connect with friends and read stories together.</p>
+                            <p><i class="material-icons">check_circle</i> __("pratilipi_feature_1")</p>
+                            <p><i class="material-icons">check_circle</i> __("pratilipi_feature_2")</p>
+                            <p><i class="material-icons">check_circle</i> __("pratilipi_feature_3")</p>
                         </div>
                     </div>
                 </div>
