@@ -16,6 +16,7 @@ COPY .eslintignore .eslintignore
 COPY .eslintrc.js .eslintrc.js
 COPY .postcssrc.js .postcssrc.js
 COPY index.html index.html
+COPY old_build old_build
 
 COPY server.js .
 
