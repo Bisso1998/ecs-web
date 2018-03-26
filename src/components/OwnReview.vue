@@ -3,12 +3,12 @@
         <div class="comment-main-level">
             <div class="comment-avatar"><img :src="userPratilipiData.userId == 0 ? defaultAuthorImage : userPratilipiData.userImageUrl" alt="author"></div>
             <div class="comment-box">
-                <div class="already-rated"  v-if="userPratilipiData.reviewDateMillis != null">
+                <div class="already-rated"  v-if="userPratilipiData.reviewDateMillis != null && !editRatingMode">
                     <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">more_vert</i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="moreOptions">
-                        <button type="button" class="btn options-btn" data-toggle="modal" @click="openReview">
+                        <button type="button" class="btn options-btn" data-toggle="modal" @click="openReviewAndEditRating">
                             __("review_edit_review")
                         </button>
                         <button type="button" class="btn options-btn" data-toggle="modal" @click="checkAndDeleteReview" >
@@ -26,7 +26,7 @@
                     <div class="comment-content">
                         {{ userPratilipiData.review }}
                     </div>
-                    <button class="btn btn-primary write-review-btn" v-if="userPratilipiData.review === '' || !userPratilipiData.review" @click="openReview" >__("review_write_a_review")</button>
+                    <button class="btn btn-primary write-review-btn" v-if="(userPratilipiData.review === '' || !userPratilipiData.review) && !editRatingMode" @click="openReview" >__("review_write_a_review")</button>
                     <div class="review-box">
                         <form>
                             <div class="form-group">
@@ -37,7 +37,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="rate-now" v-if="!userPratilipiData.reviewDateMillis">
+                <div class="rate-now" v-if="!userPratilipiData.reviewDateMillis || editRatingMode">
                     <span class="text">__("rating_your_rating")</span>
                     <fieldset class="rating" @click="openReview">
                         <input type="radio" id="star5" name="rating" value="5" :checked="userPratilipiData.rating == 5" @change="changeRating"/><label class = "full" for="star5"></label>
@@ -83,7 +83,8 @@ export default {
     },
     data() {
         return {
-            newReview: ''
+            newReview: '',
+            editRatingMode: false
         }
     },
     computed: {
@@ -124,6 +125,7 @@ export default {
             }
         },
         checkAndUpdateReview(data) {
+            this.editRatingMode = false;
             if (this.getUserDetails.isGuest) {
                 data.pageName = this.$route.meta.store;
                 this.saveOrUpdateReview(data)
@@ -137,6 +139,13 @@ export default {
         },
         checkAndDeleteReview(e) {
             this.deleteReview({ pratilipiId: this.userPratilipiData.pratilipiId, pageName: this.$route.meta.store });
+        },
+        openReviewAndEditRating() {
+            this.openReview();
+            setTimeout(() => {
+                $(".write-review-btn").hide()
+            }, 0);
+            this.editRatingMode = true;
         },
         openReview() {
             $(".review-box").fadeIn();

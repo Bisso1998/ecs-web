@@ -109,6 +109,7 @@
                                 :key="eachChapter.chapterNo"
                                 v-html="eachChapter.content">
                             </div>
+                            <Spinner v-if="getPratilipiContentLoadingState !== 'LOADING_SUCCESS'"></Spinner>
                             <div class="book-navigation">
                                 <div class="prev" v-if="selectedChapter !== 1" @click="goToPreviousChapter">Previous Chapter</div>
                                 <div class="next" v-if="selectedChapter !== getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
@@ -142,7 +143,6 @@
                         </div>
                     </div>
                 </div>
-                <Spinner v-if="getPratilipiContent.length === 0 || getPratilipiData.pratilipiId != $route.query.id"></Spinner>
             </div>
             
             <div class="footer-section">
@@ -357,6 +357,9 @@ export default {
             $("body").addClass("modal-open");
         },
         openRatingModal() {
+            if (this.getUserDetails.authorId === this.getPratilipiData.author.authorId) {
+                return;
+            }
             $(".rating-popout").addClass("show");
             $('.overlay-2').fadeIn();
             $('.overlay-1').fadeOut();
@@ -404,6 +407,7 @@ export default {
             'getIndexData',
             'getIndexLoadingState',
             'getPratilipiContent',
+            'getPratilipiContentLoadingState',
             'getAuthorData',
             'getAuthorDataLoadingState'
         ]),

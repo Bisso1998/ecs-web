@@ -12,7 +12,7 @@
         <a :href="getWhatsAppUri" class="whatsapp" target="_blank">
             <span class="social-icon"><icon name="whatsapp"></icon></span>
         </a>
-        <a :href="getContentUri" class="link">
+        <a class="link">
             <span class="social-icon"><icon name="link"></icon></span>
         </a>
         <input type="text" id="inlineShareUri" hidden>

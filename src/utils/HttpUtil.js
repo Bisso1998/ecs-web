@@ -13,8 +13,10 @@ const httpUtil = {
         /**
         Need to look for an alternative
         **/
-        headers = headers || {};
-        headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
+        if ((window.location.origin.indexOf("localhost") || window.location.origin.indexOf("herokuapp")) > -1) {
+            headers = headers || {};
+            headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
+        }
 
         if (headers != null) {
             for (var key in headers)
@@ -42,8 +44,10 @@ const httpUtil = {
         /**
         Need to look for an alternative
         **/
-        headers = headers || {};
-        headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
+        if ((window.location.origin.indexOf("localhost") || window.location.origin.indexOf("herokuapp")) > -1) {
+            headers = headers || {};
+            headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
+        }
 
         if (headers != null) {
             for (var key in headers)
@@ -70,8 +74,10 @@ const httpUtil = {
         /**
         Need to look for an alternative
         **/
-        headers = headers || {};
-        headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
+        if ((window.location.origin.indexOf("localhost") || window.location.origin.indexOf("herokuapp")) > -1) {
+            headers = headers || {};
+            headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
+        }
 
         if (headers != null) {
             for (var key in headers)
@@ -99,8 +105,10 @@ const httpUtil = {
         /*
         Need to look for an alternative
         */
-        headers = headers || {};
-        headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
+        if ((window.location.origin.indexOf("localhost") || window.location.origin.indexOf("herokuapp")) > -1) {
+            headers = headers || {};
+            headers["AccessToken"] = headers["AccessToken"] || getCookie("access_token");
+        }
         
 
         if (headers != null) {

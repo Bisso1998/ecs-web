@@ -23,6 +23,7 @@ import Footer from '@/components/Footer.vue';
 import Alert from '@/components/Alert.vue';
 
 import constants from '@/constants'
+import mixins from '@/mixins'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -38,6 +39,9 @@ export default {
             currentLocale: ''
         }
     },
+    mixins: [
+        mixins
+    ],
     methods: {
         ...mapActions([
             'fetchUserDetails',
@@ -57,12 +61,7 @@ export default {
     watch: {
         'getUserDetails.userId'(newValue) {
             if (newValue) {
-                const currentLocale = process.env.LANGUAGE;
-                constants.LANGUAGES.forEach((eachLanguage) => {
-                    if (eachLanguage.shortName === currentLocale) {
-                        this.fetchInitialNotifications(eachLanguage.fullName.toUpperCase(), 10);
-                    }
-                });
+                this.fetchInitialNotifications({ language: this.getCurrentLanguage().fullName.toUpperCase(), resultCount: 10 });
             }
         }
     },
