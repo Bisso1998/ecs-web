@@ -80,6 +80,10 @@ export default {
     },
 
     addToLibrary({ commit, state }) {
+        commit('alert/triggerAlertView', '__("added_to_library")', { root: true });
+        setTimeout(() => {
+            commit('alert/triggerAlertHide', null, { root: true });
+        }, 3000);
         DataAccessor.addOrRemoveFromLibrary(state.pratilipi.data.pratilipiId, true, (response) => {
             commit('addPratilipiToLibrarySuccess', response);
         }, (error) => {
@@ -88,6 +92,10 @@ export default {
     },
 
     removeFromLibrary({ commit, state }) {
+        commit('alert/triggerAlertView', '__("removed_from_library")', { root: true });
+        setTimeout(() => {
+            commit('alert/triggerAlertHide', null, { root: true });
+        }, 3000);
         DataAccessor.addOrRemoveFromLibrary(state.pratilipi.data.pratilipiId, false, (response) => {
             commit('removePratilipiFromLibrarySuccess', response);
         }, (error) => {
