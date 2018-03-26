@@ -25,7 +25,7 @@
                     
                     <div class="col-lg-6 col-md-12">
                         <div class="card">
-                            <div class="head-title">Login Features</div>
+                            <div class="head-title">__("login_benifits")</div>
                             <p><i class="material-icons">check_circle</i> __("pratilipi_feature_1")</p>
                             <p><i class="material-icons">check_circle</i> __("pratilipi_feature_2")</p>
                             <p><i class="material-icons">check_circle</i> __("pratilipi_feature_3")</p>
