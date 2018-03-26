@@ -6,6 +6,8 @@ window.fbAsyncInit = function() {
         autoLogAppEvents: false,
         version: 'v2.10'
     });
+
+    FB.AppEvents.logPageView();
 };
 
 (function(d, s, id) {
