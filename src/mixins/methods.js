@@ -9,10 +9,9 @@ export function translateWord(word, callback) {
         type: "GET",
 
         dataType: "json",
-    })
-        .done(function(json) {
-            callback(json[1][0][1])
-        });
+    }).done(function(json) {
+        callback(json[1][0][1])
+    });
 }
 
 export function openLoginModal() {
@@ -40,11 +39,11 @@ export function openWritePratilipiModal() {
 }
 
 export function isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent );
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 export function isAndroid() {
-    return /Android/i.test( navigator.userAgent );
+    return /Android/i.test(navigator.userAgent);
 }
 
 export function isChrome() {
@@ -60,4 +59,35 @@ export function getCurrentLanguage() {
         }
     });
     return language;
+}
+
+export function getLowResolutionImage(imageUrl) {
+    let type;
+
+    if (isChrome()){
+        type = 'webp';
+    } else {
+        type = 'jpg';
+    }
+
+    if (imageUrl.indexOf('?') === -1) {
+        return imageUrl + `?quality=low&type=${type}&width=50`;
+    } else {
+        return imageUrl + `&quality=low&type=${type}&width=50`;
+    }
+}
+
+export function getHighResolutionImage(imageUrl) {
+    let type;
+    if (isChrome()){
+        type = 'webp';
+    } else {
+        type = 'jpg';
+    }
+
+    if (imageUrl.indexOf('?') === -1) {
+        return imageUrl + `?quality=high&type=${type}`;
+    } else {
+        return imageUrl + `&quality=high&type=${type}`;
+    }
 }

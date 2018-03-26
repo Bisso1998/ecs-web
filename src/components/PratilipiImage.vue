@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import mixins from '@/mixins';
 
 export default {
     name: 'Pratilipi',
@@ -19,21 +20,11 @@ export default {
         return {
         }
     },
+    mixins: [
+        mixins
+    ],
     methods: {
-        getLowResolutionImage(imageUrl) {
-            if (imageUrl.indexOf('?') === -1) {
-                return imageUrl + '?quality=low&type=webp&width=50';
-            } else {
-                return imageUrl + '&quality=low&type=webp&width=50';
-            }
-        },
-        getHighResolutionImage(imageUrl) {
-            if (imageUrl.indexOf('?') === -1) {
-                return imageUrl + '?quality=high&type=webp';
-            } else {
-                return imageUrl + '&quality=high&type=webp';
-            }
-        },
+        
     },
     beforeMount() {
         const that = this;

@@ -4,7 +4,7 @@
             <div class="banners" v-for="each_banner in banners" v-bind:key="each_banner.bannerId">
                 <router-link
                     :to="{ path: each_banner.actionUrl }">
-                    <img :src="each_banner.imageUrl + '&quality=high&type=webp'" alt="">
+                    <img :src="getHighResolutionImage(each_banner.imageUrl)" alt="">
                 </router-link>
             </div>
         </slick>
@@ -13,6 +13,8 @@
 
 <script>
 import Slick from 'vue-slick'
+import mixins from '@/mixins';
+
 export default {
     props: {
         banners: {
@@ -20,6 +22,9 @@ export default {
             required: true
         }
     },
+    mixins: [
+        mixins
+    ],
     data() {
         return {
             slickOptions: {

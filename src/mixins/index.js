@@ -7,6 +7,8 @@ import {
     openForgotPasswordModal,
     openWritePratilipiModal,
     getCurrentLanguage,
+    getLowResolutionImage,
+    getHighResolutionImage,
     isMobile,
     isAndroid,
     isChrome
@@ -28,6 +30,8 @@ export default {
         openForgotPasswordModal,
         openWritePratilipiModal,
         getCurrentLanguage,
+        getLowResolutionImage,
+        getHighResolutionImage,
         isMobile,
         isAndroid,
         isChrome
