@@ -3,6 +3,7 @@
         <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
             <OwnReview :userPratilipiData="userPratilipiData" :authorId="authorId"></OwnReview>
             <li class="all-reviews" v-if="getReviewsData.length > 0">__("pratilipi_count_reviews")</li>
+            <li class="no-results" v-if="getReviewsData.length === 0">__("no_results_found")</li>
             <Review 
                 v-for="eachReview in getReviewsData" 
                 :loadCommentsOfReview="loadCommentsOfReview"
@@ -121,12 +122,16 @@ export default {
     margin-top: 10px;
     position: relative;
     padding-left: 5px;
-    li.all-reviews {
+    li.all-reviews, li.no-results {
         font-size: 12px;
         font-weight: bold;
         color: #6c757d;
         margin: 0 0 10px 5px;
         list-style: none;
+    }
+    li.no-results {
+        text-align: center;
+        font-size: 13px;
     }
 }
 .show-more {
