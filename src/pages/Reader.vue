@@ -114,7 +114,11 @@
                                 <div class="next" v-if="selectedChapter !== getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
                             
-                            <ShareStrip :data="getPratilipiData" :type="'PRATILIPI'"></ShareStrip>
+                            <ShareStrip
+                                v-if="selectedChapter == getIndexData.length"
+                                :data="getPratilipiData"
+                                :type="'PRATILIPI'">
+                            </ShareStrip>
 
                             <div class="book-bottom-ratings">
                                 <Reviews 
@@ -346,15 +350,15 @@ export default {
             $(".footer-section").addClass("theme-yellow");
         },
         openReviewModal() {
-            $(".review-popout").toggleClass("show");
-            $('.overlay-1').fadeToggle();
+            $(".review-popout").addClass("show");
+            $('.overlay-1').fadeIn();
             $('.overlay-2').fadeOut();
             $(".rating-popout").removeClass("show");
             $("body").addClass("modal-open");
         },
         openRatingModal() {
-            $(".rating-popout").toggleClass("show");
-            $('.overlay-2').fadeToggle();
+            $(".rating-popout").addClass("show");
+            $('.overlay-2').fadeIn();
             $('.overlay-1').fadeOut();
             $(".review-popout").removeClass("show");
             $("body").addClass("modal-open");
@@ -604,7 +608,7 @@ export default {
         }
     }
     .book-content {
-        margin: 54px 0;
+        margin: 49px 0;
         font-size: 16px;
         padding: 0;
         text-align: justify;
@@ -616,6 +620,9 @@ export default {
         -webkit-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        .content-section {
+            min-height: 400px;
+        }
         h2.chapter-title {
             font-size: 24px;
             text-align: center;
@@ -989,11 +996,17 @@ export default {
             color: #2c3e50 !important;
         }
     }
+    .reader-progress {
+        background: #000;
+    }
     
 }
 .theme-yellow {
     background: #F4ECD8 !important;
     color: #2c3e50 !important;
+    .reader-progress {
+        background: #F4ECD8;
+    }
 }
 </style>
 <style lang="scss">
@@ -1024,7 +1037,7 @@ export default {
         .write-review-btn, .all-reviews, .comments-list li, .show-more {
             display: none !important;
         }
-        .comments-list li:first-child {
+        .comments-list li.ownReview  {
             display: block !important;
         }
     }

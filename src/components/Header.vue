@@ -196,7 +196,7 @@ export default {
                 margin: 0;
                 background: none;
                 line-height: 40px;
-                font-size: 15px;
+                font-size: 14px;
                 font-weight: 700;
                 color: #212121;
                 &:focus {

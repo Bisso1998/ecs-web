@@ -1,7 +1,7 @@
 <template>
     <div class="follow-wrap">
         <div class="follow">
-            <a :href="authorData.pageUrl">
+            <a :href="authorData.pageUrl || authorData.profilePageUrl">
                 <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + authorData.profileImageUrl + (authorData.profileImageUrl.endsWith('/author/image') ? '?' : '&')  + 'width=100)' }"></div>
                 <div class="follow-name">{{ authorData.name }}</div>
             </a>
@@ -10,27 +10,29 @@
                 <span v-else>{{ authorData.author.followCount }}</span>
             </div>
             
-            <span v-if="authorData.authorId === undefined && authorData.author.authorId !== getUserDetails.authorId">
-                <button class="btn btn-light follow-link" 
-                    v-if="authorData.author.following === false"
-                    @click="verifyAndFollowOrUnfollowAuthor({ authorId: authorData.author.authorId, following: false })">
-                    <i class="material-icons">person_add</i>
-                    __("author_follow")
-                </button>
-                <button v-else @click="verifyAndFollowOrUnfollowAuthor({ authorId: authorData.author.authorId, following: true })" class="btn btn-light follow-link">
-                    <i class="material-icons">check</i>
-                    __("author_following")
-                </button>
-            </span>
-            <span v-if="authorData.authorId !== undefined && authorData.authorId !== getUserDetails.authorId">
-                <button class="btn btn-light follow-link"
-                v-if="authorData.following === false"
-                @click="verifyAndFollowOrUnfollowAuthor({ authorId: authorData.authorId, following: false })">
-                    <i class="material-icons">person_add</i> __("author_follow")
-                </button>
-                <button v-else @click="verifyAndFollowOrUnfollowAuthor({ authorId: authorData.authorId, following: true })" class="btn btn-light follow-link">
-                    <i class="material-icons">check</i> __("author_following")
-                </button>    
+            <span class="button-container">
+                <span v-if="authorData.authorId === undefined && authorData.author.authorId !== getUserDetails.authorId">
+                    <button class="btn btn-light follow-link" 
+                        v-if="authorData.author.following === false"
+                        @click="verifyAndFollowOrUnfollowAuthor({ authorId: authorData.author.authorId, following: false })">
+                        <i class="material-icons">person_add</i>
+                        __("author_follow")
+                    </button>
+                    <button v-else @click="verifyAndFollowOrUnfollowAuthor({ authorId: authorData.author.authorId, following: true })" class="btn btn-light follow-link">
+                        <i class="material-icons">check</i>
+                        __("author_following")
+                    </button>
+                </span>
+                <span v-if="authorData.authorId !== undefined && authorData.authorId !== getUserDetails.authorId">
+                    <button class="btn btn-light follow-link"
+                    v-if="authorData.following === false"
+                    @click="verifyAndFollowOrUnfollowAuthor({ authorId: authorData.authorId, following: false })">
+                        <i class="material-icons">person_add</i> __("author_follow")
+                    </button>
+                    <button v-else @click="verifyAndFollowOrUnfollowAuthor({ authorId: authorData.authorId, following: true })" class="btn btn-light follow-link">
+                        <i class="material-icons">check</i> __("author_following")
+                    </button>    
+                </span>
             </span>
             
         </div>
@@ -104,6 +106,7 @@ export default {
 <style  lang="scss" scoped>
 .follow-wrap {
     display: inline-block;
+    overflow: hidden;
 }
 .follow {
     border: 1px solid #e9e9e9;
@@ -144,6 +147,10 @@ export default {
             font-size: 16px;
             vertical-align: middle;
         }
+    }
+    span.button-container {
+        height: 50px;
+        display: block;
     }
     .follow-count {
         font-size: 11px;

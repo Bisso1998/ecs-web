@@ -9,10 +9,14 @@
             </router-link>
             <div class="image-mask">
                 <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
-                <button v-if="!hideAddToLibrary">
-                    <i v-if="!pratilipiData.addedToLib" class="material-icons" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">bookmark_border</i>
-                    <i v-else class="material-icons added-to-lib" @click="removeFromLibrary(pratilipiData.pratilipiId)">bookmark</i>
-                </button>
+                <span v-if="!hideAddToLibrary">
+                    <button v-if="!pratilipiData.addedToLib" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">
+                        <i class="material-icons">bookmark_border</i>
+                    </button>
+                    <button v-else @click="removeFromLibrary(pratilipiData.pratilipiId)">
+                        <i class="material-icons added-to-lib">bookmark</i>
+                    </button>
+                </span>
             </div>
             <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" :title="pratilipiData.title">
                 <div class="pratilipi-details">
@@ -293,13 +297,14 @@ export default {
             }
             .read-count, .read-time {
                 border-left: 1px solid #e9e9e9;
+                padding: 10px 0;
             }
             .read-time {
                 font-size: 12px;
             }
         }
     }
-    .language-ta .pratilipi .stats .read-time, .language-te .pratilipi .stats .read-time {
+    .language-ta .pratilipi .stats .read-time, .language-te .pratilipi .stats .read-time, .language-ml .pratilipi .stats .read-time, .language-kn .pratilipi .stats .read-time {
         font-size: 10px;
         @media screen and (max-width: 768px ) {
             font-size: 9px;
