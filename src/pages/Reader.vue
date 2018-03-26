@@ -672,7 +672,7 @@ export default {
         background: #fff;
         i {
             vertical-align: middle;
-            max-width: 30px;
+            max-width: 24px;
         }
         span {
             font-size: 14px;
