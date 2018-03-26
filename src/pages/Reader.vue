@@ -110,7 +110,7 @@
                                 v-html="eachChapter.content">
                             </div>
                             <Spinner v-if="getPratilipiContentLoadingState !== 'LOADING_SUCCESS'"></Spinner>
-                            <div class="book-navigation">
+                            <div class="book-navigation" v-if="getPratilipiContentLoadingState === 'LOADING_SUCCESS'">
                                 <div class="prev" v-if="selectedChapter !== 1" @click="goToPreviousChapter">Previous Chapter</div>
                                 <div class="next" v-if="selectedChapter !== getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
