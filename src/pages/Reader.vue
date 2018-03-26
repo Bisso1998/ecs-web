@@ -630,6 +630,7 @@ export default {
         h2.chapter-title {
             font-size: 24px;
             text-align: center;
+            padding-top: 10px;
             @media screen and (max-width: 768px ) {
                 font-size: 18px;
             }
