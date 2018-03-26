@@ -30,9 +30,9 @@
                     <div class="review-box">
                         <form>
                             <div class="form-group">
-                                <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" rows="2" placeholder="__('review_write_a_review')"></textarea>
+                                <textarea :value="newReview" @input="newReview = $event.target.value" class="form-control" rows="2" placeholder="__('review_write_a_review')"></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary" @click="checkAndUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })">__("save")</button>
+                            <button type="button" class="btn btn-primary" :disabled="newReview === ''" @click="checkAndUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })">__("save")</button>
                             <button type="button" @click="cancelReview" class="btn btn-light">__("cancel")</button>
                         </form>
                     </div>
@@ -51,9 +51,9 @@
                     <div class="review-box">
                         <form>
                             <div class="form-group">
-                                <textarea :value="userPratilipiData.review" @input="newReview = $event.target.value" class="form-control" rows="2" placeholder="__('review_write_a_review')"></textarea>
+                                <textarea :value="newReview" @input="newReview = $event.target.value" class="form-control" rows="2" placeholder="__('review_write_a_review')"></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary" @click="checkAndUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })">__("save")</button>
+                            <button type="button" :disabled="newReview === ''" class="btn btn-primary" @click="checkAndUpdateReview({ review: newReview, pratilipiId: userPratilipiData.pratilipiId })">__("save")</button>
                             <button type="button" @click="cancelReview" class="btn btn-light">__("cancel")</button>
                         </form>
                     </div>
@@ -155,6 +155,9 @@ export default {
             $(".review-box").hide();
             $(".write-review-btn").fadeIn();
         }
+    },
+    created() {
+        this.newReview = this.userPratilipiData.review;
     }
 }
 
