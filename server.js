@@ -3,6 +3,7 @@
 const express = require( 'express' );
 const compression = require( 'compression' );
 const morgan = require('morgan');
+const parse = require('url-parse');
 
 var fs = require( 'fs' );
 
