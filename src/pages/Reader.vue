@@ -353,6 +353,10 @@ export default {
             $("body").addClass("modal-open");
         },
         openRatingModal() {
+            if (this.getUserDetails.authorId === this.getPratilipiData.author.authorId) {
+                return;
+            }
+
             $(".rating-popout").toggleClass("show");
             $('.overlay-2').fadeToggle();
             $('.overlay-1').fadeOut();
