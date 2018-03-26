@@ -96,6 +96,14 @@ const processPostResponse = function(response, status, successCallBack, errorCal
 
 /* DataAccessor */
 export default {
+
+    getPageType: (pageUri, aCallBack) => {
+        httpUtil.get(API_PREFIX + PAGE_API,
+            null,
+            { uri: pageUri },
+            function(response, status) { processGetResponse(response, status, aCallBack) });
+    },
+
     getPratilipiByUri: (pageUri, includeUserPratilipi, aCallBack) => {
 
         var requests = [];

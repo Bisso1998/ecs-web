@@ -164,10 +164,16 @@ export default {
                 }
             });
         });
+
         this.fetchInitialDraftedContents({ 
             authorId: this.getUserDetails.authorId,
             resultCount: 10
         });
+    },
+    mounted() {
+        if (this.$route.query.type === 'STORY' && !this.isMobile()) {
+            this.alertOrOpenWriteModal();
+        }
     }
 }
 </script>

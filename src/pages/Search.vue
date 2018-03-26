@@ -97,7 +97,7 @@ export default {
                 constants.LANGUAGES.forEach((eachLanguage) => {
                     if (eachLanguage.shortName === currentLocale) {
                         this.fetchMorePratilipisForSearchPage({ 
-                            searchQuery: this.$route.query.searchText,
+                            searchQuery: this.$route.query.q,
                             language: eachLanguage.fullName.toUpperCase(),
                             resultCount: 10
                         });
@@ -105,14 +105,14 @@ export default {
                 });
             }
         },
-        '$route.query.searchText'(newValue) {
+        '$route.query.q'(newValue) {
             console.log(newValue)
 
             const currentLocale = process.env.LANGUAGE;
             constants.LANGUAGES.forEach((eachLanguage) => {
                 if (eachLanguage.shortName === currentLocale) {
                     this.fetchInitialSearchResult({ 
-                        searchQuery: this.$route.query.searchText,
+                        searchQuery: this.$route.query.q,
                         language: eachLanguage.fullName.toUpperCase(),
                     });
                 }
@@ -126,12 +126,12 @@ export default {
         window.removeEventListener('scroll', this.updateScroll);
     },
     created() {
-        if (this.$route.query.searchText) {
+        if (this.$route.query.q) {
             const currentLocale = process.env.LANGUAGE;
             constants.LANGUAGES.forEach((eachLanguage) => {
                 if (eachLanguage.shortName === currentLocale) {
                     this.fetchInitialSearchResult({ 
-                        searchQuery: this.$route.query.searchText,
+                        searchQuery: this.$route.query.q,
                         language: eachLanguage.fullName.toUpperCase(),
                     });
                 }

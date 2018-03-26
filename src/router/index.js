@@ -22,10 +22,11 @@ import LoginPageComponent from '@/pages/Login.vue'
 import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
 
 import constants from '@/constants'
+import DataAccessor from '@/utils/DataAccessor'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     routes: [{
         path: '/',
@@ -54,7 +55,11 @@ export default new Router({
         component: AuthorComponent,
         meta: { 'store': 'authorpage' }
     }, {
-        path: '/notification',
+        path: '/followers',
+        name: 'Login_Page',
+        component: LoginPageComponent
+    }, {
+        path: '/notifications',
         name: 'Notification',
         component: NotificationComponent,
         meta: { 'store': 'notification' }
@@ -72,7 +77,15 @@ export default new Router({
         name: 'Career_Page',
         component: StaticComponent
     }, {
+        path: '/careers',
+        name: 'Career_Page',
+        component: StaticComponent
+    }, {
         path: '/about/pratilipi',
+        name: 'About_Page',
+        component: StaticComponent
+    }, {
+        path: '/about',
         name: 'About_Page',
         component: StaticComponent
     }, {
@@ -117,12 +130,21 @@ export default new Router({
         name: 'Login_Page',
         component: LoginPageComponent
     }, {
+        path: '/signup',
+        name: 'Login_Page',
+        component: LoginPageComponent
+    }, {
         path: '/blog',
         name: 'Blogs_Page',
         component: BlogsPageComponent,
         meta: { 'store': 'blogspage' }
     }, {
         path: '/blog/:blog_id',
+        name: 'Blog_Page',
+        component: BlogPageComponent,
+        meta: { 'store': 'blogpage' }
+    }, {
+        path: '/blogpost/:blog_id',
         name: 'Blog_Page',
         component: BlogPageComponent,
         meta: { 'store': 'blogpage' }
@@ -141,10 +163,106 @@ export default new Router({
         name: 'Password_Reset',
         component: PasswordResetPageComponent
     }, {
+        path: '/author/:author_id',
+        beforeEnter: (to, from, next) => {
+            const author_id = to.params.author_id;
+            DataAccessor.getAuthorById(author_id, false, (data) => {
+                if (data) {
+                    next(data.pageUrl);
+                } else {
+                    // redirect to page not found
+                }
+            });
+        }
+    }, {
+        path: '/pratilipi/:pratilipi_id',
+        beforeEnter: (to, from, next) => {
+            const pratilipi_id = to.params.pratilipi_id;
+            DataAccessor.getPratilipiById(pratilipi_id, false, (data) => {
+                if (data) {
+                    next(data.pageUrl);
+                } else {
+                    // redirect to page not found
+                }
+            });
+        }
+    }, {
         path: '/:list_page_url',
         name: 'List_Page',
         component: ListPageComponent,
-        meta: { 'store': 'listpage' }
+        meta: { 'store': 'listpage' },
+        beforeEnter: (to, from, next) => {
+            console.log(to);
+
+            const pathToGo = to.path;
+            DataAccessor.getPageType(pathToGo, (response) => {
+                if (response.status === 200) {
+                    switch(response.response.pageType) {
+                        case 'PRATILIPI':
+                            DataAccessor.getPratilipiById(response.response.primaryContentId, false, (data) => {
+                                if (data) {
+                                    next(data.pageUrl);
+                                } else {
+                                    // redirect to page not found
+                                }
+                            });
+                        case 'AUTHOR':
+                            DataAccessor.getAuthorById(response.response.primaryContentId, false, (data) => {
+                                if (data) {
+                                    next(data.pageUrl);
+                                } else {
+                                    // redirect to page not found
+                                }
+                            });
+                        default:
+                            next();
+                    }
+                } else {
+                    next();
+                }
+            });
+        }
+    }, {
+        path: '*',
+        beforeEnter: (to, from, next) => {
+            console.log('Going to an unknown world!');
+            const pathToGo = to.path;
+            DataAccessor.getPageType(pathToGo, (response) => {
+                if (response.status === 200) {
+                    switch(response.response.pageType) {
+                        case 'PRATILIPI':
+                            DataAccessor.getPratilipiById(response.response.primaryContentId, false, (data) => {
+                                if (data) {
+                                    next(data.pageUrl);
+                                } else {
+                                    // redirect to page not found
+                                }
+                            });
+                        case 'AUTHOR':
+                            DataAccessor.getAuthorById(response.response.primaryContentId, false, (data) => {
+                                if (data) {
+                                    next(data.pageUrl);
+                                } else {
+                                    // redirect to page not found
+                                }
+                            });
+                    }
+                } else {
+                    // redirect to page not found
+                }
+            });
+        }
     }],
     scrollBehavior: () => ({ y: 0 })
-})
+});
+
+router.afterEach((to, from) => {
+    ga( 'set', 'page', to.path + window.location.search );
+    // ga( 'set', 'dimension1', appViewModel.user.userId() == null ? 0 : appViewModel.user.userId() );
+    ga( 'set', 'dimension2', process.env.GA_WEBSITE );
+    ga( 'set', 'dimension3', process.env.GA_WEBSITE_MODE );
+    ga( 'set', 'dimension4', process.env.GA_WEBSITE_VERSION );
+    ga( 'send', 'pageview' );
+});
+
+export default router;

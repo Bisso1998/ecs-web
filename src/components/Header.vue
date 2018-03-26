@@ -13,7 +13,7 @@
                             __("pratilipi")
                             </button>
                             <div class="dropdown-menu" aria-labelledby="languageDropdown">
-                                <a class="dropdown-item" :href="'https://' + eachLanguage.fullName + '-gamma-gr.pratilipi.com'" :key="index" v-for="(eachLanguage, index) in languages">{{ eachLanguage.languageNative }}</a>
+                                <a class="dropdown-item" :class="{ 'isActive': getCurrentLanguage().fullName === eachLanguage.fullName }" :href="'https://' + eachLanguage.fullName + '-gamma-gr.pratilipi.com'" :key="index" v-for="(eachLanguage, index) in languages">{{ eachLanguage.languageNative }}</a>
                             </div>
                         </div>
                     </div>
@@ -61,6 +61,7 @@
 
 <script>
 import constants from '@/constants'
+import mixins from '@/mixins'
 import SearchBox from '@/components/SearchBox.vue'
 import MainMenu from '@/components/MainMenu.vue'
 import { mapGetters, mapActions } from 'vuex'
@@ -75,6 +76,9 @@ export default {
             type: Number
         }
     },
+    mixins: [
+        mixins
+    ],
     data(){
         return {
             languages: constants.LANGUAGES,
@@ -98,7 +102,7 @@ export default {
     },
     methods: {
         goToSearchPage() {
-            this.$router.push({ name: 'Search_Page', query: { searchText: this.searchText } });
+            this.$router.push({ name: 'Search_Page', query: { q: this.searchText } });
         },
         opendesktopsearch() {
             $("#search-box-big .search-dropdown").show();
