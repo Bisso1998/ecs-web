@@ -25,7 +25,7 @@
                   <span class="social-icon"><icon name="whatsapp"></icon></span>
                   __("whatsapp")
               </a>
-              <a class="link" @click="copyUrlToClipboard">
+              <a v-if="false" class="link" @click="copyUrlToClipboard">
                   <span class="social-icon"><icon name="link"></icon></span>
                   copy link
               </a>

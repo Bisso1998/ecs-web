@@ -12,7 +12,7 @@
         <a :href="getWhatsAppUri" class="whatsapp" target="_blank">
             <span class="social-icon"><icon name="whatsapp"></icon></span>
         </a>
-        <a class="link">
+        <a class="link" v-if="false" >
             <span class="social-icon"><icon name="link"></icon></span>
         </a>
         <input type="text" id="inlineShareUri" hidden>
@@ -63,7 +63,7 @@ export default {
 
 <style  lang="scss" scoped>
 .social-share {
-    width: 220px;
+    width: 180px;
     margin: 0 auto;
     a {
         vertical-align: middle;
