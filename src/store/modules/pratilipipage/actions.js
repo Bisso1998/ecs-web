@@ -94,7 +94,14 @@ export default {
         });
     },
 
-    saveOrUpdateReview({ commit, state }, { review, pratilipiId }) {
+    saveOrUpdateReview({ commit, state, dispatch }, { review, pratilipiId }) {
+        if (state.userPratilipi.data.rating === null || state.userPratilipi.data.rating === undefined) {
+            commit('alert/triggerAlertView', 'need_rating', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
+            return;
+        }
         commit('setPratilipiReviewUpdateLoading');
         DataAccessor.createOrUpdateReview(pratilipiId, null, review, function(successData) {
             commit('setPratilipiReviewUpdateSuccess', review);
@@ -107,7 +114,7 @@ export default {
         commit('setPratilipiReviewUpdateLoading');
         DataAccessor.deleteReview(pratilipiId, function(successData) {
             commit('setPratilipiReviewUpdateSuccess', '');
-            commit('setPratilipiRatingUpdateLoading', null);
+            commit('setPratilipiRatingUpdateSuccess', null);
         }, (errorData) => {
             commit('setPratilipiReviewUpdateError');
         });

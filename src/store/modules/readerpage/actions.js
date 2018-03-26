@@ -105,6 +105,15 @@ export default {
     },
 
     saveOrUpdateReview({ commit, state }, { review, pratilipiId }) {
+        console.log(state);
+        if (state.userPratilipi.data.rating === null || state.userPratilipi.data.rating === undefined) {
+            commit('alert/triggerAlertView', 'need_rating', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
+            console.log('okay, i wont give review');
+            return;
+        }
         commit('setPratilipiReviewUpdateLoading');
         DataAccessor.createOrUpdateReview(pratilipiId, null, review, function(successData) {
             commit('setPratilipiReviewUpdateSuccess', review);
@@ -117,7 +126,7 @@ export default {
         commit('setPratilipiReviewUpdateLoading');
         DataAccessor.deleteReview(pratilipiId, function(successData) {
             commit('setPratilipiReviewUpdateSuccess', '');
-            commit('setPratilipiRatingUpdateLoading', null);
+            commit('setPratilipiRatingUpdateSuccess', null);
         }, (errorData) => {
             commit('setPratilipiReviewUpdateError');
         });
