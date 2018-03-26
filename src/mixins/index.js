@@ -11,7 +11,8 @@ import {
     getHighResolutionImage,
     isMobile,
     isAndroid,
-    isChrome
+    isChrome,
+    setAnalyticsUserProperty
 } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
@@ -34,6 +35,7 @@ export default {
         getHighResolutionImage,
         isMobile,
         isAndroid,
-        isChrome
+        isChrome,
+        setAnalyticsUserProperty
     }
 }

@@ -91,3 +91,22 @@ export function getHighResolutionImage(imageUrl) {
         return imageUrl + `&quality=high&type=${type}`;
     }
 }
+
+export function setAnalyticsUserProperty(propertyName, propertyValue) {
+    const identify = new amplitude.Identify();
+    identify.set(propertyName, propertyValue);
+    amplitude.getInstance().identify(identify);
+
+    const propertyObject = {};
+    propertyObject[propertyName] = propertyValue
+
+    if (propertyName === 'USER_ID') {
+        console.log('setting user id')
+        FB.AppEvents.setUserID(propertyValue);
+    }
+    FB.AppEvents.updateUserProperties(propertyObject, function (res, error) {
+        console.log(res);
+        console.log(error);
+        console.log('hello');
+    });
+}

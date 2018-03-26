@@ -179,13 +179,80 @@ app.get( '/health', (req, res, next) => {
 
 
 // Serving PWA files
+// Serving PWA files
 app.get( '/*', (req, res, next) => {
+
+    var bucketId = Number(req.headers["bucket-id"] || 0) + 1;
+    var totalGrowthBuckets = Number(req.headers["total-growth-buckets"] || 10);
+
+    const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
+    if (Number(bucketId) <= 10) {
+        next();
+        return
+    }
+
     var website = _getWebsite( req.headers.host );
-    var fs = require('fs');
     if (fs.existsSync(__dirname + `/dist/${website.displayLanguage.code}${req.path}`)) {
         res.sendFile(__dirname + `/dist/${website.displayLanguage.code}${req.path}`)
     } else {
         res.sendFile(__dirname + `/dist/${website.displayLanguage.code}/index.html`)
+    }
+});
+
+app.get('/*', (req, res, next) => {
+    var website = _getWebsite( req.headers.host );
+    var totalGrowthBuckets = Number(req.headers["total-growth-buckets"] || 10);
+    var variation = 'old_build/prod-variation-2/';
+
+    if (req.query.customVariation && fs.existsSync('old_build/' + req.query.customVariation)) {
+        variation = 'old_build/' + req.query.customVariation + '/';
+    }
+    const parsedUrl = parse(req.header('Referer'), true);
+    if (parsedUrl.query && fs.existsSync('old_build/' + parsedUrl.query.customVariation)) {
+        variation = 'old_build/' + parsedUrl.query.customVariation + '/';
+    }
+
+    // if (req.header('Referer') && req.header('Referer').contains('variation=GROWTH')) {
+    //  variation = 'old_build/growth/';
+    // } else if (req.header('Referer') && req.header('Referer').contains('variation=PRODUCT')) {
+    //  variation = 'old_build/product/';
+    // } else {
+    //  const parsedUrl = parse(req.header('Referer'), true);
+    //  if (parsedUrl.query && fs.existsSync('old_build/' + parsedUrl.query.customVariation)) {
+    //      variation = 'old_build/' + parsedUrl.query.customVariation + '/';
+    //  }
+    // }
+
+    if( req.path === '/pwa-stylesheets/css/style.css' ) {
+        fs.readFile( variation + 'src/pwa-stylesheets/style.css', { 'encoding': 'utf8' }, (err, data) => {
+            if(err) throw err;
+            res.set( 'Content-Type', 'text/css' ).send(data);
+        });
+    } else if( req.path === '/pwa-sw-' + website.__name__ + '.js' ) {
+        fs.readFile( variation + 'src/pwa-service-worker' + req.path, { 'encoding': 'utf8' }, (err, data) => {
+            if(err) throw err;
+            res.set( 'Content-Type', 'text/javascript' ).send(data);
+        });
+    } else if( req.path === '/favicon.ico' || req.path === '/favicon.png' ) {
+        res.sendfile( variation + 'src/favicon.ico' );
+    } else if( req.path.indexOf( '/pwa-images/' ) === 0 ) {
+        res.sendfile( variation + 'src' + req.path );
+    } else if( req.path.indexOf( '/resources/' ) === 0 || req.path.indexOf( '/stylesheets/' ) === 0 ) {
+        res.set( 'Content-Type', 'text/plain' ).send( "" );
+    } else if( req.path === "/pwa-manifest-" + website.__name__ + ".json" ) {
+        fs.readFile( variation + 'src/pwa-manifest' + '/pwa-manifest-' + website.__name__ + '.json', { 'encoding': 'utf8' }, (err, data) => {
+            if(err) throw err;
+            res.set( 'Content-Type', 'application/json' ).send(data);
+        });
+    } else if( req.path === '/pratilipi-logo-144px.png' ) {
+        res.sendfile( variation + 'src' + req.path );
+    } else {
+        // https://github.com/expressjs/express/issues/3127
+        console.log( "Serving html file to url :: ",  req.url );
+        fs.readFile( variation + 'src/pwa-markup/PWA-' + website.__name__ + '.html', { 'encoding': 'utf8' }, (err, data) => {
+            if(err) throw err;
+            res.set( 'Content-Type', 'text/html' ).send(data);
+        });
     }
 });
 

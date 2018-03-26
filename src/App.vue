@@ -8,6 +8,7 @@
 import '@/static_scripts/google_analytics.js'
 import '@/static_scripts/amplitude_analytics.js'
 import '@/static_scripts/facebook_analytics.js'
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -24,6 +25,9 @@ export default {
             'getUserDetails'
         ])
     },
+    mixins: [
+        mixins
+    ],
     watch: {
         'getUserDetails.isGuest'(isGuest) {
             if (!isGuest) {
@@ -54,11 +58,32 @@ export default {
                         }
                     });
                 });
+            } else {
+                console.log('Im a guest')
             }
+
+            if (!isGuest) {
+                this.setAnalyticsUserProperty('IS_LOGGED_ID', true);
+                this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
+                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId);
+            } else {
+                this.setAnalyticsUserProperty('IS_LOGGED_ID', false);
+            }
+            
         }
     },
     created() {
         this.fetchUserDetails();
+
+        if (this.getUserDetails.isGuest !== undefined || this.getUserDetails.isGuest !== null) {
+            if (!this.getUserDetails.isGuest) {
+                this.setAnalyticsUserProperty('IS_LOGGED_ID', true);
+                this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
+                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId);
+            } else {
+                this.setAnalyticsUserProperty('IS_LOGGED_ID', false);
+            }
+        }
     }
 }
 </script>
