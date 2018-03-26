@@ -100,7 +100,7 @@ export default {
 
 <style lang="scss" scoped>
 .comments-container {
-    margin: 0 0 15px;
+    margin: 0 auto 15px;
     width: 100%;
     max-width: 700px;
     h1 {
