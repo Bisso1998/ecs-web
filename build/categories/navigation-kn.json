@@ -37,7 +37,7 @@
                     }
                 },
                 {
-                    "categoryUrl": "/relationship ಬಂಧುತ್ವ",
+                    "categoryUrl": "/relationship",
                     "title": "ಬಂಧುತ್ವ",
                     "analyticsCategoryName": "family",
                     "imageFileName": "event_friendship.jpg",
@@ -59,7 +59,7 @@
                     }
                 },
                 {
-                    "categoryUrl": "/nonfiction ಲೇಖನಗಳು",
+                    "categoryUrl": "/nonfiction",
                     "title": "ಲೇಖನಗಳು",
                     "analyticsCategoryName": "articles",
                     "imageFileName": "articles.jpg",
@@ -125,7 +125,7 @@
                     }
                 },
                 {
-                    "categoryUrl": "/inspirational ಸ್ಫೂರ್ತಿದಾಯಕ",
+                    "categoryUrl": "/inspirational",
                     "title": "ಸ್ಫೂರ್ತಿದಾಯಕ",
                     "analyticsCategoryName": "inspirational",
                     "imageFileName": "inspirational.jpg",
@@ -219,7 +219,7 @@
                 },
                 {
                     "categoryUrl": "/blog",
-                    "title": "ಬ್ಲಾಗ್ ಗಳು",
+                    "title": "ಬ್ಲಾಗ್'ಗಳು",
                     "analyticsCategoryName": "blogs",
                     "imageFileName": "blog.jpg",
                     "pratilipiListData": {
