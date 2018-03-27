@@ -4,7 +4,15 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>__("notification_notifications")</h2>
+                        <h2>
+                            __("notification_notifications")
+                            <router-link
+                            class="notification-settings"
+                            :to="{ name: 'Settings_Page'}"
+                            v-if="!getUserDetails.isGuest">
+                                <i class="material-icons">settings</i>
+                            </router-link>
+                        </h2>
                         <div class="card" v-if="getUserDetails.isGuest">
                             <div class="head-title">__("seo_login_page")</div>
                             <div class="card-content">
@@ -115,6 +123,16 @@ export default {
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
+        position: relative;
+        .notification-settings {
+            position: absolute;
+            right: 10px;
+            top: 0;
+            color: #2c3e50;
+            i {
+                vertical-align: middle;
+            }
+        }
     }
     .card {
         border-radius: 0;
