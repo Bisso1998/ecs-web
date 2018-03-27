@@ -125,6 +125,9 @@ export default {
             'fetchInitialDraftedContents',
             'fetchMoreDraftedContents'
         ]),
+        ...mapActions([
+            'setAfterLoginAction'
+        ]),
         updateScroll() {
             const width = $('.card-content.drafts').outerWidth();
             const newScrollLeft = $('.card-content.drafts').scrollLeft();
@@ -139,7 +142,13 @@ export default {
             }
         },
         alertOrOpenWriteModal() {
-            this.openWritePratilipiModal();
+            if (this.getUserDetails.isGuest) {
+                this.setAfterLoginAction({ action: null, data: null });
+                this.openLoginModal();
+            } else {
+                this.openWritePratilipiModal();
+            }
+            
         }
     },
     components: {

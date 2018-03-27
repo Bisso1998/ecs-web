@@ -99,6 +99,7 @@
                                         <!-- <span class="all-tags active" v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span> -->
                                         <span class="all-tags" 
                                             :class="{'active': isTagSelected(each_tag.id)}" 
+                                            v-if="getSystemTags[selectedPratilipiType || 'POEM']"
                                             v-for="each_tag in getSystemTags[selectedPratilipiType || 'POEM'].categories" 
                                             :key="each_tag.id"
                                             @click="addOrRemoveFromListOfSelectedTag(each_tag, isTagSelected(each_tag.id))">{{ each_tag.name }}</span>
@@ -176,6 +177,7 @@
                     </div>
                 </div>
                 <Spinner v-if="getPratilipiLoadingState === 'LOADING'"></Spinner>
+                <ServerError :action="'pratilipipage/fetchPratilipiDetailsAndUserPratilipiData'" :data="$route.params.slug_id" v-if="getPratilipiLoadingState === 'LOADING_ERROR'"></ServerError>
             </div>
         </div>
     </MainLayout>
@@ -188,6 +190,7 @@ import TranslatingInput from '@/components/TranslatingInput.vue';
 import AboutAuthor from '@/components/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
 import Reviews from '@/components/Reviews.vue';
+import ServerError from '@/components/ServerError.vue';
 import mixins from '@/mixins';
 import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
@@ -400,7 +403,8 @@ export default {
         AboutAuthor,
         Spinner,
         TranslatingInput,
-        Reviews
+        Reviews,
+        ServerError
     },
     watch: {
         '$route.params.slug_id' (slug_id) {

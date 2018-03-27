@@ -151,5 +151,9 @@ export default {
         }, (error) => {
             console.log(error);
         });
+    },
+    
+    dispatchReloadAction({ commit, state, dispatch }, { data, action }) {
+        dispatch(action, data, { root: true });
     }
 }

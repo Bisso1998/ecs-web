@@ -1,14 +1,32 @@
 <template>
     <div class="server_error">
         <span>__("server_error_message")</span>
-        <button type="button" name="button"><i class="material-icons">refresh</i></button>
+        <button @click="reloadWithDefinedAction" type="button" name="button"><i class="material-icons">refresh</i></button>
     </div>  
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 
 export default {
-    
+    props: {
+        action: {
+            type: String,
+            required: true
+        },
+        data: {
+            required: false
+        }
+    },
+    methods: {
+        ...mapActions([
+            'dispatchReloadAction'
+        ]),
+        reloadWithDefinedAction() {
+            const { data, action } = this;
+            this.dispatchReloadAction({ data, action });
+        }
+    }
 }
 </script>
 

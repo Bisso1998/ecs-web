@@ -135,7 +135,7 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
             FB.AppEvents.updateUserProperties(propertyObject, function (res, error) {
                 console.log(res);
             });
-        }, 3000);
+        }, 15000);
     } else {
         if (propertyName === 'USER_ID') {
             FB.AppEvents.setUserID(String(propertyValue));

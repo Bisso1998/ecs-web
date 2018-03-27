@@ -11,7 +11,7 @@
                 :listPageUrl="eachSection.listPageUrl"
                 v-bind="{ addToLibrary, removeFromLibrary }"
             ></PratilipiListComponent>
-            <ServerError v-if="getHomePageLoadingState === 'LOADING_ERROR'"></ServerError>
+            <ServerError :action="'homepage/getListOfSections'" :data="getCurrentLanguage().fullName.toUpperCase()" v-if="getHomePageLoadingState === 'LOADING_ERROR'"></ServerError>
         </div>
     </MainLayout>
 </template>
@@ -23,6 +23,8 @@ import MainLayout from '@/layout/main-layout.vue';
 import Banners from '@/components/Banners.vue';
 import ServerError from '@/components/ServerError.vue';
 import constants from '@/constants'
+import mixins from '@/mixins'
+
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -33,6 +35,9 @@ export default {
             sectionList: []
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('homepage', [
             'getHomePageSections',

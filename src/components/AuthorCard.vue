@@ -1,10 +1,10 @@
 <template>
     <div class="follow-wrap">
         <div class="follow">
-            <a :href="authorData.pageUrl || authorData.profilePageUrl">
+            <router-link :to="authorData.pageUrl || authorData.profilePageUrl">
                 <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + authorData.profileImageUrl + (authorData.profileImageUrl.endsWith('/author/image') ? '?' : '&')  + 'width=100)' }"></div>
                 <div class="follow-name">{{ authorData.name || authorData.author.name }}</div>
-            </a>
+            </router-link>
             <div class="follow-count">__("author_followers"): 
                 <span v-if="authorData.followCount !== undefined">{{ authorData.followCount}}</span>
                 <span v-else>{{ authorData.author.followCount }}</span>
