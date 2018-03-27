@@ -116,6 +116,16 @@ export default {
         if (this.$route.hash === '#forgot-pass') {
             this.openForgotPasswordModal();
         }
+        
+        // Hide Footer when keyboard comes
+        if (this.isMobile()) {
+            $(document).on('focus', 'input', function() {
+                $(".footer-menu").css("height", "0")
+            });
+            $(document).on('blur', 'input', function() {
+                $(".footer-menu").css("height", "51px")
+            });
+        }
     }
 }
 </script>

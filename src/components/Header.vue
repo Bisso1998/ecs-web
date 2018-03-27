@@ -153,6 +153,16 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
+        
+        // Hide Footer when keyboard comes
+        if (this.isMobile()) {
+            $(document).on('focus', 'input', function() {
+                $(".footer-menu").css("height", "0")
+            });
+            $(document).on('blur', 'input', function() {
+                $(".footer-menu").css("height", "51px")
+            });
+        }
     },
     destroyed() {
         window.removeEventListener('scroll', this.updateScroll);

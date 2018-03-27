@@ -170,6 +170,7 @@
 import MainLayout from '@/layout/main-layout.vue';
 import TranslatingInput from '@/components/TranslatingInput.vue';
 import constants from '@/constants';
+import mixins from '@/mixins';
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
@@ -184,6 +185,9 @@ export default {
             newPassword: ''
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('settingspage', [
             'getAuthorData'
@@ -264,6 +268,17 @@ export default {
 
         if (this.getUserDetails.authorId) {
             this.fetchAuthorDetails(this.getUserDetails.authorId);    
+        }
+    },
+    mounted() {
+        // Hide Footer when keyboard comes
+        if (this.isMobile()) {
+            $(document).on('focus', 'input, textarea', function() {
+                $(".footer-menu").css("height", "0")
+            });
+            $(document).on('blur', 'input, textarea', function() {
+                $(".footer-menu").css("height", "51px")
+            });
         }
     }
 }
