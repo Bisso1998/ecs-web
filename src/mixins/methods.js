@@ -100,13 +100,28 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
     const propertyObject = {};
     propertyObject[propertyName] = propertyValue
 
-    if (propertyName === 'USER_ID') {
-        console.log('setting user id')
-        FB.AppEvents.setUserID(propertyValue);
+    if (!window.FB) {
+        setTimeout(() => {
+            if (propertyName === 'USER_ID') {
+                console.log('setting user id')
+                FB.AppEvents.setUserID(propertyValue);
+            }
+            FB.AppEvents.updateUserProperties(propertyObject, function (res, error) {
+                console.log(res);
+                console.log(error);
+                console.log('hello');
+            });
+        }, 3000);
+    } else {
+        if (propertyName === 'USER_ID') {
+            console.log('setting user id')
+            FB.AppEvents.setUserID(propertyValue);
+        }
+        FB.AppEvents.updateUserProperties(propertyObject, function (res, error) {
+            console.log(res);
+            console.log(error);
+            console.log('hello');
+        });
     }
-    FB.AppEvents.updateUserProperties(propertyObject, function (res, error) {
-        console.log(res);
-        console.log(error);
-        console.log('hello');
-    });
+    
 }

@@ -56,8 +56,9 @@ const router = new Router({
         meta: { 'store': 'authorpage' }
     }, {
         path: '/followers',
-        name: 'Login_Page',
-        component: LoginPageComponent
+        beforeEnter: (to, from, next) => {
+            next('/login');
+        }
     }, {
         path: '/notifications',
         name: 'Notification',
@@ -78,7 +79,7 @@ const router = new Router({
         component: StaticComponent
     }, {
         path: '/careers',
-        name: 'Career_Page',
+        name: 'Career_Page_2',
         component: StaticComponent
     }, {
         path: '/about/pratilipi',
@@ -86,7 +87,7 @@ const router = new Router({
         component: StaticComponent
     }, {
         path: '/about',
-        name: 'About_Page',
+        name: 'About_Page_2',
         component: StaticComponent
     }, {
         path: '/terms-of-service',
@@ -131,7 +132,7 @@ const router = new Router({
         component: LoginPageComponent
     }, {
         path: '/signup',
-        name: 'Login_Page',
+        name: 'Signup_Page',
         component: LoginPageComponent
     }, {
         path: '/blog',
@@ -145,7 +146,7 @@ const router = new Router({
         meta: { 'store': 'blogpage' }
     }, {
         path: '/blogpost/:blog_id',
-        name: 'Blog_Page',
+        name: 'Blog_Page_2',
         component: BlogPageComponent,
         meta: { 'store': 'blogpage' }
     }, {
