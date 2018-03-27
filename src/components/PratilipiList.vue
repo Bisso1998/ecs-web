@@ -75,7 +75,9 @@ export default {
         }
     },
     mounted(){
-        this.reInit();
+    	if (this.pratilipiList.length > 0) {
+    		this.reInit();	
+    	}
     },
     components: {
         PratilipiComponent,
