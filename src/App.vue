@@ -70,6 +70,8 @@ export default {
                 this.setAnalyticsUserProperty('USER_ID', "0");
                 this.setAnalyticsUserProperty('IS_LOGGED_ID', false);
             }
+            this.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
+            this.setAnalyticsUserProperty('CONTENT_LANGUAGE', this.getCurrentLanguage().fullName.toUpperCase());
             
         }
     },
@@ -85,6 +87,8 @@ export default {
                 this.setAnalyticsUserProperty('USER_ID', "0");
                 this.setAnalyticsUserProperty('IS_LOGGED_ID', false);
             }
+            this.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
+            this.setAnalyticsUserProperty('CONTENT_LANGUAGE', this.getCurrentLanguage().fullName.toUpperCase());
         }
     }
 }
