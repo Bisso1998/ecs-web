@@ -14,7 +14,8 @@ import {
     isChrome,
     setAnalyticsUserProperty,
     validateEmail,
-    validatePassword
+    validatePassword,
+    validateUsername
 } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
@@ -40,6 +41,7 @@ export default {
         isChrome,
         setAnalyticsUserProperty,
         validateEmail,
-        validatePassword
+        validatePassword,
+        validateUsername
     }
 }

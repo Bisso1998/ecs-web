@@ -60,6 +60,8 @@ Vue.filter('getTranslatedLoginErrorMessage', function(value) {
             return "__('email_not_registered')";
         case 'Invalid Credentials!':
             return "__('login_failed')";
+        case 'The email address is already registered':
+            return "__('email_already_registered')";
         default:
             return value;
     }
