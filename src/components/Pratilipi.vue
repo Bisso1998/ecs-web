@@ -8,7 +8,6 @@
                 <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
             </router-link>
             <div class="image-mask">
-                <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
                 <span v-if="!hideAddToLibrary">
                     <button class="add-library" v-if="!pratilipiData.addedToLib" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">
                         <i class="material-icons">bookmark_border</i>
@@ -19,6 +18,7 @@
                         <i class="material-icons stacked">check</i>
                     </button>
                 </span>
+                <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
             </div>
             <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" :title="pratilipiData.title">
                 <div class="pratilipi-details">
@@ -233,7 +233,7 @@ export default {
             left: auto;
             button {
                 padding: 0;
-                margin: 10px 4px 0 0;
+                margin: 5px 5px 0 0;
                 text-align: center;
                 width: 40px;
                 height: 40px;
@@ -246,8 +246,9 @@ export default {
                 border: 1px solid #e9e9e9;
                 z-index: 2;
                 position: relative;
+                float: right;
                 &.add-library i {
-                    font-size: 22px;
+                    font-size: 23px;
                 }
                 i {
                     height: 40px;
@@ -255,8 +256,8 @@ export default {
                     font-size: 18px;
                     &.stacked {
                         position: absolute;
-                        top: 0;
-                        left: 0;
+                        top: -1px;
+                        left: -1px;
                         margin-left: 14px;
                         font-size: 11px;
                         color: #fff;
@@ -264,8 +265,8 @@ export default {
                         &.grey {
                             color: #212121;
                             margin-left: 13.5px;
-                            
-                            margin-top: -1px
+                            margin-top: -1px;
+                            left: 0;
                         }
                     }
                 }

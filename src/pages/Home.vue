@@ -11,6 +11,7 @@
                 :listPageUrl="eachSection.listPageUrl"
                 v-bind="{ addToLibrary, removeFromLibrary }"
             ></PratilipiListComponent>
+            <ServerError v-if="getHomePageLoadingState === 'LOADING_ERROR'"></ServerError>
         </div>
     </MainLayout>
 </template>
@@ -20,6 +21,7 @@ import Spinner from '@/components/Spinner.vue';
 import PratilipiListComponent from '@/components/PratilipiList.vue';
 import MainLayout from '@/layout/main-layout.vue';
 import Banners from '@/components/Banners.vue';
+import ServerError from '@/components/ServerError.vue';
 import constants from '@/constants'
 
 import { mapGetters, mapActions } from 'vuex'
@@ -51,7 +53,8 @@ export default {
         Spinner,
         PratilipiListComponent,
         MainLayout,
-        Banners
+        Banners,
+        ServerError
     },
     created() {
         const currentLocale = process.env.LANGUAGE;
