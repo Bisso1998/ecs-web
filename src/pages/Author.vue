@@ -110,6 +110,8 @@
                                         :key="each_follower.userId"
                                         :followOrUnfollowAuthor="followOrUnfollowFollowers"
                                         :inFollowersTab="true"></AuthorCard>
+                                        <p class="message" v-if="getAuthorFollowersLoadingState === 'LOADING_SUCCESS' && getAuthorFollowers.length == 0 && getUserDetails.userId === getAuthorData.user.userId">__("user_no_followers")</p>
+                                        <p class="message" v-if="getAuthorFollowersLoadingState === 'LOADING_SUCCESS' && getAuthorFollowers.length == 0 && getUserDetails.userId !== getAuthorData.user.userId">__("author_no_followers")</p>
                                     <Spinner v-if="getAuthorFollowersLoadingState === 'LOADING'"></Spinner>
                                 </div>
                                 <div class="list following" id="following">
@@ -118,6 +120,8 @@
                                         :key="each_following.userId"
                                         :followOrUnfollowAuthor="followOrUnfollowFollowing"
                                         :inFollowingTab="true"></AuthorCard>
+                                    <p class="message" v-if="getAuthorFollowingLoadingState === 'LOADING_SUCCESS' && getAuthorFollowing.length == 0 && getUserDetails.userId === getAuthorData.user.userId">__("user_no_following")</p>
+                                    <p class="message" v-if="getAuthorFollowingLoadingState === 'LOADING_SUCCESS' && getAuthorFollowing.length == 0 && getUserDetails.userId !== getAuthorData.user.userId">__("author_no_following")</p>
                                     <Spinner v-if="getAuthorFollowingLoadingState === 'LOADING'"></Spinner>
                                 </div>
                             </div>
