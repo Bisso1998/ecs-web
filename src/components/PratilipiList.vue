@@ -74,7 +74,7 @@ export default {
             this.$refs.slick.reSlick()
         }
     },
-    mount(){
+    mounted(){
         this.reInit();
     },
     components: {
