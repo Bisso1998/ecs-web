@@ -127,7 +127,7 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
     if (!window.FB) {
         setTimeout(() => {
             if (propertyName === 'USER_ID') {
-                FB.AppEvents.setUserID(propertyValue);
+                FB.AppEvents.setUserID(String(propertyValue));
             }
             if (FB.AppEvents.getUserID() === undefined || FB.AppEvents.getUserID() === null || FB.AppEvents.getUserID().trim() === '') {
                 return;
@@ -138,7 +138,7 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
         }, 3000);
     } else {
         if (propertyName === 'USER_ID') {
-            FB.AppEvents.setUserID(propertyValue);
+            FB.AppEvents.setUserID(String(propertyValue));
         }
         if (FB.AppEvents.getUserID() === undefined || FB.AppEvents.getUserID() === null || FB.AppEvents.getUserID().trim() === '') {
             return;
