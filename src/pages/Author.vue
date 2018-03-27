@@ -93,8 +93,10 @@
                                     :redirectToReader="true"
                                     :removeFromLibrary="removeFromLibrary"
                                     ></PratilipiComponent>
+                                    <p class="message" v-if="getLibraryListLoadingState === 'LOADING_SUCCESS' && getLibraryList.length == 0">__("empty_library")</p>
                                     <router-link
                                     :to="{ name: 'Library_Page' }"
+                                    v-if="getLibraryListLoadingState === 'LOADING_SUCCESS' && getLibraryList.length !== 0"
                                     class="view_more">
                                         <div class="view_more_card">
                                             <i class="material-icons">keyboard_arrow_right</i>

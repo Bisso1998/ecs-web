@@ -14,6 +14,7 @@
                         :removeFromLibrary="removeFromLibrary"
                         ></PratilipiComponent>
                         <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
+                        <p class="message" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' && getPratilipiListData.length == 0">__("empty_library")</p>
                     </div>
                 </div>
             </div>
@@ -89,6 +90,7 @@ export default {
 .list-page {
     margin-top: 85px;
     text-align: left;
+    min-height: 700px;
     @media screen and (max-width: 992px ) {
         margin-top: 65px;
         text-align: center;
@@ -100,6 +102,11 @@ export default {
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
+    }
+    p.message {
+        margin: 15px 15px 15px 0;
+        font-size: 14px;
+        color: #555;
     }
 }
 </style>
