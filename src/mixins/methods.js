@@ -92,35 +92,51 @@ export function getHighResolutionImage(imageUrl) {
     }
 }
 
+export function validateEmail(mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+export function validatePassword(password) {
+    if (password && password.length >= 6  ){
+        return true;
+    } else {
+        return false;
+    }
+}
+
 export function setAnalyticsUserProperty(propertyName, propertyValue) {
     const identify = new amplitude.Identify();
     identify.set(propertyName, propertyValue);
     amplitude.getInstance().identify(identify);
 
     const propertyObject = {};
-    propertyObject[propertyName] = propertyValue
+    propertyObject[propertyName] = String(propertyValue)
 
     if (!window.FB) {
         setTimeout(() => {
             if (propertyName === 'USER_ID') {
-                console.log('setting user id')
                 FB.AppEvents.setUserID(propertyValue);
+            }
+            if (FB.AppEvents.getUserID() === undefined || FB.AppEvents.getUserID() === null || FB.AppEvents.getUserID().trim() === '') {
+                return;
             }
             FB.AppEvents.updateUserProperties(propertyObject, function (res, error) {
                 console.log(res);
-                console.log(error);
-                console.log('hello');
             });
         }, 3000);
     } else {
         if (propertyName === 'USER_ID') {
-            console.log('setting user id')
             FB.AppEvents.setUserID(propertyValue);
         }
-        FB.AppEvents.updateUserProperties(propertyObject, function (res, error) {
-            console.log(res);
-            console.log(error);
-            console.log('hello');
+        if (FB.AppEvents.getUserID() === undefined || FB.AppEvents.getUserID() === null || FB.AppEvents.getUserID().trim() === '') {
+            return;
+        }
+        FB.AppEvents.updateUserProperties(propertyObject, function (res) {
+            console.log("FACEBOOK USER_PROPS: ", res);
         });
     }
     

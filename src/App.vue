@@ -63,10 +63,11 @@ export default {
             }
 
             if (!isGuest) {
+                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
                 this.setAnalyticsUserProperty('IS_LOGGED_ID', true);
                 this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
-                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId);
             } else {
+                this.setAnalyticsUserProperty('USER_ID', "0");
                 this.setAnalyticsUserProperty('IS_LOGGED_ID', false);
             }
             
@@ -77,10 +78,11 @@ export default {
 
         if (this.getUserDetails.isGuest !== undefined || this.getUserDetails.isGuest !== null) {
             if (!this.getUserDetails.isGuest) {
+                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
                 this.setAnalyticsUserProperty('IS_LOGGED_ID', true);
                 this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
-                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId);
             } else {
+                this.setAnalyticsUserProperty('USER_ID', "0");
                 this.setAnalyticsUserProperty('IS_LOGGED_ID', false);
             }
         }

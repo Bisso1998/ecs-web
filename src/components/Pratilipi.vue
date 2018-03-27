@@ -233,7 +233,7 @@ export default {
             left: auto;
             button {
                 padding: 0;
-                margin: 10px 4px 0;
+                margin: 10px 4px 0 0;
                 text-align: center;
                 width: 40px;
                 height: 40px;

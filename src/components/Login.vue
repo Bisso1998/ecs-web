@@ -6,13 +6,27 @@
         </div>
         <div class="or">__("or")</div>
         <form>
+            <p class="validation_error" v-if="(getLoginError && getLoginError.message)">
+                <i class="material-icons">error</i>
+                <span v-if="(getLoginError && getLoginError.message)">{{ getLoginError.message | getTranslatedLoginErrorMessage }}</span>
+            </p>
             <div class="form-group">
-                <input type="email" class="form-control" v-model="email" :placeholder="'__("user_email")'">
+                <p class="validation_error" v-if="emailIsInvalid || (getLoginError && getLoginError.email)">
+                    <i class="material-icons">error</i>
+                    <span v-if="(getLoginError && getLoginError.email)">{{ getLoginError.email }}</span>
+                    <span v-else>__("email_entered_incorrectly")</span>
+                </p>
+                <input type="email" :class="{error: emailIsInvalid || (getLoginError && getLoginError.email) }" class="form-control" v-model="email" :placeholder="'__("user_email")'">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" v-model="password" :placeholder="'__("user_password")'">
+                <p class="validation_error" v-if="passwordIsInvalid || (getLoginError && getLoginError.password)">
+                    <i class="material-icons">error</i>
+                    <span v-if="(getLoginError && getLoginError.password)">{{ getLoginError.password }}</span>
+                    <span v-else>__("password_minimum")</span>
+                </p>
+                <input type="password" :class="{error: passwordIsInvalid || (getLoginError && getLoginError.password) }" class="form-control" v-model="password" :placeholder="'__("user_password")'">
             </div>
-            <button type="button" @click="loginUser({email, password})" class="btn sign-in">__("user_sign_in")</button>
+            <button type="button" @click="validateAndLoginUser({email, password})" class="btn sign-in">__("user_sign_in")</button>
             <a v-if="!openForgotPasswordInTab" @click="openForgotPasswordModal" href="#" class="forgot-pass">__("user_forgot_password")</a>
             <router-link v-else :to="'/login#forgot-pass'" target="_blank" class="forgot-pass">__("user_forgot_password")</router-link>
             <a href="#" class="footlink" v-on:click="tabsignup" data-tab="signup">__("user_sign_up")</a>
@@ -42,8 +56,15 @@ export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            emailIsInvalid: false,
+            passwordIsInvalid: false
         }
+    },
+    computed: {
+        ...mapGetters([
+            'getLoginError'
+        ])
     },
     methods: {
         ...mapActions([
@@ -56,6 +77,15 @@ export default {
             $(".signup").addClass("active");
             $(".forms").hide();
             $("#" + tab_id).show();
+        },
+        validateAndLoginUser({ email, password }) {
+            
+            
+            this.emailIsInvalid = !this.validateEmail(email);
+            this.passwordIsInvalid = !this.validatePassword(password);
+            if (!this.emailIsInvalid && !this.passwordIsInvalid) {
+                this.loginUser({ email, password });
+            }
         }
     },
     components: {
@@ -152,5 +182,20 @@ export default {
     button.google {
         background: #DD4B39;
     }
+}
+.validation_error {
+    margin: 5px 5px 5px 0;
+    font-size: 12px;
+    color: #d00b12;
+    i {
+        font-size: 16px;
+        vertical-align: middle;
+    }
+    span {
+        vertical-align: middle;
+    }
+}
+.form-control.error {
+    border-color: #d00b12;
 }
 </style>

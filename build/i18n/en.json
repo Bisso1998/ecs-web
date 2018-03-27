@@ -519,5 +519,12 @@
     "pratilipi_feature_3": "Connect with friends and read stories together",
     "need_rating": "Please provide rating to submit the review",
     "reader_prev_chapter": "Previous Chapter",
-    "no_results_found": "No Result Found"
+    "no_results_found": "No Result Found",
+    "email_not_registered": "Email ID not registered",
+    "email_already_registered": "Email ID already registered",
+    "email_entered_incorrectly": "Email ID has been entered incorrectly",
+    "password_minimum": "Password should be of minimum 6 characters",
+    "login_failed": "Login failed. Please retry.",
+    "signup_failed": "Signup Failed. Please retry.",
+    "name_required": "Name is mandatory"
 }

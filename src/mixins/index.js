@@ -12,7 +12,9 @@ import {
     isMobile,
     isAndroid,
     isChrome,
-    setAnalyticsUserProperty
+    setAnalyticsUserProperty,
+    validateEmail,
+    validatePassword
 } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
@@ -36,6 +38,8 @@ export default {
         isMobile,
         isAndroid,
         isChrome,
-        setAnalyticsUserProperty
+        setAnalyticsUserProperty,
+        validateEmail,
+        validatePassword
     }
 }

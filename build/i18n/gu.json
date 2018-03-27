@@ -519,5 +519,12 @@
     "pratilipi_feature_3": "મિત્રો સાથે જોડાઓ અને સાથે વાર્તાઓ વાંચો",
     "need_rating": "પ્રતિભાવ પ્રકાશિત કરતા પહેલા રેટિંગ આપો",
     "reader_prev_chapter": "પાછળનું ચેપ્ટર",
-    "no_results_found": "પરિણામ પ્રાપ્ય નથી"
+    "no_results_found": "પરિણામ પ્રાપ્ય નથી",
+    "email_not_registered": "ઈ-મેઈલ આઈડી નોંધાયેલ નથી",
+    "email_already_registered": "ઈ-મેઈલ આઈડી પહેલેથી નોંધાયેલ છે.",
+    "email_entered_incorrectly": "દર્જ કરેલ ઈ-મેઈલ આઈડી ખોટું છે.",
+    "password_minimum": "પાસવર્ડમાં ઓછામાં ઓછા ૬ અક્ષર હોવા જોઈએ.",
+    "login_failed": "લોગ ઇનમાં વિક્ષેપ, ફરીથી પ્રયાસ કરો.",
+    "signup_failed": "સાઈન અપ થયું નથી, ફરી પ્રયાસ કરો",
+    "name_required": "નામ જરૂરી છે"
 }

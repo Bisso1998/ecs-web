@@ -53,6 +53,18 @@ Vue.filter('getPratilipiTypeInNativeLanguage', function(value) {
     }
 });
 
+Vue.filter('getTranslatedLoginErrorMessage', function(value) {
+    console.log(value);
+    switch (value) {
+        case 'Email not registered.':
+            return "__('email_not_registered')";
+        case 'Invalid Credentials!':
+            return "__('login_failed')";
+        default:
+            return value;
+    }
+});
+
 Vue.filter('convertDate', function(value) {
     const d = new Date(value);
 

@@ -53,7 +53,7 @@ export default {
             
         }, (error) => {
             console.log(error);
-            commit('setUserDataLoadingError', error.message);
+            commit('setUserDataLoadingError', error);
         })
     },
 
@@ -69,7 +69,7 @@ export default {
             
         }, (error) => {
             console.log(error);
-            commit('setUserDataLoadingError', error.message);
+            commit('setUserDataLoadingError', error);
         })
     },
 
