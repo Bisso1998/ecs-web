@@ -115,7 +115,7 @@ export default {
         });
     },
 
-    loginUserWithFacebookAccessToken({ commit, state }, {facebookAccessToken, language}) {
+    loginUserWithFacebookAccessToken({ commit, state, dispatch }, {facebookAccessToken, language}) {
         console.log(language);
         DataAccessor.loginFacebookUser( facebookAccessToken, language, ( data ) => {
             commit('setUserDataLoadingSuccess', data);
