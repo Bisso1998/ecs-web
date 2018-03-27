@@ -6,16 +6,35 @@
                 <GoogleLogin></GoogleLogin>
             </div>
             <div class="or">__("or")</div>
+            <p class="validation_error" v-if="(getLoginError && getLoginError.message)">
+                <i class="material-icons">error</i>
+                <span v-if="(getLoginError && getLoginError.message)">{{ getLoginError.message | getTranslatedLoginErrorMessage }}</span>
+            </p>
             <div class="form-group">
-                <input type="text" class="form-control" :placeholder="'__("user_full_name")'">
+                <p class="validation_error" v-if="nameIsInvalid || (getLoginError && getLoginError.name)">
+                    <i class="material-icons">error</i>
+                    <span v-if="(getLoginError && getLoginError.name)">{{ getLoginError.name }}</span>
+                    <span v-else>__("name_required")</span>
+                </p>
+                <input type="text" v-model="name" class="form-control" :placeholder="'__("user_full_name")'">
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" :placeholder="'__("user_email")'">
+                <p class="validation_error" v-if="emailIsInvalid || (getLoginError && getLoginError.email)">
+                    <i class="material-icons">error</i>
+                    <span v-if="(getLoginError && getLoginError.email)">{{ getLoginError.email }}</span>
+                    <span v-else>__("email_entered_incorrectly")</span>
+                </p>
+                <input type="email" v-model="email" class="form-control" :placeholder="'__("user_email")'">
             </div>
             <div class="form-group">
-                <input autocomplete="new-password" type="password" class="form-control" :placeholder="'__("user_password")'">
+                <p class="validation_error" v-if="passwordIsInvalid || (getLoginError && getLoginError.password)">
+                    <i class="material-icons">error</i>
+                    <span v-if="(getLoginError && getLoginError.password)">{{ getLoginError.password }}</span>
+                    <span v-else>__("password_minimum")</span>
+                </p>
+                <input autocomplete="new-password" v-model="password" type="password" class="form-control" :placeholder="'__("user_password")'">
             </div>
-            <button type="button" @click="signupUser({ name, email, password, language: getCurrentLanguage() })" class="btn sign-in">__("user_sign_up")</button>
+            <button type="button" @click="verifyAndSignupUser({ name, email, password, language: getCurrentLanguage().fullName.toUpperCase() })" class="btn sign-in">__("user_sign_up")</button>
             <a href="#" class="footlink" v-on:click="tabsignin" data-tab="signin">__("user_sign_in")</a>
             <span class="terms-section">__("register_part_1") <a href="/privacy-policy" target="_blank">__("footer_privacy_policy")</a> __("register_part_2") <a href="/terms-of-service" target="_blank">__("footer_terms_of_service")</a> __("register_part_3")</span>
         </form>
@@ -38,13 +57,27 @@ export default {
         return {
             email: '',
             password: '',
-            name: ''
+            name: '',
+            emailIsInvalid: false,
+            passwordIsInvalid: false,
+            nameIsInvalid: false
         }
     },
     methods: {
         ...mapActions([
             'signupUser'
         ]),
+        verifyAndSignupUser(data) {
+            const { name, email, password } = data;
+
+            this.nameIsInvalid = !this.validateUsername(name);
+            this.emailIsInvalid = !this.validateEmail(email);
+            this.passwordIsInvalid = !this.validatePassword(password);
+
+            if (!this.emailIsInvalid && !this.passwordIsInvalid && !this.nameIsInvalid) {
+                this.signupUser(data);
+            }
+        },
         tabsignin(event) {
             event.preventDefault();        
             var tab_id = $(event.currentTarget).attr('data-tab');
@@ -53,6 +86,11 @@ export default {
             $(".forms").hide();
             $("#" + tab_id).show();
         }
+    },
+    computed: {
+        ...mapGetters([
+            'getLoginError'
+        ])
     },
     components: {
         GoogleLogin,
@@ -148,5 +186,20 @@ export default {
     button.google {
         background: #DD4B39;
     }
+}
+.validation_error {
+    margin: 5px 5px 5px 0;
+    font-size: 12px;
+    color: #d00b12;
+    i {
+        font-size: 16px;
+        vertical-align: middle;
+    }
+    span {
+        vertical-align: middle;
+    }
+}
+.form-control.error {
+    border-color: #d00b12;
 }
 </style>

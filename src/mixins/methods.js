@@ -108,6 +108,14 @@ export function validatePassword(password) {
     }
 }
 
+export function validateUsername(name) {
+    if (name && name.length > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 export function setAnalyticsUserProperty(propertyName, propertyValue) {
     const identify = new amplitude.Identify();
     identify.set(propertyName, propertyValue);
