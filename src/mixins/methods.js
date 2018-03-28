@@ -1,4 +1,5 @@
 import constants from '@/constants';
+import controlAnalyticsEvents from '@/static_scripts/analytics_events_control'
 
 export function translateWord(word, callback) {
     $.ajax({
@@ -148,4 +149,36 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
         });
     }
     
+}
+
+export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty) {
+
+    let eventProps;
+    switch(experimentType) {
+        case 'CONTROL':
+            eventProps = controlAnalyticsEvents[eventName];
+            break;
+    }
+
+    if (eventProps) {
+        eventProps = {
+            ...eventProps,
+            ...eventProperty,
+            'DEVICE_TYPE': isMobile() ? 'MOBILE':'DESKTOP',
+            'WEBSITE_TYPE': 'PHOENIX',
+            'EXPERIMENT_ID': experimentType
+        }
+        console.log(eventName, eventProperty, eventProps);
+        amplitude.getInstance().logEvent(eventName, eventProperty);
+        FB.AppEvents.logEvent(eventName, null, eventProperty);
+    }
+}
+
+export function getPratilipiAnalyticsData(pratilipiData) {
+    return {
+        'PRATILIPI_TYPE': pratilipiData.type,
+        'CONTENT_ID': pratilipiData.pratilipiId,
+        'AUTHOR_ID': pratilipiData.author.authorId,
+        'CONTENT_LANGUAGE': pratilipiData.language
+    }
 }
