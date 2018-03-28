@@ -5,6 +5,7 @@
             <li class="all-reviews" v-if="getReviewsData.length > 0">__("pratilipi_count_reviews")</li>
             <li class="no-results" v-if="getReviewsData.length === 0">__("pratilipi_no_reviews")</li>
             <Review 
+                v-if="haveInfiniteScroll"
                 v-for="eachReview in getReviewsData" 
                 :loadCommentsOfReview="loadCommentsOfReview"
                 :likeOrDislikeReview="likeOrDislikeReview" 
@@ -15,6 +16,19 @@
                 :deleteComment="deleteComment"
                 :likeOrDislikeComment="verifyAndLikeComment"
                 :updateComment="updateComment"></Review>
+            <Review 
+                v-if="!haveInfiniteScroll"
+                v-for="eachReview in getReviewsData.slice(0, 2)" 
+                :loadCommentsOfReview="loadCommentsOfReview"
+                :likeOrDislikeReview="likeOrDislikeReview" 
+                :userPratilipiData="userPratilipiData"
+                :eachReview="eachReview" :key="eachReview.userPratilipiId"
+                :authorId="authorId"
+                :createComment="verifyAndCreateComment"
+                :deleteComment="deleteComment"
+                :likeOrDislikeComment="verifyAndLikeComment"
+                :updateComment="updateComment"></Review>
+            
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
         <!-- <button v-if="getReviewsCursor !== null" @click="loadMoreReviews({ resultCount: 3, pratilipiId })" class="show-more">__("show_more")</button> -->
