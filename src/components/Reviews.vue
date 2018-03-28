@@ -31,7 +31,6 @@
             
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
-        <!-- <button v-if="getReviewsCursor !== null" @click="loadMoreReviews({ resultCount: 3, pratilipiId })" class="show-more">__("show_more")</button> -->
     </div>
 </template>
 <script>
@@ -178,5 +177,8 @@ export default {
     &:focus {
         outline: none;
     }
+}
+.review-popout .y-scrolling {
+    height: 90vh;
 }
 </style>
