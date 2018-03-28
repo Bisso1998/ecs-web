@@ -17,7 +17,6 @@
                 :updateComment="updateComment"></Review>
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
-        <!-- <button v-if="getReviewsCursor !== null" @click="loadMoreReviews({ resultCount: 3, pratilipiId })" class="show-more">__("show_more")</button> -->
     </div>
 </template>
 <script>

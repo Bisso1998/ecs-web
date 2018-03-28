@@ -797,7 +797,7 @@ export default {
             width: 100vw;
             height: 100vh;
             background: rgba(0, 0, 0, 0.7);
-            z-index: 9;
+            z-index: 8;
             display: none;
             top: 0;
             left: 0;
@@ -809,6 +809,7 @@ export default {
             position: fixed;
             margin-bottom: 51px;
             margin-left: 0;
+            left: 7px;
             bottom: -100vh;
             overflow: hidden;
             overflow-y: auto;
@@ -816,7 +817,7 @@ export default {
             background: #fff;
             box-shadow: 0 -1px 2px rgba(0,0,0,0.5);
             transition: all 0.5s;
-            z-index: 10;
+            z-index: 9;
             .close-review {
                 position: absolute;
                 top: 5px;
