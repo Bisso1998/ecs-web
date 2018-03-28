@@ -164,4 +164,7 @@ export default {
         outline: none;
     }
 }
+.review-popout .y-scrolling {
+    height: 90vh;
+}
 </style>

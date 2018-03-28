@@ -802,14 +802,14 @@ export default {
             top: 0;
             left: 0;
         }
-        .review-popout{
+        .review-popout {
             height: 60vh;
             width: 96%;
             max-width: 700px;
             position: fixed;
-            margin-bottom: 51px;
+            margin-bottom: 0;
             margin-left: 0;
-            left: 7px;
+            left: 20%;
             bottom: -100vh;
             overflow: hidden;
             overflow-y: auto;
@@ -818,6 +818,10 @@ export default {
             box-shadow: 0 -1px 2px rgba(0,0,0,0.5);
             transition: all 0.5s;
             z-index: 9;
+            @media screen and (max-width: 992px ) {
+                margin-bottom: 51px;
+                left: 7px;
+            }
             .close-review {
                 position: absolute;
                 top: 5px;
