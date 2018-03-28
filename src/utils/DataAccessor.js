@@ -1,4 +1,5 @@
 import { httpUtil, formatParams } from './HttpUtil';
+import Raven from 'raven-js';
 
 
 const API_PREFIX = (window.location.origin.indexOf("localhost") || window.location.origin.indexOf("herokuapp")) > -1 ? "https://gamma.pratilipi.com" : "/api";
@@ -76,6 +77,12 @@ const processRequests = function(requests) {
 };
 
 const processGetResponse = function(response, status, aCallBack) {
+    if (status !== 200) {
+        Raven.captureMessage(response.message || 'GET call failed', {
+            level: 'error' // one of 'info', 'warning', or 'error'
+        });
+    }
+
     if (aCallBack != null)
         aCallBack(status == 200 ? {
             status,

@@ -170,7 +170,15 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         }
         console.log(eventName, eventProperty, eventProps);
         amplitude.getInstance().logEvent(eventName, eventProperty);
-        FB.AppEvents.logEvent(eventName, null, eventProperty);
+
+        if (!window.fbApiInit) {
+            setTimeout(() => {
+                FB.AppEvents.logEvent(eventName, null, eventProperty)
+            }, 15000);
+        } else {
+            FB.AppEvents.logEvent(eventName, null, eventProperty)
+        }
+        
     }
 }
 
