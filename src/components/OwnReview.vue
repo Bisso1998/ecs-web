@@ -64,12 +64,14 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import inViewport from 'vue-in-viewport-mixin';
 import mixins from '@/mixins'
 import Spinner from '@/components/Spinner.vue';
 
 export default {
     mixins: [
-        mixins
+        mixins,
+        inViewport
     ],
     props: {
         userPratilipiData: {
@@ -78,6 +80,17 @@ export default {
         },
         authorId: {
             type: Number,
+            required: true
+        },
+        'in-viewport-once': {
+            default: true
+        },
+        screenName: {
+            type: String,
+            required: true
+        },
+        screenLocation: {
+            type: String,
             required: true
         }
     },
@@ -102,6 +115,10 @@ export default {
             'setAfterLoginAction'
         ]),
         changeRating(e) {
+            this.triggerAnanlyticsEvent(`RATE_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': e.target.value
+            });
             if (this.getUserDetails.isGuest) {
                 const newRating = e.target.value;
                 $('#star1').prop('checked', false);
@@ -158,6 +175,27 @@ export default {
     },
     created() {
         this.newReview = this.userPratilipiData.review;
+    },
+    mounted() {
+        console.log(this.screenName);
+        console.log(this.screenLocation);
+    },
+    watch: {
+        'inViewport.now': function(visible) {
+            if (visible) {
+
+                if (this.screenLocation === 'BOOKEND' && this.screenName === 'READER') {
+                    this.triggerAnanlyticsEvent(`LANDED_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });    
+                } else {
+                    this.triggerAnanlyticsEvent(`VIEWED_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                }
+                
+            }
+        }
     }
 }
 

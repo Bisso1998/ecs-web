@@ -1742,5 +1742,25 @@ export default {
         "SCREEN_NAME": "DISCOVER",
         "LOCATION": "DISCOVERM",
         "ACTION": "LANDED"
-    }
+    },
+    "RATE_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "RATE"
+    },
+    "RATE_RATEREV_BOOK": {
+        "SCREEN_NAME": "BOOK",
+        "LOCATION": "RATEREV",
+        "ACTION": "RATE"
+    },
+    "RATE_RATEREV_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "RATEREV",
+        "ACTION": "RATE"
+    },
+    "RATE_READERM_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "READERM",
+        "ACTION": "RATE"
+    },
 };

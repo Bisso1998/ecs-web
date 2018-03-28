@@ -68,11 +68,40 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getUserDetails'
+            'getUserDetails',
+            'getSignupSource',
+            'getLoginSource'
         ])
     },
     watch:{
         'getUserDetails.isGuest'(isGuest) {
+
+            switch(this.getLoginSource) {
+                case 'EMAIL':
+                    this.triggerAnanlyticsEvent('SIGNINSUC_EMAIL_LOGIN', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                    break;
+            }
+
+            switch(this.getSignupSource) {
+                case 'EMAIL':
+                    this.triggerAnanlyticsEvent('SIGNUPSUC_EMAIL_REGISTER', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                    break;
+                case 'FACEBOOK':
+                    this.triggerAnanlyticsEvent('SIGNUPSUC_FACEBOOK_REGISTER', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                    break;
+                case 'GOOGLE':
+                    this.triggerAnanlyticsEvent('SIGNUPSUC_GOOGLE_REGISTER', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                    break;
+            }
+
             if (!isGuest) {
                 this.$router.push(this.getUserDetails.profilePageUrl);
             }
@@ -83,6 +112,9 @@ export default {
             if (newHash === '#forgot-pass') {
                 this.openForgotPasswordModal();
             }
+        },
+        'getLoginSource'(source) {
+            
         }
     },
     methods: {

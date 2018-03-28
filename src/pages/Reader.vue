@@ -127,7 +127,9 @@
                                     :authorId="getPratilipiData.author.authorId" 
                                     :userPratilipiData='getUserPratilipiData'
                                     :haveInfiniteScroll="true"
-                                    v-if="selectedChapter == getIndexData.length">
+                                    screenName="READER"
+                                    screenLocation="BOOKEND"
+                                    v-if="selectedChapter == getIndexData.length && !openRateReaderm && !openRateRev ">
                                 </Reviews>
                             </div>
 
@@ -135,6 +137,8 @@
                                 <Recommendation
                                     :contextId="getPratilipiData.pratilipiId"
                                     :context="'summaryPage'"
+                                    screenName="READER"
+                                    screenLocation="RECOMMENDBOOK"
                                     v-if="getPratilipiData && getPratilipiData.pratilipiId">
                                 </Recommendation>
                             </div>
@@ -215,6 +219,9 @@
                             :pratilipiId="getPratilipiData.pratilipiId" 
                             :authorId="getPratilipiData.author.authorId" 
                             :haveInfiniteScroll="true"
+                            screenName="READER"
+                            screenLocation="RATEREV"
+                            v-if="openRateRev"
                             :userPratilipiData='getUserPratilipiData'>
                         </Reviews>
                     </div>
@@ -225,6 +232,9 @@
                             :pratilipiId="getPratilipiData.pratilipiId" 
                             :authorId="getPratilipiData.author.authorId" 
                             :haveInfiniteScroll="false"
+                            screenName="READER"
+                            screenLocation="READERM"
+                            v-if="openRateReaderm"
                             :userPratilipiData='getUserPratilipiData'>
                         </Reviews>
                     </div>
@@ -271,7 +281,10 @@ export default {
             selectedChapter: 1,
             scrollPosition: null,
             scrollDirection: null,
-            counter: 0
+            counter: 0,
+            openRateRev: false,
+            openRateReaderm: false,
+            rateRev: 'RATEREV'
         }
     },
     methods: {
@@ -362,11 +375,13 @@ export default {
             $('.overlay-2').fadeOut();
             $(".rating-popout").removeClass("show");
             $("body").addClass("modal-open");
+            this.openRateRev = true;
         },
         openRatingModal() {
             if (this.getUserDetails.authorId === this.getPratilipiData.author.authorId) {
                 return;
             }
+            this.openRateReaderm = true;
             $(".rating-popout").addClass("show");
             $('.overlay-2').fadeIn();
             $('.overlay-1').fadeOut();
@@ -377,8 +392,10 @@ export default {
             $(".review-popout").removeClass("show");
             $('.overlay-1').fadeOut();
             $("body").removeClass("modal-open");
+            this.openRateRev = false;
         },
         closeRatingModal() {
+            this.openRateReaderm = false;
             $(".rating-popout").removeClass("show");
             $('.overlay-2').fadeOut();
             $("body").removeClass("modal-open");

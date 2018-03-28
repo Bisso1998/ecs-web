@@ -45,7 +45,7 @@ export default {
         commit('setUserDataLoadingTrue');
         DataAccessor.loginUser(email, password, (data) => {
             commit('setUserDataLoadingSuccess', data);
-
+            commit('setLoginSource', 'EMAIL');
             if (state.post_login_action.action) {
                 dispatch(state.post_login_action.action, state.post_login_action.data, { root: true });
                 commit('clearPostLoginAction');
@@ -61,7 +61,7 @@ export default {
         commit('setUserDataLoadingTrue');
         DataAccessor.registerUser(name, email, password, language, (data) => {
             commit('setUserDataLoadingSuccess', data);
-
+            commit('setSignupSource', 'EMAIL');
             if (state.post_login_action.action) {
                 dispatch(state.post_login_action.action, state.post_login_action.data, { root: true });
                 commit('clearPostLoginAction');
@@ -119,7 +119,7 @@ export default {
         console.log(language);
         DataAccessor.loginFacebookUser( facebookAccessToken, language, ( data ) => {
             commit('setUserDataLoadingSuccess', data);
-
+            commit('setSignupSource', 'FACEBOOK');
             if (state.post_login_action.action) {
                 dispatch(state.post_login_action.action, state.post_login_action.data, { root: true });
                 commit('clearPostLoginAction');
@@ -133,6 +133,7 @@ export default {
         commit('setUserDataLoadingTrue');
         DataAccessor.loginGoogleUser(googleIdToken, language, (data) => {
             commit('setUserDataLoadingSuccess', data);
+            commit('setSignupSource', 'GOOGLE');
             if (state.post_login_action.action) {
                 dispatch(state.post_login_action.action, state.post_login_action.data, { root: true });
                 commit('clearPostLoginAction');

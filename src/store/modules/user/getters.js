@@ -21,5 +21,7 @@ export default {
     getUserDetails: state => state.data,
     getNotificationCount: state => state.notification_count,
     getLogoutStatus: state => state.logout_user,
-    getLoginError: state => state.loading_error_message
+    getLoginError: state => state.loading_error_message,
+    getSignupSource: state => state.signup_source,
+    getLoginSource: state => state.login_source,
 }

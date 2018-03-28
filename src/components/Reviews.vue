@@ -1,7 +1,11 @@
 <template>
     <div class="comments-container">
         <ul id="comments-list" @scroll="updateScroll" :class="{'y-scrolling': haveInfiniteScroll }" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
-            <OwnReview :userPratilipiData="userPratilipiData" :authorId="authorId"></OwnReview>
+            <OwnReview 
+                :userPratilipiData="userPratilipiData" 
+                :authorId="authorId"
+                :screenName="screenName"
+                :screenLocation="screenLocation"></OwnReview>
             <li class="all-reviews" v-if="getReviewsData.length > 0">__("pratilipi_count_reviews")</li>
             <li class="no-results" v-if="getReviewsData.length === 0">__("pratilipi_no_reviews")</li>
             <Review 
@@ -55,6 +59,14 @@ export default {
         },
         haveInfiniteScroll: {
             type: Boolean,
+            required: true
+        },
+        screenName: {
+            type: String,
+            required: true
+        },
+        screenLocation: {
+            type: String,
             required: true
         }
     },

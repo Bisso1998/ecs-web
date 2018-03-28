@@ -36,7 +36,7 @@ export default {
     components: {
         
     },
-    mounted() {
+    created() {
 
         if (document.getElementById('google-client-jssdk')) {
             return;

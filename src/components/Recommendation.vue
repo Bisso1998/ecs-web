@@ -11,11 +11,16 @@
 
 <script>
 import PratilipiListComponent from '@/components/PratilipiList.vue';
-
+import inViewport from 'vue-in-viewport-mixin';
+import mixins from '@/mixins'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: 'Home',
+    mixins: [
+        mixins,
+        inViewport
+    ],
     props: {
         contextId: {
             type: Number,
@@ -28,6 +33,17 @@ export default {
         resultCount: {
             type: Number,
             default: 6
+        },
+        'in-viewport-once': {
+            default: true
+        },
+        screenName: {
+            type: String,
+            required: true
+        },
+        screenLocation: {
+            type: String,
+            required: true
         }
     },
     data() {
@@ -40,6 +56,9 @@ export default {
             'getRecommendationList',
             'getRecommendationLoadingState',
             'getRecommendationTitle'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     methods: {
@@ -55,6 +74,16 @@ export default {
     created() {
         const { contextId, context, resultCount } = this;
         this.fetchRecommendation({ contextId, context, resultCount });
+    },
+    watch: {
+        'inViewport.now': function(visible) {
+            if (visible) {
+                this.triggerAnanlyticsEvent(`VIEWED_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+                
+            }
+        }
     }
 }
 </script>

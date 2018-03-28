@@ -60,5 +60,13 @@ export default {
     clearPostLoginAction(state) {
         state.post_login_action.action = null;
         state.post_login_action.data = null;
+    },
+
+    setSignupSource(state, source) {
+        state.signup_source = source;
+    },
+
+    setLoginSource(state, source) {
+        state.login_source = source;
     }
 }

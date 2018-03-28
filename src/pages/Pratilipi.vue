@@ -63,6 +63,7 @@
                                 <router-link
                                   v-else
                                   :to="getPratilipiData.readPageUrl"
+                                  @click.native="logReadEvent"
                                   class="read-btn">
                                   <span>__("read")</span>
                                 </router-link>
@@ -163,6 +164,8 @@
                                 :authorId="getPratilipiData.author.authorId" 
                                 :userPratilipiData="getUserPratilipiData"
                                 :haveInfiniteScroll="false"
+                                screenName="BOOK"
+                                screenLocation="BOOKEND"
                                 v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                             </Reviews>
                             <button type="button" class="load_more" name="button" @click="openReviewModal">__("view_more")</button>
@@ -173,6 +176,8 @@
                                     :pratilipiId="getPratilipiData.pratilipiId" 
                                     :authorId="getPratilipiData.author.authorId" 
                                     :haveInfiniteScroll="true"
+                                    screenName="BOOK"
+                                    screenLocation="RATEREV"
                                     :userPratilipiData='getUserPratilipiData'>
                                 </Reviews>
                             </div>
@@ -184,6 +189,8 @@
                             <Recommendation
                                 :contextId="getPratilipiData.pratilipiId"
                                 :context="'summaryPage'"
+                                screenName="BOOK"
+                                screenLocation="RECOMMENDBOOK"
                                 v-if="getPratilipiData && getPratilipiData.pratilipiId">
                             </Recommendation>
                         </div>
@@ -260,6 +267,13 @@ export default {
         ...mapActions('alert', [
             'triggerAlert'
         ]),
+        logReadEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READBOOK_BOOKM_BOOK', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+        },
         showAlertToGoToDesktop() {
             this.triggerAlert({ message: '__("write_on_desktop_only")', timer: 3000 });
         },
