@@ -34,7 +34,7 @@ const router = new Router({
         component: HomeComponent,
         meta: {
             'store': 'homepage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page") | __("pratilipi")'
         },
         beforeEnter: (to, from, next) => {
             if (to.query.email && to.query.token && to.query.passwordReset) {
@@ -73,14 +73,14 @@ const router = new Router({
         component: NotificationComponent,
         meta: {
             'store': 'notification',
-            'title': '__("seo_notifications_page")'
+            'title': '__("seo_notifications_page") | __("pratilipi")'
         }
     }, {
         path: '/discover',
         name: 'Discovery_Page',
         component: DiscoverPageComponent,
         meta: {
-            'title': '__("seo_navigation_page")'
+            'title': '__("seo_navigation_page") | __("pratilipi")'
         }
     }, {
         path: '/read',
@@ -95,42 +95,42 @@ const router = new Router({
         name: 'Career_Page',
         component: StaticComponent,
         meta: {
-            'title': '__("seo_home_page")'
+            'title': 'Career | __("pratilipi")'
         }
     }, {
         path: '/careers',
         name: 'Career_Page_2',
         component: StaticComponent,
         meta: {
-            'title': '__("seo_home_page")'
+            'title': 'Career | __("pratilipi")'
         }
     }, {
         path: '/about/pratilipi',
         name: 'About_Page',
         component: StaticComponent,
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("footer_about_us") | __("pratilipi")'
         }
     }, {
         path: '/about',
         name: 'About_Page_2',
         component: StaticComponent,
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("footer_about_us") | __("pratilipi")'
         }
     }, {
         path: '/terms-of-service',
         name: 'Terms_Page',
         component: StaticComponent,
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("footer_terms_of_service") | __("pratilipi")'
         }
     }, {
         path: '/privacy-policy',
         name: 'Privacy_Page',
         component: StaticComponent,
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("footer_privacy_policy") | __("pratilipi")'
         }
     }, {
         path: '/event',
@@ -138,7 +138,7 @@ const router = new Router({
         component: EventsPageComponent,
         meta: {
             'store': 'eventspage',
-            'title': '__("seo_events_page")'
+            'title': '__("seo_events_page") | __("pratilipi")'
         }
     }, {
         path: '/event/:event_slug',
@@ -154,7 +154,7 @@ const router = new Router({
         component: WritePageComponent,
         meta: {
             'store': 'writepage',
-            'title': '__("seo_home_page")'
+            'title': '__("write") | __("pratilipi")'
         }
     }, {
         path: '/library',
@@ -169,7 +169,7 @@ const router = new Router({
         name: 'Settings_Page',
         component: SettingsPageComponent,
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page") | __("pratilipi")'
         }
     }, {
         path: '/search',
@@ -177,21 +177,21 @@ const router = new Router({
         component: SearchPageComponent,
         meta: {
             'store': 'searchpage',
-            'title': '__("seo_search_page")'
+            'title': '__("seo_search_page") | __("pratilipi")'
         }
     }, {
         path: '/login',
         name: 'Login_Page',
         component: LoginPageComponent,
         meta: {
-            'title': '__("seo_login_page")'
+            'title': '__("seo_login_page") | __("pratilipi")'
         }
     }, {
         path: '/signup',
         name: 'Signup_Page',
         component: LoginPageComponent,
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("seo_register_page") | __("pratilipi")'
         }
     }, {
         path: '/blog',
@@ -199,7 +199,7 @@ const router = new Router({
         component: BlogsPageComponent,
         meta: {
             'store': 'blogspage',
-            'title': '__("seo_blog_page")'
+            'title': '__("seo_blog_page") | __("pratilipi")'
         }
     }, {
         path: '/blog/:blog_id',
@@ -222,7 +222,7 @@ const router = new Router({
         component: InterviewsPageComponent,
         meta: {
             'store': 'interviewspage',
-            'title': '__("seo_author_interview")'
+            'title': '__("seo_author_interview") | __("pratilipi")'
         }
     }, {
         path: '/author-interviews/:interview_id',
@@ -237,7 +237,7 @@ const router = new Router({
         name: 'Password_Reset',
         component: PasswordResetPageComponent,
         meta: {
-            'title': '__("seo_reset_password_page")'
+            'title': '__("seo_reset_password_page") | __("pratilipi")'
         }
     }, {
         path: '/author/:author_id',
@@ -311,7 +311,7 @@ const router = new Router({
     }, {
         path: '*',
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page") | __("pratilipi")'
         },
         beforeEnter: (to, from, next) => {
             console.log('Going to an unknown world!');
