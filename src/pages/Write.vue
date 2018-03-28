@@ -54,7 +54,7 @@
                                 <div class="card-content">
                                     <router-link
                                     :to="{ path: eventData.categoryUrl }">
-                                        <img :src="'https://0.ptlp.co/event/banner?eventId=' + eventData.pratilipiListData.eventId" alt="Events">
+                                        <img :src="getHighResolutionImage('https://0.ptlp.co/event/banner?eventId=' + eventData.pratilipiListData.eventId)" alt="Events">
                                     </router-link>
                                 </div>
                             </div>

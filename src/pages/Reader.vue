@@ -180,9 +180,9 @@
                 <div class="book-info">
                     <div class="book-cover"><img :src="getPratilipiData.coverImageUrl" alt=""></div>
                     <div class="book-name">{{ getPratilipiData.title }}</div>
-                    <a :href="getPratilipiData.author.pageUrl" class="author-link">
+                    <router-link :to="getPratilipiData.author.pageUrl" class="author-link">
                         <span class="auth-name">{{ getPratilipiData.author.displayName }}</span>
-                    </a>
+                    </router-link>
                     <div class="follow-btn-w-count" v-if="!getAuthorData.following"><!-- Follow Button -->
                         <button @click="followOrUnfollowAuthor" >
                             <i class="material-icons">person_add</i>__("author_follow")

@@ -74,8 +74,10 @@ export default {
             this.$refs.slick.reSlick()
         }
     },
-    mount(){
-        this.reInit();
+    mounted(){
+    	if (this.pratilipiList.length > 0) {
+    		this.reInit();	
+    	}
     },
     components: {
         PratilipiComponent,

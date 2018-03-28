@@ -62,33 +62,57 @@ export default {
                 console.log('Im a guest')
             }
 
-            if (!isGuest) {
-                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
-                this.setAnalyticsUserProperty('IS_LOGGED_ID', true);
-                this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
-            } else {
-                this.setAnalyticsUserProperty('USER_ID', "0");
-                this.setAnalyticsUserProperty('IS_LOGGED_ID', false);
+            const that = this;
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId: process.env.FACEBOOK_APP_ID,
+                    cookie: true,
+                    xfbml: true,
+                    autoLogAppEvents: false,
+                    version: 'v2.10'
+                });
+
+                FB.AppEvents.logPageView();
+                if (!isGuest) {
+                    that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
+                    that.setAnalyticsUserProperty('IS_LOGGED_ID', true);
+                    that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
+                } else {
+                    that.setAnalyticsUserProperty('USER_ID', "0");
+                    that.setAnalyticsUserProperty('IS_LOGGED_ID', false);
+                }
+                that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
+                that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
             }
-            this.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
-            this.setAnalyticsUserProperty('CONTENT_LANGUAGE', this.getCurrentLanguage().fullName.toUpperCase());
             
         }
     },
     created() {
         this.fetchUserDetails();
 
+        const that = this;
         if (this.getUserDetails.isGuest !== undefined || this.getUserDetails.isGuest !== null) {
-            if (!this.getUserDetails.isGuest) {
-                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
-                this.setAnalyticsUserProperty('IS_LOGGED_ID', true);
-                this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
-            } else {
-                this.setAnalyticsUserProperty('USER_ID', "0");
-                this.setAnalyticsUserProperty('IS_LOGGED_ID', false);
-            }
-            this.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
-            this.setAnalyticsUserProperty('CONTENT_LANGUAGE', this.getCurrentLanguage().fullName.toUpperCase());
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId: process.env.FACEBOOK_APP_ID,
+                    cookie: true,
+                    xfbml: true,
+                    autoLogAppEvents: false,
+                    version: 'v2.10'
+                });
+
+                FB.AppEvents.logPageView();
+                if (!that.getUserDetails.isGuest) {
+                    that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
+                    that.setAnalyticsUserProperty('IS_LOGGED_ID', true);
+                    that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
+                } else {
+                    that.setAnalyticsUserProperty('USER_ID', "0");
+                    that.setAnalyticsUserProperty('IS_LOGGED_ID', false);
+                }
+                that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
+                that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
+            };
         }
     }
 }

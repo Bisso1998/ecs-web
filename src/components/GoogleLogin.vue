@@ -17,21 +17,27 @@ export default {
         ]),
         loginToGoogle() {
             const that = this;
-            const GoogleAuth = gapi.auth2.getAuthInstance();
-            GoogleAuth.signIn().then( function( googleUser ) {
-                console.log(GoogleAuth.currentUser.get());
-                that.loginUserWithGoogleToken({ googleIdToken: googleUser.getAuthResponse().id_token, language: that.getCurrentLanguage().fullName.toUpperCase() });
-            }, function( error ) {
-                console.log( JSON.stringify( error, undefined, 2 ) );
+
+            const googleClientId = process.env.GOOGLE_CLIENT_ID;
+            gapi.auth2.init({
+                client_id: `${googleClientId}`,
+                cookiepolicy: 'single_host_origin'
+            }).then(() => {
+                const GoogleAuth = gapi.auth2.getAuthInstance();
+                GoogleAuth.signIn().then( function( googleUser ) {
+                    console.log(GoogleAuth.currentUser.get());
+                    that.loginUserWithGoogleToken({ googleIdToken: googleUser.getAuthResponse().id_token, language: that.getCurrentLanguage().fullName.toUpperCase() });
+                }, function( error ) {
+                    console.log( JSON.stringify( error, undefined, 2 ) );
+                });
             });
         }
     },
     components: {
         
     },
-    created() {
+    mounted() {
 
-        const googleClientId = process.env.GOOGLE_CLIENT_ID;
         if (document.getElementById('google-client-jssdk')) {
             return;
         }
@@ -45,12 +51,7 @@ export default {
         }(document, 'script', 'google-client-jssdk'));
         document.getElementById('google-client-jssdk').onload = () => {
             gapi.load( 'auth2', function() {
-                gapi.auth2.init({
-                    client_id: `${googleClientId}`,
-                    cookiepolicy: 'single_host_origin'
-                }).then(() => {
-                    console.log('google api initialized')
-                });
+                
             });
         }
     }

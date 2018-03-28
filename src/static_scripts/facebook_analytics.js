@@ -1,15 +1,3 @@
-window.fbAsyncInit = function() {
-    FB.init({
-        appId: process.env.FACEBOOK_APP_ID,
-        cookie: true,
-        xfbml: true,
-        autoLogAppEvents: false,
-        version: 'v2.10'
-    });
-
-    FB.AppEvents.logPageView();
-};
-
 (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) { return; }

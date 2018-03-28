@@ -25,6 +25,7 @@
                             :removeFromLibrary="removeFromLibrary"
                             ></PratilipiComponent>
                             <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
+                            <p class="message" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' && getPratilipiListData.length == 0">__("search_no_results_found")</p>
                         </div>
                     </div>
                 </div>
@@ -168,6 +169,11 @@ export default {
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0 5px;
+    }
+    p.message {
+        margin: 15px 15px 15px 0;
+        font-size: 14px;
+        color: #555;
     }
     .author-section {
         width: 100%;

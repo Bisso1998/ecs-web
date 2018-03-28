@@ -73,7 +73,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
-      Popper: ['popper.js', 'default']
+      Popper: ['popper.js', 'default'],
+      Promise: 'es6-promise-promise'
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
