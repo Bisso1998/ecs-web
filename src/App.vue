@@ -72,6 +72,7 @@ export default {
                     version: 'v2.10'
                 });
 
+                window.fbApiInit = true;
                 FB.AppEvents.logPageView();
                 if (!isGuest) {
                     that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
@@ -101,6 +102,7 @@ export default {
                     version: 'v2.10'
                 });
 
+                window.fbApiInit = true;
                 FB.AppEvents.logPageView();
                 if (!that.getUserDetails.isGuest) {
                     that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
