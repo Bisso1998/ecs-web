@@ -32,7 +32,10 @@ const router = new Router({
         path: '/',
         name: 'Home',
         component: HomeComponent,
-        meta: { 'store': 'homepage' },
+        meta: {
+            'store': 'homepage',
+            'title': '__("seo_home_page")'
+        },
         beforeEnter: (to, from, next) => {
             if (to.query.email && to.query.token && to.query.passwordReset) {
                 next({ path: '/reset-password', query: { 
@@ -48,12 +51,17 @@ const router = new Router({
         path: '/story/:slug_id',
         name: 'Pratilipi',
         component: PratilipiComponent,
-        meta: { 'store': 'pratilipipage' }
+        meta: { 
+            'store': 'pratilipipage'
+        }
     }, {
         path: '/user/:user_slug',
         name: 'User',
         component: AuthorComponent,
-        meta: { 'store': 'authorpage' }
+        meta: {
+            'store': 'authorpage',
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/followers',
         beforeEnter: (to, from, next) => {
@@ -63,108 +71,179 @@ const router = new Router({
         path: '/notifications',
         name: 'Notification',
         component: NotificationComponent,
-        meta: { 'store': 'notification' }
+        meta: {
+            'store': 'notification',
+            'title': '__("seo_notifications_page")'
+        }
     }, {
         path: '/discover',
         name: 'Discovery_Page',
-        component: DiscoverPageComponent
+        component: DiscoverPageComponent,
+        meta: {
+            'title': '__("seo_navigation_page")'
+        }
     }, {
         path: '/read',
         name: 'Reader_Page',
         component: ReaderPageComponent,
-        meta: { 'store': 'readerpage' }
+        meta: {
+            'store': 'readerpage',
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/work-with-us',
         name: 'Career_Page',
-        component: StaticComponent
+        component: StaticComponent,
+        meta: {
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/careers',
         name: 'Career_Page_2',
-        component: StaticComponent
+        component: StaticComponent,
+        meta: {
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/about/pratilipi',
         name: 'About_Page',
-        component: StaticComponent
+        component: StaticComponent,
+        meta: {
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/about',
         name: 'About_Page_2',
-        component: StaticComponent
+        component: StaticComponent,
+        meta: {
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/terms-of-service',
         name: 'Terms_Page',
-        component: StaticComponent
+        component: StaticComponent,
+        meta: {
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/privacy-policy',
         name: 'Privacy_Page',
-        component: StaticComponent
+        component: StaticComponent,
+        meta: {
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/event',
         name: 'Events_Page',
         component: EventsPageComponent,
-        meta: { 'store': 'eventspage' }
+        meta: {
+            'store': 'eventspage',
+            'title': '__("seo_events_page")'
+        }
     }, {
         path: '/event/:event_slug',
         name: 'Event_Page',
         component: EventPageComponent,
-        meta: { 'store': 'eventpage' }
+        meta: {
+            'store': 'eventpage',
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/create',
         name: 'Write_Page',
         component: WritePageComponent,
-        meta: { 'store': 'writepage' }
+        meta: {
+            'store': 'writepage',
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/library',
         name: 'Library_Page',
         component: LibraryPageComponent,
-        meta: { 'store': 'librarypage' }
+        meta: {
+            'store': 'librarypage',
+            'title': '__("seo_library_page")'
+        }
     }, {
         path: '/settings',
         name: 'Settings_Page',
-        component: SettingsPageComponent
+        component: SettingsPageComponent,
+        meta: {
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/search',
         name: 'Search_Page',
         component: SearchPageComponent,
-        meta: { 'store': 'searchpage' }
+        meta: {
+            'store': 'searchpage',
+            'title': '__("seo_search_page")'
+        }
     }, {
         path: '/login',
         name: 'Login_Page',
-        component: LoginPageComponent
+        component: LoginPageComponent,
+        meta: {
+            'title': '__("seo_login_page")'
+        }
     }, {
         path: '/signup',
         name: 'Signup_Page',
-        component: LoginPageComponent
+        component: LoginPageComponent,
+        meta: {
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/blog',
         name: 'Blogs_Page',
         component: BlogsPageComponent,
-        meta: { 'store': 'blogspage' }
+        meta: {
+            'store': 'blogspage',
+            'title': '__("seo_blog_page")'
+        }
     }, {
         path: '/blog/:blog_id',
         name: 'Blog_Page',
         component: BlogPageComponent,
-        meta: { 'store': 'blogpage' }
+        meta: {
+            'store': 'blogpage',
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/blogpost/:blog_id',
         name: 'Blog_Page_2',
         component: BlogPageComponent,
-        meta: { 'store': 'blogpage' }
+        meta: {'store': 'blogpage',
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/author-interviews',
         name: 'Interviews_Page',
         component: InterviewsPageComponent,
-        meta: { 'store': 'interviewspage' }
+        meta: {
+            'store': 'interviewspage',
+            'title': '__("seo_author_interview")'
+        }
     }, {
         path: '/author-interviews/:interview_id',
         name: 'Interview_Page',
         component: InterviewPageComponent,
-        meta: { 'store': 'interviewpage' }
+        meta: {
+            'store': 'interviewpage',
+            'title': '__("seo_home_page")'
+        }
     }, {
         path: '/reset-password',
         name: 'Password_Reset',
-        component: PasswordResetPageComponent
+        component: PasswordResetPageComponent,
+        meta: {
+            'title': '__("seo_reset_password_page")'
+        }
     }, {
         path: '/author/:author_id',
+        meta: {
+            'title': '__("seo_home_page")'
+        },
         beforeEnter: (to, from, next) => {
             const author_id = to.params.author_id;
             DataAccessor.getAuthorById(author_id, false, (data) => {
@@ -177,6 +256,9 @@ const router = new Router({
         }
     }, {
         path: '/pratilipi/:pratilipi_id',
+        meta: {
+            'title': '__("seo_home_page")'
+        },
         beforeEnter: (to, from, next) => {
             const pratilipi_id = to.params.pratilipi_id;
             DataAccessor.getPratilipiById(pratilipi_id, false, (data) => {
@@ -191,7 +273,10 @@ const router = new Router({
         path: '/:list_page_url',
         name: 'List_Page',
         component: ListPageComponent,
-        meta: { 'store': 'listpage' },
+        meta: {
+            'store': 'listpage',
+            'title': '__("seo_home_page")'
+        },
         beforeEnter: (to, from, next) => {
             console.log(to);
 
@@ -225,6 +310,9 @@ const router = new Router({
         }
     }, {
         path: '*',
+        meta: {
+            'title': '__("seo_home_page")'
+        },
         beforeEnter: (to, from, next) => {
             console.log('Going to an unknown world!');
             const pathToGo = to.path;
@@ -256,6 +344,11 @@ const router = new Router({
     }],
     scrollBehavior: () => ({ y: 0 })
 });
+
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title
+    next()
+})
 
 router.afterEach((to, from) => {
     ga( 'set', 'page', to.path + window.location.search );

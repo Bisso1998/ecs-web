@@ -420,6 +420,7 @@ export default {
             this.selectedTags = this.getPratilipiData.tags;
             this.suggestedTags = this.getPratilipiData.suggestedTags;
             this.fetchSystemTags(this.getPratilipiData.language);
+            document.title = this.getPratilipiData.title;
         },
         'getUserDetails.userId'() {
             this.fetchPratilipiDetailsAndUserPratilipiData(this.$route.params.slug_id);
