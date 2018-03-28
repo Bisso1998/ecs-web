@@ -162,8 +162,21 @@
                                 :pratilipiId="getPratilipiData.pratilipiId" 
                                 :authorId="getPratilipiData.author.authorId" 
                                 :userPratilipiData="getUserPratilipiData"
+                                :haveInfiniteScroll="false"
                                 v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                             </Reviews>
+                            <button type="button" class="load_more" name="button" @click="openReviewModal">__("view_more")</button>
+                            <!-- Reviews MODAL -->
+                            <div class="review-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
+                                <button type="button" class="close-review" name="button" @click="closeReviewModal"><i class="material-icons">close</i></button>
+                                <Reviews 
+                                    :pratilipiId="getPratilipiData.pratilipiId" 
+                                    :authorId="getPratilipiData.author.authorId" 
+                                    :haveInfiniteScroll="true"
+                                    :userPratilipiData='getUserPratilipiData'>
+                                </Reviews>
+                            </div>
+                            <div class="overlay-1" @click="closeReviewModal"></div>
                         </div>
                     </div>
                     <div class="book-recomendations col-md-12 p-0">
@@ -382,6 +395,17 @@ export default {
         cancelTags() {
             $(".edit-tags").hide();
             $(".tags").fadeIn();
+        },
+        openReviewModal() {
+            $(".review-popout").addClass("show");
+            $('.overlay-1').fadeIn();
+            $(".rating-popout").removeClass("show");
+            $("body").addClass("modal-open");
+        },
+        closeReviewModal() {
+            $(".review-popout").removeClass("show");
+            $('.overlay-1').fadeOut();
+            $("body").removeClass("modal-open");
         }
     },
     created() {
@@ -390,11 +414,21 @@ export default {
         this.selectedPratilipiType = this.getPratilipiData.type;
         this.selectedTags = this.getPratilipiData.tags;
         this.suggestedTags = this.getPratilipiData.suggestedTags;
+        document.title = this.getPratilipiData.title;
 
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
 
         if (this.getPratilipiData.language) {
             this.fetchSystemTags(this.getPratilipiData.language);
+        }
+    },
+    mounted() {
+        if (this.getPratilipiLoadingState === 'LOADING_SUCCESS') {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('LANDED_BOOKM_BOOK', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });    
         }
     },
     components: {
@@ -420,6 +454,15 @@ export default {
             this.selectedTags = this.getPratilipiData.tags;
             this.suggestedTags = this.getPratilipiData.suggestedTags;
             this.fetchSystemTags(this.getPratilipiData.language);
+            document.title = this.getPratilipiData.title;
+
+            if (this.getPratilipiLoadingState === 'LOADING_SUCCESS') {
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                this.triggerAnanlyticsEvent('LANDED_BOOKM_BOOK', 'CONTROL', {
+                    ...pratilipiAnalyticsData,
+                    'USER_ID': this.getUserDetails.userId
+                });    
+            }
         },
         'getUserDetails.userId'() {
             this.fetchPratilipiDetailsAndUserPratilipiData(this.$route.params.slug_id);
@@ -490,7 +533,7 @@ export default {
                     overflow: hidden;
                 }
             }
-            .show_more {
+            .show_more, .load_more {
                 color: #d0021b;
                 width: 100%;
                 background: none;
@@ -500,6 +543,9 @@ export default {
                 font-size: 14px;
                 margin: 0 0 10px;
                 cursor: pointer;
+            }
+            .load_more {
+                text-align: center;
             }
             button.edit {
                 background: none;
@@ -745,6 +791,48 @@ export default {
             margin: 4px 10px;
             clear: both;
             overflow: hidden;
+        }
+        .overlay-1 {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 8;
+            display: none;
+            top: 0;
+            left: 0;
+        }
+        .review-popout {
+            height: 500px;
+            width: 96%;
+            max-width: 700px;
+            position: fixed;
+            margin-bottom: 0;
+            margin-left: 0;
+            left: 20%;
+            bottom: -100vh;
+            overflow: hidden;
+            overflow-y: auto;
+            text-align: left;
+            background: #fff;
+            box-shadow: 0 -1px 2px rgba(0,0,0,0.5);
+            transition: all 0.5s;
+            z-index: 9;
+            @media screen and (max-width: 992px ) {
+                margin-bottom: 51px;
+                left: 7px;
+            }
+            .close-review {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                z-index: 9;
+                background: none;
+                border: 0;
+            }
+            &.show {
+                bottom: 0;
+            }
         }
     }
 </style>

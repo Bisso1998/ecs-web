@@ -15,7 +15,9 @@ import {
     setAnalyticsUserProperty,
     validateEmail,
     validatePassword,
-    validateUsername
+    validateUsername,
+    triggerAnanlyticsEvent,
+    getPratilipiAnalyticsData
 } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
@@ -42,6 +44,8 @@ export default {
         setAnalyticsUserProperty,
         validateEmail,
         validatePassword,
-        validateUsername
+        validateUsername,
+        triggerAnanlyticsEvent,
+        getPratilipiAnalyticsData
     }
 }

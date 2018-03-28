@@ -126,6 +126,7 @@
                                     :pratilipiId="getPratilipiData.pratilipiId" 
                                     :authorId="getPratilipiData.author.authorId" 
                                     :userPratilipiData='getUserPratilipiData'
+                                    :haveInfiniteScroll="true"
                                     v-if="selectedChapter == getIndexData.length">
                                 </Reviews>
                             </div>                                
@@ -215,6 +216,7 @@
                         <Reviews 
                             :pratilipiId="getPratilipiData.pratilipiId" 
                             :authorId="getPratilipiData.author.authorId" 
+                            :haveInfiniteScroll="true"
                             :userPratilipiData='getUserPratilipiData'>
                         </Reviews>
                     </div>
@@ -224,6 +226,7 @@
                         <Reviews 
                             :pratilipiId="getPratilipiData.pratilipiId" 
                             :authorId="getPratilipiData.author.authorId" 
+                            :haveInfiniteScroll="false"
                             :userPratilipiData='getUserPratilipiData'>
                         </Reviews>
                     </div>
