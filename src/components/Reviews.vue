@@ -1,6 +1,6 @@
 <template>
     <div class="comments-container">
-        <ul id="comments-list" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
+        <ul id="comments-list" @scroll="updateScroll" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
             <OwnReview :userPratilipiData="userPratilipiData" :authorId="authorId"></OwnReview>
             <li class="all-reviews" v-if="getReviewsData.length > 0">__("pratilipi_count_reviews")</li>
             <li class="no-results" v-if="getReviewsData.length === 0">__("pratilipi_no_reviews")</li>
@@ -17,7 +17,7 @@
                 :updateComment="updateComment"></Review>
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
-        <button v-if="getReviewsCursor !== null" @click="loadMoreReviews({ resultCount: 3, pratilipiId })" class="show-more">__("show_more")</button>
+        <!-- <button v-if="getReviewsCursor !== null" @click="loadMoreReviews({ resultCount: 3, pratilipiId })" class="show-more">__("show_more")</button> -->
     </div>
 </template>
 <script>
@@ -85,10 +85,20 @@ export default {
             } else {
                 this.likeOrDislikeComment(data);
             }
-        }
+        },
+        updateScroll(e) {
+            if (this.getReviewsCursor === null || this.getReviewsLoadingState === 'LOADING') {
+                return;
+            }
+            const nintyPercentOfList = ( 75 / 100 ) * e.target.scrollHeight;
+
+            if (e.target.scrollTop + e.target.offsetHeight > nintyPercentOfList) {
+                this.loadMoreReviews({ resultCount: 3, pratilipiId: this.pratilipiId })
+            }
+        },
     },
     created() {
-        this.fetchPratilipiReviews({ pratilipiId: this.pratilipiId, resultCount: 2 });
+        this.fetchPratilipiReviews({ pratilipiId: this.pratilipiId, resultCount: 4 });
     },
     components: {
         Spinner,
@@ -122,6 +132,9 @@ export default {
     margin-top: 10px;
     position: relative;
     padding-left: 5px;
+    overflow: hidden;
+    height: 475px;
+    overflow-y: auto;
     li.all-reviews, li.no-results {
         font-size: 12px;
         font-weight: bold;
