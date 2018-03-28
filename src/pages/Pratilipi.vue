@@ -803,7 +803,7 @@ export default {
             left: 0;
         }
         .review-popout {
-            height: 60vh;
+            height: 500px;
             width: 96%;
             max-width: 700px;
             position: fixed;
