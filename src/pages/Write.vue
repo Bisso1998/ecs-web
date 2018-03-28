@@ -183,6 +183,10 @@ export default {
         if (this.$route.query.type === 'STORY' && !this.isMobile()) {
             this.alertOrOpenWriteModal();
         }
+
+        this.triggerAnanlyticsEvent('LANDED_CREATEM_CREATE', 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId
+        });
     }
 }
 </script>

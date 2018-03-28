@@ -28,6 +28,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Constants from '@/constants';
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -39,15 +40,25 @@ export default {
         }
     },
     computed: {
-        
+        ...mapGetters([
+            'getUserDetails'
+        ])
     },
     methods: {
         
     },
+    mixins: [
+        mixins
+    ],
     created() {
         this.category_sections = Constants.CATEGORY_DATA.sections;
         console.log(Constants);
         console.log();
+    },
+    mounted() {
+        this.triggerAnanlyticsEvent('LANDED_DISCOVERM_DISCOVER', 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId
+        });
     },
     components: {
         MainLayout

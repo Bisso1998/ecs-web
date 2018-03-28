@@ -497,6 +497,15 @@ export default {
                 $('.reader-progress').removeClass('progress-up');
                 this.counter = 0;
             }
+        },
+        'getPratilipiLoadingState'(status) {
+            if (status === 'LOADING_SUCCESS') {
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                this.triggerAnanlyticsEvent('LANDED_READERM_READER', 'CONTROL', {
+                    ...pratilipiAnalyticsData,
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
         }
     },
     destroyed() {

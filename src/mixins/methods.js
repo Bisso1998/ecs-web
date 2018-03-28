@@ -166,7 +166,9 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             ...eventProperty,
             'DEVICE_TYPE': isMobile() ? 'MOBILE':'DESKTOP',
             'WEBSITE_TYPE': 'PHOENIX',
-            'EXPERIMENT_ID': experimentType
+            'EXPERIMENT_ID': experimentType,
+            'CONTENT_LANGUAGE': getCurrentLanguage().fullName.toUpperCase(),
+            'SCREEN_LOCATION': eventProps.SCREEN_NAME + '_' + eventProps.LOCATION
         }
         console.log(eventName, eventProperty, eventProps);
         amplitude.getInstance().logEvent(eventName, eventProperty);

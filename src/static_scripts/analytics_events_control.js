@@ -1732,5 +1732,15 @@ export default {
         "SCREEN_NAME": "WRITER",
         "LOCATION": "WRITERM",
         "ACTION": "STARTWRITING"
+    },
+    "LANDED_CREATEM_CREATE": {
+        "SCREEN_NAME": "CREATE",
+        "LOCATION": "CREATEM",
+        "ACTION": "LANDED"
+    },
+    "LANDED_DISCOVERM_DISCOVER": {
+        "SCREEN_NAME": "DISCOVER",
+        "LOCATION": "DISCOVERM",
+        "ACTION": "LANDED"
     }
 };

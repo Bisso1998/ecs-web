@@ -208,7 +208,6 @@ export default {
             $("#" + tab_id).show();
         },
         goToPublishedContentsTab() {
-            console.log($('#menu-published'))
             $(".profile-menu a").removeClass("active");
             $('#menu-published').addClass("active");
             $(".bottom-contents .list").hide();
@@ -266,7 +265,10 @@ export default {
                     resultCount: 20
                 });
 
-                this.fetchInitialLibraryList(10);
+                if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
+                    this.fetchInitialLibraryList(10);
+                }
+                
             }
         },
         '$route.params.user_slug' (user_slug) {
@@ -307,10 +309,23 @@ export default {
             if (state === 'LOADING_SUCCESS') {
                 if (decodeURI(this.$route.path) !== this.getUserDetails.profilePageUrl) {
                     setTimeout(() => {
-                        console.log($('#published'));
                         this.goToPublishedContentsTab();    
                     }, 0);
                     
+                }
+
+                if (decodeURI(this.$route.path) !== this.getUserDetails.profilePageUrl) {
+                    this.triggerAnanlyticsEvent('LANDED_USERM_USER', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId,
+                        'PARENT_ID': this.getAuthorData.user.userId,
+                        'AUTHOR_ID': this.getAuthorData.authorId
+                    });
+                }
+
+                if (decodeURI(this.$route.path) === this.getUserDetails.profilePageUrl) {
+                    this.triggerAnanlyticsEvent('LANDED_MYPROFILEM_MYPROFILE', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
                 }
             }
         }
@@ -327,10 +342,7 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
-        console.log(this.getUserDetails.profilePageUrl)
-        console.log(decodeURI(this.$route.path))
         if (decodeURI(this.$route.path) !== this.getUserDetails.profilePageUrl && this.getUserDetails.profilePageUrl !== undefined) {
-            console.log('here 2');
             this.goToPublishedContentsTab();
         }
     },

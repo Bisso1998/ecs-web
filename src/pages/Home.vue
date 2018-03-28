@@ -44,7 +44,11 @@ export default {
             'getHomePageLoadingState',
             'getHomePageBanners',
             'getHomePageBannersLoadingState'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
+
     },
     methods: {
         ...mapActions('homepage', [
@@ -62,14 +66,14 @@ export default {
         ServerError
     },
     created() {
-        const currentLocale = process.env.LANGUAGE;
-        constants.LANGUAGES.forEach((eachLanguage) => {
-            if (eachLanguage.shortName === currentLocale) {
-                this.fetchBanners(eachLanguage.fullName.toUpperCase());
-                this.getListOfSections(eachLanguage.fullName.toUpperCase());
-            }
-        });
+        this.fetchBanners(this.getCurrentLanguage().fullName.toUpperCase());
+        this.getListOfSections(this.getCurrentLanguage().fullName.toUpperCase());
         
+    },
+    mounted() {
+        this.triggerAnanlyticsEvent('LANDED_HOMEM_HOME', 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId
+        });
     }
 }
 </script>

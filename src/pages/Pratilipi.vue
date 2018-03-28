@@ -422,15 +422,6 @@ export default {
             this.fetchSystemTags(this.getPratilipiData.language);
         }
     },
-    mounted() {
-        if (this.getPratilipiLoadingState === 'LOADING_SUCCESS') {
-            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-            this.triggerAnanlyticsEvent('LANDED_BOOKM_BOOK', 'CONTROL', {
-                ...pratilipiAnalyticsData,
-                'USER_ID': this.getUserDetails.userId
-            });    
-        }
-    },
     components: {
         MainLayout,
         Recommendation,
@@ -455,13 +446,14 @@ export default {
             this.suggestedTags = this.getPratilipiData.suggestedTags;
             this.fetchSystemTags(this.getPratilipiData.language);
             document.title = this.getPratilipiData.title;
-
-            if (this.getPratilipiLoadingState === 'LOADING_SUCCESS') {
+        },
+        'getPratilipiLoadingState'(status) {
+            if (status === 'LOADING_SUCCESS') {
                 const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
                 this.triggerAnanlyticsEvent('LANDED_BOOKM_BOOK', 'CONTROL', {
                     ...pratilipiAnalyticsData,
                     'USER_ID': this.getUserDetails.userId
-                });    
+                });
             }
         },
         'getUserDetails.userId'() {
