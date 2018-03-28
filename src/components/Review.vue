@@ -93,7 +93,7 @@
                                 <textarea class="form-control" :value='newComment' @input="newComment = $event.target.value" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
                             </div>
                             <button type="button" class="btn btn-primary" @click="() => {createComment({ userPratilipiId: eachReview.userPratilipiId, content: newComment }); newComment = ''; }">__("save")</button>
-                            <button type="button" class="btn btn-light" @click="cancelReview">__("cancel")</button>
+                            <button type="button" class="btn btn-light" @click="closeReply">__("cancel")</button>
                         </form>
                     </div>
                 </div>
@@ -158,11 +158,15 @@ export default {
         cancelReview(e) {
             $(".review-box").fadeOut();
         },
+        closeReply() {
+            $(this.$el).find(".add-reply").hide();
+        },
         cancelCommentInput(commentId) {
             $(this.$el).find(".comment-content.editable." + commentId).toggle();
         },
         toggleComments(data) {
             $(this.$el).find(".reply-list").toggle();
+            $(this.$el).find(".add-reply").show();
             this.loadCommentsOfReview(data);
         },
         editComment(commentId) {
