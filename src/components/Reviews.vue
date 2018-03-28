@@ -108,7 +108,6 @@ export default {
                 return;
             }
             const nintyPercentOfList = ( 75 / 100 ) * e.target.scrollHeight;
-            console.log(nintyPercentOfList);
 
             if (e.target.scrollTop + e.target.offsetHeight > nintyPercentOfList) {
                 this.loadMoreReviews({ resultCount: 3, pratilipiId: this.pratilipiId })
@@ -178,5 +177,8 @@ export default {
     &:focus {
         outline: none;
     }
+}
+.book-bottom-ratings .y-scrolling {
+    height: auto;
 }
 </style>

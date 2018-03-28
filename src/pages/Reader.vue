@@ -94,15 +94,15 @@
             <div class="book-content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12" v-if="getPratilipiContent.length > 0 && getPratilipiData.pratilipiId == $route.query.id">
+                        <div class="col-12 p-0" v-if="getPratilipiContent.length > 0 && getPratilipiData.pratilipiId == $route.query.id">
                             <h2
-                                class="chapter-title"
+                                class="chapter-title p-lr-15"
                                 v-for="eachIndex in getIndexData" 
                                 :key="eachIndex.chapterId"
                                 v-if="eachIndex.chapterNo === selectedChapter">
                                     {{ eachIndex.title || eachIndex.chapterNo }}
                             </h2>
-                            <div class="content-section lh-md" 
+                            <div class="content-section lh-md p-lr-15" 
                                 :class="fontStyleObject" 
                                 v-for="eachChapter in getPratilipiContent"
                                 v-if="eachChapter.chapterNo === selectedChapter" 
@@ -110,7 +110,7 @@
                                 v-html="eachChapter.content">
                             </div>
                             <Spinner v-if="getPratilipiContentLoadingState !== 'LOADING_SUCCESS'"></Spinner>
-                            <div class="book-navigation" v-if="getPratilipiContentLoadingState === 'LOADING_SUCCESS'">
+                            <div class="book-navigation p-lr-15" v-if="getPratilipiContentLoadingState === 'LOADING_SUCCESS'">
                                 <div class="prev" v-if="selectedChapter !== 1" @click="goToPreviousChapter">__("reader_prev_chapter")</div>
                                 <div class="next" v-if="selectedChapter !== getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
@@ -121,7 +121,7 @@
                                 :type="'PRATILIPI'">
                             </ShareStrip>
 
-                            <div class="book-bottom-ratings">
+                            <div class="book-bottom-ratings p-lr-15">
                                 <Reviews 
                                     :pratilipiId="getPratilipiData.pratilipiId" 
                                     :authorId="getPratilipiData.author.authorId" 
@@ -129,16 +129,14 @@
                                     :haveInfiniteScroll="true"
                                     v-if="selectedChapter == getIndexData.length">
                                 </Reviews>
-                            </div>                                
+                            </div>
 
-                            <div class="book-recomendations" v-if="selectedChapter == getIndexData.length">
-                                <div class="card">
-                                    <Recommendation
-                                        :contextId="getPratilipiData.pratilipiId"
-                                        :context="'summaryPage'"
-                                        v-if="getPratilipiData && getPratilipiData.pratilipiId">
-                                    </Recommendation>
-                                </div>
+                            <div class="book-recomendations p-r-10" v-if="selectedChapter == getIndexData.length">
+                                <Recommendation
+                                    :contextId="getPratilipiData.pratilipiId"
+                                    :context="'summaryPage'"
+                                    v-if="getPratilipiData && getPratilipiData.pratilipiId">
+                                </Recommendation>
                             </div>
                             
                         </div>
@@ -636,6 +634,12 @@ export default {
         .content-section {
             min-height: 400px;
         }
+        .p-lr-15 {
+            padding: 0 15px;
+        }
+        .p-r-10 {
+            padding: 0 10px 0 0;
+        }
         h2.chapter-title {
             font-size: 24px;
             text-align: center;
@@ -693,11 +697,18 @@ export default {
             user-select: none;
         }
         .add-to-lib {
+            i {
+                font-size: 25px;
+                max-width: 25px;
+            }
             span {
                 position: relative;
+                max-width: 25px;
+                display: block;
+                margin: 0 auto;
                 .stacked {
                     position: absolute;
-                    top: 3px;
+                    top: 5px;
                     left: 0;
                     margin-left: 7px;
                     font-size: 11px;
@@ -774,9 +785,6 @@ export default {
                     margin: 0 10px;
                     font-size: 14px;
                     vertical-align: middle;
-                    @media screen and (max-width: 992px ) {
-                        max-width: 110px;
-                    }
                 }
                 &:hover {
                     text-decoration: none;
@@ -998,7 +1006,7 @@ export default {
             top: 5px;
             right: 5px;
             z-index: 9;
-            background: none;
+            background: #fff;
             border: 0;
         }
         &.show {
