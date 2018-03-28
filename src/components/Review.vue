@@ -179,6 +179,7 @@ export default {
         replyToComment(eachComment) {
             console.log(eachComment);
             this.newComment = `@${eachComment.user.displayName} `;
+            $(this.$el).find(".add-reply").show();
             $(this.$el).find(".add-reply .comment-content textarea").focus();
         },
         checkUserAndlikeOrDislikeReview(data) {
