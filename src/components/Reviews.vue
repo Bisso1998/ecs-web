@@ -1,6 +1,6 @@
 <template>
     <div class="comments-container">
-        <ul id="comments-list" @scroll="updateScroll" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
+        <ul id="comments-list" @scroll="updateScroll" :class="{'y-scrolling': haveInfiniteScroll }" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
             <OwnReview :userPratilipiData="userPratilipiData" :authorId="authorId"></OwnReview>
             <li class="all-reviews" v-if="getReviewsData.length > 0">__("pratilipi_count_reviews")</li>
             <li class="no-results" v-if="getReviewsData.length === 0">__("pratilipi_no_reviews")</li>
@@ -39,6 +39,10 @@ export default {
         },
         userPratilipiData: {
             type: Object
+        },
+        haveInfiniteScroll: {
+            type: Boolean,
+            required: true
         }
     },
     mixins: [
@@ -98,7 +102,7 @@ export default {
         },
     },
     created() {
-        this.fetchPratilipiReviews({ pratilipiId: this.pratilipiId, resultCount: 4 });
+        this.fetchPratilipiReviews({ pratilipiId: this.pratilipiId, resultCount: this.haveInfiniteScroll ? 4 : 2 });
     },
     components: {
         Spinner,
@@ -132,9 +136,6 @@ export default {
     margin-top: 10px;
     position: relative;
     padding-left: 5px;
-    overflow: hidden;
-    height: 475px;
-    overflow-y: auto;
     li.all-reviews, li.no-results {
         font-size: 12px;
         font-weight: bold;
@@ -146,6 +147,11 @@ export default {
         text-align: center;
         font-size: 13px;
     }
+}
+.y-scrolling {
+    overflow: hidden;
+    height: 475px;
+    overflow-y: auto;
 }
 .show-more {
     text-align: center;
