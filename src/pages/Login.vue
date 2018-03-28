@@ -97,6 +97,10 @@ export default {
             $(".signup").addClass("active");
             $(".forms").hide();
             $("#" + tab_id).show();
+
+            this.triggerAnanlyticsEvent('LANDED_REGISTERM_REGISTER', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         },
         tabsignin(event) {
             event.preventDefault();        
@@ -105,6 +109,10 @@ export default {
             $(".signin").addClass("active");
             $(".forms").hide();
             $("#" + tab_id).show();
+
+            this.triggerAnanlyticsEvent('LANDED_LOGINM_LOGIN', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         }
     },
     created() {
@@ -117,6 +125,10 @@ export default {
             this.openForgotPasswordModal();
         }
         
+        this.triggerAnanlyticsEvent('LANDED_REGISTERM_REGISTER', 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId
+        });
+
         // Hide Footer when keyboard comes
         if (this.isMobile()) {
             $(document).on('focus', 'input', function() {
