@@ -827,7 +827,7 @@ export default {
                 top: 5px;
                 right: 5px;
                 z-index: 9;
-                background: none;
+                background: #fff;
                 border: 0;
             }
             &.show {

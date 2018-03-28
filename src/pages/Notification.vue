@@ -36,6 +36,7 @@
                                 </router-link>
                             </li>
                         </ul>
+                        <p class="message" v-if="getNotificationLoadingState === 'LOADING_SUCCESS' && getNotifications.length == 0">__("notifications_no_notifications")</p>
                     </div>
                 </div>
             </div>
@@ -133,6 +134,11 @@ export default {
                 vertical-align: middle;
             }
         }
+    }
+    p.message {
+        margin: 15px 15px 15px 0;
+        font-size: 14px;
+        color: #555;
     }
     .card {
         border-radius: 0;
