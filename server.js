@@ -92,7 +92,7 @@ var Language = defineEnum({
 var Website = defineEnum({
 
     ALL_LANGUAGE:   { hostName: "www.pratilipi.com",        mobileHostName: "m.pratilipi.com", displayLanguage: Language.ENGLISH,       filterLanguage: null },
-    HINDI:          { hostName: "hindi.pratilipi.com",      mobileHostName: "hi.pratilipi.com", displayLanguage: Language.HINDI,        filterLanguage: Language.HINDI },
+    HINDI:          { hostName: "hindi-mum.pratilipi.com",      mobileHostName: "hi.pratilipi.com", displayLanguage: Language.HINDI,        filterLanguage: Language.HINDI },
     GUJARATI:       { hostName: "gujarati.pratilipi.com",   mobileHostName: "gu.pratilipi.com", displayLanguage: Language.GUJARATI,    filterLanguage: Language.GUJARATI },
     TAMIL:          { hostName: "tamil.pratilipi.com",      mobileHostName: "ta.pratilipi.com", displayLanguage: Language.TAMIL,        filterLanguage: Language.TAMIL },
     MARATHI:            { hostName: "marathi.pratilipi.com",    mobileHostName: "mr.pratilipi.com", displayLanguage: Language.MARATHI,      filterLanguage: Language.MARATHI },
