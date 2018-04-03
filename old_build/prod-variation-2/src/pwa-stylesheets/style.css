@@ -50,6 +50,9 @@
   background-image: url(../../pwa-images/notifications-empty.svg);
   background-repeat: no-repeat; }
 
+body.bg-white {
+  background: white !important; }
+
 .parent-container {
   padding: 0px;
   min-width: 300px;
@@ -7358,6 +7361,239 @@ nav.pratilipi-navigation-drawer {
     margin-left: 4px;
     margin-right: 4px; }
 
+.pratilipi-login-component {
+  -webkit-display: flex;
+  -khtml-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -khtml-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  -khtml-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  box-sizing: border-box; }
+  .pratilipi-login-component input.login-input {
+    margin: 4px 0;
+    outline: 0;
+    padding: 10px 8px;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+    background: #f3f3f3;
+    color: #333333;
+    border: 1px solid #ededed;
+    border-radius: 1px; }
+  .pratilipi-login-component button.login-button {
+    -webkit-display: flex;
+    -khtml-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -khtml-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-shrink: 0;
+    -khtml-flex-shrink: 0;
+    -moz-flex-shrink: 0;
+    -ms-flex-shrink: 0;
+    -o-flex-shrink: 0;
+    flex-shrink: 0;
+    margin: 4px 0;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: left;
+    box-sizing: border-box;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 10px 8px;
+    border-radius: 1px;
+    text-transform: none; }
+  .pratilipi-login-component span.pratilipi-logo-icon {
+    -webkit-zoom: 1.2;
+    -khtml-zoom: 1.2;
+    -moz-zoom: 1.2;
+    -ms-zoom: 1.2;
+    -o-zoom: 1.2;
+    zoom: 1.2; }
+  .pratilipi-login-component div.pre-login-screen, .pratilipi-login-component div.login-screen, .pratilipi-login-component div.register-screen, .pratilipi-login-component div.reset-password-screen {
+    -webkit-display: none;
+    -khtml-display: none;
+    -moz-display: none;
+    -ms-display: none;
+    -o-display: none;
+    display: none;
+    -webkit-flex-direction: column;
+    -khtml-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    -khtml-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    -webkit-flex-shrink: 0;
+    -khtml-flex-shrink: 0;
+    -moz-flex-shrink: 0;
+    -ms-flex-shrink: 0;
+    -o-flex-shrink: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: inherit;
+    height: inherit;
+    padding: 20px 0;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none; }
+    .pratilipi-login-component div.pre-login-screen *, .pratilipi-login-component div.login-screen *, .pratilipi-login-component div.register-screen *, .pratilipi-login-component div.reset-password-screen * {
+      -webkit-flex-shrink: 0;
+      -khtml-flex-shrink: 0;
+      -moz-flex-shrink: 0;
+      -ms-flex-shrink: 0;
+      -o-flex-shrink: 0;
+      flex-shrink: 0; }
+  .pratilipi-login-component div.pre-login-screen::-webkit-scrollbar,
+  .pratilipi-login-component div.login-screen::-webkit-scrollbar,
+  .pratilipi-login-component div.register-screen::-webkit-scrollbar,
+  .pratilipi-login-component div.reset-password-screen::-webkit-scrollbar {
+    display: none; }
+  .pratilipi-login-component div.pre-login-screen.is-active, .pratilipi-login-component div.login-screen.is-active, .pratilipi-login-component div.register-screen.is-active, .pratilipi-login-component div.reset-password-screen.is-active {
+    -webkit-display: flex;
+    -khtml-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex; }
+  .pratilipi-login-component div.login-screen.is-active, .pratilipi-login-component div.register-screen.is-active {
+    -webkit-animation: fade-show-hide 250ms ease-in-out both;
+    animation: fade-show-hide 250ms ease-in-out both; }
+  .pratilipi-login-component div.screen-heading-text {
+    margin: 12px 0; }
+  .pratilipi-login-component form {
+    -webkit-display: flex;
+    -khtml-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -khtml-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+    width: 100%; }
+    .pratilipi-login-component form button[type="submit"] {
+      background: #d0021b;
+      color: #FFFFFF; }
+  .pratilipi-login-component span.error-message {
+    color: red; }
+  .pratilipi-login-component div.form-container {
+    -webkit-display: flex;
+    -khtml-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -khtml-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+    width: 260px; }
+  .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login, .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login {
+    border: 1px solid #ededed; }
+    .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login span, .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login span {
+      -webkit-display: flex;
+      -khtml-display: flex;
+      -moz-display: flex;
+      -ms-display: flex;
+      -o-display: flex;
+      display: flex; }
+    .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login span.sprites-icon, .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login span.sprites-icon {
+      margin-right: 8px; }
+    .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login span.social-login-title, .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login span.social-login-title {
+      flex-grow: 1;
+      justify-content: center; }
+  .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login {
+    background-color: #3b5998 !important;
+    color: #FFFFFF; }
+  .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login {
+    background-color: #FFFFFF !important;
+    color: #000000; }
+  .pratilipi-login-component div.pre-login-screen p.login-or {
+    margin: 12px 0; }
+  .pratilipi-login-component div.pre-login-screen div.email-login-container form button[type="submit"] span.button-text {
+    flex-grow: 1;
+    justify-content: flex-start; }
+  .pratilipi-login-component div.pre-login-screen div.email-login-container form span.error-message {
+    padding-left: 12px; }
+  .pratilipi-login-component div.login-screen form button[type="submit"] span.button-text {
+    flex-grow: 1;
+    justify-content: center;
+    text-align: center; }
+  .pratilipi-login-component div.login-screen form span.error-message {
+    text-align: center;
+    margin: 4px 0 12px 0; }
+  .pratilipi-login-component div.login-screen button.forgot-password-button {
+    outline: none;
+    border: none;
+    color: #333333;
+    cursor: pointer;
+    background: inherit; }
+  .pratilipi-login-component div.register-screen div.screen-description-text {
+    padding: 0 20px 16px 20px;
+    text-align: center;
+    color: red; }
+  .pratilipi-login-component div.register-screen form button[type="submit"] span.button-text {
+    flex-grow: 1;
+    justify-content: center;
+    text-align: center; }
+  .pratilipi-login-component div.register-screen form span.error-message {
+    padding-left: 12px; }
+  .pratilipi-login-component div.register-screen form label.terms-conditions {
+    margin: 12px 0;
+    color: #333333; }
+    .pratilipi-login-component div.register-screen form label.terms-conditions span.label-text > a {
+      color: inherit;
+      text-decoration: underline; }
+  .pratilipi-login-component div.reset-password-screen form button[type="submit"] span.button-text {
+    flex-grow: 1;
+    justify-content: center;
+    text-align: center; }
+  .pratilipi-login-component div.reset-password-screen form span.error-message {
+    padding-left: 12px; }
+
+@-webkit-keyframes fade-show-hide {
+  0%, 100% {
+    -webkit-transform: scale(0); }
+  50% {
+    -webkit-transform: scale(1); } }
+@keyframes fade-show-hide {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
 .pratilipi-login-container {
   text-align: center;
   margin: auto;
@@ -7417,6 +7653,34 @@ nav.pratilipi-navigation-drawer {
     white-space: nowrap; }
 .pratilipi-login-container .member-login {
   margin: 12px 0; }
+
+.pratilipi-login-page-v2 {
+  -webkit-display: flex;
+  -khtml-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -khtml-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  -o-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  -khtml-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -khtml-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh; }
 
 .pratilipi-pratilipi-card {
   min-height: auto;
@@ -7613,7 +7877,8 @@ nav.pratilipi-navigation-drawer {
         font-size: 12px; }
       .section-list .section-container .section-header .partnership-container .image-holder img.partner-image {
         height: 48px;
-        max-height: 48px; }
+        max-height: 48px;
+        background: #ffffff; }
         @media only screen and (max-width: 768px) {
           .section-list .section-container .section-header .partnership-container .image-holder img.partner-image {
             height: 40px;
