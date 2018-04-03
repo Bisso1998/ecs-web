@@ -272,4 +272,4 @@ process.on( 'uncaughtException', function( err ) {
     console.log( 'Error: ',  err );
 });
 
-app.listen( PORT );
+app.listen( PORT, () => console.log('Server Started Successfully!') );
