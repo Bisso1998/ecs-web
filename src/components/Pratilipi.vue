@@ -23,7 +23,8 @@
             <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" :title="pratilipiData.title">
                 <div class="pratilipi-details">
                     <span class="title">{{ pratilipiData.title }}</span>
-                    <span  v-if="!hideAuthorName" class="author">{{ pratilipiData.author.name }}</span>
+                    <span v-if="!hideAuthorName" class="author">{{ pratilipiData.author.name }}</span>
+                    <p v-if="pratilipiData.cardSummary" class="summary">{{ pratilipiData.cardSummary }}</p>
                 </div>
                 <div class="stats">
                     <div class="rating">
@@ -292,13 +293,22 @@ export default {
                 }
                 &.author {
                     font-size: 13px;
+                    color: #555555;
                 }
+            }
+            .summary {
+                color: #212121;
+                font-size: 12px;
+                height: 72px;
+                overflow: hidden;
+                margin: 5px 0 10px;
             }
         }
         .stats {
             border-top: 1px solid #e9e9e9;
             margin-top: 5px;
             overflow: hidden;
+            text-align: center;
             .rating, .read-count, .read-time {
                 float: left;
                 width: 32%;

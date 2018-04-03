@@ -10,6 +10,7 @@
 	                :pratilipiData="eachPratilipi"
                     :addToLibrary="addToLibrary"
                     :removeFromLibrary="removeFromLibrary"
+                    :redirectToReader="redirectToReader"
                     ></PratilipiComponent>
 					<router-link :to="listPageUrl" v-if="listPageUrl" class="view_more">
 						<div class="view_more_card">
@@ -46,6 +47,9 @@ export default {
         }, 
         removeFromLibrary: {
             type: Function
+        },
+        redirectToReader: {
+            type: Boolean
         }
     },
     data() {
@@ -221,6 +225,11 @@ export default {
 	.forward {
 		right: -15px;
 	}
+    .recommendation .section {
+        .back, .forward {
+            top: 33%;
+        }
+    }
 </style>
 <style lang="scss">
     @import '../../node_modules/slick-carousel/slick/slick.css';

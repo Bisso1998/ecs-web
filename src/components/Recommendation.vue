@@ -5,6 +5,7 @@
             :title="getRecommendationTitle"
             v-bind="{ addToLibrary, removeFromLibrary }"
             v-if="getRecommendationLoadingState === 'LOADING_SUCCESS'"
+            :redirectToReader="true"
         ></PratilipiListComponent>
     </div>
 </template>
