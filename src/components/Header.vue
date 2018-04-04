@@ -276,10 +276,10 @@ export default {
                 }
                 &:focus-within {
                     @media screen and (max-width: 450px ) {
-                        width: calc(100vw - 110px);
+                        width: calc(100vw - 109px);
                     }
                     @media screen and (max-width: 370px ) {
-                        width: calc(100vw - 99px);
+                        width: calc(100vw - 98px);
                     }
                 }
             }
