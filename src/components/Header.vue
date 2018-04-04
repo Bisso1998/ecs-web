@@ -261,14 +261,26 @@ export default {
             margin-left: auto;
             text-align: right;
             .form-group {
-                position: relative;
+                position: absolute;
+                right: 50px;
                 width: 81%;
+                -webkit-transition: .4s ease;
+                -o-transition: .4s ease;
+                transition: .4s ease;
                 display: inline-block;
                 @media screen and (max-width: 410px ) {
                     width: 70%;
                 }
                 i {
                     top: 5px;
+                }
+                &:focus-within {
+                    @media screen and (max-width: 450px ) {
+                        width: calc(100vw - 110px);
+                    }
+                    @media screen and (max-width: 370px ) {
+                        width: calc(100vw - 99px);
+                    }
                 }
             }
         }
