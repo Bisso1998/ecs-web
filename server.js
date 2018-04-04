@@ -179,15 +179,22 @@ app.get( '/health', (req, res, next) => {
     res.send( Date.now() + "" );
 });
 
-app.get('/kibana/*', (req, res, next) =>  {
+app.use('/kibana*', (req, res, next) =>  {
     const method = req.method;
     const path = req.path;
     request({
         uri: 'http://ec2-13-127-245-136.ap-south-1.compute.amazonaws.com:5601/' + path,
         method: method
-    }, (error, response, data) => {
-        res.send(data);
-    });
+    }).pipe(res);
+});
+
+app.use('/app/kibana*', (req, res, next) =>  {
+    const method = req.method;
+    const path = req.path;
+    request({
+        uri: 'http://ec2-13-127-245-136.ap-south-1.compute.amazonaws.com:5601/' + path,
+        method: method
+    }).pipe(res);
 });
 
 
