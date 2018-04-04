@@ -179,31 +179,6 @@ app.get( '/health', (req, res, next) => {
     res.send( Date.now() + "" );
 });
 
-app.use((req, res, next) => {
-    console.log(req.path);
-    next();
-});
-// app.use('/kibana*', (req, res, next) =>  {
-//     console.log('redirecting to base route');
-//     const method = req.method;
-//     const path = req.path;
-//     request({
-//         uri: 'http://ec2-13-127-245-136.ap-south-1.compute.amazonaws.com:5601' + path,
-//         method: method
-//     }).pipe(res);
-// });
-
-app.use('/app/kibana*', (req, res, next) =>  {
-    console.log('redirecting to app route');
-    const method = req.method;
-    const path = req.path;
-    request({
-        uri: 'http://ec2-13-127-245-136.ap-south-1.compute.amazonaws.com:5601' + path,
-        method: method
-    }).pipe(res);
-});
-
-
 // Serving PWA files
 // Serving PWA files
 app.get( '/*', (req, res, next) => {
