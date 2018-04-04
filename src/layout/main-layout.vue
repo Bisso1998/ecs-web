@@ -70,3 +70,10 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+.modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+</style>

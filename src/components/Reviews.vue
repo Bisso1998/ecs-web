@@ -175,7 +175,7 @@ export default {
 }
 .y-scrolling {
     overflow: hidden;
-    height: 475px;
+    height: calc(60vh - 30px);
     overflow-y: auto;
 }
 .show-more {
