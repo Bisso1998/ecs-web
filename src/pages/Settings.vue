@@ -162,6 +162,9 @@
                     </div>
                 </div>
             </div>
+            <div class="spinner-overlay" v-if="getAuthorLoadingState === 'LOADING' || getAuthorUpdateState === 'LOADING'">
+                <Spinner></Spinner> 
+            </div>
         </div>
     </MainLayout>
 </template>
@@ -169,6 +172,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import TranslatingInput from '@/components/TranslatingInput.vue';
+import Spinner from '@/components/Spinner.vue';
 import constants from '@/constants';
 import mixins from '@/mixins';
 import { mapGetters, mapActions, mapState } from 'vuex'
@@ -176,7 +180,8 @@ import { mapGetters, mapActions, mapState } from 'vuex'
 export default {
     components: {
         MainLayout,
-        TranslatingInput
+        TranslatingInput,
+        Spinner
     },
     data() {
         return {
@@ -190,7 +195,9 @@ export default {
     ],
     computed: {
         ...mapGetters('settingspage', [
-            'getAuthorData'
+            'getAuthorData',
+            'getAuthorLoadingState',
+            'getAuthorUpdateState'
         ]),
         ...mapState({
             email: state => state.user.data.email,
@@ -382,6 +389,17 @@ export default {
                 box-shadow: none;
             }
         }
+    }
+}
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    background: rgba(255,255,255,0.8);
+    width: 100%;
+    height: 100%;
+    .spinner {
+        top: 40%;
+        position: absolute;
     }
 }
 </style>

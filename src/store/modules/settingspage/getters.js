@@ -19,6 +19,6 @@ export default {
     // }
     
     getAuthorData: state => state.author.data,
-    getAuthorLoadingStatus: state => state.author.loading_state,
-
+    getAuthorLoadingState: state => state.author.loading_state,
+    getAuthorUpdateState: state => state.author.author_update_state,
 }

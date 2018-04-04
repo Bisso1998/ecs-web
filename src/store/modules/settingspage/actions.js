@@ -29,6 +29,10 @@ export default {
         console.log(authorData);
         DataAccessor.createOrUpdateAuthor(authorData, (response) => {
             commit('setUpdateAuthorLoadingSuccess', response);
+            commit('alert/triggerAlertView', '__('updated_author_info_success')', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
         }, () => {
             commit('setUpdateAuthorLoadingError');
         });
