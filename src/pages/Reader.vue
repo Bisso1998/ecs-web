@@ -99,20 +99,20 @@
                                 class="chapter-title p-lr-15"
                                 v-for="eachIndex in getIndexData" 
                                 :key="eachIndex.chapterId"
-                                v-if="eachIndex.chapterNo === selectedChapter">
+                                v-if="eachIndex.chapterNo == selectedChapter">
                                     {{ eachIndex.title || eachIndex.chapterNo }}
                             </h2>
                             <div class="content-section lh-md p-lr-15" 
                                 :class="fontStyleObject" 
                                 v-for="eachChapter in getPratilipiContent"
-                                v-if="eachChapter.chapterNo === selectedChapter" 
+                                v-if="eachChapter.chapterNo == selectedChapter" 
                                 :key="eachChapter.chapterNo"
                                 v-html="eachChapter.content">
                             </div>
                             <Spinner v-if="getPratilipiContentLoadingState !== 'LOADING_SUCCESS'"></Spinner>
                             <div class="book-navigation p-lr-15" v-if="getPratilipiContentLoadingState === 'LOADING_SUCCESS'">
-                                <div class="prev" v-if="selectedChapter !== 1" @click="goToPreviousChapter">__("reader_prev_chapter")</div>
-                                <div class="next" v-if="selectedChapter !== getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
+                                <div class="prev" v-if="selectedChapter != 1" @click="goToPreviousChapter">__("reader_prev_chapter")</div>
+                                <div class="next" v-if="selectedChapter != getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
                             
                             <ShareStrip
@@ -466,6 +466,7 @@ export default {
         },
         '$route.query.chapterNo'(newValue) {
             if (!newValue) {
+                this.selectedChapter = 1;
                 return;
             }
             if (this.getPratilipiData.contentType === 'PRATILIPI') {
