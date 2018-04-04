@@ -3,6 +3,7 @@
 const express = require( 'express' );
 const compression = require( 'compression' );
 const morgan = require('morgan');
+const request = require('request');
 const parse = require('url-parse');
 
 var fs = require( 'fs' );
@@ -176,6 +177,17 @@ app.use( morgan('short') );
 // Health
 app.get( '/health', (req, res, next) => {
     res.send( Date.now() + "" );
+});
+
+app.get('/kibana/*', (req, res, next) =>  {
+    const method = req.method;
+    const path = req.path;
+    request({
+        uri: 'http://ec2-13-127-245-136.ap-south-1.compute.amazonaws.com:5601/' + path,
+        method: method
+    }, (error, response, data) => {
+        res.send(data);
+    });
 });
 
 
