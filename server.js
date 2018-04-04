@@ -179,6 +179,10 @@ app.get( '/health', (req, res, next) => {
     res.send( Date.now() + "" );
 });
 
+app.use((req, res, next) => {
+    console.log(req.path);
+    next();
+});
 app.use('/kibana*', (req, res, next) =>  {
     const method = req.method;
     const path = req.path;
