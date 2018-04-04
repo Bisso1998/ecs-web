@@ -1,6 +1,7 @@
 <template>
     <div class="server_error">
-        <span>__("server_error_message")</span>
+        <span v-if="message">{{ message }}</span>
+        <span v-else>__("server_error_message")</span>
         <button @click="reloadWithDefinedAction" type="button" name="button"><i class="material-icons">refresh</i></button>
     </div>  
 </template>
@@ -16,6 +17,9 @@ export default {
         },
         data: {
             required: false
+        },
+        message: {
+            type: String
         }
     },
     methods: {
@@ -37,6 +41,7 @@ export default {
     background: #f9f9f9;
     font-size: 14px;
     font-style: italic;
+    text-align: center;
     span {
         display: block;
     }

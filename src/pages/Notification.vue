@@ -37,6 +37,9 @@
                             </li>
                         </ul>
                         <p class="message" v-if="getNotificationLoadingState === 'LOADING_SUCCESS' && getNotifications.length == 0">__("notifications_no_notifications")</p>
+                        <p class="message" v-if="getNotificationLoadingState === 'LOADING_ERROR'">
+                            <ServerError :action="'fetchInitialNotifications'" :data="{language: getCurrentLanguage().fullName.toUpperCase(), resultCount: 20}" :message="'__('notifications_load_failed')'"></ServerError>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -46,8 +49,10 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import ServerError from '@/components/ServerError.vue';
 import { mapGetters, mapActions } from 'vuex';
 import constants from '@/constants';
+import mixins from '@/mixins';
 
 export default {
     name: 'Pratilipi',
@@ -57,6 +62,9 @@ export default {
             scrollPosition: null
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters([
             'getNotifications',
@@ -104,7 +112,8 @@ export default {
         window.removeEventListener('scroll', this.updateScroll);
     },
     components: {
-        MainLayout
+        MainLayout,
+        ServerError
     }
 }
 </script>
