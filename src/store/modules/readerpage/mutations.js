@@ -110,6 +110,7 @@ export default {
             }
             state.content.data.push(eachContentObject);
         });
+        state.content.loading_state = 'LOADING_SUCCESS';
         console.log(state.content.data);
     },
 
