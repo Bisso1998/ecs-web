@@ -24,4 +24,5 @@ export default {
     getLoginError: state => state.loading_error_message,
     getSignupSource: state => state.signup_source,
     getLoginSource: state => state.login_source,
+    getLoginLoadingState: state => state.loading_state,
 }
