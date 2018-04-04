@@ -1095,7 +1095,8 @@ export default {
 .book-content {
     img {
         width: 100%;
-        max-width: 1200px;
+        max-width: 100%;
+        height: auto !important;
     }
     .book-bottom-ratings {
         margin: 10px 0;
