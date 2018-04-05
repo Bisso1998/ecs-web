@@ -736,6 +736,7 @@ export default {
             i {
                 font-size: 25px;
                 max-width: 25px;
+                margin-top: 1px;
             }
             span {
                 position: relative;
