@@ -13,7 +13,7 @@
                         <i class="material-icons">bookmark_border</i>
                         <i class="material-icons stacked grey">add</i>
                     </button>
-                    <button class="add-library" v-else @click="removeFromLibrary(pratilipiData.pratilipiId)">
+                    <button class="add-library" v-else @click="triggerAnalyticsAndRemovePratilipiFromLibrary(pratilipiData.pratilipiId)">
                         <i class="material-icons added-to-lib">bookmark</i>
                         <i class="material-icons stacked">check</i>
                     </button>
@@ -85,6 +85,14 @@ export default {
             type: Boolean,
             required: false,
             default: false
+        },
+        screenName: {
+            type: String,
+            required: true
+        },
+        screenLocation: {
+            type: String,
+            required: true
         }
     },
     mixins: [
@@ -105,14 +113,27 @@ export default {
             'setAfterLoginAction'
         ]),
         addPratilipiToLibrary(pratilipiId) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`LIBRARYADD_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 console.log(this.$route);
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
-                this.openLoginModal(this.$route.meta.store, 'LIBRARYADD', 'HOMEM');
+                this.openLoginModal(this.$route.meta.store, 'LIBRARYADD', this.screenLocation);
             } else {
                 this.addToLibrary(pratilipiId);
             }
+        },
+        triggerAnalyticsAndRemovePratilipiFromLibrary(pratilipiId) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`LIBRARYREMOVE_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.removeFromLibrary(pratilipiId);
         },
         imageHasBeenRendered() {
             console.log('has been rendered');
