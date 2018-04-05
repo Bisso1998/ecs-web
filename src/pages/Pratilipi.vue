@@ -165,7 +165,7 @@
                                 :userPratilipiData="getUserPratilipiData"
                                 :haveInfiniteScroll="false"
                                 screenName="BOOK"
-                                screenLocation="BOOKEND"
+                                screenLocation="RATEREV"
                                 v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                             </Reviews>
                             <button type="button" class="load_more" name="button" @click="openReviewModal">__("view_more")</button>
