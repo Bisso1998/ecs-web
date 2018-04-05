@@ -90,7 +90,7 @@ export default {
                     this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor`, data });    
                 }
                 
-                this.openLoginModal();
+                this.openLoginModal(this.$route.meta.store);
             } else {
                 this.followOrUnfollowAuthor(data);
             }

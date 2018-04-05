@@ -15,7 +15,56 @@ export function translateWord(word, callback) {
     });
 }
 
-export function openLoginModal() {
+export function openLoginModal(pageSource) {
+    let analyticsPageSource;
+    switch (pageSource) {
+        case 'homepage': 
+            analyticsPageSource = 'HOME';
+            break;
+        case 'pratilipipage': 
+            analyticsPageSource = 'BOOK';
+            break;
+        case 'authorpage': 
+            analyticsPageSource = 'USER';
+            break;
+        case 'notification': 
+            analyticsPageSource = 'NOTIFS';
+            break;
+        case 'readerpage': 
+            analyticsPageSource = 'READER';
+            break;
+        case 'eventspage': 
+            analyticsPageSource = 'EVENTLIST';
+            break;
+        case 'eventpage': 
+            analyticsPageSource = 'EVENT';
+            break;
+        case 'writepage': 
+            analyticsPageSource = 'CREATE';
+            break;
+        case 'librarypage': 
+            analyticsPageSource = 'LIBRARY';
+            break;
+        case 'searchpage': 
+            analyticsPageSource = 'SEARCH';
+            break;
+        case 'blogspage': 
+            analyticsPageSource = 'BLOGLIST';
+            break;
+        case 'blogpage': 
+            analyticsPageSource = 'BLOG';
+            break;
+        case 'interviewspage': 
+            analyticsPageSource = 'AUTHORINT';
+            break;
+        case 'interviewpage': 
+            analyticsPageSource = 'AUTHORINT';
+            break;
+        case 'listpage': 
+            analyticsPageSource = 'CATEGORY';
+            break;
+    }
+    triggerAnanlyticsEvent('LANDED_LOGINM_' + analyticsPageSource, 'CONTROL')
     $('#login_modal').modal('show');
 }
 
@@ -181,6 +230,8 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             FB.AppEvents.logEvent(eventName, null, eventProperty)
         }
         
+    } else {
+        console.log('NON REGISTERED EVENT: ', eventName);
     }
 }
 
