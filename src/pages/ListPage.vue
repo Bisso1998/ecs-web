@@ -12,6 +12,8 @@
                         v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' || getPratilipiListData.length !== 0"
                         :addToLibrary="addToLibrary"
                         :removeFromLibrary="removeFromLibrary"
+                        :screenName="'CATEGORY'"
+                        :screenLocation="'CATEGORYM'"
                         ></PratilipiComponent>
                         <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
                     </div>
