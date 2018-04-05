@@ -28,7 +28,7 @@
                 </div>
                 <div class="comment-footer">
                     <button type="button" :class="{ 'active': eachReview.isLiked }" @click="checkUserAndlikeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
-                    <button type="button" name="button" @click="toggleComments({ resultCount: eachReview.commentCount * 2, parentId: eachReview.userPratilipiId })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
+                    <button type="button" name="button" @click="toggleComments({ resultCount: eachReview.commentCount * 2, parentId: eachReview.userPratilipiId, reviewUserName: eachReview.userName })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
                 </div>
             </div>
         </div>
@@ -170,6 +170,7 @@ export default {
             if ($(this.$el).find(".reply-list").hasClass("show-comments")) {
                 this.loadCommentsOfReview(data);
             }
+            this.newComment = `@${data.reviewUserName} `;
         },
         editComment(commentId) {
             $(this.$el).find(".comment-content.editable." + commentId).toggle();
