@@ -80,7 +80,7 @@
                                     v-if="publishedContentsLoadingState === 'LOADING_SUCCESS' || getPublishedContents.length !== 0"
                                     :hideAddToLibrary="true"
                                     :hideAuthorName="true"
-                                    :screenName="'USER'"
+                                    :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
                                     :screenLocation="'PUBLISHED'"
                                     ></PratilipiComponent>
                                     <p class="message" v-if="publishedContentsLoadingState === 'LOADING_SUCCESS' && getPublishedContents.length == 0">__("author_no_contents_published")</p>
@@ -94,7 +94,7 @@
                                     :hideAuthorName="true"
                                     :redirectToReader="true"
                                     :removeFromLibrary="removeFromLibrary"
-                                    :screenName="'USER'"
+                                    :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
                                     :screenLocation="'LIBRARY'"
                                     ></PratilipiComponent>
                                     <p class="message" v-if="getLibraryListLoadingState === 'LOADING_SUCCESS' && getLibraryList.length == 0">__("empty_library")</p>

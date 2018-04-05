@@ -4,7 +4,7 @@
             <div class="book-type" :class="pratilipiData.type">
                 {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
             </div>
-            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" :title="pratilipiData.title">
+            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
                 <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
             </router-link>
             <div class="image-mask">
@@ -20,7 +20,7 @@
                 </span>
                 <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
             </div>
-            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" :title="pratilipiData.title">
+            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
                 <div class="pratilipi-details">
                     <span class="title">{{ pratilipiData.title }}</span>
                     <span v-if="!hideAuthorName" class="author">{{ pratilipiData.author.name }}</span>
@@ -134,6 +134,13 @@ export default {
                 'USER_ID': this.getUserDetails.userId
             });
             this.removeFromLibrary(pratilipiId);
+        },
+        triggerReadPratilipiEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`READBOOK_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
         },
         imageHasBeenRendered() {
             console.log('has been rendered');
