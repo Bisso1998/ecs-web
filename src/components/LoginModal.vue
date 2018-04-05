@@ -21,6 +21,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Login from '@/components/Login';
+import mixins from '@/mixins';
 import Register from '@/components/Register';
 
 export default {
@@ -33,14 +34,44 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getUserDetails'
+            'getUserDetails',
+            'getLoginSource'
         ])
     },
+    mixins: [
+        mixins
+    ],
     watch:{
         getUserDetails(value) {
             if (value && !value.isGuest) {
                 $('#login_modal').modal('hide');
                 $(".overlay, .overlay-1, .overlay-2").hide();
+
+                switch(this.getLoginSource) {
+                    case 'EMAIL':
+                        this.triggerAnanlyticsEvent('SIGNINSUC_EMAIL_LOGIN', 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                        break;
+                }
+
+                switch(this.getSignupSource) {
+                    case 'EMAIL':
+                        this.triggerAnanlyticsEvent('SIGNUPSUC_EMAIL_REGISTER', 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                        break;
+                    case 'FACEBOOK':
+                        this.triggerAnanlyticsEvent('SIGNUPSUC_FACEBOOK_REGISTER', 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                        break;
+                    case 'GOOGLE':
+                        this.triggerAnanlyticsEvent('SIGNUPSUC_GOOGLE_REGISTER', 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                        break;
+                }
             }
         }
     },
