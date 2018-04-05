@@ -213,7 +213,7 @@
             
             <div class="container">
                 <div class="row">
-                    <div class="review-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
+                    <div class="review-popout reader-review-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                         <button type="button" class="close-review" name="button" @click="closeReviewModal"><i class="material-icons">close</i></button>
                         <Reviews 
                             :pratilipiId="getPratilipiData.pratilipiId" 

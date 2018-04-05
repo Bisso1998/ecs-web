@@ -175,7 +175,7 @@ export default {
 }
 .y-scrolling {
     overflow: hidden;
-    height: calc(60vh - 30px);
+    height: 470px;  
     overflow-y: auto;
 }
 .show-more {
@@ -192,5 +192,8 @@ export default {
 }
 .book-bottom-ratings .y-scrolling {
     height: auto;
+}
+.reader-review-popout .y-scrolling {
+    height: calc(60vh - 30px);
 }
 </style>
