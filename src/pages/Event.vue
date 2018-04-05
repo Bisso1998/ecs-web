@@ -20,6 +20,8 @@
                                 v-for="pratilipiData in getEventPratilipis"
                                 :addToLibrary="addToLibrary"
                                 :removeFromLibrary="removeFromLibrary"
+                                :screenName="'EVENT'"
+                                :screenLocation="'EVENTRIES'"
                                 ></PratilipiComponent>
                             <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner>
                         </div>

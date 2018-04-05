@@ -80,6 +80,8 @@
                                     v-if="publishedContentsLoadingState === 'LOADING_SUCCESS' || getPublishedContents.length !== 0"
                                     :hideAddToLibrary="true"
                                     :hideAuthorName="true"
+                                    :screenName="'USER'"
+                                    :screenLocation="'PUBLISHED'"
                                     ></PratilipiComponent>
                                     <p class="message" v-if="publishedContentsLoadingState === 'LOADING_SUCCESS' && getPublishedContents.length == 0">__("author_no_contents_published")</p>
                                 </div>
@@ -92,6 +94,8 @@
                                     :hideAuthorName="true"
                                     :redirectToReader="true"
                                     :removeFromLibrary="removeFromLibrary"
+                                    :screenName="'USER'"
+                                    :screenLocation="'LIBRARY'"
                                     ></PratilipiComponent>
                                     <p class="message" v-if="getLibraryListLoadingState === 'LOADING_SUCCESS' && getLibraryList.length == 0">__("empty_library")</p>
                                     <router-link

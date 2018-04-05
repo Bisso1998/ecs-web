@@ -12,6 +12,8 @@
                         v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' || getPratilipiListData.length !== 0"
                         :addToLibrary="addToLibrary"
                         :removeFromLibrary="removeFromLibrary"
+                        :screenName="'LIBRARY'"
+                        :screenLocation="'LIBRARYM'"
                         ></PratilipiComponent>
                         <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
                         <p class="message" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' && getPratilipiListData.length == 0">__("empty_library")</p>
