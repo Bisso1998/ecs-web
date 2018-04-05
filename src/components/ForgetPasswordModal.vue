@@ -18,6 +18,9 @@
                         </form>
                     </div>
                 </div>
+                <div class="spinner-overlay" v-if="getForgotPasswordUpdateState === 'LOADING'">
+                    <Spinner></Spinner> 
+                </div>
             </div>
         </div>
     </div>
@@ -25,6 +28,7 @@
 
 <script>
 import mixins from '@/mixins';
+import Spinner from '@/components/Spinner.vue';
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -37,9 +41,17 @@ export default {
             forgotten_password_email: ''
         }
     },
+    components: {
+        Spinner
+    },
     methods: {
         ...mapActions([
             'sendPasswordResetEmail'
+        ])
+    },
+    computed: {
+        ...mapGetters([
+            'getForgotPasswordUpdateState'
         ])
     },
     created() {
@@ -69,6 +81,17 @@ export default {
         margin-right: 10px;
         &:hover {
             opacity: 0.9;
+        }
+    }
+    .spinner-overlay {
+        position: absolute;
+        top: 0;
+        background: rgba(255,255,255,0.8);
+        width: 100%;
+        height: 100%;
+        .spinner {
+            top: 42%;
+            position: absolute;
         }
     }
 }
