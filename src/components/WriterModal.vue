@@ -14,12 +14,13 @@
                         <div class="form-group">
                             <label for="pratilipi_write_language">__("writer_select_language")</label>
                             <select class="form-control" id="pratilipi_write_language" v-model="language">
+                                <option disabled value="">__('writer_select_language')</option>
                                 <option :value="eachLanguage.fullName.toUpperCase()"  v-for="eachLanguage in constants.LANGUAGES" :key="eachLanguage.shortName">{{ eachLanguage.languageNative }}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="pratilipi_write_title_input">__("writer_input_title") *</label>
-                            <TranslatingInput :value="title" :oninput="updatePrefilledValue"></TranslatingInput>
+                            <TranslatingInput :value="title" :oninput="updatePrefilledValue" :placeholder="'__("writer_input_title")'"></TranslatingInput>
                         </div>
                         <div class="form-group">
                             <label for="pratilipi_write_title_en_input">__("writer_input_title_en")</label>
@@ -28,6 +29,7 @@
                         <div class="form-group">
                             <label for="pratilipi_write_type">__("write_type")</label>
                             <select class="form-control" id="pratilipi_write_type" v-model="type">
+                                <option disabled value="">__('write_type')</option>
                                 <option value="POEM">__('_pratilipi_type_poem')</option>
                                 <option value="STORY">__('_pratilipi_type_story')</option>
                                 <option value="ARTICLE">__('_pratilipi_type_article')</option>
@@ -57,8 +59,8 @@ export default {
             constants,
             title: '',
             titleEn: '',
-            language: null,
-            type: null
+            language: '',
+            type: ''
         }
     },
     methods: {

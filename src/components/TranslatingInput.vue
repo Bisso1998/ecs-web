@@ -6,6 +6,7 @@
             @keyup.down="goDownInSuggestions"
             @input="getTranslation"
             @keyup.enter="selectSuggestion"
+            :placeholder="placeholder"
             name="" >
         <ul class="translations">
             <li v-for="(eachSuggestion, index) in suggestions" :class="{ 'active': index === selectedSuggestion }" :key="index" @click="selectTranslatedWord(eachSuggestion)">{{ eachSuggestion }}</li>
@@ -27,6 +28,9 @@ export default {
         },
         oninput: {
             type: Function
+        },
+        placeholder: {
+            type: String
         }
     },
     computed: {
@@ -109,6 +113,8 @@ export default {
         background: #fff;
         z-index: 100;
         width: 100%;
+        border: 1px solid #ced4da;
+        border-top: 0;
         li {
             list-style: none;
             padding: 3px 10px;
