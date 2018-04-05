@@ -39,7 +39,7 @@
                                     </button>
                                 </div>
                                 <p>{{ getAuthorData.summary }}</p>
-                                <button type="button" class="view-more" name="button" data-toggle="modal" data-target="#summary_modal">__("view_more")</button>
+                                <button v-if="showShowMoreOfSummary" type="button" class="view-more" name="button" data-toggle="modal" data-target="#summary_modal">__("view_more")</button>
                             </div>
                             <div class="modal fade summary-modal" id="summary_modal" tabindex="-1" role="dialog" aria-labelledby="summary-modalLabel" aria-hidden="true">
                               <div class="modal-dialog" role="document">
@@ -149,7 +149,8 @@ export default {
     data() {
         return {
             user_id: null,
-            scrollPosition: null
+            scrollPosition: null,
+            showShowMoreOfSummary: false
         }
     },
     computed: {
@@ -245,6 +246,19 @@ export default {
         editAuthorSummary() {
             this.openInputModal();
         },
+        detectOverflow() {
+            const element = $('.profile-summary p');
+            const offsetHeight = element.prop('offsetHeight');
+            const scrollHeight = element.prop('scrollHeight');
+
+            if (offsetHeight < scrollHeight) {
+                // your element have overflow
+                this.showShowMoreOfSummary = true;
+            } else {
+                // your element doesn't have overflow
+                this.showShowMoreOfSummary = false;
+            }   
+        }
     },
     watch: {
         'getAuthorData.authorId'(newValue) {
@@ -327,6 +341,11 @@ export default {
                         'USER_ID': this.getUserDetails.userId
                     });
                 }
+
+                const that = this;
+                setTimeout(() => {
+                    that.detectOverflow();    
+                }, 0);
             }
         }
     },
