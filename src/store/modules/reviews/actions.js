@@ -57,6 +57,10 @@ export default {
         if (pageName === 'readerpage') {
             dispatch('readerpage/setPratilipiRating', { rating, pratilipiId }, { root: true });
         }
+        commit('alert/triggerAlertView', '__("success_generic_message")', { root: true });
+        setTimeout(() => {
+            commit('alert/triggerAlertHide', null, { root: true });
+        }, 3000);
     },
 
     saveOrUpdateReview({ commit, state, dispatch }, { review, pratilipiId, pageName }) {
