@@ -103,6 +103,8 @@ export default {
     methods: {
         goToSearchPage() {
             this.$router.push({ name: 'Search_Page', query: { q: this.searchText } });
+            $("#search-box-small .search-dropdown").hide();
+            $("#search-box-big .search-dropdown").hide();
         },
         opendesktopsearch() {
             $("#search-box-big .search-dropdown").show();
@@ -264,9 +266,9 @@ export default {
                 position: absolute;
                 right: 50px;
                 width: 81%;
-                -webkit-transition: .4s ease;
-                -o-transition: .4s ease;
-                transition: .4s ease;
+                -webkit-transition: width .4s ease;
+                -o-transition: width .4s ease;
+                transition: width .4s ease;
                 display: inline-block;
                 @media screen and (max-width: 410px ) {
                     width: 70%;
