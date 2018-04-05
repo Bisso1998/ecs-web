@@ -160,7 +160,7 @@
                             <span>{{ getPratilipiData.ratingCount }}</span>
                         </div>
                         <div class="add-to-lib col-3">
-                            <span v-if="getUserPratilipiData.addedToLib" @click="removeFromLibrary">
+                            <span v-if="getUserPratilipiData.addedToLib" @click="triggerAnanlyticsEventAndRemoveFromLibrary">
                                 <i class="material-icons">bookmark</i>
                                 <i class="material-icons stacked">check</i>
                             </span>
@@ -303,6 +303,11 @@ export default {
             'setAfterLoginAction'
         ]),
         addPratilipiToLibrary(pratilipiId) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`LIBRARYADD_READERM_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
@@ -310,6 +315,14 @@ export default {
             } else {
                 this.addToLibrary(pratilipiId);
             }
+        },
+        triggerAnanlyticsEventAndRemoveFromLibrary() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`LIBRARYREMOVE_READERM_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.removeFromLibrary()
         },
         checkLoginStatusAndFollowOrUnfollowAuthor() {
             if (this.getUserDetails.isGuest) {
