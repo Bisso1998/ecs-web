@@ -131,7 +131,7 @@ export default {
                     pratilipiId: this.userPratilipiData.pratilipiId,
                     pageName: this.$route.meta.store
                 } });
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'RATE', this.screenLocation);
             } else {
                 const newRating = e.target.value;
                 this.setPratilipiRating({ 
@@ -146,7 +146,7 @@ export default {
             if (this.getUserDetails.isGuest) {
                 data.pageName = this.$route.meta.store;
                 this.saveOrUpdateReview(data)
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'REVIEW', this.screenLocation);
                 this.cancelReview();
             } else {
                 data.pageName = this.$route.meta.store;

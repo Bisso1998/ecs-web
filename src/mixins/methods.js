@@ -15,7 +15,7 @@ export function translateWord(word, callback) {
     });
 }
 
-export function openLoginModal(pageSource) {
+export function openLoginModal(pageSource, action, location) {
     let analyticsPageSource;
     switch (pageSource) {
         case 'homepage': 
@@ -64,7 +64,12 @@ export function openLoginModal(pageSource) {
             analyticsPageSource = 'CATEGORY';
             break;
     }
-    triggerAnanlyticsEvent('LANDED_LOGINM_' + analyticsPageSource, 'CONTROL')
+    triggerAnanlyticsEvent('LANDED_LOGINM_GLOBAL', 'CONTROL', {
+        REFER_SCREEN: analyticsPageSource,
+        REFER_ACTION: action,
+        REFER_LOCATION: location
+
+    });
     $('#login_modal').modal('show');
 }
 
@@ -220,7 +225,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             'SCREEN_LOCATION': eventProps.SCREEN_NAME + '_' + eventProps.LOCATION
         }
         console.log(eventName, eventProperty, eventProps);
-        amplitude.getInstance().logEvent(eventName, eventProperty);
+        amplitude.getInstance().logEvent(eventName, eventProps);
 
         if (!window.fbApiInit) {
             setTimeout(() => {

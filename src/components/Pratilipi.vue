@@ -109,7 +109,7 @@ export default {
                 // throw popup modal
                 console.log(this.$route);
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'LIBRARYADD', 'HOMEM');
             } else {
                 this.addToLibrary(pratilipiId);
             }

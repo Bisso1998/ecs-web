@@ -688,6 +688,11 @@ export default {
         "LOCATION": "LOGINM",
         "ACTION": "LANDED"
     },
+    "LANDED_LOGINM_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "LOGINM",
+        "ACTION": "LANDED"
+    },
     "TYPELOGINFIELD_PASSWORD_LOGIN": {
         "SCREEN_NAME": "LOGIN",
         "LOCATION": "PASSWORD",

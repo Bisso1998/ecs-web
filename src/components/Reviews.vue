@@ -101,7 +101,7 @@ export default {
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 this.setAfterLoginAction({ action: `reviews/createComment`, data });
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'REVIEW', this.screenLocation);
             } else {
                 this.createComment(data);
             }
@@ -110,7 +110,7 @@ export default {
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 this.setAfterLoginAction({ action: `reviews/likeOrDislikeComment`, data });
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'LIKE', this.screenLocation);
             } else {
                 this.likeOrDislikeComment(data);
             }

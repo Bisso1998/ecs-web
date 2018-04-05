@@ -84,7 +84,7 @@ export default {
         checkUserAndFollowAuthor() {
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor`});
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'FOLLOW', 'AUTHORDETAILS');
             } else {
                 this.followOrUnfollowAuthor();
             }

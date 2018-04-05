@@ -306,7 +306,7 @@ export default {
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'LIBRARYADD', 'READERM');
             } else {
                 this.addToLibrary(pratilipiId);
             }
@@ -315,7 +315,7 @@ export default {
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor` });
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'FOLLOW', 'READERM');
             } else {
                 this.followOrUnfollowAuthor();
             }

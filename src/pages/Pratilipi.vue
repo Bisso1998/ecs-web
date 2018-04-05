@@ -381,7 +381,7 @@ export default {
         addPratilipiToLibrary(pratilipiId) {
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'LIBRARYADD', 'BOOKM');
             } else {
                 this.addToLibrary(pratilipiId);
             }

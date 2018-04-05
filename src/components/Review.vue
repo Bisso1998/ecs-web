@@ -188,7 +188,7 @@ export default {
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 this.setAfterLoginAction({ action: `reviews/likeOrDislikeReview`, data });
-                this.openLoginModal(this.$route.meta.store);
+                this.openLoginModal(this.$route.meta.store, 'LIKE', 'REVIEWS');
             } else {
                 this.likeOrDislikeReview(data);
             }
