@@ -165,9 +165,11 @@ export default {
             $(this.$el).find(".comment-content.editable." + commentId).toggle();
         },
         toggleComments(data) {
-            $(this.$el).find(".reply-list").toggle();
+            $(this.$el).find(".reply-list").toggleClass("show-comments");
             $(this.$el).find(".add-reply").show();
-            this.loadCommentsOfReview(data);
+            if ($(this.$el).find(".reply-list").hasClass("show-comments")) {
+                this.loadCommentsOfReview(data);
+            }
         },
         editComment(commentId) {
             $(this.$el).find(".comment-content.editable." + commentId).toggle();
@@ -424,6 +426,9 @@ export default {
     .comment-avatar {
         width:35px;
         height: 35px;
+    }
+    &.show-comments {
+        display: block;
     }
 }
 .comment-main-level:after {
