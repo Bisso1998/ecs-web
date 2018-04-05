@@ -40,6 +40,7 @@ export default {
         getUserDetails(value) {
             if (value && !value.isGuest) {
                 $('#login_modal').modal('hide');
+                $(".overlay, .overlay-1, .overlay-2").hide();
             }
         }
     },
