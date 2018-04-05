@@ -11,6 +11,8 @@
                     :addToLibrary="addToLibrary"
                     :removeFromLibrary="removeFromLibrary"
                     :redirectToReader="redirectToReader"
+                    :screenName="screenName"
+                	:screenLocation="screenLocation"
                     ></PratilipiComponent>
 					<router-link :to="listPageUrl" v-if="listPageUrl" class="view_more">
 						<div class="view_more_card">
@@ -50,6 +52,14 @@ export default {
         },
         redirectToReader: {
             type: Boolean
+        },
+        screenName: {
+            type: String,
+            required: true
+        },
+        screenLocation: {
+            type: String,
+            required: true
         }
     },
     data() {

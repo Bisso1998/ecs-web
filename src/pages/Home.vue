@@ -9,6 +9,8 @@
                 :pratilipiList="eachSection.pratilipiList" 
                 :title="eachSection.title"
                 :listPageUrl="eachSection.listPageUrl"
+                :screenName="'HOME'"
+                :screenLocation="'COLLECTIONS'"
                 v-bind="{ addToLibrary, removeFromLibrary }"
             ></PratilipiListComponent>
             <ServerError :action="'homepage/getListOfSections'" :data="getCurrentLanguage().fullName.toUpperCase()" v-if="getHomePageLoadingState === 'LOADING_ERROR'"></ServerError>

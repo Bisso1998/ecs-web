@@ -1768,4 +1768,9 @@ export default {
         "LOCATION": "READERM",
         "ACTION": "RATE"
     },
+    "READBOOK_LIBRARY_MYPROFILE": {
+        "SCREEN_NAME": "MYPROFILE",
+        "LOCATION": "LIBRARY",
+        "ACTION": "READBOOK"
+    }
 };

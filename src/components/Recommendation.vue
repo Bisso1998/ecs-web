@@ -5,6 +5,8 @@
             :title="getRecommendationTitle"
             v-bind="{ addToLibrary, removeFromLibrary }"
             v-if="getRecommendationLoadingState === 'LOADING_SUCCESS'"
+            :screenName="screenName"
+            :screenLocation="screenLocation"
             :redirectToReader="true"
         ></PratilipiListComponent>
     </div>
