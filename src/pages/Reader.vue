@@ -187,7 +187,7 @@
                         <span class="auth-name">{{ getPratilipiData.author.displayName }}</span>
                     </router-link>
                     <div class="follow-btn-w-count" v-if="!getAuthorData.following"><!-- Follow Button -->
-                        <button @click="followOrUnfollowAuthor" >
+                        <button @click="checkLoginStatusAndFollowOrUnfollowAuthor" >
                             <i class="material-icons">person_add</i>__("author_follow")
                         </button><span><b>{{ getAuthorData.followCount }}</b></span>
                     </div>
@@ -306,9 +306,18 @@ export default {
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
-                this.openLoginModal();
+                this.openLoginModal(this.$route.meta.store);
             } else {
                 this.addToLibrary(pratilipiId);
+            }
+        },
+        checkLoginStatusAndFollowOrUnfollowAuthor() {
+            if (this.getUserDetails.isGuest) {
+                // throw popup modal
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor` });
+                this.openLoginModal(this.$route.meta.store);
+            } else {
+                this.followOrUnfollowAuthor();
             }
         },
         goToPreviousChapter() {

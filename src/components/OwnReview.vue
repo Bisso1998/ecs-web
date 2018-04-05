@@ -131,7 +131,7 @@ export default {
                     pratilipiId: this.userPratilipiData.pratilipiId,
                     pageName: this.$route.meta.store
                 } });
-                this.openLoginModal();
+                this.openLoginModal(this.$route.meta.store);
             } else {
                 const newRating = e.target.value;
                 this.setPratilipiRating({ 
@@ -146,7 +146,7 @@ export default {
             if (this.getUserDetails.isGuest) {
                 data.pageName = this.$route.meta.store;
                 this.saveOrUpdateReview(data)
-                this.openLoginModal();
+                this.openLoginModal(this.$route.meta.store);
                 this.cancelReview();
             } else {
                 data.pageName = this.$route.meta.store;
@@ -175,10 +175,6 @@ export default {
     },
     created() {
         this.newReview = this.userPratilipiData.review;
-    },
-    mounted() {
-        console.log(this.screenName);
-        console.log(this.screenLocation);
     },
     watch: {
         'inViewport.now': function(visible) {
