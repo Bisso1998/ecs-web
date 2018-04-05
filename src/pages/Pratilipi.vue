@@ -136,7 +136,7 @@
                                     <button class="edit" @click="editPratilipiSummary" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button>
                                 </div>
                                 <p class="text show-more-height">{{ getPratilipiData.summary }}</p>
-                                <button type="button" class="show_more" name="button" data-toggle="modal" data-target="#book_summary_modal">__("view_more")</button>
+                                <button type="button" v-if="showShowMoreOfSummary" class="show_more" name="button" data-toggle="modal" data-target="#book_summary_modal">__("view_more")</button>
                             </div>
                             <!-- SUMMARY MODAL -->
                             <div class="modal fade summary-modal" id="book_summary_modal" tabindex="-1" role="dialog" aria-labelledby="summary-modalLabel" aria-hidden="true">
@@ -226,6 +226,7 @@ export default {
             selectedTags: [],
             suggestedTags: [],
             newSuggestedTag: '',
+            showShowMoreOfSummary: false
         }
     },
     mixins: [
@@ -420,6 +421,19 @@ export default {
             $(".review-popout").removeClass("show");
             $('.overlay-1').fadeOut();
             $("body").removeClass("modal-open");
+        },
+        detectOverflow() {
+            const element = $('.show-more-height');
+            const offsetHeight = element.prop('offsetHeight');
+            const scrollHeight = element.prop('scrollHeight');
+
+            if (offsetHeight < scrollHeight) {
+                // your element have overflow
+                this.showShowMoreOfSummary = true;
+            } else {
+                // your element doesn't have overflow
+                this.showShowMoreOfSummary = false;
+            }   
         }
     },
     created() {
@@ -468,6 +482,11 @@ export default {
                     ...pratilipiAnalyticsData,
                     'USER_ID': this.getUserDetails.userId
                 });
+                const that = this;
+                setTimeout(() => {
+                    that.detectOverflow();
+                }, 0);
+                
             }
         },
         'getUserDetails.userId'() {
