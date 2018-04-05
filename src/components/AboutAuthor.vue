@@ -10,7 +10,7 @@
         <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow")</button>
         <button class="btn btn-light follow-link following" @click="checkUserAndFollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
         <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
-        <button type="button" class="show_more_auth_desc" name="button" data-toggle="modal" data-target="#auth_summary_modal">__("view_more")</button>
+        <button type="button" v-if="showShowMoreOfSummary" class="show_more_auth_desc" name="button" data-toggle="modal" data-target="#auth_summary_modal">__("view_more")</button>
         <!-- SUMMARY MODAL -->
         <div class="modal fade summary-modal" id="auth_summary_modal" tabindex="-1" role="dialog" aria-labelledby="summary-modalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -48,7 +48,7 @@ export default {
     ],
     data() {
         return {
-            
+            showShowMoreOfSummary: false
         }
     },
     computed: {
@@ -56,7 +56,8 @@ export default {
             'getUserDetails'
         ]),
         ...mapGetters('pratilipipage', [
-            'getAuthorDetails'
+            'getAuthorDetails',
+            'getAuthorDetailsLoadingState'
         ])
     },
     methods: {
@@ -67,6 +68,19 @@ export default {
         ...mapActions([
             'setAfterLoginAction'
         ]),
+        detectOverflow() {
+            const element = $('.auth-desc.show-more-height');
+            const offsetHeight = element.prop('offsetHeight');
+            const scrollHeight = element.prop('scrollHeight');
+
+            if (offsetHeight < scrollHeight) {
+                // your element have overflow
+                this.showShowMoreOfSummary = true;
+            } else {
+                // your element doesn't have overflow
+                this.showShowMoreOfSummary = false;
+            }   
+        },
         checkUserAndFollowAuthor() {
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor`});
@@ -78,6 +92,16 @@ export default {
     },
     components: {
         
+    },
+    watch: {
+        'getAuthorDetailsLoadingState'( state ) {
+            if (state === 'LOADING_SUCCESS') {
+                const that = this;
+                setTimeout(() => {
+                    that.detectOverflow();    
+                }, 0);
+            }
+        }
     },
     created() {
         this.fetchAuthorDetails(this.authorId);
