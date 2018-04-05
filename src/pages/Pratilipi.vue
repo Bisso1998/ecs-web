@@ -815,8 +815,9 @@ export default {
             position: fixed;
             margin-bottom: 0;
             margin-left: 0;
-            left: 20%;
-            bottom: -100vh;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -200vh;
             overflow: hidden;
             overflow-y: auto;
             text-align: left;
@@ -826,7 +827,6 @@ export default {
             z-index: 9;
             @media screen and (max-width: 992px ) {
                 margin-bottom: 51px;
-                left: 7px;
             }
             .close-review {
                 position: absolute;
