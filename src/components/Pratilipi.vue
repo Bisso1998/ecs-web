@@ -299,7 +299,7 @@ export default {
             .summary {
                 color: #212121;
                 font-size: 12px;
-                height: 72px;
+                height: 55px;
                 overflow: hidden;
                 margin: 5px 0 10px;
             }
