@@ -144,7 +144,7 @@ export default {
         alertOrOpenWriteModal() {
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: null, data: null });
-                this.openLoginModal();
+                this.openLoginModal(this.$route.meta.store);
             } else {
                 this.openWritePratilipiModal();
             }
