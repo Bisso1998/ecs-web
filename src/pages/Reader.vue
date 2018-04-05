@@ -1028,8 +1028,10 @@ export default {
         max-width: 700px;
         position: fixed;
         margin-bottom: 46px;
-        margin-left: 7px;
-        bottom: -100vh;
+        margin-left: 0;
+        bottom: -200vh;
+        left: 50%;
+        transform: translateX(-50%);
         overflow: hidden;
         overflow-y: auto;
         text-align: left;
