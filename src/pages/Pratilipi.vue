@@ -49,7 +49,7 @@
                                         <span>+ __("library")</span>
                                     </button>
 
-                                    <button v-if="getUserPratilipiData.addedToLib" class="library-btn" @click="removeFromLibrary(getPratilipiData.pratilipiId)">
+                                    <button v-if="getUserPratilipiData.addedToLib" class="library-btn" @click="removeFromLibraryAndTriggerAnalytics(getPratilipiData.pratilipiId)">
                                         <span>- __("library")</span>
                                     </button>
                                 </span>
@@ -379,12 +379,25 @@ export default {
             this.openConfirmationModal();
         },
         addPratilipiToLibrary(pratilipiId) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`LIBRARYADD_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
                 this.openLoginModal(this.$route.meta.store, 'LIBRARYADD', 'BOOKM');
             } else {
                 this.addToLibrary(pratilipiId);
             }
+        },
+        removeFromLibraryAndTriggerAnalytics(pratilipiId) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`LIBRARYREMOVE_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.removeFromLibrary(pratilipiId);
         },
         openShareModal() {
             this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
