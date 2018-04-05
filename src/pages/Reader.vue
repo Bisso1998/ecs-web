@@ -1020,7 +1020,7 @@ export default {
         position: fixed;
         margin-bottom: 46px;
         margin-left: 7px;
-        bottom: -100vh;
+        bottom: -200vh;
         overflow: hidden;
         overflow-y: auto;
         text-align: left;
