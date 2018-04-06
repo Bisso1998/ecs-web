@@ -171,6 +171,7 @@ export default {
         cancelReview(e) {
             $(".review-box").hide();
             $(".write-review-btn").fadeIn();
+            this.editRatingMode = false;
         }
     },
     created() {

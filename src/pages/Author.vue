@@ -31,7 +31,7 @@
                             </div>
                             <div class="profile-user-name">{{ getAuthorData.name }}</div>
                             <div class="profile-read-by">__("author_readby_count")</div>
-                            <div class="profile-summary">
+                            <div class="profile-summary" v-if="getAuthorData.summary || getAuthorData.hasAccessToUpdate">
                                 <div class="head-title">
                                     <span>__("author_about")</span>
                                     <button class="edit" @click="editAuthorSummary" v-if="getUserDetails.userId === getAuthorData.user.userId">
