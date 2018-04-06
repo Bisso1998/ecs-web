@@ -113,7 +113,7 @@ export default {
     border: 1px solid #e9e9e9;
     width: 150px;
     display: inline-block;
-    margin: 10px 5px;
+    margin: 4px;
     position: relative;
     text-align: center;
     a {
