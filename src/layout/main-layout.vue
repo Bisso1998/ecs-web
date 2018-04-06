@@ -2,6 +2,7 @@
     <div :class="currentLocale">
         <Header :userDetails="getUserDetails" :notificationCount="getNotificationCount" ></Header>
         <slot></slot>
+        <PratilipiModal></PratilipiModal>
         <LoginModal></LoginModal>
         <ShareModal></ShareModal>
         <InputModal></InputModal>
@@ -14,6 +15,7 @@
 
 <script>
 import Header from '@/components/Header.vue';
+import PratilipiModal from '@/components/PratilipiModal.vue';
 import LoginModal from '@/components/LoginModal.vue';
 import ShareModal from '@/components/Share.vue';
 import InputModal from '@/components/InputModal.vue';
@@ -50,6 +52,7 @@ export default {
     },
     components: {
         Header,
+        PratilipiModal,
         LoginModal,
         ShareModal,
         InputModal,
