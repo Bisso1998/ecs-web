@@ -188,7 +188,7 @@ app.get( '/*', (req, res, next) => {
 
     console.log('BUCKET ID: ', bucketId);
     const numberOfBucketsToShowProduct = Math.floor((PRODUCT_PERCENTAGE / 100) * totalGrowthBuckets);
-    if (Number(bucketId) <= 10) {
+    if (Number(bucketId) > 10) {
         next();
         return
     }
