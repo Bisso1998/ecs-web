@@ -400,7 +400,7 @@ export default {
             this.removeFromLibrary(pratilipiId);
         },
         openShareModal() {
-            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
             this.triggerAnanlyticsEvent(`CLICKSHRBOOK_BOOKM_BOOK`, 'CONTROL', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
