@@ -192,7 +192,7 @@
                         </button><span><b>{{ getAuthorData.followCount }}</b></span>
                     </div>
                     <div class="follow-btn-w-count" v-else><!-- Following Button -->
-                        <button @click="followOrUnfollowAuthor"><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
+                        <button @click="checkLoginStatusAndFollowOrUnfollowAuthor"><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                     </div>
                 </div>
                 <div class="book-index">
@@ -325,6 +325,13 @@ export default {
             this.removeFromLibrary()
         },
         checkLoginStatusAndFollowOrUnfollowAuthor() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            let action = !this.getAuthorData.following ? 'FOLLOW' : 'UNFOLLOW';
+            this.triggerAnanlyticsEvent(`${action}_INDEX_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.getAuthorData.followCount
+            });
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor` });
