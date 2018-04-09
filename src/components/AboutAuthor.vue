@@ -41,6 +41,10 @@ export default {
         authorId: {
             type: Number,
             required: true
+        },
+        pratilipiData: {
+            type: Object,
+            required: true
         }
     },
     mixins: [
@@ -82,6 +86,14 @@ export default {
             }   
         },
         checkUserAndFollowAuthor() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            let action = !this.getAuthorDetails.following ? 'FOLLOW' : 'UNFOLLOW';
+            this.triggerAnanlyticsEvent(`${action}_AUTHORDETAIL_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.getAuthorDetails.followCount,
+                'AUTHOR_ID': this.getAuthorDetails.authorId
+            });
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor`});
                 this.openLoginModal(this.$route.meta.store, 'FOLLOW', 'AUTHORDETAILS');
