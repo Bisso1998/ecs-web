@@ -4,7 +4,7 @@
             <div class="banners" v-for="each_banner in banners" v-bind:key="each_banner.bannerId">
                 <router-link
                     :to="{ path: each_banner.actionUrl }"
-                     @click.native="triggerAnalyticsEvent">
+                     @click.native="triggerAnalyticsEvent(each_banner.bannerId)">
                     <img :src="getHighResolutionImage(each_banner.imageUrl)" alt="">
                 </router-link>
             </div>
@@ -63,9 +63,10 @@ export default {
             this.$refs.slick.reSlick()
         },
 
-        triggerAnalyticsEvent() {
+        triggerAnalyticsEvent(bannerId) {
             this.triggerAnanlyticsEvent(`CLICKBANNER_BANNERS_HOME`, 'CONTROL', {
-                'USER_ID': this.getUserDetails.userId
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': bannerId
             });
         }
     },
