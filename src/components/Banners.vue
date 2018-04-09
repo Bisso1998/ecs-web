@@ -3,7 +3,8 @@
         <slick ref="slick" :options="slickOptions" class="slick-banner">
             <div class="banners" v-for="each_banner in banners" v-bind:key="each_banner.bannerId">
                 <router-link
-                    :to="{ path: each_banner.actionUrl }">
+                    :to="{ path: each_banner.actionUrl }"
+                     @click.native="triggerAnalyticsEvent">
                     <img :src="getHighResolutionImage(each_banner.imageUrl)" alt="">
                 </router-link>
             </div>
@@ -14,6 +15,7 @@
 <script>
 import Slick from 'vue-slick'
 import mixins from '@/mixins';
+import { mapGetters } from 'vuex'
 
 export default {
     props: {
@@ -25,6 +27,11 @@ export default {
     mixins: [
         mixins
     ],
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
     data() {
         return {
             slickOptions: {
@@ -54,6 +61,12 @@ export default {
         reInit() {
             // Helpful if you have to deal with v-for to update dynamic lists
             this.$refs.slick.reSlick()
+        },
+
+        triggerAnalyticsEvent() {
+            this.triggerAnanlyticsEvent(`CLICKBANNER_BANNERS_HOME`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         }
     },
     mount() {

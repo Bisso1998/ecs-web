@@ -431,8 +431,12 @@ export default {
             $('.overlay').fadeOut();
         },
         openShareModal() {
-            this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
-            console.log('test')
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKSHRBOOK_READERM_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' });
             $('#share_modal').modal('show');
         },
         updateScroll() {
