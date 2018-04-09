@@ -1772,5 +1772,25 @@ export default {
         "SCREEN_NAME": "MYPROFILE",
         "LOCATION": "LIBRARY",
         "ACTION": "READBOOK"
-    }
+    },
+    "FOLLOW_USERRESULT_SEARCH": {
+        "SCREEN_NAME": "SEARCH",
+        "LOCATION": "USERRESULT",
+        "ACTION": "FOLLOW"
+    },
+    "UNFOLLOW_USERRESULT_SEARCH": {
+        "SCREEN_NAME": "SEARCH",
+        "LOCATION": "USERRESULT",
+        "ACTION": "UNFOLLOW"
+    },
+    "FOLLOW_INDEX_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "INDEX",
+        "ACTION": "FOLLOW"
+    },
+    "UNFOLLOW_INDEX_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "INDEX",
+        "ACTION": "UNFOLLOW"
+    },
 };

@@ -61,6 +61,14 @@ export default {
         },
         inFollowingTab: {
             type: Boolean
+        },
+        screenName: {
+            type: String,
+            required: true
+        },
+        screenLocation: {
+            type: String,
+            required: true
         }
     },
     mixins: [
@@ -81,6 +89,12 @@ export default {
             'setAfterLoginAction'
         ]),
         verifyAndFollowOrUnfollowAuthor(data) {
+            let action = !data.following ? 'FOLLOW' : 'UNFOLLOW';
+            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.authorData.followCount !== undefined ? this.authorData.followCount : this.authorData.author.followCount,
+                'AUTHOR_ID': this.authorData.authorId !== undefined ? this.authorData.authorId : this.authorData.author.authorId
+            });
             if (this.getUserDetails.isGuest) {
                 if (this.inFollowingTab) {
                     this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowFollowing`, data });    

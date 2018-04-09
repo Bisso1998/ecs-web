@@ -191,12 +191,12 @@ export default {
 
     },
     setFollowUnfollowFollowingLoadingDataLoadingSuccess(state, data) {
-        const authorFollowedOrUnfollowed = state.following.data.find(eachAuthor => eachAuthor.author.authorId === data.authorId);
-        authorFollowedOrUnfollowed.author.following = data.following;
+        const authorFollowedOrUnfollowed = state.following.data.find(eachAuthor => eachAuthor.authorId === data.authorId);
+        authorFollowedOrUnfollowed.following = data.following;
         if (data.following) {
-            authorFollowedOrUnfollowed.author.followCount++;    
+            authorFollowedOrUnfollowed.followCount++;    
         } else {
-            authorFollowedOrUnfollowed.author.followCount--;
+            authorFollowedOrUnfollowed.followCount--;
         }
     },
     setFollowUnfollowFollowingLoadingDataLoadingError(state) {

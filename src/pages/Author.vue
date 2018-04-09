@@ -56,10 +56,10 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="follow-btn-w-count" v-if="!getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="followOrUnfollowAuthor"><!-- Follow Button -->
+                            <div class="follow-btn-w-count" v-if="!getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="triggerEventAndFollowOrUnfollowAuthor"><!-- Follow Button -->
                                 <button><i class="material-icons">person_add</i> __("author_follow")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                             </div>
-                            <div class="follow-btn-w-count" v-if="getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="followOrUnfollowAuthor"><!-- Following Button -->
+                            <div class="follow-btn-w-count" v-if="getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="triggerEventAndFollowOrUnfollowAuthor"><!-- Following Button -->
                                 <button><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                             </div>
                         </div>
@@ -112,6 +112,8 @@
                                     <AuthorCard  v-for="each_follower in getAuthorFollowers" 
                                         :authorData="each_follower" 
                                         :key="each_follower.userId"
+                                        :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
+                                        :screenLocation="'FOLLOWERS'"
                                         :followOrUnfollowAuthor="followOrUnfollowFollowers"
                                         :inFollowersTab="true"></AuthorCard>
                                         <p class="message" v-if="getAuthorFollowersLoadingState === 'LOADING_SUCCESS' && getAuthorFollowers.length == 0 && getUserDetails.userId === getAuthorData.user.userId">__("user_no_followers")</p>
@@ -122,6 +124,8 @@
                                     <AuthorCard v-for="each_following in getAuthorFollowing" 
                                         :authorData="each_following" 
                                         :key="each_following.userId"
+                                        :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
+                                        :screenLocation="'FOLLOWINGS'"
                                         :followOrUnfollowAuthor="followOrUnfollowFollowing"
                                         :inFollowingTab="true"></AuthorCard>
                                     <p class="message" v-if="getAuthorFollowingLoadingState === 'LOADING_SUCCESS' && getAuthorFollowing.length == 0 && getUserDetails.userId === getAuthorData.user.userId">__("user_no_following")</p>
@@ -232,6 +236,15 @@ export default {
                     break;
             }
             
+        },
+        triggerEventAndFollowOrUnfollowAuthor() {
+            let action = !this.getAuthorData.following ? 'FOLLOW' : 'UNFOLLOW';
+            this.triggerAnanlyticsEvent(`${action}_USERM_USER`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.getAuthorData.followCount,
+                'AUTHOR_ID': this.getAuthorData.authorId
+            });
+            this.followOrUnfollowAuthor();
         },
         openShareModal() {
             if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {

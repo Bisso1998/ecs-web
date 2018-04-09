@@ -155,7 +155,7 @@
                               </div>
                             </div>
                             
-                            <AboutAuthor :authorId="getPratilipiData.author.authorId"></AboutAuthor>
+                            <AboutAuthor :authorId="getPratilipiData.author.authorId" :pratilipiData="getPratilipiData"></AboutAuthor>
                         </div>
                         <div class="card">
                             <div class="head-title">__("review_heading")</div>
