@@ -234,6 +234,18 @@ export default {
             
         },
         openShareModal() {
+            if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
+                this.triggerAnanlyticsEvent(`CLICKSHRUSER_MYPROFILEM_MYPROFILE`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'AUTHOR_ID': this.getAuthorData.authorId
+                });
+            }
+            else {
+                this.triggerAnanlyticsEvent(`CLICKSHRUSER_USERM_USER`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'AUTHOR_ID': this.getAuthorData.authorId
+                });
+            }
             this.setShareDetails({ data: this.getAuthorData, type: 'AUTHOR' })
             $('#share_modal').modal('show');
         },
