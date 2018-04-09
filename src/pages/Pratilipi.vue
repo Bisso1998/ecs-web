@@ -400,6 +400,11 @@ export default {
             this.removeFromLibrary(pratilipiId);
         },
         openShareModal() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKSHRBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
             $('#share_modal').modal('show');
         },
