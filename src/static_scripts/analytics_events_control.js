@@ -1793,4 +1793,9 @@ export default {
         "LOCATION": "INDEX",
         "ACTION": "UNFOLLOW"
     },
+    "COMMENT_REVIEWS_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "REVIEWS",
+        "ACTION": "COMMENT"
+    }
 };

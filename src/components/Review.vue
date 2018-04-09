@@ -92,7 +92,7 @@
                                 <label for="writeReply">__("comment_reply_to_comment")</label>
                                 <textarea class="form-control" :value='newComment' @input="newComment = $event.target.value" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary" @click="() => {createComment({ userPratilipiId: eachReview.userPratilipiId, content: newComment }); newComment = ''; }">__("save")</button>
+                            <button type="button" class="btn btn-primary" @click="triggerEventAndCreateComment(eachReview)">__("save")</button>
                             <button type="button" class="btn btn-light" @click="closeReply">__("cancel")</button>
                         </form>
                     </div>
@@ -152,6 +152,18 @@ export default {
         deleteComment: {
             type: Function,
             required: true
+        },
+        screenName: {
+            type: String,
+            required: true
+        },
+        screenLocation: {
+            type: String,
+            required: true
+        },
+        pratilipiData: {
+            type: Object,
+            required: true
         }
     },
     methods: {
@@ -171,6 +183,20 @@ export default {
                 this.loadCommentsOfReview(data);
             }
             this.newComment = `@${data.reviewUserName} `;
+        },
+        triggerEventAndCreateComment(review) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`COMMENT_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': review.userPratilipiId
+            });
+            
+            this.createComment({ 
+                userPratilipiId: review.userPratilipiId, 
+                content: this.newComment 
+            }); 
+            this.newComment = ''; 
         },
         editComment(commentId) {
             $(this.$el).find(".comment-content.editable." + commentId).toggle();

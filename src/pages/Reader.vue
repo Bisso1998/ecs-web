@@ -129,6 +129,7 @@
                                     :haveInfiniteScroll="true"
                                     screenName="READER"
                                     screenLocation="BOOKEND"
+                                    :pratilipiData="getPratilipiData"
                                     v-if="selectedChapter == getIndexData.length && !openRateReaderm && !openRateRev ">
                                 </Reviews>
                             </div>
@@ -221,6 +222,7 @@
                             :haveInfiniteScroll="true"
                             screenName="READER"
                             screenLocation="RATEREV"
+                            :pratilipiData="getPratilipiData"
                             v-if="openRateRev"
                             :userPratilipiData='getUserPratilipiData'>
                         </Reviews>
@@ -234,6 +236,7 @@
                             :haveInfiniteScroll="false"
                             screenName="READER"
                             screenLocation="READERM"
+                            :pratilipiData="getPratilipiData"
                             v-if="openRateReaderm"
                             :userPratilipiData='getUserPratilipiData'>
                         </Reviews>
