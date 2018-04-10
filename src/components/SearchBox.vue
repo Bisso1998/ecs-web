@@ -54,7 +54,7 @@ export default {
             $(".search-dropdown").hide();
         },
         triggerEvent(trendingWord) {
-            this.triggerAnanlyticsEvent(`SEARCH_SEARCHM_SEARCH`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`SEARCH_TRENDSEARCH_SEARCH`, 'CONTROL', {
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': trendingWord
             });
