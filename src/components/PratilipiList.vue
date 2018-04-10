@@ -1,7 +1,10 @@
 <template>
 	<div class="section">
 		<div class="container-fluid">
-	        <h2 class="section-title"><router-link :to="listPageUrl">{{title}}</router-link></h2>
+	        <h2 class="section-title">
+                <router-link v-if="listPageUrl" :to="listPageUrl">{{title}}</router-link>
+                <span v-else>{{title}}</span>
+            </h2>
 	        <div class="pratilipi-list" v-if="pratilipiList.length > 0">
 	            <slick ref="slick" :options="slickOptions">
 	                <PratilipiComponent 
