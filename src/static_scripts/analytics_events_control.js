@@ -1827,5 +1827,10 @@ export default {
         "SCREEN_NAME": "CREATE",
         "LOCATION": "APPBANNER",
         "ACTION": "GETANDROID"
+    },
+    "CLICKBOOK_DRAFTS_CREATE": {
+        "SCREEN_NAME": "CREATE",
+        "LOCATION": "DRAFTS",
+        "ACTION": "CLICKBOOK"
     }
 };

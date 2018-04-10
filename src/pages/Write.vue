@@ -28,7 +28,7 @@
                                 <div class="card-content drafts" @scroll="updateScroll">
                                     
                                     <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
-                                        <router-link :to="each_draft.pageUrl">
+                                        <router-link :to="each_draft.pageUrl" @click.native="triggerEventClickDraft()">
                                             <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
                                             <div class="draft-name">{{ each_draft.title }}</div>
                                         </router-link >
@@ -158,6 +158,11 @@ export default {
                 'USER_ID': this.getUserDetails.userId
             });
             window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_write&utm_campaign=app_download')
+        },
+        triggerEventClickDraft() {
+            this.triggerAnanlyticsEvent(`CLICKBOOK_DRAFTS_CREATE`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         }
     },
     components: {
