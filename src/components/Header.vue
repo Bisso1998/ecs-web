@@ -96,6 +96,11 @@ export default {
             counter: 0
         }
     },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
     components: {
         SearchBox,
         MainMenu
@@ -105,6 +110,10 @@ export default {
             this.searchText = event.target.value;
         },
         goToSearchPage() {
+            this.triggerAnanlyticsEvent(`SEARCH_SEARCHM_SEARCH`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.searchText
+            });
             this.$router.push({ name: 'Search_Page', query: { q: this.searchText } });
             $("#search-box-small .search-dropdown").hide();
             $("#search-box-big .search-dropdown").hide();
