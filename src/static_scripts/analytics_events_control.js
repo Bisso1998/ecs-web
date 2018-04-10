@@ -1822,5 +1822,10 @@ export default {
         "SCREEN_NAME": "CREATE",
         "LOCATION": "NEWBOOK",
         "ACTION": "WRITENEWBOOK"
+    },
+    "GETANDROID_APPBANNER_CREATE": {
+        "SCREEN_NAME": "CREATE",
+        "LOCATION": "APPBANNER",
+        "ACTION": "GETANDROID"
     }
 };

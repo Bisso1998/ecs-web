@@ -15,7 +15,7 @@
                         <div class="col-md-12 d-block d-md-block d-lg-none" v-if="isMobile()"><!-- Android only -->
                             <div class="card install-app">
                                 <div class="card-content">
-                                <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_write&utm_campaign=app_download" target="_blank">
+                                <a @click.prevent="triggerEvent" href="#" target="_blank">
                                     <p>Write your stories on Pratilipi App</p>
                                     <img src="https://www.ptlp.co/resource-all/image/google-play-badge.png" alt="">
                                 </a>
@@ -152,6 +152,12 @@ export default {
                 this.openWritePratilipiModal();
             }
             
+        },
+        triggerEvent() {
+            this.triggerAnanlyticsEvent(`GETANDROID_APPBANNER_CREATE`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
+            window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_write&utm_campaign=app_download')
         }
     },
     components: {
