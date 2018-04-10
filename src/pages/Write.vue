@@ -142,6 +142,9 @@ export default {
             }
         },
         alertOrOpenWriteModal() {
+            this.triggerAnanlyticsEvent(`WRITENEWBOOK_NEWBOOK_CREATE`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: null, data: null });
                 this.openLoginModal(this.$route.meta.store, 'WRITE', null);

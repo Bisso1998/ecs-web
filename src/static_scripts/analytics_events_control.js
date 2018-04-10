@@ -1817,5 +1817,10 @@ export default {
         "SCREEN_NAME": "READER",
         "LOCATION": "READERM",
         "ACTION": "EDITREVIEW"
+    },
+    "WRITENEWBOOK_NEWBOOK_CREATE": {
+        "SCREEN_NAME": "CREATE",
+        "LOCATION": "NEWBOOK",
+        "ACTION": "WRITENEWBOOK"
     }
 };
