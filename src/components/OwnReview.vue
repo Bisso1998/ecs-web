@@ -92,6 +92,10 @@ export default {
         screenLocation: {
             type: String,
             required: true
+        },
+        pratilipiData: {
+            type: Object,
+            required: true
         }
     },
     data() {
@@ -142,6 +146,16 @@ export default {
             }
         },
         checkAndUpdateReview(data) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            let action = this.userPratilipiData.review ? 'EDITREVIEW' : 'REVIEW';
+            if (action === 'EDITREVIEW') {
+                pratilipiAnalyticsData['ENTITY_STATE'] = 'UPDATE';
+            }
+            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.userPratilipiData.rating
+            });
             this.editRatingMode = false;
             if (this.getUserDetails.isGuest) {
                 data.pageName = this.$route.meta.store;

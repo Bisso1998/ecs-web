@@ -1797,5 +1797,25 @@ export default {
         "SCREEN_NAME": "READER",
         "LOCATION": "REVIEWS",
         "ACTION": "COMMENT"
+    },
+    "REVIEW_RATEREV_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "RATEREV",
+        "ACTION": "REVIEW"
+    },
+    "EDITREVIEW_RATEREV_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "RATEREV",
+        "ACTION": "EDITREVIEW"
+    },
+    "REVIEW_READERM_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "READERM",
+        "ACTION": "REVIEW"
+    },
+    "EDITREVIEW_READERM_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "READERM",
+        "ACTION": "EDITREVIEW"
     }
 };
