@@ -10,7 +10,7 @@
                         <div class="book-name tool-icon-8" @click="openSidebar"><span>{{ getPratilipiData.title }}</span> <i class="material-icons">arrow_drop_down</i></div>
                         <div class="right-icons">
                             <div class="settings tool-icon-1">
-                                <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions" @click="triggerSettingsEvent">
                                     <i class="material-icons">settings</i>
                                 </button>
                             </div>
@@ -326,6 +326,13 @@ export default {
                 'USER_ID': this.getUserDetails.userId
             });
             this.removeFromLibrary()
+        },
+        triggerSettingsEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('LANDED_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
         },
         checkLoginStatusAndFollowOrUnfollowAuthor() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
