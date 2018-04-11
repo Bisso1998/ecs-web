@@ -287,6 +287,9 @@ export default {
                 $(".footer-menu").css("height", "51px")
             });
         }
+        this.triggerAnanlyticsEvent('LANDED_SETTINGSM_SETTINGS', 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId
+        });
     }
 }
 </script>
