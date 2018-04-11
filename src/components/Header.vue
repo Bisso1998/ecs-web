@@ -120,6 +120,9 @@ export default {
         },
         opendesktopsearch() {
             $("#search-box-big .search-dropdown").show();
+            this.triggerAnanlyticsEvent('LANDED_SEARCHM_SEARCH', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
             $(document).mouseup(function(e) {
                 var container = $(".search-dropdown");
                 if (!container.is(e.target) && container.has(e.target).length === 0) {
@@ -129,7 +132,9 @@ export default {
         },
         openmobilesearch() {
             $("#search-box-small .search-dropdown").show();
-            
+            this.triggerAnanlyticsEvent('LANDED_SEARCHM_SEARCH', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
             $(document).mouseup(function(e) {
                 var container = $(".search-dropdown");
                 if (!container.is(e.target) && container.has(e.target).length === 0) {
