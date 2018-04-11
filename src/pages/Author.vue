@@ -215,6 +215,34 @@ export default {
             $(event.currentTarget).addClass("active");
             $(".bottom-contents .list").hide();
             $("#" + tab_id).show();
+            if (tab_id === 'followers') {
+                if (this.getUserDetails.author.authorId !== this.getAuthorData.authorId) {
+                    this.triggerAnanlyticsEvent('LANDED_FOLLOWERS_USER', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId,
+                        'PARENT_ID': this.getAuthorData.user.userId,
+                        'AUTHOR_ID': this.getAuthorData.authorId
+                    });
+                }
+                else if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
+                    this.triggerAnanlyticsEvent('LANDED_FOLLOWERS_MYPROFILE', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                }
+            }
+            else if (tab_id === 'following') {
+                if (this.getUserDetails.author.authorId !== this.getAuthorData.authorId) {
+                    this.triggerAnanlyticsEvent('LANDED_FOLLOWINGS_USER', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId,
+                        'PARENT_ID': this.getAuthorData.user.userId,
+                        'AUTHOR_ID': this.getAuthorData.authorId
+                    });
+                }
+                else if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
+                    this.triggerAnanlyticsEvent('LANDED_FOLLOWINGS_MYPROFILE', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                }
+            }
         },
         goToPublishedContentsTab() {
             $(".profile-menu a").removeClass("active");
