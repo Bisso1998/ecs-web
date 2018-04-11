@@ -265,9 +265,6 @@ export default {
                     top: 7px;
                     right: 6px;
                 }
-                &:focus-within {
-                    box-shadow: 0 0 2px rgba(0,0,0,0.2);
-                }
             }
         }
         .search-box-2 {
