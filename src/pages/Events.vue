@@ -27,6 +27,7 @@
 import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants'
 import Spinner from '@/components/Spinner.vue';
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -34,10 +35,16 @@ export default {
         MainLayout,
         Spinner
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('eventspage', [
             'getEventsLoadingState',
             'getEventsData'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     methods: {
@@ -51,6 +58,11 @@ export default {
             if (eachLanguage.shortName === currentLocale) {
                 this.fetchListOfEvents(eachLanguage.fullName.toUpperCase())
             }
+        });
+    },
+    mounted() {
+        this.triggerAnanlyticsEvent('LANDED_EVENTLISTM_EVENTLIST', 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId
         });
     }
 }
