@@ -28,7 +28,7 @@
                     <input type="password" :class="{error: passwordIsInvalid || (getLoginError && getLoginError.password) }" class="form-control" v-model="password" :placeholder="'__("user_password")'">
                 </div>
                 <button type="button" @click="validateAndLoginUser({email, password})" class="btn sign-in">__("user_sign_in")</button>
-                <a v-if="!openForgotPasswordInTab" @click="openForgotPasswordModal" href="#" class="forgot-pass">__("user_forgot_password")</a>
+                <a v-if="!openForgotPasswordInTab" @click="triggerEventAndOpenForgotPasswordModal" href="#" class="forgot-pass">__("user_forgot_password")</a>
                 <router-link v-else :to="'/login#forgot-pass'" target="_blank" class="forgot-pass">__("user_forgot_password")</router-link>
                 <div class="terms-section">
                     <span>__("user_is_new")</span>
@@ -73,7 +73,8 @@ export default {
     computed: {
         ...mapGetters([
             'getLoginError',
-            'getLoginLoadingState'
+            'getLoginLoadingState',
+            'getUserDetails'
         ])
     },
     methods: {
@@ -96,6 +97,12 @@ export default {
             if (!this.emailIsInvalid && !this.passwordIsInvalid) {
                 this.loginUser({ email, password });
             }
+        },
+        triggerEventAndOpenForgotPasswordModal() {
+            this.openForgotPasswordModal();
+            this.triggerAnanlyticsEvent('LANDED_FORGOTPM_FORGOTP', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         }
     },
     components: {
