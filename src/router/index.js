@@ -240,6 +240,12 @@ const router = new Router({
             'title': '__("seo_reset_password_page") | __("pratilipi")'
         }
     }, {
+        path: '/forgot-password',
+        name: 'Forgot_Password',
+        beforeEnter: (to, from, next) => {
+            next('login#forgot-pass')
+        }
+    }, {
         path: '/author/:author_id',
         meta: {
             'title': '__("seo_home_page")'
