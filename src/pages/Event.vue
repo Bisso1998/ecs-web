@@ -37,6 +37,7 @@ import MainLayout from '@/layout/main-layout.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import Spinner from '@/components/Spinner.vue';
 import constants from '@/constants'
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -50,6 +51,9 @@ export default {
             scrollPosition: null
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('eventpage', [
             'getEventData',
@@ -57,6 +61,9 @@ export default {
             'getEventPratilipis',
             'getEventPratilipisLoadingState',
             'getEventPratilipisCursor'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     methods: {
@@ -76,6 +83,10 @@ export default {
         'getEventData.eventId' (eventId) {
             if (eventId) {
                 this.fetchInitialEventPratilipis({ eventId, resultCount: 20 });
+                this.triggerAnanlyticsEvent('LANDED_EVENTM_EVENT', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': this.getEventData.eventId
+                });
             }
         },
         'scrollPosition'(newScrollPosition){
