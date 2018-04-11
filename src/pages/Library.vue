@@ -29,6 +29,7 @@ import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import constants from '@/constants'
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -39,12 +40,18 @@ export default {
             scrollPosition: null
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('librarypage', [
             'getPratilipiListLoadingState',
             'getPratilipiListData',
             'getPratilipiListTotalCount',
             'getPratilipiListCursor'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     methods: {
@@ -76,6 +83,9 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
+        this.triggerAnanlyticsEvent('LANDED_LIBRARYM_LIBRARY', 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId
+        });
     },
     destroyed() {
         window.removeEventListener('scroll', this.updateScroll);
