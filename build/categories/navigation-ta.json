@@ -185,14 +185,14 @@
             "title": "பிரபலமானவை",
             "categories": [
                 {
-                    "categoryUrl": "/event/அன்பென்று-கொட்டு-முரசே-f6f17tl1o6",
-                    "title": "அன்பென்று கொட்டு முரசே!",
-                    "analyticsCategoryName": "event-lovestory-spardha",
-                    "imageFileName": "event_generic7.jpg",
+                    "categoryUrl": "/event/அன்புள்ள-உயிரே-0pdtvy7dur",
+                    "title": "அன்புள்ள உயிரே",
+                    "analyticsCategoryName": "event-letters",
+                    "imageFileName": "letters.jpg",
                     "pratilipiListData": {
                         "language": "TAMIL",
                         "state": "PUBLISHED",
-                        "eventId": 6900000000000034
+                        "eventId": 6900000000000058
                     }
                 },
                 {
@@ -229,14 +229,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/new",
+                    "categoryUrl": "/newcontents",
                     "title": "புதியவை",
                     "analyticsCategoryName": "newly-published",
                     "imageFileName": "newpublished.jpg",
                     "pratilipiListData": {
                         "language": "TAMIL",
                         "state": "PUBLISHED",
-                        "listName": "new"
+                        "listName": "newcontents"
                     }
                 },
                 {

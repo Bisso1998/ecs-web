@@ -92,6 +92,17 @@
                     }
                 },
                 {
+                    "categoryUrl": "/women",
+                    "title": "स्त्री-विशेष कथा",
+                    "analyticsCategoryName": "women",
+                    "imageFileName": "women.jpg",
+                    "pratilipiListData": {
+                        "language": "MARATHI",
+                        "state": "PUBLISHED",
+                        "listName": "women"
+                    }
+                },
+                {
                     "categoryUrl": "/kadambari",
                     "title": "कादंबरी",
                     "analyticsCategoryName": "novels",
@@ -185,32 +196,32 @@
             "title": "नवीन",
             "categories": [
                 {
-                    "categoryUrl": "/readers-top-choice",
+                    "categoryUrl": "/most-read",
                     "title": "वाचकांची सर्वात जास्त आवड",
                     "analyticsCategoryName": "most-read",
                     "imageFileName": "mostpopular.jpg",
                     "pratilipiListData": {
                         "language": "MARATHI",
                         "state": "PUBLISHED",
-                        "listName": "readers-top-choice"
+                        "listName": "most-read"
                     }
                 },
                 {
-                    "categoryUrl": "/newly-published-content",
+                    "categoryUrl": "/newcontents",
                     "title": "नवीन प्रकाशित साहित्य",
                     "analyticsCategoryName": "newly-published",
                     "imageFileName": "newpublished.jpg",
                     "pratilipiListData": {
                         "language": "MARATHI",
                         "state": "PUBLISHED",
-                        "listName": "newly-published-content"
+                        "listName": "newcontents"
                     }
                 },
                 {
                     "categoryUrl": "/classic-sahitya",
                     "title": "क्लासिक साहित्य",
                     "analyticsCategoryName": "classics",
-                    "imageFileName": "classic-sahitya.jpg",
+                    "imageFileName": "classic.jpg",
                     "pratilipiListData": {
                         "language": "MARATHI",
                         "state": "PUBLISHED",
@@ -229,14 +240,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/event/अडीच-अक्षरे-प्रेमाची-ऑनलाईन-कथालेखन-स्पर्धा-col92alrl2",
-                    "title": "अडीच अक्षरे प्रेमाची",
-                    "analyticsCategoryName": "event-lovestory-event",
+                    "categoryUrl": "/event/ऑनलाईन-कथा-महोत्सव-२०१८-1akbeyt8p7",
+                    "title": "कथा महोत्सव २०१८",
+                    "analyticsCategoryName": "event-story-writing",
                     "imageFileName": "event_generic7.jpg",
                     "pratilipiListData": {
                         "language": "MARATHI",
                         "state": "PUBLISHED",
-                        "eventId": 6900000000000036
+                        "eventId": 6900000000000063
                     }
                 },
                 {

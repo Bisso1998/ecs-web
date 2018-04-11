@@ -152,14 +152,14 @@
             "title": "പ്രസിദ്ധമായവ",
             "categories": [
                 {
-                    "categoryUrl": "/event/എന്‍റെ-പ്രണയം-wcmx5gkiw7",
-                    "title": "എന്‍റെ പ്രണയം",
-                    "analyticsCategoryName": "event-lovestory-spardha",
-                    "imageFileName": "event_generic7.jpg",
+                    "categoryUrl": "/event/എഴുത്തുപെട്ടി-2-077ojsrgec",
+                    "title": "എഴുത്തുപെട്ടി - 2",
+                    "analyticsCategoryName": "event-letters",
+                    "imageFileName": "letters.jpg",
                     "pratilipiListData": {
                         "language": "MALAYALAM",
                         "state": "PUBLISHED",
-                        "eventId": 6900000000000035
+                        "eventId": 6900000000000061
                     }
                 },
                 {
@@ -185,14 +185,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/new",
+                    "categoryUrl": "/newcontents",
                     "title": "പുതിയവ",
                     "analyticsCategoryName": "newly-published",
                     "imageFileName": "newpublished.jpg",
                     "pratilipiListData": {
                         "language": "MALAYALAM",
                         "state": "PUBLISHED",
-                        "listName": "new"
+                        "listName": "newcontents"
                     }
                 },
                 {

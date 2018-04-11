@@ -174,14 +174,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/natun-prakashito-rachona",
+                    "categoryUrl": "/newcontents",
                     "title": "নতুন প্রকাশিত রচনা",
                     "analyticsCategoryName": "newly-published",
                     "imageFileName": "newpublished.jpg",
                     "pratilipiListData": {
                         "language": "BENGALI",
                         "state": "PUBLISHED",
-                        "listName": "natun-prakashito-rachona"
+                        "listName": "newcontents"
                     }
                 },
                 {
@@ -196,14 +196,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/event/সেই-যে-আমার-প্রেমগাথা-c54mb7iubq",
-                    "title": "সেই যে আমার প্রেমগাথা",
-                    "analyticsCategoryName": "event-lovestory-spardha",
+                    "categoryUrl": "/event/রসসাগরে-নবরস-oy31jemvn4",
+                    "title": "রসসাগরে নবরস",
+                    "analyticsCategoryName": "event-navras",
                     "imageFileName": "event_generic7.jpg",
                     "pratilipiListData": {
                         "language": "BENGALI",
                         "state": "PUBLISHED",
-                        "eventId": 6900000000000039
+                        "eventId": 6900000000000062
                     }
                 },
                 {
