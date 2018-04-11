@@ -30,6 +30,7 @@ import Spinner from '@/components/Spinner.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import PageNotFound from '@/components/404.vue';
 import constants from '@/constants'
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -40,6 +41,9 @@ export default {
             scrollPosition: null
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('listpage', [
             'getPratilipiListLoadingState',
@@ -47,6 +51,9 @@ export default {
             'getPratilipiListTotalCount',
             'getPratilipiListTitle',
             'getPratilipiListCursor'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     methods: {
@@ -107,6 +114,15 @@ export default {
                     });
                 }
             });
+        },
+        'getPratilipiListLoadingState'(loadingState) {
+            const { list_page_url } = this.$route.params;
+            if (loadingState === 'LOADING_SUCCESS' && this.getPratilipiListData.length > 0) {
+                this.triggerAnanlyticsEvent(`LANDED_CATEGORYM_CATEGORY`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': list_page_url
+                });
+            }
         }
     },
     mounted() {
