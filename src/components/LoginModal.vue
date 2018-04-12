@@ -35,15 +35,16 @@ export default {
     computed: {
         ...mapGetters([
             'getUserDetails',
-            'getLoginSource'
+            'getLoginSource',
+            'getSignupSource'
         ])
     },
     mixins: [
         mixins
     ],
     watch:{
-        getUserDetails(value) {
-            if (value && !value.isGuest) {
+        'getUserDetails.isGuest'(value) {
+            if (!value) {
                 $('#login_modal').modal('hide');
                 $(".overlay, .overlay-1, .overlay-2").hide();
 
@@ -86,6 +87,10 @@ export default {
             $(".signup").addClass("active");
             $(".forms").hide();
             $("#" + tab_id).show();
+
+            this.triggerAnanlyticsEvent('LANDED_REGISTERM_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         },
         tabsignin(event) {
             event.preventDefault();        
@@ -94,6 +99,10 @@ export default {
             $(".signin").addClass("active");
             $(".forms").hide();
             $("#" + tab_id).show();
+
+            this.triggerAnanlyticsEvent('LANDED_LOGINM_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         }
     },
     components: {

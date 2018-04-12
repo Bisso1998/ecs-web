@@ -64,7 +64,7 @@ export function openLoginModal(pageSource, action, location) {
             analyticsPageSource = 'CATEGORY';
             break;
     }
-    triggerAnanlyticsEvent('LANDED_LOGINM_GLOBAL', 'CONTROL', {
+    triggerAnanlyticsEvent('LANDED_REGISTERM_GLOBAL', 'CONTROL', {
         REFER_SCREEN: analyticsPageSource,
         REFER_ACTION: action,
         REFER_LOCATION: location
