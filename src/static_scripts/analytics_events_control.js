@@ -648,6 +648,11 @@ export default {
         "LOCATION": "LIBRARYM",
         "ACTION": "SHAREBOOKWA"
     },
+    "TYPELOGINFIELD_EMAIL_LOGIN": {
+        "SCREEN_NAME": "LOGIN",
+        "LOCATION": "EMAIL",
+        "ACTION": "TYPELOGINFIELD"
+    },
     "SIGNINERR_EMAIL_LOGIN": {
         "SCREEN_NAME": "LOGIN",
         "LOCATION": "EMAIL",
@@ -657,11 +662,6 @@ export default {
         "SCREEN_NAME": "LOGIN",
         "LOCATION": "EMAIL",
         "ACTION": "SIGNINSUC"
-    },
-    "TYPELOGINFIELD_EMAIL_LOGIN": {
-        "SCREEN_NAME": "LOGIN",
-        "LOCATION": "EMAIL",
-        "ACTION": "TYPELOGINFIELD"
     },
     "SIGNINERR_FACEBOOK_LOGIN": {
         "SCREEN_NAME": "LOGIN",
@@ -683,6 +683,39 @@ export default {
         "LOCATION": "GOOGLE",
         "ACTION": "SIGNINSUC"
     },
+
+
+    "SIGNUPERR_EMAIL_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "EMAIL",
+        "ACTION": "SIGNUPERR"
+    },
+    "SIGNUPSUC_EMAIL_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "EMAIL",
+        "ACTION": "SIGNUPSUC"
+    },
+    "SIGNUPERR_FACEBOOK_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "FACEBOOK",
+        "ACTION": "SIGNUPERR"
+    },
+    "SIGNUPSUC_FACEBOOK_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "FACEBOOK",
+        "ACTION": "SIGNUPSUC"
+    },
+    "SIGNUPERR_GOOGLE_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "GOOGLE",
+        "ACTION": "SIGNUPERR"
+    },
+    "SIGNUPSUC_GOOGLE_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "GOOGLE",
+        "ACTION": "SIGNUPSUC"
+    },
+
     "LANDED_LOGINM_LOGIN": {
         "SCREEN_NAME": "LOGIN",
         "LOCATION": "LOGINM",

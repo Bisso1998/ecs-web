@@ -50,7 +50,7 @@ export default {
 
                 switch(this.getLoginSource) {
                     case 'EMAIL':
-                        this.triggerAnanlyticsEvent('SIGNINSUC_EMAIL_LOGIN', 'CONTROL', {
+                        this.triggerAnanlyticsEvent('SIGNINSUC_EMAIL_GLOBAL', 'CONTROL', {
                             'USER_ID': this.getUserDetails.userId
                         });
                         break;
@@ -58,17 +58,17 @@ export default {
 
                 switch(this.getSignupSource) {
                     case 'EMAIL':
-                        this.triggerAnanlyticsEvent('SIGNUPSUC_EMAIL_REGISTER', 'CONTROL', {
+                        this.triggerAnanlyticsEvent('SIGNUPSUC_EMAIL_GLOBAL', 'CONTROL', {
                             'USER_ID': this.getUserDetails.userId
                         });
                         break;
                     case 'FACEBOOK':
-                        this.triggerAnanlyticsEvent('SIGNUPSUC_FACEBOOK_REGISTER', 'CONTROL', {
+                        this.triggerAnanlyticsEvent('SIGNUPSUC_FACEBOOK_GLOBAL', 'CONTROL', {
                             'USER_ID': this.getUserDetails.userId
                         });
                         break;
                     case 'GOOGLE':
-                        this.triggerAnanlyticsEvent('SIGNUPSUC_GOOGLE_REGISTER', 'CONTROL', {
+                        this.triggerAnanlyticsEvent('SIGNUPSUC_GOOGLE_GLOBAL', 'CONTROL', {
                             'USER_ID': this.getUserDetails.userId
                         });
                         break;
