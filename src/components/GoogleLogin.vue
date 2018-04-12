@@ -21,7 +21,9 @@ export default {
             const googleClientId = process.env.GOOGLE_CLIENT_ID;
             gapi.auth2.init({
                 client_id: `${googleClientId}`,
-                cookiepolicy: 'single_host_origin'
+                cookiepolicy: 'single_host_origin',
+                ux_mode: 'popup',
+                prompt: 'select_account'
             }).then(() => {
                 const GoogleAuth = gapi.auth2.getAuthInstance();
                 GoogleAuth.signIn().then( function( googleUser ) {
@@ -50,9 +52,7 @@ export default {
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'google-client-jssdk'));
         document.getElementById('google-client-jssdk').onload = () => {
-            gapi.load( 'auth2', function() {
-                
-            });
+            gapi.load( 'auth2', () => {});
         }
     }
 }
