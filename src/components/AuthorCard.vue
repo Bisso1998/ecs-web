@@ -93,6 +93,7 @@ export default {
             this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': this.authorData.followCount !== undefined ? this.authorData.followCount : this.authorData.author.followCount,
+                'PARENT_ID': this.authorData.userId !== undefined ? this.authorData.userId : this.authorData.user.userId,
                 'AUTHOR_ID': this.authorData.authorId !== undefined ? this.authorData.authorId : this.authorData.author.authorId
             });
             if (this.getUserDetails.isGuest) {
