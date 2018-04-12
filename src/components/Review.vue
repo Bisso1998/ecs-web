@@ -29,7 +29,7 @@
                     {{ eachReview.review }}
                 </div>
                 <div class="comment-footer">
-                    <button type="button" :class="{ 'active': eachReview.isLiked }" @click="checkUserAndlikeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
+                    <button type="button" :class="{ 'active': eachReview.isLiked }" @click="checkUserAndlikeOrDislikeReview({userPratilipiId: eachReview.userPratilipiId, isLiked: eachReview.isLiked, likeCount: eachReview.likeCount })" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
                     <button type="button" name="button" @click="toggleComments({ resultCount: eachReview.commentCount * 2, parentId: eachReview.userPratilipiId, reviewUserName: eachReview.userName })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                         </form>
                     </div>
                     <div class="comment-footer">
-                        <button type="button" :class="{ 'active': eachComment.isLiked}" @click="likeOrDislikeComment({ commentId: eachComment.commentId, isLiked: eachComment.isLiked })" name="button"><span class="counter">{{ eachComment.likeCount }}</span><i class="material-icons">thumb_up</i></button>
+                        <button type="button" :class="{ 'active': eachComment.isLiked}" @click="triggerEventAndlikeOrDislikeComment({ commentId: eachComment.commentId, isLiked: eachComment.isLiked, likeCount: eachComment.likeCount })" name="button"><span class="counter">{{ eachComment.likeCount }}</span><i class="material-icons">thumb_up</i></button>
                         <button type="button" @click="replyToComment(eachComment)" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
                     </div>
                 </div>
@@ -219,9 +219,29 @@ export default {
                 this.setAfterLoginAction({ action: `reviews/likeOrDislikeReview`, data });
                 this.openLoginModal(this.$route.meta.store, 'LIKE', 'REVIEWS');
             } else {
-                this.likeOrDislikeReview(data);
+                this.likeOrDislikeReview(data.userPratilipiId);
             }
             
+            let action = !data.isLiked ? 'LIKE' : 'UNLIKE';
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`${action}_REVIEWS_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data.userPratilipiId,
+                'ENTITY_VALUE': data.likeCount
+            });
+        },
+        triggerEventAndlikeOrDislikeComment(data) {
+            let action = !data.isLiked ? 'LIKE' : 'UNLIKE';
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`${action}_COMMENTS_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data.commentId,
+                'ENTITY_VALUE': data.likeCount
+            });
+
+            this.likeOrDislikeComment(data);
         },
         triggerClickReviewUser(data) {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
