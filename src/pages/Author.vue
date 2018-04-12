@@ -280,14 +280,15 @@ export default {
                     'USER_ID': this.getUserDetails.userId,
                     'AUTHOR_ID': this.getAuthorData.authorId
                 });
+                this.setShareDetails({ data: this.getAuthorData, type: 'AUTHOR', screen_name: 'MYPROFILE', screen_location: 'MYPROFILEM' });
             }
             else {
                 this.triggerAnanlyticsEvent(`CLICKSHRUSER_USERM_USER`, 'CONTROL', {
                     'USER_ID': this.getUserDetails.userId,
                     'AUTHOR_ID': this.getAuthorData.authorId
                 });
+                this.setShareDetails({ data: this.getAuthorData, type: 'AUTHOR', screen_name: 'USER', screen_location: 'USERM' });
             }
-            this.setShareDetails({ data: this.getAuthorData, type: 'AUTHOR' })
             $('#share_modal').modal('show');
         },
         triggerCoverImageUpload(event) {
