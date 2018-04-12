@@ -2,12 +2,14 @@
     <li>
         <div class="comment-main-level">
             <div class="comment-avatar">
-                <router-link :to="eachReview.userProfilePageUrl"><img :src="eachReview.userImageUrl" alt="author"></router-link>
+                <router-link :to="eachReview.userProfilePageUrl" @click.native="triggerClickReviewUser(eachReview.userId)"><img :src="eachReview.userImageUrl" alt="author"></router-link>
             </div>
             <div class="comment-box">
                 <div class="comment-head">
                     <div class="comment-meta">
-                        <h6 class="comment-name"><router-link :to="eachReview.userProfilePageUrl">{{ eachReview.userName }}</router-link></h6>
+                        <h6 class="comment-name">
+                            <router-link :to="eachReview.userProfilePageUrl" @click.native="triggerClickReviewUser(eachReview.userId)">{{ eachReview.userName }}</router-link>
+                        </h6>
                         <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
@@ -38,12 +40,12 @@
                 v-for="eachComment in eachReview.comments.data" :key="eachComment.commentId"
                 v-if="eachReview.comments && eachReview.comments.data && eachReview.comments.data.length > 0 && eachReview.comments.loading_state === 'LOADING_SUCCESS'">
                 <div class="comment-avatar">
-                    <router-link :to="eachComment.user.profilePageUrl"><img :src="eachComment.user.profileImageUrl" alt="author"></router-link>
+                    <router-link :to="eachComment.user.profilePageUrl" @click.native="triggerClickCommentUser(eachComment.user.userId)"><img :src="eachComment.user.profileImageUrl" alt="author"></router-link>
                 </div>
                 <div class="comment-box">
                     <div class="comment-head">
                         <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }">
-                            <router-link :to="eachComment.user.profilePageUrl">{{ eachComment.user.displayName }}</router-link>
+                            <router-link :to="eachComment.user.profilePageUrl" @click.native="triggerClickCommentUser(eachComment.user.userId)">{{ eachComment.user.displayName }}</router-link>
                         </h6>
                         <button class="btn more-options" type="button" id="moreOptions2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
@@ -220,6 +222,24 @@ export default {
                 this.likeOrDislikeReview(data);
             }
             
+        },
+        triggerClickReviewUser(data) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKUSER_REVIEWS_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data,
+                'AUTHOR_ID': this.pratilipiData.author.authorId
+            });
+        },
+        triggerClickCommentUser(data) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKUSER_COMMENTS_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data,
+                'AUTHOR_ID': this.pratilipiData.author.authorId
+            });
         },
         ...mapActions([
             'setAfterLoginAction'
