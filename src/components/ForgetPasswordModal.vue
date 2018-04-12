@@ -14,7 +14,7 @@
                             <div class="form-group">
                                 <input type="email" @input="forgotten_password_email = $event.target.value" class="form-control" id="forgotEmail" :placeholder="'__("user_email")'">
                             </div>
-                            <button type="button" @click="sendPasswordResetEmail(forgotten_password_email)" class="btn sign-in">__("user_reset_password")</button>
+                            <button type="button" @click="triggerEventAndSendPasswordResetEmail(forgotten_password_email)" class="btn sign-in">__("user_reset_password")</button>
                         </form>
                     </div>
                 </div>
@@ -47,11 +47,18 @@ export default {
     methods: {
         ...mapActions([
             'sendPasswordResetEmail'
-        ])
+        ]),
+        triggerEventAndSendPasswordResetEmail(data) {
+            this.triggerAnanlyticsEvent('REQUESTPASSWORD_EMAIL_FORGOTP', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.sendPasswordResetEmail(data);
+        }
     },
     computed: {
         ...mapGetters([
-            'getForgotPasswordUpdateState'
+            'getForgotPasswordUpdateState',
+            'getUserDetails'
         ])
     },
     created() {
