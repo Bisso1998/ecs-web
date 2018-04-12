@@ -3,6 +3,7 @@
         <div class="head-title">__("author_about")</div>
         <router-link
             :to="getAuthorDetails.pageUrl"
+            @click.native="triggerClickAuthorEvent"
             class="author-link">
             <img :src="getAuthorDetails.profileImageUrl" alt="author" class="auth-img" >
             <div class="auth-name">{{ getAuthorDetails.name }}</div>
@@ -100,6 +101,15 @@ export default {
             } else {
                 this.followOrUnfollowAuthor();
             }
+        },
+        triggerClickAuthorEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKUSER_AUTHORDETAIL_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.getAuthorDetails.user.userId,
+                'AUTHOR_ID': this.getAuthorDetails.authorId
+            });
         }
     },
     components: {
