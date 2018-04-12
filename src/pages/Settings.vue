@@ -155,7 +155,7 @@
                                             <input type="password" class="form-control" v-model="newPassword" id="pratilipi-settings-confirm-password" placeholder="__('user_confirm_password')">
                                         </div>
                                     </div>
-                                    <button type="button" class="btn update-btn" @click="updateUserPassword({ oldPassword, newPassword })">__("save_changes")</button>
+                                    <button type="button" class="btn update-btn" @click="triggerEventAndUpdateUserPassword({ oldPassword, newPassword })">__("save_changes")</button>
                                 </form>
                             </div>
                         </div>
@@ -249,6 +249,12 @@ export default {
         updateProfileSettings() {
             this.updateUserDetails();
             this.updateAuthorDetails();
+        },
+        triggerEventAndUpdateUserPassword(data) {
+            this.triggerAnanlyticsEvent('RESETPASSWORD_PASSWORD_SETNGPRI', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.updateUserPassword(data);
         }
     },
     watch: {
