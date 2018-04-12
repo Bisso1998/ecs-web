@@ -695,6 +695,11 @@ export default {
         "LOCATION": "EMAIL",
         "ACTION": "SIGNUPSUC"
     },
+    "SIGNINSUC_EMAIL_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "EMAIL",
+        "ACTION": "SIGNINSUC"
+    },
     "SIGNUPERR_FACEBOOK_GLOBAL": {
         "SCREEN_NAME": "GLOBAL",
         "LOCATION": "FACEBOOK",
