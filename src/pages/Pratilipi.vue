@@ -16,6 +16,7 @@
                             <div class="book-title">{{ getPratilipiData.title }} <button class="edit" @click="editPratilipiTitle" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
                             <router-link
                               :to="getPratilipiData.author.pageUrl"
+                              @click.native="triggerClickAuthorNameEvent"
                               class="author-name">
                               <span>{{ getPratilipiData.author.name }}</span>
                             </router-link>
@@ -242,7 +243,8 @@ export default {
             'getUserPratilipiLoadingState',
             'getImageUploadLoadingState',
             'getSystemTags',
-            'getSystemTagsLoadingState'
+            'getSystemTagsLoadingState',
+            'getAuthorDetails'
         ]),
         ...mapGetters([
             'getUserDetails'
@@ -422,6 +424,15 @@ export default {
             const formData = new FormData();
             formData.append('ko_unique_6', event.target.files[0], event.target.files[0].name);
             this.uploadPratilipiImage(formData);
+        },
+        triggerClickAuthorNameEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKUSER_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.getAuthorDetails.user.userId,
+                'AUTHOR_ID': this.getPratilipiData.author.authorId
+            });
         },
         showTags() {
             $(".edit-tags").fadeIn();
