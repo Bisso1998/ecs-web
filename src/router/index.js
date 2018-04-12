@@ -52,7 +52,8 @@ const router = new Router({
         name: 'Pratilipi',
         component: PratilipiComponent,
         meta: { 
-            'store': 'pratilipipage'
+            'store': 'pratilipipage',
+            'id_prop': 'slug_id'
         }
     }, {
         path: '/user/:user_slug',
@@ -60,7 +61,8 @@ const router = new Router({
         component: AuthorComponent,
         meta: {
             'store': 'authorpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'user_slug'
         }
     }, {
         path: '/followers',
@@ -146,7 +148,8 @@ const router = new Router({
         component: EventPageComponent,
         meta: {
             'store': 'eventpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'event_slug'
         }
     }, {
         path: '/create',
@@ -207,14 +210,16 @@ const router = new Router({
         component: BlogPageComponent,
         meta: {
             'store': 'blogpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'blog_id'
         }
     }, {
         path: '/blogpost/:blog_id',
         name: 'Blog_Page_2',
         component: BlogPageComponent,
         meta: {'store': 'blogpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'blog_id'
         }
     }, {
         path: '/author-interviews',
@@ -230,7 +235,8 @@ const router = new Router({
         component: InterviewPageComponent,
         meta: {
             'store': 'interviewpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'interview_id'
         }
     }, {
         path: '/reset-password',
@@ -248,7 +254,8 @@ const router = new Router({
     }, {
         path: '/author/:author_id',
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'author_id'
         },
         beforeEnter: (to, from, next) => {
             const author_id = to.params.author_id;
@@ -263,7 +270,8 @@ const router = new Router({
     }, {
         path: '/pratilipi/:pratilipi_id',
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'pratilipi_id'
         },
         beforeEnter: (to, from, next) => {
             const pratilipi_id = to.params.pratilipi_id;
@@ -281,7 +289,8 @@ const router = new Router({
         component: ListPageComponent,
         meta: {
             'store': 'listpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'list_page_url'
         },
         beforeEnter: (to, from, next) => {
             console.log(to);

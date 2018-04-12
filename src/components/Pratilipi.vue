@@ -152,7 +152,7 @@ export default {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
             });
-            this.setShareDetails({ data: this.pratilipiData, type: 'PRATILIPI' })
+            this.setShareDetails({ data: this.pratilipiData, type: 'PRATILIPI', screen_name: this.screenName, screen_location: this.screenLocation });
             $('#share_modal').modal('show');
         }
     },

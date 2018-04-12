@@ -9,7 +9,7 @@
             </button>
           </div>
           <div class="modal-body social">
-              <a :href="getFacebookShareUrl" class="fb" target="_blank">
+              <a :href="getFacebookShareUrl" @click="triggerFbShareEvent" class="fb" target="_blank">
                   <span class="social-icon"><icon name="facebook-f"></icon></span>
                   __("facebook")
               </a>
@@ -43,6 +43,7 @@ import 'vue-awesome/icons/whatsapp'
 import 'vue-awesome/icons/link'
 
 import { mapGetters } from 'vuex'
+import mixins from '@/mixins';
 
 export default {
     name: 'Share-Modal',
@@ -52,9 +53,15 @@ export default {
             'getTwitterUrl',
             'getGooglePlusUrl',
             'getWhatsAppUri',
-            'getContentUri'
+            'getContentUri',
+            'getScreenDetails',
+            'getUserDetails',
+            'getPratilipiData'
         ]),
     },
+    mixins: [
+        mixins
+    ],
     methods: {
         copyUrlToClipboard() {
             
@@ -97,6 +104,25 @@ export default {
         copyTextToClipboard(text) {
             console.log(text);
             
+        },
+        triggerFbShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            console.log(this.$route);
+            // let parentId;
+            // 
+            // for (let prop in this.$route.params) {
+            //     parentId = this.$route.params[prop];
+            // }
+            let action = !this.getPratilipiData ? 'SHAREUSERFB' : 'SHAREBOOKFB';
+            this.triggerAnanlyticsEvent(`${action}_${this.getScreenDetails.screen_location}_${this.getScreenDetails.screen_name}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'FACEBOOK',
+                'PARENT_ID': this.$route.params[this.$route.meta.id_prop]
+            });
         }
     }
 }

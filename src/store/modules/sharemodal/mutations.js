@@ -19,8 +19,10 @@ export default {
     //     state.checkoutStatus = status
     // }
     
-    setShareDetails(state, { data, type }) {
+    setShareDetails(state, { data, type, screen_name, screen_location }) {
         state.share_data = data;
         state.share_type = type;
+        state.screen_name = screen_name;
+        state.screen_location = screen_location;
     }
 }

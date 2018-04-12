@@ -49,6 +49,21 @@ export default {
             case 'AUTHOR':
                 return `https://${state.share_data.language.toLowerCase()}.pratilipi.com${state.share_data.pageUrl}`;
         }
+    },
+    
+    getScreenDetails: (state) => {
+        return {
+            screen_location: state.screen_location,
+            screen_name: state.screen_name
+        }
+    },
+    
+    getPratilipiData: (state) => {
+        if (state.share_type === 'PRATILIPI') {
+            return state.share_data;
+        } else {
+            return false
+        }
     }
 
 }
