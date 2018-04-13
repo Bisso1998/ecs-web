@@ -127,7 +127,7 @@ function processResponseText(repsonseText) {
     try {
         res = JSON.parse(repsonseText);
     } catch (err) {
-        res["message"] = "${ _strings.server_error_message }";
+        res["message"] = "__('server_error_message')";
     }
     return res;
 };

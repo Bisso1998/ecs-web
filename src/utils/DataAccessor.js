@@ -77,7 +77,7 @@ const processRequests = function(requests) {
 };
 
 const processGetResponse = function(response, status, aCallBack) {
-    if (status !== 200) {
+    if (status !== 200 && status !== 404) {
         Raven.captureMessage(response.message || 'GET call failed', {
             level: 'error' // one of 'info', 'warning', or 'error'
         });
