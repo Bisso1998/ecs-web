@@ -6,7 +6,7 @@
         <a :href="getTwitterUrl" class="twitter" target="_blank">
            <span class="social-icon"><icon name="twitter"></icon></span>
         </a>
-        <a :href="getGooglePlusUrl" class="google" target="_blank">
+        <a :href="getGooglePlusUrl" @click="triggerGpEndShareEvent" class="google" target="_blank">
             <span class="social-icon"><icon name="google-plus"></icon></span>
         </a>
         <a :href="getWhatsAppUri" class="whatsapp" target="_blank">
@@ -62,6 +62,17 @@ export default {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': 'FACEBOOK'
+            });
+        },
+        triggerGpEndShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            this.triggerAnanlyticsEvent(`SHAREBOOKGP_BOOKEND_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'GOOGLEPLUS'
             });
         }
     },
