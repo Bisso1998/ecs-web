@@ -21,7 +21,7 @@
                   <span class="social-icon"><icon name="google-plus"></icon></span>
                   __("google_plus")
               </a>
-              <a :href="getWhatsAppUri" class="whatsapp" target="_blank">
+              <a :href="getWhatsAppUri" @click="triggerWaShareEvent" class="whatsapp" target="_blank">
                   <span class="social-icon"><icon name="whatsapp"></icon></span>
                   __("whatsapp")
               </a>
@@ -141,6 +141,19 @@ export default {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': 'TWITTER',
+                'PARENT_ID': this.$route.params[this.$route.meta.id_prop]
+            });
+        },
+        triggerWaShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            let action = !this.getPratilipiData ? 'SHAREUSERWA' : 'SHAREBOOKWA';
+            this.triggerAnanlyticsEvent(`${action}_${this.getScreenDetails.screen_location}_${this.getScreenDetails.screen_name}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'WHATSAPP',
                 'PARENT_ID': this.$route.params[this.$route.meta.id_prop]
             });
         }
