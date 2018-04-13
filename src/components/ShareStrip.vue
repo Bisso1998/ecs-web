@@ -1,6 +1,6 @@
 <template>
     <div class="social-share">
-        <a :href="getFacebookShareUrl" class="fb" target="_blank">
+        <a :href="getFacebookShareUrl" @click="triggerFbEndShareEvent" class="fb" target="_blank">
             <span class="social-icon"><icon name="facebook-f"></icon></span>
         </a>
         <a :href="getTwitterUrl" class="twitter" target="_blank">
@@ -34,7 +34,9 @@ export default {
             'getTwitterUrl',
             'getGooglePlusUrl',
             'getWhatsAppUri',
-            'getContentUri'
+            'getContentUri',
+            'getUserDetails',
+            'getPratilipiData'
         ]),
     },
     props: {
@@ -50,7 +52,18 @@ export default {
     methods: {
         ...mapActions([
             'setShareDetails'
-        ])
+        ]),
+        triggerFbEndShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            this.triggerAnanlyticsEvent(`SHAREBOOKFB_BOOKEND_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'FACEBOOK'
+            });
+        }
     },
     components: {
         
