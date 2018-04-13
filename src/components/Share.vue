@@ -17,7 +17,7 @@
                  <span class="social-icon"><icon name="twitter"></icon></span>
                  __("twitter")
               </a>
-              <a :href="getGooglePlusUrl" class="google" target="_blank">
+              <a :href="getGooglePlusUrl" @click="triggerGpShareEvent" class="google" target="_blank">
                   <span class="social-icon"><icon name="google-plus"></icon></span>
                   __("google_plus")
               </a>
@@ -115,6 +115,19 @@ export default {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': 'FACEBOOK',
+                'PARENT_ID': this.$route.params[this.$route.meta.id_prop]
+            });
+        },
+        triggerGpShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            let action = !this.getPratilipiData ? 'SHAREUSERGP' : 'SHAREBOOKGP';
+            this.triggerAnanlyticsEvent(`${action}_${this.getScreenDetails.screen_location}_${this.getScreenDetails.screen_name}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'GOOGLEPLUS',
                 'PARENT_ID': this.$route.params[this.$route.meta.id_prop]
             });
         }
