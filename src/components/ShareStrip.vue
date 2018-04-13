@@ -9,7 +9,7 @@
         <a :href="getGooglePlusUrl" @click="triggerGpEndShareEvent" class="google" target="_blank">
             <span class="social-icon"><icon name="google-plus"></icon></span>
         </a>
-        <a :href="getWhatsAppUri" class="whatsapp" target="_blank">
+        <a :href="getWhatsAppUri" @click="triggerWaEndShareEvent" class="whatsapp" target="_blank">
             <span class="social-icon"><icon name="whatsapp"></icon></span>
         </a>
         <a class="link" v-if="false" >
@@ -84,6 +84,17 @@ export default {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': 'TWITTER'
+            });
+        },
+        triggerWaEndShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            this.triggerAnanlyticsEvent(`SHAREBOOKWA_BOOKEND_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'WHATSAPP'
             });
         }
     },
