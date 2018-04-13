@@ -110,12 +110,6 @@ export default {
             if (this.getPratilipiData) {
                 pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
             }
-            console.log(this.$route);
-            // let parentId;
-            // 
-            // for (let prop in this.$route.params) {
-            //     parentId = this.$route.params[prop];
-            // }
             let action = !this.getPratilipiData ? 'SHAREUSERFB' : 'SHAREBOOKFB';
             this.triggerAnanlyticsEvent(`${action}_${this.getScreenDetails.screen_location}_${this.getScreenDetails.screen_name}`, 'CONTROL', {
                 ...pratilipiAnalyticsData,
