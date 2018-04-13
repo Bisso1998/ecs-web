@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="head-title">Settings</div>
-                        <button type="button" class="sign-out btn btn-light" name="button" @click="logoutUser"><i class="material-icons">power_settings_new</i> __("user_sign_out")</button>
+                        <button type="button" class="sign-out btn btn-light" name="button" @click="triggerEventAndLogoutUser"><i class="material-icons">power_settings_new</i> __("user_sign_out")</button>
                         <div class="settings-menu">
                             <a href="#" v-on:click="tabchange" class="active" data-tab="profile-settings">__("menu_profile")</a>
                             <a href="#" v-on:click="tabchange" data-tab="notification-settings">__("notification_notifications")</a>
@@ -255,6 +255,12 @@ export default {
                 'USER_ID': this.getUserDetails.userId
             });
             this.updateUserPassword(data);
+        },
+        triggerEventAndLogoutUser() {
+            this.triggerAnanlyticsEvent('LOGOUT_SETTINGSM_SETTINGS', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.logoutUser();
         }
     },
     watch: {
