@@ -3,7 +3,7 @@
         <a :href="getFacebookShareUrl" @click="triggerFbEndShareEvent" class="fb" target="_blank">
             <span class="social-icon"><icon name="facebook-f"></icon></span>
         </a>
-        <a :href="getTwitterUrl" class="twitter" target="_blank">
+        <a :href="getTwitterUrl" @click="triggerTwEndShareEvent" class="twitter" target="_blank">
            <span class="social-icon"><icon name="twitter"></icon></span>
         </a>
         <a :href="getGooglePlusUrl" @click="triggerGpEndShareEvent" class="google" target="_blank">
@@ -73,6 +73,17 @@ export default {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': 'GOOGLEPLUS'
+            });
+        },
+        triggerTwEndShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            this.triggerAnanlyticsEvent(`SHAREBOOKTW_BOOKEND_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'TWITTER'
             });
         }
     },
