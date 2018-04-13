@@ -13,7 +13,7 @@
                   <span class="social-icon"><icon name="facebook-f"></icon></span>
                   __("facebook")
               </a>
-              <a :href="getTwitterUrl" class="twitter" target="_blank">
+              <a :href="getTwitterUrl" @click="triggerTwShareEvent" class="twitter" target="_blank">
                  <span class="social-icon"><icon name="twitter"></icon></span>
                  __("twitter")
               </a>
@@ -128,6 +128,19 @@ export default {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': 'GOOGLEPLUS',
+                'PARENT_ID': this.$route.params[this.$route.meta.id_prop]
+            });
+        },
+        triggerTwShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            let action = !this.getPratilipiData ? 'SHAREUSERTW' : 'SHAREBOOKTW';
+            this.triggerAnanlyticsEvent(`${action}_${this.getScreenDetails.screen_location}_${this.getScreenDetails.screen_name}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'TWITTER',
                 'PARENT_ID': this.$route.params[this.$route.meta.id_prop]
             });
         }
