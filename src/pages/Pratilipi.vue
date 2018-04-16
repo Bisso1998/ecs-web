@@ -438,6 +438,20 @@ export default {
             switch(imageType) {
                 case 'pratilipi-image':
                     $('#pratilipiimage-uploader').click();
+                    if (this.getPratilipiData.coverImageUrl.endsWith('/pratilipi/cover')) {
+                        const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                        this.triggerAnanlyticsEvent(`NEWBOOKINFO_BOOKCOVER_BOOK`, 'CONTROL', {
+                            ...pratilipiAnalyticsData,
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
+                    else {
+                        const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                        this.triggerAnanlyticsEvent(`UPDATEBOOKINFO_BOOKCOVER_BOOK`, 'CONTROL', {
+                            ...pratilipiAnalyticsData,
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
                     break;
             }
             
