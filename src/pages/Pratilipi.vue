@@ -38,7 +38,7 @@
                                     </span>
                                     <span>
                                         <button v-if="isMobile()" @click="showAlertToGoToDesktop"><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button>
-                                        <a v-else :href="getPratilipiData.writePageUrl"><button ><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button></a>
+                                        <a v-else @click="triggerEditBookEvent" :href="getPratilipiData.writePageUrl"><button><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button></a>
                                     </span>
                                     <span v-if="getPratilipiData.state === 'DRAFTED'">
                                         <button @click="unpublishOrPublishBook({ bookState: 'PUBLISHED' })">__("pratilipi_publish_it")</button>
@@ -280,7 +280,19 @@ export default {
             });
         },
         showAlertToGoToDesktop() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`EDITBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             this.triggerAlert({ message: '__("write_on_desktop_only")', timer: 3000 });
+        },
+        triggerEditBookEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`EDITBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
         },
         saveTypeAndCategoriesAndCloseSection(data) {
             this.saveTypeAndCategories(data);
