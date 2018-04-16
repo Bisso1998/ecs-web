@@ -6,7 +6,7 @@
                     <div class="col-md-4">
                         <div class="foot-title">__("footer_mobile_app")</div>
                         <div class="foot-items">
-                            <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_footer&utm_campaign=app_download" target="_blank">
+                            <a @click.prevent="triggerEvent" href="#" target="_blank">
                                 <img src="../assets/google-play-badge.png" alt="google-play" class="google-play-badge">
                             </a>
                         </div>
@@ -58,14 +58,32 @@ import 'vue-awesome/icons/facebook-f'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/linkedin'
+import mixins from '@/mixins'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    mixins: [
+        mixins
+    ],
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
     methods: {
         toggleTopFooter() {
             $(".show-more").toggleClass("shown");
             $(".top-footer").toggleClass("shown");
             $("html, body").animate({ scrollTop: $(document).height() }, "slow");
-        }
+        },
+        triggerEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GETANDROID_FOOTER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_footer&utm_campaign=app_download')
+        },
     }
 }
 </script>
