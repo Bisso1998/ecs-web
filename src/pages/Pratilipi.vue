@@ -916,7 +916,7 @@ export default {
             margin-left: 0;
             left: 50%;
             transform: translateX(-50%);
-            bottom: -200vh;
+            bottom: -700vh;
             overflow: hidden;
             overflow-y: auto;
             text-align: left;

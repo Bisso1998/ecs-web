@@ -1064,7 +1064,7 @@ export default {
         position: fixed;
         margin-bottom: 46px;
         margin-left: 0;
-        bottom: -200vh;
+        bottom: -700vh;
         left: 50%;
         transform: translateX(-50%);
         overflow: hidden;
