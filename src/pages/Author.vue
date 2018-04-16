@@ -9,6 +9,7 @@
                                 <div class="cover-options">
                                     <router-link
                                     :to="{ name: 'Settings_Page'}"
+                                    @click.native="triggerSettingsEvent"
                                     v-if="getUserDetails.userId === getAuthorData.user.userId">
                                         <i class="material-icons">settings</i>
                                     </router-link>
@@ -264,6 +265,11 @@ export default {
                     break;
             }
             
+        },
+        triggerSettingsEvent() {
+            this.triggerAnanlyticsEvent(`CLICKSETTINGS_MYPROFILEM_MYPROFILE`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         },
         triggerEventAndFollowOrUnfollowAuthor() {
             let action = !this.getAuthorData.following ? 'FOLLOW' : 'UNFOLLOW';
