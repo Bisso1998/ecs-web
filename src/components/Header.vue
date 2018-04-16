@@ -24,13 +24,12 @@
                                 <i class="material-icons">search</i>
                                 <SearchBox :searchText="searchText"></SearchBox>
                             </div>
-                            <router-link
-                            :to="{ name: 'Notification'}"
+                            <div
                             class="notification-icon"
-                            @click.native="resetNotificationCount">
+                            @click="triggerEventAndResetNotificationCount">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
-                            </router-link>
+                            </div>
                         </div>
                         <div class="d-block d-lg-none search-box search-box-2 text-right">
                             <div class="form-group has-feedback" id="search-box-small">
@@ -38,13 +37,12 @@
                                 <i class="material-icons">search</i>
                                 <SearchBox :searchText="searchText"></SearchBox>
                             </div>
-                            <router-link
-                            :to="{ name: 'Notification'}"
-                            @click.native="resetNotificationCount"
+                            <div
+                            @click="triggerEventAndResetNotificationCount"
                             class="notification-icon">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
-                            </router-link>
+                            </div>
                         </div>
                     </div>
                     <div class="d-none d-lg-block col-lg-5">
@@ -150,6 +148,15 @@ export default {
                 }
             });
         },
+        triggerEventAndResetNotificationCount() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GONOTIFPAGE_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.$router.push('/notifications');
+            this.resetNotificationCount;
+        },
         ...mapActions([
             'resetNotificationCount'
         ]),
@@ -189,6 +196,9 @@ export default {
             $(document).on('blur', 'input', function() {
                 $(".footer-menu").css("height", "51px")
             });
+        }
+        if (this.$route.path === '/notifications' ) {
+            $(".notification-icon").addClass("active");
         }
     },
     destroyed() {
@@ -317,6 +327,7 @@ export default {
             vertical-align: middle;
             margin: 5px 12px 0 5px;
             position: relative;
+            cursor: pointer;
             &:hover {
                 text-decoration: none;
             }
@@ -333,7 +344,7 @@ export default {
                 font-size: 11px;
                 line-height: 22px;
             }
-            &.router-link-exact-active {
+            &.router-link-exact-active , &.active {
                 color: #d00b12;
             }
         }

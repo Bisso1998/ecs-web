@@ -79,7 +79,6 @@ export default {
                 SCREEN_NAME
             });
             this.$router.push(this.userDetails.profilePageUrl);
-            $(".profile-tab").addClass("active");
         }
     },
     mounted() {
