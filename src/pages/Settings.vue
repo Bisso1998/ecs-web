@@ -245,6 +245,11 @@ export default {
                     'USER_ID': this.getUserDetails.userId
                 });
             }
+            else if (tab_id === 'profile-settings') {
+                this.triggerAnanlyticsEvent('GOSETNGACC_SETTINGSM_SETTINGS', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
         },
         updateEmail(e) { this.$store.commit('settingspage/updateEmail', e.target.value) },
         updatePhone(e) { this.$store.commit('settingspage/updatePhone', e.target.value) },
