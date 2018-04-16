@@ -206,6 +206,13 @@ export default {
             $(this.$el).find(".comment-content.editable." + commentId).toggle();
         },
         updateCommentAndToggle(data) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`EDITCOMMENT_COMMENTS_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_STATE': 'UPDATE'
+            });
+            
             $(this.$el).find(".comment-content.editable." + data.commentId).toggle();
             this.updateComment(data);
         },
