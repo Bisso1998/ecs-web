@@ -2,7 +2,7 @@
 	<div class="section">
 		<div class="container-fluid">
 	        <h2 class="section-title">
-                <router-link v-if="listPageUrl" :to="listPageUrl">{{title}}</router-link>
+                <router-link v-if="listPageUrl" :to="listPageUrl" @click.native="triggerListLink">{{title}}</router-link>
                 <span v-else>{{title}}</span>
             </h2>
 	        <div class="pratilipi-list" v-if="pratilipiList.length > 0">
@@ -32,6 +32,8 @@
 <script type="text/javascript">
 import PratilipiComponent from '@/components/Pratilipi.vue'
 import Slick from 'vue-slick'
+import mixins from '@/mixins';
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
     name: 'PratilipiList',
@@ -65,6 +67,14 @@ export default {
             required: true
         }
     },
+    mixins: [
+        mixins
+    ],
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ]),
+    },
     data() {
         return {
             slickOptions: {
@@ -89,6 +99,12 @@ export default {
         reInit() {
             // Helpful if you have to deal with v-for to update dynamic lists
             this.$refs.slick.reSlick()
+        },
+        triggerListLink() {
+            this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.listPageUrl
+            });
         }
     },
     mounted() {
