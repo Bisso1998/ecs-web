@@ -18,13 +18,13 @@
           <i class="material-icons">mode_edit</i>
           <span>__("write")</span>
         </router-link>
-        <router-link
-          :to="userDetails.profilePageUrl"
+        <div
+          @click="triggerProfileEvent"
           v-if="userDetails.profilePageUrl"
-          class="main-tabs">
+          class="main-tabs profile-tab">
           <i class="material-icons">account_circle</i>
           <span>__('menu_profile')</span>
-        </router-link>
+        </div>
         <div
           v-else
           @click="triggerLoginEvent"
@@ -71,6 +71,15 @@ export default {
                 SCREEN_NAME
             });
             this.$router.push('/login');
+        },
+        triggerProfileEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GOMYPROFILE_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.$router.push(this.userDetails.profilePageUrl);
+            $(".profile-tab").addClass("active");
         }
     },
     mounted() {
@@ -79,6 +88,9 @@ export default {
         }
         if (this.$route.path === '/login' ) {
             $(".login-tab").addClass("active");
+        }
+        if (this.$route.path === this.userDetails.profilePageUrl ) {
+            $(".profile-tab").addClass("active");
         }
     }
 }
