@@ -360,6 +360,11 @@ export default {
             this.openMultiInputModal();
         },
         confirmAndDeletePratilipi() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`DELETEBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             this.setConfirmModalAction({ 
                 action: `${this.$route.meta.store}/deletePratilipi`, 
                 heading: 'pratilipi_delete_content',
