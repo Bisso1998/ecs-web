@@ -82,7 +82,8 @@ const router = new Router({
         name: 'Discovery_Page',
         component: DiscoverPageComponent,
         meta: {
-            'title': '__("seo_navigation_page") | __("pratilipi")'
+            'title': '__("seo_navigation_page") | __("pratilipi")',
+            'store': 'discover'
         }
     }, {
         path: '/read',
@@ -187,14 +188,16 @@ const router = new Router({
         name: 'Login_Page',
         component: LoginPageComponent,
         meta: {
-            'title': '__("seo_login_page") | __("pratilipi")'
+            'title': '__("seo_login_page") | __("pratilipi")',
+            'store': 'login'
         }
     }, {
         path: '/signup',
         name: 'Signup_Page',
         component: LoginPageComponent,
         meta: {
-            'title': '__("seo_register_page") | __("pratilipi")'
+            'title': '__("seo_register_page") | __("pratilipi")',
+            'store': 'register'
         }
     }, {
         path: '/blog',

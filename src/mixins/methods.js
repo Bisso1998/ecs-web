@@ -16,6 +16,16 @@ export function translateWord(word, callback) {
 }
 
 export function openLoginModal(pageSource, action, location) {
+    triggerAnanlyticsEvent('LANDED_REGISTERM_GLOBAL', 'CONTROL', {
+        REFER_SCREEN: getAnalyticsPageSource(pageSource),
+        REFER_ACTION: action,
+        REFER_LOCATION: location
+
+    });
+    $('#login_modal').modal('show');
+}
+
+export function getAnalyticsPageSource(pageSource) {
     let analyticsPageSource;
     switch (pageSource) {
         case 'homepage': 
@@ -63,14 +73,17 @@ export function openLoginModal(pageSource, action, location) {
         case 'listpage': 
             analyticsPageSource = 'CATEGORY';
             break;
+        case 'discover':
+            analyticsPageSource = 'DISCOVER';
+            break;
+        case 'login':
+            analyticsPageSource = 'LOGIN';
+            break;
+        case 'register':
+            analyticsPageSource = 'SIGNUP';
+            break;
     }
-    triggerAnanlyticsEvent('LANDED_REGISTERM_GLOBAL', 'CONTROL', {
-        REFER_SCREEN: analyticsPageSource,
-        REFER_ACTION: action,
-        REFER_LOCATION: location
-
-    });
-    $('#login_modal').modal('show');
+    return analyticsPageSource;
 }
 
 export function openInputModal() {
@@ -210,8 +223,13 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
     let eventProps;
     switch(experimentType) {
         case 'CONTROL':
-            eventProps = controlAnalyticsEvents[eventName];
+            eventProps = { ...controlAnalyticsEvents[eventName] };
             break;
+    }
+    
+    if (!eventProps.SCREEN_NAME) {
+        eventProps.SCREEN_NAME = eventProperty['SCREEN_NAME'];
+        delete eventProperty.SCREEN_NAME;
     }
 
     if (eventProps) {

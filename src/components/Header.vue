@@ -4,10 +4,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-2 col-sm-4 col-5 p-r-0">
-                        <router-link
-                          :to="{ name: 'Home' }"
+                        <span
+                          @click="triggerHomeEvent"
                           class="logo">
-                        </router-link>
+                        </span>
                         <div class="language-dropdown">
                             <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             __("pratilipi")
@@ -108,6 +108,14 @@ export default {
     methods: {
         changeSearchText(event) {
             this.searchText = event.target.value;
+        },
+        triggerHomeEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GOHOME_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.$router.push('/');
         },
         goToSearchPage() {
             this.triggerAnanlyticsEvent(`SEARCH_SEARCHM_SEARCH`, 'CONTROL', {

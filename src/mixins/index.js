@@ -17,7 +17,8 @@ import {
     validatePassword,
     validateUsername,
     triggerAnanlyticsEvent,
-    getPratilipiAnalyticsData
+    getPratilipiAnalyticsData,
+    getAnalyticsPageSource
 } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
@@ -46,6 +47,7 @@ export default {
         validatePassword,
         validateUsername,
         triggerAnanlyticsEvent,
-        getPratilipiAnalyticsData
+        getPratilipiAnalyticsData,
+        getAnalyticsPageSource
     }
 }

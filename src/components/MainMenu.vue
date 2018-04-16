@@ -1,11 +1,11 @@
 <template>
     <div class="tabs-section col-md-12 col-12">
-        <router-link
-          :to="{ name: 'Home' }"
-          class="main-tabs">
+        <div
+          @click="triggerHomeEvent"
+          class="main-tabs home-tab">
           <i class="material-icons">home</i>
           <span>__("goto_home")</span>
-        </router-link>
+        </div>
         <router-link
           :to="{ name: 'Discovery_Page' }"
           class="main-tabs">
@@ -37,6 +37,7 @@
 
 <script>
 import constants from '@/constants'
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -44,6 +45,29 @@ export default {
         userDetails: {
             type: Object,
             required: true
+        }
+    },
+    mixins: [
+        mixins
+    ],
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
+    methods: {
+        triggerHomeEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GOHOME_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.$router.push('/');
+        },
+    },
+    mounted() {
+        if (this.$route.path === '/' ) {
+            $(".home-tab").addClass("active");
         }
     }
 }
@@ -58,6 +82,7 @@ export default {
         font-size: 18px;
         border-bottom: 3px solid #fff;
         padding-bottom: 2px;
+        cursor: pointer;
         span {
             display: block;
             font-size: 12px;
@@ -66,7 +91,7 @@ export default {
             text-decoration: none;
             color: #d00b12;
         }
-        &.router-link-exact-active {
+        &.router-link-exact-active, &.active {
             color: #d00b12;
             border-bottom-color: #d00b12;
         }
