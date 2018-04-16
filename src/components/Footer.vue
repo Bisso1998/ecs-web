@@ -21,10 +21,10 @@
                     <div class="col-md-4">
                         <div class="foot-title">__("footer_follow_us_on_social_media")</div>
                         <div class="foot-items social">
-                            <a :href="'__('facebook_page')'" class="fb" target="_blank"><icon name="facebook-f"></icon></a>
-                            <a :href="'__('twitter_page')'" class="twitter" target="_blank"><icon name="twitter"></icon></a>
-                            <a :href="'__('googleplus_page')'" class="google" target="_blank"><icon name="google-plus"></icon></a>
-                            <a :href="'__('linkedin_page')'" class="linkedin" target="_blank"><icon name="linkedin"></icon></a>
+                            <a @click="triggerFbEvent" :href="'__('facebook_page')'" class="fb" target="_blank"><icon name="facebook-f"></icon></a>
+                            <a @click="triggerTwEvent" :href="'__('twitter_page')'" class="twitter" target="_blank"><icon name="twitter"></icon></a>
+                            <a @click="triggerGpEvent" :href="'__('googleplus_page')'" class="google" target="_blank"><icon name="google-plus"></icon></a>
+                            <a @click="triggerLnEvent" :href="'__('linkedin_page')'" class="linkedin" target="_blank"><icon name="linkedin"></icon></a>
                         </div>
                     </div>
                 </div>
@@ -83,6 +83,38 @@ export default {
                 SCREEN_NAME
             });
             window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_footer&utm_campaign=app_download')
+        },
+        triggerFbEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('LIKEPRATFB_FOOTER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'FACEBOOK',
+                SCREEN_NAME
+            });
+        },
+        triggerTwEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('LIKEPRATTW_FOOTER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'TWITTER',
+                SCREEN_NAME
+            });
+        },
+        triggerGpEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('LIKEPRATGP_FOOTER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'GOOGLEPLUS',
+                SCREEN_NAME
+            });
+        },
+        triggerLnEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('LIKEPRATLINKD_FOOTER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'LINKEDIN',
+                SCREEN_NAME
+            });
         },
     }
 }
