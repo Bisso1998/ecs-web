@@ -259,10 +259,20 @@ export default {
             switch(imageType) {
                 case 'cover-image':
                     $('#coverimage_uploader').click();
+                    if (this.getAuthorData.coverImageUrl.endsWith('/author/cover')) {
+                        this.triggerAnanlyticsEvent(`NEWUSERINFO_COVERPIC_MYPROFILE`, 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
+                    else {
+                        this.triggerAnanlyticsEvent(`UPDATEUSERINFO_COVERPIC_MYPROFILE`, 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
                     break;
                 case 'profile-image':
                     $('#profile_uploader').click();
-                    if (this.getAuthorData.imageUrl.endsWith('/author/cover')) {
+                    if (this.getAuthorData.imageUrl.endsWith('/author/image')) {
                         this.triggerAnanlyticsEvent(`NEWUSERINFO_PROFILEPIC_MYPROFILE`, 'CONTROL', {
                             'USER_ID': this.getUserDetails.userId
                         });
