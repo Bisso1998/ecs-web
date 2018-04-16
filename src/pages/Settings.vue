@@ -240,6 +240,11 @@ export default {
                     'USER_ID': this.getUserDetails.userId
                 });
             }
+            else if (tab_id === 'password-settings') {
+                this.triggerAnanlyticsEvent('GOSETNGSEC_SETTINGSM_SETTINGS', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
         },
         updateEmail(e) { this.$store.commit('settingspage/updateEmail', e.target.value) },
         updatePhone(e) { this.$store.commit('settingspage/updatePhone', e.target.value) },
