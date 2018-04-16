@@ -8,7 +8,7 @@
                         <div class="page-content event-list">
                             <ul>
                                 <li v-for="each_event in getEventsData" :key="each_event.eventId">
-                                    <router-link :to="{ name: 'Event_Page', params: { event_slug: each_event.pageUrl.split('/').pop(), event_data: each_event } }">
+                                    <router-link @click.native="triggerEvent(each_event.eventId)" :to="{ name: 'Event_Page', params: { event_slug: each_event.pageUrl.split('/').pop(), event_data: each_event } }">
                                         <span class="event-img" v-bind:style="{ backgroundImage: 'url(' + each_event.bannerImageUrl  + ')' }"></span>
                                         <span class="event-name">{{ each_event.name }}</span>
                                     </router-link>
@@ -51,6 +51,12 @@ export default {
         ...mapActions('eventspage', [
             'fetchListOfEvents'
         ]),
+        triggerEvent(data) {
+            this.triggerAnanlyticsEvent(`CLICKEVENT_EVENTLISTM_EVENTLIST`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data
+            });
+        }
     },
     created() {
         const currentLocale = process.env.LANGUAGE;
