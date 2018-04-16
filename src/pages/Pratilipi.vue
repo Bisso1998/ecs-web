@@ -401,7 +401,12 @@ export default {
             this.openConfirmationModal();
         },
         askConfirmationAndUnpublishOrPublishBook({bookState}) {
-            this.setConfirmModalAction({ 
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`UNPUBLISHBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.setConfirmModalAction({
                 action: `${this.$route.meta.store}/unpublishOrPublishBook`, 
                 heading: 'pratilipi_delete_content',
                 message: 'pratilipi_confirm_delete_content',
