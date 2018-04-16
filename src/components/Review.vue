@@ -51,7 +51,7 @@
                             <i class="material-icons">more_vert</i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="moreOptions2">
-                            <button v-if="eachComment.user.userId === getUserDetails.userId" type="button" @click="editComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="">
+                            <button v-if="eachComment.user.userId === getUserDetails.userId" type="button" @click="editComment(eachComment.commentId, eachComment.content)" class="btn options-btn" data-toggle="modal" data-target="">
                                 __("review_edit_review")
                             </button>
                             <button v-if="eachComment.user.userId === getUserDetails.userId" type="button" @click="deleteComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="">
@@ -115,7 +115,8 @@ export default {
     data() {
         return {
             newComment: '',
-            x: ''
+            x: '',
+            updatedComment: ''
         }
     },
     props: {
@@ -200,7 +201,8 @@ export default {
             }); 
             this.newComment = ''; 
         },
-        editComment(commentId) {
+        editComment(commentId, content) {
+            this.updatedComment = content;
             $(this.$el).find(".comment-content.editable." + commentId).toggle();
         },
         updateCommentAndToggle(data) {
