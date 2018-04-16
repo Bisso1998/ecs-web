@@ -25,13 +25,13 @@
           <i class="material-icons">account_circle</i>
           <span>__('menu_profile')</span>
         </router-link>
-        <router-link
-          :to="{ name: 'Login_Page'}"
+        <div
           v-else
-          class="main-tabs">
+          @click="triggerLoginEvent"
+          class="main-tabs login-tab">
           <i class="material-icons">account_circle</i>
           <span>__('user_sign_in')</span>
-        </router-link>
+        </div>
     </div>
 </template>
 
@@ -64,10 +64,21 @@ export default {
             });
             this.$router.push('/');
         },
+        triggerLoginEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GOLOGIN_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.$router.push('/login');
+        }
     },
     mounted() {
         if (this.$route.path === '/' ) {
             $(".home-tab").addClass("active");
+        }
+        if (this.$route.path === '/login' ) {
+            $(".login-tab").addClass("active");
         }
     }
 }
