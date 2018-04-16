@@ -234,6 +234,12 @@ export default {
             $(event.currentTarget).addClass("active");
             $(".tabs").hide();
             $("#" + tab_id).show();
+            
+            if (tab_id === 'notification-settings') {
+                this.triggerAnanlyticsEvent('GOSETNGNOTIFY_SETTINGSM_SETTINGS', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
         },
         updateEmail(e) { this.$store.commit('settingspage/updateEmail', e.target.value) },
         updatePhone(e) { this.$store.commit('settingspage/updatePhone', e.target.value) },
