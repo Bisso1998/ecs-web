@@ -360,6 +360,11 @@ export default {
             }
         },
         editPratilipiTitle() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`EDITTITLE_BOOKTITLE_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             this.setInputModalSaveAction({ 
                 action: `${this.$route.meta.store}/saveOrUpdateTitle`, 
                 heading: 'edit_pratilipi_title',
