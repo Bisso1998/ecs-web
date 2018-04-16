@@ -15,6 +15,7 @@
 <script>
 import Slick from 'vue-slick'
 import mixins from '@/mixins';
+import inViewport from 'vue-in-viewport-mixin';
 import { mapGetters } from 'vuex'
 
 export default {
@@ -22,10 +23,14 @@ export default {
         banners: {
             type: Array,
             required: true
+        },
+        'in-viewport-once': {
+            default: true
         }
     },
     mixins: [
-        mixins
+        mixins,
+        inViewport
     ],
     computed: {
         ...mapGetters([
@@ -75,6 +80,16 @@ export default {
     },
     components: {
         Slick
+    },
+    watch: {
+        'inViewport.now': function(visible) {
+            if (visible) {
+                this.triggerAnanlyticsEvent(`VIEWED_BANNERS_HOME`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+                
+            }
+        }
     }
 }
 </script>
