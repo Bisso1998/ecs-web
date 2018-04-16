@@ -9,7 +9,7 @@
                           class="logo">
                         </span>
                         <div class="language-dropdown">
-                            <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn dropdown-toggle" type="button" @click="triggerLanguageEvent" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             __("pratilipi")
                             </button>
                             <div class="dropdown-menu" aria-labelledby="languageDropdown">
@@ -114,6 +114,13 @@ export default {
                 SCREEN_NAME
             });
             this.$router.push('/');
+        },
+        triggerLanguageEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GOLANGUAGE_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
         },
         goToSearchPage() {
             this.triggerAnanlyticsEvent(`SEARCH_SEARCHM_SEARCH`, 'CONTROL', {
