@@ -79,8 +79,10 @@
                                     :key="pratilipiData.pratilipiId"
                                     v-for="pratilipiData in getPublishedContents"
                                     v-if="publishedContentsLoadingState === 'LOADING_SUCCESS' || getPublishedContents.length !== 0"
-                                    :hideAddToLibrary="true"
+                                    :hideAddToLibrary="getAuthorData.authorId === getUserDetails.authorId"
                                     :hideAuthorName="true"
+                                    :removeFromLibrary="removeFromLibraryPublished"
+                                    :addToLibrary="addToLibraryPublished"
                                     :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
                                     :screenLocation="'PUBLISHED'"
                                     ></PratilipiComponent>
@@ -204,10 +206,13 @@ export default {
             'followOrUnfollowFollowing',
             'followOrUnfollowFollowers',
             'uploadCoverImage',
-            'uploadProfileImage'
+            'uploadProfileImage',
+            'removeFromLibraryPublished',
+            'addToLibraryPublished'
         ]),
         ...mapActions([
-            'setShareDetails'
+            'setShareDetails',
+            'setAfterLoginAction'
         ]),
         tabchange(event) {
             event.preventDefault();        
@@ -298,7 +303,15 @@ export default {
                 'ENTITY_VALUE': this.getAuthorData.followCount,
                 'AUTHOR_ID': this.getAuthorData.authorId
             });
-            this.followOrUnfollowAuthor();
+            
+            if (this.getUserDetails.isGuest) {
+                // throw popup modal
+                console.log(this.$route);
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor` });
+                this.openLoginModal(this.$route.meta.store, action, this.screenLocation);
+            } else {
+                this.followOrUnfollowAuthor();
+            }
         },
         openShareModal() {
             if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {

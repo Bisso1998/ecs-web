@@ -101,6 +101,30 @@ export default {
             commit('removePratilipiFromLibraryError');
         });
     },
+    
+    removeFromLibraryPublished({ commit, state }, pratilipiId) {
+        DataAccessor.addOrRemoveFromLibrary(pratilipiId, false, (response) => {
+            commit('alert/triggerAlertView', '__('removed_from_library')', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
+            commit('removePratilipiFromLibraryPublishedSuccess', response);
+        }, (error) => {
+            commit('removePratilipiFromLibraryPublishedError');
+        });
+    },
+    
+    addToLibraryPublished({ commit, state }, pratilipiId) {
+        DataAccessor.addOrRemoveFromLibrary(pratilipiId, true, (response) => {
+            commit('alert/triggerAlertView', '__('added_to_library')', { root: true });
+            setTimeout(() => {
+                commit('alert/triggerAlertHide', null, { root: true });
+            }, 3000);
+            commit('addPratilipiToLibrarySuccess', response);
+        }, (error) => {
+            commit('addPratilipiToLibraryError');
+        });
+    },
 
     followOrUnfollowAuthor({ commit, state, dispatch }) {
         commit('setFollowUnfollowLoadingDataLoadingTrue');
