@@ -351,9 +351,23 @@ export default {
             }
         },
         goToPreviousChapter() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('CHANGECHAPTER_READERM_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.selectedChapter
+            });
+            
             this.$router.push({ path: '/read', query: { id: this.getPratilipiData.pratilipiId, chapterNo: this.selectedChapter - 1 } });
         },
         goToNextChapter() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('CHANGECHAPTER_READERM_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.selectedChapter
+            });
+            
             this.$router.push({ path: '/read', query: { id: this.getPratilipiData.pratilipiId, chapterNo: this.selectedChapter + 1 } });
         },
         increaseFont() {
