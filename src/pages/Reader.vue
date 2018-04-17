@@ -204,7 +204,7 @@
                             :class="{ isActive: eachIndex.chapterNo === selectedChapter }">
                                 <router-link
                                     :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }"
-                                    @click.native="closeSidebar">
+                                    @click.native="triggerEventAndCloseSidebar(eachIndex.chapterNo)">
                                     __("writer_chapter") {{ eachIndex.title || eachIndex.chapterNo }}
                                 </router-link>
                         </li>
@@ -458,6 +458,17 @@ export default {
             $('.overlay').fadeIn();   
         },
         closeSidebar() {
+            $('#sidebar').removeClass('active');
+            $('.overlay').fadeOut();
+        },
+        triggerEventAndCloseSidebar(data) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('CHANGECHAPTER_INDEX_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data
+            });
+            
             $('#sidebar').removeClass('active');
             $('.overlay').fadeOut();
         },
