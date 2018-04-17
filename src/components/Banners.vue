@@ -73,10 +73,26 @@ export default {
                 'USER_ID': this.getUserDetails.userId,
                 'PARENT_ID': bannerId
             });
+        },
+        triggerEvent() {
+            console.log("next");
         }
+
     },
-    mount() {
+    mounted() {
         this.reInit();
+        const that = this;
+        $('.slick-banner').on('swipe', function(event, slick, direction) {
+            that.triggerAnanlyticsEvent(`SWIPE_BANNERS_HOME`, 'CONTROL', {
+                'USER_ID': that.getUserDetails.userId,
+                'PARENT_ID': $($(event.target).find('img')[slick.currentSlide]).attr('src')
+            });
+        });
+        $('.slick-banner').on('click','.slick-arrow', function() {
+            that.triggerAnanlyticsEvent(`SWIPE_BANNERS_HOME`, 'CONTROL', {
+                'USER_ID': that.getUserDetails.userId
+            });
+        });
     },
     components: {
         Slick
