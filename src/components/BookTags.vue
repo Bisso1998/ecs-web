@@ -164,7 +164,6 @@ export default {
     },
     watch: {
         'inViewport.now'(visible) {
-            console.log('VISIBLE: ', visible);
             if (visible) {
                 const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
                 this.triggerAnanlyticsEvent(`VIEWED_CATTAG_BOOK`, 'CONTROL', {
