@@ -166,11 +166,12 @@ export default {
         'inViewport.now'(visible) {
             if (visible) {
                 const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
-                this.triggerAnanlyticsEvent(`VIEWED_CATTAG_BOOK`, 'CONTROL', {
-                    ...pratilipiAnalyticsData,
-                    'USER_ID': this.getUserDetails.userId
-                });
-                
+                if (this.pratilipiData.hasAccessToUpdate) {
+                    this.triggerAnanlyticsEvent(`VIEWED_CATTAG_BOOK`, 'CONTROL', {
+                        ...pratilipiAnalyticsData,
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                }
             }
         }
     }
