@@ -395,14 +395,32 @@ export default {
         lineHeightSm() {
             $(".book-content .content-section").removeClass("lh-sm lh-md lh-lg");
             $(".book-content .content-section").addClass("lh-sm");
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERGAP_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'LESS'
+            });
         },
         lineHeightMd() {
             $(".book-content .content-section").removeClass("lh-sm lh-md lh-lg");
             $(".book-content .content-section").addClass("lh-md");
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERGAP_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'NORMAL'
+            });
         },
         lineHeightLg() {
             $(".book-content .content-section").removeClass("lh-sm lh-md lh-lg");
             $(".book-content .content-section").addClass("lh-lg");
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERGAP_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'HIGH'
+            });
         },
         themeWhite() {
             $(".read-page").removeClass("theme-white theme-black theme-yellow");
