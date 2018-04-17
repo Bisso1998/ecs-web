@@ -119,7 +119,8 @@ export default {
             'setAfterLoginAction'
         ]),
         changeRating(e) {
-            this.triggerAnanlyticsEvent(`RATE_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            let action = this.userPratilipiData.rating ? 'EDITRATE' : 'RATE';
+            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': e.target.value
             });
