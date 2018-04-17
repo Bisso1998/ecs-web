@@ -40,7 +40,7 @@ export default {
         }
         commit('setContentLoadingTrue');
         DataAccessor.getPratilipiContent(pratilipiId, chapterNo, false, (data) => {
-            if (data.status === 200) {
+            if (data && data.status === 200) {
                 commit('setContentLoadingSuccess', data.response);
                 dispatch('fetchPratilipiContentForHTMLNextChapter', { pratilipiId, chapterNo: chapterNo + 1 })
             } else {
@@ -52,7 +52,7 @@ export default {
     fetchPratilipiContentForIMAGE({ commit, state, dispatch }, { pratilipiId, chapterNo }) {
         DataAccessor.getPratilipiContent(pratilipiId, null, true, (data) => {
             console.log(data);
-            if (data.status === 200) {
+            if (data && data.status === 200) {
                 console.log(data);
                 commit('setImageContentLoadingSuccess', data.response);
             } else {
@@ -72,7 +72,7 @@ export default {
             return;
         }
         DataAccessor.getPratilipiContent(pratilipiId, chapterNo, false, (data) => {
-            if (data.status === 200) {
+            if (data && data.status === 200) {
                 commit('setContentLoadingSuccess', data.response);
             } else {
                 commit('setContentLoadingError');

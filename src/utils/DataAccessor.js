@@ -178,9 +178,9 @@ export default {
         httpUtil.get(API_PREFIX, null, { "requests": processRequests(requests) },
             function(response, status) {
                 if (aCallBack != null) {
-                    var pratilipi = response.req1.status == 200 ? response.req1.response : null;
-                    var index = response.req2.status == 200 ? response.req2.response : null;
-                    var userpratilipi = response.req3.status == 200 ? response.req3.response : null;
+                    var pratilipi = response.req1 && response.req1.status == 200 ? response.req1.response : null;
+                    var index = response.req2 && response.req2.status == 200 ? response.req2.response : null;
+                    var userpratilipi = response.req3 && response.req3.status == 200 ? response.req3.response : null;
                     aCallBack(pratilipi, index, userpratilipi);
                 }
             });
