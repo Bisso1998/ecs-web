@@ -33,6 +33,7 @@
 import PratilipiComponent from '@/components/Pratilipi.vue'
 import Slick from 'vue-slick'
 import mixins from '@/mixins';
+import inViewport from 'vue-in-viewport-mixin';
 import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
@@ -58,6 +59,9 @@ export default {
         redirectToReader: {
             type: Boolean
         },
+        'in-viewport-once': {
+            default: true
+        },
         screenName: {
             type: String,
             required: true
@@ -68,7 +72,8 @@ export default {
         }
     },
     mixins: [
-        mixins
+        mixins,
+        inViewport
     ],
     computed: {
         ...mapGetters([
@@ -124,6 +129,17 @@ export default {
     components: {
         PratilipiComponent,
         Slick
+    },
+    watch: {
+        'inViewport.now': function(visible) {
+            if (visible) {
+                this.triggerAnanlyticsEvent(`VIEWED_COLLECTIONS_HOME`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': this.listPageUrl
+                });
+                
+            }
+        }
     }
 }
 </script>
