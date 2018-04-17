@@ -5,8 +5,8 @@
                 <router-link v-if="listPageUrl" :to="listPageUrl" @click.native="triggerListLink">{{title}}</router-link>
                 <span v-else>{{title}}</span>
             </h2>
-	        <div :id="listPageUrl.substr(1)" class="pratilipi-list" v-if="pratilipiList.length > 0">
-	            <slick ref="slick" :options="slickOptions" class="slick-pratilipis">
+	        <div class="pratilipi-list" v-if="pratilipiList.length > 0">
+	            <slick ref="slick" :options="slickOptions" @beforeChange="handleBeforeChange" class="slick-pratilipis">
 	                <PratilipiComponent 
 	                v-for="(eachPratilipi, index) in pratilipiList" 
 	                v-bind:key="eachPratilipi.pratilipiId + index"
@@ -101,16 +101,18 @@ export default {
         prev() {
             this.$refs.slick.prev()
         },
+        handleBeforeChange() {
+            if (this.$route.meta.store === 'homepage') {
+                this.triggerAnanlyticsEvent(`SWIPE_COLLECTIONS_HOME`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': this.listPageUrl
+                });
+            }
+        },
         reInit() {
             // Helpful if you have to deal with v-for to update dynamic lists
-            this.$refs.slick.reSlick()
-            const that = this;
-            $(`#${this.listPageUrl.substr(1)} .slick-pratilipis`).on('beforeChange', function(event, slick, direction) {
-                that.triggerAnanlyticsEvent(`SWIPE_COLLECTIONS_HOME`, 'CONTROL', {
-                    'USER_ID': that.getUserDetails.userId,
-                    'PARENT_ID': that.listPageUrl
-                });
-            });
+            // console.log(this.listPageUrl);
+            this.$refs.slick.reSlick();
         },
         triggerListLink() {
             this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
@@ -120,11 +122,10 @@ export default {
         }
     },
     mounted() {
+        const that = this;
     	if (this.pratilipiList.length > 0) {
-    		this.reInit();	
+    		this.reInit();
     	}
-        
-        
     },
     components: {
         PratilipiComponent,
