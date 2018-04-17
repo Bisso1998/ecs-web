@@ -5,8 +5,8 @@
                 <router-link v-if="listPageUrl" :to="listPageUrl" @click.native="triggerListLink">{{title}}</router-link>
                 <span v-else>{{title}}</span>
             </h2>
-	        <div class="pratilipi-list" v-if="pratilipiList.length > 0">
-	            <slick ref="slick" :options="slickOptions">
+	        <div :id="listPageUrl.substr(1)" class="pratilipi-list" v-if="pratilipiList.length > 0">
+	            <slick ref="slick" :options="slickOptions" class="slick-pratilipis">
 	                <PratilipiComponent 
 	                v-for="(eachPratilipi, index) in pratilipiList" 
 	                v-bind:key="eachPratilipi.pratilipiId + index"
@@ -99,6 +99,13 @@ export default {
         reInit() {
             // Helpful if you have to deal with v-for to update dynamic lists
             this.$refs.slick.reSlick()
+            const that = this;
+            $(`#${this.listPageUrl.substr(1)} .slick-pratilipis`).on('beforeChange', function(event, slick, direction) {
+                that.triggerAnanlyticsEvent(`SWIPE_COLLECTIONS_HOME`, 'CONTROL', {
+                    'USER_ID': that.getUserDetails.userId,
+                    'PARENT_ID': that.listPageUrl
+                });
+            });
         },
         triggerListLink() {
             this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
@@ -111,6 +118,8 @@ export default {
     	if (this.pratilipiList.length > 0) {
     		this.reInit();	
     	}
+        
+        
     },
     components: {
         PratilipiComponent,
