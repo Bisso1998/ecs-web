@@ -268,6 +268,8 @@ export default {
                 action: `${this.$route.meta.store}/saveOrUpdateSummary`, 
                 heading: 'edit_pratilipi_summary',
                 prefilled_value: this.getPratilipiData.summary,
+                initial_value: this.getPratilipiData.summary,
+                pratilipi_data: this.getPratilipiData,
                 data: {
                     pratilipiId: this.getPratilipiData.pratilipiId
                 }

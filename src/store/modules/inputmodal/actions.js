@@ -1,8 +1,8 @@
 import DataAccessor from '@/utils/DataAccessor'
 
 export default {
-    setInputModalSaveAction({ commit, state }, { action, data, heading, prefilled_value }) {
-    	commit('setInputModalSaveAction', { action, data, prefilled_value });
+    setInputModalSaveAction({ commit, state }, { action, data, heading, prefilled_value, initial_value, pratilipi_data }) {
+    	commit('setInputModalSaveAction', { action, data, prefilled_value, initial_value, pratilipi_data });
     	commit('setModalHeading', heading);
     },
 

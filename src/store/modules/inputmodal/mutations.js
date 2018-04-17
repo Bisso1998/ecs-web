@@ -19,11 +19,13 @@ export default {
     //     state.checkoutStatus = status
     // }
     
-    setInputModalSaveAction(state, { action, data, prefilled_value, prefilled_value_two }) {
+    setInputModalSaveAction(state, { action, data, prefilled_value, prefilled_value_two, initial_value, pratilipi_data }) {
         state.action = action;
         state.data = data;
         state.prefilled_value = prefilled_value;
         state.prefilled_value_two = prefilled_value_two;
+        state.initial_value = initial_value;
+        state.pratilipi_data = pratilipi_data;
     },
 
     setConfirmModalAction(state, { action, data, message }) {
