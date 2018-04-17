@@ -374,11 +374,23 @@ export default {
             if (this.fontSize !== 32) {
                 this.fontSize += 2;
             }
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERFONT_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.fontSize
+            });
         },
         decreaseFont() {
             if (this.fontSize !== 12) {
                 this.fontSize -= 2;
             }
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERFONT_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.fontSize
+            });
         },
         lineHeightSm() {
             $(".book-content .content-section").removeClass("lh-sm lh-md lh-lg");
