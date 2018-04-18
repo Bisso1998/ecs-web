@@ -17,53 +17,59 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-first-name">__('edit_author_first_name') *</label>
-                                            <!-- <input type="text" class="form-control" id="pratilipi-settings-first-name" :value="firstName" @input="updateFirstName" placeholder="__('edit_author_first_name')"> -->
-                                            <TranslatingInput :value="firstName" :oninput="updateFirstName"></TranslatingInput>
+                                            <!-- <input type="text" class="form-control" id="pratilipi-settings-first-name" v-model="authorData.firstName" @input="updateFirstName" placeholder="__('edit_author_first_name')"> -->
+                                            <TranslatingInput :value="authorData.firstName" placeholder="__('edit_author_first_name')" :oninput="updateFirstName"></TranslatingInput>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-last-name">__('edit_author_last_name')</label>
-                                            <!-- <input type="text" class="form-control" id="pratilipi-settings-last-name" :value="lastName" @input="updateLastName" placeholder="__('edit_author_last_name')"> -->
-                                            <TranslatingInput :value="lastName" :oninput="updateLastName"></TranslatingInput>
+                                            <!-- <input type="text" class="form-control" id="pratilipi-settings-last-name" v-model="authorData.lastName" @input="updateLastName" placeholder="__('edit_author_last_name')"> -->
+                                            <TranslatingInput :value="authorData.lastName" placeholder="__('edit_author_last_name')" :oninput="updateLastName"></TranslatingInput>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-first-name-en">__('edit_author_first_name_en') *</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-first-name-en" :value="firstNameEn" @input="updateFirstNameEn" placeholder="__('edit_author_first_name_en')">
+                                            <input type="text" class="form-control" id="pratilipi-settings-first-name-en" v-model="authorData.firstNameEn" placeholder="__('edit_author_first_name_en')">
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-last-name-en">__('edit_author_last_name_en')</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-last-name-en" :value="lastNameEn" @input="updateLastNameEn" placeholder="__('edit_author_last_name_en')">
+                                            <input type="text" class="form-control" id="pratilipi-settings-last-name-en" v-model="authorData.lastNameEn" placeholder="__('edit_author_last_name_en')">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-pen-name">__('edit_author_pen_name') *</label>
-                                            <input type="text" class="form-control" id="pratilipi-settings-pen-name" :value="penName" @input="updatePenName" placeholder="__('edit_author_pen_name')">
+                                            <input type="text" class="form-control" id="pratilipi-settings-pen-name" v-model="authorData.penName" placeholder="__('edit_author_pen_name')">
                                         </div>
                                         <div class="form-group">
                                             <label for="pratilipi-settings-language">__("language_choose_language") *</label>
                                             <select class="form-control" id="pratilipi-settings-language" @input="updateLanguage">
                                                 <option disabled selected>__("language_choose_language")</option>
-                                                <option :selected="eachLanguage.fullName.toUpperCase() === language" :value="eachLanguage.fullName.toUpperCase()" v-for="eachLanguage in constants.LANGUAGES" :key="eachLanguage.shortName">{{ eachLanguage.fullName.toUpperCase() }}</option>
+                                                <option 
+                                                    :selected="eachLanguage.fullName.toUpperCase() === authorData.language" 
+                                                    :value="eachLanguage.fullName.toUpperCase()" 
+                                                    v-for="eachLanguage in constants.LANGUAGES" 
+                                                    :key="eachLanguage.shortName">
+                                                    {{ eachLanguage.fullName.toUpperCase() }}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-summary">__('edit_author_summary')</label>
-                                            <textarea class="form-control" id="pratilipi-settings-summary" :value="summary" @input="updateSummary" rows="3"></textarea>
+                                            <textarea class="form-control" id="pratilipi-settings-summary" v-model="authorData.summary" rows="3"></textarea>
                                         </div>
                                     </div>
                                     <div class="section-title">Private Information</div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-email">__('user_email')</label>
-                                            <input type="email" class="form-control" id="pratilipi-settings-email" :value="email" @input="updateEmail" placeholder="__('user_email')">
+                                            <input type="email" class="form-control" id="pratilipi-settings-email" v-model="userData.email" placeholder="__('user_email')">
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-phone">__('user_phone')</label>
-                                            <input type="tel" class="form-control" id="pratilipi-settings-phone" :value="phone" @input="updatePhone" placeholder="__('user_phone')">
+                                            <input type="tel" class="form-control" id="pratilipi-settings-phone" v-model="userData.phone" placeholder="__('user_phone')">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -71,14 +77,14 @@
                                             <label for="pratilipi-settings-gender">__('gender')</label>
                                             <select class="form-control" id="pratilipi-settings-gender" @input="updateGender">
                                                 <option disabled selected>__("gender")</option>
-                                                <option :selected="'MALE' === gender" value="MALE">__("gender_male")</option>
-                                                <option :selected="'FEMALE' === gender" value="FEMALE">__("gender_female")</option>
-                                                <option :selected="'OTHER' === gender" value="OTHER">__("gender_other")</option>
+                                                <option :selected="'MALE' === authorData.gender" value="MALE">__("gender_male")</option>
+                                                <option :selected="'FEMALE' === authorData.gender" value="FEMALE">__("gender_female")</option>
+                                                <option :selected="'OTHER' === authorData.gender" value="OTHER">__("gender_other")</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-dateOfBirth">__('author_date_of_birth')</label>
-                                            <input type="date" class="form-control" id="pratilipi-settings-dateOfBirth" :value="dateOfBirth" @input="updateDateOfBirth" placeholder="__('author_date_of_birth')">
+                                            <input type="date" class="form-control" id="pratilipi-settings-dateOfBirth" v-model="authorData.dateOfBirth" placeholder="__('author_date_of_birth')">
                                         </div>
                                     </div>
                                     <button type="button" class="btn update-btn" @click="updateProfileSettings">__("save_changes")</button>
@@ -89,32 +95,32 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-email-frequency">__('email_frequency')</label>
-                                            <select class="form-control" id="pratilipi-settings-email-frequency">
+                                            <select class="form-control" id="pratilipi-settings-email-frequency" @input="updateEmailFrequency">
                                                 <option disabled selected>__("email_frequency")</option>
-                                                <option>__("email_frequency_immediate")</option>
-                                                <option>__("email_frequency_daily")</option>
-                                                <option>__("email_frequency_weekly")</option>
-                                                <option>__("email_frequency_monthly")</option>
-                                                <option>__("email_frequency_never")</option>
+                                                <option :selected="'IMMEDIATELY' === notificationSettings.emailFrequency" value="IMMEDIATELY">__("email_frequency_immediate")</option>
+                                                <option :selected="'DAILY' === notificationSettings.emailFrequency" value="DAILY">__("email_frequency_daily")</option>
+                                                <option :selected="'WEEKLY' === notificationSettings.emailFrequency" value="WEEKLY">__("email_frequency_weekly")</option>
+                                                <option :selected="'MONTHLY' === notificationSettings.emailFrequency" value="MONTHLY">__("email_frequency_monthly")</option>
+                                                <option :selected="'NEVER' === notificationSettings.emailFrequency" value="NEVER">__("email_frequency_never")</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="section-title">__("notification_group_content")</div>
                                     <div class="form-row">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="notif_option_new_review">
+                                            <input type="checkbox" v-model="notificationSettings.notificationSubscriptions.USER_PRATILIPI_REVIEW" class="form-check-input" id="notif_option_new_review">
                                             <label class="form-check-label" for="notif_option_new_review">__("option_new_review")</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="notif_option_new_comment">
+                                            <input type="checkbox"  v-model="notificationSettings.notificationSubscriptions.COMMENT_REVIEW_REVIEWER" class="form-check-input" id="notif_option_new_comment">
                                             <label class="form-check-label" for="notif_option_new_comment">__("option_new_comment")</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="notif_option_like_review">
+                                            <input type="checkbox" v-model="notificationSettings.notificationSubscriptions.VOTE_REVIEW_REVIEWER" class="form-check-input" id="notif_option_like_review">
                                             <label class="form-check-label" for="notif_option_like_review">__("option_like_review")</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="notif_option_like_comment">
+                                            <input type="checkbox" v-model="notificationSettings.notificationSubscriptions.VOTE_COMMENT_REVIEW_COMMENTOR" class="form-check-input" id="notif_option_like_comment">
                                             <label class="form-check-label" for="notif_option_like_comment">__("option_like_comment")</label>
                                         </div>
                                     </div>
@@ -122,11 +128,11 @@
                                     <div class="section-title">__("notification_group_network")</div>
                                     <div class="form-row">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="notif_option_new_follower">
+                                            <input type="checkbox" v-model="notificationSettings.notificationSubscriptions.AUTHOR_FOLLOW" class="form-check-input" id="notif_option_new_follower">
                                             <label class="form-check-label" for="notif_option_new_follower">__("option_new_follower")</label>
                                         </div>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="notif_option_pratilipi_published_follower">
+                                            <input type="checkbox" v-model="notificationSettings.notificationSubscriptions.PRATILIPI_PUBLISHED_FOLLOWER" class="form-check-input" id="notif_option_pratilipi_published_follower">
                                             <label class="form-check-label" for="notif_option_pratilipi_published_follower">__("option_pratilipi_published_follower")</label>
                                         </div>
                                         <div class="form-check">
@@ -134,7 +140,7 @@
                                             <label class="form-check-label" for="notif_option_pratilipi_updates">__("option_pratilipi_updates")</label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn update-btn" disabled>__("save_changes")</button>
+                                    <button type="button" class="btn update-btn" @click="setUserPreference">__("save_changes")</button>
                                 </form>
                             </div>
                             <div class="tabs" id="password-settings">
@@ -175,7 +181,7 @@ import TranslatingInput from '@/components/TranslatingInput.vue';
 import Spinner from '@/components/Spinner.vue';
 import constants from '@/constants';
 import mixins from '@/mixins';
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
@@ -188,7 +194,37 @@ export default {
             constants,
             oldPassword: '',
             newPassword: '',
-            initial_author_data: null
+            initial_author_data: null,
+            authorData: {
+                firstName: null,
+                lastName: null,
+                firstNameEn: null,
+                lastNameEn: null,
+                language: null,
+                summary: null,
+                penName: null,
+                gender: null,
+                dateOfBirth: null
+            },
+            userData: {
+                email: null,
+                phone: null
+            },
+            notificationSettings: {
+                emailFrequency: 'IMMEDIATELY',
+                notificationSubscriptions: {
+                    AUTHOR: null, 
+                    AUTHOR_FOLLOW: null,
+                    COMMENT_REVIEW_REVIEWER: null, 
+                    EVENT: null, 
+                    GENERIC: null, 
+                    PRATILIPI: null, 
+                    PRATILIPI_PUBLISHED_FOLLOWER: null, 
+                    USER_PRATILIPI_REVIEW: null, 
+                    VOTE_COMMENT_REVIEW_COMMENTOR: null, 
+                    VOTE_REVIEW_REVIEWER: null
+                }
+            }
         }
     },
     mixins: [
@@ -200,19 +236,6 @@ export default {
             'getAuthorLoadingState',
             'getAuthorUpdateState'
         ]),
-        ...mapState({
-            email: state => state.user.data.email,
-            phone: state => state.user.data.phone,
-            firstName: state => state.settingspage.author.data.firstName,
-            language: state => state.settingspage.author.data.language,
-            lastName: state => state.settingspage.author.data.lastName,
-            firstNameEn: state => state.settingspage.author.data.firstNameEn,
-            lastNameEn: state => state.settingspage.author.data.lastNameEn,
-            penName: state => state.settingspage.author.data.penName,
-            summary: state => state.settingspage.author.data.summary,
-            gender: state => state.settingspage.author.data.gender,
-            dateOfBirth: state => state.settingspage.author.data.dateOfBirth
-        }),
         ...mapGetters([
             'getUserDetails',
             'getLogoutStatus'
@@ -228,6 +251,15 @@ export default {
         ...mapActions([
             'logoutUser'
         ]),
+        ...mapActions('alert', [
+            'triggerAlert'
+        ]),
+        updateFirstName(value) {
+            this.authorData.firstName = value;
+        },
+        updateLastName(value) {
+            this.authorData.lastName = value;
+        },
         tabchange(event) {
             event.preventDefault();        
             var tab_id = $(event.currentTarget).attr('data-tab');
@@ -252,30 +284,19 @@ export default {
                 });
             }
         },
-        updateEmail(e) { this.$store.commit('settingspage/updateEmail', e.target.value) },
-        updatePhone(e) { this.$store.commit('settingspage/updatePhone', e.target.value) },
-        updateFirstName(value) { this.$store.commit('settingspage/updateFirstName', value) },
-        updateLanguage(e) { this.$store.commit('settingspage/updateLanguage', e.target.selectedOptions[0].value) },
-        updateLastName(value) { this.$store.commit('settingspage/updateLastName', value) },
-        updateFirstNameEn(e) { this.$store.commit('settingspage/updateFirstNameEn', e.target.value) },
-        updateLastNameEn(e) { this.$store.commit('settingspage/updateLastNameEn', e.target.value) },
-        updatePenName(e) { this.$store.commit('settingspage/updatePenName', e.target.value) },
-        updateSummary(e) { this.$store.commit('settingspage/updateSummary', e.target.value) },
-        updateGender(e) { this.$store.commit('settingspage/updateGender', e.target.selectedOptions[0].value) },
-        updateDateOfBirth(e) { this.$store.commit('settingspage/updateDateOfBirth', e.target.value) },
+        updateLanguage(e) { 
+            this.authorData.language = e.target.selectedOptions[0].value;
+        },
+        updateEmailFrequency(e) { 
+            this.notificationSettings.emailFrequency = e.target.selectedOptions[0].value;
+        },
+        updateGender(e) { 
+            this.authorData.gender = e.target.selectedOptions[0].value;
+        },
         updateProfileSettings() {
-            if(!this.initial_author_data.firstName && this.initial_author_data.firstName !== this.firstName) {
-                this.triggerAnanlyticsEvent('NEWUSERINFO_FNAME_SETNGACC', 'CONTROL', {
-                    'USER_ID': this.getUserDetails.userId
-                });
-            }
-            else if(this.initial_author_data.firstName && this.initial_author_data.firstName !== this.firstName) {
-                this.triggerAnanlyticsEvent('UPDATEUSERINFO_FNAME_SETNGACC', 'CONTROL', {
-                    'USER_ID': this.getUserDetails.userId
-                });
-            }
-            this.updateUserDetails();
-            this.updateAuthorDetails();
+            this.detectChangesAndTriggerEvent();
+            this.updateUserDetails(this.userData);
+            this.updateAuthorDetails(this.authorData);
         },
         triggerEventAndUpdateUserPassword(data) {
             this.triggerAnanlyticsEvent('RESETPASSWORD_PASSWORD_SETNGPRI', 'CONTROL', {
@@ -288,6 +309,141 @@ export default {
                 'USER_ID': this.getUserDetails.userId
             });
             this.logoutUser();
+        },
+        detectChangesAndTriggerEvent() {
+
+            // For first name
+            if(!this.getAuthorData.firstName && this.getAuthorData.firstName !== this.authorData.firstName) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_FNAME_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getAuthorData.firstName && this.getAuthorData.firstName !== this.authorData.firstName) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_FNAME_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For last name
+            if(!this.getAuthorData.lastName && this.getAuthorData.lastName !== this.authorData.lastName) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_LNAME_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getAuthorData.lastName && this.getAuthorData.lastName !== this.authorData.lastName) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_LNAME_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For pen name
+            if(!this.getAuthorData.penName && this.getAuthorData.penName !== this.authorData.penName) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_PENNAME_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getAuthorData.penName && this.getAuthorData.penName !== this.authorData.penName) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_PENNAME_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For gender
+            if(!this.getAuthorData.gender && this.getAuthorData.gender !== this.authorData.gender) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_GENDER_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getAuthorData.gender && this.getAuthorData.gender !== this.authorData.gender) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_GENDER_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For first name english
+            if(!this.getAuthorData.firstNameEn && this.getAuthorData.firstNameEn !== this.authorData.firstNameEn) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_FNAMEENG_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getAuthorData.firstNameEn && this.getAuthorData.firstNameEn !== this.authorData.firstNameEn) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_FNAMEENG_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For last name english
+            if(!this.getAuthorData.lastNameEn && this.getAuthorData.lastNameEn !== this.authorData.lastNameEn) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_LNAMEENG_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getAuthorData.lastNameEn && this.getAuthorData.lastNameEn !== this.authorData.lastNameEn) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_LNAMEENG_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For language
+            if(!this.getAuthorData.language && this.getAuthorData.language !== this.authorData.language) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_CONTENTLANG_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getAuthorData.language && this.getAuthorData.language !== this.authorData.language) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_CONTENTLANG_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For summary
+            if(!this.getAuthorData.summary && this.getAuthorData.summary !== this.authorData.summary) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_USERBIO_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getAuthorData.summary && this.getAuthorData.summary !== this.authorData.summary) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_USERBIO_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For date of birth
+            if(!this.getAuthorData.dateOfBirth && this.getAuthorData.dateOfBirth !== this.authorData.dateOfBirth) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_DOB_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getAuthorData.dateOfBirth && this.getAuthorData.dateOfBirth !== this.authorData.dateOfBirth) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_DOB_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For email
+            if(!this.getUserDetails.email && this.getUserDetails.email !== this.userData.email) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_EMAIL_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getUserDetails.email && this.getUserDetails.email !== this.userData.email) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_EMAIL_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+
+            // For phone
+            if(!this.getUserDetails.phone && this.getUserDetails.phone !== this.userData.phone) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_PHONE_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            } else if(this.getUserDetails.phone && this.getUserDetails.phone !== this.userData.phone) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_PHONE_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+        },
+        setUserPreference() {
+            const that = this;
+            import('firebase').then((firebase) => {
+                var node = firebase.database().ref( "PREFERENCE" ).child( this.getUserDetails.userId );
+                node.set({
+                    "emailFrequency": that.notificationSettings[ "emailFrequency" ],
+                    "notificationSubscriptions": that.notificationSettings[ "notificationSubscriptions" ],
+                    "lastUpdated": firebase.database.ServerValue.TIMESTAMP 
+                });
+            });
+            this.triggerAlert({ message: '__("notification_settings_save_changes")', timer: 3000 });
         }
     },
     watch: {
@@ -308,11 +464,44 @@ export default {
         },
         'getAuthorLoadingState'(loadingState) {
             if (loadingState === 'LOADING_SUCCESS') {
-                this.initial_author_data = {
-                    ...this.getAuthorData,
-                    email: this.getUserDetails.email,
-                    phone: this.getUserDetails.phone
-                }
+                const {
+                    firstName, lastName, firstNameEn, lastNameEn, language, summary, penName, gender, dateOfBirth, authorId
+                } = this.getAuthorData;
+
+                this.authorData.firstName = firstName || '';
+                this.authorData.lastName = lastName || '';
+                this.authorData.firstNameEn = firstNameEn || '';
+                this.authorData.lastNameEn = lastNameEn || '';
+                this.authorData.language = language || '';
+                this.authorData.summary = summary || '';
+                this.authorData.penName = penName || '';
+                this.authorData.gender = gender || '';
+                this.authorData.dateOfBirth = dateOfBirth || '';
+                this.authorData.authorId = authorId || '';
+                                
+                this.userData.email = this.getUserDetails.email;
+                this.userData.phone = this.getUserDetails.phone;
+            }
+        },
+        'getAuthorUpdateState'(loadingState) {
+            if (loadingState === 'LOADING_SUCCESS') {
+                const {
+                    firstName, lastName, firstNameEn, lastNameEn, language, summary, penName, gender, dateOfBirth, authorId
+                } = this.getAuthorData;
+
+                this.authorData.firstName = firstName || '';
+                this.authorData.lastName = lastName || '';
+                this.authorData.firstNameEn = firstNameEn || '';
+                this.authorData.lastNameEn = lastNameEn || '';
+                this.authorData.language = language || '';
+                this.authorData.summary = summary || '';
+                this.authorData.penName = penName || '';
+                this.authorData.gender = gender || '';
+                this.authorData.dateOfBirth = dateOfBirth || '';
+                this.authorData.authorId = authorId || '';
+                
+                this.userData.email = this.getUserDetails.email;
+                this.userData.phone = this.getUserDetails.phone;
             }
         }
     },
@@ -337,6 +526,27 @@ export default {
         }
         this.triggerAnanlyticsEvent('LANDED_SETTINGSM_SETTINGS', 'CONTROL', {
             'USER_ID': this.getUserDetails.userId
+        });
+
+        const that = this;
+        import('firebase').then((firebase) => {
+            if (firebase.apps.length === 0) {
+                const config = {
+                    apiKey: process.env.FIREBASE_API_KEY,
+                    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+                    databaseURL: process.env.FIREBASE_DATABASE_URL,
+                    storageBucket: process.env.FIREBASE_STORAGE_BUCKET
+                };
+                firebase.initializeApp(config);
+            }
+            const that = this;
+            const userPreferencesNode = firebase.database().ref( "PREFERENCE" ).child( this.getUserDetails.userId );
+            userPreferencesNode.on( 'value', function( snapshot ) {
+                const userPreferences = snapshot.val() != null ? snapshot.val() : {};
+                console.log(userPreferences);
+
+                that.notificationSettings = userPreferences;
+            });
         });
     }
 }
