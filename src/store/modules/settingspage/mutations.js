@@ -50,42 +50,5 @@ export default {
     },
     setUpdateAuthorLoadingError(state) {
         state.author.author_update_state = 'LOADING_ERROR';
-    },
-
-
-
-
-    updateEmail(state, value){
-        state.author.data.email = value;
-    },
-    updatePhone(state, value){
-        state.author.data.phone = value;
-    },
-    updateFirstName(state, value){
-        state.author.data.firstName = value;
-    },
-    updateLanguage(state, value){
-        state.author.data.language = value;
-    },
-    updateLastName(state, value){
-        state.author.data.lastName = value;
-    },
-    updateFirstNameEn(state, value){
-        state.author.data.firstNameEn = value;
-    },
-    updateLastNameEn(state, value){
-        state.author.data.lastNameEn = value;
-    },
-    updatePenName(state, value){
-        state.author.data.penName = value;
-    },
-    updateSummary(state, value){
-        state.author.data.summary = value;
-    },
-    updateGender(state, value){
-        state.author.data.gender = value;
-    },
-    updateDateOfBirth(state, value){
-        state.author.data.dateOfBirth = value;
     }
 }
