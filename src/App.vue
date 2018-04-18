@@ -32,14 +32,16 @@ export default {
         'getUserDetails.isGuest'(isGuest) {
             if (!isGuest) {
                 import('firebase').then((firebase) => {
-                    var config = {
-                        apiKey: process.env.FIREBASE_API_KEY,
-                        authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-                        databaseURL: process.env.FIREBASE_DATABASE_URL,
-                        storageBucket: process.env.FIREBASE_STORAGE_BUCKET
-                    };
-                    const firebaseApp = firebase.initializeApp(config);
-                    const db = firebaseApp.database();
+                    if (firebase.apps.length === 0) {
+                        const config = {
+                            apiKey: process.env.FIREBASE_API_KEY,
+                            authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+                            databaseURL: process.env.FIREBASE_DATABASE_URL,
+                            storageBucket: process.env.FIREBASE_STORAGE_BUCKET
+                        };
+                        firebase.initializeApp(config);
+                    }
+                    
                     const that = this;
 
                     firebase.auth().onAuthStateChanged( function( fbUser ) {
@@ -48,10 +50,6 @@ export default {
                             newNotificationCountNode.on( 'value', function( snapshot ) {
                                 var newNotificationCount = snapshot.val() != null ? snapshot.val() : 0;
                                 that.setNotificationCount(newNotificationCount);
-                            });
-                            var userPreferencesNode = firebase.database().ref( "PREFERENCE" ).child( fbUser.uid );
-                            userPreferencesNode.on( 'value', function( snapshot ) {
-                                var userPreferences = snapshot.val() != null ? snapshot.val() : {};
                             });
                         } else {
                             firebase.auth().signInWithCustomToken( that.getUserDetails.firebaseToken );
