@@ -143,6 +143,31 @@ export default {
     },
     methods: {
         saveTypeAndCategoriesAndCloseSection(data) {
+            const existingTagIds = this.pratilipiData.tags ? this.pratilipiData.tags.map(eachTag => eachTag.id) : [];
+            const newTagIds = data.tags.map(eachTag => eachTag.id);
+
+            if (existingTagIds.sort().toString() !== newTagIds.sort().toString() && existingTagIds.length === 0) {
+
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+                if (this.pratilipiData.hasAccessToUpdate) {
+                    this.triggerAnanlyticsEvent(`NEWBOOKINFO_CATTAG_BOOK`, 'CONTROL', {
+                        ...pratilipiAnalyticsData,
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                }
+            }
+
+            if (existingTagIds.sort().toString() !== newTagIds.sort().toString() && existingTagIds.length > 0) {
+
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+                if (this.pratilipiData.hasAccessToUpdate) {
+                    this.triggerAnanlyticsEvent(`UPDATEBOOKINFO_CATTAG_BOOK`, 'CONTROL', {
+                        ...pratilipiAnalyticsData,
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                }
+            }
+
             this.saveTypeAndCategories(data);
             this.cancelTags();
         },
