@@ -1875,5 +1875,20 @@ export default {
         "SCREEN_NAME": "CREATE",
         "LOCATION": "DRAFTS",
         "ACTION": "CLICKBOOK"
+    },
+    "GETANDROID_OPENAPP_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "OPENAPP",
+        "ACTION": "GETANDROID"  
+    },
+    "DISMISS_OPENAPP_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "OPENAPP",
+        "ACTION": "DISMISS"  
+    },
+    "VIEWANDROID_OPENAPP_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "OPENAPP",
+        "ACTION": "VIEWANDROID"  
     }
 };

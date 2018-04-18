@@ -243,6 +243,7 @@
                     </div>
                 </div>
             </div>
+            <OpenInApp v-if="isAndroid() && getPratilipiLoadingState === 'LOADING_SUCCESS'" :isVisible="shouldShowOpenInAppStrip" :pratilipiData="getPratilipiData"></OpenInApp>
             <div class="overlay" @click="closeSidebar"></div>
             <div class="overlay-1" @click="closeReviewModal"></div>
             <div class="overlay-2" @click="closeRatingModal"></div>
@@ -264,8 +265,9 @@ import 'vue-awesome/icons/whatsapp'
 import 'vue-awesome/icons/link'
 import Reviews from '@/components/Reviews.vue';
 import Recommendation from '@/components/Recommendation.vue';
+import OpenInApp from '@/components/OpenInApp.vue';
 import ShareStrip from '@/components/ShareStrip.vue';
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
@@ -273,7 +275,8 @@ export default {
         Spinner,
         Reviews,
         Recommendation,
-        ShareStrip
+        ShareStrip,
+        OpenInApp
     },
     mixins: [
         mixins
@@ -287,7 +290,8 @@ export default {
             counter: 0,
             openRateRev: false,
             openRateReaderm: false,
-            rateRev: 'RATEREV'
+            rateRev: 'RATEREV',
+            shouldShowOpenInAppStrip: true
         }
     },
     methods: {
@@ -633,6 +637,13 @@ export default {
                 $('.header-section').removeClass('nav-up');
                 $('.reader-progress').removeClass('progress-up');
                 this.counter = 0;
+            }
+
+
+            if ($(window).height() + newScrollPosition > $('.content-section').height()) {
+                this.shouldShowOpenInAppStrip = false;
+            } else {
+                this.shouldShowOpenInAppStrip = true;
             }
         },
         'getPratilipiLoadingState'(status) {

@@ -18,7 +18,9 @@ import {
     validateUsername,
     triggerAnanlyticsEvent,
     getPratilipiAnalyticsData,
-    getAnalyticsPageSource
+    getAnalyticsPageSource,
+    getAndroidIntentUri,
+    openInNewTab
 } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
@@ -48,6 +50,8 @@ export default {
         validateUsername,
         triggerAnanlyticsEvent,
         getPratilipiAnalyticsData,
-        getAnalyticsPageSource
+        getAnalyticsPageSource,
+        getAndroidIntentUri,
+        openInNewTab
     }
 }

@@ -114,6 +114,11 @@ export function isAndroid() {
     return /Android/i.test(navigator.userAgent);
 }
 
+export function openInNewTab(url) {
+    const win = window.open(url, '_blank');
+    win.focus();
+}
+
 export function isChrome() {
     return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 }
@@ -231,8 +236,8 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         eventProps.SCREEN_NAME = eventProperty['SCREEN_NAME'];
         delete eventProperty.SCREEN_NAME;
     }
-
-    if (eventProps) {
+    console.log('props', eventProps);
+    if (eventProps && eventProps.ACTION) {
         eventProps = {
             ...eventProps,
             ...eventProperty,
@@ -265,4 +270,15 @@ export function getPratilipiAnalyticsData(pratilipiData) {
         'AUTHOR_ID': pratilipiData.author.authorId,
         'CONTENT_LANGUAGE': pratilipiData.language
     }
+}
+
+export function getAndroidIntentUri( utmParameters ) {
+    const SCHEME = 'http';
+    const PACKAGE_NAME = 'com.pratilipi.mobile.android';
+    const PLAYSTORE_URL = 'https://play.google.com/store/apps/details?id=' + PACKAGE_NAME;
+    const UTM_PARAMETER = utmParameters ? encodeURIComponent( Object.keys(utmParameters).map(function(key){ return key + "=" + utmParameters[key] }).join("&") ) : "";
+    const uri = window.location.host + window.location.pathname + ( window.location.search || '' );
+    return isChrome() ?
+        'intent://' + uri + '#Intent;scheme=' + SCHEME + ';package=' + PACKAGE_NAME + ';S.browser_fallback_url=' + PLAYSTORE_URL + '&referrer=' + UTM_PARAMETER + ';end' :
+        'intent://' + uri + '#Intent;scheme=' + SCHEME + ';package=' + PACKAGE_NAME + ';S.browser_fallback_url=' + 'market://search?q=pname:' + PACKAGE_NAME + '&referrer=' + UTM_PARAMETER + ';end' ;
 }
