@@ -217,7 +217,13 @@ export default {
             this.updateComment(data);
         },
         replyToComment(eachComment) {
-            console.log(eachComment);
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`REPLY_COMMENTS_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': eachComment.commentId
+            });
+
             this.newComment = `@${eachComment.user.displayName} `;
             $(this.$el).find(".add-reply").show();
             $(this.$el).find(".add-reply .comment-content textarea").focus();

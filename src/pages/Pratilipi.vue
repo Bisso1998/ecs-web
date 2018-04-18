@@ -71,6 +71,7 @@
                             </div>
                         </div>
                         <BookTags 
+                            v-if="getPratilipiData.hasAccessToUpdate"
                             :selectedPratilipiType="selectedPratilipiType"     
                             :isTagSelected="isTagSelected" 
                             :selectedTags="selectedTags" 
@@ -259,10 +260,6 @@ export default {
             });
             this.unpublishOrPublishBook({ bookState: 'PUBLISHED' });
         },
-        saveTypeAndCategoriesAndCloseSection(data) {
-            this.saveTypeAndCategories(data);
-            this.cancelTags();
-        },
         editPratilipiSummary() {
             this.setInputModalSaveAction({ 
                 action: `${this.$route.meta.store}/saveOrUpdateSummary`, 
@@ -293,6 +290,14 @@ export default {
         addToSuggestedTag() {
             if (this.newSuggestedTag && this.newSuggestedTag.trim().length > 0) {
                 this.suggestedTags.push(this.newSuggestedTag);    
+                
+
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                this.triggerAnanlyticsEvent(`ADDTAG_CATTAG_BOOK`, 'CONTROL', {
+                    ...pratilipiAnalyticsData,
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': this.newSuggestedTag
+                });
                 this.newSuggestedTag = '';
             }
         },
@@ -300,6 +305,14 @@ export default {
             this.newSuggestedTag = value;
         },
         removeSuggestedTag(indexToRemove){
+            
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`REMOVETAG_CATTAG_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.suggestedTags[indexToRemove]
+            });
+
             this.suggestedTags.splice(indexToRemove, 1);
         },
         addOrRemoveFromListOfSelectedTag(tagData, isDeselectOperation) {
@@ -322,7 +335,19 @@ export default {
                 if (indexToRemove != null) {
                     currentTags.splice(indexToRemove, 1);
                 }
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                this.triggerAnanlyticsEvent(`REMOVECATEGORY_CATTAG_BOOK`, 'CONTROL', {
+                    ...pratilipiAnalyticsData,
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': tagData.id
+                });
             } else {
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                this.triggerAnanlyticsEvent(`ADDCATEGORY_CATTAG_BOOK`, 'CONTROL', {
+                    ...pratilipiAnalyticsData,
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': tagData.id
+                });
                 this.selectedTags.push(tagData);
             }
         },
