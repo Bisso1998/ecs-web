@@ -16,10 +16,11 @@ export default {
         commit('setUpdateUserLoadingTrue');
         const { email, phone } = state.author.data;
         const { userId } = state.author.data.user;
-        DataAccessor.createOrUpdateUser(userId, email, phone, () => {
+        DataAccessor.createOrUpdateUser(userId, email, phone, (data) => {
             commit('setUpdateUserLoadingSuccess');
+            commit('setUserDataLoadingSuccess', data, { root: true });
         }, () => {
-            commit('setUpdateUserLoadingError');
+            commit('setUserDataLoadingError', { root: true });
         });
     },
 

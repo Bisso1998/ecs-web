@@ -187,7 +187,8 @@ export default {
         return {
             constants,
             oldPassword: '',
-            newPassword: ''
+            newPassword: '',
+            initial_author_data: null
         }
     },
     mixins: [
@@ -263,6 +264,16 @@ export default {
         updateGender(e) { this.$store.commit('settingspage/updateGender', e.target.selectedOptions[0].value) },
         updateDateOfBirth(e) { this.$store.commit('settingspage/updateDateOfBirth', e.target.value) },
         updateProfileSettings() {
+            if(!this.initial_author_data.firstName && this.initial_author_data.firstName !== this.firstName) {
+                this.triggerAnanlyticsEvent('NEWUSERINFO_FNAME_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
+            else if(this.initial_author_data.firstName && this.initial_author_data.firstName !== this.firstName) {
+                this.triggerAnanlyticsEvent('UPDATEUSERINFO_FNAME_SETNGACC', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+            }
             this.updateUserDetails();
             this.updateAuthorDetails();
         },
@@ -293,6 +304,15 @@ export default {
         'getLogoutStatus'(loggedOut) {
             if (loggedOut) {
                 location.reload()    
+            }
+        },
+        'getAuthorLoadingState'(loadingState) {
+            if (loadingState === 'LOADING_SUCCESS') {
+                this.initial_author_data = {
+                    ...this.getAuthorData,
+                    email: this.getUserDetails.email,
+                    phone: this.getUserDetails.phone
+                }
             }
         }
     },
