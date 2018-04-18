@@ -27,7 +27,8 @@ export default {
             type: String
         },
         oninput: {
-            type: Function
+            type: Function,
+            required: true
         },
         placeholder: {
             type: String
