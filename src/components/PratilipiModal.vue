@@ -25,7 +25,7 @@
                                 <i class="material-icons stacked">check</i>
                             </button>
                         </span>
-                        <button type="button" data-toggle="modal"><i class="material-icons">share</i></button>
+                        <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
                     </div>
                     <!-- <div class="book-name">सी - बीच पर दो पूर्व परिचित</div> -->
                     <div class="author-name" v-if="getPratilipiData.author"><a href="#">{{ getPratilipiData.author.fullName }}</a></div>
@@ -72,8 +72,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getUserDetails',
-            'setAfterLoginAction'
+            'getUserDetails'
         ]),
         ...mapGetters('pratilipimodal', [
             'getPratilipiData',
@@ -87,6 +86,10 @@ export default {
         ...mapActions('pratilipimodal', [
             'addToLibrary',
             'removeFromLibrary'
+        ]),
+        ...mapActions([
+            'setShareDetails',
+            'setAfterLoginAction'
         ]),
         triggerReadPratilipiModalEvent() {
             $('.modal-backdrop').hide();
@@ -103,6 +106,15 @@ export default {
         },
         triggerAnalyticsAndRemovePratilipiFromLibrary() {
             this.removeFromLibrary();
+        },
+        openShareModal() {
+            // const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            // this.triggerAnanlyticsEvent(`CLICKSHRBOOK_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            //     ...pratilipiAnalyticsData,
+            //     'USER_ID': this.getUserDetails.userId
+            // });
+            this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI', screen_name: 'HOME', screen_location: 'COLLECTIONS' });
+            $('#share_modal').modal('show');
         }
     },
     created() {
