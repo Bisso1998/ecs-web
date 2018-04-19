@@ -1,6 +1,7 @@
 <template>
     <div :class="currentLocale">
         <Header :userDetails="getUserDetails" :notificationCount="getNotificationCount" ></Header>
+        <AppBanner></AppBanner>
         <slot></slot>
         <LoginModal></LoginModal>
         <ShareModal></ShareModal>
@@ -14,6 +15,7 @@
 
 <script>
 import Header from '@/components/Header.vue';
+import AppBanner from '@/components/AppBanner.vue';
 import LoginModal from '@/components/LoginModal.vue';
 import ShareModal from '@/components/Share.vue';
 import InputModal from '@/components/InputModal.vue';
@@ -50,6 +52,7 @@ export default {
     },
     components: {
         Header,
+        AppBanner,
         LoginModal,
         ShareModal,
         InputModal,
