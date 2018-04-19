@@ -4,16 +4,16 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">सी - बीच पर दो पूर्व परिचित</h5>
+                  <h5 class="modal-title">{{ getPratilipiData.title }}</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                    <div class="book-type STORY">
-                        കഥ <span></span>
+                    <div class="book-type" :class="getPratilipiData.type">
+                        {{ getPratilipiData.type | getPratilipiTypeInNativeLanguage }}<span></span>
                     </div>
-                    <div class="book-cover" style="background-image: url('https://4.ptlp.co/pratilipi/cover?pratilipiId=4584126513414144&version=1491204640179')"></div>
+                    <div class="book-cover" :style="{'background-image': `url('${getPratilipiData.coverImageUrl}')`}"></div>
                     <div class="image-mask">
                         <span>
                             <button class="add-library">
@@ -28,21 +28,23 @@
                         <button type="button" data-toggle="modal"><i class="material-icons">share</i></button>
                     </div>
                     <!-- <div class="book-name">सी - बीच पर दो पूर्व परिचित</div> -->
-                    <div class="author-name"><a href="#">ब्रजेंद्रनाथ मिश्रा</a></div>
+                    <div class="author-name" v-if="getPratilipiData.author"><a href="#">{{ getPratilipiData.author.fullName }}</a></div>
                     <div class="book-stats-wrap">
                         <div class="book-stats">
-                            <span class="avg-rating stars-green"><span class="rating-text">4.5</span> <i class="material-icons">star_rate</i></span>
-                            <span class="review-count">100 __("rating_ratings")</span>
+                            <span class="avg-rating stars-green">
+                                <span class="rating-text">{{ getPratilipiData.averageRating | round(1) }}</span>
+                                <i class="material-icons">star_rate</i></span>
+                            <span class="review-count">{{ getPratilipiData.ratingCount }} __("rating_ratings")</span>
                         </div>
                         <div class="book-stats">
-                            <span class="read-time">__("pratilipi_reading_time"): 4 मिनट</span>
+                            <span class="read-time">__("pratilipi_reading_time"): {{ getPratilipiData.readingTime | showInMinutesOrHours }}</span>
                         </div>
                         <div class="book-stats">
-                            <span class="read-count">__("pratilipi_count_reads"): 9876</span>
-                            <span class="date">__("pratilipi_listing_date"): 06 जुलाई 2016</span>
+                            <span class="read-count">__("pratilipi_count_reads"): {{ getPratilipiData.readCount | round(1) }} </span>
+                            <span class="date">__("pratilipi_listing_date"): {{ getPratilipiData.listingDateMillis | convertDate }}</span>
                         </div>
                     </div>
-                    <div class="book-summary">यह कहानी कॉलेज  के दिनों के दो अंतरंग  प्रेमियों  के  बिछुड़ जाने के अरसा बाद मिलने की कहानी है । ...देखिये मिलने के बाद उन दिनों के  पनपते प्रेम का  क्या होता है ...  (यह कहानी मेरे शीघ्र प्रकाशित होने वाले उपन्यास "डिवाईडर पर कॉलेज जंक्शन" से लिया गया है। )</div>
+                    <div class="book-summary">{{ getPratilipiData.summary || getPratilipiData.cardSummary }}</div>
                     <a href="#" class="read-more"><span>View Summary Page</span></a>
                 </div>
                 <div class="modal-footer">
@@ -67,9 +69,14 @@ export default {
         }
     },
     computed: {
-
+        ...mapGetters('pratilipimodal', [
+            'getPratilipiData'
+        ])
     },
     methods: {
+
+    },
+    created() {
 
     }
 }

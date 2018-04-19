@@ -4,7 +4,7 @@
             <div class="book-type" :class="pratilipiData.type">
                 {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
             </div>
-            <a data-toggle="modal" data-target="#pratilipi_modal">
+            <a @click="setModalDataAndOpenPratilipiModal">
                 <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
             </a >
             <div class="image-mask">
@@ -112,6 +112,15 @@ export default {
             'setShareDetails',
             'setAfterLoginAction'
         ]),
+        ...mapActions('pratilipimodal', [
+            'setPratilipiModalData',
+            'fetchPratilipiData'
+        ]),
+        setModalDataAndOpenPratilipiModal() {
+            this.setPratilipiModalData(this.pratilipiData);
+            // this.fetchPratilipiData(this.pratilipiData.pratilipiId);
+            this.openPratilipiModal();
+        },
         addPratilipiToLibrary(pratilipiId) {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
             this.triggerAnanlyticsEvent(`LIBRARYADD_${this.screenLocation}_${this.screenName}`, 'CONTROL', {

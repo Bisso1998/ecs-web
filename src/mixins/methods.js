@@ -25,6 +25,10 @@ export function openLoginModal(pageSource, action, location) {
     $('#login_modal').modal('show');
 }
 
+export function openPratilipiModal() {
+    $('#pratilipi_modal').modal('show');
+}
+
 export function getAnalyticsPageSource(pageSource) {
     let analyticsPageSource;
     switch (pageSource) {
