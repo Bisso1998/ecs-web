@@ -93,6 +93,7 @@ export default {
         ]),
         triggerReadPratilipiModalEvent() {
             $('.modal-backdrop').hide();
+            $('body').removeClass("modal-open");
         },
         addPratilipiToLibrary(pratilipiId) {
             if (this.getUserDetails.isGuest) {
