@@ -323,7 +323,7 @@ export default {
             }
 
             if (isDeselectOperation) {
-                const currentTags = this.selectedTags;
+                const currentTags = this.selectedTags; 
 
                 let indexToRemove = null;
                 currentTags.forEach((eachTag, index) => {
@@ -496,7 +496,7 @@ export default {
         const slug_id = this.$route.params.slug_id;
         const pratilipiData = this.$route.params.pratilipiData;
         this.selectedPratilipiType = this.getPratilipiData.type;
-        this.selectedTags = this.getPratilipiData.tags;
+        this.selectedTags = this.getPratilipiData.tags ? [ ...this.getPratilipiData.tags ] : [];
         this.suggestedTags = this.getPratilipiData.suggestedTags;
         document.title = this.getPratilipiData.title;
 
@@ -522,7 +522,7 @@ export default {
         },
         'getPratilipiData.pratilipiId'(newId){
             this.selectedPratilipiType = this.getPratilipiData.type;
-            this.selectedTags = this.getPratilipiData.tags;
+            this.selectedTags = this.getPratilipiData.tags ? [ ...this.getPratilipiData.tags ] : [];
             this.suggestedTags = this.getPratilipiData.suggestedTags;
             document.title = this.getPratilipiData.title;
         },
@@ -545,7 +545,7 @@ export default {
         },
         selectedPratilipiType(newType) {
             if (newType === this.getPratilipiData.type) {
-                this.selectedTags = this.getPratilipiData.tags;
+                this.selectedTags = this.getPratilipiData.tags ? [ ...this.getPratilipiData.tags ] : [];
             } else {
                 this.selectedTags = [];
             }

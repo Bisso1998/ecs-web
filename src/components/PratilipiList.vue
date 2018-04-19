@@ -134,11 +134,12 @@ export default {
     watch: {
         'inViewport.now': function(visible) {
             if (visible) {
-                this.triggerAnanlyticsEvent(`VIEWED_COLLECTIONS_HOME`, 'CONTROL', {
-                    'USER_ID': this.getUserDetails.userId,
-                    'PARENT_ID': this.listPageUrl
-                });
-                
+                if (this.screenName === 'HOME') {
+                    this.triggerAnanlyticsEvent(`VIEWED_COLLECTIONS_HOME`, 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId,
+                        'PARENT_ID': this.listPageUrl
+                    });
+                }
             }
         }
     }
