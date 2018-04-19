@@ -34,6 +34,13 @@ export default {
             default: true
         },
     },
+    data() {
+        return {
+            showBanner: this.getCookie( "USER_NOTIFIED_APP_LAUNCHED" ) == null || this.getCookie( "USER_NOTIFIED_APP_LAUNCHED" ) == "true",
+            click_count: this.getCookie( "APP_LAUNCHED_CLICKED" ) == null ? 0 : parseInt( this.getCookie( "APP_LAUNCHED_CLICKED" ) || 0 ),
+            cross_count: this.getCookie( "APP_LAUNCHED_CROSSED" ) == null ? 0 : parseInt( this.getCookie( "APP_LAUNCHED_CROSSED" ) || 0 )
+        }
+    },
     mixins: [
         mixins,
         inViewport
@@ -47,6 +54,7 @@ export default {
         closeBanner() {
             $(".app-banner").hide();
             $(".page-wrap").css("margin-top", "65px");
+            this.cross_count++;
             
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
             this.triggerAnanlyticsEvent(`DISMISS_APPBANNER_GLOBAL`, 'CONTROL', {
@@ -55,6 +63,7 @@ export default {
             });
         },
         downloadApp() {
+            this.click_count++;
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
             this.triggerAnanlyticsEvent(`GETANDROID_APPBANNER_GLOBAL`, 'CONTROL', {
                 'USER_ID': this.getUserDetails.userId,
@@ -65,6 +74,35 @@ export default {
                 'utm_medium': 'web_bottom_strip',
                 'utm_campaign': 'app_download'
             }));
+        },
+        execCookieLogic() {
+            if( this.click_count >= 3 ) {
+                this.setCookie( "USER_NOTIFIED_APP_LAUNCHED", 'false', 365, "/" );
+                return;
+            }
+            if( this.click_count > 0 && this.click_count < 3 ) {
+                if( this.cross_count > 2 )
+                    this.cross_count = 0;
+                if( this.cross_count == 0 )
+                    this.setCookie( "USER_NOTIFIED_APP_LAUNCHED", 'false', 3, "/" );
+                if( this.cross_count == 1 )
+                    this.setCookie( "USER_NOTIFIED_APP_LAUNCHED", 'false', 7, "/" );
+                if( this.cross_count == 2 )
+                    this.setCookie( "USER_NOTIFIED_APP_LAUNCHED", 'false', 30, "/" );
+            }
+            else {
+                if( this.cross_count < 3 ){
+                    console.log('hello');
+                    this.setCookie( "USER_NOTIFIED_APP_LAUNCHED", 'false', null, "/" );
+                }
+                if( this.cross_count >= 3 && this.cross_count < 6)
+                    this.setCookie( "USER_NOTIFIED_APP_LAUNCHED", 'false', 2, "/" );
+                if( this.cross_count >= 6 )
+                    this.setCookie( "USER_NOTIFIED_APP_LAUNCHED", 'false', 7, "/" );
+            }
+
+            this.setCookie( "APP_LAUNCHED_CLICKED", this.click_count, 365, "/" );
+            this.setCookie( "APP_LAUNCHED_CROSSED", this.cross_count, 365, "/" );
         }
     },
     watch: {
@@ -76,11 +114,26 @@ export default {
                     SCREEN_NAME
                 });
             }
+        },
+        'showBanner': function(shouldShow) {
+            if (!shouldShow) {
+                this.closeBanner();
+            }
+            this.execCookieLogic();
+        },
+        'click_count': function() {
+            this.execCookieLogic();
+        },
+        'cross_count': function() {
+            this.execCookieLogic();
         }
     },
     mounted() {
         if ($('.app-banner').is(":visible") == true) {
             $("#app .page-wrap").css("margin-top", "10px");
+        }
+        if (!this.showBanner) {
+            this.closeBanner();
         }
     }
 }
