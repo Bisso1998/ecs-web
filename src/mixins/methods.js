@@ -236,7 +236,6 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         eventProps.SCREEN_NAME = eventProperty['SCREEN_NAME'];
         delete eventProperty.SCREEN_NAME;
     }
-    console.log('props', eventProps);
     if (eventProps && eventProps.ACTION) {
         eventProps = {
             ...eventProps,
