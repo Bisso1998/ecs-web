@@ -10,6 +10,9 @@
                   </button>
                 </div>
                 <div class="modal-body">
+                    <div class="book-type STORY">
+                        കഥ <span></span>
+                    </div>
                     <div class="book-cover" style="background-image: url('https://4.ptlp.co/pratilipi/cover?pratilipiId=4584126513414144&version=1491204640179')"></div>
                     <div class="image-mask">
                         <span>
@@ -96,12 +99,76 @@ export default {
         font-size: 18px;
         font-weight: 700;
     }
+    .book-type {
+        font-size: 11px;
+        line-height: 20px;
+        font-weight: 700;
+        color: #fff;
+        padding: 0 20px 3px;
+        background: #4CAF50;
+        position: absolute;
+        top: 15px;
+        left: 2px;
+        z-index: 1;
+        height: 21px;
+        &:before {
+            content: '';
+            position: absolute;
+            border-left: 0px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 21px solid #4CAF50;
+            bottom: -3px;
+            left: 50%;
+            margin-left: 0px;
+            left: 100%;
+            padding-bottom: 3px;
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            border-top: 0 solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid #4CAF50;
+            top: 100%;
+            left: -10px;
+            left: 0;
+        }
+        span {
+            content: '';
+            position: absolute;
+            border-top: 0 solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid rgba(0, 0, 0, 0.2);
+            top: 100%;
+            left: -10px;
+            left: 0;
+            z-index: 9;
+        }
+        &.ARTICLE {
+            background: #42bab0;
+        }
+        &.ARTICLE:before {
+            border-top: 21px solid #42bab0;
+        }
+        &.ARTICLE:after {
+            border-right: 10px solid #42bab0;
+        }
+        &.POEM {
+            background: #FF9800;
+        }
+        &.POEM:before {
+            border-top: 21px solid #FF9800;
+        }
+        &.POEM:after {
+            border-right: 10px solid #FF9800;
+        }
+    }
     .book-cover {
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        margin: 0 0 5px;
-        width: 100%;
+        margin: 0 auto 5px;
+        width: 99%;
         height: 150px;
         position: relative;
     }
@@ -131,8 +198,11 @@ export default {
             z-index: 2;
             position: relative;
             float: right;
-            &.add-library i {
-                font-size: 23px;
+            &.add-library {
+                margin-right: 10px;
+                i {
+                    font-size: 23px;
+                }
             }
             i {
                 height: 40px;
