@@ -33,6 +33,9 @@
                     <div class="author-name" v-if="getPratilipiData.author">{{ getPratilipiData.author.fullName }}</div>
                     <div class="date-added">__("pratilipi_listing_date"): {{ getPratilipiData.listingDateMillis | convertDate }}</div>
                     <div class="book-summary">{{ getPratilipiData.summary || getPratilipiData.cardSummary }}</div>
+                    <div class="book-tags">
+                        <span v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name }}</span>
+                    </div>
                     <div class="stats">
                         <div class="rating">
                             <div class="icons">
@@ -324,6 +327,17 @@ export default {
         overflow: hidden;
         margin: 5px 0 0;
     }
+    .book-tags {
+        margin-bottom: 5px;
+        span {
+            background: #e9e9e9;
+            font-size: 12px;
+            margin: 5px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+    }
     .stats {
         border-top: 1px solid #e9e9e9;
         border-bottom: 1px solid #e9e9e9;
@@ -387,5 +401,11 @@ export default {
         }
     }
     
+}
+.language-ta .stats .read-time, .language-te .stats .read-time, .language-ml .stats .read-time, .language-kn .stats .read-time {
+    font-size: 10px;
+    @media screen and (max-width: 768px ) {
+        font-size: 9px;
+    }
 }
 </style>
