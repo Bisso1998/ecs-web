@@ -1,6 +1,6 @@
 <template>
     <!-- Pratilipi Modal -->
-    <div class="modal fade pratilipi-modal" id="pratilipi_modal" tabindex="-1" role="dialog" aria-labelledby="pratilipi-modalLabel" aria-hidden="true" v-if="getPratilipiData.pratilipiId">
+    <div class="modal fade pratilipi-modal" id="pratilipi_modal" tabindex="-1" role="dialog" aria-labelledby="pratilipi-modalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,7 +9,7 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" v-if="getPratilipiData.pratilipiId">
                     <div class="book-type" :class="getPratilipiData.type">
                         {{ getPratilipiData.type | getPratilipiTypeInNativeLanguage }}<span></span>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="book-summary">{{ getPratilipiData.summary || getPratilipiData.cardSummary }}</div>
                     <a href="#" class="read-more"><span>View Summary Page</span></a>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer"  v-if="getPratilipiData.pratilipiId">
                     <div class="main-actions">
                         <router-link class="read-btn" :to="getPratilipiData.readPageUrl" @click.native="triggerReadPratilipiModalEvent" :title="getPratilipiData.title">
                             <span>__("read")</span>
