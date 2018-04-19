@@ -94,7 +94,7 @@ export default {
         bottom: 46px;
         left: 0px;
         right: 0px;
-        height: 60px;
+        height: 46px;
         color: white;
 
         .read-in-app-close{
@@ -103,13 +103,14 @@ export default {
             border: none;
             color: white;
             height: 100%;
-            padding-top: 8px;
+            padding-top: 3px;
         }
 
         .read-in-app-text {
             text-align: center;
             font-size: 20px;
-            padding:5px;
+            padding: 5px;
+            padding-top: 0px;
         }
     }
 }

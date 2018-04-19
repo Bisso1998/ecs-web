@@ -27,12 +27,11 @@
                 </div>
                 <div class="tag-sections">
                     <div class="tag-section-title">__("tags_categories")</div>
-                    <div class="tag-section-body">
+                    <div class="tag-section-body" v-if="getSystemTags[selectedPratilipiType]">
                         <!-- <span class="all-tags active" v-for="each_tag in pratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span> -->
                         <span class="all-tags" 
                             :class="{'active': isTagSelected(each_tag.id)}" 
-                            v-if="getSystemTags[selectedPratilipiType || 'POEM']"
-                            v-for="each_tag in getSystemTags[selectedPratilipiType || 'POEM'].categories" 
+                            v-for="each_tag in getSystemTags[selectedPratilipiType].categories" 
                             :key="each_tag.id"
                             @click="addOrRemoveFromListOfSelectedTag(each_tag, isTagSelected(each_tag.id))">{{ each_tag.name }}</span>
                     </div>
@@ -75,7 +74,8 @@ export default {
     name: 'Pratilipi-BookTags',
     props: {
         selectedPratilipiType: {
-            type: String
+            type: String,
+            default: 'POEM'
         },
         pratilipiData: {
             type: Object,

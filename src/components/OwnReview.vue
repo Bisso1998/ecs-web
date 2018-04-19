@@ -1,6 +1,6 @@
 <template>
-    <li v-if="authorId !== getUserDetails.authorId" class="ownReview">
-        <div class="comment-main-level">
+    <li class="ownReview">
+        <div  v-if="authorId !== getUserDetails.authorId" class="comment-main-level">
             <div class="comment-avatar"><img :src="userPratilipiData.userId == 0 ? defaultAuthorImage : userPratilipiData.userImageUrl" alt="author"></div>
             <div class="comment-box">
                 <div class="already-rated"  v-if="userPratilipiData.reviewDateMillis != null && !editRatingMode">
