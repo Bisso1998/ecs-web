@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="settings-page">
+        <div class="settings-page page-wrap">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">

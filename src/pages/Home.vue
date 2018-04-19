@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="home-page">
+        <div class="home-page page-wrap">
             <Banners v-if="getHomePageBannersLoadingState === 'LOADING_SUCCESS'"
                 :banners="getHomePageBanners"
             ></Banners>

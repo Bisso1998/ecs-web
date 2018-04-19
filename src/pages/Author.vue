@@ -2,7 +2,7 @@
     <MainLayout>
         <div class="author-page">
             <div class="container">
-                <div class="page-content">
+                <div class="page-content page-wrap">
                     <div class="row">
                         <div class="col-md-12 profile-top" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
                             <div class="profile-cover" :style="{ backgroundImage: 'url(' + getAuthorData.coverImageUrl + ')' }">
