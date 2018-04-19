@@ -1,5 +1,5 @@
 <template>
-    <div class="app-banner container">
+    <div class="app-banner container" v-if="isAndroid()">
         <div class="row">
             <button class="close" @click="closeBanner"><i class="material-icons">close</i></button>
             <div class="col-2 logo">
@@ -15,36 +15,70 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <button name="button" class="download-now">__("android_download")</button>
+                <button name="button" class="download-now" @click="downloadApp">__("android_download")</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-// import mixins from '@/mixins';
-// import inViewport from 'vue-in-viewport-mixin';
-// import { mapGetters } from 'vuex'
+import mixins from '@/mixins';
+import inViewport from 'vue-in-viewport-mixin';
+import { mapGetters } from 'vuex'
 
 export default {
     props: {
-        // 'in-viewport-once': {
-        //     default: true
-        // },
+        'in-viewport-once': {
+            default: true
+        },
     },
     mixins: [
-        // mixins,
-        // inViewport
+        mixins,
+        inViewport
     ],
     computed: {
-        // ...mapGetters([
-        //     'getUserDetails'
-        // ])
+        ...mapGetters([
+            'getUserDetails'
+        ])
     },
     methods: {
         closeBanner() {
             $(".app-banner").hide();
             $(".page-wrap").css("margin-top", "65px");
+            
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent(`DISMISS_APPBANNER_GLOBAL`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+        },
+        downloadApp() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent(`GETANDROID_APPBANNER_GLOBAL`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.openInNewTab(this.getAndroidIntentUri({
+                'utm_source': 'pratilipi_main_web',
+                'utm_medium': 'web_bottom_strip',
+                'utm_campaign': 'app_download'
+            }));
+        }
+    },
+    watch: {
+        'inViewport.now': function(visible) {
+            if (visible) {
+                const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+                this.triggerAnanlyticsEvent(`VIEWED_APPBANNER_GLOBAL`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    SCREEN_NAME
+                });
+            }
+        }
+    },
+    mounted() {
+        if ($('.app-banner').is(":visible") == true) {
+            $("#app .page-wrap").css("margin-top", "10px");
         }
     }
 }
@@ -53,7 +87,7 @@ export default {
 <style lang="scss" scoped>
     .app-banner {
         margin-top: 70px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        box-shadow: 0 1px 1px rgba(0,0,0,0.2);
         position: relative;
         button.close {
             position: absolute;
@@ -103,14 +137,4 @@ export default {
             box-shadow: 0 1px 2px rgba(0,0,0,0.4);
         }
     }
-</style>
-
-<style lang="scss">
-@media screen and (max-width: 992px) {
-    #app {
-        .page-wrap {
-            margin-top: 10px;
-        }
-    }
-}
 </style>
