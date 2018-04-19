@@ -1,24 +1,26 @@
 <template>
-    <div class="app-banner container" v-if="isAndroid()">
-        <div class="row">
-            <button class="close" @click="closeBanner"><i class="material-icons">close</i></button>
-            <div class="col-2 logo">
-                <img src="../assets/pratilipi_logo.png" alt="logo">
+    <span>
+        <div class="app-banner container" v-if="isAndroid()">
+            <div class="row">
+                <button class="close" @click="closeBanner"><i class="material-icons">close</i></button>
+                <div class="col-2 logo">
+                    <img src="../assets/pratilipi_logo.png" alt="logo">
+                </div>
+                <div class="col-10 app-info">
+                    <span class="name">__("pratilipi_android_application")</span>
+                    <span class="stars"><img class="rating-image" src="http://public.pratilipi.com/images/Stars-for-App-Install-Strip.png"></span>
+                </div>
             </div>
-            <div class="col-10 app-info">
-                <span class="name">__("pratilipi_android_application")</span>
-                <span class="stars"><img class="rating-image" src="http://public.pratilipi.com/images/Stars-for-App-Install-Strip.png"></span>
+            <div class="row">
+                <div class="col-12 app-desc">__("read_stories_without_internet")</div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button name="button" class="download-now" @click="downloadApp">__("android_download")</button>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 app-desc">__("read_stories_without_internet")</div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <button name="button" class="download-now" @click="downloadApp">__("android_download")</button>
-            </div>
-        </div>
-    </div>
+    </span>
 </template>
 
 <script>
