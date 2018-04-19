@@ -11,6 +11,8 @@
                                 <AuthorCard v-for="eachAuthor in getAuthorListData" 
                                     :key="eachAuthor.authorId" 
                                     :authorData="eachAuthor"
+                                    :screenName="'SEARCH'"
+                                    :screenLocation="'USERRESULT'"
                                     :followOrUnfollowAuthor="followOrUnfollowAuthor"></AuthorCard>
                             </slick>
                         </div>
@@ -23,6 +25,8 @@
                             v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' || getPratilipiListData.length !== 0"
                             :addToLibrary="addToLibrary"
                             :removeFromLibrary="removeFromLibrary"
+                            :screenName="'SEARCH'"
+                            :screenLocation="'PRATILIPIRESULT'"
                             ></PratilipiComponent>
                             <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
                             <p class="message" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' && getPratilipiListData.length == 0">__("search_no_results_found")</p>

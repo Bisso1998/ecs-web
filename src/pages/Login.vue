@@ -111,6 +111,9 @@ export default {
 
             if (newHash === '#forgot-pass') {
                 this.openForgotPasswordModal();
+                this.triggerAnanlyticsEvent('LANDED_FORGOTPM_FORGOTP', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
             }
         },
         'getLoginSource'(source) {
@@ -155,6 +158,9 @@ export default {
     mounted() {
         if (this.$route.hash === '#forgot-pass') {
             this.openForgotPasswordModal();
+            this.triggerAnanlyticsEvent('LANDED_FORGOTPM_FORGOTP', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         }
         
         this.triggerAnanlyticsEvent('LANDED_REGISTERM_REGISTER', 'CONTROL', {

@@ -648,6 +648,11 @@ export default {
         "LOCATION": "LIBRARYM",
         "ACTION": "SHAREBOOKWA"
     },
+    "TYPELOGINFIELD_EMAIL_LOGIN": {
+        "SCREEN_NAME": "LOGIN",
+        "LOCATION": "EMAIL",
+        "ACTION": "TYPELOGINFIELD"
+    },
     "SIGNINERR_EMAIL_LOGIN": {
         "SCREEN_NAME": "LOGIN",
         "LOCATION": "EMAIL",
@@ -657,11 +662,6 @@ export default {
         "SCREEN_NAME": "LOGIN",
         "LOCATION": "EMAIL",
         "ACTION": "SIGNINSUC"
-    },
-    "TYPELOGINFIELD_EMAIL_LOGIN": {
-        "SCREEN_NAME": "LOGIN",
-        "LOCATION": "EMAIL",
-        "ACTION": "TYPELOGINFIELD"
     },
     "SIGNINERR_FACEBOOK_LOGIN": {
         "SCREEN_NAME": "LOGIN",
@@ -683,6 +683,44 @@ export default {
         "LOCATION": "GOOGLE",
         "ACTION": "SIGNINSUC"
     },
+
+
+    "SIGNUPERR_EMAIL_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "EMAIL",
+        "ACTION": "SIGNUPERR"
+    },
+    "SIGNUPSUC_EMAIL_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "EMAIL",
+        "ACTION": "SIGNUPSUC"
+    },
+    "SIGNINSUC_EMAIL_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "EMAIL",
+        "ACTION": "SIGNINSUC"
+    },
+    "SIGNUPERR_FACEBOOK_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "FACEBOOK",
+        "ACTION": "SIGNUPERR"
+    },
+    "SIGNUPSUC_FACEBOOK_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "FACEBOOK",
+        "ACTION": "SIGNUPSUC"
+    },
+    "SIGNUPERR_GOOGLE_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "GOOGLE",
+        "ACTION": "SIGNUPERR"
+    },
+    "SIGNUPSUC_GOOGLE_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "GOOGLE",
+        "ACTION": "SIGNUPSUC"
+    },
+
     "LANDED_LOGINM_LOGIN": {
         "SCREEN_NAME": "LOGIN",
         "LOCATION": "LOGINM",
@@ -691,6 +729,11 @@ export default {
     "LANDED_LOGINM_GLOBAL": {
         "SCREEN_NAME": "GLOBAL",
         "LOCATION": "LOGINM",
+        "ACTION": "LANDED"
+    },
+    "LANDED_REGISTERM_GLOBAL": {
+        "SCREEN_NAME": "GLOBAL",
+        "LOCATION": "REGISTERM",
         "ACTION": "LANDED"
     },
     "TYPELOGINFIELD_PASSWORD_LOGIN": {
@@ -1772,5 +1815,80 @@ export default {
         "SCREEN_NAME": "MYPROFILE",
         "LOCATION": "LIBRARY",
         "ACTION": "READBOOK"
+    },
+    "FOLLOW_USERRESULT_SEARCH": {
+        "SCREEN_NAME": "SEARCH",
+        "LOCATION": "USERRESULT",
+        "ACTION": "FOLLOW"
+    },
+    "UNFOLLOW_USERRESULT_SEARCH": {
+        "SCREEN_NAME": "SEARCH",
+        "LOCATION": "USERRESULT",
+        "ACTION": "UNFOLLOW"
+    },
+    "FOLLOW_INDEX_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "INDEX",
+        "ACTION": "FOLLOW"
+    },
+    "UNFOLLOW_INDEX_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "INDEX",
+        "ACTION": "UNFOLLOW"
+    },
+    "COMMENT_REVIEWS_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "REVIEWS",
+        "ACTION": "COMMENT"
+    },
+    "REVIEW_RATEREV_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "RATEREV",
+        "ACTION": "REVIEW"
+    },
+    "EDITREVIEW_RATEREV_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "RATEREV",
+        "ACTION": "EDITREVIEW"
+    },
+    "REVIEW_READERM_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "READERM",
+        "ACTION": "REVIEW"
+    },
+    "EDITREVIEW_READERM_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "READERM",
+        "ACTION": "EDITREVIEW"
+    },
+    "WRITENEWBOOK_NEWBOOK_CREATE": {
+        "SCREEN_NAME": "CREATE",
+        "LOCATION": "NEWBOOK",
+        "ACTION": "WRITENEWBOOK"
+    },
+    "GETANDROID_APPBANNER_CREATE": {
+        "SCREEN_NAME": "CREATE",
+        "LOCATION": "APPBANNER",
+        "ACTION": "GETANDROID"
+    },
+    "CLICKBOOK_DRAFTS_CREATE": {
+        "SCREEN_NAME": "CREATE",
+        "LOCATION": "DRAFTS",
+        "ACTION": "CLICKBOOK"
+    },
+    "GETANDROID_OPENAPP_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "OPENAPP",
+        "ACTION": "GETANDROID"  
+    },
+    "DISMISS_OPENAPP_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "OPENAPP",
+        "ACTION": "DISMISS"  
+    },
+    "VIEWANDROID_OPENAPP_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "OPENAPP",
+        "ACTION": "VIEWANDROID"  
     }
 };

@@ -12,21 +12,20 @@ export default {
         });
     },
 
-    updateUserDetails({ commit, state }) {
+    updateUserDetails({ commit, state }, userData) {
         commit('setUpdateUserLoadingTrue');
-        const { email, phone } = state.author.data;
+        const { email, phone } = userData;
         const { userId } = state.author.data.user;
-        DataAccessor.createOrUpdateUser(userId, email, phone, () => {
+        DataAccessor.createOrUpdateUser(userId, email, phone, (data) => {
             commit('setUpdateUserLoadingSuccess');
+            commit('setUserDataLoadingSuccess', data, { root: true });
         }, () => {
-            commit('setUpdateUserLoadingError');
+            commit('setUserDataLoadingError', { root: true });
         });
     },
 
-    updateAuthorDetails({ commit, state }) {
+    updateAuthorDetails({ commit, state }, authorData) {
         commit('setUpdateAuthorLoadingTrue');
-        const authorData = { ...state.author.data };
-        console.log(authorData);
         DataAccessor.createOrUpdateAuthor(authorData, (response) => {
             commit('setUpdateAuthorLoadingSuccess', response);
             commit('alert/triggerAlertView', '__('updated_author_info_success')', { root: true });

@@ -9,6 +9,7 @@
                                 <div class="cover-options">
                                     <router-link
                                     :to="{ name: 'Settings_Page'}"
+                                    @click.native="triggerSettingsEvent"
                                     v-if="getUserDetails.userId === getAuthorData.user.userId">
                                         <i class="material-icons">settings</i>
                                     </router-link>
@@ -56,10 +57,10 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="follow-btn-w-count" v-if="!getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="followOrUnfollowAuthor"><!-- Follow Button -->
+                            <div class="follow-btn-w-count" v-if="!getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="triggerEventAndFollowOrUnfollowAuthor"><!-- Follow Button -->
                                 <button><i class="material-icons">person_add</i> __("author_follow")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                             </div>
-                            <div class="follow-btn-w-count" v-if="getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="followOrUnfollowAuthor"><!-- Following Button -->
+                            <div class="follow-btn-w-count" v-if="getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="triggerEventAndFollowOrUnfollowAuthor"><!-- Following Button -->
                                 <button><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                             </div>
                         </div>
@@ -78,8 +79,10 @@
                                     :key="pratilipiData.pratilipiId"
                                     v-for="pratilipiData in getPublishedContents"
                                     v-if="publishedContentsLoadingState === 'LOADING_SUCCESS' || getPublishedContents.length !== 0"
-                                    :hideAddToLibrary="true"
+                                    :hideAddToLibrary="getAuthorData.authorId === getUserDetails.authorId"
                                     :hideAuthorName="true"
+                                    :removeFromLibrary="removeFromLibraryPublished"
+                                    :addToLibrary="addToLibraryPublished"
                                     :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
                                     :screenLocation="'PUBLISHED'"
                                     ></PratilipiComponent>
@@ -112,6 +115,8 @@
                                     <AuthorCard  v-for="each_follower in getAuthorFollowers" 
                                         :authorData="each_follower" 
                                         :key="each_follower.userId"
+                                        :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
+                                        :screenLocation="'FOLLOWERS'"
                                         :followOrUnfollowAuthor="followOrUnfollowFollowers"
                                         :inFollowersTab="true"></AuthorCard>
                                         <p class="message" v-if="getAuthorFollowersLoadingState === 'LOADING_SUCCESS' && getAuthorFollowers.length == 0 && getUserDetails.userId === getAuthorData.user.userId">__("user_no_followers")</p>
@@ -122,6 +127,8 @@
                                     <AuthorCard v-for="each_following in getAuthorFollowing" 
                                         :authorData="each_following" 
                                         :key="each_following.userId"
+                                        :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
+                                        :screenLocation="'FOLLOWINGS'"
                                         :followOrUnfollowAuthor="followOrUnfollowFollowing"
                                         :inFollowingTab="true"></AuthorCard>
                                     <p class="message" v-if="getAuthorFollowingLoadingState === 'LOADING_SUCCESS' && getAuthorFollowing.length == 0 && getUserDetails.userId === getAuthorData.user.userId">__("user_no_following")</p>
@@ -199,10 +206,13 @@ export default {
             'followOrUnfollowFollowing',
             'followOrUnfollowFollowers',
             'uploadCoverImage',
-            'uploadProfileImage'
+            'uploadProfileImage',
+            'removeFromLibraryPublished',
+            'addToLibraryPublished'
         ]),
         ...mapActions([
-            'setShareDetails'
+            'setShareDetails',
+            'setAfterLoginAction'
         ]),
         tabchange(event) {
             event.preventDefault();        
@@ -211,6 +221,34 @@ export default {
             $(event.currentTarget).addClass("active");
             $(".bottom-contents .list").hide();
             $("#" + tab_id).show();
+            if (tab_id === 'followers') {
+                if (this.getUserDetails.author.authorId !== this.getAuthorData.authorId) {
+                    this.triggerAnanlyticsEvent('LANDED_FOLLOWERS_USER', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId,
+                        'PARENT_ID': this.getAuthorData.user.userId,
+                        'AUTHOR_ID': this.getAuthorData.authorId
+                    });
+                }
+                else if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
+                    this.triggerAnanlyticsEvent('LANDED_FOLLOWERS_MYPROFILE', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                }
+            }
+            else if (tab_id === 'following') {
+                if (this.getUserDetails.author.authorId !== this.getAuthorData.authorId) {
+                    this.triggerAnanlyticsEvent('LANDED_FOLLOWINGS_USER', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId,
+                        'PARENT_ID': this.getAuthorData.user.userId,
+                        'AUTHOR_ID': this.getAuthorData.authorId
+                    });
+                }
+                else if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
+                    this.triggerAnanlyticsEvent('LANDED_FOLLOWINGS_MYPROFILE', 'CONTROL', {
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                }
+            }
         },
         goToPublishedContentsTab() {
             $(".profile-menu a").removeClass("active");
@@ -226,15 +264,70 @@ export default {
             switch(imageType) {
                 case 'cover-image':
                     $('#coverimage_uploader').click();
+                    if (this.getAuthorData.coverImageUrl.endsWith('/author/cover')) {
+                        this.triggerAnanlyticsEvent(`NEWUSERINFO_COVERPIC_MYPROFILE`, 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
+                    else {
+                        this.triggerAnanlyticsEvent(`UPDATEUSERINFO_COVERPIC_MYPROFILE`, 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
                     break;
                 case 'profile-image':
                     $('#profile_uploader').click();
+                    if (this.getAuthorData.imageUrl.endsWith('/author/image')) {
+                        this.triggerAnanlyticsEvent(`NEWUSERINFO_PROFILEPIC_MYPROFILE`, 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
+                    else {
+                        this.triggerAnanlyticsEvent(`UPDATEUSERINFO_PROFILEPIC_MYPROFILE`, 'CONTROL', {
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
                     break;
             }
             
         },
+        triggerSettingsEvent() {
+            this.triggerAnanlyticsEvent(`CLICKSETTINGS_MYPROFILEM_MYPROFILE`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
+        },
+        triggerEventAndFollowOrUnfollowAuthor() {
+            let action = !this.getAuthorData.following ? 'FOLLOW' : 'UNFOLLOW';
+            this.triggerAnanlyticsEvent(`${action}_USERM_USER`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.getAuthorData.followCount,
+                'AUTHOR_ID': this.getAuthorData.authorId
+            });
+            
+            if (this.getUserDetails.isGuest) {
+                // throw popup modal
+                console.log(this.$route);
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor` });
+                this.openLoginModal(this.$route.meta.store, action, this.screenLocation);
+            } else {
+                this.followOrUnfollowAuthor();
+            }
+        },
         openShareModal() {
-            this.setShareDetails({ data: this.getAuthorData, type: 'AUTHOR' })
+            if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
+                this.triggerAnanlyticsEvent(`CLICKSHRUSER_MYPROFILEM_MYPROFILE`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'AUTHOR_ID': this.getAuthorData.authorId
+                });
+                this.setShareDetails({ data: this.getAuthorData, type: 'AUTHOR', screen_name: 'MYPROFILE', screen_location: 'MYPROFILEM' });
+            }
+            else {
+                this.triggerAnanlyticsEvent(`CLICKSHRUSER_USERM_USER`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'AUTHOR_ID': this.getAuthorData.authorId
+                });
+                this.setShareDetails({ data: this.getAuthorData, type: 'AUTHOR', screen_name: 'USER', screen_location: 'USERM' });
+            }
             $('#share_modal').modal('show');
         },
         triggerCoverImageUpload(event) {

@@ -1,31 +1,34 @@
 <template>
-    <div class="about-author" v-if="getAuthorDetails.pageUrl">
-        <div class="head-title">__("author_about")</div>
-        <router-link
-            :to="getAuthorDetails.pageUrl"
-            class="author-link">
-            <img :src="getAuthorDetails.profileImageUrl" alt="author" class="auth-img" >
-            <div class="auth-name">{{ getAuthorDetails.name }}</div>
-        </router-link>
-        <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow")</button>
-        <button class="btn btn-light follow-link following" @click="checkUserAndFollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
-        <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
-        <button type="button" v-if="showShowMoreOfSummary" class="show_more_auth_desc" name="button" data-toggle="modal" data-target="#auth_summary_modal">__("view_more")</button>
-        <!-- SUMMARY MODAL -->
-        <div class="modal fade summary-modal" id="auth_summary_modal" tabindex="-1" role="dialog" aria-labelledby="summary-modalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">__("pratilipi_summary")</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body social">
-                 <p>{{ getAuthorDetails.summary }}</p>
+    <div class="about-author">
+        <div class="wrap" v-if="getAuthorDetails.pageUrl">
+            <div class="head-title">__("author_about")</div>
+            <router-link
+                :to="getAuthorDetails.pageUrl"
+                @click.native="triggerClickAuthorEvent"
+                class="author-link">
+                <img :src="getAuthorDetails.profileImageUrl" alt="author" class="auth-img" >
+                <div class="auth-name">{{ getAuthorDetails.name }}</div>
+            </router-link>
+            <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow")</button>
+            <button class="btn btn-light follow-link following" @click="checkUserAndFollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
+            <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
+            <button type="button" v-if="showShowMoreOfSummary" class="show_more_auth_desc" name="button" data-toggle="modal" data-target="#auth_summary_modal">__("view_more")</button>
+            <!-- SUMMARY MODAL -->
+            <div class="modal fade summary-modal" id="auth_summary_modal" tabindex="-1" role="dialog" aria-labelledby="summary-modalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">__("pratilipi_summary")</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body social">
+                     <p>{{ getAuthorDetails.summary }}</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
         </div>
     </div>
 </template>
@@ -33,6 +36,7 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex'
+import inViewport from 'vue-in-viewport-mixin';
 import mixins from '@/mixins';
 
 export default {
@@ -41,10 +45,18 @@ export default {
         authorId: {
             type: Number,
             required: true
+        },
+        'in-viewport-once': {
+            default: true
+        },
+        pratilipiData: {
+            type: Object,
+            required: true
         }
     },
     mixins: [
-        mixins
+        mixins,
+        inViewport
     ],
     data() {
         return {
@@ -82,12 +94,29 @@ export default {
             }   
         },
         checkUserAndFollowAuthor() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            let action = !this.getAuthorDetails.following ? 'FOLLOW' : 'UNFOLLOW';
+            this.triggerAnanlyticsEvent(`${action}_AUTHORDETAIL_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.getAuthorDetails.followCount,
+                'AUTHOR_ID': this.getAuthorDetails.authorId
+            });
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor`});
                 this.openLoginModal(this.$route.meta.store, 'FOLLOW', 'AUTHORDETAILS');
             } else {
                 this.followOrUnfollowAuthor();
             }
+        },
+        triggerClickAuthorEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKUSER_AUTHORDETAIL_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.getAuthorDetails.user.userId,
+                'AUTHOR_ID': this.getAuthorDetails.authorId
+            });
         }
     },
     components: {
@@ -100,6 +129,17 @@ export default {
                 setTimeout(() => {
                     that.detectOverflow();    
                 }, 0);
+            }
+        },
+        'inViewport.now'(visible) {
+            console.log(visible);
+            if (visible) {
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+                this.triggerAnanlyticsEvent(`VIEWED_AUTHORDETAIL_BOOK`, 'CONTROL', {
+                    ...pratilipiAnalyticsData,
+                    'USER_ID': this.getUserDetails.userId
+                });
+                
             }
         }
     },

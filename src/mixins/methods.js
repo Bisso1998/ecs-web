@@ -16,6 +16,16 @@ export function translateWord(word, callback) {
 }
 
 export function openLoginModal(pageSource, action, location) {
+    triggerAnanlyticsEvent('LANDED_REGISTERM_GLOBAL', 'CONTROL', {
+        REFER_SCREEN: getAnalyticsPageSource(pageSource),
+        REFER_ACTION: action,
+        REFER_LOCATION: location
+
+    });
+    $('#login_modal').modal('show');
+}
+
+export function getAnalyticsPageSource(pageSource) {
     let analyticsPageSource;
     switch (pageSource) {
         case 'homepage': 
@@ -63,14 +73,17 @@ export function openLoginModal(pageSource, action, location) {
         case 'listpage': 
             analyticsPageSource = 'CATEGORY';
             break;
+        case 'discover':
+            analyticsPageSource = 'DISCOVER';
+            break;
+        case 'login':
+            analyticsPageSource = 'LOGIN';
+            break;
+        case 'register':
+            analyticsPageSource = 'SIGNUP';
+            break;
     }
-    triggerAnanlyticsEvent('LANDED_LOGINM_GLOBAL', 'CONTROL', {
-        REFER_SCREEN: analyticsPageSource,
-        REFER_ACTION: action,
-        REFER_LOCATION: location
-
-    });
-    $('#login_modal').modal('show');
+    return analyticsPageSource;
 }
 
 export function openInputModal() {
@@ -99,6 +112,11 @@ export function isMobile() {
 
 export function isAndroid() {
     return /Android/i.test(navigator.userAgent);
+}
+
+export function openInNewTab(url) {
+    const win = window.open(url, '_blank');
+    win.focus();
 }
 
 export function isChrome() {
@@ -210,11 +228,16 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
     let eventProps;
     switch(experimentType) {
         case 'CONTROL':
-            eventProps = controlAnalyticsEvents[eventName];
+            eventProps = { ...controlAnalyticsEvents[eventName] };
             break;
     }
-
-    if (eventProps) {
+    
+    if (!eventProps.SCREEN_NAME) {
+        eventProps.SCREEN_NAME = eventProperty['SCREEN_NAME'];
+        delete eventProperty.SCREEN_NAME;
+    }
+    console.log('props', eventProps);
+    if (eventProps && eventProps.ACTION) {
         eventProps = {
             ...eventProps,
             ...eventProperty,
@@ -247,4 +270,15 @@ export function getPratilipiAnalyticsData(pratilipiData) {
         'AUTHOR_ID': pratilipiData.author.authorId,
         'CONTENT_LANGUAGE': pratilipiData.language
     }
+}
+
+export function getAndroidIntentUri( utmParameters ) {
+    const SCHEME = 'http';
+    const PACKAGE_NAME = 'com.pratilipi.mobile.android';
+    const PLAYSTORE_URL = 'https://play.google.com/store/apps/details?id=' + PACKAGE_NAME;
+    const UTM_PARAMETER = utmParameters ? encodeURIComponent( Object.keys(utmParameters).map(function(key){ return key + "=" + utmParameters[key] }).join("&") ) : "";
+    const uri = window.location.host + window.location.pathname + ( window.location.search || '' );
+    return isChrome() ?
+        'intent://' + uri + '#Intent;scheme=' + SCHEME + ';package=' + PACKAGE_NAME + ';S.browser_fallback_url=' + PLAYSTORE_URL + '&referrer=' + UTM_PARAMETER + ';end' :
+        'intent://' + uri + '#Intent;scheme=' + SCHEME + ';package=' + PACKAGE_NAME + ';S.browser_fallback_url=' + 'market://search?q=pname:' + PACKAGE_NAME + '&referrer=' + UTM_PARAMETER + ';end' ;
 }

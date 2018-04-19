@@ -16,6 +16,7 @@
                             <div class="book-title">{{ getPratilipiData.title }} <button class="edit" @click="editPratilipiTitle" v-if="getPratilipiData.hasAccessToUpdate"><i class="material-icons">mode_edit</i></button></div>
                             <router-link
                               :to="getPratilipiData.author.pageUrl"
+                              @click.native="triggerClickAuthorNameEvent"
                               class="author-name">
                               <span>{{ getPratilipiData.author.name }}</span>
                             </router-link>
@@ -37,10 +38,10 @@
                                     </span>
                                     <span>
                                         <button v-if="isMobile()" @click="showAlertToGoToDesktop"><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button>
-                                        <a v-else :href="getPratilipiData.writePageUrl"><button ><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button></a>
+                                        <a v-else @click="triggerEditBookEvent" :href="getPratilipiData.writePageUrl"><button><i class="material-icons">mode_edit</i> __("pratilipi_edit_content")</button></a>
                                     </span>
                                     <span v-if="getPratilipiData.state === 'DRAFTED'">
-                                        <button @click="unpublishOrPublishBook({ bookState: 'PUBLISHED' })">__("pratilipi_publish_it")</button>
+                                        <button @click="triggerEventAndUnpublishOrPublishBook({ bookState: 'PUBLISHED' })">__("pratilipi_publish_it")</button>
                                         <button @click="confirmAndDeletePratilipi"><i class="material-icons">delete</i> __("pratilipi_delete_content")</button>
                                     </span>
                                 </div>
@@ -69,65 +70,23 @@
                                 </router-link>
                             </div>
                         </div>
-                        <div class="card tags-section" v-if="getPratilipiData.hasAccessToUpdate">
-                            <div class="head-title">__("tags_categories") <button class="edit" @click="showTags"><i class="material-icons">mode_edit</i></button></div>
-                            <div class="tags">
-                                <span v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span>
-                                <span v-for="(each_tag, index) in getPratilipiData.suggestedTags" :key="index">{{ each_tag }}</span>
-                            </div>
-                            <div class="edit-tags">
-                                <div class="desc">__("tags_select_for_max_people")</div>
-                                <div class="tag-sections">
-                                    <div class="tag-section-title">__("tags_content_type")</div>
-                                    <div class="tag-section-body">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pratilipi-type" :checked="selectedPratilipiType === 'POEM'" @change="changePratilipiType" id="radio-POEM" value="POEM">
-                                            <label class="form-check-label" for="radio-POEM">__("_pratilipi_type_poem")</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pratilipi-type" :checked="selectedPratilipiType === 'STORY'" @change="changePratilipiType" id="radio-STORY" value="STORY">
-                                            <label class="form-check-label" for="radio-STORY">__("_pratilipi_type_story")</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="pratilipi-type" :checked="selectedPratilipiType === 'ARTICLE'" @change="changePratilipiType" id="radio-ARTICLE" value="ARTICLE">
-                                            <label class="form-check-label" for="radio-ARTICLE">__("_pratilipi_type_article")</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tag-sections">
-                                    <div class="tag-section-title">__("tags_categories")</div>
-                                    <div class="tag-section-body">
-                                        <!-- <span class="all-tags active" v-for="each_tag in getPratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span> -->
-                                        <span class="all-tags" 
-                                            :class="{'active': isTagSelected(each_tag.id)}" 
-                                            v-if="getSystemTags[selectedPratilipiType || 'POEM']"
-                                            v-for="each_tag in getSystemTags[selectedPratilipiType || 'POEM'].categories" 
-                                            :key="each_tag.id"
-                                            @click="addOrRemoveFromListOfSelectedTag(each_tag, isTagSelected(each_tag.id))">{{ each_tag.name }}</span>
-                                    </div>
-                                </div>
-                                <div class="tag-sections">
-                                    <div class="tag-section-title">__("tags_add_custom_category")</div>
-                                    <div class="tag-section-body">
-                                        <div class="new-tags">
-                                            <span class="all-tags active new-tag" 
-                                                v-for="(eachSuggestedTags, index) in suggestedTags"
-                                                :key="index">{{ eachSuggestedTags }}
-                                                <i class="material-icons" @click="removeSuggestedTag(index)">remove_circle</i>
-                                            </span>
-                                        </div>
-                                        <div class="form-inline">
-                                            <div class="form-group">
-                                                <TranslatingInput :value="newSuggestedTag" :oninput="updateNewSuggestedTag"></TranslatingInput>
-                                            </div>
-                                            <button type="button" class="btn add-category" @click="addToSuggestedTag"><i class="material-icons">send</i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="button" @click="saveTypeAndCategoriesAndCloseSection({ suggestedTags, type: selectedPratilipiType, tags: selectedTags })" class="btn btn-save">__("save")</button>
-                                <button type="button" @click="cancelTags" class="btn btn-light">__("cancel")</button>
-                            </div>
-                        </div>
+                        <BookTags 
+                            v-if="getPratilipiData.hasAccessToUpdate"
+                            :selectedPratilipiType="selectedPratilipiType"     
+                            :isTagSelected="isTagSelected" 
+                            :selectedTags="selectedTags" 
+                            :pratilipiData="getPratilipiData"
+                            :changePratilipiType="changePratilipiType"
+                            :getSystemTags="getSystemTags"
+                            :addOrRemoveFromListOfSelectedTag="addOrRemoveFromListOfSelectedTag"
+                            :suggestedTags="suggestedTags"
+                            :removeSuggestedTag="removeSuggestedTag"
+                            :newSuggestedTag="newSuggestedTag"
+                            :updateNewSuggestedTag="updateNewSuggestedTag" 
+                            :addToSuggestedTag="addToSuggestedTag"
+                            :saveTypeAndCategories="saveTypeAndCategories"
+                            :fetchSystemTags="fetchSystemTags"
+                            ></BookTags>
                     </div>
                     <div class="book-synopsis col-md-12 col-lg-7 p-0">
                         <div class="card">
@@ -155,7 +114,7 @@
                               </div>
                             </div>
                             
-                            <AboutAuthor :authorId="getPratilipiData.author.authorId"></AboutAuthor>
+                            <AboutAuthor :authorId="getPratilipiData.author.authorId" :pratilipiData="getPratilipiData"></AboutAuthor>
                         </div>
                         <div class="card">
                             <div class="head-title">__("review_heading")</div>
@@ -166,6 +125,7 @@
                                 :haveInfiniteScroll="false"
                                 screenName="BOOK"
                                 screenLocation="RATEREV"
+                                :pratilipiData="getPratilipiData"
                                 v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                             </Reviews>
                             <button type="button" class="load_more" name="button" @click="openReviewModal">__("view_more")</button>
@@ -178,6 +138,7 @@
                                     :haveInfiniteScroll="true"
                                     screenName="BOOK"
                                     screenLocation="RATEREV"
+                                    :pratilipiData="getPratilipiData"
                                     :userPratilipiData='getUserPratilipiData'>
                                 </Reviews>
                             </div>
@@ -206,11 +167,11 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Recommendation from '@/components/Recommendation.vue';
-import TranslatingInput from '@/components/TranslatingInput.vue';
 import AboutAuthor from '@/components/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
 import Reviews from '@/components/Reviews.vue';
 import ServerError from '@/components/ServerError.vue';
+import BookTags from '@/components/BookTags.vue';
 import mixins from '@/mixins';
 import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
@@ -240,7 +201,8 @@ export default {
             'getUserPratilipiLoadingState',
             'getImageUploadLoadingState',
             'getSystemTags',
-            'getSystemTagsLoadingState'
+            'getSystemTagsLoadingState',
+            'getAuthorDetails'
         ]),
         ...mapGetters([
             'getUserDetails'
@@ -276,17 +238,35 @@ export default {
             });
         },
         showAlertToGoToDesktop() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`EDITBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             this.triggerAlert({ message: '__("write_on_desktop_only")', timer: 3000 });
         },
-        saveTypeAndCategoriesAndCloseSection(data) {
-            this.saveTypeAndCategories(data);
-            this.cancelTags();
+        triggerEditBookEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`EDITBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+        },
+        triggerEventAndUnpublishOrPublishBook() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`PUBLISHBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.unpublishOrPublishBook({ bookState: 'PUBLISHED' });
         },
         editPratilipiSummary() {
             this.setInputModalSaveAction({ 
                 action: `${this.$route.meta.store}/saveOrUpdateSummary`, 
                 heading: 'edit_pratilipi_summary',
                 prefilled_value: this.getPratilipiData.summary,
+                initial_value: this.getPratilipiData.summary,
+                pratilipi_data: this.getPratilipiData,
                 data: {
                     pratilipiId: this.getPratilipiData.pratilipiId
                 }
@@ -310,6 +290,14 @@ export default {
         addToSuggestedTag() {
             if (this.newSuggestedTag && this.newSuggestedTag.trim().length > 0) {
                 this.suggestedTags.push(this.newSuggestedTag);    
+                
+
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                this.triggerAnanlyticsEvent(`ADDTAG_CATTAG_BOOK`, 'CONTROL', {
+                    ...pratilipiAnalyticsData,
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': this.newSuggestedTag
+                });
                 this.newSuggestedTag = '';
             }
         },
@@ -317,6 +305,14 @@ export default {
             this.newSuggestedTag = value;
         },
         removeSuggestedTag(indexToRemove){
+            
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`REMOVETAG_CATTAG_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.suggestedTags[indexToRemove]
+            });
+
             this.suggestedTags.splice(indexToRemove, 1);
         },
         addOrRemoveFromListOfSelectedTag(tagData, isDeselectOperation) {
@@ -339,11 +335,28 @@ export default {
                 if (indexToRemove != null) {
                     currentTags.splice(indexToRemove, 1);
                 }
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                this.triggerAnanlyticsEvent(`REMOVECATEGORY_CATTAG_BOOK`, 'CONTROL', {
+                    ...pratilipiAnalyticsData,
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': tagData.id
+                });
             } else {
+                const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                this.triggerAnanlyticsEvent(`ADDCATEGORY_CATTAG_BOOK`, 'CONTROL', {
+                    ...pratilipiAnalyticsData,
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': tagData.id
+                });
                 this.selectedTags.push(tagData);
             }
         },
         editPratilipiTitle() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`EDITTITLE_BOOKTITLE_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             this.setInputModalSaveAction({ 
                 action: `${this.$route.meta.store}/saveOrUpdateTitle`, 
                 heading: 'edit_pratilipi_title',
@@ -356,6 +369,11 @@ export default {
             this.openMultiInputModal();
         },
         confirmAndDeletePratilipi() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`DELETEBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
             this.setConfirmModalAction({ 
                 action: `${this.$route.meta.store}/deletePratilipi`, 
                 heading: 'pratilipi_delete_content',
@@ -367,7 +385,12 @@ export default {
             this.openConfirmationModal();
         },
         askConfirmationAndUnpublishOrPublishBook({bookState}) {
-            this.setConfirmModalAction({ 
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`UNPUBLISHBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.setConfirmModalAction({
                 action: `${this.$route.meta.store}/unpublishOrPublishBook`, 
                 heading: 'pratilipi_delete_content',
                 message: 'pratilipi_confirm_delete_content',
@@ -400,13 +423,32 @@ export default {
             this.removeFromLibrary(pratilipiId);
         },
         openShareModal() {
-            this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKSHRBOOK_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI', screen_name: 'BOOK', screen_location: 'BOOKM' })
             $('#share_modal').modal('show');
         },
         uploadImage(imageType) {
             switch(imageType) {
                 case 'pratilipi-image':
                     $('#pratilipiimage-uploader').click();
+                    if (this.getPratilipiData.coverImageUrl.endsWith('/pratilipi/cover')) {
+                        const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                        this.triggerAnanlyticsEvent(`NEWBOOKINFO_BOOKCOVER_BOOK`, 'CONTROL', {
+                            ...pratilipiAnalyticsData,
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
+                    else {
+                        const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+                        this.triggerAnanlyticsEvent(`UPDATEBOOKINFO_BOOKCOVER_BOOK`, 'CONTROL', {
+                            ...pratilipiAnalyticsData,
+                            'USER_ID': this.getUserDetails.userId
+                        });
+                    }
                     break;
             }
             
@@ -416,13 +458,14 @@ export default {
             formData.append('ko_unique_6', event.target.files[0], event.target.files[0].name);
             this.uploadPratilipiImage(formData);
         },
-        showTags() {
-            $(".edit-tags").fadeIn();
-            $(".tags").hide();
-        },
-        cancelTags() {
-            $(".edit-tags").hide();
-            $(".tags").fadeIn();
+        triggerClickAuthorNameEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKUSER_BOOKM_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.getAuthorDetails.user.userId,
+                'AUTHOR_ID': this.getPratilipiData.author.authorId
+            });
         },
         openReviewModal() {
             $(".review-popout").addClass("show");
@@ -458,17 +501,13 @@ export default {
         document.title = this.getPratilipiData.title;
 
         this.fetchPratilipiDetailsAndUserPratilipiData(slug_id);
-
-        if (this.getPratilipiData.language) {
-            this.fetchSystemTags(this.getPratilipiData.language);
-        }
     },
     components: {
         MainLayout,
         Recommendation,
         AboutAuthor,
         Spinner,
-        TranslatingInput,
+        BookTags,
         Reviews,
         ServerError
     },
@@ -485,7 +524,6 @@ export default {
             this.selectedPratilipiType = this.getPratilipiData.type;
             this.selectedTags = this.getPratilipiData.tags;
             this.suggestedTags = this.getPratilipiData.suggestedTags;
-            this.fetchSystemTags(this.getPratilipiData.language);
             document.title = this.getPratilipiData.title;
         },
         'getPratilipiLoadingState'(status) {
@@ -594,87 +632,6 @@ export default {
                 }
                 &:focus {
                     outline: none;
-                }
-            }
-            &.tags-section {
-                .tags {
-                    text-align: left;
-                    span {
-                        display: inline-block;
-                        background: #e9e9e9;
-                        border-radius: 15px;
-                        color: #6c757d;
-                        margin: 5px 0 10px 10px;
-                        padding: 5px 12px;
-                        font-size: 14px;
-                    }
-                }
-                .edit-tags {
-                    font-size: 14px;
-                    padding: 10px;
-                    display: none;
-                    overflow: hidden;
-                    .desc {
-                        font-size: 13px;
-                        color: #212121;
-                        text-align: left;
-                    }
-                    .tag-sections {
-                        margin: 10px 0;
-                        text-align: left;
-                        .tag-section-title {
-                            font-size: 16px;
-                            font-weight: bold;
-                            padding: 10px 0;
-                        }
-                        .tag-section-body {
-                            font-size: 16px;
-                            .all-tags {
-                                display: inline-block;
-                                background: #fff;
-                                border: 1px solid #e9e9e9;
-                                border-radius: 15px;
-                                color: #212121;
-                                margin: 5px 4px;
-                                padding: 5px 10px;
-                                font-size: 14px;
-                                cursor: pointer;
-                                &.active {
-                                    background: #e9e9e9;
-                                }
-                                &.new-tag {
-                                    i {
-                                        font-size: 18px;
-                                        vertical-align: middle;
-                                        padding-left: 5px;
-                                    }
-                                }
-                            }
-                            .form-group {
-                                margin-bottom: 0;
-                            }
-                            .form-control {
-                                font-size: 14px;
-                            }
-                            .add-category {
-                                background: none;
-                                padding: 0;
-                                margin-left: 10px;
-                                i {
-                                    vertical-align: middle;
-                                }
-                            }
-                        }
-                    }
-                    button {
-                        font-size: 14px;
-                        margin: 5px 4px 10px 0;
-                        float: right;
-                        &.btn-save {
-                            background: #d0021b;
-                            color: #fff;
-                        }
-                    }
                 }
             }
         }
@@ -849,7 +806,7 @@ export default {
             margin-left: 0;
             left: 50%;
             transform: translateX(-50%);
-            bottom: -200vh;
+            bottom: -700vh;
             overflow: hidden;
             overflow-y: auto;
             text-align: left;

@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -36,15 +37,34 @@ export default {
     computed: {
         ...mapGetters([
             'getModalTitle',
-            'getModalActionAndData'
+            'getModalActionAndData',
+            'getUserDetails',
         ])
     },
+    mixins: [
+        mixins
+    ],
     methods: {
         ...mapActions([
             'dispatchAction',
             'updatePrefilledValue'
         ]),
         dispatchActionAndCloseModal() {
+            if (this.getModalActionAndData.action === 'pratilipipage/saveOrUpdateSummary') {
+                if (!this.getModalActionAndData.initial_value) {
+                    const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getModalActionAndData.pratilipi_data);
+                    this.triggerAnanlyticsEvent(`NEWBOOKINFO_SUMMARY_BOOK`, 'CONTROL', {
+                        ...pratilipiAnalyticsData,
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                } else {
+                    const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getModalActionAndData.pratilipi_data);
+                    this.triggerAnanlyticsEvent(`UPDATEBOOKINFO_SUMMARY_BOOK`, 'CONTROL', {
+                        ...pratilipiAnalyticsData,
+                        'USER_ID': this.getUserDetails.userId
+                    });
+                }
+            }
             $('#reportModal').modal('hide');
             this.dispatchAction();
         }

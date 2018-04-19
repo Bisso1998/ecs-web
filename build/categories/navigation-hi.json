@@ -92,6 +92,17 @@
                     }
                 },
                 {
+                    "categoryUrl": "/women",
+                    "title": "स्त्री विशेष कहानियाँ",
+                    "analyticsCategoryName": "women",
+                    "imageFileName": "women.jpg",
+                    "pratilipiListData": {
+                        "language": "HINDI",
+                        "state": "PUBLISHED",
+                        "listName": "women"
+                    }
+                },
+                {
                     "categoryUrl": "/poems",
                     "title": "पद्य",
                     "analyticsCategoryName": "poetry",
@@ -229,14 +240,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/nayi-prakashit-rachnaye",
+                    "categoryUrl": "/newcontents",
                     "title": "नई प्रकाशित रचनाएं",
                     "analyticsCategoryName": "newly-published",
                     "imageFileName": "newpublished.jpg",
                     "pratilipiListData": {
                         "language": "HINDI",
                         "state": "PUBLISHED",
-                        "listName": "nayi-prakashit-rachnaye"
+                        "listName": "newcontents"
                     }
                 },
                 {
@@ -272,14 +283,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/event/आपकी-प्रेम-कहानी-क्या-है-eavtvxrx9c",
-                    "title": "आपकी प्रेम कहानी क्या है?",
-                    "analyticsCategoryName": "event-aapki-prem-kahani",
-                    "imageFileName": "event_generic7.jpg",
+                    "categoryUrl": "/event/लिखे-जो-ख़त-तुझे-पत्रलेखन-स्पर्द्धा-cp26c520tl",
+                    "title": "लिखे जो ख़त तुझे...",
+                    "analyticsCategoryName": "event-letter-writing",
+                    "imageFileName": "letters.jpg",
                     "pratilipiListData": {
                         "language": "HINDI",
                         "state": "PUBLISHED",
-                        "eventId": 6900000000000041
+                        "eventId": 6900000000000052
                     }
                 },
                 {

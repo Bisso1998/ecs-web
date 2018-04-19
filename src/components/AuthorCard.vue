@@ -1,7 +1,7 @@
 <template>
     <div class="follow-wrap">
         <div class="follow">
-            <router-link :to="authorData.pageUrl || authorData.profilePageUrl">
+            <router-link :to="authorData.pageUrl || authorData.profilePageUrl" @click.native="triggerUserClick">
                 <div class="follow-img" v-bind:style="{ backgroundImage: 'url(' + authorData.profileImageUrl + (authorData.profileImageUrl.endsWith('/author/image') ? '?' : '&')  + 'width=100)' }"></div>
                 <div v-if="authorData.name || authorData.name === ''" class="follow-name">{{ authorData.name }}</div>
                 <div v-else class="follow-name">{{ authorData.author.name }}</div>
@@ -61,6 +61,14 @@ export default {
         },
         inFollowingTab: {
             type: Boolean
+        },
+        screenName: {
+            type: String,
+            required: true
+        },
+        screenLocation: {
+            type: String,
+            required: true
         }
     },
     mixins: [
@@ -81,6 +89,13 @@ export default {
             'setAfterLoginAction'
         ]),
         verifyAndFollowOrUnfollowAuthor(data) {
+            let action = !data.following ? 'FOLLOW' : 'UNFOLLOW';
+            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.authorData.followCount !== undefined ? this.authorData.followCount : this.authorData.author.followCount,
+                'PARENT_ID': this.authorData.userId !== undefined ? this.authorData.userId : this.authorData.user !== undefined ? this.authorData.user.userId : null,
+                'AUTHOR_ID': this.authorData.authorId !== undefined ? this.authorData.authorId : this.authorData.author.authorId
+            });
             if (this.getUserDetails.isGuest) {
                 if (this.inFollowingTab) {
                     this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowFollowing`, data });    
@@ -94,6 +109,14 @@ export default {
             } else {
                 this.followOrUnfollowAuthor(data);
             }
+        },
+        triggerUserClick() {
+            this.triggerAnanlyticsEvent(`CLICKUSER_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.authorData.followCount !== undefined ? this.authorData.followCount : this.authorData.author.followCount,
+                'PARENT_ID': this.authorData.userId !== undefined ? this.authorData.userId : this.authorData.user !== undefined ? this.authorData.user.userId : null,
+                'AUTHOR_ID': this.authorData.authorId !== undefined ? this.authorData.authorId : this.authorData.author.authorId
+            });
         }
     },
     components: {
@@ -113,7 +136,7 @@ export default {
     border: 1px solid #e9e9e9;
     width: 150px;
     display: inline-block;
-    margin: 10px 5px;
+    margin: 4px;
     position: relative;
     text-align: center;
     a {

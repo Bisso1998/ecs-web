@@ -7384,17 +7384,6 @@ nav.pratilipi-navigation-drawer {
   height: 100%;
   background: inherit;
   box-sizing: border-box; }
-  .pratilipi-login-component input.login-input {
-    margin: 4px 0;
-    outline: 0;
-    padding: 10px 8px;
-    box-sizing: border-box;
-    width: 100%;
-    text-align: left;
-    background: #f3f3f3;
-    color: #333333;
-    border: 1px solid #ededed;
-    border-radius: 1px; }
   .pratilipi-login-component button.login-button {
     -webkit-display: flex;
     -khtml-display: flex;
@@ -7432,7 +7421,7 @@ nav.pratilipi-navigation-drawer {
     -ms-zoom: 1.2;
     -o-zoom: 1.2;
     zoom: 1.2; }
-  .pratilipi-login-component div.pre-login-screen, .pratilipi-login-component div.login-screen, .pratilipi-login-component div.register-screen, .pratilipi-login-component div.reset-password-screen {
+  .pratilipi-login-component div.pre-login-screen, .pratilipi-login-component div.login-screen, .pratilipi-login-component div.register-screen, .pratilipi-login-component div.reset-password-screen, .pratilipi-login-component div.add-password-screen {
     -webkit-display: none;
     -khtml-display: none;
     -moz-display: none;
@@ -7464,7 +7453,7 @@ nav.pratilipi-navigation-drawer {
     overflow-y: auto;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none; }
-    .pratilipi-login-component div.pre-login-screen *, .pratilipi-login-component div.login-screen *, .pratilipi-login-component div.register-screen *, .pratilipi-login-component div.reset-password-screen * {
+    .pratilipi-login-component div.pre-login-screen *, .pratilipi-login-component div.login-screen *, .pratilipi-login-component div.register-screen *, .pratilipi-login-component div.reset-password-screen *, .pratilipi-login-component div.add-password-screen * {
       -webkit-flex-shrink: 0;
       -khtml-flex-shrink: 0;
       -moz-flex-shrink: 0;
@@ -7474,9 +7463,14 @@ nav.pratilipi-navigation-drawer {
   .pratilipi-login-component div.pre-login-screen::-webkit-scrollbar,
   .pratilipi-login-component div.login-screen::-webkit-scrollbar,
   .pratilipi-login-component div.register-screen::-webkit-scrollbar,
-  .pratilipi-login-component div.reset-password-screen::-webkit-scrollbar {
+  .pratilipi-login-component div.reset-password-screen::-webkit-scrollbar,
+  .pratilipi-login-component div.add-password-screen::-webkit-scrollbar {
     display: none; }
-  .pratilipi-login-component div.pre-login-screen.is-active, .pratilipi-login-component div.login-screen.is-active, .pratilipi-login-component div.register-screen.is-active, .pratilipi-login-component div.reset-password-screen.is-active {
+  .pratilipi-login-component div.pre-login-screen.is-active,
+  .pratilipi-login-component div.login-screen.is-active,
+  .pratilipi-login-component div.register-screen.is-active,
+  .pratilipi-login-component div.reset-password-screen.is-active,
+  .pratilipi-login-component div.add-password-screen.is-active {
     -webkit-display: flex;
     -khtml-display: flex;
     -moz-display: flex;
@@ -7502,11 +7496,32 @@ nav.pratilipi-navigation-drawer {
     -o-flex-direction: column;
     flex-direction: column;
     width: 100%; }
+    .pratilipi-login-component form input.login-input {
+      margin: 0;
+      outline: 0;
+      padding: 10px 8px;
+      box-sizing: border-box;
+      width: 100%;
+      text-align: left;
+      background: #f3f3f3;
+      color: #333333;
+      border: 1px solid #ededed;
+      border-radius: 1px; }
+    .pratilipi-login-component form span.error-message {
+      white-space: pre-wrap;
+      color: #d0021b;
+      padding: 0 8px; }
     .pratilipi-login-component form button[type="submit"] {
       background: #d0021b;
       color: #FFFFFF; }
-  .pratilipi-login-component span.error-message {
-    color: red; }
+    .pratilipi-login-component form button[type="submit"]:focus, .pratilipi-login-component form button[type="submit"]:active {
+      background: #d0021b;
+      color: #FFFFFF; }
+  .pratilipi-login-component span.common-error-message {
+    white-space: pre-wrap;
+    color: #d0021b;
+    text-align: center;
+    margin: 4px 0 12px 0; }
   .pratilipi-login-component div.form-container {
     -webkit-display: flex;
     -khtml-display: flex;
@@ -7521,56 +7536,49 @@ nav.pratilipi-navigation-drawer {
     -o-flex-direction: column;
     flex-direction: column;
     width: 260px; }
-  .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login, .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login {
+  .pratilipi-login-component div.social-login-container button.fb-login, .pratilipi-login-component div.social-login-container button.google-login {
     border: 1px solid #ededed; }
-    .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login span, .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login span {
+    .pratilipi-login-component div.social-login-container button.fb-login span, .pratilipi-login-component div.social-login-container button.google-login span {
       -webkit-display: flex;
       -khtml-display: flex;
       -moz-display: flex;
       -ms-display: flex;
       -o-display: flex;
       display: flex; }
-    .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login span.sprites-icon, .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login span.sprites-icon {
+    .pratilipi-login-component div.social-login-container button.fb-login span.sprites-icon, .pratilipi-login-component div.social-login-container button.google-login span.sprites-icon {
       margin-right: 8px; }
-    .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login span.social-login-title, .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login span.social-login-title {
+    .pratilipi-login-component div.social-login-container button.fb-login span.social-login-title, .pratilipi-login-component div.social-login-container button.google-login span.social-login-title {
       flex-grow: 1;
       justify-content: center; }
-  .pratilipi-login-component div.pre-login-screen div.social-login-container button.fb-login {
+  .pratilipi-login-component div.social-login-container button.fb-login {
     background-color: #3b5998 !important;
     color: #FFFFFF; }
-  .pratilipi-login-component div.pre-login-screen div.social-login-container button.google-login {
+  .pratilipi-login-component div.social-login-container button.google-login {
     background-color: #FFFFFF !important;
     color: #000000; }
-  .pratilipi-login-component div.pre-login-screen p.login-or {
+  .pratilipi-login-component p.login-or {
     margin: 12px 0; }
+  .pratilipi-login-component div.screen-description-text {
+    padding: 0 20px 16px 20px;
+    text-align: center;
+    color: red; }
   .pratilipi-login-component div.pre-login-screen div.email-login-container form button[type="submit"] span.button-text {
     flex-grow: 1;
     justify-content: flex-start; }
-  .pratilipi-login-component div.pre-login-screen div.email-login-container form span.error-message {
-    padding-left: 12px; }
   .pratilipi-login-component div.login-screen form button[type="submit"] span.button-text {
     flex-grow: 1;
     justify-content: center;
     text-align: center; }
-  .pratilipi-login-component div.login-screen form span.error-message {
-    text-align: center;
-    margin: 4px 0 12px 0; }
   .pratilipi-login-component div.login-screen button.forgot-password-button {
     outline: none;
     border: none;
     color: #333333;
     cursor: pointer;
     background: inherit; }
-  .pratilipi-login-component div.register-screen div.screen-description-text {
-    padding: 0 20px 16px 20px;
-    text-align: center;
-    color: red; }
   .pratilipi-login-component div.register-screen form button[type="submit"] span.button-text {
     flex-grow: 1;
     justify-content: center;
     text-align: center; }
-  .pratilipi-login-component div.register-screen form span.error-message {
-    padding-left: 12px; }
   .pratilipi-login-component div.register-screen form label.terms-conditions {
     margin: 12px 0;
     color: #333333; }
@@ -7581,8 +7589,9 @@ nav.pratilipi-navigation-drawer {
     flex-grow: 1;
     justify-content: center;
     text-align: center; }
-  .pratilipi-login-component div.reset-password-screen form span.error-message {
-    padding-left: 12px; }
+  .pratilipi-login-component div.add-password-screen div.email-login-container form button[type="submit"] span.button-text {
+    flex-grow: 1;
+    justify-content: flex-start; }
 
 @-webkit-keyframes fade-show-hide {
   0%, 100% {
@@ -9660,9 +9669,7 @@ pratilipi-loading-state {
   overflow-x: auto;
   overflow-y: hidden;
   background: inherit;
-  box-sizing: border-box;
-  -ms-overflow-style: none;
-  overflow: -moz-scrollbars-none; }
+  box-sizing: border-box; }
   @media only screen and (max-width: 768px) {
     .pratilipi-recommendation-carousel ul.pratilipi-recommendation-carousel li {
       max-width: 260px; } }
@@ -10312,5 +10319,319 @@ a.pratilipi-pratilipi-card-v2 .summary {
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical; }
+
+.pratilipi-writersacademy-collection-page .collection-info-variable-width {
+  flex-grow: 1;
+  margin: 8px; }
+  @media (max-width: 459px) {
+    .pratilipi-writersacademy-collection-page .collection-info-variable-width {
+      text-align: center;
+      width: 100%; } }
+  @media (min-width: 460px) {
+    .pratilipi-writersacademy-collection-page .collection-info-variable-width {
+      width: 50%; } }
+.pratilipi-writersacademy-collection-page .width100 {
+  width: 100%; }
+.pratilipi-writersacademy-collection-page .image-video-width {
+  width: 100%; }
+.pratilipi-writersacademy-collection-page .video-video-width {
+  width: 100%;
+  height: 30vh; }
+.pratilipi-writersacademy-collection-page .category-video-width {
+  width: 100%;
+  height: 450px; }
+  @media only screen and (max-width: 768px) {
+    .pratilipi-writersacademy-collection-page .category-video-width {
+      width: 100%;
+      height: 180px; } }
+  @media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .pratilipi-writersacademy-collection-page .category-video-width {
+      width: 100%;
+      height: 432px; } }
+.pratilipi-writersacademy-collection-page .collection {
+  padding: 16px;
+  min-height: unset !important;
+  margin: 0px; }
+.pratilipi-writersacademy-collection-page .title-padding {
+  padding-bottom: 8px; }
+.pratilipi-writersacademy-collection-page .video-image-holder {
+  width: 100%; }
+.pratilipi-writersacademy-collection-page .latest-video-media-container {
+  margin: 8px 0;
+  -webkit-flex-grow: 1;
+  -khtml-flex-grow: 1;
+  -moz-flex-grow: 1;
+  -ms-flex-grow: 1;
+  -o-flex-grow: 1;
+  flex-grow: 1; }
+  .pratilipi-writersacademy-collection-page .latest-video-media-container img, .pratilipi-writersacademy-collection-page .latest-video-media-container iframe {
+    width: 100%; }
+.pratilipi-writersacademy-collection-page .latest-video-info-container {
+  -webkit-flex-grow: 1;
+  -khtml-flex-grow: 1;
+  -moz-flex-grow: 1;
+  -ms-flex-grow: 1;
+  -o-flex-grow: 1;
+  flex-grow: 1;
+  margin: 0 4px; }
+  @media only screen and (min-width: 840px) {
+    .pratilipi-writersacademy-collection-page .latest-video-info-container {
+      margin: 4px 8px; } }
+  .pratilipi-writersacademy-collection-page .latest-video-info-container a {
+    color: inherit; }
+  .pratilipi-writersacademy-collection-page .latest-video-info-container .latest-video-description {
+    padding-top: 8px; }
+.pratilipi-writersacademy-collection-page .no-margin {
+  margin: 0px; }
+.pratilipi-writersacademy-collection-page .no-padding {
+  padding: 0px; }
+.pratilipi-writersacademy-collection-page ul.video-carousel {
+  -webkit-flex-flow: row;
+  -khtml-flex-flow: row;
+  -moz-flex-flow: row;
+  -ms-flex-flow: row;
+  -o-flex-flow: row;
+  flex-flow: row;
+  -webkit-flex-shrink: 0;
+  -khtml-flex-shrink: 0;
+  -moz-flex-shrink: 0;
+  -ms-flex-shrink: 0;
+  -o-flex-shrink: 0;
+  flex-shrink: 0;
+  -webkit-flex-wrap: nowrap;
+  -khtml-flex-wrap: nowrap;
+  -moz-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  -o-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  width: 100%;
+  position: relative;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: inherit;
+  box-sizing: border-box;
+  margin-left: -8px;
+  margin-right: -8px;
+  width: calc(100% + 16px); }
+  @media only screen and (max-width: 768px) {
+    .pratilipi-writersacademy-collection-page ul.video-carousel li {
+      max-width: 260px; } }
+  .pratilipi-writersacademy-collection-page ul.video-carousel li {
+    list-style: none;
+    display: inline-block;
+    min-width: 100px;
+    box-sizing: border-box;
+    position: relative;
+    -webkit-flex-grow: 0;
+    -khtml-flex-grow: 0;
+    -moz-flex-grow: 0;
+    -ms-flex-grow: 0;
+    -o-flex-grow: 0;
+    flex-grow: 0;
+    -webkit-flex-shrink: 0;
+    -khtml-flex-shrink: 0;
+    -moz-flex-shrink: 0;
+    -ms-flex-shrink: 0;
+    -o-flex-shrink: 0;
+    flex-shrink: 0;
+    -webkit-flex-basis: auto;
+    -khtml-flex-basis: auto;
+    -moz-flex-basis: auto;
+    -ms-flex-basis: auto;
+    -o-flex-basis: auto;
+    flex-basis: auto; }
+    .pratilipi-writersacademy-collection-page ul.video-carousel li a.video-title {
+      color: inherit;
+      margin-top: 4px;
+      display: inline-block; }
+  .pratilipi-writersacademy-collection-page ul.video-carousel li:last-child {
+    border-right: 8px solid white; }
+.pratilipi-writersacademy-collection-page ul.video-carousel::-webkit-scrollbar {
+  display: none; }
+.pratilipi-writersacademy-collection-page div.mdl-spinner-container {
+  -webkit-display: flex;
+  -khtml-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -khtml-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  margin: 12px 0;
+  background: #ffffff; }
+
+.pratilipi-writersacademy-video-page .video {
+  padding: 16px;
+  min-height: unset !important;
+  margin: 0px; }
+.pratilipi-writersacademy-video-page .title-padding {
+  padding-bottom: 8px; }
+.pratilipi-writersacademy-video-page .video-image-holder {
+  width: 100%; }
+.pratilipi-writersacademy-video-page .video-holder {
+  width: 100%;
+  height: 60vh;
+  min-height: unset !important; }
+.pratilipi-writersacademy-video-page .previous-link {
+  float: left;
+  color: inherit; }
+.pratilipi-writersacademy-video-page .next-link {
+  float: right;
+  color: inherit; }
+.pratilipi-writersacademy-video-page .no-margin {
+  margin: 0px; }
+.pratilipi-writersacademy-video-page .no-padding {
+  padding: 0px; }
+.pratilipi-writersacademy-video-page .image-video-width {
+  width: 100%; }
+.pratilipi-writersacademy-video-page ul.video-carousel {
+  -webkit-flex-flow: row;
+  -khtml-flex-flow: row;
+  -moz-flex-flow: row;
+  -ms-flex-flow: row;
+  -o-flex-flow: row;
+  flex-flow: row;
+  -webkit-flex-shrink: 0;
+  -khtml-flex-shrink: 0;
+  -moz-flex-shrink: 0;
+  -ms-flex-shrink: 0;
+  -o-flex-shrink: 0;
+  flex-shrink: 0;
+  -webkit-flex-wrap: nowrap;
+  -khtml-flex-wrap: nowrap;
+  -moz-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  -o-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  width: 100%;
+  position: relative;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: inherit;
+  box-sizing: border-box;
+  margin-left: -8px;
+  margin-right: -8px;
+  width: calc(100% + 16px); }
+  @media only screen and (max-width: 768px) {
+    .pratilipi-writersacademy-video-page ul.video-carousel li {
+      max-width: 260px; } }
+  .pratilipi-writersacademy-video-page ul.video-carousel li {
+    list-style: none;
+    display: inline-block;
+    min-width: 100px;
+    box-sizing: border-box;
+    position: relative;
+    -webkit-flex-grow: 0;
+    -khtml-flex-grow: 0;
+    -moz-flex-grow: 0;
+    -ms-flex-grow: 0;
+    -o-flex-grow: 0;
+    flex-grow: 0;
+    -webkit-flex-shrink: 0;
+    -khtml-flex-shrink: 0;
+    -moz-flex-shrink: 0;
+    -ms-flex-shrink: 0;
+    -o-flex-shrink: 0;
+    flex-shrink: 0;
+    -webkit-flex-basis: auto;
+    -khtml-flex-basis: auto;
+    -moz-flex-basis: auto;
+    -ms-flex-basis: auto;
+    -o-flex-basis: auto;
+    flex-basis: auto; }
+    .pratilipi-writersacademy-video-page ul.video-carousel li a.video-title {
+      color: inherit;
+      margin-top: 4px;
+      display: inline-block; }
+  .pratilipi-writersacademy-video-page ul.video-carousel li:last-child {
+    border-right: 8px solid white; }
+.pratilipi-writersacademy-video-page ul.video-carousel::-webkit-scrollbar {
+  display: none; }
+.pratilipi-writersacademy-video-page div.mdl-spinner-container {
+  -webkit-display: flex;
+  -khtml-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -khtml-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  margin: 12px 0;
+  background: #ffffff; }
+
+.pratilipi-video-carousel ul.video-carousel {
+  -webkit-flex-flow: row;
+  -khtml-flex-flow: row;
+  -moz-flex-flow: row;
+  -ms-flex-flow: row;
+  -o-flex-flow: row;
+  flex-flow: row;
+  -webkit-flex-shrink: 0;
+  -khtml-flex-shrink: 0;
+  -moz-flex-shrink: 0;
+  -ms-flex-shrink: 0;
+  -o-flex-shrink: 0;
+  flex-shrink: 0;
+  -webkit-flex-wrap: nowrap;
+  -khtml-flex-wrap: nowrap;
+  -moz-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  -o-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  width: 100%;
+  position: relative;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: inherit;
+  box-sizing: border-box;
+  margin-left: -8px;
+  margin-right: -8px;
+  width: calc(100% + 16px); }
+  @media only screen and (max-width: 768px) {
+    .pratilipi-video-carousel ul.video-carousel li {
+      max-width: 260px; } }
+  .pratilipi-video-carousel ul.video-carousel li {
+    list-style: none;
+    display: inline-block;
+    min-width: 100px;
+    box-sizing: border-box;
+    position: relative;
+    -webkit-flex-grow: 0;
+    -khtml-flex-grow: 0;
+    -moz-flex-grow: 0;
+    -ms-flex-grow: 0;
+    -o-flex-grow: 0;
+    flex-grow: 0;
+    -webkit-flex-shrink: 0;
+    -khtml-flex-shrink: 0;
+    -moz-flex-shrink: 0;
+    -ms-flex-shrink: 0;
+    -o-flex-shrink: 0;
+    flex-shrink: 0;
+    -webkit-flex-basis: auto;
+    -khtml-flex-basis: auto;
+    -moz-flex-basis: auto;
+    -ms-flex-basis: auto;
+    -o-flex-basis: auto;
+    flex-basis: auto; }
+    .pratilipi-video-carousel ul.video-carousel li a.video-title {
+      color: inherit;
+      margin-top: 4px;
+      display: inline-block; }
+  .pratilipi-video-carousel ul.video-carousel li:last-child {
+    border-right: 8px solid white; }
+.pratilipi-video-carousel ul.video-carousel::-webkit-scrollbar {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */

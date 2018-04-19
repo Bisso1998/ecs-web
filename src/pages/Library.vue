@@ -17,6 +17,14 @@
                         ></PratilipiComponent>
                         <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
                         <p class="message" v-if="getPratilipiListLoadingState === 'LOADING_SUCCESS' && getPratilipiListData.length == 0">__("empty_library")</p>
+                        <div class="card" v-if="getUserDetails.isGuest">
+                            <div class="head-title">__("seo_login_page")</div>
+                            <div class="card-content">
+                                <p><i class="material-icons">check_circle</i> __("user_login_to_view_library")</p>
+                                <p><i class="material-icons">check_circle</i> __("android_banner_library_2")</p>
+                                <button type="button" class="btn" data-toggle="modal" data-target="#login_modal">__("user_sign_in") / __("user_sign_up")</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -29,6 +37,7 @@ import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import constants from '@/constants'
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -39,12 +48,18 @@ export default {
             scrollPosition: null
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('librarypage', [
             'getPratilipiListLoadingState',
             'getPratilipiListData',
             'getPratilipiListTotalCount',
             'getPratilipiListCursor'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     methods: {
@@ -76,6 +91,9 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
+        this.triggerAnanlyticsEvent('LANDED_LIBRARYM_LIBRARY', 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId
+        });
     },
     destroyed() {
         window.removeEventListener('scroll', this.updateScroll);
@@ -109,6 +127,40 @@ export default {
         margin: 15px 15px 15px 0;
         font-size: 14px;
         color: #555;
+    }
+    .card {
+        border-radius: 0;
+        margin: 20px 0;
+        padding: 0;
+        text-align: center;
+        .head-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            border-left: 3px solid #d0021b;
+            padding-left: 10px;
+            margin: 10px 0 0;
+        }
+        .card-content {
+            padding: 5px 10px 10px;
+            text-align: left;
+            p {
+                text-align: left;
+                font-size: 14px;
+                margin: 10px 0;
+                i {
+                    font-size: 16px;
+                    vertical-align: middle;
+                    color: #9E9E9E;
+                    padding-right: 5px;
+                }
+            }
+            button {
+                background: #d00b12;
+                color: #fff;
+                margin: 10px 0;
+            }
+        }
     }
 }
 </style>

@@ -77,7 +77,7 @@ const processRequests = function(requests) {
 };
 
 const processGetResponse = function(response, status, aCallBack) {
-    if (status !== 200) {
+    if (status !== 200 && status !== 404) {
         Raven.captureMessage(response.message || 'GET call failed', {
             level: 'error' // one of 'info', 'warning', or 'error'
         });
@@ -178,9 +178,9 @@ export default {
         httpUtil.get(API_PREFIX, null, { "requests": processRequests(requests) },
             function(response, status) {
                 if (aCallBack != null) {
-                    var pratilipi = response.req1.status == 200 ? response.req1.response : null;
-                    var index = response.req2.status == 200 ? response.req2.response : null;
-                    var userpratilipi = response.req3.status == 200 ? response.req3.response : null;
+                    var pratilipi = response.req1 && response.req1.status == 200 ? response.req1.response : null;
+                    var index = response.req2 && response.req2.status == 200 ? response.req2.response : null;
+                    var userpratilipi = response.req3 && response.req3.status == 200 ? response.req3.response : null;
                     aCallBack(pratilipi, index, userpratilipi);
                 }
             });

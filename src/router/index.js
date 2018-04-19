@@ -52,7 +52,8 @@ const router = new Router({
         name: 'Pratilipi',
         component: PratilipiComponent,
         meta: { 
-            'store': 'pratilipipage'
+            'store': 'pratilipipage',
+            'id_prop': 'slug_id'
         }
     }, {
         path: '/user/:user_slug',
@@ -60,7 +61,8 @@ const router = new Router({
         component: AuthorComponent,
         meta: {
             'store': 'authorpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'user_slug'
         }
     }, {
         path: '/followers',
@@ -80,7 +82,8 @@ const router = new Router({
         name: 'Discovery_Page',
         component: DiscoverPageComponent,
         meta: {
-            'title': '__("seo_navigation_page") | __("pratilipi")'
+            'title': '__("seo_navigation_page") | __("pratilipi")',
+            'store': 'discover'
         }
     }, {
         path: '/read',
@@ -146,7 +149,8 @@ const router = new Router({
         component: EventPageComponent,
         meta: {
             'store': 'eventpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'event_slug'
         }
     }, {
         path: '/create',
@@ -184,14 +188,16 @@ const router = new Router({
         name: 'Login_Page',
         component: LoginPageComponent,
         meta: {
-            'title': '__("seo_login_page") | __("pratilipi")'
+            'title': '__("seo_login_page") | __("pratilipi")',
+            'store': 'login'
         }
     }, {
         path: '/signup',
         name: 'Signup_Page',
         component: LoginPageComponent,
         meta: {
-            'title': '__("seo_register_page") | __("pratilipi")'
+            'title': '__("seo_register_page") | __("pratilipi")',
+            'store': 'register'
         }
     }, {
         path: '/blog',
@@ -207,14 +213,16 @@ const router = new Router({
         component: BlogPageComponent,
         meta: {
             'store': 'blogpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'blog_id'
         }
     }, {
         path: '/blogpost/:blog_id',
         name: 'Blog_Page_2',
         component: BlogPageComponent,
         meta: {'store': 'blogpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'blog_id'
         }
     }, {
         path: '/author-interviews',
@@ -230,7 +238,8 @@ const router = new Router({
         component: InterviewPageComponent,
         meta: {
             'store': 'interviewpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'interview_id'
         }
     }, {
         path: '/reset-password',
@@ -240,9 +249,16 @@ const router = new Router({
             'title': '__("seo_reset_password_page") | __("pratilipi")'
         }
     }, {
+        path: '/forgot-password',
+        name: 'Forgot_Password',
+        beforeEnter: (to, from, next) => {
+            next('login#forgot-pass')
+        }
+    }, {
         path: '/author/:author_id',
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'author_id'
         },
         beforeEnter: (to, from, next) => {
             const author_id = to.params.author_id;
@@ -257,7 +273,8 @@ const router = new Router({
     }, {
         path: '/pratilipi/:pratilipi_id',
         meta: {
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'pratilipi_id'
         },
         beforeEnter: (to, from, next) => {
             const pratilipi_id = to.params.pratilipi_id;
@@ -275,7 +292,8 @@ const router = new Router({
         component: ListPageComponent,
         meta: {
             'store': 'listpage',
-            'title': '__("seo_home_page")'
+            'title': '__("seo_home_page")',
+            'id_prop': 'list_page_url'
         },
         beforeEnter: (to, from, next) => {
             console.log(to);

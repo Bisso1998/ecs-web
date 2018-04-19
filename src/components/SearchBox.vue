@@ -14,6 +14,7 @@
             <div class="tags">
                 <router-link
                 :to="{ name: 'Search_Page', query: { q: eachTrendingWord } }"
+                @click.native="triggerEvent(eachTrendingWord)"
                  v-for="(eachTrendingWord, index) in getTrendingWords" :key="index">
                     #{{ eachTrendingWord }}
                 </router-link>
@@ -24,6 +25,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import mixins from '@/mixins'
 import constants from '@/constants'
 
 export default {
@@ -33,9 +35,15 @@ export default {
             required: true
         }
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('searchpage', [
             'getTrendingWords'
+        ]),
+        ...mapGetters([
+            'getUserDetails'
         ])
     },
     methods: {
@@ -44,6 +52,12 @@ export default {
         ]),
         closeDropdown() {
             $(".search-dropdown").hide();
+        },
+        triggerEvent(trendingWord) {
+            this.triggerAnanlyticsEvent(`SEARCH_TRENDSEARCH_SEARCH`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': trendingWord
+            });
         }
     },
     created() {

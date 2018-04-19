@@ -10,7 +10,7 @@
                         <div class="book-name tool-icon-8" @click="openSidebar"><span>{{ getPratilipiData.title }}</span> <i class="material-icons">arrow_drop_down</i></div>
                         <div class="right-icons">
                             <div class="settings tool-icon-1">
-                                <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#readerOptions" @click="triggerSettingsEvent">
                                     <i class="material-icons">settings</i>
                                 </button>
                             </div>
@@ -129,6 +129,7 @@
                                     :haveInfiniteScroll="true"
                                     screenName="READER"
                                     screenLocation="BOOKEND"
+                                    :pratilipiData="getPratilipiData"
                                     v-if="selectedChapter == getIndexData.length && !openRateReaderm && !openRateRev ">
                                 </Reviews>
                             </div>
@@ -192,7 +193,7 @@
                         </button><span><b>{{ getAuthorData.followCount }}</b></span>
                     </div>
                     <div class="follow-btn-w-count" v-else><!-- Following Button -->
-                        <button @click="followOrUnfollowAuthor"><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
+                        <button @click="checkLoginStatusAndFollowOrUnfollowAuthor"><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                     </div>
                 </div>
                 <div class="book-index">
@@ -203,7 +204,7 @@
                             :class="{ isActive: eachIndex.chapterNo === selectedChapter }">
                                 <router-link
                                     :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }"
-                                    @click.native="closeSidebar">
+                                    @click.native="triggerEventAndCloseSidebar(eachIndex.chapterNo)">
                                     __("writer_chapter") {{ eachIndex.title || eachIndex.chapterNo }}
                                 </router-link>
                         </li>
@@ -221,6 +222,7 @@
                             :haveInfiniteScroll="true"
                             screenName="READER"
                             screenLocation="RATEREV"
+                            :pratilipiData="getPratilipiData"
                             v-if="openRateRev"
                             :userPratilipiData='getUserPratilipiData'>
                         </Reviews>
@@ -234,12 +236,14 @@
                             :haveInfiniteScroll="false"
                             screenName="READER"
                             screenLocation="READERM"
+                            :pratilipiData="getPratilipiData"
                             v-if="openRateReaderm"
                             :userPratilipiData='getUserPratilipiData'>
                         </Reviews>
                     </div>
                 </div>
             </div>
+            <OpenInApp v-if="isAndroid() && getPratilipiLoadingState === 'LOADING_SUCCESS'" :isVisible="shouldShowOpenInAppStrip" :pratilipiData="getPratilipiData"></OpenInApp>
             <div class="overlay" @click="closeSidebar"></div>
             <div class="overlay-1" @click="closeReviewModal"></div>
             <div class="overlay-2" @click="closeRatingModal"></div>
@@ -261,8 +265,9 @@ import 'vue-awesome/icons/whatsapp'
 import 'vue-awesome/icons/link'
 import Reviews from '@/components/Reviews.vue';
 import Recommendation from '@/components/Recommendation.vue';
+import OpenInApp from '@/components/OpenInApp.vue';
 import ShareStrip from '@/components/ShareStrip.vue';
-import { mapGetters, mapActions, mapState } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
@@ -270,7 +275,8 @@ export default {
         Spinner,
         Reviews,
         Recommendation,
-        ShareStrip
+        ShareStrip,
+        OpenInApp
     },
     mixins: [
         mixins
@@ -284,7 +290,8 @@ export default {
             counter: 0,
             openRateRev: false,
             openRateReaderm: false,
-            rateRev: 'RATEREV'
+            rateRev: 'RATEREV',
+            shouldShowOpenInAppStrip: true
         }
     },
     methods: {
@@ -324,7 +331,21 @@ export default {
             });
             this.removeFromLibrary()
         },
+        triggerSettingsEvent() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('LANDED_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+        },
         checkLoginStatusAndFollowOrUnfollowAuthor() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            let action = !this.getAuthorData.following ? 'FOLLOW' : 'UNFOLLOW';
+            this.triggerAnanlyticsEvent(`${action}_INDEX_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.getAuthorData.followCount
+            });
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 this.setAfterLoginAction({ action: `${this.$route.meta.store}/followOrUnfollowAuthor` });
@@ -334,32 +355,76 @@ export default {
             }
         },
         goToPreviousChapter() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('CHANGECHAPTER_READERM_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.selectedChapter
+            });
+            
             this.$router.push({ path: '/read', query: { id: this.getPratilipiData.pratilipiId, chapterNo: this.selectedChapter - 1 } });
         },
         goToNextChapter() {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('CHANGECHAPTER_READERM_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.selectedChapter
+            });
+            
             this.$router.push({ path: '/read', query: { id: this.getPratilipiData.pratilipiId, chapterNo: this.selectedChapter + 1 } });
         },
         increaseFont() {
             if (this.fontSize !== 32) {
                 this.fontSize += 2;
             }
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERFONT_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.fontSize
+            });
         },
         decreaseFont() {
             if (this.fontSize !== 12) {
                 this.fontSize -= 2;
             }
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERFONT_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.fontSize
+            });
         },
         lineHeightSm() {
             $(".book-content .content-section").removeClass("lh-sm lh-md lh-lg");
             $(".book-content .content-section").addClass("lh-sm");
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERGAP_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'LESS'
+            });
         },
         lineHeightMd() {
             $(".book-content .content-section").removeClass("lh-sm lh-md lh-lg");
             $(".book-content .content-section").addClass("lh-md");
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERGAP_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'NORMAL'
+            });
         },
         lineHeightLg() {
             $(".book-content .content-section").removeClass("lh-sm lh-md lh-lg");
             $(".book-content .content-section").addClass("lh-lg");
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERGAP_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'HIGH'
+            });
         },
         themeWhite() {
             $(".read-page").removeClass("theme-white theme-black theme-yellow");
@@ -370,6 +435,13 @@ export default {
             
             $(".footer-section").removeClass("theme-white theme-black theme-yellow");
             $(".footer-section").addClass("theme-white");
+            
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERBACKGROUND_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'WHITE'
+            });
         },
         themeBlack() {
             $(".read-page").removeClass("theme-white theme-black theme-yellow");
@@ -380,6 +452,13 @@ export default {
             
             $(".footer-section").removeClass("theme-white theme-black theme-yellow");
             $(".footer-section").addClass("theme-black");
+            
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERBACKGROUND_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'NIGHT'
+            });
         },
         themeYellow() {
             $(".read-page").removeClass("theme-white theme-black theme-yellow");
@@ -390,6 +469,13 @@ export default {
             
             $(".footer-section").removeClass("theme-white theme-black theme-yellow");
             $(".footer-section").addClass("theme-yellow");
+            
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('READERBACKGROUND_SETTINGS_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'SEPIA'
+            });
         },
         openReviewModal() {
             $(".review-popout").addClass("show");
@@ -430,9 +516,24 @@ export default {
             $('#sidebar').removeClass('active');
             $('.overlay').fadeOut();
         },
+        triggerEventAndCloseSidebar(data) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent('CHANGECHAPTER_INDEX_READER', 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data
+            });
+            
+            $('#sidebar').removeClass('active');
+            $('.overlay').fadeOut();
+        },
         openShareModal() {
-            this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI' })
-            console.log('test')
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKSHRBOOK_READERM_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.setShareDetails({ data: this.getPratilipiData, type: 'PRATILIPI', screen_name: 'READER', screen_location: 'READERM' });
             $('#share_modal').modal('show');
         },
         updateScroll() {
@@ -536,6 +637,13 @@ export default {
                 $('.header-section').removeClass('nav-up');
                 $('.reader-progress').removeClass('progress-up');
                 this.counter = 0;
+            }
+
+
+            if ($(window).height() + newScrollPosition > $('.content-section').height()) {
+                this.shouldShowOpenInAppStrip = false;
+            } else {
+                this.shouldShowOpenInAppStrip = true;
             }
         },
         'getPratilipiLoadingState'(status) {
@@ -1043,7 +1151,7 @@ export default {
         position: fixed;
         margin-bottom: 46px;
         margin-left: 0;
-        bottom: -200vh;
+        bottom: -700vh;
         left: 50%;
         transform: translateX(-50%);
         overflow: hidden;

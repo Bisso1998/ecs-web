@@ -4,12 +4,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-2 col-sm-4 col-5 p-r-0">
-                        <router-link
-                          :to="{ name: 'Home' }"
+                        <span
+                          @click="triggerHomeEvent"
                           class="logo">
-                        </router-link>
+                        </span>
                         <div class="language-dropdown">
-                            <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn dropdown-toggle" type="button" @click="triggerLanguageEvent" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             __("pratilipi")
                             </button>
                             <div class="dropdown-menu" aria-labelledby="languageDropdown">
@@ -24,13 +24,12 @@
                                 <i class="material-icons">search</i>
                                 <SearchBox :searchText="searchText"></SearchBox>
                             </div>
-                            <router-link
-                            :to="{ name: 'Notification'}"
+                            <div
                             class="notification-icon"
-                            @click.native="resetNotificationCount">
+                            @click="triggerEventAndResetNotificationCount">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
-                            </router-link>
+                            </div>
                         </div>
                         <div class="d-block d-lg-none search-box search-box-2 text-right">
                             <div class="form-group has-feedback" id="search-box-small">
@@ -38,13 +37,12 @@
                                 <i class="material-icons">search</i>
                                 <SearchBox :searchText="searchText"></SearchBox>
                             </div>
-                            <router-link
-                            :to="{ name: 'Notification'}"
-                            @click.native="resetNotificationCount"
+                            <div
+                            @click="triggerEventAndResetNotificationCount"
                             class="notification-icon">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
-                            </router-link>
+                            </div>
                         </div>
                     </div>
                     <div class="d-none d-lg-block col-lg-5">
@@ -96,6 +94,11 @@ export default {
             counter: 0
         }
     },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
     components: {
         SearchBox,
         MainMenu
@@ -104,13 +107,35 @@ export default {
         changeSearchText(event) {
             this.searchText = event.target.value;
         },
+        triggerHomeEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GOHOME_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.$router.push('/');
+        },
+        triggerLanguageEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GOLANGUAGE_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+        },
         goToSearchPage() {
+            this.triggerAnanlyticsEvent(`SEARCH_SEARCHM_SEARCH`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': this.searchText
+            });
             this.$router.push({ name: 'Search_Page', query: { q: this.searchText } });
             $("#search-box-small .search-dropdown").hide();
             $("#search-box-big .search-dropdown").hide();
         },
         opendesktopsearch() {
             $("#search-box-big .search-dropdown").show();
+            this.triggerAnanlyticsEvent('LANDED_SEARCHM_SEARCH', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
             $(document).mouseup(function(e) {
                 var container = $(".search-dropdown");
                 if (!container.is(e.target) && container.has(e.target).length === 0) {
@@ -120,13 +145,24 @@ export default {
         },
         openmobilesearch() {
             $("#search-box-small .search-dropdown").show();
-            
+            this.triggerAnanlyticsEvent('LANDED_SEARCHM_SEARCH', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
             $(document).mouseup(function(e) {
                 var container = $(".search-dropdown");
                 if (!container.is(e.target) && container.has(e.target).length === 0) {
                     container.hide();
                 }
             });
+        },
+        triggerEventAndResetNotificationCount() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GONOTIFPAGE_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.$router.push('/notifications');
+            this.resetNotificationCount;
         },
         ...mapActions([
             'resetNotificationCount'
@@ -167,6 +203,9 @@ export default {
             $(document).on('blur', 'input', function() {
                 $(".footer-menu").css("height", "51px")
             });
+        }
+        if (this.$route.path === '/notifications' ) {
+            $(".notification-icon").addClass("active");
         }
     },
     destroyed() {
@@ -256,9 +295,6 @@ export default {
                     top: 7px;
                     right: 6px;
                 }
-                &:focus-within {
-                    box-shadow: 0 0 2px rgba(0,0,0,0.2);
-                }
             }
         }
         .search-box-2 {
@@ -298,6 +334,7 @@ export default {
             vertical-align: middle;
             margin: 5px 12px 0 5px;
             position: relative;
+            cursor: pointer;
             &:hover {
                 text-decoration: none;
             }
@@ -314,7 +351,7 @@ export default {
                 font-size: 11px;
                 line-height: 22px;
             }
-            &.router-link-exact-active {
+            &.router-link-exact-active , &.active {
                 color: #d00b12;
             }
         }

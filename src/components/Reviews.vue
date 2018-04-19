@@ -5,6 +5,7 @@
                 :userPratilipiData="userPratilipiData" 
                 :authorId="authorId"
                 :screenName="screenName"
+                :pratilipiData="pratilipiData"
                 :screenLocation="screenLocation"></OwnReview>
             <li class="all-reviews" v-if="getReviewsData.length > 0">__("pratilipi_count_reviews")</li>
             <li class="no-results" v-if="getReviewsData.length === 0">__("pratilipi_no_reviews")</li>
@@ -19,7 +20,11 @@
                 :createComment="verifyAndCreateComment"
                 :deleteComment="deleteComment"
                 :likeOrDislikeComment="verifyAndLikeComment"
-                :updateComment="updateComment"></Review>
+                :updateComment="updateComment"
+                :screenName="screenName"
+                :screenLocation="'REVIEWS'"
+                :pratilipiData="pratilipiData"
+                ></Review>
             <Review 
                 v-if="!haveInfiniteScroll"
                 v-for="eachReview in getReviewsData.slice(0, 2)" 
@@ -31,7 +36,11 @@
                 :createComment="verifyAndCreateComment"
                 :deleteComment="deleteComment"
                 :likeOrDislikeComment="verifyAndLikeComment"
-                :updateComment="updateComment"></Review>
+                :updateComment="updateComment"
+                :screenName="screenName"
+                :screenLocation="'REVIEWS'"
+                :pratilipiData="pratilipiData"
+                ></Review>
             
         </ul>
         <Spinner v-if="getReviewsLoadingState === 'LOADING'"></Spinner>
@@ -67,6 +76,10 @@ export default {
         },
         screenLocation: {
             type: String,
+            required: true
+        },
+        pratilipiData: {
+            type: Object,
             required: true
         }
     },

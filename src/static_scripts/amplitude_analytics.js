@@ -3,7 +3,7 @@
     var r = t.createElement("script");
     r.type = "text/javascript";
     r.async = true;
-    r.src = "//cdn.amplitude.com/libs/amplitude-4.0.0-min.gz.js";
+    r.src = "//cdn.amplitude.com/libs/amplitude-4.1.1-min.gz.js";
     r.onload = function() {
         if (e.amplitude.runQueuedFunctions) {
             e.amplitude.runQueuedFunctions()

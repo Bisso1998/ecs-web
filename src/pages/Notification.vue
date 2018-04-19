@@ -107,6 +107,9 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
+        this.triggerAnanlyticsEvent('LANDED_NOTIFSM_NOTIFS', 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId
+        });
     },
     destroyed() {
         window.removeEventListener('scroll', this.updateScroll);

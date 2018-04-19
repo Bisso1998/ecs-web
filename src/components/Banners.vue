@@ -3,7 +3,8 @@
         <slick ref="slick" :options="slickOptions" class="slick-banner">
             <div class="banners" v-for="each_banner in banners" v-bind:key="each_banner.bannerId">
                 <router-link
-                    :to="{ path: each_banner.actionUrl }">
+                    :to="{ path: each_banner.actionUrl }"
+                     @click.native="triggerAnalyticsEvent(each_banner.bannerId)">
                     <img :src="getHighResolutionImage(each_banner.imageUrl)" alt="">
                 </router-link>
             </div>
@@ -14,17 +15,28 @@
 <script>
 import Slick from 'vue-slick'
 import mixins from '@/mixins';
+import inViewport from 'vue-in-viewport-mixin';
+import { mapGetters } from 'vuex'
 
 export default {
     props: {
         banners: {
             type: Array,
             required: true
+        },
+        'in-viewport-once': {
+            default: true
         }
     },
     mixins: [
-        mixins
+        mixins,
+        inViewport
     ],
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
+    },
     data() {
         return {
             slickOptions: {
@@ -54,13 +66,46 @@ export default {
         reInit() {
             // Helpful if you have to deal with v-for to update dynamic lists
             this.$refs.slick.reSlick()
+        },
+
+        triggerAnalyticsEvent(bannerId) {
+            this.triggerAnanlyticsEvent(`CLICKBANNER_BANNERS_HOME`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': bannerId
+            });
+        },
+        triggerEvent() {
+            console.log("next");
         }
+
     },
-    mount() {
+    mounted() {
         this.reInit();
+        const that = this;
+        $('.slick-banner').on('swipe', function(event, slick, direction) {
+            that.triggerAnanlyticsEvent(`SWIPE_BANNERS_HOME`, 'CONTROL', {
+                'USER_ID': that.getUserDetails.userId,
+                'PARENT_ID': $($(event.target).find('img')[slick.currentSlide]).attr('src')
+            });
+        });
+        $('.slick-banner').on('click','.slick-arrow', function() {
+            that.triggerAnanlyticsEvent(`SWIPE_BANNERS_HOME`, 'CONTROL', {
+                'USER_ID': that.getUserDetails.userId
+            });
+        });
     },
     components: {
         Slick
+    },
+    watch: {
+        'inViewport.now': function(visible) {
+            if (visible) {
+                this.triggerAnanlyticsEvent(`VIEWED_BANNERS_HOME`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+                
+            }
+        }
     }
 }
 </script>

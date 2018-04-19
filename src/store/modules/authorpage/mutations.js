@@ -166,6 +166,24 @@ export default {
         state.library.data = state.library.data.filter(eachPratilipi => eachPratilipi.pratilipiId !== data.referenceId);
     },
 
+    removePratilipiFromLibraryPublishedSuccess(state, data) {
+        state.library.data = state.library.data.filter(eachPratilipi => eachPratilipi.pratilipiId !== data.referenceId);
+        const pratilipiAddedToLib = state.published_contents.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
+        if (pratilipiAddedToLib) {
+            pratilipiAddedToLib.addedToLib = false;
+        }
+    },
+    addPratilipiToLibrarySuccess(state, data) {
+        const pratilipiAddedToLib = state.published_contents.data.find(eachPratilipi => eachPratilipi.pratilipiId === data.referenceId);
+        if (pratilipiAddedToLib) {
+            pratilipiAddedToLib.addedToLib = true;
+            state.library.data.push(pratilipiAddedToLib);
+        }
+    },
+    
+    removePratilipiFromLibraryPublishedError() {},
+    addPratilipiToLibraryError() {},
+
     removePratilipiFromLibraryError() {
 
     },
@@ -191,12 +209,12 @@ export default {
 
     },
     setFollowUnfollowFollowingLoadingDataLoadingSuccess(state, data) {
-        const authorFollowedOrUnfollowed = state.following.data.find(eachAuthor => eachAuthor.author.authorId === data.authorId);
-        authorFollowedOrUnfollowed.author.following = data.following;
+        const authorFollowedOrUnfollowed = state.following.data.find(eachAuthor => eachAuthor.authorId === data.authorId);
+        authorFollowedOrUnfollowed.following = data.following;
         if (data.following) {
-            authorFollowedOrUnfollowed.author.followCount++;    
+            authorFollowedOrUnfollowed.followCount++;    
         } else {
-            authorFollowedOrUnfollowed.author.followCount--;
+            authorFollowedOrUnfollowed.followCount--;
         }
     },
     setFollowUnfollowFollowingLoadingDataLoadingError(state) {

@@ -163,14 +163,14 @@
             "title": "ಪ್ರಖ್ಯಾತ ಬರಹಗಳು",
             "categories": [
                 {
-                    "categoryUrl": "/event/ಪ್ರೇಮಾನುರಾಗ-ಕಥನ-k7l61pnmx5",
-                    "title": "ಪ್ರೇಮಾನುರಾಗ ಕಥನು",
-                    "analyticsCategoryName": "event-lovestory-spardha",
-                    "imageFileName": "event_generic7.jpg",
+                    "categoryUrl": "/event/ನಗು-ನಗುತಾ-ನಲೀ-ನಲಿ-ic59tqb4yv",
+                    "title": "ನಗು ನಗುತಾ ನಲೀ ನಲಿ...",
+                    "analyticsCategoryName": "event-comedy",
+                    "imageFileName": "event_generic5.jpg",
                     "pratilipiListData": {
                         "language": "KANNADA",
                         "state": "PUBLISHED",
-                        "eventId": 6900000000000038
+                        "eventId": 6900000000000059
                     }
                 },
                 {
@@ -185,14 +185,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/new",
+                    "categoryUrl": "/newcontents",
                     "title": "ಹೊಸ  ಬರಹಗಳು",
                     "analyticsCategoryName": "newly-published",
                     "imageFileName": "newpublished.jpg",
                     "pratilipiListData": {
                         "language": "KANNADA",
                         "state": "PUBLISHED",
-                        "listName": "new"
+                        "listName": "newcontents"
                     }
                 },
                 {
@@ -219,7 +219,7 @@
                 },
                 {
                     "categoryUrl": "/blog",
-                    "title": "ಬ್ಲಾಗ್ ಗಳು",
+                    "title": "ಬ್ಲಾಗ್'ಗಳು",
                     "analyticsCategoryName": "blogs",
                     "imageFileName": "blog.jpg",
                     "pratilipiListData": {

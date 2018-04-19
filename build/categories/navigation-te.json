@@ -141,25 +141,25 @@
             "title": "విషయసూచిక",
             "categories": [
                 {
-                    "categoryUrl": "/mostread",
+                    "categoryUrl": "/most-read",
                     "title": "పాఠకులకు ప్రత్యేకం",
                     "analyticsCategoryName": "most-read",
                     "imageFileName": "mostpopular.jpg",
                     "pratilipiListData": {
                         "language": "TELUGU",
                         "state": "PUBLISHED",
-                        "listName": "mostread"
+                        "listName": "most-read"
                     }
                 },
                 {
-                    "categoryUrl": "/new",
+                    "categoryUrl": "/newcontents",
                     "title": "కొత్త రచనలు",
                     "analyticsCategoryName": "newly-published",
                     "imageFileName": "newpublished.jpg",
                     "pratilipiListData": {
                         "language": "TELUGU",
                         "state": "PUBLISHED",
-                        "listName": "new"
+                        "listName": "newcontents"
                     }
                 },
                 {
@@ -174,14 +174,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/event/మీ-ప్రేమ-కథ-ఏమిటి-708tpcfld3",
-                    "title": "మీ ప్రేమ కథ ఏమిటి?",
-                    "analyticsCategoryName": "event-lovestory-spardha",
+                    "categoryUrl": "/event/క్షణ-క్షణం-ppw6n9pvbi",
+                    "title": "ప్రస్తుత పోటీ",
+                    "analyticsCategoryName": "event-horror-crime",
                     "imageFileName": "event_generic7.jpg",
                     "pratilipiListData": {
                         "language": "TELUGU",
                         "state": "PUBLISHED",
-                        "eventId": 6900000000000037
+                        "eventId": 6900000000000057
                     }
                 },
                 {

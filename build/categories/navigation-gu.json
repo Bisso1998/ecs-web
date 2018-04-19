@@ -92,6 +92,17 @@
                     }
                 },
                 {
+                    "categoryUrl": "/women",
+                    "title": "ઉડાન - સ્ત્રી વિશેષ",
+                    "analyticsCategoryName": "women",
+                    "imageFileName": "women.jpg",
+                    "pratilipiListData": {
+                        "language": "GUJARATI",
+                        "state": "PUBLISHED",
+                        "listName": "women"
+                    }
+                },
+                {
                     "categoryUrl": "/poems",
                     "title": "પદ્ય",
                     "analyticsCategoryName": "poetry",
@@ -229,14 +240,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/navi-prakashit-rachnao",
+                    "categoryUrl": "/newcontents",
                     "title": "નવી પ્રકાશિત રચનાઓ",
                     "analyticsCategoryName": "newly-published",
                     "imageFileName": "newpublished.jpg",
                     "pratilipiListData": {
                         "language": "GUJARATI",
                         "state": "PUBLISHED",
-                        "listName": "navi-prakashit-rachnao"
+                        "listName": "newcontents"
                     }
                 },
                 {
@@ -262,14 +273,14 @@
                     }
                 },
                 {
-                    "categoryUrl": "/event/વાતો-દિલોની-ઓનલાઈન-વાર્તા-સ્પર્ધા-yy3buwqaks",
-                    "title": "વાતો દિલોની",
-                    "analyticsCategoryName": "event-vato-diloni",
-                    "imageFileName": "event_generic7.jpg",
+                    "categoryUrl": "/event/કાવ્ય-મહોત્સવ-–-૨૦૧૮-dl37bgjqmn",
+                    "title": "કાવ્ય મહોત્સવ – ૨૦૧૮",
+                    "analyticsCategoryName": "event-poems",
+                    "imageFileName": "event_experiences.jpg",
                     "pratilipiListData": {
                         "language": "GUJARATI",
                         "state": "PUBLISHED",
-                        "eventId": 6900000000000040
+                        "eventId": 6900000000000060
                     }
                 },
                 {

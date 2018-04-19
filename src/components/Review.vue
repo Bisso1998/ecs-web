@@ -2,12 +2,14 @@
     <li>
         <div class="comment-main-level">
             <div class="comment-avatar">
-                <router-link :to="eachReview.userProfilePageUrl"><img :src="eachReview.userImageUrl" alt="author"></router-link>
+                <router-link :to="eachReview.userProfilePageUrl" @click.native="triggerClickReviewUser(eachReview.userId)"><img :src="eachReview.userImageUrl" alt="author"></router-link>
             </div>
             <div class="comment-box">
                 <div class="comment-head">
                     <div class="comment-meta">
-                        <h6 class="comment-name"><router-link :to="eachReview.userProfilePageUrl">{{ eachReview.userName }}</router-link></h6>
+                        <h6 class="comment-name">
+                            <router-link :to="eachReview.userProfilePageUrl" @click.native="triggerClickReviewUser(eachReview.userId)">{{ eachReview.userName }}</router-link>
+                        </h6>
                         <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
@@ -27,7 +29,7 @@
                     {{ eachReview.review }}
                 </div>
                 <div class="comment-footer">
-                    <button type="button" :class="{ 'active': eachReview.isLiked }" @click="checkUserAndlikeOrDislikeReview(eachReview.userPratilipiId)" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
+                    <button type="button" :class="{ 'active': eachReview.isLiked }" @click="checkUserAndlikeOrDislikeReview({userPratilipiId: eachReview.userPratilipiId, isLiked: eachReview.isLiked, likeCount: eachReview.likeCount })" name="button"><span class="counter">{{ eachReview.likeCount }}</span><i class="material-icons">thumb_up</i></button>
                     <button type="button" name="button" @click="toggleComments({ resultCount: eachReview.commentCount * 2, parentId: eachReview.userPratilipiId, reviewUserName: eachReview.userName })"><span class="counter">{{ eachReview.commentCount }}</span><i class="material-icons">message</i></button>
                 </div>
             </div>
@@ -38,18 +40,18 @@
                 v-for="eachComment in eachReview.comments.data" :key="eachComment.commentId"
                 v-if="eachReview.comments && eachReview.comments.data && eachReview.comments.data.length > 0 && eachReview.comments.loading_state === 'LOADING_SUCCESS'">
                 <div class="comment-avatar">
-                    <router-link :to="eachComment.user.profilePageUrl"><img :src="eachComment.user.profileImageUrl" alt="author"></router-link>
+                    <router-link :to="eachComment.user.profilePageUrl" @click.native="triggerClickCommentUser(eachComment.user.userId)"><img :src="eachComment.user.profileImageUrl" alt="author"></router-link>
                 </div>
                 <div class="comment-box">
                     <div class="comment-head">
                         <h6 class="comment-name" :class="{ 'by-author': eachComment.user.author.authorId === authorId }">
-                            <router-link :to="eachComment.user.profilePageUrl">{{ eachComment.user.displayName }}</router-link>
+                            <router-link :to="eachComment.user.profilePageUrl" @click.native="triggerClickCommentUser(eachComment.user.userId)">{{ eachComment.user.displayName }}</router-link>
                         </h6>
                         <button class="btn more-options" type="button" id="moreOptions2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="moreOptions2">
-                            <button v-if="eachComment.user.userId === getUserDetails.userId" type="button" @click="editComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="">
+                            <button v-if="eachComment.user.userId === getUserDetails.userId" type="button" @click="editComment(eachComment.commentId, eachComment.content)" class="btn options-btn" data-toggle="modal" data-target="">
                                 __("review_edit_review")
                             </button>
                             <button v-if="eachComment.user.userId === getUserDetails.userId" type="button" @click="deleteComment(eachComment.commentId)" class="btn options-btn" data-toggle="modal" data-target="">
@@ -75,7 +77,7 @@
                         </form>
                     </div>
                     <div class="comment-footer">
-                        <button type="button" :class="{ 'active': eachComment.isLiked}" @click="likeOrDislikeComment({ commentId: eachComment.commentId, isLiked: eachComment.isLiked })" name="button"><span class="counter">{{ eachComment.likeCount }}</span><i class="material-icons">thumb_up</i></button>
+                        <button type="button" :class="{ 'active': eachComment.isLiked}" @click="triggerEventAndlikeOrDislikeComment({ commentId: eachComment.commentId, isLiked: eachComment.isLiked, likeCount: eachComment.likeCount })" name="button"><span class="counter">{{ eachComment.likeCount }}</span><i class="material-icons">thumb_up</i></button>
                         <button type="button" @click="replyToComment(eachComment)" name="button"><span class="counter"></span><i class="material-icons">message</i></button>
                     </div>
                 </div>
@@ -92,7 +94,7 @@
                                 <label for="writeReply">__("comment_reply_to_comment")</label>
                                 <textarea class="form-control" :value='newComment' @input="newComment = $event.target.value" rows="2" placeholder="__('comment_reply_comment_help')"></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary" @click="() => {createComment({ userPratilipiId: eachReview.userPratilipiId, content: newComment }); newComment = ''; }">__("save")</button>
+                            <button type="button" class="btn btn-primary" @click="triggerEventAndCreateComment(eachReview)">__("save")</button>
                             <button type="button" class="btn btn-light" @click="closeReply">__("cancel")</button>
                         </form>
                     </div>
@@ -113,7 +115,8 @@ export default {
     data() {
         return {
             newComment: '',
-            x: ''
+            x: '',
+            updatedComment: ''
         }
     },
     props: {
@@ -152,6 +155,18 @@ export default {
         deleteComment: {
             type: Function,
             required: true
+        },
+        screenName: {
+            type: String,
+            required: true
+        },
+        screenLocation: {
+            type: String,
+            required: true
+        },
+        pratilipiData: {
+            type: Object,
+            required: true
         }
     },
     methods: {
@@ -172,15 +187,43 @@ export default {
             }
             this.newComment = `@${data.reviewUserName} `;
         },
-        editComment(commentId) {
+        triggerEventAndCreateComment(review) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`COMMENT_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': review.userPratilipiId
+            });
+            
+            this.createComment({ 
+                userPratilipiId: review.userPratilipiId, 
+                content: this.newComment 
+            }); 
+            this.newComment = ''; 
+        },
+        editComment(commentId, content) {
+            this.updatedComment = content;
             $(this.$el).find(".comment-content.editable." + commentId).toggle();
         },
         updateCommentAndToggle(data) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`EDITCOMMENT_COMMENTS_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_STATE': 'UPDATE'
+            });
+            
             $(this.$el).find(".comment-content.editable." + data.commentId).toggle();
             this.updateComment(data);
         },
         replyToComment(eachComment) {
-            console.log(eachComment);
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`REPLY_COMMENTS_BOOK`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': eachComment.commentId
+            });
+
             this.newComment = `@${eachComment.user.displayName} `;
             $(this.$el).find(".add-reply").show();
             $(this.$el).find(".add-reply .comment-content textarea").focus();
@@ -188,12 +231,50 @@ export default {
         checkUserAndlikeOrDislikeReview(data) {
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
-                this.setAfterLoginAction({ action: `reviews/likeOrDislikeReview`, data });
+                this.setAfterLoginAction({ action: `reviews/likeOrDislikeReview`, data: data.userPratilipiId });
                 this.openLoginModal(this.$route.meta.store, 'LIKE', 'REVIEWS');
             } else {
-                this.likeOrDislikeReview(data);
+                this.likeOrDislikeReview(data.userPratilipiId);
             }
             
+            let action = !data.isLiked ? 'LIKE' : 'UNLIKE';
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`${action}_REVIEWS_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data.userPratilipiId,
+                'ENTITY_VALUE': data.likeCount
+            });
+        },
+        triggerEventAndlikeOrDislikeComment(data) {
+            let action = !data.isLiked ? 'LIKE' : 'UNLIKE';
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`${action}_COMMENTS_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data.commentId,
+                'ENTITY_VALUE': data.likeCount
+            });
+
+            this.likeOrDislikeComment(data);
+        },
+        triggerClickReviewUser(data) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKUSER_REVIEWS_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data,
+                'AUTHOR_ID': this.pratilipiData.author.authorId
+            });
+        },
+        triggerClickCommentUser(data) {
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKUSER_COMMENTS_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': data,
+                'AUTHOR_ID': this.pratilipiData.author.authorId
+            });
         },
         ...mapActions([
             'setAfterLoginAction'

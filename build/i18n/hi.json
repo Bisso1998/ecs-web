@@ -526,5 +526,6 @@
     "password_minimum": "पासवर्ड में न्यूनतम 6 अक्षर होने चाहिए",
     "login_failed": "लॉगिन विफल, कृपया फिर से कोशिश करें",
     "signup_failed": "साइन अप नहीं हुआ ,कृपया फिर से कोशिश करें",
-    "name_required": "नाम अनिवार्य है"
+    "name_required": "नाम अनिवार्य है",
+    "reader_read_in_app_helper_text": "ऐप में पढ़ें"
 }

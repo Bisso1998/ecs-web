@@ -1,15 +1,15 @@
 <template>
     <div class="social-share">
-        <a :href="getFacebookShareUrl" class="fb" target="_blank">
+        <a :href="getFacebookShareUrl" @click="triggerFbEndShareEvent" class="fb" target="_blank">
             <span class="social-icon"><icon name="facebook-f"></icon></span>
         </a>
-        <a :href="getTwitterUrl" class="twitter" target="_blank">
+        <a :href="getTwitterUrl" @click="triggerTwEndShareEvent" class="twitter" target="_blank">
            <span class="social-icon"><icon name="twitter"></icon></span>
         </a>
-        <a :href="getGooglePlusUrl" class="google" target="_blank">
+        <a :href="getGooglePlusUrl" @click="triggerGpEndShareEvent" class="google" target="_blank">
             <span class="social-icon"><icon name="google-plus"></icon></span>
         </a>
-        <a :href="getWhatsAppUri" class="whatsapp" target="_blank">
+        <a :href="getWhatsAppUri" @click="triggerWaEndShareEvent" class="whatsapp" target="_blank">
             <span class="social-icon"><icon name="whatsapp"></icon></span>
         </a>
         <a class="link" v-if="false" >
@@ -34,7 +34,9 @@ export default {
             'getTwitterUrl',
             'getGooglePlusUrl',
             'getWhatsAppUri',
-            'getContentUri'
+            'getContentUri',
+            'getUserDetails',
+            'getPratilipiData'
         ]),
     },
     props: {
@@ -50,7 +52,51 @@ export default {
     methods: {
         ...mapActions([
             'setShareDetails'
-        ])
+        ]),
+        triggerFbEndShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            this.triggerAnanlyticsEvent(`SHAREBOOKFB_BOOKEND_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'FACEBOOK'
+            });
+        },
+        triggerGpEndShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            this.triggerAnanlyticsEvent(`SHAREBOOKGP_BOOKEND_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'GOOGLEPLUS'
+            });
+        },
+        triggerTwEndShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            this.triggerAnanlyticsEvent(`SHAREBOOKTW_BOOKEND_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'TWITTER'
+            });
+        },
+        triggerWaEndShareEvent() {
+            let pratilipiAnalyticsData = {};
+            if (this.getPratilipiData) {
+                pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
+            }
+            this.triggerAnanlyticsEvent(`SHAREBOOKWA_BOOKEND_READER`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId,
+                'ENTITY_VALUE': 'WHATSAPP'
+            });
+        }
     },
     components: {
         

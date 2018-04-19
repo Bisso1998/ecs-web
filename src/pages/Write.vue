@@ -15,7 +15,7 @@
                         <div class="col-md-12 d-block d-md-block d-lg-none" v-if="isMobile()"><!-- Android only -->
                             <div class="card install-app">
                                 <div class="card-content">
-                                <a href="https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_write&utm_campaign=app_download" target="_blank">
+                                <a @click.prevent="triggerEvent" href="#" target="_blank">
                                     <p>Write your stories on Pratilipi App</p>
                                     <img src="https://www.ptlp.co/resource-all/image/google-play-badge.png" alt="">
                                 </a>
@@ -28,7 +28,7 @@
                                 <div class="card-content drafts" @scroll="updateScroll">
                                     
                                     <div class="draft" v-for="each_draft in draftedContents" :key="each_draft.pratilipiId">
-                                        <router-link :to="each_draft.pageUrl">
+                                        <router-link :to="each_draft.pageUrl" @click.native="triggerEventClickDraft()">
                                             <div class="draft-img" v-bind:style="{ backgroundImage: 'url(' + each_draft.coverImageUrl + ')' }"></div>
                                             <div class="draft-name">{{ each_draft.title }}</div>
                                         </router-link >
@@ -142,6 +142,9 @@ export default {
             }
         },
         alertOrOpenWriteModal() {
+            this.triggerAnanlyticsEvent(`WRITENEWBOOK_NEWBOOK_CREATE`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
             if (this.getUserDetails.isGuest) {
                 this.setAfterLoginAction({ action: null, data: null });
                 this.openLoginModal(this.$route.meta.store, 'WRITE', null);
@@ -149,6 +152,17 @@ export default {
                 this.openWritePratilipiModal();
             }
             
+        },
+        triggerEvent() {
+            this.triggerAnanlyticsEvent(`GETANDROID_APPBANNER_CREATE`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
+            window.open('https://play.google.com/store/apps/details?id=com.pratilipi.mobile.android&utm_source=web_write&utm_campaign=app_download')
+        },
+        triggerEventClickDraft() {
+            this.triggerAnanlyticsEvent(`CLICKBOOK_DRAFTS_CREATE`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
         }
     },
     components: {

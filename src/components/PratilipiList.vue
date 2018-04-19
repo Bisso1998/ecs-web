@@ -1,9 +1,12 @@
 <template>
 	<div class="section">
 		<div class="container-fluid">
-	        <h2 class="section-title"><a :href="listPageUrl">{{title}}</a></h2>
+	        <h2 class="section-title">
+                <router-link v-if="listPageUrl" :to="listPageUrl" @click.native="triggerListLink">{{title}}</router-link>
+                <span v-else>{{title}}</span>
+            </h2>
 	        <div class="pratilipi-list" v-if="pratilipiList.length > 0">
-	            <slick ref="slick" :options="slickOptions">
+	            <slick ref="slick" :options="slickOptions" @beforeChange="handleBeforeChange" class="slick-pratilipis">
 	                <PratilipiComponent 
 	                v-for="(eachPratilipi, index) in pratilipiList" 
 	                v-bind:key="eachPratilipi.pratilipiId + index"
@@ -29,6 +32,9 @@
 <script type="text/javascript">
 import PratilipiComponent from '@/components/Pratilipi.vue'
 import Slick from 'vue-slick'
+import mixins from '@/mixins';
+import inViewport from 'vue-in-viewport-mixin';
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
     name: 'PratilipiList',
@@ -53,6 +59,9 @@ export default {
         redirectToReader: {
             type: Boolean
         },
+        'in-viewport-once': {
+            default: true
+        },
         screenName: {
             type: String,
             required: true
@@ -61,6 +70,15 @@ export default {
             type: String,
             required: true
         }
+    },
+    mixins: [
+        mixins,
+        inViewport
+    ],
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ]),
     },
     data() {
         return {
@@ -83,19 +101,46 @@ export default {
         prev() {
             this.$refs.slick.prev()
         },
+        handleBeforeChange() {
+            if (this.$route.meta.store === 'homepage') {
+                this.triggerAnanlyticsEvent(`SWIPE_COLLECTIONS_HOME`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': this.listPageUrl
+                });
+            }
+        },
         reInit() {
             // Helpful if you have to deal with v-for to update dynamic lists
-            this.$refs.slick.reSlick()
+            // console.log(this.listPageUrl);
+            this.$refs.slick.reSlick();
+        },
+        triggerListLink() {
+            this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': this.listPageUrl
+            });
         }
     },
     mounted() {
+        const that = this;
     	if (this.pratilipiList.length > 0) {
-    		this.reInit();	
+    		this.reInit();
     	}
     },
     components: {
         PratilipiComponent,
         Slick
+    },
+    watch: {
+        'inViewport.now': function(visible) {
+            if (visible) {
+                this.triggerAnanlyticsEvent(`VIEWED_COLLECTIONS_HOME`, 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId,
+                    'PARENT_ID': this.listPageUrl
+                });
+                
+            }
+        }
     }
 }
 </script>

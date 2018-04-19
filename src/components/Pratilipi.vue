@@ -137,7 +137,8 @@ export default {
         },
         triggerReadPratilipiEvent() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
-            this.triggerAnanlyticsEvent(`READBOOK_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            let action = this.redirectToReader && this.screenLocation === 'LIBRARY' ? 'READBOOK' : 'CLICKBOOK';
+            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
             });
@@ -146,7 +147,12 @@ export default {
             console.log('has been rendered');
         },
         openShareModal() {
-            this.setShareDetails({ data: this.pratilipiData, type: 'PRATILIPI' })
+            const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
+            this.triggerAnanlyticsEvent(`CLICKSHRBOOK_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                ...pratilipiAnalyticsData,
+                'USER_ID': this.getUserDetails.userId
+            });
+            this.setShareDetails({ data: this.pratilipiData, type: 'PRATILIPI', screen_name: this.screenName, screen_location: this.screenLocation });
             $('#share_modal').modal('show');
         }
     },
