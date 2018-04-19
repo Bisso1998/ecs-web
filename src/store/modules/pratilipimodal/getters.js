@@ -18,5 +18,6 @@ export default {
     //     }, 0)
     // }
     
-    getPratilipiData: state => state.pratilipi.data
+    getPratilipiData: state => state.pratilipi.data,
+    getUserPratilipiData: state => state.userPratilipi.data,
 }

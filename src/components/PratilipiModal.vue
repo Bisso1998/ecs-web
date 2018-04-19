@@ -1,6 +1,6 @@
 <template>
     <!-- Pratilipi Modal -->
-    <div class="modal fade pratilipi-modal" id="pratilipi_modal" tabindex="-1" role="dialog" aria-labelledby="pratilipi-modalLabel" aria-hidden="true">
+    <div class="modal fade pratilipi-modal" id="pratilipi_modal" tabindex="-1" role="dialog" aria-labelledby="pratilipi-modalLabel" aria-hidden="true" v-if="getPratilipiData.pratilipiId">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -16,11 +16,11 @@
                     <div class="book-cover" :style="{'background-image': `url('${getPratilipiData.coverImageUrl}')`}"></div>
                     <div class="image-mask">
                         <span>
-                            <button class="add-library">
+                            <button class="add-library" v-if="!getUserPratilipiData.addedToLib" @click="addPratilipiToLibrary(getPratilipiData.pratilipiId)">
                                 <i class="material-icons">bookmark_border</i>
                                 <i class="material-icons stacked grey">add</i>
                             </button>
-                            <button class="add-library" style="display: none;">
+                            <button class="add-library" v-else @click="triggerAnalyticsAndRemovePratilipiFromLibrary(getPratilipiData.pratilipiId)">
                                 <i class="material-icons added-to-lib">bookmark</i>
                                 <i class="material-icons stacked">check</i>
                             </button>
@@ -49,7 +49,9 @@
                 </div>
                 <div class="modal-footer">
                     <div class="main-actions">
-                        <a href="/read?id=4524562726256640" class="read-btn"><span>__("read")</span></a>
+                        <router-link class="read-btn" :to="getPratilipiData.readPageUrl" @click.native="triggerReadPratilipiModalEvent" :title="getPratilipiData.title">
+                            <span>__("read")</span>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -69,12 +71,39 @@ export default {
         }
     },
     computed: {
+        ...mapGetters([
+            'getUserDetails',
+            'setAfterLoginAction'
+        ]),
         ...mapGetters('pratilipimodal', [
-            'getPratilipiData'
+            'getPratilipiData',
+            'getUserPratilipiData'
         ])
     },
+    mixins: [
+        mixins
+    ],
     methods: {
-
+        ...mapActions('pratilipimodal', [
+            'addToLibrary',
+            'removeFromLibrary'
+        ]),
+        triggerReadPratilipiModalEvent() {
+            $('.modal-backdrop').hide();
+        },
+        addPratilipiToLibrary(pratilipiId) {
+            if (this.getUserDetails.isGuest) {
+                // throw popup modal
+                console.log(this.$route);
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/addToLibrary`, data: pratilipiId });
+                this.openLoginModal(this.$route.meta.store, 'LIBRARYADD', this.screenLocation);
+            } else {
+                this.addToLibrary(pratilipiId);
+            }
+        },
+        triggerAnalyticsAndRemovePratilipiFromLibrary() {
+            this.removeFromLibrary();
+        }
     },
     created() {
 

@@ -118,7 +118,7 @@ export default {
         ]),
         setModalDataAndOpenPratilipiModal() {
             this.setPratilipiModalData(this.pratilipiData);
-            // this.fetchPratilipiData(this.pratilipiData.pratilipiId);
+            this.fetchPratilipiData(this.pratilipiData.pratilipiId);
             this.openPratilipiModal();
         },
         addPratilipiToLibrary(pratilipiId) {

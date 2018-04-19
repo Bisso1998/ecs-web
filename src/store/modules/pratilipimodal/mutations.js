@@ -21,5 +21,35 @@ export default {
 
     setPratilipiModalDataLoadingSuccess(state, pratilipiData) {
         state.pratilipi.data = pratilipiData;
+    },
+
+    addPratilipiToLibrarySuccess(state) {
+        state.userPratilipi.data.addedToLib = true;
+    },
+    
+    addPratilipiToLibraryError(state) {
+
+    },
+
+    removePratilipiFromLibrarySuccess(state) {
+        state.userPratilipi.data.addedToLib = false;
+    },
+    
+    removePratilipiFromLibraryError(state) {
+
+    },
+
+    setPratilipiUserDataLoadingTrue(state) {
+        state.userPratilipi.loading_state = 'LOADING';
+    },
+
+    setPratilipiUserDataLoadingSuccess(state, pratilipiUserData) {
+        state.userPratilipi.loading_state = 'LOADING_SUCCESS';
+        state.userPratilipi.data = pratilipiUserData;
+    },
+
+    setPratilipiUserDataLoadingError(state) {
+        state.userPratilipi.loading_state = 'LOADING_ERROR';
+        state.userPratilipi.data = {};
     }
 }
