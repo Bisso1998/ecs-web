@@ -4,9 +4,9 @@
             <div class="book-type" :class="pratilipiData.type">
                 {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
             </div>
-            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
+            <a @click="setModalDataAndOpenPratilipiModal">
                 <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
-            </router-link>
+            </a >
             <div class="image-mask">
                 <span v-if="!hideAddToLibrary">
                     <button class="add-library" v-if="!pratilipiData.addedToLib" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">
@@ -112,6 +112,15 @@ export default {
             'setShareDetails',
             'setAfterLoginAction'
         ]),
+        ...mapActions('pratilipimodal', [
+            'setPratilipiModalData',
+            'fetchPratilipiData'
+        ]),
+        setModalDataAndOpenPratilipiModal() {
+            this.setPratilipiModalData(this.pratilipiData);
+            this.fetchPratilipiData(this.pratilipiData.pratilipiId);
+            this.openPratilipiModal();
+        },
         addPratilipiToLibrary(pratilipiId) {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
             this.triggerAnanlyticsEvent(`LIBRARYADD_${this.screenLocation}_${this.screenName}`, 'CONTROL', {

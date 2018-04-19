@@ -3,6 +3,7 @@
         <Header :userDetails="getUserDetails" :notificationCount="getNotificationCount" ></Header>
         <AppBanner></AppBanner>
         <slot></slot>
+        <PratilipiModal></PratilipiModal>
         <LoginModal></LoginModal>
         <ShareModal></ShareModal>
         <InputModal></InputModal>
@@ -16,6 +17,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import AppBanner from '@/components/AppBanner.vue';
+import PratilipiModal from '@/components/PratilipiModal.vue';
 import LoginModal from '@/components/LoginModal.vue';
 import ShareModal from '@/components/Share.vue';
 import InputModal from '@/components/InputModal.vue';
@@ -53,6 +55,7 @@ export default {
     components: {
         Header,
         AppBanner,
+        PratilipiModal,
         LoginModal,
         ShareModal,
         InputModal,
