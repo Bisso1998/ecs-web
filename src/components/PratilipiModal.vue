@@ -27,25 +27,38 @@
                         </span>
                         <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
                     </div>
-                    <!-- <div class="book-name">सी - बीच पर दो पूर्व परिचित</div> -->
-                    <div class="author-name" v-if="getPratilipiData.author"><a href="#">{{ getPratilipiData.author.fullName }}</a></div>
-                    <div class="book-stats-wrap">
-                        <div class="book-stats">
-                            <span class="avg-rating stars-green">
-                                <span class="rating-text">{{ getPratilipiData.averageRating | round(1) }}</span>
-                                <i class="material-icons">star_rate</i></span>
-                            <span class="review-count">{{ getPratilipiData.ratingCount }} __("rating_ratings")</span>
+                    <div class="book-name">
+                        <router-link :to="getPratilipiData.pageUrl" @click.native="removeBackdrop">{{ getPratilipiData.title }}</router-link>
+                    </div>
+                    <div class="author-name" v-if="getPratilipiData.author">{{ getPratilipiData.author.fullName }}</div>
+                    <div class="date-added">__("pratilipi_listing_date"): {{ getPratilipiData.listingDateMillis | convertDate }}</div>
+                    <div class="book-summary">{{ getPratilipiData.summary || getPratilipiData.cardSummary }}</div>
+                    <div class="stats">
+                        <div class="rating">
+                            <div class="icons">
+                                <i class="material-icons">star</i>
+                            </div>
+                            <span>
+                                {{ getPratilipiData.averageRating | round(1) }}
+                            </span>
                         </div>
-                        <div class="book-stats">
-                            <span class="read-time">__("pratilipi_reading_time"): {{ getPratilipiData.readingTime | showInMinutesOrHours }}</span>
+                        <div class="read-count">
+                            <div class="icons">
+                                <i class="material-icons">remove_red_eye</i>
+                            </div>
+                            <span>
+                                {{ getPratilipiData.readCount | round(1) }}
+                            </span>
                         </div>
-                        <div class="book-stats">
-                            <span class="read-count">__("pratilipi_count_reads"): {{ getPratilipiData.readCount | round(1) }} </span>
-                            <span class="date">__("pratilipi_listing_date"): {{ getPratilipiData.listingDateMillis | convertDate }}</span>
+                        <div class="read-time">
+                            <div class="icons">
+                                <i class="material-icons">access_time</i>
+                            </div>
+                            <span>
+                                {{ getPratilipiData.readingTime | showInMinutesOrHours }}
+                            </span>
                         </div>
                     </div>
-                    <div class="book-summary">{{ getPratilipiData.summary || getPratilipiData.cardSummary }}</div>
-                    <a href="#" class="read-more"><span>View Summary Page</span></a>
                 </div>
                 <div class="modal-footer"  v-if="getPratilipiData.pratilipiId">
                     <div class="main-actions">
@@ -95,6 +108,10 @@ export default {
             $('.modal-backdrop').hide();
             $('body').removeClass("modal-open");
         },
+        removeBackdrop() {
+            $('.modal-backdrop').hide();
+            $('body').removeClass("modal-open");
+        },
         addPratilipiToLibrary(pratilipiId) {
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
@@ -127,11 +144,19 @@ export default {
 
 <style lang="scss" scoped>
 .pratilipi-modal {
+    @media screen and (max-width: 500px ) {
+        max-width: 320px;
+        margin: 0 auto;
+    }
     &.modal.show .modal-dialog {
         top: 10%;
     }
     .modal-header, .modal-footer {
         padding: 10px;
+    }
+    .modal-footer {
+        padding: 0 10px 10px;
+        border-top: 0;
     }
     .modal-title {
         font-size: 16px;
@@ -147,6 +172,13 @@ export default {
     .book-name {
         font-size: 18px;
         font-weight: 700;
+        text-align: center;
+        max-height: 52px;
+        line-height: 24px;
+        overflow: hidden;
+        a {
+            color: #d0021b;
+        }
     }
     .book-type {
         font-size: 11px;
@@ -157,7 +189,7 @@ export default {
         background: #4CAF50;
         position: absolute;
         top: 15px;
-        left: 2px;
+        left: 1px;
         z-index: 1;
         height: 21px;
         &:before {
@@ -275,73 +307,50 @@ export default {
             }
         }
     }
-    .author-name a {
+    .author-name {
         margin: 2px 0;
         display: inline-block;
-        color: #d0021b;
         font-size: 15px;
+    }
+    .date-added {
+        font-size: 12px;
+        margin: 0;
+        color: #555555;
     }
     .book-summary {
         color: #212121;
         font-size: 12px;
-        height: 55px;
+        max-height: 55px;
         overflow: hidden;
         margin: 5px 0 0;
     }
-    .book-stats-wrap {
+    .stats {
+        border-top: 1px solid #e9e9e9;
         border-bottom: 1px solid #e9e9e9;
-        padding-bottom: 5px;
-        color: #555;
-        .book-stats {
-            font-size: 13px;
-            margin: 2px 0;
-            .avg-rating {
-                background-color: #37be5f;
-                color: #fff;
-                margin: 0 5px 5px 0;
-                padding: 3px 7px;
-                border-radius: 2px;
+        margin-top: 5px;
+        overflow: hidden;
+        text-align: center;
+        .rating, .read-count, .read-time {
+            float: left;
+            width: 32%;
+            padding: 10px 2px;
+            font-size: 12px;
+            color: #212121;
+            .icons {
                 display: inline-block;
-                font-size: 12px;
                 vertical-align: middle;
-                .rating-text {
-                    vertical-align: middle;
-                }
-                .material-icons {
-                    font-size: 12px;
-                    width: 16px;
-                    padding-left: 5px;
-                    vertical-align: middle;
-                }
-                &.stars-green {
-                    background: #37be5f;
-                }
-                &.stars-orange {
-                    background: #ffb500;
-                }
-                &.stars-red {
-                    background: #ff6d13;
+                padding-right: 4px;
+                i {
+                    font-size: 13px;
                 }
             }
-            .review-count {
-                font-size: 12px;
-                margin-left: 5px;
-                span {
-                    padding-left: 5px;
-                }
-            }
-            .read-count {
-                border-right: 1px solid;
-                padding-right: 5px;
-                margin: 0;
-                line-height: 12px;
-                display: inline-block;
-            }
-            .date {
-                display: inline-block;
-                padding-left: 5px;
-                display: inline-block;
-            }
+        }
+        .read-count, .read-time {
+            border-left: 1px solid #e9e9e9;
+            padding: 10px 0;
+        }
+        .read-time {
+            font-size: 12px;
         }
     }
     .read-more {
