@@ -52,8 +52,7 @@ export default {
     },
     methods: {
         closeBanner() {
-            $(".app-banner").hide();
-            $(".page-wrap").css("margin-top", "65px");
+            this.hideBannerFromView();
             this.cross_count++;
             
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
@@ -61,6 +60,10 @@ export default {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
+        },
+        hideBannerFromView() {
+            $(".app-banner").hide();
+            $(".page-wrap").css("margin-top", "65px");
         },
         downloadApp() {
             this.click_count++;
@@ -117,7 +120,7 @@ export default {
         },
         'showBanner': function(shouldShow) {
             if (!shouldShow) {
-                this.closeBanner();
+                this.hideBannerFromView();
             }
             this.execCookieLogic();
         },
@@ -133,7 +136,7 @@ export default {
             $("#app .page-wrap").css("margin-top", "10px");
         }
         if (!this.showBanner) {
-            this.closeBanner();
+            this.hideBannerFromView();
         }
     }
 }
