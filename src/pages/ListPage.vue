@@ -114,18 +114,14 @@ export default {
                     });
                 }
             });
-        },
-        'getPratilipiListLoadingState'(loadingState) {
-            const { list_page_url } = this.$route.params;
-            if (loadingState === 'LOADING_SUCCESS' && this.getPratilipiListData.length > 0) {
-                this.triggerAnanlyticsEvent(`LANDED_CATEGORYM_CATEGORY`, 'CONTROL', {
-                    'USER_ID': this.getUserDetails.userId,
-                    'PARENT_ID': list_page_url
-                });
-            }
         }
     },
     mounted() {
+        const { list_page_url } = this.$route.params;
+        this.triggerAnanlyticsEvent(`LANDED_CATEGORYM_CATEGORY`, 'CONTROL', {
+            'USER_ID': this.getUserDetails.userId,
+            'PARENT_ID': list_page_url
+        });
         window.addEventListener('scroll', this.updateScroll);
     },
     destroyed() {
