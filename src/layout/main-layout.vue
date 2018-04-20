@@ -88,7 +88,7 @@ export default {
 
 <style lang="scss">
 .modal-body {
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 140px);
     overflow-y: auto;
 }
 </style>
