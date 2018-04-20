@@ -62,6 +62,9 @@ export default {
             });
         },
         hideBannerFromView() {
+            if (!this.isAndroid()) {
+                return;
+            }
             $(".app-banner").hide();
             $(".page-wrap").css("margin-top", "65px");
         },
