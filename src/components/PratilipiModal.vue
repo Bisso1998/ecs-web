@@ -255,6 +255,9 @@ export default {
         width: 99%;
         height: 150px;
         position: relative;
+        @media screen and (min-width: 768px ) {
+            height: 245px;
+        }
     }
     .image-mask {
         position: absolute;
