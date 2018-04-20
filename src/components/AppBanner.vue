@@ -107,7 +107,7 @@ export default {
     },
     watch: {
         'inViewport.now': function(visible) {
-            if (visible) {
+            if (visible && this.showBanner) {
                 const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
                 this.triggerAnanlyticsEvent(`VIEWED_APPBANNER_GLOBAL`, 'CONTROL', {
                     'USER_ID': this.getUserDetails.userId,
