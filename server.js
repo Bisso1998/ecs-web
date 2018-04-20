@@ -194,6 +194,12 @@ app.get( '/*', (req, res, next) => {
     }
 
     var website = _getWebsite( req.headers.host );
+
+    if (req.path.indexOf('OneSignalSDK')) {
+        res.sendFile(__dirname + `/dist/${website.displayLanguage.code}/static/${req.path}`);
+        return;
+    }
+
     if (fs.existsSync(__dirname + `/dist/${website.displayLanguage.code}${req.path}`)) {
         res.sendFile(__dirname + `/dist/${website.displayLanguage.code}${req.path}`)
     } else {
