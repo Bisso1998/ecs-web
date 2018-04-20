@@ -56,6 +56,7 @@
                 </div>
                 <button type="button" @click="saveTypeAndCategoriesAndCloseSection({ suggestedTags, type: selectedPratilipiType, tags: selectedTags })" class="btn btn-save">__("save")</button>
                 <button type="button" @click="cancelTags" class="btn btn-light">__("cancel")</button>
+                <div class="clear"></div>
             </div>
         </div>
     </div>
@@ -225,6 +226,9 @@ export default {
         }
     }
 }
+.clear {
+    clear: both;
+}
 .tags-section {
     .tags {
         text-align: left;
@@ -242,7 +246,6 @@ export default {
         font-size: 14px;
         padding: 10px;
         display: none;
-        overflow: hidden;
         .desc {
             font-size: 13px;
             color: #212121;
