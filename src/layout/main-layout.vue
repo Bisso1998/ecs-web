@@ -82,6 +82,22 @@ export default {
                 $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
             }, 0);
         });
+
+        $('div.modal').on('show.bs.modal', function() {
+            const modal = this;
+            const hash = modal.id;
+            window.location.hash = hash;
+            window.onhashchange = function() {
+                if (!location.hash){
+                    $(modal).modal('hide');
+                }
+            }
+        });
+
+        $('div.modal').on('hide.bs.modal', function() {
+            const hash = this.id;
+            history.pushState('', document.title, window.location.pathname);
+        });
     }
 }
 </script>
