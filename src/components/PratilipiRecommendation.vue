@@ -132,7 +132,7 @@ export default {
         display: inline-block;
     }
     .pratilipi {
-        width: 300px;
+        width: 350px;
         margin: 10px;
         background: #fff;
         border: 1px solid #e9e9e9;
