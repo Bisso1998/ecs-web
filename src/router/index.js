@@ -21,6 +21,7 @@ import SearchPageComponent from '@/pages/Search.vue'
 import LoginPageComponent from '@/pages/Login.vue'
 import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
 import MessagesComponent from '@/pages/Messages.vue'
+import MessageUserComponent from '@/pages/MessageUser.vue'
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -207,6 +208,14 @@ const router = new Router({
         meta: {
             'title': 'Messages | __("pratilipi")',
             'store': 'messages'
+        }
+    }, {
+        path: '/messages/user',
+        name: 'MessageUser_Page',
+        component: MessageUserComponent,
+        meta: {
+            'title': 'Messages | __("pratilipi")',
+            'store': 'messageuser'
         }
     }, {
         path: '/blog',
