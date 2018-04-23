@@ -11,7 +11,7 @@
                             <ul>
                                 <li v-for="each_category in each_category_section.categories" :key="each_category.categoryUrl" v-if="each_category.pratilipiListData.listName">
                                     <router-link
-                                    :to="{ path: each_category.categoryUrl }">
+                                    :to="{ path: each_category.categoryUrl }" @click.native="triggerAnanlyticsEventForClick(each_category.categoryUrl)">
                                         <span class="category-img" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/resource-all/android-category-banners/' + each_category.imageFileName  + ')' }"></span>
                                         <span class="category-name">{{ each_category.title }}</span>
                                     </router-link>
@@ -45,7 +45,12 @@ export default {
         ])
     },
     methods: {
-        
+        triggerAnanlyticsEventForClick(categoryUrl){
+            this.triggerAnanlyticsEvent('CLICKCATEGORY_TOPICS_DISCOVER', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'PARENT_ID': categoryUrl
+            });
+        }
     },
     mixins: [
         mixins

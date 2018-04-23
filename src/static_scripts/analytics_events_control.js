@@ -1890,5 +1890,10 @@ export default {
         "SCREEN_NAME": "READER",
         "LOCATION": "OPENAPP",
         "ACTION": "VIEWANDROID"  
+    },
+    "CLICKCATEGORY_TOPICS_DISCOVER": {
+        "SCREEN_NAME": "DISCOVER",
+        "LOCATION": "TOPICS",
+        "ACTION": "CLICKCATEGORY"  
     }
 };
