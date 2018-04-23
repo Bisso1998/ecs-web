@@ -1,5 +1,5 @@
 <template>
-    <div class="recommendation">
+    <div class="recommendation old-style">
         <PratilipiListComponent 
             :pratilipiList="getRecommendationList" 
             :title="getRecommendationTitle"

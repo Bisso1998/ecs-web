@@ -281,7 +281,7 @@ export default {
 	.forward {
 		right: -15px;
 	}
-    .recommendation .section {
+    .recommendation.old-style .section {
         .back, .forward {
             top: 44%;
         }
