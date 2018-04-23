@@ -4,9 +4,9 @@
             <div class="book-type" :class="pratilipiData.type">
                 {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
             </div>
-            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
+            <a @click="setModalDataAndOpenPratilipiModal">
                 <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
-            </router-link>
+            </a >
             <div class="image-mask">
                 <span v-if="!hideAddToLibrary">
                     <button class="add-library" v-if="!pratilipiData.addedToLib" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">
@@ -20,7 +20,7 @@
                 </span>
                 <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
             </div>
-            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
+            <div @click="setModalDataAndOpenPratilipiModal">
                 <div class="pratilipi-details">
                     <span class="title">{{ pratilipiData.title }}</span>
                     <span v-if="!hideAuthorName" class="author">{{ pratilipiData.author.name }}</span>
@@ -52,7 +52,7 @@
                         </span>
                     </div>
                 </div>
-            </router-link>
+            </div>
         </div>
     </div>
 </template>

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomeComponent from '@/pages/Home.vue'
 import PratilipiComponent from '@/pages/Pratilipi.vue'
 import AuthorComponent from '@/pages/Author.vue'
 import NotificationComponent from '@/pages/Notification.vue'
@@ -26,6 +25,8 @@ import MessageUserComponent from '@/pages/MessageUser.vue'
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
 
+import { getCookie } from '@/mixins/methods'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -33,27 +34,37 @@ const router = new Router({
     routes: [{
         path: '/',
         name: 'Home',
-        component: HomeComponent,
+        component: () => {
+            const isTrue = true;
+            if (isTrue) {
+                return import('@/pages/Home.vue');
+            } else {
+                return import('@/pages/experiments/pratilipi_modal/Home.vue');
+            }
+        },
         meta: {
             'store': 'homepage',
             'title': '__("seo_home_page") | __("pratilipi")'
         },
         beforeEnter: (to, from, next) => {
             if (to.query.email && to.query.token && to.query.passwordReset) {
-                next({ path: '/reset-password', query: { 
-                    email: to.query.email,
-                    token: to.query.token
-                }});    
+                next({
+                    path: '/reset-password',
+                    query: {
+                        email: to.query.email,
+                        token: to.query.token
+                    }
+                });
             } else {
                 next();
             }
-            
+
         }
     }, {
         path: '/story/:slug_id',
         name: 'Pratilipi',
         component: PratilipiComponent,
-        meta: { 
+        meta: {
             'store': 'pratilipipage',
             'id_prop': 'slug_id'
         }
@@ -238,7 +249,8 @@ const router = new Router({
         path: '/blogpost/:blog_id',
         name: 'Blog_Page_2',
         component: BlogPageComponent,
-        meta: {'store': 'blogpage',
+        meta: {
+            'store': 'blogpage',
             'title': '__("seo_home_page")',
             'id_prop': 'blog_id'
         }
@@ -319,7 +331,7 @@ const router = new Router({
             const pathToGo = to.path;
             DataAccessor.getPageType(pathToGo, (response) => {
                 if (response.status === 200) {
-                    switch(response.response.pageType) {
+                    switch (response.response.pageType) {
                         case 'PRATILIPI':
                             DataAccessor.getPratilipiById(response.response.primaryContentId, false, (data) => {
                                 if (data) {
@@ -354,7 +366,7 @@ const router = new Router({
             const pathToGo = to.path;
             DataAccessor.getPageType(pathToGo, (response) => {
                 if (response.status === 200) {
-                    switch(response.response.pageType) {
+                    switch (response.response.pageType) {
                         case 'PRATILIPI':
                             DataAccessor.getPratilipiById(response.response.primaryContentId, false, (data) => {
                                 if (data) {
@@ -387,12 +399,12 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
-    ga( 'set', 'page', to.path + window.location.search );
+    ga('set', 'page', to.path + window.location.search);
     // ga( 'set', 'dimension1', appViewModel.user.userId() == null ? 0 : appViewModel.user.userId() );
-    ga( 'set', 'dimension2', process.env.GA_WEBSITE );
-    ga( 'set', 'dimension3', process.env.GA_WEBSITE_MODE );
-    ga( 'set', 'dimension4', process.env.GA_WEBSITE_VERSION );
-    ga( 'send', 'pageview' );
+    ga('set', 'dimension2', process.env.GA_WEBSITE);
+    ga('set', 'dimension3', process.env.GA_WEBSITE_MODE);
+    ga('set', 'dimension4', process.env.GA_WEBSITE_VERSION);
+    ga('send', 'pageview');
 });
 
 export default router;

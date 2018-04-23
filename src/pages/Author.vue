@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="author-page">
+        <div class="author-page page-wrap">
             <div class="container">
                 <div class="page-content">
                     <div class="row">

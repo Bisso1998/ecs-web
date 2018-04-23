@@ -1,3 +1,7 @@
+/**
+ * Homepage with Pratilipi in form of modals
+ */
+
 <template>
     <MainLayout>
         <div class="home-page page-wrap">
@@ -20,7 +24,7 @@
 
 <script>
 import Spinner from '@/components/Spinner.vue';
-import PratilipiListComponent from '@/components/PratilipiList.vue';
+import PratilipiListComponent from '@/components/experiments/pratilipi_modal/PratilipiList.vue';
 import MainLayout from '@/layout/main-layout.vue';
 import Banners from '@/components/Banners.vue';
 import ServerError from '@/components/ServerError.vue';

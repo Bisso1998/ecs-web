@@ -1,56 +1,17 @@
 <template>
     <div class="pratilipi-wrap">
         <div class="pratilipi">
-            <div class="book-type" :class="pratilipiData.type">
-                {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
-            </div>
             <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
-                <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
-            </router-link>
-            <div class="image-mask">
-                <span v-if="!hideAddToLibrary">
-                    <button class="add-library" v-if="!pratilipiData.addedToLib" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">
-                        <i class="material-icons">bookmark_border</i>
-                        <i class="material-icons stacked grey">add</i>
-                    </button>
-                    <button class="add-library" v-else @click="triggerAnalyticsAndRemovePratilipiFromLibrary(pratilipiData.pratilipiId)">
-                        <i class="material-icons added-to-lib">bookmark</i>
-                        <i class="material-icons stacked">check</i>
-                    </button>
-                </span>
-                <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
-            </div>
-            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
-                <div class="pratilipi-details">
+                <div class="recommendation" :style="{ backgroundImage: 'url(' + pratilipiData.coverImageUrl + ')' }">
                     <span class="title">{{ pratilipiData.title }}</span>
-                    <span v-if="!hideAuthorName" class="author">{{ pratilipiData.author.name }}</span>
+                    <div class="stats-container">
+                        <div class="icons"><i class="material-icons">star</i></div>
+                        <span class="margin-right-10">{{ pratilipiData.averageRating | round(1) }}</span>
+                        
+                        <div class="icons"><i class="material-icons">remove_red_eye</i></div>
+                        <span>{{ pratilipiData.readCount | round(1) }}</span>
+                    </div>
                     <p v-if="pratilipiData.cardSummary" class="summary">{{ pratilipiData.cardSummary }}</p>
-                </div>
-                <div class="stats">
-                    <div class="rating">
-                        <div class="icons">
-                            <i class="material-icons">star</i>
-                        </div>
-                        <span>
-                            {{ pratilipiData.averageRating | round(1) }}
-                        </span>
-                    </div>
-                    <div class="read-count">
-                        <div class="icons">
-                            <i class="material-icons">remove_red_eye</i>
-                        </div>
-                        <span>
-                            {{ pratilipiData.readCount | round(1) }}    
-                        </span>
-                    </div>
-                    <div class="read-time">
-                        <div class="icons">
-                            <i class="material-icons">access_time</i>
-                        </div>
-                        <span>
-                            {{ pratilipiData.readingTime | showInMinutesOrHours }}
-                        </span>
-                    </div>
                 </div>
             </router-link>
         </div>
@@ -112,15 +73,6 @@ export default {
             'setShareDetails',
             'setAfterLoginAction'
         ]),
-        ...mapActions('pratilipimodal', [
-            'setPratilipiModalData',
-            'fetchPratilipiData'
-        ]),
-        setModalDataAndOpenPratilipiModal() {
-            this.setPratilipiModalData(this.pratilipiData);
-            this.fetchPratilipiData(this.pratilipiData.pratilipiId);
-            this.openPratilipiModal();
-        },
         addPratilipiToLibrary(pratilipiId) {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
             this.triggerAnanlyticsEvent(`LIBRARYADD_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
@@ -152,6 +104,9 @@ export default {
                 'USER_ID': this.getUserDetails.userId
             });
         },
+        imageHasBeenRendered() {
+            console.log('has been rendered');
+        },
         openShareModal() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
             this.triggerAnanlyticsEvent(`CLICKSHRBOOK_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
@@ -177,7 +132,7 @@ export default {
         display: inline-block;
     }
     .pratilipi {
-        width: 300px;
+        width: 350px;
         margin: 10px;
         background: #fff;
         border: 1px solid #e9e9e9;
@@ -370,6 +325,61 @@ export default {
             }
             .read-time {
                 font-size: 12px;
+            }
+        }
+        
+        // Old Recomendation Styles
+        .recommendation {
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: rgba(0, 0, 0, 0.5) 0px 80px 80px -20px inset, rgba(0, 0, 0, 0.8) 0px -110px 100px -10px inset;
+            span.title {
+                overflow: hidden;
+                width: 100%;
+                max-width: 100%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                padding: 5px 10px 0;
+                font-size: 21px;
+                line-height: 30px;
+                text-align: left;
+                display: block;
+            }
+            .stats-container {
+                padding: 4px 10px;
+                font-size: 13px;
+                text-align: left;
+                .icons {
+                    display: inline-block;
+                    vertical-align: middle;
+                    i {
+                        font-size: 13px;
+                    }
+                }
+            }
+            .margin-right-10 {
+                margin-right: 10px;
+            }
+            p.summary {
+                text-align: left;
+                font-size: 15px;
+                line-height: 23px;
+                position: absolute;
+                bottom: 0;
+                padding: 0 10px 0 10px;
+                margin: 0 0 5px;
+                height: 92px;
+                white-space: normal;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
             }
         }
     }

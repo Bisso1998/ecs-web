@@ -20,7 +20,10 @@ import {
     getPratilipiAnalyticsData,
     getAnalyticsPageSource,
     getAndroidIntentUri,
-    openInNewTab
+    openInNewTab,
+    openPratilipiModal,
+    getCookie,
+    setCookie
 } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
@@ -52,6 +55,9 @@ export default {
         getPratilipiAnalyticsData,
         getAnalyticsPageSource,
         getAndroidIntentUri,
-        openInNewTab
+        openInNewTab,
+        openPratilipiModal,
+        getCookie,
+        setCookie
     }
 }

@@ -49,6 +49,9 @@ export default {
         'in-viewport-once': {
             default: true
         },
+        'in-viewport-offset-top': {
+            default: -56
+        },
         pratilipiData: {
             type: Object,
             required: true

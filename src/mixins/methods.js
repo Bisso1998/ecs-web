@@ -25,6 +25,10 @@ export function openLoginModal(pageSource, action, location) {
     $('#login_modal').modal('show');
 }
 
+export function openPratilipiModal() {
+    $('#pratilipi_modal').modal('show');
+}
+
 export function getAnalyticsPageSource(pageSource) {
     let analyticsPageSource;
     switch (pageSource) {
@@ -236,7 +240,6 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         eventProps.SCREEN_NAME = eventProperty['SCREEN_NAME'];
         delete eventProperty.SCREEN_NAME;
     }
-    console.log('props', eventProps);
     if (eventProps && eventProps.ACTION) {
         eventProps = {
             ...eventProps,
@@ -281,4 +284,25 @@ export function getAndroidIntentUri( utmParameters ) {
     return isChrome() ?
         'intent://' + uri + '#Intent;scheme=' + SCHEME + ';package=' + PACKAGE_NAME + ';S.browser_fallback_url=' + PLAYSTORE_URL + '&referrer=' + UTM_PARAMETER + ';end' :
         'intent://' + uri + '#Intent;scheme=' + SCHEME + ';package=' + PACKAGE_NAME + ';S.browser_fallback_url=' + 'market://search?q=pname:' + PACKAGE_NAME + '&referrer=' + UTM_PARAMETER + ';end' ;
+}
+
+export function getCookie( cname ) {
+    const name = cname + "=";
+    const ca = document.cookie.split( ';' );
+    for( let i = 0; i < ca.length; i++ ) {
+        let c = ca[i];
+        while( c.charAt(0) == ' ' ) c = c.substring( 1 );
+        if( c.indexOf( name ) == 0 ) return c.substring( name.length, c.length );
+    }
+    return null;
+}
+
+export function setCookie( name, value, days, path ) {
+    var expires = "";
+    if( days ) {
+        var date = new Date();
+        date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
+        expires = "expires=" + date.toGMTString() + ";";
+    }
+    document.cookie = name + "=" + ( value ? value : "" ) + ";" + expires + "path=" + ( path ? path : '/' );
 }
