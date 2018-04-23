@@ -1,10 +1,9 @@
 <template>
-    <MainLayout>
+    <MessageLayout>
         <div class="message-page page-wrap">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <h2>Messages</h2>
+                    <div class="col-md-12 p-0">
                         <div class="chat-header individual">
                             <div class="back-btn"><i class="material-icons">arrow_back</i></div>
                             <div class="user-img"><img alt="" src="https://0.ptlp.co/author/image?width=60"></div>
@@ -56,28 +55,26 @@
                         </div>
 
                         <div class="chat-box">
-                            <form action="#">
-                                <div class="type-message">
-                                    <textarea id="text-message" contenteditable="true" placeholder="Type a message"></textarea>
-                                </div>
-                                <button type="submit" name="button" class="send-message"><i class="material-icons">send</i></button>
-                            </form>
+                            <div class="type-message">
+                                <textarea id="text-message" contenteditable="true" placeholder="Type a message"></textarea>
+                            </div>
+                            <button type="button" name="button" class="send-message"><i class="material-icons">send</i></button>
                         </div>
                         <!-- <Spinner></Spinner> -->
                     </div>
                 </div>
             </div>
         </div>
-    </MainLayout>
+    </MessageLayout>
 </template>
 
 <script>
-import MainLayout from '@/layout/main-layout.vue';
+import MessageLayout from '@/layout/message-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 
 export default {
     components: {
-        MainLayout,
+        MessageLayout,
         Spinner
     }
 }
@@ -85,11 +82,10 @@ export default {
 
 <style lang="scss" scoped>
 .message-page {
-    margin-top: 85px;
+    margin-top: 0;
     text-align: left;
     position: relative;
     @media screen and (max-width: 992px) {
-        margin-top: 65px;
         text-align: center;
     }
     h2 {
@@ -176,7 +172,7 @@ export default {
         text-align: center;
         overflow-y: scroll;
         background: #f9f9f9;
-        height: calc(100vh - 280px);
+        height: calc(100vh - 155px);
         .chat-date {
             text-align: center;
             margin: 7px 0;
@@ -289,7 +285,7 @@ export default {
         .type-message {
             background: #fff;
             margin: 0 5px;
-            width: calc(100vw - 100px);
+            width: calc(100vw - 75px);
             position: relative;
             border-radius: 4px;
             box-shadow: 0 1px 1px 0 rgba(164,152,135,0.32), 0 0 1px 0 #A39F98;
@@ -312,7 +308,10 @@ export default {
             margin-right: 5px;
             position: absolute;
             bottom: 0px;
-            right: 4px;
+            right: 5px;
+            i {
+                vertical-align: middle;
+            }
         }
     }
 }

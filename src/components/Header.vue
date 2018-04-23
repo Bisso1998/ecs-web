@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header>
+        <header v-if="!isHidden">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-2 col-sm-4 col-5 p-r-0">
@@ -72,6 +72,9 @@ export default {
         },
         notificationCount: {
             type: Number
+        },
+        isHidden: {
+            type: Boolean
         }
     },
     mixins: [
