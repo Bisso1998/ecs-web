@@ -33,7 +33,8 @@ const router = new Router({
         path: '/',
         name: 'Home',
         component: () => {
-            if (true) {
+            const isTrue = true;
+            if (isTrue) {
                 return import('@/pages/Home.vue');
             } else {
                 return import('@/pages/experiments/pratilipi_modal/Home.vue');
