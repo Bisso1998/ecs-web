@@ -10,7 +10,7 @@ const SEARCH_TRENDING_API = "/trending_search";
 const SEARCH_CORE_API = "/search";
 
 /* Recommendation Api */
-const RECOMMENDATION_PREFIX = "/recommendations/v2.0";
+const RECOMMENDATION_PREFIX = "/recommendations/v2.1";
 const RECOMMENDATION_PRATILIPI_API = "/pratilipis";
 
 const PAGE_API = "/page";
