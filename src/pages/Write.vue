@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="static-page">
+        <div class="static-page page-wrap">
             <div class="container">
                 <div class="page-content">
                     <div class="row">

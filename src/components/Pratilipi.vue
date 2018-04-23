@@ -4,9 +4,9 @@
             <div class="book-type" :class="pratilipiData.type">
                 {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
             </div>
-            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
+            <a @click="setModalDataAndOpenPratilipiModal">
                 <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
-            </router-link>
+            </a >
             <div class="image-mask">
                 <span v-if="!hideAddToLibrary">
                     <button class="add-library" v-if="!pratilipiData.addedToLib" @click="addPratilipiToLibrary(pratilipiData.pratilipiId)">
@@ -20,7 +20,7 @@
                 </span>
                 <button type="button" data-toggle="modal" @click="openShareModal"><i class="material-icons">share</i></button>
             </div>
-            <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
+            <div @click="setModalDataAndOpenPratilipiModal">
                 <div class="pratilipi-details">
                     <span class="title">{{ pratilipiData.title }}</span>
                     <span v-if="!hideAuthorName" class="author">{{ pratilipiData.author.name }}</span>
@@ -52,7 +52,40 @@
                         </span>
                     </div>
                 </div>
-            </router-link>
+            </div>
+            <!-- <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
+                <div class="pratilipi-details">
+                    <span class="title">{{ pratilipiData.title }}</span>
+                    <span v-if="!hideAuthorName" class="author">{{ pratilipiData.author.name }}</span>
+                    <p v-if="pratilipiData.cardSummary" class="summary">{{ pratilipiData.cardSummary }}</p>
+                </div>
+                <div class="stats">
+                    <div class="rating">
+                        <div class="icons">
+                            <i class="material-icons">star</i>
+                        </div>
+                        <span>
+                            {{ pratilipiData.averageRating | round(1) }}
+                        </span>
+                    </div>
+                    <div class="read-count">
+                        <div class="icons">
+                            <i class="material-icons">remove_red_eye</i>
+                        </div>
+                        <span>
+                            {{ pratilipiData.readCount | round(1) }}    
+                        </span>
+                    </div>
+                    <div class="read-time">
+                        <div class="icons">
+                            <i class="material-icons">access_time</i>
+                        </div>
+                        <span>
+                            {{ pratilipiData.readingTime | showInMinutesOrHours }}
+                        </span>
+                    </div>
+                </div>
+            </router-link> -->
         </div>
     </div>
 </template>
@@ -112,6 +145,15 @@ export default {
             'setShareDetails',
             'setAfterLoginAction'
         ]),
+        ...mapActions('pratilipimodal', [
+            'setPratilipiModalData',
+            'fetchPratilipiData'
+        ]),
+        setModalDataAndOpenPratilipiModal() {
+            this.setPratilipiModalData(this.pratilipiData);
+            this.fetchPratilipiData(this.pratilipiData.pratilipiId);
+            this.openPratilipiModal();
+        },
         addPratilipiToLibrary(pratilipiId) {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
             this.triggerAnanlyticsEvent(`LIBRARYADD_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
@@ -142,9 +184,6 @@ export default {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
             });
-        },
-        imageHasBeenRendered() {
-            console.log('has been rendered');
         },
         openShareModal() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);

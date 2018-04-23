@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="login-page">
+        <div class="login-page page-wrap">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">

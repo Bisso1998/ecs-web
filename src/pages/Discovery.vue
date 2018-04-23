@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="discovery-page">
+        <div class="discovery-page page-wrap">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">

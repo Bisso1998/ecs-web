@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="settings-page">
+        <div class="settings-page page-wrap">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -41,7 +41,7 @@
                                             <label for="pratilipi-settings-pen-name">__('edit_author_pen_name') *</label>
                                             <input type="text" class="form-control" id="pratilipi-settings-pen-name" v-model="authorData.penName" placeholder="__('edit_author_pen_name')">
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group col-md-6 col-sm-12">
                                             <label for="pratilipi-settings-language">__("language_choose_language") *</label>
                                             <select class="form-control" id="pratilipi-settings-language" @input="updateLanguage">
                                                 <option disabled selected>__("language_choose_language")</option>

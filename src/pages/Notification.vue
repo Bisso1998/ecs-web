@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="notification-page">
+        <div class="notification-page page-wrap">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">

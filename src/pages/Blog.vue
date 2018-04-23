@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="blog-page">
+        <div class="blog-page page-wrap">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">

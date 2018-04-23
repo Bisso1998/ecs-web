@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <div class="pratilipi-page">
+        <div class="pratilipi-page page-wrap">
             <div class="container">
                 <div class="row" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <div class="book-details col-md-12 col-lg-5 p-0">
