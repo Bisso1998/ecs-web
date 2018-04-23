@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import PratilipiListComponent from '@/components/PratilipiList.vue';
+import PratilipiListComponent from '@/components/PratilipiListRecommendation.vue';
 import inViewport from 'vue-in-viewport-mixin';
 import mixins from '@/mixins'
 import { mapGetters, mapActions } from 'vuex'
