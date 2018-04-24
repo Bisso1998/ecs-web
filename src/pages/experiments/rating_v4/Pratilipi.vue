@@ -165,7 +165,7 @@
 </template>
 
 <script>
-import MainLayout from '@/layout/main-layout.vue';
+import MainLayout from '@/layout/experiments/rating_v4/main-layout.vue';
 import Recommendation from '@/components/Recommendation.vue';
 import AboutAuthor from '@/components/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
@@ -424,7 +424,7 @@ export default {
         },
         openShareModal() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-            this.triggerAnanlyticsEvent(`CLICKSHRBOOK_BOOKM_BOOK`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`CLICKSHRBOOK_BOOKM_BOOK`, 'WGEN004', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
             });
@@ -573,7 +573,7 @@ export default {
             .share-icon {
                 outline: none;
                 border: 0;
-                background: #9E9E9E;
+                background: #d0021b;
                 color: #fff;
                 width: 40px;
                 height: 40px;
