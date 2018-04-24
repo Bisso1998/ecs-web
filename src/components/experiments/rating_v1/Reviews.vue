@@ -51,7 +51,7 @@ import { mapGetters, mapActions } from 'vuex'
 import Spinner from '@/components/Spinner.vue';
 import Review from '@/components/Review.vue';
 import mixins from '@/mixins';
-import OwnReview from '@/components/OwnReview.vue';
+import OwnReview from '@/components/experiments/rating_v1/OwnReview.vue';
 
 export default {
     props: {

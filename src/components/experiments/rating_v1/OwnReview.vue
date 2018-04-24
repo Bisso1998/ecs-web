@@ -120,7 +120,7 @@ export default {
         ]),
         changeRating(e) {
             let action = this.userPratilipiData.rating ? 'EDITRATE' : 'RATE';
-            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'WGEN001', {
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': e.target.value
             });
@@ -152,7 +152,7 @@ export default {
             if (action === 'EDITREVIEW') {
                 pratilipiAnalyticsData['ENTITY_STATE'] = 'UPDATE';
             }
-            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'WGEN001', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': this.userPratilipiData.rating
@@ -197,7 +197,7 @@ export default {
             if (visible) {
 
                 if (this.screenLocation === 'BOOKEND' && this.screenName === 'READER') {
-                    this.triggerAnanlyticsEvent(`LANDED_${this.screenLocation}_${this.screenName}`, 'WGEN1111', {
+                    this.triggerAnanlyticsEvent(`LANDED_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
                         'USER_ID': this.getUserDetails.userId,
                     });    
                 } else {
@@ -368,5 +368,8 @@ li {
 }
 .v1 .comment-main-level .comment-box {
     background: rgba(208, 3, 26, 0.1);
+    .already-rated .rating i {
+        color: #d0031a;
+    }
 }
 </style>

@@ -1,5 +1,8 @@
 import constants from '@/constants';
 import controlAnalyticsEvents from '@/static_scripts/analytics_events_control'
+import ratingV1AnalyticsEvents from '@/static_scripts/experiment_events/rating_v1'
+
+const rating_v1 = ['WGEN001'];
 
 export function translateWord(word, callback) {
     $.ajax({
@@ -230,9 +233,12 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
 export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty) {
 
     let eventProps;
-    switch(experimentType) {
-        case 'CONTROL':
+    switch(true) {
+        case (experimentType === 'CONTROL'):
             eventProps = { ...controlAnalyticsEvents[eventName] };
+            break;
+        case (rating_v1.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV1AnalyticsEvents[eventName] };
             break;
     }
     
@@ -284,7 +290,7 @@ export function getPratilipiAnalyticsData(pratilipiData) {
     }
 }
 
-export function getAndroidIntentUri( utmParameters ) {
+export function getAndroidIntentUri( utmParameters ) {``
     const SCHEME = 'http';
     const PACKAGE_NAME = 'com.pratilipi.mobile.android';
     const PLAYSTORE_URL = 'https://play.google.com/store/apps/details?id=' + PACKAGE_NAME;

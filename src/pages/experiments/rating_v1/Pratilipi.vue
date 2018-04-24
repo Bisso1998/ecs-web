@@ -529,7 +529,7 @@ export default {
         'getPratilipiLoadingState'(status) {
             if (status === 'LOADING_SUCCESS') {
                 const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-                this.triggerAnanlyticsEvent('LANDED_BOOKM_BOOK', 'CONTROL', {
+                this.triggerAnanlyticsEvent('LANDED_BOOKM_BOOK', 'WGEN001', {
                     ...pratilipiAnalyticsData,
                     'USER_ID': this.getUserDetails.userId
                 });
