@@ -4,7 +4,6 @@ import AuthorComponent from '@/pages/Author.vue'
 import NotificationComponent from '@/pages/Notification.vue'
 import ListPageComponent from '@/pages/ListPage.vue'
 import DiscoverPageComponent from '@/pages/Discovery.vue'
-import ReaderPageComponent from '@/pages/Reader.vue'
 import StaticComponent from '@/pages/Static.vue'
 import EventsPageComponent from '@/pages/Events.vue'
 import EventPageComponent from '@/pages/Event.vue'
@@ -105,7 +104,14 @@ const router = new Router({
     }, {
         path: '/read',
         name: 'Reader_Page',
-        component: ReaderPageComponent,
+        component: () => {
+            const isTrue = false;
+            if (isTrue) {
+                return import('@/pages/Pratilipi.vue');
+            } else {
+                return import('@/pages/experiments/reader_navigation/Reader.vue');
+            }
+        },
         meta: {
             'store': 'readerpage',
             'title': '__("seo_home_page")'
