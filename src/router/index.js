@@ -62,10 +62,10 @@ const router = new Router({
         name: 'Pratilipi',
         component: () => {
             const isTrue = true;
-            if (isTrue) {
-                return import('@/pages/Pratilipi.vue');
+            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+                return import('@/pages/experiments/rating_v1/Pratilipi.vue');
             } else {
-                return import('@/pages/experiments/story_tags/Pratilipi.vue');
+                return import('@/pages/Pratilipi.vue');
             }
         },
         meta: {
