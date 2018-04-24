@@ -68,6 +68,9 @@ const router = new Router({
             else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
                 return import('@/pages/experiments/rating_v2/Pratilipi.vue');
             }
+            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+                return import('@/pages/experiments/rating_v3/Pratilipi.vue');
+            }
             else {
                 return import('@/pages/Pratilipi.vue');
             }
