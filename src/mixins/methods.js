@@ -3,10 +3,12 @@ import controlAnalyticsEvents from '@/static_scripts/analytics_events_control'
 import ratingV1AnalyticsEvents from '@/static_scripts/experiment_events/rating_v1'
 import ratingV2AnalyticsEvents from '@/static_scripts/experiment_events/rating_v2'
 import ratingV3AnalyticsEvents from '@/static_scripts/experiment_events/rating_v3'
+import ratingV4AnalyticsEvents from '@/static_scripts/experiment_events/rating_v4'
 
 const rating_v1 = ['WGEN001'];
 const rating_v2 = ['WGEN002'];
 const rating_v3 = ['WGEN003'];
+const rating_v4 = ['WGEN004'];
 
 export function translateWord(word, callback) {
     $.ajax({
@@ -249,6 +251,9 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             break;
         case (rating_v3.indexOf(experimentType) > -1):
             eventProps = { ...ratingV3AnalyticsEvents[eventName] };
+            break;
+        case (rating_v4.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV4AnalyticsEvents[eventName] };
             break;
     }
     
