@@ -4,8 +4,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Messages</h2>
-                    <ul class="chat-list">
+                    <ul class="tab-menu">
+                        <li><router-link :to="{ name: 'Notification' }">__("notification_notifications")</router-link></li>
+                        <li class="active">Messages</li>
+                    </ul>
+                    <div class="card" v-if="getUserDetails.isGuest">
+                        <div class="head-title">__("seo_login_page")</div>
+                        <div class="card-content">
+                            <p><i class="material-icons">check_circle</i> Send messages to your favorite authors and friends</p>
+                            <p><i class="material-icons">check_circle</i> __("android_banner_notification_1")</p>
+                            <p><i class="material-icons">check_circle</i> __("android_banner_notification_2")</p>
+                            <button type="button" class="btn" data-toggle="modal" data-target="#login_modal">__("user_sign_in") / __("user_sign_up")</button>
+                        </div>
+                    </div>
+                    <ul class="chat-list" v-if="!getUserDetails.isGuest">
                         <li class="chat-item">
                             <div>
                                 <div class="user-img"><img src="https://0.ptlp.co/author/image?width=50" alt="profile-img"></div>
@@ -46,11 +58,17 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     components: {
         MainLayout,
         Spinner
+    },
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ])
     }
 }
 </script>
@@ -73,6 +91,40 @@ export default {
         margin: 10px 0;
         @media screen and (max-width: 768px) {
             font-size: 18px;
+        }
+    }
+    .card {
+        border-radius: 0;
+        margin: 20px 0;
+        padding: 0;
+        text-align: center;
+        .head-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            border-left: 3px solid #d0021b;
+            padding-left: 10px;
+            margin: 10px 0 0;
+        }
+        .card-content {
+            padding: 5px 10px 10px;
+            text-align: left;
+            p {
+                text-align: left;
+                font-size: 14px;
+                margin: 10px 0;
+                i {
+                    font-size: 16px;
+                    vertical-align: middle;
+                    color: #9E9E9E;
+                    padding-right: 5px;
+                }
+            }
+            button {
+                background: #d00b12;
+                color: #fff;
+                margin: 10px 0;
+            }
         }
     }
     .chat-list {
@@ -148,6 +200,33 @@ export default {
                     margin: 5px 0;
                     border-radius: 50%;
                 }
+            }
+        }
+    }
+    .tab-menu {
+        border-bottom: 1px solid #e9e9e9;
+        padding: 8px 0 0;
+        text-align: left;
+        overflow: hidden;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        li {
+            color: #555;
+            font-size: 13px;
+            border-bottom: 2px solid #fff;
+            padding: 5px 5px 11px;
+            display: inline-block;
+            a {
+                color: #555;
+            }
+            &.active {
+                color: #d0021b;
+                border-color: #d0021b;
+            }
+            &:hover {
+                text-decoration: none;
+                color: #d0021b;
             }
         }
     }

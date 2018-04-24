@@ -4,15 +4,16 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>
-                            __("notification_notifications")
-                            <router-link
-                            class="notification-settings"
-                            :to="{ name: 'Settings_Page'}"
-                            v-if="!getUserDetails.isGuest">
-                                <i class="material-icons">settings</i>
-                            </router-link>
-                        </h2>
+                        <ul class="tab-menu">
+                            <li class="active">__("notification_notifications")</li>
+                            <li><router-link :to="{ name: 'Messages_Page' }">Messages</router-link></li>
+                        </ul>
+                        <router-link
+                        class="notification-settings"
+                        :to="{ name: 'Settings_Page'}"
+                        v-if="!getUserDetails.isGuest">
+                            <i class="material-icons">settings</i>
+                        </router-link>
                         <div class="card" v-if="getUserDetails.isGuest">
                             <div class="head-title">__("seo_login_page")</div>
                             <div class="card-content">
@@ -137,14 +138,14 @@ export default {
         padding-left: 10px;
         margin: 10px 0;
         position: relative;
-        .notification-settings {
-            position: absolute;
-            right: 10px;
-            top: 0;
-            color: #2c3e50;
-            i {
-                vertical-align: middle;
-            }
+    }
+    .notification-settings {
+        position: absolute;
+        right: 10px;
+        top: 8px;
+        color: #2c3e50;
+        i {
+            vertical-align: middle;
         }
     }
     p.message {
@@ -233,6 +234,33 @@ export default {
                         max-width: 100%;
                     }
                 }
+            }
+        }
+    }
+    .tab-menu {
+        border-bottom: 1px solid #e9e9e9;
+        padding: 8px 0 0;
+        text-align: left;
+        overflow: hidden;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        li {
+            color: #555;
+            font-size: 13px;
+            border-bottom: 2px solid #fff;
+            padding: 5px 5px 11px;
+            display: inline-block;
+            a {
+                color: #555;
+            }
+            &.active {
+                color: #d0021b;
+                border-color: #d0021b;
+            }
+            &:hover {
+                text-decoration: none;
+                color: #d0021b;
             }
         }
     }
