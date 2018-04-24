@@ -12,6 +12,9 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 let StringReplacePlugin = require('string-replace-webpack-plugin');
 
+const oneSignalConfig = require('./onesignal_gcm_senders.js');
+const onesignalGcmJSON = oneSignalConfig[process.env.LANGUAGE || 'hi'];
+
 const env = require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
@@ -72,6 +75,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: config.build.index,
       template: 'index.html',
       inject: true,
+      one_signal_app_id: onesignalGcmJSON['one_signal_app_id'],
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -121,7 +125,16 @@ const webpackConfig = merge(baseWebpackConfig, {
       {
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
-        ignore: ['.*']
+        ignore: ['.*'],
+        transform (content, path) {
+          if (path.indexOf('manifest.json') > -1) {
+            const parsedJSON = JSON.parse(content.toString('utf-8'));
+            parsedJSON['gcm_sender_id'] = onesignalGcmJSON['gcm_sender_id'];
+            return JSON.stringify(parsedJSON, null, 4);
+          } else {
+            return content;
+          }
+        }
       }
     ])
   ]

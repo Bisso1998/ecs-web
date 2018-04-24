@@ -14,6 +14,9 @@ const cookie = require('cookie')
 const request = require('request');
 let StringReplacePlugin = require('string-replace-webpack-plugin');
 
+const oneSignalConfig = require('./onesignal_gcm_senders.js');
+const onesignalGcmJSON = oneSignalConfig[process.env.LANGUAGE || 'hi'];
+
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
@@ -82,6 +85,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html',
+      one_signal_app_id: onesignalGcmJSON['one_signal_app_id'],
       template: 'index.html',
       inject: true
     }),
@@ -90,7 +94,16 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       {
         from: path.resolve(__dirname, '../static'),
         to: config.dev.assetsSubDirectory,
-        ignore: ['.*']
+        ignore: ['.*'],
+        transform (content, path) {
+          if (path.indexOf('manifest.json') > -1) {
+            const parsedJSON = JSON.parse(content.toString('utf-8'));
+            parsedJSON['gcm_sender_id'] = onesignalGcmJSON['gcm_sender_id'];
+            return JSON.stringify(parsedJSON, null, 4);
+          } else {
+            return content;
+          }
+        }
       }
     ])
   ]
