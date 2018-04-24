@@ -1,8 +1,10 @@
 import constants from '@/constants';
 import controlAnalyticsEvents from '@/static_scripts/analytics_events_control'
 import ratingV1AnalyticsEvents from '@/static_scripts/experiment_events/rating_v1'
+import ratingV2AnalyticsEvents from '@/static_scripts/experiment_events/rating_v2'
 
 const rating_v1 = ['WGEN001'];
+const rating_v2 = ['WGEN002'];
 
 export function translateWord(word, callback) {
     $.ajax({
@@ -239,6 +241,9 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             break;
         case (rating_v1.indexOf(experimentType) > -1):
             eventProps = { ...ratingV1AnalyticsEvents[eventName] };
+            break;
+        case (rating_v2.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV2AnalyticsEvents[eventName] };
             break;
     }
     
