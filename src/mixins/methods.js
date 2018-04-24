@@ -251,7 +251,16 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             'SCREEN_LOCATION': eventProps.SCREEN_NAME + '_' + eventProps.LOCATION
         }
         console.log(eventName, eventProperty, eventProps);
-        amplitude.getInstance().logEvent(eventName, eventProps);
+        if (eventName !== 'VIEWED_APPBANNER_GLOBAL' &&
+            eventName !== 'VIEWED_AUTHORDETAIL_BOOK' &&
+            eventName !== 'VIEWANDROID_OPENAPP_READER' &&
+            eventName !== 'VIEWED_RATEREV_BOOK' &&
+            eventName !== 'VIEWED_RECOMMENDBOOK_BOOK' &&
+            eventName !== 'VIEWED_RECOMMENDBOOK_READER') {
+            amplitude.getInstance().logEvent(eventName, eventProps);
+        } else {
+            console.log('SKIPPING EVENT');
+        }
 
         if (!window.fbApiInit) {
             setTimeout(() => {
