@@ -62,10 +62,20 @@ const router = new Router({
         name: 'Pratilipi',
         component: () => {
             const isTrue = true;
-            if (isTrue) {
+            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+                return import('@/pages/experiments/rating_v1/Pratilipi.vue');
+            }
+            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+                return import('@/pages/experiments/rating_v2/Pratilipi.vue');
+            }
+            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+                return import('@/pages/experiments/rating_v3/Pratilipi.vue');
+            }
+            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+                return import('@/pages/experiments/rating_v4/Pratilipi.vue');
+            }
+            else {
                 return import('@/pages/Pratilipi.vue');
-            } else {
-                return import('@/pages/experiments/story_tags/Pratilipi.vue');
             }
         },
         meta: {

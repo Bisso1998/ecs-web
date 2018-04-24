@@ -1,5 +1,14 @@
 import constants from '@/constants';
 import controlAnalyticsEvents from '@/static_scripts/analytics_events_control'
+import ratingV1AnalyticsEvents from '@/static_scripts/experiment_events/rating_v1'
+import ratingV2AnalyticsEvents from '@/static_scripts/experiment_events/rating_v2'
+import ratingV3AnalyticsEvents from '@/static_scripts/experiment_events/rating_v3'
+import ratingV4AnalyticsEvents from '@/static_scripts/experiment_events/rating_v4'
+
+const rating_v1 = ['WGEN001'];
+const rating_v2 = ['WGEN002'];
+const rating_v3 = ['WGEN003'];
+const rating_v4 = ['WGEN004'];
 
 export function translateWord(word, callback) {
     $.ajax({
@@ -230,9 +239,21 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
 export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty) {
 
     let eventProps;
-    switch(experimentType) {
-        case 'CONTROL':
+    switch(true) {
+        case (experimentType === 'CONTROL'):
             eventProps = { ...controlAnalyticsEvents[eventName] };
+            break;
+        case (rating_v1.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV1AnalyticsEvents[eventName] };
+            break;
+        case (rating_v2.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV2AnalyticsEvents[eventName] };
+            break;
+        case (rating_v3.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV3AnalyticsEvents[eventName] };
+            break;
+        case (rating_v4.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV4AnalyticsEvents[eventName] };
             break;
     }
     
@@ -284,7 +305,7 @@ export function getPratilipiAnalyticsData(pratilipiData) {
     }
 }
 
-export function getAndroidIntentUri( utmParameters ) {
+export function getAndroidIntentUri( utmParameters ) {``
     const SCHEME = 'http';
     const PACKAGE_NAME = 'com.pratilipi.mobile.android';
     const PLAYSTORE_URL = 'https://play.google.com/store/apps/details?id=' + PACKAGE_NAME;
