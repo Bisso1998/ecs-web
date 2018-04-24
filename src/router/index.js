@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PratilipiComponent from '@/pages/Pratilipi.vue'
 import AuthorComponent from '@/pages/Author.vue'
 import NotificationComponent from '@/pages/Notification.vue'
 import ListPageComponent from '@/pages/ListPage.vue'
@@ -61,7 +60,14 @@ const router = new Router({
     }, {
         path: '/story/:slug_id',
         name: 'Pratilipi',
-        component: PratilipiComponent,
+        component: () => {
+            const isTrue = true;
+            if (isTrue) {
+                return import('@/pages/Pratilipi.vue');
+            } else {
+                return import('@/pages/experiments/story_tags/Pratilipi.vue');
+            }
+        },
         meta: {
             'store': 'pratilipipage',
             'id_prop': 'slug_id'
