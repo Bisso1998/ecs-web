@@ -150,6 +150,7 @@ export default {
         margin-top: 70px;
         box-shadow: 0 1px 1px rgba(0,0,0,0.2);
         position: relative;
+        z-index: 2;
         button.close {
             position: absolute;
             right: 5px;
