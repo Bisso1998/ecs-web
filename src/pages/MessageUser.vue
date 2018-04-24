@@ -31,7 +31,6 @@
                                     <span class="msg-text">Hey</span>
                                     <div class="extra-info">
                                         <span class="time">16:40</span>
-                                        <span class="status sent"><i class="material-icons">check</i></span>
                                     </div>
                                 </div>
                                 <div class="chat-msg self">
@@ -285,7 +284,7 @@ export default {
         .type-message {
             background: #fff;
             margin: 0 5px;
-            width: calc(100vw - 75px);
+            width: calc(100% - 75px);
             position: relative;
             border-radius: 4px;
             box-shadow: 0 1px 1px 0 rgba(164,152,135,0.32), 0 0 1px 0 #A39F98;
@@ -297,6 +296,8 @@ export default {
                 width: 92%;
                 display: inline-block;
                 font-size: 14px;
+                border: 0;
+                resize: none;
             }
         }
         .send-message {
