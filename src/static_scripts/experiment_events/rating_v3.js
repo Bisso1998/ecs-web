@@ -24,4 +24,9 @@ export default {
         "LOCATION": "RATEREV",
         "ACTION": "EDITREVIEW"
     },
+    "CLICKSHRBOOK_BOOKM_BOOK": {
+        "SCREEN_NAME": "BOOK",
+        "LOCATION": "BOOKM",
+        "ACTION": "CLICKSHRBOOK"
+    },
 }

@@ -424,7 +424,7 @@ export default {
         },
         openShareModal() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-            this.triggerAnanlyticsEvent(`CLICKSHRBOOK_BOOKM_BOOK`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`CLICKSHRBOOK_BOOKM_BOOK`, 'WGEN003', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
             });
@@ -573,7 +573,7 @@ export default {
             .share-icon {
                 outline: none;
                 border: 0;
-                background: #9E9E9E;
+                background: #d0021b;
                 color: #fff;
                 width: 40px;
                 height: 40px;
