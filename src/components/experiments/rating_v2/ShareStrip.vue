@@ -110,12 +110,12 @@ export default {
 
 <style  lang="scss" scoped>
 .social-share {
-    width: 180px;
+    width: 280px;
     margin: 5px auto;
     span.text {
         font-size: 14px;
         color: #555;
-        display: inline-block;
+        display: block;
         margin-bottom: 5px;
     }
     a {
