@@ -4,11 +4,19 @@ import ratingV1AnalyticsEvents from '@/static_scripts/experiment_events/rating_v
 import ratingV2AnalyticsEvents from '@/static_scripts/experiment_events/rating_v2'
 import ratingV3AnalyticsEvents from '@/static_scripts/experiment_events/rating_v3'
 import ratingV4AnalyticsEvents from '@/static_scripts/experiment_events/rating_v4'
+import readerV1AnalyticsEvents from '@/static_scripts/experiment_events/reader_v1'
+import readerV2AnalyticsEvents from '@/static_scripts/experiment_events/reader_v2'
+import readerV3AnalyticsEvents from '@/static_scripts/experiment_events/reader_v3'
+import readerV4AnalyticsEvents from '@/static_scripts/experiment_events/reader_v4'
 
 const rating_v1 = ['WGEN001'];
 const rating_v2 = ['WGEN002'];
 const rating_v3 = ['WGEN003'];
 const rating_v4 = ['WGEN004'];
+const reader_v1 = ['WGEN005'];
+const reader_v2 = ['WGEN006'];
+const reader_v3 = ['WGEN007'];
+const reader_v4 = ['WGEN008'];
 
 export function translateWord(word, callback) {
     $.ajax({
@@ -254,6 +262,18 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             break;
         case (rating_v4.indexOf(experimentType) > -1):
             eventProps = { ...ratingV4AnalyticsEvents[eventName] };
+            break;
+        case (reader_v1.indexOf(experimentType) > -1):
+            eventProps = { ...readerV1AnalyticsEvents[eventName] };
+            break;
+        case (reader_v2.indexOf(experimentType) > -1):
+            eventProps = { ...readerV2AnalyticsEvents[eventName] };
+            break;
+        case (reader_v3.indexOf(experimentType) > -1):
+            eventProps = { ...readerV3AnalyticsEvents[eventName] };
+            break;
+        case (reader_v4.indexOf(experimentType) > -1):
+            eventProps = { ...readerV4AnalyticsEvents[eventName] };
             break;
     }
     
