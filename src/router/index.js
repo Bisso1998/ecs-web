@@ -113,6 +113,7 @@ const router = new Router({
         }
     }, {
         path: '/read',
+        name: 'Reader_Page',
         component: () => {
             const isTrue = true;
             if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
@@ -131,7 +132,6 @@ const router = new Router({
                 return import('@/pages/Pratilipi.vue');
             }
         },
-        name: 'Reader_Page',
         meta: {
             'store': 'readerpage',
             'title': '__("seo_home_page")'

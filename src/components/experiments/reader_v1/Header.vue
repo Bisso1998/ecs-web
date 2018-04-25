@@ -61,7 +61,7 @@
 import constants from '@/constants'
 import mixins from '@/mixins'
 import SearchBox from '@/components/SearchBox.vue'
-import MainMenu from '@/components/MainMenu.vue'
+import MainMenu from '@/components/experiments/reader_v1/MainMenu.vue'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
