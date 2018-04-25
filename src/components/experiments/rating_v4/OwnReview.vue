@@ -1,5 +1,5 @@
 <template>
-    <li class="ownReview">
+    <li class="ownReview v4">
         <div  v-if="authorId !== getUserDetails.authorId" class="comment-main-level">
             <div class="comment-avatar"><img :src="userPratilipiData.userId == 0 ? defaultAuthorImage : userPratilipiData.userImageUrl" alt="author"></div>
             <div class="comment-box">
@@ -120,7 +120,7 @@ export default {
         ]),
         changeRating(e) {
             let action = this.userPratilipiData.rating ? 'EDITRATE' : 'RATE';
-            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'WGEN004', {
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': e.target.value
             });
@@ -152,7 +152,7 @@ export default {
             if (action === 'EDITREVIEW') {
                 pratilipiAnalyticsData['ENTITY_STATE'] = 'UPDATE';
             }
-            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`${action}_${this.screenLocation}_${this.screenName}`, 'WGEN004', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': this.userPratilipiData.rating
@@ -198,7 +198,7 @@ export default {
 
                 if (this.screenLocation === 'BOOKEND' && this.screenName === 'READER') {
                     this.triggerAnanlyticsEvent(`LANDED_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
-                        'USER_ID': this.getUserDetails.userId
+                        'USER_ID': this.getUserDetails.userId,
                     });    
                 } else {
                     this.triggerAnanlyticsEvent(`VIEWED_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
@@ -367,6 +367,24 @@ li {
                 }
             }
         }
+    }
+}
+.v4 .comment-main-level .comment-box {
+    background: rgba(40, 167, 69,0.2);
+    .already-rated .rating i {
+        color: #28a745;
+    }
+    .rate-now .rating input:checked ~ label:before, .rate-now .rating label:before {
+        color: #28a745;
+    }
+    .rate-now .rating {
+        width: 230px;
+    }
+    .rate-now .rating label:before {
+        font-size: 40px;
+    }
+    .write-review-btn {
+        margin: 5px 0;
     }
 }
 </style>

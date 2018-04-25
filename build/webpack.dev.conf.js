@@ -54,6 +54,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           url: 'https://gamma.pratilipi.com/user/accesstoken?accessToken=' + access_token,
           json: true
         }, function(errorInResponse, response, data) {
+          if (req.path.indexOf('static') > -1) {
+            next();
+            return;
+          }
           res.cookie('access_token', data.accessToken, {
             domain: process.env.DOMAIN || 'localhost',
             path: '/',
