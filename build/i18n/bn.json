@@ -528,5 +528,6 @@
     "signup_failed": "সাইন আপ হয়নি,অনুগ্রহ করে আবার চেষ্টা করুন",
     "name_required": "নাম বাধ্যতামূলক",
     "reader_read_in_app_helper_text": "অ্যাপে পড়ুন",
-    "read_popular_stories": "জনপ্রিয় গল্পগুলি পড়ুন"
+    "read_popular_stories": "জনপ্রিয় গল্পগুলি পড়ুন",
+    "see_more_categories": "আরো বিভাগ দেখুন"
 }

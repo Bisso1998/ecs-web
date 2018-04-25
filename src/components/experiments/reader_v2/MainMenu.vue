@@ -61,7 +61,7 @@ export default {
     methods: {
         triggerHomeEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GOHOME_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GOHOME_HEADER_GLOBAL', 'WGEN006', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
@@ -69,7 +69,7 @@ export default {
         },
         triggerLoginEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GOLOGIN_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GOLOGIN_HEADER_GLOBAL', 'WGEN006', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
@@ -77,7 +77,7 @@ export default {
         },
         triggerProfileEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GOMYPROFILE_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GOMYPROFILE_HEADER_GLOBAL', 'WGEN006', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
@@ -85,14 +85,14 @@ export default {
         },
         triggerCreateEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GOCREATE_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GOCREATE_HEADER_GLOBAL', 'WGEN006', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
         },
         triggerDiscoverEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GODISCOVER_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GODISCOVER_HEADER_GLOBAL', 'WGEN006', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });

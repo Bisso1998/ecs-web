@@ -528,5 +528,6 @@
     "signup_failed": "பதிவு செய்தல் தோல்வியடைந்தது. திரும்ப முயற்சிக்கவும்",
     "name_required": "பெயர் கட்டாயமாக பதிவிட வேண்டும்",
     "reader_read_in_app_helper_text": "செயலியில் பார்க்க",
-    "read_popular_stories": "பிரபலமான கதைகளைப் படிக்கவும்"
+    "read_popular_stories": "பிரபலமான கதைகளைப் படிக்கவும்",
+    "see_more_categories": "மேலும் வகைகளைக் காணவும்"
 }
