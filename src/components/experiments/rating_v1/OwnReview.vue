@@ -273,6 +273,9 @@ li {
                 display: block;
                 padding: 5px 10px;
                 background: none;
+                display: block;
+                width: 100%;
+                text-align: left;
             }
             .comment-meta {
                 .comment-name {
