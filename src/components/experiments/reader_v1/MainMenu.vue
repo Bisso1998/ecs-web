@@ -4,6 +4,7 @@
           @click="triggerHomeEvent"
           class="main-tabs home-tab">
           <i class="material-icons">home</i>
+          <span class="tooltiptext">__('read_popular_stories')</span>
           <span>__("goto_home")</span>
         </div>
         <router-link
@@ -115,6 +116,7 @@ export default {
 .tabs-section {
     .main-tabs {
         display: inline-block;
+        position: relative;
         width: 23.5%;
         color: #212121;
         font-size: 18px;
@@ -132,6 +134,43 @@ export default {
         &.router-link-exact-active, &.active {
             color: #d00b12;
             border-bottom-color: #d00b12;
+        }
+
+        /* Tooltip text */
+        .tooltiptext {
+            background-color: #d0021b;
+            color: #fff;
+            font-size: 13px;
+            text-align: center;
+            padding: 5px 3px;
+            border-radius: 6px;
+         
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+
+            width: 120px;
+            bottom: 113%;
+            left: 50%; 
+            margin-left: -60px;
+
+            -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+        }
+
+        .tooltiptext:after {
+            top: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(0, 0, 0, 0);
+            border-top-color: #d0021b;
+            border-width: 5px;
+            margin-left: -5px;
         }
     }
 }

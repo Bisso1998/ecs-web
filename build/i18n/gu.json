@@ -527,5 +527,6 @@
     "login_failed": "લોગ ઇનમાં વિક્ષેપ, ફરીથી પ્રયાસ કરો.",
     "signup_failed": "સાઈન અપ થયું નથી, ફરી પ્રયાસ કરો",
     "name_required": "નામ જરૂરી છે",
-    "reader_read_in_app_helper_text": "એપમાં વાંચો"
+    "reader_read_in_app_helper_text": "એપમાં વાંચો",
+    "read_popular_stories": "લોકપ્રિય વાર્તાઓ વાંચો"
 }
