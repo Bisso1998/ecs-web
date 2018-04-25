@@ -7,20 +7,18 @@
           <span class="tooltiptext">__('read_popular_stories')</span>
           <span>__("goto_home")</span>
         </div>
-        <router-link
-          @click.native="triggerDiscoverEvent"
-          :to="{ name: 'Discovery_Page' }"
+        <span
+          @click="triggerDiscoverEvent"
           class="main-tabs">
           <i class="material-icons">all_out</i>
           <span>__('menu_category')</span>
-        </router-link>
-        <router-link
-          @click.native="triggerCreateEvent"
-          :to="{ name: 'Write_Page' }"
+        </span>
+        <span
+          @click="triggerCreateEvent"
           class="main-tabs">
           <i class="material-icons">mode_edit</i>
           <span>__("write")</span>
-        </router-link>
+        </span>
         <div
           @click="triggerProfileEvent"
           v-if="userDetails.profilePageUrl"
@@ -89,6 +87,7 @@ export default {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
+            this.$router.push('/create');
         },
         triggerDiscoverEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
@@ -96,6 +95,7 @@ export default {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
+            this.$router.push('/discover');
         },
     },
     mounted() {
