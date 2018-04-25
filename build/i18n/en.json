@@ -526,5 +526,6 @@
     "password_minimum": "Password should be of minimum 6 characters",
     "login_failed": "Login failed. Please retry.",
     "signup_failed": "Signup Failed. Please retry.",
-    "name_required": "Name is mandatory"
+    "name_required": "Name is mandatory",
+    "read_popular_stories": "Read popular stories"
 }

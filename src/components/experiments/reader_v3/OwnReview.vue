@@ -197,11 +197,11 @@ export default {
             if (visible) {
 
                 if (this.screenLocation === 'BOOKEND' && this.screenName === 'READER') {
-                    this.triggerAnanlyticsEvent(`LANDED_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                    this.triggerAnanlyticsEvent(`LANDED_${this.screenLocation}_${this.screenName}`, 'WGEN007', {
                         'USER_ID': this.getUserDetails.userId
                     });    
                 } else {
-                    this.triggerAnanlyticsEvent(`VIEWED_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+                    this.triggerAnanlyticsEvent(`VIEWED_${this.screenLocation}_${this.screenName}`, 'WGEN007', {
                         'USER_ID': this.getUserDetails.userId
                     });
                 }

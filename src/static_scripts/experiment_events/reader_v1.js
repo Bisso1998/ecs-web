@@ -24,6 +24,11 @@ export default {
         "LOCATION": "READERM",
         "ACTION": "LANDED"
     },
+    "LANDED_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "LANDED"
+    },
     "RATE_BOOKEND_READER": {
         "SCREEN_NAME": "READER",
         "LOCATION": "BOOKEND",
