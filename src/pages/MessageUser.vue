@@ -27,7 +27,7 @@
                             <div id="all-messages" class="all-messages">
                                 <div v-for="message in messageList" v-bind:key="message.messageId">
                                     <div class="chat-date" v-if="message.isFirstMessageOfDay"><span
-                                        v-text="message.dayDefenition">TODAY</span></div>
+                                        v-text="message.dayDefinition">TODAY</span></div>
                                     <div class="chat-msg"
                                          v-bind:class="{'sender' : message.isMessageBySelf == true, 'self' : message.isMessageBySelf == false}">
                                         <span class="msg-text" v-text="message.messageText">Hello, How are you?</span>
@@ -79,6 +79,7 @@
 import MessageLayout from '@/layout/message-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import { mapGetters } from 'vuex'
+import $ from 'jquery'
 
 export default {
 
@@ -98,6 +99,7 @@ export default {
             conversationImageUrl: "",
             conversationImageUrlScaled: "",
             conversationDisplayName: "",
+            otherUserId: "123456",
             otherUserProfileUrl: "",
             isChannelInSelfWatchlist: false,
             isChannelInOtherUserWatchlist: false,
@@ -115,24 +117,25 @@ export default {
 
     methods: {
 
-        loadConversationsList () {
+        loadConversationsList() {
             redirect('/messages');
         },
 
         loadMessagesInConversation() {
+            const self = this;
             console.log("Loading Messages in Conversation : ", self.channelId);
-            self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.otherUserId).child(self.channelId).on('value', function (snapshot) {
+            this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.otherUserId).child(self.channelId).on('value', function (snapshot) {
                 console.log("Changed other user watched channel status : ", snapshot.val());
-                if (snapshot.val() == true) {
+                if (snapshot.val() === true) {
                     self.isChannelInOtherUserWatchlist = true;
                 } else {
                     self.isChannelInOtherUserWatchlist = false;
                 }
             }, function () {
             }, self);
-            self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(appViewModel.user.userId()).child(self.channelId).on('value', function (snapshot) {
+            this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(this.getUserDetails.userId).child(self.channelId).on('value', function (snapshot) {
                 console.log("Changed self user watched channel status : ", snapshot.val());
-                if (snapshot.val() == true) {
+                if (snapshot.val() === true) {
                     self.isChannelInSelfWatchlist = true;
                 } else {
                     self.isChannelInSelfWatchlist = false;
@@ -140,8 +143,8 @@ export default {
             }, function () {
             }, self);
             console.log('Loading conversations from firebase DB for channel : ', self.channelId);
-            self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(appViewModel.user.userId()).child(self.channelId).once('value').then(function (snapshot) {
-                if (snapshot.val() != undefined) {
+            this.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(this.getUserDetails.userId).child(self.channelId).once('value').then(function (snapshot) {
+                if (snapshot.val() !== undefined) {
                     console.log("Last read message : ", snapshot.val().lastReadMessage);
                     console.log("Last deleted message : ", snapshot.val().lastDeletedMessage);
                     self.lastDeletedMessageId = snapshot.val().lastDeletedMessage;
@@ -153,53 +156,56 @@ export default {
 
 
         parseDateDisplay(sentTime) {
-            var currentDate = new Date();
-            var currentDateStart = currentDate.setHours(0, 0, 0, 0);
-            var isFirstMessageOfDay = false;
-            var dayDefenition = "";
-            var messageDate = new Date(sentTime);
-            var messageDateKey = messageDate.toLocaleDateString();
+            const self = this;
+            let currentDate = new Date();
+            let currentDateStart = currentDate.setHours(0, 0, 0, 0);
+            let isFirstMessageOfDay = false;
+            let dayDefinition = "";
+            let messageDate = new Date(sentTime);
+            let messageDateKey = messageDate.toLocaleDateString();
             if (!self.firstMessageOfDayCheckMap.has(messageDateKey)) {
                 self.firstMessageOfDayCheckMap.set(messageDateKey, true);
                 isFirstMessageOfDay = true;
                 if (+messageDate >= +currentDateStart) {
-                    dayDefenition = "TODAY";
+                    dayDefinition = "TODAY";
                 }
                 else {
-                    yesterdayDate = new Date();
+                    let yesterdayDate = new Date();
                     yesterdayDate.setTime(currentDate.getTime() - (24 * 3600000));
-                    var yesterdayDateStart = yesterdayDate.setHours(0, 0, 0, 0);
+                    let yesterdayDateStart = yesterdayDate.setHours(0, 0, 0, 0);
                     if (+messageDate >= +yesterdayDateStart) {
-                        dayDefenition = "YESTERDAY";
+                        dayDefinition = "YESTERDAY";
                     }
                     else {
-                        dayDefenition = messageDateKey;
+                        dayDefinition = messageDateKey;
                     }
                 }
             }
-            return {isFirstMessageOfDay: isFirstMessageOfDay, dayDefenition: dayDefenition};
+            return {isFirstMessageOfDay: isFirstMessageOfDay, dayDefinition: dayDefinition};
         },
 
 
         attachMessagesListner () {
+            const self = this;
             self.attachMessageChildAddedListener();
             self.attachLastReadUpdater();
         },
 
 
         attachMessageChildAddedListener () {
-            var channelMessagesRef = self.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).orderByKey();
+            const self = this;
+            let channelMessagesRef = this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).orderByKey();
             debugger;
-            if (self.lastDeletedMessageId != undefined) {
+            if (self.lastDeletedMessageId !== undefined) {
                 channelMessagesRef = channelMessagesRef.startAt(self.lastDeletedMessageId);
             }
             channelMessagesRef.on('child_added', function (snapshot) {
                 debugger;
-                if (self.lastDeletedMessageId == snapshot.key) {
+                if (self.lastDeletedMessageId === snapshot.key) {
                     console.log("Skipping the first message, since firebase by default doesnt have a exclusive range query");
                     return;
                 }
-                var toPushMessage = self.buildMessage(snapshot);
+                let toPushMessage = self.buildMessage(snapshot);
                 self.messages.push(toPushMessage);
                 self.lastDeliveredMessageId = snapshot.key
             }, function () {
@@ -213,48 +219,49 @@ export default {
 
 
         attachLastReadUpdater () {
-            self.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).limitToLast(1).on('child_added', function (snapshot) {
+            this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).limitToLast(1).on('child_added', function (snapshot) {
                 debugger;
                 console.log("Last message added : ", snapshot.key, " for channel : ", self.channelId, " Updating the last read message for user");
-                self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(appViewModel.user.userId()).child(self.channelId).child('lastReadMessage').set(snapshot.key);
+                this.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(this.getUserDetails.userId).child(self.channelId).child('lastReadMessage').set(snapshot.key);
             }, function () {
             }, self);
         },
 
 
         buildMessage (snapshot) {
-            var mesage = snapshot.val();
+            let message = snapshot.val();
             console.log("Message added : ", message, " for channel : ", self.channelId);
-            var isMessageBySelf = false;
-            if (message.senderId == appViewModel.user.userId()) {
+            let isMessageBySelf = false;
+            if (message.senderId === this.getUserDetails.userId) {
                 isMessageBySelf = true;
             }
-            var dateDisplayParsed = parseDateDisplay(message.sendTime);
-            var messageTime = new Date(message.sendTime).toLocaleString('en-US', {
+            let dateDisplayParsed = parseDateDisplay(message.sendTime);
+            let messageTime = new Date(message.sendTime).toLocaleString('en-US', {
                 hour: 'numeric',
                 minute: 'numeric',
                 hour12: true
             });
             console.log('Message Time : ', messageTime);
-            var toPushMessage = {
+            let toPushMessage = {
                 messageId: snapshot.key,
                 isMessageBySelf: isMessageBySelf,
                 messageText: message.messageText,
                 messageTime: messageTime
             };
             toPushMessage.isFirstMessageOfDay = dateDisplayParsed.isFirstMessageOfDay;
-            toPushMessage.dayDefenition = dateDisplayParsed.dayDefenition;
+            toPushMessage.dayDefinition = dateDisplayParsed.dayDifenition;
             return toPushMessage;
         },
 
 
         watchBlockedConversation () {
-            self.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(appViewModel.user.userId()).child(self.otherUserId).on('value', function (snapshot) {
+            const self = this;
+            this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).on('value', function (snapshot) {
                 console.log("Changed blocked status Value : ", snapshot.val());
                 self.isUserBlockedBySelf(snapshot.val());
             }, function () {
             }, self);
-            self.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(self.otherUserId).child(appViewModel.user.userId()).on('value', function (snapshot) {
+            this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(self.otherUserId).child(this.getUserDetails.userId).on('value', function (snapshot) {
                 self.isBlockedByOtherUser(snapshot.val());
                 console.log("Changed blocked status Value for other user : ", snapshot.val());
             }, function () {
@@ -263,25 +270,27 @@ export default {
 
 
         getChannelIdForConversation (otherUser) {
-            if (appViewModel.useruserId() < otherUser) {
-                return appViewModel.user.userId() + '_' + otherUser;
+            if (this.getUserDetails.userId < otherUser) {
+                return this.getUserDetails.userId + '_' + otherUser;
             }
             else {
-                return otherUser + '_' + appViewModel.user.userId();
+                return otherUser + '_' + this.getUserDetails.userId;
             }
         },
 
 
         loadChannelDetails () {
-            self.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(self.channelId).once('value').then(function (snapshot) {
+            const self = this;
+            this.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(this.channelId).once('value').then(function (snapshot) {
                 debugger;
                 if (snapshot.val() == undefined) {
-                    if (appViewModel.p2pChat != undefined && appViewModel.p2pChat.userDetails != undefined && appViewModel.p2pChat.userDetails.userId == self.otherUserId) {
-                        self.createChannelAndRenderChat();
-                    }
-                    else {
-                        redirect('/messages');
-                    }
+                    // //TODO Needs to add the store data here
+                    // if (appViewModel.p2pChat != undefined && appViewModel.p2pChat.userDetails != undefined && appViewModel.p2pChat.userDetails.userId == this.otherUserId) {
+                    //     self.createChannelAndRenderChat();
+                    // }
+                    // else {
+                    //     redirect('/messages');
+                    // }
                 }
                 else {
                     self.renderChatData(snapshot.val().users);
@@ -291,72 +300,100 @@ export default {
 
 
         createChannelAndRenderChat () {
-            var channelUsersData = {};
-            channelUsersData[self.otherUserId] = {
-                profileImageUrl: appViewModel.p2pChat.userDetails.profileImageUrl,
-                displayName: appViewModel.p2pChat.userDetails.displayName,
-                profileUrl: appViewModel.p2pChat.userDetails.profileUrl
-            };
-            channelUsersData[appViewModel.user.userId()] = {
-                profileImageUrl: appViewModel.user.profileImageUrl(),
-                displayName: appViewModel.user.displayName(),
-                profileUrl: appViewModel.user.profilePageUrl()
-            };
-            self.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId).set({users: channelUsersData}, function (error) {
-                if (error) {
-                    redirect('/messages');
-                    console.log("Channel metadata could not be saved. Error : " + error);
-                }
-                else {
-                    self.renderChatData(channelUsersData);
-                }
-            });
-            appViewModel.p2pChat = {};
+            // const self = this;
+            // var channelUsersData = {};
+            // channelUsersData[self.otherUserId] = {
+            //     profileImageUrl: appViewModel.p2pChat.userDetails.profileImageUrl,
+            //     displayName: appViewModel.p2pChat.userDetails.displayName,
+            //     profileUrl: appViewModel.p2pChat.userDetails.profileUrl
+            // };
+            // channelUsersData[appViewModel.user.userId()] = {
+            //     profileImageUrl: appViewModel.user.profileImageUrl(),
+            //     displayName: appViewModel.user.displayName(),
+            //     profileUrl: appViewModel.user.profilePageUrl()
+            // };
+            // this.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId).set({users: channelUsersData}, function (error) {
+            //     if (error) {
+            //         redirect('/messages');
+            //         console.log("Channel metadata could not be saved. Error : " + error);
+            //     }
+            //     else {
+            //         self.renderChatData(channelUsersData);
+            //     }
+            // });
+            // appViewModel.p2pChat = {};
         },
 
 
         readOtherUserProfileData () {
             debugger;
-            self.firebaseGrowthDB.ref('/CHATS').child('user_profile').child(self.otherUserId).once('value').then(function (snapshot) {
-                if (snapshot.val() == undefined) {
+            const self = this;
+            this.firebaseGrowthDB.ref('/CHATS').child('user_profile').child(self.otherUserId).once('value').then(function (snapshot) {
+                if (snapshot.val() === undefined) {
                     console.log("No profile data present for the other user. Using data from channel metadata");
                     return;
                 }
                 else {
-                    var otherUserProfile = snapshot.val();
-                    if (otherUserProfile.displayName != self.conversationDisplayName()) {
+                    let otherUserProfile = snapshot.val();
+                    if (otherUserProfile.displayName !== self.conversationDisplayName()) {
                         self.conversationDisplayName(otherUserProfile.displayName);
                     }
-                    if (otherUserProfile.profileImageUrl != self.conversationImageUrl()) {
+                    if (otherUserProfile.profileImageUrl !== self.conversationImageUrl()) {
                         self.conversationImageUrl(otherUserProfile.profileImageUrl);
-                        var scaledProfileImageUrl = getImageUrl(otherUserProfile.profileImageUrl, 100);
+                        let scaledProfileImageUrl = getImageUrl(otherUserProfile.profileImageUrl, 100);
                         self.conversationImageUrlScaled(scaledProfileImageUrl);
                     }
-                    if (otherUserProfile.profileUrl != self.otherUserProfileUrl()) {
+                    if (otherUserProfile.profileUrl !== self.otherUserProfileUrl()) {
                         self.otherUserProfileUrl(otherUserProfile.profileUrl);
                     }
                 }
             });
         },
 
+        getImageUrl( imageUrl, width, compressed ) {
+            if( imageUrl == null ) return null;
+            if( imageUrl.startsWith( "http://" ) && imageUrl.indexOf( "ptlp.co" ) !== -1 )
+                imageUrl = "https://" + imageUrl.substr(7);
+
+            if( width != null ) imageUrl = imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + "width=" + width;
+            if( compressed != null ) imageUrl = imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + "quality=" + ( compressed ? "low" : "high" );
+            imageUrl = imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + "type=" + self.getSupportedImageType();
+            return imageUrl;
+        },
+
+        getSupportedImageType() {
+            function canUseWebP() {
+                var elem = document.createElement( 'canvas' );
+                if( !!(elem.getContext && elem.getContext('2d')) ) {
+                    return elem.toDataURL( 'image/webp' ).indexOf( 'data:image/webp' ) == 0;
+                }
+                return false;
+            }
+            if( window.canUseWebp == null )
+                window.canUseWebp = canUseWebP();
+
+            return window.canUseWebp ? "webp" : "jpg";
+
+        },
 
         renderChatData (channelUsersData) {
-            var userInChannel = false;
+            const self = this;
+            let userInChannel = false;
             $.each(channelUsersData, function (user, userData) {
                 debugger;
-                if (user == appViewModel.user.userId()) {
+                if (user === self.getUserDetails.userId) {
                     userInChannel = true;
                 }
-                else if (user == self.otherUserId) {
+                else if (user === self.otherUserId) {
                     self.conversationDisplayName(userData.displayName);
                     self.conversationImageUrl(userData.profileImageUrl);
-                    var scaledProfileImageUrl = getImageUrl(userData.profileImageUrl, 100);
+                    let scaledProfileImageUrl = self.getImageUrl(userData.profileImageUrl, 100);
                     self.conversationImageUrlScaled(scaledProfileImageUrl);
                     self.otherUserProfileUrl(userData.profileUrl);
                 }
                 console.log(user, userData);
             });
-            if (userInChannel != true) {
+            if (userInChannel !== true) {
                 redirect('/messages');
             }
             self.loadMessagesInConversation();
@@ -366,12 +403,10 @@ export default {
 
 
         setAllPendingMessageStatus (status) {
-            debuger;
+            debugger;
+            const self = this;
             self.pendingMessageStatus.forEach(function (value, key) {
-                if (value() == "SEND_SUCCESS") {
-                    return;
-                }
-                else {
+                if (value() !== "SEND_SUCCESS") {
                     self.pendingMessageStatus.get(key)(status);
                 }
             });
@@ -379,29 +414,30 @@ export default {
 
         sendMessageToFirebase () {
             debugger;
-            var addChannelToWatchlistUpdate = {};
-            var watchlistUpdateNeeded = false;
-            if (self.isChannelInSelfWatchlist != true) {
-                addChannelToWatchlistUpdate['/CHATS/user_watched_channels/' + appViewModel.user.userId() + '/' + self.channelId] = true;
+            const self = this;
+            let addChannelToWatchlistUpdate = {};
+            let watchlistUpdateNeeded = false;
+            if (self.isChannelInSelfWatchlist !== true) {
+                addChannelToWatchlistUpdate['/CHATS/user_watched_channels/' + this.getUserDetails.userId + '/' + self.channelId] = true;
                 watchlistUpdateNeeded = true;
             }
-            if (self.isChannelInOtherUserWatchlist != true) {
+            if (self.isChannelInOtherUserWatchlist !== true) {
                 addChannelToWatchlistUpdate['/CHATS/user_watched_channels/' + self.otherUserId + '/' + self.channelId] = true;
                 watchlistUpdateNeeded = true;
             }
-            if (watchlistUpdateNeeded == true) {
-                self.firebaseGrowthDB.ref().update(addChannelToWatchlistUpdate, function (error) {
+            if (watchlistUpdateNeeded === true) {
+                this.firebaseGrowthDB.ref().update(addChannelToWatchlistUpdate, function (error) {
                     if (error) {
                         console.log("Error updating data:", error);
                     }
                 });
             }
-            var messagePushRef = self.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).push();
-            var messageId = messagePushRef.key;
-            var sendStatus = self.isConnectedToServer() ? "SENDING" : "SEND_FAILED";
-            self.pendingMessageStatus.set(messageId, ko.observable(sendStatus));
+            let messagePushRef = this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).push();
+            let messageId = messagePushRef.key;
+            let sendStatus = self.isConnectedToServer === true ? "SENDING" : "SEND_FAILED";
+            self.pendingMessageStatus.set(messageId, sendStatus);
             messagePushRef.set({
-                senderId: appViewModel.user.userId() + "",
+                senderId: this.getUserDetails.userId + "",
                 messageText: self.toSendMessageText(),
                 sendTime: firebase.database.ServerValue.TIMESTAMP
             }, function (error) {
@@ -419,26 +455,26 @@ export default {
 
         blockUser () {
             debugger;
-            this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(appViewModel.user.userId()).child(self.otherUserId).set(true);
+            this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(this.getUserDetails.userId).child(this.otherUserId).set(true);
         },
 
 
         unblockUser () {
             debugger;
-            self.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(appViewModel.user.userId()).child(self.otherUserId).set(false);
+            this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).set(false);
         },
 
 
         deleteConversation() {
-            var deleteConversationUpdates = {};
-            deleteConversationUpdates['/CHATS/user_watched_channels/' + appViewModel.user.userId() + '/' + self.channelId] = {};
-            deleteConversationUpdates['/CHATS/user_channels/' + appViewModel.user.userId() + '/' + self.channelId + '/lastDeletedMessage'] = self.lastDeliveredMessageId;
-            firebaseGrowthDB.ref().update(deleteConversationUpdates, function (error) {
+            let deleteConversationUpdates = {};
+            deleteConversationUpdates['/CHATS/user_watched_channels/' + this.getUserDetails.userId + '/' + self.channelId] = {};
+            deleteConversationUpdates['/CHATS/user_channels/' + this.getUserDetails.userId + '/' + self.channelId + '/lastDeletedMessage'] = self.lastDeliveredMessageId;
+            this.firebaseGrowthDB.ref().update(deleteConversationUpdates, function (error) {
                 if (error) {
                     console.log("Error updating data:", error);
                 }
             });
-            self.messages([]);
+            self.messageList = [];
             redirect('/messages');
         },
 
@@ -456,11 +492,28 @@ export default {
     },
 
     mounted() {
-        const that = this;
+        const self = this;
         import('firebase').then((firebase) => {
             setTimeout(function() {
-                that.firebaseGrowthDB = firebase.app("FirebaseGrowth");
-            }, 10000);
+                self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
+                console.log("Firebase growth initialized for page");
+                self.otherUserId = window.location.pathname.split("/")[2];
+                self.channelId = self.getChannelIdForConversation(self.otherUserId);
+                console.log("Channel Id : ", self.channelId);
+                self.loadChannelDetails();
+                let connectedRef = self.firebaseGrowthDB.ref(".info/connected");
+                connectedRef.on("value", function (snap) {
+                    if (snap.val() === true) {
+                        console.log("connected to internet");
+                        self.isConnectedToServer = true;
+                        self.setAllPendingMessageStatus("SENDING");
+                    } else {
+                        self.isConnectedToServer = false;
+                        console.log("not connected to internet");
+                        self.setAllPendingMessageStatus("SEND_FAILED");
+                    }
+                });
+            }, 3000);
         });
     },
 
