@@ -190,7 +190,8 @@ export default {
             selectedTags: [],
             suggestedTags: [],
             newSuggestedTag: '',
-            showShowMoreOfSummary: false
+            showShowMoreOfSummary: false,
+            hasLandedBeenTriggered: false
         }
     },
     mixins: [
@@ -531,12 +532,13 @@ export default {
             document.title = this.getPratilipiData.title;
         },
         'getPratilipiLoadingState'(status) {
-            if (status === 'LOADING_SUCCESS') {
+            if (status === 'LOADING_SUCCESS' && !this.hasLandedBeenTriggered) {
                 const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
                 this.triggerAnanlyticsEvent('LANDED_BOOKM_BOOK', 'WGEN001', {
                     ...pratilipiAnalyticsData,
                     'USER_ID': this.getUserDetails.userId
                 });
+                this.hasLandedBeenTriggered = true;
                 const that = this;
                 setTimeout(() => {
                     that.detectOverflow();
