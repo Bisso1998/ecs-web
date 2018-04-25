@@ -372,10 +372,10 @@ li {
         color: #d0031a;
     }
     .rate-now .rating {
-        width: 190px;
+        width: 230px;
     }
     .rate-now .rating label:before {
-        font-size: 32px;
+        font-size: 40px;
     }
     .write-review-btn {
         margin: 5px 0;
