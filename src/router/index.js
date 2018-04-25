@@ -33,9 +33,9 @@ const router = new Router({
         component: () => {
             const isTrue = true;
             if (isTrue) {
-                return import('@/pages/Home.vue');
+                return import ('@/pages/Home.vue');
             } else {
-                return import('@/pages/experiments/pratilipi_modal/Home.vue');
+                return import ('@/pages/experiments/pratilipi_modal/Home.vue');
             }
         },
         meta: {
@@ -62,9 +62,9 @@ const router = new Router({
         component: () => {
             const isTrue = true;
             if (isTrue) {
-                return import('@/pages/Pratilipi.vue');
+                return import ('@/pages/Pratilipi.vue');
             } else {
-                return import('@/pages/experiments/story_tags/Pratilipi.vue');
+                return import ('@/pages/experiments/story_tags/Pratilipi.vue');
             }
         },
         meta: {
@@ -104,12 +104,12 @@ const router = new Router({
     }, {
         path: '/read',
         name: 'Reader_Page',
-        component: () => {
+        component: (resolve) => {
             const isTrue = false;
             if (isTrue) {
-                return import('@/pages/Pratilipi.vue');
+                require(['@/pages/Reader.vue'], resolve);
             } else {
-                return import('@/pages/experiments/reader_navigation/Reader.vue');
+                require(['@/pages/experiments/reader_navigation/Reader.vue'], resolve);
             }
         },
         meta: {
