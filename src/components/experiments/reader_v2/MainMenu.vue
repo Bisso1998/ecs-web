@@ -138,7 +138,7 @@ export default {
 
         /* Tooltip text */
         .tooltiptext {
-            background-color: #d0021b;
+            background-color: #266a1f;
             color: #fff;
             font-size: 13px;
             text-align: center;
@@ -168,7 +168,7 @@ export default {
             position: absolute;
             pointer-events: none;
             border-color: rgba(0, 0, 0, 0);
-            border-top-color: #d0021b;
+            border-top-color: #266a1f;
             border-width: 5px;
             margin-left: -5px;
         }
