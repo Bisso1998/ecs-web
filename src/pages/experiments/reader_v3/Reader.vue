@@ -114,12 +114,6 @@
                                 <div class="prev" v-if="selectedChapter != 1" @click="goToPreviousChapter">__("reader_prev_chapter")</div>
                                 <div class="next" v-if="selectedChapter != getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
-                            
-                            <ShareStrip
-                                v-if="selectedChapter == getIndexData.length"
-                                :data="getPratilipiData"
-                                :type="'PRATILIPI'">
-                            </ShareStrip>
 
                             <div class="book-bottom-ratings p-lr-15">
                                 <Reviews 
@@ -133,6 +127,12 @@
                                     v-if="selectedChapter == getIndexData.length && !openRateReaderm && !openRateRev ">
                                 </Reviews>
                             </div>
+                            
+                            <ShareStrip
+                                v-if="selectedChapter == getIndexData.length"
+                                :data="getPratilipiData"
+                                :type="'PRATILIPI'">
+                            </ShareStrip>
 
                             <div class="book-recomendations p-r-10" v-if="selectedChapter == getIndexData.length">
                                 <Recommendation
@@ -216,7 +216,7 @@
                 <div class="row">
                     <div class="review-popout reader-review-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                         <button type="button" class="close-review" name="button" @click="closeReviewModal"><i class="material-icons">close</i></button>
-                        <Reviews 
+                        <ControlReviews 
                             :pratilipiId="getPratilipiData.pratilipiId" 
                             :authorId="getPratilipiData.author.authorId" 
                             :haveInfiniteScroll="true"
@@ -225,12 +225,12 @@
                             :pratilipiData="getPratilipiData"
                             v-if="openRateRev"
                             :userPratilipiData='getUserPratilipiData'>
-                        </Reviews>
+                        </ControlReviews>
                     </div>
                     
                     <div class="rating-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                         <button type="button" class="close-review" name="button" @click="closeRatingModal"><i class="material-icons">close</i></button>
-                        <Reviews 
+                        <ControlReviews 
                             :pratilipiId="getPratilipiData.pratilipiId" 
                             :authorId="getPratilipiData.author.authorId" 
                             :haveInfiniteScroll="false"
@@ -239,7 +239,7 @@
                             :pratilipiData="getPratilipiData"
                             v-if="openRateReaderm"
                             :userPratilipiData='getUserPratilipiData'>
-                        </Reviews>
+                        </ControlReviews>
                     </div>
                 </div>
             </div>
@@ -253,7 +253,7 @@
 </template>
 
 <script>
-import ReadLayout from '@/layout/Reader-layout.vue';
+import ReadLayout from '@/layout/experiments/reader_v3/Reader-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import mixins from '@/mixins';
 import 'vue-awesome/icons/file-text'
@@ -263,7 +263,8 @@ import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/whatsapp'
 import 'vue-awesome/icons/link'
-import Reviews from '@/components/Reviews.vue';
+import Reviews from '@/components/experiments/reader_v3/Reviews.vue';
+import ControlReviews from '@/components/Reviews.vue';
 import Recommendation from '@/components/Recommendation.vue';
 import OpenInApp from '@/components/OpenInApp.vue';
 import ShareStrip from '@/components/ShareStrip.vue';
@@ -276,7 +277,8 @@ export default {
         Reviews,
         Recommendation,
         ShareStrip,
-        OpenInApp
+        OpenInApp,
+        ControlReviews
     },
     mixins: [
         mixins
@@ -639,6 +641,15 @@ export default {
                 this.counter = 0;
             }
 
+            if (this.isMobile()) {
+                if ($(window).height() + newScrollPosition > $('.content-section').height() + $('.book-bottom-ratings').height() + $('.book-content .social-share').height() + $('.book-navigation').height() + 200) {
+                    $(".footer-menu").slideDown();
+                    $('[data-toggle="tooltip"]').tooltip('show');
+                } else {
+                    $(".footer-menu").slideUp();
+                    // $('[data-toggle="tooltip"]').tooltip('hide');
+                }
+            }
 
             if ($(window).height() + newScrollPosition > $('.content-section').height()) {
                 this.shouldShowOpenInAppStrip = false;
@@ -649,7 +660,7 @@ export default {
         'getPratilipiLoadingState'(status) {
             if (status === 'LOADING_SUCCESS') {
                 const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-                this.triggerAnanlyticsEvent('LANDED_READERM_READER', 'CONTROL', {
+                this.triggerAnanlyticsEvent('LANDED_READERM_READER', 'WGEN007', {
                     ...pratilipiAnalyticsData,
                     'USER_ID': this.getUserDetails.userId
                 });
