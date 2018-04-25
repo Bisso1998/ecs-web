@@ -267,7 +267,7 @@ import Reviews from '@/components/experiments/reader_v1/Reviews.vue';
 import ControlReviews from '@/components/Reviews.vue';
 import Recommendation from '@/components/Recommendation.vue';
 import OpenInApp from '@/components/OpenInApp.vue';
-import ShareStrip from '@/components/ShareStrip.vue';
+import ShareStrip from '@/components/experiments/reader_v1/ShareStrip.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {

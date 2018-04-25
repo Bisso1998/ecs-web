@@ -49,4 +49,24 @@ export default {
         "LOCATION": "BOOKEND",
         "ACTION": "EDITREVIEW"
     },
+    "SHAREBOOKFB_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "SHAREBOOKFB"
+    },
+    "SHAREBOOKGP_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "SHAREBOOKGP"
+    },
+    "SHAREBOOKTW_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "SHAREBOOKTW"
+    },
+    "SHAREBOOKWA_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "SHAREBOOKWA"
+    },
 }
