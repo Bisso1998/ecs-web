@@ -253,7 +253,7 @@
 </template>
 
 <script>
-import ReadLayout from '@/layout/Reader-layout.vue';
+import ReadLayout from '@/layout/experiments/reader_v1/Reader-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import mixins from '@/mixins';
 import 'vue-awesome/icons/file-text'
@@ -639,6 +639,13 @@ export default {
                 this.counter = 0;
             }
 
+            if (this.isMobile()) {
+                if ($(window).height() + newScrollPosition > $('.content-section').height() + $('.book-bottom-ratings').height() + $('.book-content .social-share').height() + $('.book-navigation').height() + 200) {
+                    $(".footer-menu").slideDown();
+                } else {
+                    $(".footer-menu").slideUp();
+                }
+            }
 
             if ($(window).height() + newScrollPosition > $('.content-section').height()) {
                 this.shouldShowOpenInAppStrip = false;
