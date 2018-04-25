@@ -642,8 +642,10 @@ export default {
             if (this.isMobile()) {
                 if ($(window).height() + newScrollPosition > $('.content-section').height() + $('.book-bottom-ratings').height() + $('.book-content .social-share').height() + $('.book-navigation').height() + 200) {
                     $(".footer-menu").slideDown();
+                    $('[data-toggle="tooltip"]').tooltip('show');
                 } else {
                     $(".footer-menu").slideUp();
+                    // $('[data-toggle="tooltip"]').tooltip('hide');
                 }
             }
 
