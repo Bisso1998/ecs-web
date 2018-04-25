@@ -7,16 +7,14 @@
           <span>__("goto_home")</span>
         </div>
         <span
-          @click.native="triggerDiscoverEvent"
-          :to="{ name: 'Discovery_Page' }"
+          @click="triggerDiscoverEvent"
           class="main-tabs">
           <i class="material-icons">all_out</i>
           <span class="tooltiptext">__('see_more_categories')</span>
           <span>__('menu_category')</span>
         </span>
         <span
-          @click.native="triggerCreateEvent"
-          :to="{ name: 'Write_Page' }"
+          @click="triggerCreateEvent"
           class="main-tabs">
           <i class="material-icons">mode_edit</i>
           <span>__("write")</span>
