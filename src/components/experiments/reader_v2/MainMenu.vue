@@ -148,10 +148,10 @@ export default {
             /* Position the tooltip text - see examples below! */
             position: absolute;
 
-            width: 120px;
+            width: 100px;
             bottom: 113%;
             left: 50%; 
-            margin-left: -60px;
+            margin-left: -50px;
 
             -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
             -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
