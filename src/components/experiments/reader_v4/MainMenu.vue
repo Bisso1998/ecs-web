@@ -4,7 +4,6 @@
           @click="triggerHomeEvent"
           class="main-tabs home-tab">
           <i class="material-icons">home</i>
-          <span class="tooltiptext">__('read_popular_stories')</span>
           <span>__("goto_home")</span>
         </div>
         <router-link
@@ -12,6 +11,7 @@
           :to="{ name: 'Discovery_Page' }"
           class="main-tabs">
           <i class="material-icons">all_out</i>
+          <span class="tooltiptext">__('see_more_categories')</span>
           <span>__('menu_category')</span>
         </router-link>
         <router-link
@@ -61,7 +61,7 @@ export default {
     methods: {
         triggerHomeEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GOHOME_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GOHOME_HEADER_GLOBAL', 'WGEN008', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
@@ -69,7 +69,7 @@ export default {
         },
         triggerLoginEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GOLOGIN_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GOLOGIN_HEADER_GLOBAL', 'WGEN008', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
@@ -77,7 +77,7 @@ export default {
         },
         triggerProfileEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GOMYPROFILE_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GOMYPROFILE_HEADER_GLOBAL', 'WGEN008', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
@@ -85,14 +85,14 @@ export default {
         },
         triggerCreateEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GOCREATE_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GOCREATE_HEADER_GLOBAL', 'WGEN008', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
         },
         triggerDiscoverEvent() {
             const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
-            this.triggerAnanlyticsEvent('GODISCOVER_HEADER_GLOBAL', 'WGEN005', {
+            this.triggerAnanlyticsEvent('GODISCOVER_HEADER_GLOBAL', 'WGEN008', {
                 'USER_ID': this.getUserDetails.userId,
                 SCREEN_NAME
             });
@@ -138,7 +138,7 @@ export default {
 
         /* Tooltip text */
         .tooltiptext {
-            background-color: #d0021b;
+            background-color: #266a1f;
             color: #fff;
             font-size: 13px;
             text-align: center;
@@ -168,7 +168,7 @@ export default {
             position: absolute;
             pointer-events: none;
             border-color: rgba(0, 0, 0, 0);
-            border-top-color: #d0021b;
+            border-top-color: #266a1f;
             border-width: 5px;
             margin-left: -5px;
         }

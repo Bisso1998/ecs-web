@@ -11,7 +11,7 @@
 <script>
 import LoginModal from '@/components/LoginModal.vue';
 import ShareModal from '@/components/Share.vue';
-import Header from '@/components/experiments/reader_v1/Header.vue';
+import Header from '@/components/experiments/reader_v4/Header.vue';
 import Alert from '@/components/Alert.vue';
 import constants from '@/constants';
 import mixins from '@/mixins';

@@ -528,5 +528,6 @@
     "signup_failed": "साइन अप नहीं हुआ ,कृपया फिर से कोशिश करें",
     "name_required": "नाम अनिवार्य है",
     "reader_read_in_app_helper_text": "ऐप में पढ़ें",
-    "read_popular_stories": "लोकप्रिय कहानियां पढ़ें"
+    "read_popular_stories": "लोकप्रिय कहानियां पढ़ें",
+    "see_more_categories": "और श्रेणियां देखें"
 }
