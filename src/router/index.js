@@ -221,7 +221,7 @@ const router = new Router({
             'store': 'messages'
         }
     }, {
-        path: '/messages/user',
+        path: '/messages/:channel_id',
         name: 'MessageUser_Page',
         component: MessageUserComponent,
         meta: {

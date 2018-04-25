@@ -8,56 +8,64 @@
                             <div class="back-btn"><i class="material-icons">arrow_back</i></div>
                             <div class="user-img"><img alt="" src="https://0.ptlp.co/author/image?width=60"></div>
                             <div class="user-name">Rahul</div>
-                            <button class="options" type="button" id="chat-user-more-option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="material-icons">more_vert</i>
-                                        </button>
+                            <button class="options" type="button" id="chat-user-more-option" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                            </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <button type="button" class="btn report-btn">View profile</button>
-                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#confirmation">Delete Conversation</button>
-                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#confirmation">Block User</button>
+                                <button type="button" class="btn report-btn" data-toggle="modal"
+                                        data-target="#confirmation">Delete Conversation
+                                </button>
+                                <button type="button" class="btn report-btn" data-toggle="modal"
+                                        data-target="#confirmation" v-on:click="blockUser()">Block User
+                                </button>
                             </div>
                         </div>
 
                         <div id="p2p-chat-body" class="chat-body">
                             <div id="all-messages" class="all-messages">
-                                <div class="chat-date"><span>TODAY</span></div>
-                                <div class="chat-msg sender">
-                                    <span class="msg-text">Hello, How are you?</span>
-                                    <div class="extra-info">
-                                        <span class="time">16:40</span>
+                                <div v-for="message in messageList" v-bind:key="message.messageId">
+                                    <div class="chat-date" v-if="message.isFirstMessageOfDay"><span
+                                        v-text="message.dayDefenition">TODAY</span></div>
+                                    <div class="chat-msg"
+                                         v-bind:class="{'sender' : message.isMessageBySelf == true, 'self' : message.isMessageBySelf == false}">
+                                        <span class="msg-text" v-text="message.messageText">Hello, How are you?</span>
+                                        <div class="extra-info">
+                                            <span class="time" v-text="message.messageTime">16:40</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="chat-msg self">
-                                    <span class="msg-text">Hey</span>
-                                    <div class="extra-info">
-                                        <span class="time">16:40</span>
+                                    <div class="chat-msg self">
+                                        <span class="msg-text">I'm fine</span>
+                                        <div class="extra-info">
+                                            <span class="time">16:41</span>
+                                            <span class="status sent error"><i class="material-icons">error</i></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="chat-msg self">
-                                    <span class="msg-text">I'm fine</span>
-                                    <div class="extra-info">
-                                        <span class="time">16:41</span>
-                                        <span class="status sent error"><i class="material-icons">error</i></span>
-                                    </div>
-                                </div>
-                                <div class="chat-msg self">
-                                    <span class="msg-text">I'm fine</span>
-                                    <div class="extra-info">
-                                        <span class="time">16:42</span>
-                                        <span class="status sending"><i class="material-icons">access_time</i></span>
+                                    <div class="chat-msg self">
+                                        <span class="msg-text">I'm fine</span>
+                                        <div class="extra-info">
+                                            <span class="time">16:42</span>
+                                            <span class="status sending"><i
+                                                class="material-icons">access_time</i></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="message-blocked">
+                            <div class="message-blocked" v-if="isConversationBlocked == true">
                                 You cannot send anymore messages to this user
                             </div>
                         </div>
 
                         <div class="chat-box">
                             <div class="type-message">
-                                <textarea id="text-message" contenteditable="true" placeholder="Type a message"></textarea>
+                                <textarea id="text-message" contenteditable="true" placeholder="Type a message"
+                                          v-bind:disabled="isConversationBlocked == true"
+                                          v-model="toSendMessageText"></textarea>
                             </div>
-                            <button type="button" name="button" class="send-message"><i class="material-icons">send</i></button>
+                            <button type="button" name="button" class="send-message"
+                                    v-bind:disabled="isConversationBlocked == true"
+                                    v-on:click="sendMessageToFirebase()"><i class="material-icons">send</i></button>
                         </div>
                         <!-- <Spinner></Spinner> -->
                     </div>
@@ -70,250 +78,636 @@
 <script>
 import MessageLayout from '@/layout/message-layout.vue';
 import Spinner from '@/components/Spinner.vue';
+import { mapGetters } from 'vuex'
 
 export default {
+
+    data() {
+        return {
+            firebaseGrowthDB: {},
+            messageList: [{
+                messageId: "id1",
+                isMessageBySelf: true,
+                messageText: "Test render",
+                messageTime: "1/2/3"
+            }, {messageId: "id2", isMessageBySelf: false, messageText: "Test render 2", messageTime: "1/2/4"}],
+            isConversationBlocked: false,
+            toSendMessageText: "",
+            isUserBlockedBySelf: false,
+            isBlockedByOtherUser: false,
+            conversationImageUrl: "",
+            conversationImageUrlScaled: "",
+            conversationDisplayName: "",
+            otherUserProfileUrl: "",
+            isChannelInSelfWatchlist: false,
+            isChannelInOtherUserWatchlist: false,
+            firstMessageOfDayCheckMap: new Map(),
+            isConnectedToServer: false,
+            pendingMessageStatus: new Map()
+        }
+    },
+
+    computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ]),
+    },
+
+    methods: {
+
+        loadConversationsList () {
+            redirect('/messages');
+        },
+
+        loadMessagesInConversation() {
+            console.log("Loading Messages in Conversation : ", self.channelId);
+            self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.otherUserId).child(self.channelId).on('value', function (snapshot) {
+                console.log("Changed other user watched channel status : ", snapshot.val());
+                if (snapshot.val() == true) {
+                    self.isChannelInOtherUserWatchlist = true;
+                } else {
+                    self.isChannelInOtherUserWatchlist = false;
+                }
+            }, function () {
+            }, self);
+            self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(appViewModel.user.userId()).child(self.channelId).on('value', function (snapshot) {
+                console.log("Changed self user watched channel status : ", snapshot.val());
+                if (snapshot.val() == true) {
+                    self.isChannelInSelfWatchlist = true;
+                } else {
+                    self.isChannelInSelfWatchlist = false;
+                }
+            }, function () {
+            }, self);
+            console.log('Loading conversations from firebase DB for channel : ', self.channelId);
+            self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(appViewModel.user.userId()).child(self.channelId).once('value').then(function (snapshot) {
+                if (snapshot.val() != undefined) {
+                    console.log("Last read message : ", snapshot.val().lastReadMessage);
+                    console.log("Last deleted message : ", snapshot.val().lastDeletedMessage);
+                    self.lastDeletedMessageId = snapshot.val().lastDeletedMessage;
+                }
+                self.attachMessagesListner();
+            });
+
+        },
+
+
+        parseDateDisplay(sentTime) {
+            var currentDate = new Date();
+            var currentDateStart = currentDate.setHours(0, 0, 0, 0);
+            var isFirstMessageOfDay = false;
+            var dayDefenition = "";
+            var messageDate = new Date(sentTime);
+            var messageDateKey = messageDate.toLocaleDateString();
+            if (!self.firstMessageOfDayCheckMap.has(messageDateKey)) {
+                self.firstMessageOfDayCheckMap.set(messageDateKey, true);
+                isFirstMessageOfDay = true;
+                if (+messageDate >= +currentDateStart) {
+                    dayDefenition = "TODAY";
+                }
+                else {
+                    yesterdayDate = new Date();
+                    yesterdayDate.setTime(currentDate.getTime() - (24 * 3600000));
+                    var yesterdayDateStart = yesterdayDate.setHours(0, 0, 0, 0);
+                    if (+messageDate >= +yesterdayDateStart) {
+                        dayDefenition = "YESTERDAY";
+                    }
+                    else {
+                        dayDefenition = messageDateKey;
+                    }
+                }
+            }
+            return {isFirstMessageOfDay: isFirstMessageOfDay, dayDefenition: dayDefenition};
+        },
+
+
+        attachMessagesListner () {
+            self.attachMessageChildAddedListener();
+            self.attachLastReadUpdater();
+        },
+
+
+        attachMessageChildAddedListener () {
+            var channelMessagesRef = self.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).orderByKey();
+            debugger;
+            if (self.lastDeletedMessageId != undefined) {
+                channelMessagesRef = channelMessagesRef.startAt(self.lastDeletedMessageId);
+            }
+            channelMessagesRef.on('child_added', function (snapshot) {
+                debugger;
+                if (self.lastDeletedMessageId == snapshot.key) {
+                    console.log("Skipping the first message, since firebase by default doesnt have a exclusive range query");
+                    return;
+                }
+                var toPushMessage = self.buildMessage(snapshot);
+                self.messages.push(toPushMessage);
+                self.lastDeliveredMessageId = snapshot.key
+            }, function () {
+            }, self);
+        },
+
+        scrollMessageIntoView (data) {
+            console.log('To scroll into view', data, ' Element : ', $('#' + data.messageId)[0]);
+            $('#' + data.messageId)[0].scrollIntoView();
+        },
+
+
+        attachLastReadUpdater () {
+            self.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).limitToLast(1).on('child_added', function (snapshot) {
+                debugger;
+                console.log("Last message added : ", snapshot.key, " for channel : ", self.channelId, " Updating the last read message for user");
+                self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(appViewModel.user.userId()).child(self.channelId).child('lastReadMessage').set(snapshot.key);
+            }, function () {
+            }, self);
+        },
+
+
+        buildMessage (snapshot) {
+            var mesage = snapshot.val();
+            console.log("Message added : ", message, " for channel : ", self.channelId);
+            var isMessageBySelf = false;
+            if (message.senderId == appViewModel.user.userId()) {
+                isMessageBySelf = true;
+            }
+            var dateDisplayParsed = parseDateDisplay(message.sendTime);
+            var messageTime = new Date(message.sendTime).toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            });
+            console.log('Message Time : ', messageTime);
+            var toPushMessage = {
+                messageId: snapshot.key,
+                isMessageBySelf: isMessageBySelf,
+                messageText: message.messageText,
+                messageTime: messageTime
+            };
+            toPushMessage.isFirstMessageOfDay = dateDisplayParsed.isFirstMessageOfDay;
+            toPushMessage.dayDefenition = dateDisplayParsed.dayDefenition;
+            return toPushMessage;
+        },
+
+
+        watchBlockedConversation () {
+            self.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(appViewModel.user.userId()).child(self.otherUserId).on('value', function (snapshot) {
+                console.log("Changed blocked status Value : ", snapshot.val());
+                self.isUserBlockedBySelf(snapshot.val());
+            }, function () {
+            }, self);
+            self.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(self.otherUserId).child(appViewModel.user.userId()).on('value', function (snapshot) {
+                self.isBlockedByOtherUser(snapshot.val());
+                console.log("Changed blocked status Value for other user : ", snapshot.val());
+            }, function () {
+            }, self);
+        },
+
+
+        getChannelIdForConversation (otherUser) {
+            if (appViewModel.useruserId() < otherUser) {
+                return appViewModel.user.userId() + '_' + otherUser;
+            }
+            else {
+                return otherUser + '_' + appViewModel.user.userId();
+            }
+        },
+
+
+        loadChannelDetails () {
+            self.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(self.channelId).once('value').then(function (snapshot) {
+                debugger;
+                if (snapshot.val() == undefined) {
+                    if (appViewModel.p2pChat != undefined && appViewModel.p2pChat.userDetails != undefined && appViewModel.p2pChat.userDetails.userId == self.otherUserId) {
+                        self.createChannelAndRenderChat();
+                    }
+                    else {
+                        redirect('/messages');
+                    }
+                }
+                else {
+                    self.renderChatData(snapshot.val().users);
+                }
+            });
+        },
+
+
+        createChannelAndRenderChat () {
+            var channelUsersData = {};
+            channelUsersData[self.otherUserId] = {
+                profileImageUrl: appViewModel.p2pChat.userDetails.profileImageUrl,
+                displayName: appViewModel.p2pChat.userDetails.displayName,
+                profileUrl: appViewModel.p2pChat.userDetails.profileUrl
+            };
+            channelUsersData[appViewModel.user.userId()] = {
+                profileImageUrl: appViewModel.user.profileImageUrl(),
+                displayName: appViewModel.user.displayName(),
+                profileUrl: appViewModel.user.profilePageUrl()
+            };
+            self.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId).set({users: channelUsersData}, function (error) {
+                if (error) {
+                    redirect('/messages');
+                    console.log("Channel metadata could not be saved. Error : " + error);
+                }
+                else {
+                    self.renderChatData(channelUsersData);
+                }
+            });
+            appViewModel.p2pChat = {};
+        },
+
+
+        readOtherUserProfileData () {
+            debugger;
+            self.firebaseGrowthDB.ref('/CHATS').child('user_profile').child(self.otherUserId).once('value').then(function (snapshot) {
+                if (snapshot.val() == undefined) {
+                    console.log("No profile data present for the other user. Using data from channel metadata");
+                    return;
+                }
+                else {
+                    var otherUserProfile = snapshot.val();
+                    if (otherUserProfile.displayName != self.conversationDisplayName()) {
+                        self.conversationDisplayName(otherUserProfile.displayName);
+                    }
+                    if (otherUserProfile.profileImageUrl != self.conversationImageUrl()) {
+                        self.conversationImageUrl(otherUserProfile.profileImageUrl);
+                        var scaledProfileImageUrl = getImageUrl(otherUserProfile.profileImageUrl, 100);
+                        self.conversationImageUrlScaled(scaledProfileImageUrl);
+                    }
+                    if (otherUserProfile.profileUrl != self.otherUserProfileUrl()) {
+                        self.otherUserProfileUrl(otherUserProfile.profileUrl);
+                    }
+                }
+            });
+        },
+
+
+        renderChatData (channelUsersData) {
+            var userInChannel = false;
+            $.each(channelUsersData, function (user, userData) {
+                debugger;
+                if (user == appViewModel.user.userId()) {
+                    userInChannel = true;
+                }
+                else if (user == self.otherUserId) {
+                    self.conversationDisplayName(userData.displayName);
+                    self.conversationImageUrl(userData.profileImageUrl);
+                    var scaledProfileImageUrl = getImageUrl(userData.profileImageUrl, 100);
+                    self.conversationImageUrlScaled(scaledProfileImageUrl);
+                    self.otherUserProfileUrl(userData.profileUrl);
+                }
+                console.log(user, userData);
+            });
+            if (userInChannel != true) {
+                redirect('/messages');
+            }
+            self.loadMessagesInConversation();
+            self.watchBlockedConversation();
+            self.readOtherUserProfileData();
+        },
+
+
+        setAllPendingMessageStatus (status) {
+            debuger;
+            self.pendingMessageStatus.forEach(function (value, key) {
+                if (value() == "SEND_SUCCESS") {
+                    return;
+                }
+                else {
+                    self.pendingMessageStatus.get(key)(status);
+                }
+            });
+        },
+
+        sendMessageToFirebase () {
+            debugger;
+            var addChannelToWatchlistUpdate = {};
+            var watchlistUpdateNeeded = false;
+            if (self.isChannelInSelfWatchlist != true) {
+                addChannelToWatchlistUpdate['/CHATS/user_watched_channels/' + appViewModel.user.userId() + '/' + self.channelId] = true;
+                watchlistUpdateNeeded = true;
+            }
+            if (self.isChannelInOtherUserWatchlist != true) {
+                addChannelToWatchlistUpdate['/CHATS/user_watched_channels/' + self.otherUserId + '/' + self.channelId] = true;
+                watchlistUpdateNeeded = true;
+            }
+            if (watchlistUpdateNeeded == true) {
+                self.firebaseGrowthDB.ref().update(addChannelToWatchlistUpdate, function (error) {
+                    if (error) {
+                        console.log("Error updating data:", error);
+                    }
+                });
+            }
+            var messagePushRef = self.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).push();
+            var messageId = messagePushRef.key;
+            var sendStatus = self.isConnectedToServer() ? "SENDING" : "SEND_FAILED";
+            self.pendingMessageStatus.set(messageId, ko.observable(sendStatus));
+            messagePushRef.set({
+                senderId: appViewModel.user.userId() + "",
+                messageText: self.toSendMessageText(),
+                sendTime: firebase.database.ServerValue.TIMESTAMP
+            }, function (error) {
+                if (error) {
+                    console.log("Message : " + messageId + " could not be saved." + error);
+                    self.pendingMessageStatus.get(messageId)("SEND_FAILED");
+                } else {
+                    console.log("Message : " + messageId + " saved successfully.");
+                    self.pendingMessageStatus.get(messageId)("SEND_SUCCESS");
+                }
+            });
+            self.toSendMessageText("");
+        },
+
+
+        blockUser () {
+            debugger;
+            this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(appViewModel.user.userId()).child(self.otherUserId).set(true);
+        },
+
+
+        unblockUser () {
+            debugger;
+            self.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(appViewModel.user.userId()).child(self.otherUserId).set(false);
+        },
+
+
+        deleteConversation() {
+            var deleteConversationUpdates = {};
+            deleteConversationUpdates['/CHATS/user_watched_channels/' + appViewModel.user.userId() + '/' + self.channelId] = {};
+            deleteConversationUpdates['/CHATS/user_channels/' + appViewModel.user.userId() + '/' + self.channelId + '/lastDeletedMessage'] = self.lastDeliveredMessageId;
+            firebaseGrowthDB.ref().update(deleteConversationUpdates, function (error) {
+                if (error) {
+                    console.log("Error updating data:", error);
+                }
+            });
+            self.messages([]);
+            redirect('/messages');
+        },
+
+
+        redirectToOtherUserProfile() {
+            this.$router.push(self.otherUserProfileUrl());
+        }
+
+    },
+
+    created() {
+        if (this.getUserDetails.isGuest) {
+            this.$router.push('login');
+        }
+    },
+
+    mounted() {
+        const that = this;
+        import('firebase').then((firebase) => {
+            setTimeout(function() {
+                that.firebaseGrowthDB = firebase.app("FirebaseGrowth");
+            }, 10000);
+        });
+    },
+
     components: {
         MessageLayout,
         Spinner
     }
+
 }
+
 </script>
 
 <style lang="scss" scoped>
-.message-page {
-    margin-top: 0;
-    text-align: left;
-    position: relative;
-    @media screen and (max-width: 992px) {
-        text-align: center;
-    }
-    h2 {
-        font-size: 22px;
-        font-weight: bold;
+    .message-page {
+        margin-top: 0;
         text-align: left;
-        border-left: 3px solid #d0021b;
-        padding-left: 10px;
-        margin: 10px 0;
-        @media screen and (max-width: 768px) {
-            font-size: 18px;
-        }
-    }
-    .chat-header {
-        background: #f8f9fa;
-        height: 50px;
-        padding: 5px 0;
-        width: 100%;
-        color: #000;
         position: relative;
-        z-index: 2;
-        box-shadow: 0 1px 1px rgba(0,0,0,.2);
-        .back-btn {
-            float: left;
-            color: #000;
-            padding: 0 10px;
-            i {
-                line-height: 40px;
-            }
-        }
-        .title {
-            float: left;
-            font-size: 21px;
-            line-height: 40px;
-            padding-left: 5px;
-        }
-    }
-    .chat-header.individual {
-        position: relative;
-        .user-img {
-            float: left;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            overflow: hidden;
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-        .user-name {
-            float: left;
-            line-height: 40px;
-            margin-left: 10px;
-            font-size: 16px;
-        }
-        .options {
-            float: right;
-            border: 0;
-            padding: 0;
-            background: none;
-            &:focus {
-                outline: none;
-                box-shadow: none;
-            }
-            i {
-                line-height: 40px;
-                padding: 0 10px;
-            }
-        }
-        .dropdown-menu {
-            text-align: right;
-            button {
-                display: block;
-                background: none;
-                text-align: right;
-                width: 100%;
-                font-size: 13px;
-            }
-        }
-    }
-
-    .chat-body {
-        text-align: center;
-        overflow-y: scroll;
-        background: #f9f9f9;
-        height: calc(100vh - 155px);
-        .chat-date {
+        @media screen and (max-width: 992px) {
             text-align: center;
-            margin: 7px 0;
-            clear: both;
-            display: inline-block;
-            width: 100%;
-            span {
-                font-size: 13px;
-                color: #686868;
-                padding: 3px 5px;
-                background: #D4EAF4;
-                box-shadow: 0 1px 1px 0 rgba(164,152,135,0.32), 0 0 1px 0 #A39F98;
-                border-radius: 4px;
-            }
         }
-        .all-messages {
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-        .message-blocked {
-            display: block;
-            clear: both;
-            margin: 10px 5px;
-            font-size: 14px;
-            color: #9e9e9e;
-            text-align: center;
-            font-style: italic;
-        }
-        .chat-msg {
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 1px 1px 0 rgba(164,152,135,0.32), 0 0 1px 0 #A39F98;
-            display: inline-block;
-            padding: 10px 15px;
-            position: relative;
-            vertical-align: top;
+        h2 {
+            font-size: 22px;
+            font-weight: bold;
             text-align: left;
-            color: #000000;
-            line-height: 16px;
-            font-size: 14px;
-            clear: both;
-            &::before {
-                background-color: #fff;
-                content: "\00a0";
-                display: block;
-                height: 16px;
-                position: absolute;
-                top: -1px;
-                transform: rotate(45deg) skew(-45deg);
-                -moz-transform: rotate(45deg) skew(-45deg);
-                -ms-transform: rotate(45deg) skew(-45deg);
-                -o-transform: rotate(45deg) skew(-45deg);
-                -webkit-transform: rotate(45deg) skew(-45deg);
-                width: 20px;
+            border-left: 3px solid #d0021b;
+            padding-left: 10px;
+            margin: 10px 0;
+            @media screen and (max-width: 768px) {
+                font-size: 18px;
             }
-            &.sender {
+        }
+        .chat-header {
+            background: #f8f9fa;
+            height: 50px;
+            padding: 5px 0;
+            width: 100%;
+            color: #000;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+            .back-btn {
                 float: left;
-                margin: 5px 45px 5px 20px;
+                color: #000;
+                padding: 0 10px;
+                i {
+                    line-height: 40px;
+                }
             }
-            &.sender::before {
-                box-shadow: -1px 1px 1px 0 rgba(164,152,135,0.32);
-                left: -5px;
+            .title {
+                float: left;
+                font-size: 21px;
+                line-height: 40px;
+                padding-left: 5px;
             }
-            &.self {
-                background-color: #FFBAC2;
+        }
+        .chat-header.individual {
+            position: relative;
+            .user-img {
+                float: left;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .user-name {
+                float: left;
+                line-height: 40px;
+                margin-left: 10px;
+                font-size: 16px;
+            }
+            .options {
                 float: right;
-                margin: 5px 20px 5px 45px;
+                border: 0;
+                padding: 0;
+                background: none;
+                &:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+                i {
+                    line-height: 40px;
+                    padding: 0 10px;
+                }
             }
-            &.self::before {
-                background-color: #FFBAC2;
-                box-shadow: 1px -1px 1px 0 rgba(164,152,135,0.32);
-                right: -5px;
-                transform: rotate(1deg) skew(-45deg);
-                -moz-transform: rotate(1deg) skew(-45deg);
-                -ms-transform: rotate(1deg) skew(-45deg);
-                -o-transform: rotate(1deg) skew(-45deg);
-                -webkit-transform: rotate(1deg) skew(-45deg);
-                top: 0;
+            .dropdown-menu {
+                text-align: right;
+                button {
+                    display: block;
+                    background: none;
+                    text-align: right;
+                    width: 100%;
+                    font-size: 13px;
+                }
             }
-            .msg-text {
-                position: relative;
-            }
-            .extra-info {
+        }
+
+        .chat-body {
+            text-align: center;
+            overflow-y: scroll;
+            background: #f9f9f9;
+            height: calc(100vh - 155px);
+            .chat-date {
+                text-align: center;
+                margin: 7px 0;
+                clear: both;
                 display: inline-block;
-                float: right;
-                font-size: 11px;
-                margin-left: 5px;
-                color: rgba(0,0,0,0.5);
+                width: 100%;
+                span {
+                    font-size: 13px;
+                    color: #686868;
+                    padding: 3px 5px;
+                    background: #D4EAF4;
+                    box-shadow: 0 1px 1px 0 rgba(164, 152, 135, 0.32), 0 0 1px 0 #A39F98;
+                    border-radius: 4px;
+                }
+            }
+            .all-messages {
+                overflow: hidden;
+                margin-bottom: 10px;
+            }
+            .message-blocked {
+                display: block;
+                clear: both;
+                margin: 10px 5px;
+                font-size: 14px;
+                color: #9e9e9e;
+                text-align: center;
+                font-style: italic;
+            }
+            .chat-msg {
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 1px 1px 0 rgba(164, 152, 135, 0.32), 0 0 1px 0 #A39F98;
+                display: inline-block;
+                padding: 10px 15px;
                 position: relative;
-                .status {
-                    vertical-align: middle;
-                    margin-left: 4px;
-                    i {
-                        font-size: 14px;
-                    }
-                    &.error {
-                        color: #D0021B;
+                vertical-align: top;
+                text-align: left;
+                color: #000000;
+                line-height: 16px;
+                font-size: 14px;
+                clear: both;
+                &::before {
+                    background-color: #fff;
+                    content: "\00a0";
+                    display: block;
+                    height: 16px;
+                    position: absolute;
+                    top: -1px;
+                    transform: rotate(45deg) skew(-45deg);
+                    -moz-transform: rotate(45deg) skew(-45deg);
+                    -ms-transform: rotate(45deg) skew(-45deg);
+                    -o-transform: rotate(45deg) skew(-45deg);
+                    -webkit-transform: rotate(45deg) skew(-45deg);
+                    width: 20px;
+                }
+                &.sender {
+                    float: left;
+                    margin: 5px 45px 5px 20px;
+                }
+                &.sender::before {
+                    box-shadow: -1px 1px 1px 0 rgba(164, 152, 135, 0.32);
+                    left: -5px;
+                }
+                &.self {
+                    background-color: #FFBAC2;
+                    float: right;
+                    margin: 5px 20px 5px 45px;
+                }
+                &.self::before {
+                    background-color: #FFBAC2;
+                    box-shadow: 1px -1px 1px 0 rgba(164, 152, 135, 0.32);
+                    right: -5px;
+                    transform: rotate(1deg) skew(-45deg);
+                    -moz-transform: rotate(1deg) skew(-45deg);
+                    -ms-transform: rotate(1deg) skew(-45deg);
+                    -o-transform: rotate(1deg) skew(-45deg);
+                    -webkit-transform: rotate(1deg) skew(-45deg);
+                    top: 0;
+                }
+                .msg-text {
+                    position: relative;
+                }
+                .extra-info {
+                    display: inline-block;
+                    float: right;
+                    font-size: 11px;
+                    margin-left: 5px;
+                    color: rgba(0, 0, 0, 0.5);
+                    position: relative;
+                    .status {
+                        vertical-align: middle;
+                        margin-left: 4px;
+                        i {
+                            font-size: 14px;
+                        }
+                        &.error {
+                            color: #D0021B;
+                        }
                     }
                 }
             }
         }
-    }
 
-    .chat-box {
-        position: relative;
-        width: 100%;
-        height: 45px;
-        background: #f9f9f9;
-        margin-bottom: 20px;
-        .type-message {
-            background: #fff;
-            margin: 0 5px;
-            width: calc(100% - 75px);
+        .chat-box {
             position: relative;
-            border-radius: 4px;
-            box-shadow: 0 1px 1px 0 rgba(164,152,135,0.32), 0 0 1px 0 #A39F98;
-            #text-message {
-                outline: none;
-                padding: 5px;
-                overflow-y: scroll;
-                height: 40px;
-                width: 92%;
-                display: inline-block;
-                font-size: 14px;
-                border: 0;
-                resize: none;
-            }
-        }
-        .send-message {
-            width: 45px;
+            width: 100%;
             height: 45px;
-            background: #D1021B;
-            color: #fff;
-            border-radius: 50%;
-            margin-right: 5px;
-            position: absolute;
-            bottom: 0px;
-            right: 5px;
-            i {
-                vertical-align: middle;
+            background: #f9f9f9;
+            margin-bottom: 20px;
+            .type-message {
+                background: #fff;
+                margin: 0 5px;
+                width: calc(100% - 75px);
+                position: relative;
+                border-radius: 4px;
+                box-shadow: 0 1px 1px 0 rgba(164, 152, 135, 0.32), 0 0 1px 0 #A39F98;
+                #text-message {
+                    outline: none;
+                    padding: 5px;
+                    overflow-y: scroll;
+                    height: 40px;
+                    width: 92%;
+                    display: inline-block;
+                    font-size: 14px;
+                    border: 0;
+                    resize: none;
+                }
+            }
+            .send-message {
+                width: 45px;
+                height: 45px;
+                background: #D1021B;
+                color: #fff;
+                border-radius: 50%;
+                margin-right: 5px;
+                position: absolute;
+                bottom: 0px;
+                right: 5px;
+                i {
+                    vertical-align: middle;
+                }
             }
         }
     }
-}
 </style>
