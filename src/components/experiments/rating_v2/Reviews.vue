@@ -10,7 +10,7 @@
             <li class="all-reviews" v-if="getReviewsData.length > 0">__("pratilipi_count_reviews")</li>
             <li class="no-results" v-if="getReviewsData.length === 0">__("pratilipi_no_reviews")</li>
             <Review 
-                v-if="haveInfiniteScroll"
+                v-if="haveInfiniteScroll && getReviewsData.length > 0"
                 v-for="eachReview in getReviewsData" 
                 :loadCommentsOfReview="loadCommentsOfReview"
                 :likeOrDislikeReview="likeOrDislikeReview" 
@@ -26,7 +26,7 @@
                 :pratilipiData="pratilipiData"
                 ></Review>
             <Review 
-                v-if="!haveInfiniteScroll"
+                v-if="!haveInfiniteScroll && getReviewsData.length > 0"
                 v-for="eachReview in getReviewsData.slice(0, 2)" 
                 :loadCommentsOfReview="loadCommentsOfReview"
                 :likeOrDislikeReview="likeOrDislikeReview" 
