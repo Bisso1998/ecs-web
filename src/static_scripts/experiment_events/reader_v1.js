@@ -18,5 +18,30 @@ export default {
     "GODISCOVER_HEADER_GLOBAL": {
         "LOCATION": "HEADER",
         "ACTION": "GOMYPROFILE"
-    }
+    },
+    "LANDED_READERM_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "READERM",
+        "ACTION": "LANDED"
+    },
+    "RATE_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "RATE"
+    },
+    "EDITRATE_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "EDITRATE"
+    },
+    "REVIEW_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "REVIEW"
+    },
+    "EDITREVIEW_BOOKEND_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "BOOKEND",
+        "ACTION": "EDITREVIEW"
+    },
 }

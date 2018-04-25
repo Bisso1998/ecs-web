@@ -129,7 +129,7 @@ const router = new Router({
                 return import('@/pages/experiments/reader_v4/Reader.vue');
             }
             else {
-                return import('@/pages/Pratilipi.vue');
+                return import('@/pages/Reader.vue');
             }
         },
         meta: {

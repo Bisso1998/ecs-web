@@ -216,7 +216,7 @@
                 <div class="row">
                     <div class="review-popout reader-review-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                         <button type="button" class="close-review" name="button" @click="closeReviewModal"><i class="material-icons">close</i></button>
-                        <Reviews 
+                        <ControlReviews 
                             :pratilipiId="getPratilipiData.pratilipiId" 
                             :authorId="getPratilipiData.author.authorId" 
                             :haveInfiniteScroll="true"
@@ -225,12 +225,12 @@
                             :pratilipiData="getPratilipiData"
                             v-if="openRateRev"
                             :userPratilipiData='getUserPratilipiData'>
-                        </Reviews>
+                        </ControlReviews>
                     </div>
                     
                     <div class="rating-popout" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                         <button type="button" class="close-review" name="button" @click="closeRatingModal"><i class="material-icons">close</i></button>
-                        <Reviews 
+                        <ControlReviews 
                             :pratilipiId="getPratilipiData.pratilipiId" 
                             :authorId="getPratilipiData.author.authorId" 
                             :haveInfiniteScroll="false"
@@ -239,7 +239,7 @@
                             :pratilipiData="getPratilipiData"
                             v-if="openRateReaderm"
                             :userPratilipiData='getUserPratilipiData'>
-                        </Reviews>
+                        </ControlReviews>
                     </div>
                 </div>
             </div>
@@ -263,7 +263,8 @@ import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/whatsapp'
 import 'vue-awesome/icons/link'
-import Reviews from '@/components/Reviews.vue';
+import Reviews from '@/components/experiments/reader_v1/Reviews.vue';
+import ControlReviews from '@/components/Reviews.vue';
 import Recommendation from '@/components/Recommendation.vue';
 import OpenInApp from '@/components/OpenInApp.vue';
 import ShareStrip from '@/components/ShareStrip.vue';
@@ -276,7 +277,8 @@ export default {
         Reviews,
         Recommendation,
         ShareStrip,
-        OpenInApp
+        OpenInApp,
+        ControlReviews
     },
     mixins: [
         mixins
@@ -656,7 +658,7 @@ export default {
         'getPratilipiLoadingState'(status) {
             if (status === 'LOADING_SUCCESS') {
                 const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-                this.triggerAnanlyticsEvent('LANDED_READERM_READER', 'CONTROL', {
+                this.triggerAnanlyticsEvent('LANDED_READERM_READER', 'WGEN005', {
                     ...pratilipiAnalyticsData,
                     'USER_ID': this.getUserDetails.userId
                 });
