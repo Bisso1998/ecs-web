@@ -33,9 +33,9 @@
                                         <span class="msg-text" v-text="message.messageText"></span>
                                         <div class="extra-info">
                                             <span class="time" v-text="message.messageTime">16:40</span>
-                                            <div v-if="pendingMessageStatus.has(message.messageId)">
-                                                <span class="status sent error" v-if="pendingMessageStatus.get(message.messageId) == 'SEND_FAILED'"><i class="material-icons">error</i></span>
-                                                <span class="status sending" v-if="pendingMessageStatus.get(message.messageId) == 'SENDING'"><i class="material-icons">access_time</i></span>
+                                            <div v-if="pendingMessageStatus[message.messageId] != undefined">
+                                                <span class="status sent error" v-if="pendingMessageStatus[message.messageId] == 'SEND_FAILED'"><i class="material-icons">error</i></span>
+                                                <span class="status sending" v-if="pendingMessageStatus[message.messageId] == 'SENDING'"><i class="material-icons">access_time</i></span>
                                             </div>
                                         </div>
                                     </div>
