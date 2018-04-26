@@ -203,7 +203,7 @@
                             :key="eachIndex.chapterId"
                             :class="{ isActive: eachIndex.chapterNo === selectedChapter }">
                                 <router-link
-                                    :to="{ path: '/read', query: { id: getPratilipiData.pratilipiId, chapterNo: eachIndex.chapterNo } }"
+                                    :to="{ path: '/read', query: { id: String(getPratilipiData.pratilipiId), chapterNo: eachIndex.chapterNo } }"
                                     @click.native="triggerEventAndCloseSidebar(eachIndex.chapterNo)">
                                     __("writer_chapter") {{ eachIndex.title || eachIndex.chapterNo }}
                                 </router-link>
@@ -364,7 +364,7 @@ export default {
                 'PARENT_ID': this.selectedChapter
             });
             
-            this.$router.push({ path: '/read', query: { id: this.getPratilipiData.pratilipiId, chapterNo: this.selectedChapter - 1 } });
+            this.$router.push({ path: '/read', query: { id: String(this.getPratilipiData.pratilipiId), chapterNo: this.selectedChapter - 1 } });
         },
         goToNextChapter() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
@@ -374,7 +374,7 @@ export default {
                 'PARENT_ID': this.selectedChapter
             });
             
-            this.$router.push({ path: '/read', query: { id: this.getPratilipiData.pratilipiId, chapterNo: this.selectedChapter + 1 } });
+            this.$router.push({ path: '/read', query: { id: String(this.getPratilipiData.pratilipiId), chapterNo: this.selectedChapter + 1 } });
         },
         increaseFont() {
             if (this.fontSize !== 32) {
