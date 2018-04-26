@@ -20,6 +20,12 @@ const reader_v4 = ['WGEN008'];
 
 let REFERRER_EVENT;
 let REFERRER_EXPERIMENTID;
+let REFERRER_DATA = {
+    REFER_ACTION: 'DIRECT',
+    REFER_LOCATION: 'DIRECT',
+    REFER_SCREEN: 'DIRECT',
+    REFER_EXPID: 'DIRECT'
+};
 
 export function translateWord(word, callback) {
     $.ajax({
@@ -264,6 +270,19 @@ export function getReferrerExperimentId() {
     return REFERRER_EXPERIMENTID;
 }
 
+export function setReferrerData(referrerScreen, referrerLocation, referrerAction, referrerExpId) {
+    REFERRER_DATA = {
+        REFER_ACTION: referrerAction,
+        REFER_LOCATION: referrerLocation,
+        REFER_SCREEN: referrerScreen,
+        REFER_EXPID: referrerExpId
+    }
+}
+
+export function getReferrerData() {
+    return REFERRER_DATA;
+}
+
 export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty) {
 
     let eventProps;
@@ -302,17 +321,15 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         delete eventProperty.SCREEN_NAME;
     }
 
-    if (getReferrerEvent()) {
-        eventProps.REFERRER_EVENT = getReferrerEvent();
-    }
-
-    if (getReferrerExperimentId()) {
-        eventProps.REFERRER_EXPERIMENTID = getReferrerExperimentId();
+    if (eventName.indexOf('LANDED') > -1) {
+        eventProps = {
+            ...eventProps,
+            ...getReferrerData()
+        }
     }
 
     if (eventProps && eventProps.ACTION) {
-        setReferrerEvent(eventName);
-        setReferrerExperimentId(experimentType);
+        setReferrerData(eventProps.SCREEN_NAME, eventProps.LOCATION, eventProps.ACTION, experimentType);
         eventProps = {
             ...eventProps,
             ...eventProperty,
