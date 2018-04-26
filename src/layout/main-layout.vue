@@ -64,13 +64,6 @@ export default {
         Footer,
         Alert
     },
-    watch: {
-        'getUserDetails.userId'(newValue) {
-            if (newValue) {
-                this.fetchInitialNotifications({ language: this.getCurrentLanguage().fullName.toUpperCase(), resultCount: 10 });
-            }
-        }
-    },
     created() {
         this.currentLocale = 'language-' + process.env.LANGUAGE;
     },
