@@ -58,10 +58,10 @@
                               </div>
                             </div>
                             <div class="follow-btn-w-count" v-if="!getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="triggerEventAndFollowOrUnfollowAuthor"><!-- Follow Button -->
-                                <button><i class="material-icons">person_add</i> __("author_follow")</button><span><b>{{ getAuthorData.followCount }}</b></span>
+                                <button><i class="material-icons">person_add</i> __("author_follow")</button>
                             </div>
                             <div class="follow-btn-w-count" v-if="getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="triggerEventAndFollowOrUnfollowAuthor"><!-- Following Button -->
-                                <button><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
+                                <button><i class="material-icons">check</i> __("author_following")</button>
                             </div>
                         </div>
                         <Spinner v-if="getAuthorDataLoadingState === 'LOADING'"></Spinner>
@@ -298,7 +298,7 @@ export default {
         },
         triggerEventAndFollowOrUnfollowAuthor() {
             let action = !this.getAuthorData.following ? 'FOLLOW' : 'UNFOLLOW';
-            this.triggerAnanlyticsEvent(`${action}_USERM_USER`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`${action}_USERM_USER`, 'WGEN012', {
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': this.getAuthorData.followCount,
                 'AUTHOR_ID': this.getAuthorData.authorId
@@ -426,7 +426,7 @@ export default {
                 }
 
                 if (decodeURI(this.$route.path) !== this.getUserDetails.profilePageUrl) {
-                    this.triggerAnanlyticsEvent('LANDED_USERM_USER', 'CONTROL', {
+                    this.triggerAnanlyticsEvent('LANDED_USERM_USER', 'WGEN012', {
                         'USER_ID': this.getUserDetails.userId,
                         'PARENT_ID': this.getAuthorData.user.userId,
                         'AUTHOR_ID': this.getAuthorData.authorId
@@ -573,9 +573,7 @@ export default {
             button {
                 background: #d0021b;
                 border: 1px solid #d0021b;
-                border: 1px solid #d0021b;
-                border-top-left-radius: 3px;
-                border-bottom-left-radius: 3px;
+                border-radius: 3px;
                 outline: none;
                 color: #fff;
                 margin: 0;
