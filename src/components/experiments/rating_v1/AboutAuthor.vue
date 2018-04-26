@@ -99,7 +99,7 @@ export default {
         checkUserAndFollowAuthor() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
             let action = !this.getAuthorDetails.following ? 'FOLLOW' : 'UNFOLLOW';
-            this.triggerAnanlyticsEvent(`${action}_AUTHORDETAIL_BOOK`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`${action}_AUTHORDETAIL_BOOK`, 'WGEN001', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': this.getAuthorDetails.followCount,
