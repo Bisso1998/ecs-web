@@ -14,7 +14,7 @@
                         v-if="!getUserDetails.isGuest">
                             <i class="material-icons">settings</i>
                         </router-link>
-                        
+
                         <div class="tab-content" id="notifications">
                             <div class="card" v-if="getUserDetails.isGuest">
                                 <div class="head-title">__("seo_login_page")</div>
@@ -44,7 +44,7 @@
                                 <ServerError :action="'fetchInitialNotifications'" :data="{language: getCurrentLanguage().fullName.toUpperCase(), resultCount: 20}" :message="'__('notifications_load_failed')'"></ServerError>
                             </p>
                         </div>
-                        
+
                         <div class="tab-content" id="messages">
                             <div class="card" v-if="getUserDetails.isGuest">
                                 <div class="head-title">__("seo_login_page")</div>
@@ -56,9 +56,9 @@
                                 </div>
                             </div>
                             <ul class="chat-list" v-if="!getUserDetails.isGuest">
-                                <li class="chat-item">
+                                <li class="chat-item" v-for="messageNotification in messageNotificationList">
                                     <div>
-                                        <div class="user-img"><img src="https://0.ptlp.co/author/image?width=50" alt="profile-img"></div>
+                                        <div class="user-img"><img v-bind:src="messageNotification.profileImageUrl" alt="profile-img"></div>
                                         <div class="chat-wrap">
                                             <div class="user-info">
                                                 <div class="user-name">Roshan</div>
@@ -85,7 +85,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            
+
                             <router-link
                             class="show-more"
                             :to="{ name: 'Messages_Page'}"
@@ -123,7 +123,9 @@ export default {
             'getNotifications',
             'getNotificationLoadingState',
             'getNotificationCursor',
-            'getUserDetails'
+            'getUserDetails',
+
+            'messageNotificationList'
         ])
     },
     methods: {
@@ -135,7 +137,7 @@ export default {
             this.scrollPosition = window.scrollY
         },
         tabchange(event) {
-            event.preventDefault();        
+            event.preventDefault();
             var tab_id = $(event.currentTarget).attr('data-tab');
             $(".tab-menu li").removeClass("active");
             $(event.currentTarget).addClass("active");
@@ -144,7 +146,7 @@ export default {
         },
     },
     created() {
-        
+
     },
     watch: {
         'scrollPosition'(newScrollPosition){
@@ -152,7 +154,7 @@ export default {
             // const { list_page_url } = this.$route.params;
 
             if (newScrollPosition > nintyPercentOfList && this.getNotificationLoadingState !== 'LOADING' && this.getNotificationCursor !== null) {
-                
+
                 const currentLocale = process.env.LANGUAGE;
                 constants.LANGUAGES.forEach((eachLanguage) => {
                     if (eachLanguage.shortName === currentLocale) {
@@ -162,7 +164,7 @@ export default {
                         });
                     }
                 });
-                
+
             }
         }
     },

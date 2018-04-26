@@ -5,20 +5,23 @@
                 <div class="row">
                     <div class="col-md-12 p-0">
                         <div class="chat-header individual">
-                            <div class="back-btn"><i class="material-icons">arrow_back</i></div>
-                            <div class="user-img"><img v-bind:src="conversationImageUrlScaled" alt="https://0.ptlp.co/author/image?width=60"></div>
+                            <div class="back-btn"><i class="material-icons" v-on:click="redirectToMessagesPage()">arrow_back</i></div>
+                            <div class="user-img"><img v-bind:src="conversationImageUrlScaled" alt="profile-img"></div>
                             <div class="user-name" v-text="conversationDisplayName">Rahul</div>
                             <button class="options" type="button" id="chat-user-more-option" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">more_vert</i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <button type="button" class="btn report-btn">View profile</button>
+                                <button type="button" class="btn report-btn"  v-on:click="redirectToOtherUserProfile()">View profile</button>
                                 <button type="button" class="btn report-btn" data-toggle="modal"
                                         data-target="#confirmation" v-on:click="deleteConversation()">Delete Conversation
                                 </button>
                                 <button type="button" class="btn report-btn" data-toggle="modal"
-                                         v-on:click="blockUser()">Block User
+                                        v-if="!isConversationBlocked" v-on:click="blockUser()">Block User
+                                </button>
+                                <button type="button" class="btn report-btn" data-toggle="modal"
+                                        v-if="isConversationBlocked" v-on:click="unblockUser()">Unblock User
                                 </button>
                             </div>
                         </div>
@@ -76,7 +79,6 @@ export default {
             firebaseGrowthDB: {},
             channelId: "",
             messageList: [],
-            isConversationBlocked: false,
             toSendMessageText: "",
             isUserBlockedBySelf: false,
             isBlockedByOtherUser: false,
@@ -99,6 +101,9 @@ export default {
         ...mapGetters([
             'getUserDetails'
         ]),
+        isConversationBlocked: function () {
+            return this.isUserBlockedBySelf || this.isBlockedByOtherUser;
+        }
     },
 
     methods: {
@@ -481,14 +486,18 @@ export default {
 
 
         redirectToOtherUserProfile() {
-            this.$router.push(self.otherUserProfileUrl());
+            this.$router.push(this.otherUserProfileUrl);
+        },
+
+        redirectToMessagesPage() {
+            this.$router.push('/messages');
         }
 
     },
 
     created() {
         if (this.getUserDetails.isGuest) {
-            this.$router.go('/login');
+            this.$router.push('/login');
         }
     },
 
@@ -516,6 +525,17 @@ export default {
                 });
             }, 3000);
         });
+    },
+
+    beforeDestroy: function() {
+        const self = this;
+        var chatRef = self.firebaseGrowthDB.ref('/CHATS');
+        chatRef.child('messages').child(self.channelId).off();
+        chatRef.child('blocked_users').child(self.getUserDetails.userId).child(self.otherUserId).off();
+        chatRef.child('blocked_users').child(self.otherUserId).child(self.getUserDetails.userId).off();
+        chatRef.child('user_watched_channels').child(self.getUserDetails.userId).child(self.channelId).off();
+        chatRef.child('user_watched_channels').child(self.otherUserId).child(self.channelId).off();
+        self.firebaseGrowthDB.ref(".info/connected").off();
     },
 
     components: {

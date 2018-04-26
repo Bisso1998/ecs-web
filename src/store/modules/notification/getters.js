@@ -17,8 +17,10 @@ export default {
     //         return total + product.price * product.quantity
     //     }, 0)
     // }
-    
+
     getNotifications: state => state.data,
     getNotificationLoadingState: state => state.loading_state,
-    getNotificationCursor: state => state.cursor
+    getNotificationCursor: state => state.cursor,
+
+    messageNotificationList: state => state.messageNotificationList
 }

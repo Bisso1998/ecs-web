@@ -15,30 +15,16 @@
                         </div>
                     </div>
                     <ul class="chat-list" v-if="!getUserDetails.isGuest">
-                        <li class="chat-item">
-                            <div>
-                                <div class="user-img"><img src="https://0.ptlp.co/author/image?width=50" alt="profile-img"></div>
+                        <li class="chat-item" v-for="conversation in conversations"  v-bind:key="conversation.channelId">
+                            <div v-on:click="loadMessagesForConversation(conversation.userId)">
+                                <div class="user-img"><img  v-bind:src="conversation.profileImageUrl"  alt="profile-img"></div>
                                 <div class="chat-wrap">
                                     <div class="user-info">
-                                        <div class="user-name">Roshan</div>
-                                        <div class="user-last-msg">Lorem ipsum</div>
+                                        <div class="user-name" v-text="conversation.channelName"></div>
+                                        <div class="user-last-msg" v-text="conversation.lastMessage"></div>
                                     </div>
-                                    <div class="chat-info unread">
-                                        <div class="chat-time">11:30 PM</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="chat-item">
-                            <div>
-                                <div class="user-img"><img src="https://0.ptlp.co/author/image?width=50" alt="profile-img"></div>
-                                <div class="chat-wrap">
-                                    <div class="user-info">
-                                        <div class="user-name">Rahul</div>
-                                        <div class="user-last-msg">Lorem ipsum</div>
-                                    </div>
-                                    <div class="chat-info">
-                                        <div class="chat-time">11:20 PM</div>
+                                    <div class="chat-info" v-bind:class="{unread : conversation.isUnread}">
+                                        <div class="chat-time" v-text="conversation.lastMessageTimeDisplay"></div>
                                     </div>
                                 </div>
                             </div>
@@ -56,12 +42,270 @@
 import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions } from 'vuex';
+import $ from 'jquery'
 
 export default {
+
+    data(){
+        return {
+            conversations: [],
+            channelLastMessage: {},
+            channelLastReadMessage: {},
+            fetchedChannelMetadataData: {}
+        }
+    },
+
+    methods: {
+        loadChannelMetadata(channelId){
+            const self = this;
+            self.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(channelId).once('value').then(function(snapshot){
+                debugger;
+                if(snapshot.val() == undefined){
+                /* TODO Something wrong */
+                }
+                var userInChannel = false;
+                var otherUserId = 0;
+                var conversationDisplayName = "";
+                var conversationImageUrl = "";
+                $.each(snapshot.val().users, function(user, userDetails){
+                    if(user == self.getUserDetails.userId){
+                        userInChannel = true;
+                    } else {
+                        otherUserId = user;
+                        conversationDisplayName = userDetails.displayName;
+                        conversationImageUrl = userDetails.profileImageUrl;
+                    }
+                    console.log(user, userDetails);
+                });
+                if(userInChannel != true){
+                /* TODO Something wrong */
+                    return;
+                }
+                self.firebaseGrowthDB.ref('/CHATS').child('user_profile').child(otherUserId).once('value').then(function(snapshot){
+                    if(snapshot.val() != undefined){
+                        conversationDisplayName = snapshot.val().displayName;
+                        conversationImageUrl = snapshot.val().profileImageUrl;
+                    }
+                    var conversationImageUrlScaled = self.getImageUrl(conversationImageUrl,100);
+                    self.fetchedChannelMetadataData[channelId] = {'otherUserId' : otherUserId, conversationDisplayName : conversationDisplayName, conversationImageUrl : conversationImageUrlScaled};
+                    self.attachLastReadListener(channelId);
+                    self.attachLastMessageListener(channelId);
+                });
+            });
+        },
+
+
+        attachLastReadListener(channelId){
+            const self = this;
+            self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(self.getUserDetails.userId).child(channelId).child('lastReadMessage').on('value', function(snapshot){
+                debugger;
+                if(self.channelLastMessage[channelId] != undefined){
+                    if(snapshot.val() == self.channelLastMessage[channelId].messageId){
+                        self.channelLastMessage[channelId].isUnread(false);
+                    }
+                }
+                self.channelLastReadMessage[channelId] = snapshot.val();
+            });
+        },
+
+
+        attachLastMessageListener(channelId){
+            const self = this;
+            self.firebaseGrowthDB.ref('/CHATS').child('messages').child(channelId).limitToLast(1).on('child_added', function(snapshot){
+                debugger;
+                var message = snapshot.val();
+                console.log("Last message added : ",message, " for channel : ", channelId);
+                self.conversations.filter(function(item){
+                    return item.channelId == channelId;
+                });
+                var isMessageUnread = true;
+                if((message.senderId == self.getUserDetails.userId) || (self.channelLastReadMessage[channelId] == snapshot.key)){
+                    isMessageUnread = false;
+                }
+                var messageTimeDisplay = self.parseDateDisplay(message.sendTime);
+                var messageReceived = {channelId : channelId, messageId : snapshot.key, userId : self.fetchedChannelMetadataData[channelId].otherUserId, channelName : self.fetchedChannelMetadataData[channelId].conversationDisplayName, profileImageUrl : self.fetchedChannelMetadataData[channelId].conversationImageUrl, senderId : message.senderId, lastMessage : message.messageText, lastMessageTime : message.sendTime, lastMessageTimeDisplay : messageTimeDisplay, isUnread : isMessageUnread};
+                self.channelLastMessage[channelId] = messageReceived;
+                self.conversations.unshift(messageReceived);
+                self.conversations.sort(function (l, r) { return l.lastMessageTime > r.lastMessageTime ? -1 : 1 })
+            }, function(){}, self);
+        },
+
+
+        parseDateDisplay(sentTime){
+            const self = this;
+            var currentDate = new Date();
+            var currentDateStart = currentDate.setHours(0,0,0,0);
+            var timeToDisplay = "";
+            var messageDate = new Date(sentTime);
+            var messageDateKey = messageDate.toLocaleDateString();
+            if(+messageDate >= +currentDateStart){
+                timeToDisplay = new Date(sentTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+            }
+            else {
+                let yesterdayDate = new Date();
+                yesterdayDate.setTime(currentDate.getTime() - (24*3600000));
+                let yesterdayDateStart = yesterdayDate.setHours(0,0,0,0);
+                if(+messageDate >= +yesterdayDateStart){
+                    timeToDisplay = "YESTERDAY";
+                }
+                else {
+                    timeToDisplay = messageDateKey;
+                }
+            }
+            return timeToDisplay;
+        },
+
+
+        loadWatchedChannels(){
+            const self = this;
+            self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_added', function(snapshot){
+                debugger;
+                let channelId = snapshot.key;
+                self.loadChannelMetadata(channelId);
+            }, function(){}, self);
+
+            self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_removed', function(snapshot){
+                debugger;
+                console.log("Watching channel removed : ", snapshot.key);
+                self.conversations.remove(function(item){
+                    return item.channelId == snapshot.key;
+                });
+                self.firebaseGrowthDB.ref('/CHATS').child('messages').child(snapshot.key).off();
+            }, function(){}, self);
+
+        },
+
+
+        clearConversationsFromCache(){
+            const self = this;
+            ko.utils.arrayForEach(self.conversations(), function (conversation){
+                if(conversation.isLoadedFromCache != undefined && conversation.isLoadedFromCache == true){
+                    self.conversations.remove(function(item){
+                        return item.channelId == conversation.channelId;
+                    });
+                }
+            });
+        },
+
+
+        loadConversationsFromCache(){
+            const self = this;
+            debugger;
+            if((appViewModel.p2pChat != undefined) && (appViewModel.p2pChat.convesationCache != undefined)){
+                if(typeof appViewModel.p2pChat.convesationCache.conversations != undefined){
+                    ko.utils.arrayForEach(appViewModel.p2pChat.convesationCache.conversations, function (conversation){
+                        conversation.isLoadedFromCache = true;
+                        self.conversations.push(conversation);
+                    });
+                }
+                self.channelLastMessage = appViewModel.p2pChat.convesationCache.channelLastMessage;
+                self.channelLastReadMessage = appViewModel.p2pChat.convesationCache.channelLastReadMessage;
+                self.fetchedChannelMetadataData = appViewModel.p2pChat.convesationCache.fetchedChannelMetadataData;
+            }
+            setTimeout(self.clearConversationsFromCache, 4000);
+        },
+
+
+        updateUserProfile(){
+            const self = this;
+            debugger;
+            //TODO FIGURE OUT TO DO THIS ONCE PER SESSION
+            // if((appViewModel.p2pChat != undefined) && (appViewModel.p2pChat.updatedUserProfile == true)){
+            //     console.log("User profile already updated for this session. Skipping update");
+            //     return;
+            // }
+            self.firebaseGrowthDB.ref('/CHATS').child('user_profile').child(self.getUserDetails.userId).once('value').then(function(snapshot){
+                if(snapshot.val() == undefined || snapshot.val.displayName != self.getUserDetails.displayName() || snapshot.val.profileImageUrl != self.getUserDetails.profileImageUrl()){
+                    var userProfile = {displayName : self.getUserDetails.displayName, profileImageUrl : self.getUserDetails.profileImageUrl, profileUrl: self.getUserDetails.profilePageUrl};
+                    self.firebaseGrowthDB.ref('/CHATS').child('user_profile').child(self.getUserDetails.userId).set(userProfile, function(error){
+                        //TODO Figure out error handling
+                        // if(error == undefined){
+                        //     if(appViewModel.p2pChat == undefined){
+                        //         appViewModel.p2pChat = {};
+                        //     }
+                        //     appViewModel.p2pChat.updatedUserProfile = true;
+                        // }
+                    });
+                }
+            });
+        },
+
+        loadMessagesForConversation(userId){
+            this.$router.push('/messages/' + userId );
+        },
+
+        redirectToSourcePage(){
+            var sourcePath = "/";
+            if((appViewModel.p2pChat != undefined) && (appViewModel.p2pChat.sourcePagePath != undefined )){
+                sourcePath = appViewModel.p2pChat.sourcePagePath;
+            }
+            redirect(sourcePath);
+        },
+
+        getImageUrl( imageUrl, width, compressed ) {
+            const self = this;
+            if( imageUrl == null ) return null;
+            if( imageUrl.startsWith( "http://" ) && imageUrl.indexOf( "ptlp.co" ) !== -1 )
+                imageUrl = "https://" + imageUrl.substr(7);
+
+            if( width != null ) imageUrl = imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + "width=" + width;
+            if( compressed != null ) imageUrl = imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + "quality=" + ( compressed ? "low" : "high" );
+            imageUrl = imageUrl + ( imageUrl.indexOf( "?" ) > -1 ? "&" : "?" ) + "type=" + self.getSupportedImageType();
+            return imageUrl;
+        },
+
+        getSupportedImageType() {
+            function canUseWebP() {
+                var elem = document.createElement( 'canvas' );
+                if( !!(elem.getContext && elem.getContext('2d')) ) {
+                    return elem.toDataURL( 'image/webp' ).indexOf( 'data:image/webp' ) == 0;
+                }
+                return false;
+            }
+            if( window.canUseWebp == null )
+                window.canUseWebp = canUseWebP();
+
+            return window.canUseWebp ? "webp" : "jpg";
+
+        },
+    },
+
+    created() {
+        if (this.getUserDetails.isGuest) {
+            this.$router.go('/login');
+        }
+    },
+
+    mounted() {
+        const self = this;
+        import('firebase').then((firebase) => {
+            setTimeout(function() {
+                self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
+                console.log("Firebase growth initialized for page");
+                //self.loadConversationsFromCache();
+                self.loadWatchedChannels();
+                self.updateUserProfile();
+            }, 3000);
+        });
+    },
+
+    beforeDestroy: function() {
+        const self = this;
+        var chatRef = self.firebaseGrowthDB.ref('/CHATS');
+        chatRef.child('user_watched_channels').child(self.getUserDetails.userId).off();
+        for (var i = 0, len = self.conversations.length; i < len; i++) {
+            var conversation = self.conversations[i];
+            var conversationChannel = conversation.channelId;
+            chatRef.child('user_channels').child(self.getUserDetails.userId).child(conversationChannel).child('lastReadMessage').off();
+            chatRef.child('messages').child(conversationChannel).off();
+        }
+    },
+
     components: {
         MainLayout,
         Spinner
     },
+
     computed: {
         ...mapGetters([
             'getUserDetails'
@@ -75,7 +319,7 @@ export default {
     margin-top: 85px;
     text-align: left;
     min-height: 700px;
-    @media screen and (max-width: 992px) {
+    @media screen and (max-width: 992px){
         margin-top: 65px;
         text-align: center;
     }
@@ -86,7 +330,7 @@ export default {
         border-left: 3px solid #d0021b;
         padding-left: 10px;
         margin: 10px 0;
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 768px){
             font-size: 18px;
         }
     }

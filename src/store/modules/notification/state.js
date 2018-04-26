@@ -1,5 +1,7 @@
 export default {
     data: [],
     loading_state: 'LOADING',
-    cursor: null
+    cursor: null,
+
+    messageNotificationList: []
 }
