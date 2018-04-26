@@ -57,11 +57,11 @@ export default {
     },
     "GOCREATE_HEADER_GLOBAL": {
         "LOCATION": "HEADER",
-        "ACTION": "GOMYPROFILE"
+        "ACTION": "GOCREATE"
     },
     "GODISCOVER_HEADER_GLOBAL": {
         "LOCATION": "HEADER",
-        "ACTION": "GOMYPROFILE"
+        "ACTION": "GODISCOVER"
     },
     "GOMYPROFILE_HEADER_GLOBAL": {
         "LOCATION": "HEADER",

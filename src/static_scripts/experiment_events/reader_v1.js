@@ -9,15 +9,15 @@ export default {
     },
     "GOREGISTER_HEADER_GLOBAL": {
         "LOCATION": "HEADER",
-        "ACTION": "GOMYPROFILE"
+        "ACTION": "GOREGISTER"
     },
     "GOCREATE_HEADER_GLOBAL": {
         "LOCATION": "HEADER",
-        "ACTION": "GOMYPROFILE"
+        "ACTION": "GOCREATE"
     },
     "GODISCOVER_HEADER_GLOBAL": {
         "LOCATION": "HEADER",
-        "ACTION": "GOMYPROFILE"
+        "ACTION": "GODISCOVER"
     },
     "LANDED_READERM_READER": {
         "SCREEN_NAME": "READER",
