@@ -329,7 +329,9 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
     }
 
     if (eventProps && eventProps.ACTION) {
-        setReferrerData(eventProps.SCREEN_NAME, eventProps.LOCATION, eventProps.ACTION, experimentType);
+        if (eventName !== 'VIEWED_APPBANNER_GLOBAL') {
+            setReferrerData(eventProps.SCREEN_NAME, eventProps.LOCATION, eventProps.ACTION, experimentType);
+        }
         eventProps = {
             ...eventProps,
             ...eventProperty,

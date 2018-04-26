@@ -8,14 +8,14 @@
         </div>
         <span
           @click="triggerDiscoverEvent"
-          class="main-tabs">
+          class="main-tabs discover-tab">
           <i class="material-icons">all_out</i>
           <span class="tooltiptext">__('see_more_categories')</span>
           <span>__('menu_category')</span>
         </span>
         <span
           @click="triggerCreateEvent"
-          class="main-tabs">
+          class="main-tabs create-tab">
           <i class="material-icons">mode_edit</i>
           <span>__("write")</span>
         </span>
@@ -107,6 +107,12 @@ export default {
         }
         if (this.$route.path === this.userDetails.profilePageUrl ) {
             $(".profile-tab").addClass("active");
+        }
+        if (this.$route.path === '/create' ) {
+            $(".create-tab").addClass("active");
+        }
+        if (this.$route.path === '/discover' ) {
+            $(".discover-tab").addClass("active");
         }
     }
 }
