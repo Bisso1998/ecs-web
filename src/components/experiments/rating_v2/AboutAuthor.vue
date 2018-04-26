@@ -135,7 +135,6 @@ export default {
             }
         },
         'inViewport.now'(visible) {
-            console.log(visible);
             if (visible) {
                 const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
                 this.triggerAnanlyticsEvent(`VIEWED_AUTHORDETAIL_BOOK`, 'CONTROL', {
