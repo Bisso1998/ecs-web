@@ -169,7 +169,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Recommendation from '@/components/Recommendation.vue';
-import AboutAuthor from '@/components/AboutAuthor.vue';
+import AboutAuthor from '@/components/experiments/rating_v2/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
 import Reviews from '@/components/experiments/rating_v2/Reviews.vue';
 import ShareStrip from '@/components/experiments/rating_v2/ShareStrip.vue';
