@@ -1,9 +1,5 @@
 <template>
     <div class="social-share">
-        <span class="text">__("seo_share_page"): </span>
-        <a :href="getWhatsAppUri" @click="triggerWaEndShareEvent" class="whatsapp" target="_blank">
-            <span class="social-icon"><icon name="whatsapp"></icon></span>
-        </a>
         <a :href="getFacebookShareUrl" @click="triggerFbEndShareEvent" class="fb" target="_blank">
             <span class="social-icon"><icon name="facebook-f"></icon></span>
         </a>
@@ -15,6 +11,9 @@
         </a>
         <a class="link" v-if="false" >
             <span class="social-icon"><icon name="link"></icon></span>
+        </a>
+        <a :href="getWhatsAppUri" @click="triggerWaEndShareEvent" class="whatsapp" target="_blank">
+            <span class="social-icon"><icon name="whatsapp"></icon></span>
         </a>
         <input type="text" id="inlineShareUri" hidden>
     </div>
@@ -128,13 +127,13 @@ export default {
         font-size: 14px;
         .social-icon {
             display: inline-block;
-            width: 35px;
-            height: 35px;
+            width: 45px;
+            height: 45px;
             background: #3b5998;
             color: #fff;
             border-radius: 50%;
             text-align: center;
-            line-height: 35px;
+            line-height: 45px;
             margin-right: 5px;
         }
         .fa-icon {
