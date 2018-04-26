@@ -44,4 +44,14 @@ export default {
         "LOCATION": "BOOKM",
         "ACTION": "SHAREBOOKWA"
     },
+    "FOLLOW_AUTHORDETAIL_BOOK": {
+        "SCREEN_NAME": "BOOK",
+        "LOCATION": "AUTHORDETAIL",
+        "ACTION": "FOLLOW"
+    },
+    "UNFOLLOW_AUTHORDETAIL_BOOK": {
+        "SCREEN_NAME": "BOOK",
+        "LOCATION": "AUTHORDETAIL",
+        "ACTION": "UNFOLLOW"
+    },
 }

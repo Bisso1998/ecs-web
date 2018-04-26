@@ -13,6 +13,21 @@ Vue.filter('round', function(value, decimals) {
     return value;
 });
 
+Vue.filter('showThousandsInK', (value, decimals) => {
+    if (value < 1000) {
+        return value;
+    }
+    
+    value = value / 1000;
+
+    if (!decimals) {
+        decimals = 0;
+    }
+
+    value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+    return value + 'K';
+});
+
 
 Vue.filter('showInMinutesOrHours', function(value) {
     if (!value) {

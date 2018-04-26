@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AuthorComponent from '@/pages/Author.vue'
 import NotificationComponent from '@/pages/Notification.vue'
 import ListPageComponent from '@/pages/ListPage.vue'
 import DiscoverPageComponent from '@/pages/Discovery.vue'
@@ -84,7 +83,24 @@ const router = new Router({
     }, {
         path: '/user/:user_slug',
         name: 'User',
-        component: AuthorComponent,
+        component: () => {
+            const isTrue = true;
+            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+                return import('@/pages/experiments/profile_v1/Author.vue');
+            }
+            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+                return import('@/pages/experiments/profile_v2/Author.vue');
+            }
+            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+                return import('@/pages/experiments/profile_v3/Author.vue');
+            }
+            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+                return import('@/pages/experiments/profile_v4/Author.vue');
+            }
+            else {
+                return import('@/pages/Author.vue');
+            }
+        },
         meta: {
             'store': 'authorpage',
             'title': '__("seo_home_page")',

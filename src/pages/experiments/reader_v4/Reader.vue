@@ -190,10 +190,10 @@
                     <div class="follow-btn-w-count" v-if="!getAuthorData.following"><!-- Follow Button -->
                         <button @click="checkLoginStatusAndFollowOrUnfollowAuthor" >
                             <i class="material-icons">person_add</i>__("author_follow")
-                        </button><span><b>{{ getAuthorData.followCount }}</b></span>
+                        </button>
                     </div>
                     <div class="follow-btn-w-count" v-else><!-- Following Button -->
-                        <button @click="checkLoginStatusAndFollowOrUnfollowAuthor"><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
+                        <button @click="checkLoginStatusAndFollowOrUnfollowAuthor"><i class="material-icons">check</i> __("author_following")</button>
                     </div>
                 </div>
                 <div class="book-index">
@@ -343,7 +343,7 @@ export default {
         checkLoginStatusAndFollowOrUnfollowAuthor() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
             let action = !this.getAuthorData.following ? 'FOLLOW' : 'UNFOLLOW';
-            this.triggerAnanlyticsEvent(`${action}_INDEX_READER`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`${action}_INDEX_READER`, 'WGEN008', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': this.getAuthorData.followCount
@@ -989,9 +989,7 @@ export default {
             button {
                 background: #d0021b;
                 border: 1px solid #d0021b;
-                border: 1px solid #d0021b;
-                border-top-left-radius: 3px;
-                border-bottom-left-radius: 3px;
+                border-radius: 3px;
                 outline: none;
                 color: #fff;
                 margin: 0;

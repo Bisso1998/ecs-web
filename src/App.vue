@@ -31,6 +31,7 @@ export default {
     watch: {
         'getUserDetails.isGuest'(isGuest) {
             if (!isGuest) {
+                this.fetchInitialNotifications({ language: this.getCurrentLanguage().fullName.toUpperCase(), resultCount: 10 });
                 import('firebase').then((firebase) => {
                     if (firebase.apps.length === 0) {
                         const config = {

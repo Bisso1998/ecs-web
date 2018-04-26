@@ -99,7 +99,7 @@ export default {
         checkUserAndFollowAuthor() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.pratilipiData);
             let action = !this.getAuthorDetails.following ? 'FOLLOW' : 'UNFOLLOW';
-            this.triggerAnanlyticsEvent(`${action}_AUTHORDETAIL_BOOK`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`${action}_AUTHORDETAIL_BOOK`, 'WGEN004', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': this.getAuthorDetails.followCount,
@@ -198,13 +198,19 @@ export default {
     }
     .follow-link {
         color: #d0021b;
+        background: #e9e9e9;
         float: right;
         margin: 4px 10px 0 0;
         font-size: 14px;
+        border-color: #e9e9e9;
         i {
             vertical-align: middle;
             padding-right: 5px;
             font-size: 18px;
+        }
+        span.follow-count {
+            font-size: 10px;
+            vertical-align: text-bottom;
         }
     }
     .auth-desc {
