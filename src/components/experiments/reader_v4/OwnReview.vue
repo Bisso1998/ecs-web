@@ -377,5 +377,14 @@ li {
     .rate-now .rating input:checked ~ label:before, .rate-now .rating label:before {
         color: #28a745;
     }
+    .rate-now .rating {
+        width: 230px;
+    }
+    .rate-now .rating label:before {
+        font-size: 40px;
+    }
+    .write-review-btn {
+        margin: 5px 0;
+    }
 }
 </style>

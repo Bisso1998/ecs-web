@@ -1,6 +1,5 @@
 <template>
     <div class="social-share">
-        <span class="text">__("seo_share_page"): </span>
         <a :href="getWhatsAppUri" @click="triggerWaEndShareEvent" class="whatsapp" target="_blank">
             <span class="social-icon"><icon name="whatsapp"></icon></span>
         </a>
@@ -128,13 +127,13 @@ export default {
         font-size: 14px;
         .social-icon {
             display: inline-block;
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             background: #3b5998;
             color: #fff;
             border-radius: 50%;
             text-align: center;
-            line-height: 45px;
+            line-height: 35px;
             margin-right: 5px;
         }
         .fa-icon {
