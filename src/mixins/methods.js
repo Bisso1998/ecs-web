@@ -18,6 +18,9 @@ const reader_v2 = ['WGEN006'];
 const reader_v3 = ['WGEN007'];
 const reader_v4 = ['WGEN008'];
 
+let REFERRER_EVENT;
+let REFERRER_EXPERIMENTID;
+
 export function translateWord(word, callback) {
     $.ajax({
         url: "https://www.google.com/inputtools/request?ime=transliteration_en_" + process.env.LANGUAGE + "&num=5&cp=0&cs=0&ie=utf-8&oe=utf-8&app=jsapi",
@@ -244,6 +247,23 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
     
 }
 
+
+export function setReferrerEvent(eventName) {
+    REFERRER_EVENT = eventName;
+}
+
+export function getReferrerEvent() {
+    return REFERRER_EVENT;
+}
+
+export function setReferrerExperimentId(experimentId) {
+    REFERRER_EXPERIMENTID = experimentId;
+}
+
+export function getReferrerExperimentId() {
+    return REFERRER_EXPERIMENTID;
+}
+
 export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty) {
 
     let eventProps;
@@ -281,7 +301,18 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         eventProps.SCREEN_NAME = eventProperty['SCREEN_NAME'];
         delete eventProperty.SCREEN_NAME;
     }
+
+    if (getReferrerEvent()) {
+        eventProps.REFERRER_EVENT = getReferrerEvent();
+    }
+
+    if (getReferrerExperimentId()) {
+        eventProps.REFERRER_EXPERIMENTID = getReferrerExperimentId();
+    }
+
     if (eventProps && eventProps.ACTION) {
+        setReferrerEvent(eventName);
+        setReferrerExperimentId(experimentType);
         eventProps = {
             ...eventProps,
             ...eventProperty,
