@@ -114,7 +114,13 @@
                                 <div class="prev" v-if="selectedChapter != 1" @click="goToPreviousChapter">__("reader_prev_chapter")</div>
                                 <div class="next" v-if="selectedChapter != getIndexData.length" @click="goToNextChapter">__("reader_next_chapter")</div>
                             </div>
-
+                            
+                            <ShareStrip
+                                v-if="selectedChapter == getIndexData.length"
+                                :data="getPratilipiData"
+                                :type="'PRATILIPI'">
+                            </ShareStrip>
+                            
                             <div class="book-bottom-ratings p-lr-15">
                                 <Reviews 
                                     :pratilipiId="getPratilipiData.pratilipiId" 
@@ -127,12 +133,6 @@
                                     v-if="selectedChapter == getIndexData.length && !openRateReaderm && !openRateRev ">
                                 </Reviews>
                             </div>
-                            
-                            <ShareStrip
-                                v-if="selectedChapter == getIndexData.length"
-                                :data="getPratilipiData"
-                                :type="'PRATILIPI'">
-                            </ShareStrip>
 
                             <div class="book-recomendations p-r-10" v-if="selectedChapter == getIndexData.length">
                                 <Recommendation
