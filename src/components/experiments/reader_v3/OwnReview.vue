@@ -374,5 +374,14 @@ li {
     .already-rated .rating i {
         color: #d0031a;
     }
+    .rate-now .rating {
+        width: 230px;
+    }
+    .rate-now .rating label:before {
+        font-size: 40px;
+    }
+    .write-review-btn {
+        margin: 5px 0;
+    }
 }
 </style>
