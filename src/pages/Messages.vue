@@ -4,10 +4,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <ul class="tab-menu">
-                        <li><router-link :to="{ name: 'Notification' }">__("notification_notifications")</router-link></li>
-                        <li class="active">Messages</li>
-                    </ul>
+                    <h2>Messages</h2>
                     <div class="card" v-if="getUserDetails.isGuest">
                         <div class="head-title">__("seo_login_page")</div>
                         <div class="card-content">

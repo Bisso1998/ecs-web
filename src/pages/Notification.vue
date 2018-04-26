@@ -5,8 +5,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="tab-menu">
-                            <li class="active">__("notification_notifications")</li>
-                            <li><router-link :to="{ name: 'Messages_Page' }">Messages</router-link></li>
+                            <li @click="tabchange" class="active" data-tab="notifications">__("notification_notifications")</li>
+                            <li @click="tabchange" data-tab="messages">Messages</li>
                         </ul>
                         <router-link
                         class="notification-settings"
@@ -14,33 +14,85 @@
                         v-if="!getUserDetails.isGuest">
                             <i class="material-icons">settings</i>
                         </router-link>
-                        <div class="card" v-if="getUserDetails.isGuest">
-                            <div class="head-title">__("seo_login_page")</div>
-                            <div class="card-content">
-                                <p><i class="material-icons">check_circle</i> __("user_login_to_view_notifications")</p>
-                                <p><i class="material-icons">check_circle</i> __("android_banner_notification_1")</p>
-                                <p><i class="material-icons">check_circle</i> __("android_banner_notification_2")</p>
-                                <button type="button" class="btn" data-toggle="modal" data-target="#login_modal">__("user_sign_in") / __("user_sign_up")</button>
+                        
+                        <div class="tab-content" id="notifications">
+                            <div class="card" v-if="getUserDetails.isGuest">
+                                <div class="head-title">__("seo_login_page")</div>
+                                <div class="card-content">
+                                    <p><i class="material-icons">check_circle</i> __("user_login_to_view_notifications")</p>
+                                    <p><i class="material-icons">check_circle</i> __("android_banner_notification_1")</p>
+                                    <p><i class="material-icons">check_circle</i> __("android_banner_notification_2")</p>
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#login_modal">__("user_sign_in") / __("user_sign_up")</button>
+                                </div>
                             </div>
+                            <ul v-if="getNotificationLoadingState === 'LOADING_SUCCESS' || getNotifications.length > 0" class="notifications">
+                                <li v-for="each_notification in getNotifications" :key="each_notification.notificationId" :class="each_notification.state.toLowerCase()">
+                                    <router-link
+                                    :to="each_notification.sourceUrl"
+                                    @click.native="changeNotificationStatusToRead(each_notification.notificationId)">
+                                        <span class="notif-display-image"><img :src="each_notification.displayImageUrl" alt="notification"></span>
+                                        <span class="message-wrap">
+                                            <span class="notif-message" v-html="each_notification.message"></span>
+                                            <span class="notif-date">{{ each_notification.lastUpdatedMillis | convertDate }}</span>
+                                        </span>
+                                        <span class="notif-source-image" v-if="each_notification.sourceImageUrl"><img :src="each_notification.sourceImageUrl" alt="notification"></span>
+                                    </router-link>
+                                </li>
+                            </ul>
+                            <p class="message" v-if="getNotificationLoadingState === 'LOADING_SUCCESS' && getNotifications.length == 0">__("notifications_no_notifications")</p>
+                            <p class="message" v-if="getNotificationLoadingState === 'LOADING_ERROR'">
+                                <ServerError :action="'fetchInitialNotifications'" :data="{language: getCurrentLanguage().fullName.toUpperCase(), resultCount: 20}" :message="'__('notifications_load_failed')'"></ServerError>
+                            </p>
                         </div>
-                        <ul v-if="getNotificationLoadingState === 'LOADING_SUCCESS' || getNotifications.length > 0" class="notifications">
-                            <li v-for="each_notification in getNotifications" :key="each_notification.notificationId" :class="each_notification.state.toLowerCase()">
-                                <router-link
-                                :to="each_notification.sourceUrl"
-                                @click.native="changeNotificationStatusToRead(each_notification.notificationId)">
-                                    <span class="notif-display-image"><img :src="each_notification.displayImageUrl" alt="notification"></span>
-                                    <span class="message-wrap">
-                                        <span class="notif-message" v-html="each_notification.message"></span>
-                                        <span class="notif-date">{{ each_notification.lastUpdatedMillis | convertDate }}</span>
-                                    </span>
-                                    <span class="notif-source-image" v-if="each_notification.sourceImageUrl"><img :src="each_notification.sourceImageUrl" alt="notification"></span>
-                                </router-link>
-                            </li>
-                        </ul>
-                        <p class="message" v-if="getNotificationLoadingState === 'LOADING_SUCCESS' && getNotifications.length == 0">__("notifications_no_notifications")</p>
-                        <p class="message" v-if="getNotificationLoadingState === 'LOADING_ERROR'">
-                            <ServerError :action="'fetchInitialNotifications'" :data="{language: getCurrentLanguage().fullName.toUpperCase(), resultCount: 20}" :message="'__('notifications_load_failed')'"></ServerError>
-                        </p>
+                        
+                        <div class="tab-content" id="messages">
+                            <div class="card" v-if="getUserDetails.isGuest">
+                                <div class="head-title">__("seo_login_page")</div>
+                                <div class="card-content">
+                                    <p><i class="material-icons">check_circle</i> Send messages to your favorite authors and friends</p>
+                                    <p><i class="material-icons">check_circle</i> __("android_banner_notification_1")</p>
+                                    <p><i class="material-icons">check_circle</i> __("android_banner_notification_2")</p>
+                                    <button type="button" class="btn" data-toggle="modal" data-target="#login_modal">__("user_sign_in") / __("user_sign_up")</button>
+                                </div>
+                            </div>
+                            <ul class="chat-list" v-if="!getUserDetails.isGuest">
+                                <li class="chat-item">
+                                    <div>
+                                        <div class="user-img"><img src="https://0.ptlp.co/author/image?width=50" alt="profile-img"></div>
+                                        <div class="chat-wrap">
+                                            <div class="user-info">
+                                                <div class="user-name">Roshan</div>
+                                                <div class="user-last-msg">Lorem ipsum</div>
+                                            </div>
+                                            <div class="chat-info unread">
+                                                <div class="chat-time">11:30 PM</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="chat-item">
+                                    <div>
+                                        <div class="user-img"><img src="https://0.ptlp.co/author/image?width=50" alt="profile-img"></div>
+                                        <div class="chat-wrap">
+                                            <div class="user-info">
+                                                <div class="user-name">Rahul</div>
+                                                <div class="user-last-msg">Lorem ipsum</div>
+                                            </div>
+                                            <div class="chat-info unread">
+                                                <div class="chat-time">11:20 PM</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <router-link
+                            class="show-more"
+                            :to="{ name: 'Messages_Page'}"
+                            v-if="!getUserDetails.isGuest">
+                            __("show_more")
+                            </router-link>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,7 +133,15 @@ export default {
         ]),
         updateScroll() {
             this.scrollPosition = window.scrollY
-        }
+        },
+        tabchange(event) {
+            event.preventDefault();        
+            var tab_id = $(event.currentTarget).attr('data-tab');
+            $(".tab-menu li").removeClass("active");
+            $(event.currentTarget).addClass("active");
+            $(".tab-content").hide();
+            $("#" + tab_id).show();
+        },
     },
     created() {
         
@@ -245,6 +305,7 @@ export default {
         width: 100%;
         overflow-x: auto;
         white-space: nowrap;
+        cursor: pointer;
         li {
             color: #555;
             font-size: 13px;
@@ -264,5 +325,95 @@ export default {
             }
         }
     }
+}
+
+#notifications {
+    display: block;
+}
+.tab-content {
+    display: none;
+    .chat-list {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow: hidden;
+        background: #fff;
+        .chat-item {
+            list-style: none;
+            overflow: hidden;
+            padding: 5px 0;
+            .user-img {
+                float: left;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin: 7px 0;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .chat-wrap {
+                border-bottom: 1px solid #E1E1E1;
+                float: left;
+                width: calc(100% - 75px);
+                padding: 12px 0;
+                margin-left: 15px;
+                text-align: left;
+            }
+            .user-info {
+                float: left;
+                width: calc(100% - 65px);
+                margin-right: 5px;
+                .user-name {
+                    font-size: 15px;
+                    color: #4A4A4A;
+                    line-height: 18px;
+                    font-weight: 700;
+                    width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .user-last-msg {
+                    color: #757575;
+                    font-size: 14px;
+                    width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+            .chat-info {
+                float: right;
+                width: 60px;
+                text-align: right;
+                color: #9B9B9B;
+                font-size: 11px;
+                &.unread .chat-time {
+                    color: #D0021B;
+                }
+                &.unread::after {
+                    content: "";
+                    display: block;
+                    color: #D0021B;
+                    width: 10px;
+                    height: 10px;
+                    background: #D0021B;
+                    float: right;
+                    margin: 5px 0;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+}
+.show-more {
+    display: block;
+    text-align: center;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #d00c12;
 }
 </style>
