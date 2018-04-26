@@ -15,7 +15,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <button type="button" class="btn report-btn">View profile</button>
                                 <button type="button" class="btn report-btn" data-toggle="modal"
-                                        data-target="#confirmation">Delete Conversation
+                                        data-target="#confirmation" v-on:click="deleteConversation()">Delete Conversation
                                 </button>
                                 <button type="button" class="btn report-btn" data-toggle="modal"
                                          v-on:click="blockUser()">Block User
@@ -33,10 +33,8 @@
                                         <span class="msg-text" v-text="message.messageText"></span>
                                         <div class="extra-info">
                                             <span class="time" v-text="message.messageTime">16:40</span>
-                                            <div v-if="pendingMessageStatus[message.messageId] != undefined">
-                                                <span class="status sent error" v-if="pendingMessageStatus[message.messageId] == 'SEND_FAILED'"><i class="material-icons">error</i></span>
-                                                <span class="status sending" v-if="pendingMessageStatus[message.messageId] == 'SENDING'"><i class="material-icons">access_time</i></span>
-                                            </div>
+                                            <span class="status sent error" v-if="failedMessages.indexOf(message.messageId) > -1"><i class="material-icons">error</i></span>
+                                            <span class="status sending" v-if="pendingMessages.indexOf(message.messageId) > -1"><i class="material-icons">access_time</i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -85,13 +83,15 @@ export default {
             conversationImageUrl: "",
             conversationImageUrlScaled: "",
             conversationDisplayName: "",
-            otherUserId: "123456",
+            otherUserId: "",
             otherUserProfileUrl: "",
             isChannelInSelfWatchlist: false,
             isChannelInOtherUserWatchlist: false,
             firstMessageOfDayCheckMap: new Map(),
             isConnectedToServer: false,
-            pendingMessageStatus: {}
+            pendingMessages: [],
+            failedMessages: []
+
         }
     },
 
@@ -390,13 +390,16 @@ export default {
         },
 
 
-        setAllPendingMessageStatus (status) {
+        setAllMessagesPending() {
             const self = this;
-            self.pendingMessageStatus.forEach(function (value, key) {
-                if (value() !== "SEND_SUCCESS") {
-                    self.pendingMessageStatus.set(key,status);
-                }
-            });
+            self.pendingMessages = [].concat(self.pendingMessages.slice(), self.failedMessages.slice());
+            self.failedMessages = [];
+        },
+
+        setAllMessagesFailed() {
+            const self = this;
+            self.failedMessages = [].concat(self.pendingMessages.slice(), self.failedMessages.slice());
+            self.pendingMessages = [];
         },
 
         sendMessageToFirebase () {
@@ -421,38 +424,49 @@ export default {
             }
             let messagePushRef = this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).push();
             let messageId = messagePushRef.key;
-            let sendStatus = self.isConnectedToServer == true ? "SENDING" : "SEND_FAILED";
-            self.pendingMessageStatus.set(messageId, sendStatus);
+            if(self.isConnectedToServer) {
+                self.pendingMessages.push(messageId);
+            } else {
+                self.failedMessages.push(messageId);
+            }
             messagePushRef.set({
                 senderId: this.getUserDetails.userId + "",
                 messageText: self.toSendMessageText,
                 sendTime: firebase.database.ServerValue.TIMESTAMP
             }, function (error) {
                 if (error) {
-                    console.log("Message : " + messageId + " could not be saved." + error);
-                    self.pendingMessageStatus.set(messageId,"SEND_FAILED");
+                    console.log("Message : " + messageId + " could not be saved.", error);
+                    self.failedMessages.push(messageId);
                 } else {
                     console.log("Message : " + messageId + " saved successfully.");
-                    self.pendingMessageStatus.set(messageId,"SEND_SUCCESS");
+                    self.removeValueFromArray(self.pendingMessages, messageId);
+                    self.removeValueFromArray(self.failedMessages, messageId);
                 }
             });
             self.toSendMessageText = "";
         },
 
+        removeValueFromArray(arr, val) {
+            var index = arr.indexOf(val)
+            if(index > -1) {
+                arr.splice(index, 1);
+            }
+        },
+
 
         blockUser () {
-            debugger;
             this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(this.getUserDetails.userId).child(this.otherUserId).set(true);
         },
 
 
         unblockUser () {
-            debugger;
+            const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).set(false);
         },
 
 
         deleteConversation() {
+            const self = this;
             let deleteConversationUpdates = {};
             deleteConversationUpdates['/CHATS/user_watched_channels/' + this.getUserDetails.userId + '/' + self.channelId] = {};
             deleteConversationUpdates['/CHATS/user_channels/' + this.getUserDetails.userId + '/' + self.channelId + '/lastDeletedMessage'] = self.lastDeliveredMessageId;
@@ -462,7 +476,7 @@ export default {
                 }
             });
             self.messageList = [];
-            redirect('/messages');
+            this.$router.push('/messages');
         },
 
 
@@ -493,11 +507,11 @@ export default {
                     if (snap.val() == true) {
                         console.log("connected to internet");
                         self.isConnectedToServer = true;
-                        self.setAllPendingMessageStatus("SENDING");
+                        self.setAllMessagesPending();
                     } else {
                         self.isConnectedToServer = false;
                         console.log("not connected to internet");
-                        self.setAllPendingMessageStatus("SEND_FAILED");
+                        self.setAllMessagesFailed()
                     }
                 });
             }, 3000);
