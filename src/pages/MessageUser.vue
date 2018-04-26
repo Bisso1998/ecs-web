@@ -6,8 +6,8 @@
                     <div class="col-md-12 p-0">
                         <div class="chat-header individual">
                             <div class="back-btn"><i class="material-icons">arrow_back</i></div>
-                            <div class="user-img"><img alt="" src="https://0.ptlp.co/author/image?width=60"></div>
-                            <div class="user-name">Rahul</div>
+                            <div class="user-img"><img v-bind:src="conversationImageUrlScaled" alt="https://0.ptlp.co/author/image?width=60"></div>
+                            <div class="user-name" v-text="conversationDisplayName">Rahul</div>
                             <button class="options" type="button" id="chat-user-more-option" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 <i class="material-icons">more_vert</i>
@@ -18,7 +18,7 @@
                                         data-target="#confirmation">Delete Conversation
                                 </button>
                                 <button type="button" class="btn report-btn" data-toggle="modal"
-                                        data-target="#confirmation" v-on:click="blockUser()">Block User
+                                         v-on:click="blockUser()">Block User
                                 </button>
                             </div>
                         </div>
@@ -27,27 +27,16 @@
                             <div id="all-messages" class="all-messages">
                                 <div v-for="message in messageList" v-bind:key="message.messageId">
                                     <div class="chat-date" v-if="message.isFirstMessageOfDay"><span
-                                        v-text="message.dayDefinition">TODAY</span></div>
+                                        v-text="message.dayDefenition">TODAY</span></div>
                                     <div class="chat-msg"
-                                         v-bind:class="{'sender' : message.isMessageBySelf == true, 'self' : message.isMessageBySelf == false}">
-                                        <span class="msg-text" v-text="message.messageText">Hello, How are you?</span>
+                                         v-bind:class="{'sender' : message.isMessageBySelf == false, 'self' : message.isMessageBySelf == true}">
+                                        <span class="msg-text" v-text="message.messageText"></span>
                                         <div class="extra-info">
                                             <span class="time" v-text="message.messageTime">16:40</span>
-                                        </div>
-                                    </div>
-                                    <div class="chat-msg self">
-                                        <span class="msg-text">I'm fine</span>
-                                        <div class="extra-info">
-                                            <span class="time">16:41</span>
-                                            <span class="status sent error"><i class="material-icons">error</i></span>
-                                        </div>
-                                    </div>
-                                    <div class="chat-msg self">
-                                        <span class="msg-text">I'm fine</span>
-                                        <div class="extra-info">
-                                            <span class="time">16:42</span>
-                                            <span class="status sending"><i
-                                                class="material-icons">access_time</i></span>
+                                            <div v-if="pendingMessageStatus.has(message.messageId)">
+                                                <span class="status sent error" v-if="pendingMessageStatus.get(message.messageId) == 'SEND_FAILED'"><i class="material-icons">error</i></span>
+                                                <span class="status sending" v-if="pendingMessageStatus.get(message.messageId) == 'SENDING'"><i class="material-icons">access_time</i></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -80,18 +69,15 @@ import MessageLayout from '@/layout/message-layout.vue';
 import Spinner from '@/components/Spinner.vue';
 import { mapGetters } from 'vuex'
 import $ from 'jquery'
+import firebase from 'firebase'
 
 export default {
 
     data() {
         return {
             firebaseGrowthDB: {},
-            messageList: [{
-                messageId: "id1",
-                isMessageBySelf: true,
-                messageText: "Test render",
-                messageTime: "1/2/3"
-            }, {messageId: "id2", isMessageBySelf: false, messageText: "Test render 2", messageTime: "1/2/4"}],
+            channelId: "",
+            messageList: [],
             isConversationBlocked: false,
             toSendMessageText: "",
             isUserBlockedBySelf: false,
@@ -105,7 +91,7 @@ export default {
             isChannelInOtherUserWatchlist: false,
             firstMessageOfDayCheckMap: new Map(),
             isConnectedToServer: false,
-            pendingMessageStatus: new Map()
+            pendingMessageStatus: {}
         }
     },
 
@@ -123,10 +109,10 @@ export default {
 
         loadMessagesInConversation() {
             const self = this;
-            console.log("Loading Messages in Conversation : ", self.channelId);
+            debugger;
             this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.otherUserId).child(self.channelId).on('value', function (snapshot) {
                 console.log("Changed other user watched channel status : ", snapshot.val());
-                if (snapshot.val() === true) {
+                if (snapshot.val() == true) {
                     self.isChannelInOtherUserWatchlist = true;
                 } else {
                     self.isChannelInOtherUserWatchlist = false;
@@ -135,7 +121,7 @@ export default {
             }, self);
             this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(this.getUserDetails.userId).child(self.channelId).on('value', function (snapshot) {
                 console.log("Changed self user watched channel status : ", snapshot.val());
-                if (snapshot.val() === true) {
+                if (snapshot.val() == true) {
                     self.isChannelInSelfWatchlist = true;
                 } else {
                     self.isChannelInSelfWatchlist = false;
@@ -144,7 +130,7 @@ export default {
             }, self);
             console.log('Loading conversations from firebase DB for channel : ', self.channelId);
             this.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(this.getUserDetails.userId).child(self.channelId).once('value').then(function (snapshot) {
-                if (snapshot.val() !== undefined) {
+                if (snapshot.val() != undefined) {
                     console.log("Last read message : ", snapshot.val().lastReadMessage);
                     console.log("Last deleted message : ", snapshot.val().lastDeletedMessage);
                     self.lastDeletedMessageId = snapshot.val().lastDeletedMessage;
@@ -160,28 +146,28 @@ export default {
             let currentDate = new Date();
             let currentDateStart = currentDate.setHours(0, 0, 0, 0);
             let isFirstMessageOfDay = false;
-            let dayDefinition = "";
+            let dayDefenition = "";
             let messageDate = new Date(sentTime);
             let messageDateKey = messageDate.toLocaleDateString();
             if (!self.firstMessageOfDayCheckMap.has(messageDateKey)) {
                 self.firstMessageOfDayCheckMap.set(messageDateKey, true);
                 isFirstMessageOfDay = true;
                 if (+messageDate >= +currentDateStart) {
-                    dayDefinition = "TODAY";
+                    dayDefenition = "TODAY";
                 }
                 else {
                     let yesterdayDate = new Date();
                     yesterdayDate.setTime(currentDate.getTime() - (24 * 3600000));
                     let yesterdayDateStart = yesterdayDate.setHours(0, 0, 0, 0);
                     if (+messageDate >= +yesterdayDateStart) {
-                        dayDefinition = "YESTERDAY";
+                        dayDefenition = "YESTERDAY";
                     }
                     else {
-                        dayDefinition = messageDateKey;
+                        dayDefenition = messageDateKey;
                     }
                 }
             }
-            return {isFirstMessageOfDay: isFirstMessageOfDay, dayDefinition: dayDefinition};
+            return {isFirstMessageOfDay: isFirstMessageOfDay, dayDefenition: dayDefenition};
         },
 
 
@@ -194,19 +180,19 @@ export default {
 
         attachMessageChildAddedListener () {
             const self = this;
-            let channelMessagesRef = this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).orderByKey();
+            var channelMessagesRef = this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).orderByKey();
             debugger;
-            if (self.lastDeletedMessageId !== undefined) {
+            if (self.lastDeletedMessageId != undefined) {
                 channelMessagesRef = channelMessagesRef.startAt(self.lastDeletedMessageId);
             }
             channelMessagesRef.on('child_added', function (snapshot) {
                 debugger;
-                if (self.lastDeletedMessageId === snapshot.key) {
+                if (self.lastDeletedMessageId == snapshot.key) {
                     console.log("Skipping the first message, since firebase by default doesnt have a exclusive range query");
                     return;
                 }
-                let toPushMessage = self.buildMessage(snapshot);
-                self.messages.push(toPushMessage);
+                var toPushMessage = self.buildMessage(snapshot);
+                self.messageList.push(toPushMessage);
                 self.lastDeliveredMessageId = snapshot.key
             }, function () {
             }, self);
@@ -229,27 +215,28 @@ export default {
 
 
         buildMessage (snapshot) {
-            let message = snapshot.val();
+            const self = this;
+            var message = snapshot.val();
             console.log("Message added : ", message, " for channel : ", self.channelId);
-            let isMessageBySelf = false;
-            if (message.senderId === this.getUserDetails.userId) {
+            var isMessageBySelf = false;
+            if (message.senderId == this.getUserDetails.userId) {
                 isMessageBySelf = true;
             }
-            let dateDisplayParsed = parseDateDisplay(message.sendTime);
-            let messageTime = new Date(message.sendTime).toLocaleString('en-US', {
+            var dateDisplayParsed = self.parseDateDisplay(message.sendTime);
+            var messageTime = new Date(message.sendTime).toLocaleString('en-US', {
                 hour: 'numeric',
                 minute: 'numeric',
                 hour12: true
             });
             console.log('Message Time : ', messageTime);
-            let toPushMessage = {
+            var toPushMessage = {
                 messageId: snapshot.key,
                 isMessageBySelf: isMessageBySelf,
                 messageText: message.messageText,
                 messageTime: messageTime
             };
             toPushMessage.isFirstMessageOfDay = dateDisplayParsed.isFirstMessageOfDay;
-            toPushMessage.dayDefinition = dateDisplayParsed.dayDifenition;
+            toPushMessage.dayDefenition = dateDisplayParsed.dayDefenition;
             return toPushMessage;
         },
 
@@ -258,11 +245,11 @@ export default {
             const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).on('value', function (snapshot) {
                 console.log("Changed blocked status Value : ", snapshot.val());
-                self.isUserBlockedBySelf(snapshot.val());
+                self.isUserBlockedBySelf = snapshot.val();
             }, function () {
             }, self);
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(self.otherUserId).child(this.getUserDetails.userId).on('value', function (snapshot) {
-                self.isBlockedByOtherUser(snapshot.val());
+                self.isBlockedByOtherUser = snapshot.val();
                 console.log("Changed blocked status Value for other user : ", snapshot.val());
             }, function () {
             }, self);
@@ -329,28 +316,29 @@ export default {
             debugger;
             const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('user_profile').child(self.otherUserId).once('value').then(function (snapshot) {
-                if (snapshot.val() === undefined) {
+                if (snapshot.val() == undefined) {
                     console.log("No profile data present for the other user. Using data from channel metadata");
                     return;
                 }
                 else {
                     let otherUserProfile = snapshot.val();
-                    if (otherUserProfile.displayName !== self.conversationDisplayName()) {
+                    if (otherUserProfile.displayName != self.conversationDisplayName()) {
                         self.conversationDisplayName(otherUserProfile.displayName);
                     }
-                    if (otherUserProfile.profileImageUrl !== self.conversationImageUrl()) {
-                        self.conversationImageUrl(otherUserProfile.profileImageUrl);
-                        let scaledProfileImageUrl = getImageUrl(otherUserProfile.profileImageUrl, 100);
-                        self.conversationImageUrlScaled(scaledProfileImageUrl);
+                    if (otherUserProfile.profileImageUrl != self.conversationImageUrl()) {
+                        self.conversationImageUrl = otherUserProfile.profileImageUrl;
+                        let scaledProfileImageUrl = self.getImageUrl(otherUserProfile.profileImageUrl, 100);
+                        self.conversationImageUrlScaled = scaledProfileImageUrl;
                     }
-                    if (otherUserProfile.profileUrl !== self.otherUserProfileUrl()) {
-                        self.otherUserProfileUrl(otherUserProfile.profileUrl);
+                    if (otherUserProfile.profileUrl != self.otherUserProfileUrl) {
+                        self.otherUserProfileUrl = otherUserProfile.profileUrl;
                     }
                 }
             });
         },
 
         getImageUrl( imageUrl, width, compressed ) {
+            const self = this;
             if( imageUrl == null ) return null;
             if( imageUrl.startsWith( "http://" ) && imageUrl.indexOf( "ptlp.co" ) !== -1 )
                 imageUrl = "https://" + imageUrl.substr(7);
@@ -381,20 +369,20 @@ export default {
             let userInChannel = false;
             $.each(channelUsersData, function (user, userData) {
                 debugger;
-                if (user === self.getUserDetails.userId) {
+                if (user == self.getUserDetails.userId) {
                     userInChannel = true;
                 }
-                else if (user === self.otherUserId) {
-                    self.conversationDisplayName(userData.displayName);
-                    self.conversationImageUrl(userData.profileImageUrl);
+                else if (user == self.otherUserId) {
+                    self.conversationDisplayName = userData.displayName;
+                    self.conversationImageUrl = userData.profileImageUrl;
                     let scaledProfileImageUrl = self.getImageUrl(userData.profileImageUrl, 100);
-                    self.conversationImageUrlScaled(scaledProfileImageUrl);
-                    self.otherUserProfileUrl(userData.profileUrl);
+                    self.conversationImageUrlScaled = scaledProfileImageUrl;
+                    self.otherUserProfileUrl = userData.profileUrl;
                 }
                 console.log(user, userData);
             });
             if (userInChannel !== true) {
-                redirect('/messages');
+                this.$router.push('/messages');
             }
             self.loadMessagesInConversation();
             self.watchBlockedConversation();
@@ -403,11 +391,10 @@ export default {
 
 
         setAllPendingMessageStatus (status) {
-            debugger;
             const self = this;
             self.pendingMessageStatus.forEach(function (value, key) {
                 if (value() !== "SEND_SUCCESS") {
-                    self.pendingMessageStatus.get(key)(status);
+                    self.pendingMessageStatus.set(key,status);
                 }
             });
         },
@@ -417,15 +404,15 @@ export default {
             const self = this;
             let addChannelToWatchlistUpdate = {};
             let watchlistUpdateNeeded = false;
-            if (self.isChannelInSelfWatchlist !== true) {
+            if (self.isChannelInSelfWatchlist != true) {
                 addChannelToWatchlistUpdate['/CHATS/user_watched_channels/' + this.getUserDetails.userId + '/' + self.channelId] = true;
                 watchlistUpdateNeeded = true;
             }
-            if (self.isChannelInOtherUserWatchlist !== true) {
+            if (self.isChannelInOtherUserWatchlist != true) {
                 addChannelToWatchlistUpdate['/CHATS/user_watched_channels/' + self.otherUserId + '/' + self.channelId] = true;
                 watchlistUpdateNeeded = true;
             }
-            if (watchlistUpdateNeeded === true) {
+            if (watchlistUpdateNeeded == true) {
                 this.firebaseGrowthDB.ref().update(addChannelToWatchlistUpdate, function (error) {
                     if (error) {
                         console.log("Error updating data:", error);
@@ -434,22 +421,22 @@ export default {
             }
             let messagePushRef = this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).push();
             let messageId = messagePushRef.key;
-            let sendStatus = self.isConnectedToServer === true ? "SENDING" : "SEND_FAILED";
+            let sendStatus = self.isConnectedToServer == true ? "SENDING" : "SEND_FAILED";
             self.pendingMessageStatus.set(messageId, sendStatus);
             messagePushRef.set({
                 senderId: this.getUserDetails.userId + "",
-                messageText: self.toSendMessageText(),
+                messageText: self.toSendMessageText,
                 sendTime: firebase.database.ServerValue.TIMESTAMP
             }, function (error) {
                 if (error) {
                     console.log("Message : " + messageId + " could not be saved." + error);
-                    self.pendingMessageStatus.get(messageId)("SEND_FAILED");
+                    self.pendingMessageStatus.set(messageId,"SEND_FAILED");
                 } else {
                     console.log("Message : " + messageId + " saved successfully.");
-                    self.pendingMessageStatus.get(messageId)("SEND_SUCCESS");
+                    self.pendingMessageStatus.set(messageId,"SEND_SUCCESS");
                 }
             });
-            self.toSendMessageText("");
+            self.toSendMessageText = "";
         },
 
 
@@ -487,7 +474,7 @@ export default {
 
     created() {
         if (this.getUserDetails.isGuest) {
-            this.$router.push('login');
+            this.$router.go('/login');
         }
     },
 
@@ -503,7 +490,7 @@ export default {
                 self.loadChannelDetails();
                 let connectedRef = self.firebaseGrowthDB.ref(".info/connected");
                 connectedRef.on("value", function (snap) {
-                    if (snap.val() === true) {
+                    if (snap.val() == true) {
                         console.log("connected to internet");
                         self.isConnectedToServer = true;
                         self.setAllPendingMessageStatus("SENDING");
