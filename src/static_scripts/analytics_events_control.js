@@ -55,6 +55,14 @@ export default {
         "LOCATION": "HEADER",
         "ACTION": "GOLOGIN"
     },
+    "GOCREATE_HEADER_GLOBAL": {
+        "LOCATION": "HEADER",
+        "ACTION": "GOMYPROFILE"
+    },
+    "GODISCOVER_HEADER_GLOBAL": {
+        "LOCATION": "HEADER",
+        "ACTION": "GOMYPROFILE"
+    },
     "GOMYPROFILE_HEADER_GLOBAL": {
         "LOCATION": "HEADER",
         "ACTION": "GOMYPROFILE"
