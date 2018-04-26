@@ -167,7 +167,7 @@
 <script>
 import MainLayout from '@/layout/experiments/rating_v3/main-layout.vue';
 import Recommendation from '@/components/Recommendation.vue';
-import AboutAuthor from '@/components/AboutAuthor.vue';
+import AboutAuthor from '@/components/experiments/rating_v3/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
 import Reviews from '@/components/experiments/rating_v3/Reviews.vue';
 import ServerError from '@/components/ServerError.vue';
