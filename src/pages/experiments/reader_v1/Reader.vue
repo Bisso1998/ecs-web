@@ -343,7 +343,7 @@ export default {
         checkLoginStatusAndFollowOrUnfollowAuthor() {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
             let action = !this.getAuthorData.following ? 'FOLLOW' : 'UNFOLLOW';
-            this.triggerAnanlyticsEvent(`${action}_INDEX_READER`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`${action}_INDEX_READER`, 'WGEN005', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId,
                 'ENTITY_VALUE': this.getAuthorData.followCount
@@ -987,9 +987,8 @@ export default {
             overflow: hidden;
             cursor: pointer;
             button {
-                background: #d0021b;
-                border: 1px solid #d0021b;
-                border: 1px solid #d0021b;
+                background: #9e9e9e;
+                border: 1px solid #9e9e9e;
                 border-top-left-radius: 3px;
                 border-bottom-left-radius: 3px;
                 outline: none;
@@ -1007,9 +1006,9 @@ export default {
             }
             span {
                 background: #fff;
-                color: #d0021b;
+                color: #555;
                 display: inline-block;
-                border: 1px solid #d0021b;
+                border: 1px solid #9e9e9e;
                 padding: 5px 10px;
                 border-top-right-radius: 3px;
                 border-bottom-right-radius: 3px;

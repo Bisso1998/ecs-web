@@ -69,4 +69,14 @@ export default {
         "LOCATION": "BOOKEND",
         "ACTION": "SHAREBOOKWA"
     },
+    "FOLLOW_INDEX_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "INDEX",
+        "ACTION": "FOLLOW"
+    },
+    "UNFOLLOW_INDEX_READER": {
+        "SCREEN_NAME": "READER",
+        "LOCATION": "INDEX",
+        "ACTION": "UNFOLLOW"
+    },
 }
