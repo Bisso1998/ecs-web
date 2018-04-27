@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         triggerAnanlyticsEventForClick(categoryUrl){
-            this.triggerAnanlyticsEvent('CLICKCATEGORY_TOPICS_DISCOVER', 'CONTROL', {
+            this.triggerAnanlyticsEvent('CLICKCATEGORY_TOPICS_DISCOVER', 'WGEN013', {
                 'USER_ID': this.getUserDetails.userId,
                 'PARENT_ID': categoryUrl
             });
@@ -61,7 +61,7 @@ export default {
         console.log();
     },
     mounted() {
-        this.triggerAnanlyticsEvent('LANDED_DISCOVERM_DISCOVER', 'CONTROL', {
+        this.triggerAnanlyticsEvent('LANDED_DISCOVERM_DISCOVER', 'WGEN013', {
             'USER_ID': this.getUserDetails.userId
         });
     },
@@ -112,10 +112,10 @@ export default {
             color: #d0021b;
             display: inline-block;
             @media screen and (max-width: 768px ) {
-                width: 100%;
+                width: 48%;
                 max-width: 340px;
                 height: 150px;
-                margin: 10px 2px;
+                margin: 3px 2px;
             }
             a {
                 color: #212121;
@@ -143,6 +143,7 @@ export default {
                 @media screen and (max-width: 768px ) {
                     height: 50px;
                     line-height: 50px;
+                    font-size: 12px;
                 }
             }
         }
