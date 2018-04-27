@@ -47,11 +47,11 @@
                                 </div>
                                 <span v-if="!getPratilipiData.hasAccessToUpdate">
                                     <button v-if="!getUserPratilipiData.addedToLib" class="library-btn" @click="addPratilipiToLibrary(getPratilipiData.pratilipiId)">
-                                        <span>+ __("library")</span>
+                                        <span>__("add_to_library")</span>
                                     </button>
 
                                     <button v-if="getUserPratilipiData.addedToLib" class="library-btn" @click="removeFromLibraryAndTriggerAnalytics(getPratilipiData.pratilipiId)">
-                                        <span>- __("library")</span>
+                                        <span>__("remove_from_library")</span>
                                     </button>
                                 </span>
 
@@ -404,7 +404,7 @@ export default {
         },
         addPratilipiToLibrary(pratilipiId) {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-            this.triggerAnanlyticsEvent(`LIBRARYADD_BOOKM_BOOK`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`LIBRARYADD_BOOKM_BOOK`, 'WGEN003', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
             });
@@ -417,7 +417,7 @@ export default {
         },
         removeFromLibraryAndTriggerAnalytics(pratilipiId) {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-            this.triggerAnanlyticsEvent(`LIBRARYREMOVE_BOOKM_BOOK`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`LIBRARYREMOVE_BOOKM_BOOK`, 'WGEN003', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
             });
@@ -777,6 +777,12 @@ export default {
                 }
                 .library-btn {
                     background: #9E9E9E;
+                    line-height: initial;
+                    vertical-align: middle;
+                    font-size: 13px;
+                    &:hover {
+                        opacity: 1;
+                    }
                 }
                 .read-btn {
                     background: #d0021b;
