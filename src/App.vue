@@ -57,8 +57,13 @@ export default {
                         }
                     });
                 });
+
+                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
+                this.setAnalyticsUserProperty('IS_LOGGED_ID', true);
+                this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
             } else {
-                console.log('Im a guest')
+                this.setAnalyticsUserProperty('USER_ID', "0");
+                this.setAnalyticsUserProperty('IS_LOGGED_ID', false);
             }
 
             const that = this;
@@ -105,10 +110,12 @@ export default {
                 FB.AppEvents.logPageView();
                 if (!that.getUserDetails.isGuest) {
                     that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
+                    console.log('logging is logged in to true');
                     that.setAnalyticsUserProperty('IS_LOGGED_ID', true);
                     that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
                 } else {
                     that.setAnalyticsUserProperty('USER_ID', "0");
+                    console.log('logging is logged in to false');
                     that.setAnalyticsUserProperty('IS_LOGGED_ID', false);
                 }
                 that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
