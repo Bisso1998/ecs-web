@@ -116,7 +116,7 @@ export default {
                 width: 48%;
                 max-width: 340px;
                 height: 150px;
-                margin: 3px 2px;
+                margin: 0 2px;
             }
             a {
                 color: #212121;
