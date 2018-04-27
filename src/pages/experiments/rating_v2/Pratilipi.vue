@@ -407,7 +407,7 @@ export default {
         },
         addPratilipiToLibrary(pratilipiId) {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-            this.triggerAnanlyticsEvent(`LIBRARYADD_BOOKM_BOOK`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`LIBRARYADD_BOOKM_BOOK`, 'WGEN002', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
             });
@@ -420,7 +420,7 @@ export default {
         },
         removeFromLibraryAndTriggerAnalytics(pratilipiId) {
             const pratilipiAnalyticsData = this.getPratilipiAnalyticsData(this.getPratilipiData);
-            this.triggerAnanlyticsEvent(`LIBRARYREMOVE_BOOKM_BOOK`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`LIBRARYREMOVE_BOOKM_BOOK`, 'WGEN002', {
                 ...pratilipiAnalyticsData,
                 'USER_ID': this.getUserDetails.userId
             });
@@ -776,11 +776,12 @@ export default {
                     cursor: pointer;
                     &:hover {
                         text-decoration: none;
-                        opacity: 0.8;
                     }
                 }
                 .library-btn {
-                    background: #9E9E9E;
+                    background: #fff;
+                    color: #555;
+                    border: 1px solid #9e9e9e;
                 }
                 .read-btn {
                     background: #d0021b;
