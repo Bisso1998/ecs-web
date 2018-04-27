@@ -54,4 +54,14 @@ export default {
         "LOCATION": "AUTHORDETAIL",
         "ACTION": "UNFOLLOW"
     },
+    "LIBRARYADD_BOOKM_BOOK": {
+        "SCREEN_NAME": "BOOK",
+        "LOCATION": "BOOKM",
+        "ACTION": "LIBRARYADD"
+    },
+    "LIBRARYREMOVE_BOOKM_BOOK": {
+        "SCREEN_NAME": "BOOK",
+        "LOCATION": "BOOKM",
+        "ACTION": "LIBRARYREMOVE"
+    },
 }
