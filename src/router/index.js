@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import NotificationComponent from '@/pages/Notification.vue'
 import ListPageComponent from '@/pages/ListPage.vue'
-import DiscoverPageComponent from '@/pages/Discovery.vue'
 import StaticComponent from '@/pages/Static.vue'
 import EventsPageComponent from '@/pages/Events.vue'
 import EventPageComponent from '@/pages/Event.vue'
@@ -122,7 +121,24 @@ const router = new Router({
     }, {
         path: '/discover',
         name: 'Discovery_Page',
-        component: DiscoverPageComponent,
+        component: () => {
+            const isTrue = true;
+            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+                return import('@/pages/experiments/discovery_v1/Discovery.vue');
+            }
+            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+                return import('@/pages/experiments/discovery_v2/Discovery.vue');
+            }
+            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+                return import('@/pages/experiments/discovery_v3/Discovery.vue');
+            }
+            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+                return import('@/pages/experiments/discovery_v4/Discovery.vue');
+            }
+            else {
+                return import('@/pages/Discovery.vue');
+            }
+        },
         meta: {
             'title': '__("seo_navigation_page") | __("pratilipi")',
             'store': 'discover'

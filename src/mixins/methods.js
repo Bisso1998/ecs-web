@@ -12,6 +12,10 @@ import profileV1AnalyticsEvents from '@/static_scripts/experiment_events/profile
 import profileV2AnalyticsEvents from '@/static_scripts/experiment_events/profile_v2'
 import profileV3AnalyticsEvents from '@/static_scripts/experiment_events/profile_v3'
 import profileV4AnalyticsEvents from '@/static_scripts/experiment_events/profile_v4'
+import discoveryV1AnalyticsEvents from '@/static_scripts/experiment_events/discovery_v1'
+import discoveryV2AnalyticsEvents from '@/static_scripts/experiment_events/discovery_v2'
+import discoveryV3AnalyticsEvents from '@/static_scripts/experiment_events/discovery_v3'
+import discoveryV4AnalyticsEvents from '@/static_scripts/experiment_events/discovery_v4'
 
 const rating_v1 = ['WGEN001'];
 const rating_v2 = ['WGEN002'];
@@ -25,6 +29,11 @@ const profile_v1 = ['WGEN009'];
 const profile_v2 = ['WGEN010'];
 const profile_v3 = ['WGEN011'];
 const profile_v4 = ['WGEN012'];
+const discovery_v1 = ['WGEN013'];
+const discovery_v2 = ['WGEN014'];
+const discovery_v3 = ['WGEN015'];
+const discovery_v4 = ['WGEN016'];
+
 
 let REFERRER_EVENT;
 let REFERRER_EXPERIMENTID;
@@ -333,6 +342,18 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             break;
         case (profile_v4.indexOf(experimentType) > -1):
             eventProps = { ...profileV4AnalyticsEvents[eventName] };
+            break;
+        case (discovery_v1.indexOf(experimentType) > -1):
+            eventProps = { ...discoveryV1AnalyticsEvents[eventName] };
+            break;
+        case (discovery_v2.indexOf(experimentType) > -1):
+            eventProps = { ...discoveryV2AnalyticsEvents[eventName] };
+            break;
+        case (discovery_v3.indexOf(experimentType) > -1):
+            eventProps = { ...discoveryV3AnalyticsEvents[eventName] };
+            break;
+        case (discovery_v4.indexOf(experimentType) > -1):
+            eventProps = { ...discoveryV4AnalyticsEvents[eventName] };
             break;
     }
     
