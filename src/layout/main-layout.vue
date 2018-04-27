@@ -49,7 +49,8 @@ export default {
     methods: {
         ...mapActions([
             'fetchUserDetails',
-            'fetchInitialNotifications'
+            'fetchInitialNotifications',
+            'attachMessageNotificationListener'
         ])
     },
     components: {
@@ -68,6 +69,7 @@ export default {
         'getUserDetails.userId'(newValue) {
             if (newValue) {
                 this.fetchInitialNotifications({ language: this.getCurrentLanguage().fullName.toUpperCase(), resultCount: 10 });
+                this.attachMessageNotificationListener(this.getUserDetails.userId);
             }
         }
     },

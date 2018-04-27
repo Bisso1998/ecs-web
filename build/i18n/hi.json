@@ -192,6 +192,7 @@
     "save_changes": "परिवर्तन सुरक्षित करें",
     "show_more": "और देखें",
     "show_less": "कम देखें",
+    "show_all_messages": "Show all messages",
     "read": "पढ़िए",
     "write": "लिखिए",
     "free": "निःशुल्क",
@@ -508,7 +509,7 @@
     "hours": "घंटे",
     "minute": "मिनट",
     "minutes": "मिनट",
-    
+
     "menu_category": "श्रेणी",
     "menu_profile": "प्रोफ़ाइल",
     "join_pratilipi": "प्रतिलिपि से जुड़े",

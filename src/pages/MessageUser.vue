@@ -495,13 +495,10 @@ export default {
 
     },
 
-    created() {
+    mounted() {
         if (this.getUserDetails.isGuest) {
             this.$router.push('/login');
         }
-    },
-
-    mounted() {
         const self = this;
         import('firebase').then((firebase) => {
             setTimeout(function() {

@@ -17,7 +17,8 @@ export default {
         ...mapActions([
             'fetchUserDetails',
             'fetchInitialNotifications',
-            'setNotificationCount'
+            'setNotificationCount',
+            'attachMessageNotificationListener'
         ])
     },
     computed: {

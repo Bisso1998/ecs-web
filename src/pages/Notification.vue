@@ -56,33 +56,22 @@
                                 </div>
                             </div>
                             <ul class="chat-list" v-if="!getUserDetails.isGuest">
-                                <li class="chat-item" v-for="messageNotification in messageNotificationList">
+                                <li class="chat-item" v-for="messageNotification in messageNotificationList" v-bind:key="messageNotification.messageId">
+                                    <router-link
+                                        :to="'/messages/' + messageNotification.userId">
                                     <div>
                                         <div class="user-img"><img v-bind:src="messageNotification.profileImageUrl" alt="profile-img"></div>
                                         <div class="chat-wrap">
                                             <div class="user-info">
-                                                <div class="user-name">Roshan</div>
-                                                <div class="user-last-msg">Lorem ipsum</div>
+                                                <div class="user-name" v-text="messageNotification.channelName"></div>
+                                                <div class="user-last-msg" v-text="messageNotification.lastMessage"></div>
                                             </div>
-                                            <div class="chat-info unread">
-                                                <div class="chat-time">11:30 PM</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="chat-item">
-                                    <div>
-                                        <div class="user-img"><img src="https://0.ptlp.co/author/image?width=50" alt="profile-img"></div>
-                                        <div class="chat-wrap">
-                                            <div class="user-info">
-                                                <div class="user-name">Rahul</div>
-                                                <div class="user-last-msg">Lorem ipsum</div>
-                                            </div>
-                                            <div class="chat-info unread">
-                                                <div class="chat-time">11:20 PM</div>
+                                            <div class="chat-info" v-bind:class="{'unread' : readMessageNotifications.indexOf(messageNotification.messageId) == -1}">
+                                                <div class="chat-time" v-text="messageNotification.lastMessageTimeDisplay">11:30 PM</div>
                                             </div>
                                         </div>
                                     </div>
+                                    </router-link>
                                 </li>
                             </ul>
 
@@ -90,7 +79,7 @@
                             class="show-more"
                             :to="{ name: 'Messages_Page'}"
                             v-if="!getUserDetails.isGuest">
-                            __("show_more")
+                            __("show_all_messages")
                             </router-link>
                         </div>
                     </div>
@@ -125,13 +114,16 @@ export default {
             'getNotificationCursor',
             'getUserDetails',
 
-            'messageNotificationList'
+            'messageNotificationList',
+            'readMessageNotifications',
+            'fetchedChannelMetadataData'
         ])
     },
     methods: {
         ...mapActions([
             'changeNotificationStatusToRead',
-            'fetchMoreNotifications'
+            'fetchMoreNotifications',
+            'loadMessagesForConversation'
         ]),
         updateScroll() {
             this.scrollPosition = window.scrollY

@@ -22,5 +22,11 @@ export default {
     getNotificationLoadingState: state => state.loading_state,
     getNotificationCursor: state => state.cursor,
 
-    messageNotificationList: state => state.messageNotificationList
+
+    //Message Notifications
+    messageNotificationList: state => state.messageNotificationList,
+    readMessageNotifications: state => state.readMessageNotifications,
+    fetchedChannelMetadataData: state => state.fetchedChannelMetadataData,
+    readMessageNotifications: state => state.readMessageNotifications
+
 }

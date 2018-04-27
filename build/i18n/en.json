@@ -192,6 +192,7 @@
     "save_changes": "Save Changes",
     "show_more": "show more",
     "show_less": "show less",
+    "show_all_messages": "Show all messages",
     "read": "Read",
     "write": "Write",
     "free": "FREE !",
@@ -508,7 +509,7 @@
     "hours": "hrs",
     "minute": "min",
     "minutes": "mins",
-    
+
     "menu_category": "Category",
     "menu_profile": "Profile",
     "join_pratilipi": "Join Pratilipi",
