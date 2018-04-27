@@ -11,8 +11,9 @@
                             <ul>
                                 <li v-for="each_category in each_category_section.categories" :key="each_category.categoryUrl" v-if="each_category.pratilipiListData.listName">
                                     <router-link
-                                    :to="{ path: each_category.categoryUrl }" @click.native="triggerAnanlyticsEventForClick(each_category.categoryUrl)">
-                                        <span class="category-img" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/resource-all/android-category-banners/' + each_category.imageFileName  + ')' }"></span>
+                                    :to="{ path: each_category.categoryUrl }" @click.native="triggerAnanlyticsEventForClick(each_category.categoryUrl)"
+                                    class="category-img"
+                                    v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/resource-all/android-category-banners/' + each_category.imageFileName  + ')' }">
                                         <span class="category-name">{{ each_category.title }}</span>
                                     </router-link>
                                 </li>
@@ -46,7 +47,7 @@ export default {
     },
     methods: {
         triggerAnanlyticsEventForClick(categoryUrl){
-            this.triggerAnanlyticsEvent('CLICKCATEGORY_TOPICS_DISCOVER', 'CONTROL', {
+            this.triggerAnanlyticsEvent('CLICKCATEGORY_TOPICS_DISCOVER', 'WGEN016', {
                 'USER_ID': this.getUserDetails.userId,
                 'PARENT_ID': categoryUrl
             });
@@ -61,7 +62,7 @@ export default {
         console.log();
     },
     mounted() {
-        this.triggerAnanlyticsEvent('LANDED_DISCOVERM_DISCOVER', 'CONTROL', {
+        this.triggerAnanlyticsEvent('LANDED_DISCOVERM_DISCOVER', 'WGEN016', {
             'USER_ID': this.getUserDetails.userId
         });
     },
@@ -107,15 +108,15 @@ export default {
             width: 300px;
             background: #fff;
             border: 1px solid #e9e9e9;
-            height: 252px;
+            height: 200px;
             margin: 10px;
             color: #d0021b;
             display: inline-block;
             @media screen and (max-width: 768px ) {
-                width: 100%;
+                width: 48%;
                 max-width: 340px;
                 height: 150px;
-                margin: 10px 2px;
+                margin: 3px 2px;
             }
             a {
                 color: #212121;
@@ -125,21 +126,26 @@ export default {
             }
             .category-img {
                 width: 100%;
-                height: 210px;
+                height: 200px;
                 display: block;
                 background-size: cover;
                 background-position: right center;
+                position: relative;
                 @media screen and (max-width: 768px ) {
-                    height: 100px;
+                    height: 150px;
                 }
             }
             .category-name {
                 text-align: center;
-                font-size: 14px;
+                font-size: 12px;
                 display: block;
                 height: 40px;
                 line-height: 40px;
-                color: #d00b12;
+                color: #fff;
+                background: rgba(0,0,0,0.7);
+                position: absolute;
+                top: 0;
+                width: 100%;
                 @media screen and (max-width: 768px ) {
                     height: 50px;
                     line-height: 50px;
