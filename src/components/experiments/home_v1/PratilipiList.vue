@@ -115,7 +115,7 @@ export default {
             this.$refs.slick.reSlick();
         },
         triggerListLink() {
-            this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'WGEN017', {
                 'USER_ID': this.getUserDetails.userId,
                 'PARENT_ID': this.listPageUrl
             });
