@@ -2,7 +2,7 @@
 	<div class="section">
 		<div class="container-fluid">
 	        <h2 class="section-title">
-                <router-link v-if="listPageUrl" :to="listPageUrl" @click.native="triggerListLink">{{title}}</router-link>
+                <router-link v-if="listPageUrl" :to="listPageUrl" @click.native="triggerListLink">{{title}} <span class="title-view-more">__("view_more") <i class="material-icons">keyboard_arrow_right</i></span></router-link>
                 <span v-else>{{title}}</span>
             </h2>
 	        <div class="pratilipi-list" v-if="pratilipiList.length > 0">
@@ -167,6 +167,17 @@ export default {
                 color: #212121;
                 padding: 5px 0 5px 10px;
                 display: block;
+            }
+            .title-view-more {
+                font-size: 12px;
+                position: absolute;
+                right: 0;
+                padding: 0 10px;
+                color: #d0021b;
+                background: #fff;
+                i {
+                    vertical-align: middle;
+                }
             }
 			@media screen and (max-width: 576px ) {
                 font-size: 18px;
