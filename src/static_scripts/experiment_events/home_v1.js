@@ -9,4 +9,14 @@ export default {
         "LOCATION": "COLLECTIONS",
         "ACTION": "CLICKCOLLECTION"
     },
+    "VIEWED_COLLECTIONS_HOME": {
+        "SCREEN_NAME": "HOME",
+        "LOCATION": "COLLECTIONS",
+        "ACTION": "VIEWED"
+    },
+    "SWIPE_COLLECTIONS_HOME": {
+        "SCREEN_NAME": "HOME",
+        "LOCATION": "COLLECTIONS",
+        "ACTION": "SWIPE"
+    },
 }

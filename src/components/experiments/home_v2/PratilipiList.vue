@@ -2,7 +2,7 @@
 	<div class="section">
 		<div class="container-fluid">
 	        <h2 class="section-title">
-                <router-link v-if="listPageUrl" :to="listPageUrl" @click.native="triggerListLink">{{title}}</router-link>
+                <router-link v-if="listPageUrl" :to="listPageUrl" @click.native="triggerListLink">{{title}} <span class="title-view-more"><i class="material-icons">keyboard_arrow_right</i></span></router-link>
                 <span v-else>{{title}}</span>
             </h2>
 	        <div class="pratilipi-list" v-if="pratilipiList.length > 0">
@@ -103,7 +103,7 @@ export default {
         },
         handleBeforeChange() {
             if (this.$route.meta.store === 'homepage') {
-                this.triggerAnanlyticsEvent(`SWIPE_COLLECTIONS_HOME`, 'CONTROL', {
+                this.triggerAnanlyticsEvent(`SWIPE_COLLECTIONS_HOME`, 'WGEN018', {
                     'USER_ID': this.getUserDetails.userId,
                     'PARENT_ID': this.listPageUrl
                 });
@@ -115,7 +115,7 @@ export default {
             this.$refs.slick.reSlick();
         },
         triggerListLink() {
-            this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'WGEN018', {
                 'USER_ID': this.getUserDetails.userId,
                 'PARENT_ID': this.listPageUrl
             });
@@ -135,7 +135,7 @@ export default {
         'inViewport.now': function(visible) {
             if (visible) {
                 if (this.screenName === 'HOME') {
-                    this.triggerAnanlyticsEvent(`VIEWED_COLLECTIONS_HOME`, 'CONTROL', {
+                    this.triggerAnanlyticsEvent(`VIEWED_COLLECTIONS_HOME`, 'WGEN018', {
                         'USER_ID': this.getUserDetails.userId,
                         'PARENT_ID': this.listPageUrl
                     });
@@ -167,6 +167,14 @@ export default {
                 color: #212121;
                 padding: 5px 0 5px 10px;
                 display: block;
+            }
+            .title-view-more {
+                font-size: 12px;
+                position: absolute;
+                right: 0;
+                padding: 0 10px;
+                color: #d0021b;
+                background: #fff;
             }
 			@media screen and (max-width: 576px ) {
                 font-size: 18px;
