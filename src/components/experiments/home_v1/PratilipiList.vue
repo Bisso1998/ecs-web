@@ -167,6 +167,7 @@ export default {
                 color: #212121;
                 padding: 5px 0 5px 10px;
                 display: block;
+                position: relative;
             }
             .title-view-more {
                 font-size: 12px;
@@ -175,6 +176,10 @@ export default {
                 padding: 0 10px;
                 color: #d0021b;
                 background: #fff;
+                top: 0;
+                height: 30px;
+                line-height: 32px;
+                font-weight: 400;
             }
 			@media screen and (max-width: 576px ) {
                 font-size: 18px;
