@@ -30,10 +30,20 @@ const router = new Router({
         name: 'Home',
         component: () => {
             const isTrue = true;
-            if (isTrue) {
-                return import ('@/pages/Home.vue');
-            } else {
-                return import ('@/pages/experiments/pratilipi_modal/Home.vue');
+            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+                return import('@/pages/experiments/home_v1/Home.vue');
+            }
+            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+                return import('@/pages/experiments/home_v2/Home.vue');
+            }
+            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+                return import('@/pages/experiments/home_v3/Home.vue');
+            }
+            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+                return import('@/pages/experiments/home_v4/Home.vue');
+            }
+            else {
+                return import('@/pages/Home.vue');
             }
         },
         meta: {
