@@ -103,7 +103,7 @@ export default {
         },
         handleBeforeChange() {
             if (this.$route.meta.store === 'homepage') {
-                this.triggerAnanlyticsEvent(`SWIPE_COLLECTIONS_HOME`, 'CONTROL', {
+                this.triggerAnanlyticsEvent(`SWIPE_COLLECTIONS_HOME`, 'WGEN020', {
                     'USER_ID': this.getUserDetails.userId,
                     'PARENT_ID': this.listPageUrl
                 });
@@ -115,7 +115,7 @@ export default {
             this.$refs.slick.reSlick();
         },
         triggerListLink() {
-            this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'CONTROL', {
+            this.triggerAnanlyticsEvent(`CLICKCOLLECTION_${this.screenLocation}_${this.screenName}`, 'WGEN020', {
                 'USER_ID': this.getUserDetails.userId,
                 'PARENT_ID': this.listPageUrl
             });
@@ -135,7 +135,7 @@ export default {
         'inViewport.now': function(visible) {
             if (visible) {
                 if (this.screenName === 'HOME') {
-                    this.triggerAnanlyticsEvent(`VIEWED_COLLECTIONS_HOME`, 'CONTROL', {
+                    this.triggerAnanlyticsEvent(`VIEWED_COLLECTIONS_HOME`, 'WGEN020', {
                         'USER_ID': this.getUserDetails.userId,
                         'PARENT_ID': this.listPageUrl
                     });
@@ -167,6 +167,7 @@ export default {
                 color: #212121;
                 padding: 5px 0 5px 10px;
                 display: block;
+                text-decoration: underline;
             }
 			@media screen and (max-width: 576px ) {
                 font-size: 18px;
