@@ -63,6 +63,11 @@
                             <div class="follow-btn-w-count" v-if="getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="triggerEventAndFollowOrUnfollowAuthor"><!-- Following Button -->
                                 <button><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                             </div>
+                            
+                            <!-- Message Button -->
+                            <div class="message-btn" v-if="getUserDetails.userId !== getAuthorData.user.userId" @click="messageUser">
+                                <i class="material-icons">message</i> Message
+                            </div>
                         </div>
                         <Spinner v-if="getAuthorDataLoadingState === 'LOADING'"></Spinner>
                         <div class="col-md-12 profile-bottom" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
@@ -313,6 +318,10 @@ export default {
                 this.followOrUnfollowAuthor();
             }
         },
+        messageUser() {
+            console.log("clicked message button");
+            this.$router.push('/messages');
+        },
         openShareModal() {
             if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
                 this.triggerAnanlyticsEvent(`CLICKSHRUSER_MYPROFILEM_MYPROFILE`, 'CONTROL', {
@@ -560,7 +569,8 @@ export default {
             font-size: 14px;
             position: relative;
             text-align: center;
-            display: block;
+            display: inline-block;
+            vertical-align: middle;
             clear: both;
             overflow: hidden;
             cursor: pointer;
@@ -593,6 +603,23 @@ export default {
                 b {
                     font-size: 12px;
                 }
+            }
+        }
+        .message-btn {
+            background: #fff;
+            color: #d0021b;
+            display: inline-block;
+            border-radius: 3px;
+            vertical-align: middle;
+            font-size: 14px;
+            text-align: center;
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: 1px solid #d0021b;
+            i {
+                vertical-align: middle;
+                padding-right: 5px;
+                font-size: 18px;
             }
         }
         .profile-user-name {
