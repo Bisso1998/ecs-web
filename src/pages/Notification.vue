@@ -6,7 +6,7 @@
                     <div class="col-md-12">
                         <ul class="tab-menu">
                             <li @click="tabchange" class="active" data-tab="notifications">__("notification_notifications")</li>
-                            <li @click="tabchange" data-tab="messages">Messages</li>
+                            <li @click="tabchange" data-tab="messages">Messages <span class="message-dot"></span></li>
                         </ul>
                         <router-link
                         class="notification-settings"
@@ -318,6 +318,16 @@ export default {
             &:hover {
                 text-decoration: none;
                 color: #d0021b;
+            }
+            span.message-dot {
+                width: 6px;
+                height: 6px;
+                background: #d0021b;
+                display: inline-block;
+                border-radius: 50%;
+                vertical-align: top;
+                position: absolute;
+                margin: 2px;
             }
         }
     }

@@ -29,6 +29,7 @@
                             @click="triggerEventAndResetNotificationCount">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
+                                <span v-if="!notificationCount" class="message-notification"></span><!-- Todo: Update the condition for icon showing  -->
                             </div>
                         </div>
                         <div class="d-block d-lg-none search-box search-box-2 text-right">
@@ -42,6 +43,7 @@
                             class="notification-icon">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
+                                <span v-if="!notificationCount" class="message-notification"></span><!-- Todo: Update the condition for icon showing  -->
                             </div>
                         </div>
                     </div>
@@ -353,6 +355,13 @@ export default {
                 text-align: center;
                 font-size: 11px;
                 line-height: 22px;
+            }
+            span.message-notification {
+                width: 10px;
+                height: 10px;
+                top: 3px;
+                right: 2px;
+                border: 1px solid #fff;
             }
             &.router-link-exact-active , &.active {
                 color: #d00b12;
