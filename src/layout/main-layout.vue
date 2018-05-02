@@ -1,6 +1,6 @@
 <template>
     <div :class="currentLocale">
-        <Header :userDetails="getUserDetails" :notificationCount="getNotificationCount" ></Header>
+        <Header :userDetails="getUserDetails" :notificationCount="getNotificationCount" :pendingMessages="pendingMessages"></Header>
         <AppBanner></AppBanner>
         <slot></slot>
         <PratilipiModal></PratilipiModal>
@@ -35,7 +35,8 @@ export default {
     computed: {
         ...mapGetters([
             'getUserDetails',
-            'getNotificationCount'
+            'getNotificationCount',
+            'pendingMessages'
         ])
     },
     data() {

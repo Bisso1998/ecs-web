@@ -86,6 +86,10 @@ export default {
         commit('setNotificationCount', notificationCount);
     },
 
+    setPendingMessages({ commit, state }, status) {
+        commit('setPendingMessagesStatus', status);
+    },
+
     resetNotificationCount({ commit, state }) {
         import('firebase').then((firebase) => {
             const node = firebase.database().ref( "NOTIFICATION" ).child( state.data.userId ).child( "newNotificationCount" );

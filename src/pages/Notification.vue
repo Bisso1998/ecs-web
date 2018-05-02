@@ -6,7 +6,7 @@
                     <div class="col-md-12">
                         <ul class="tab-menu">
                             <li @click="tabchange" class="active" data-tab="notifications">__("notification_notifications")</li>
-                            <li @click="tabchange" data-tab="messages">Messages <span class="message-dot"></span></li>
+                            <li @click="tabchange" data-tab="messages">Messages <span class="message-dot" v-if="messageNotificationList.length > 0"></span></li>
                         </ul>
                         <router-link
                         class="notification-settings"
@@ -115,7 +115,6 @@ export default {
             'getUserDetails',
 
             'messageNotificationList',
-            'readMessageNotifications',
             'fetchedChannelMetadataData',
             'channelLastReadMessage'
         ])

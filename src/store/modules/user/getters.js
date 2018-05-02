@@ -17,9 +17,10 @@ export default {
     //         return total + product.price * product.quantity
     //     }, 0)
     // }
-    
+
     getUserDetails: state => state.data,
     getNotificationCount: state => state.notification_count,
+    pendingMessages: state => state.pending_messages,
     getLogoutStatus: state => state.logout_user,
     getLoginError: state => state.loading_error_message,
     getSignupSource: state => state.signup_source,

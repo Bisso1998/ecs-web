@@ -29,7 +29,7 @@
                             @click="triggerEventAndResetNotificationCount">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
-                                <span v-if="!notificationCount" class="message-notification"></span><!-- Todo: Update the condition for icon showing  -->
+                                <span v-if="!notificationCount && pendingMessages == true" class="message-notification"></span>
                             </div>
                         </div>
                         <div class="d-block d-lg-none search-box search-box-2 text-right">
@@ -74,6 +74,9 @@ export default {
         },
         notificationCount: {
             type: Number
+        },
+        pendingMessages: {
+            type: Boolean
         },
         isHidden: {
             type: Boolean

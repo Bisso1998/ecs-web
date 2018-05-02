@@ -5,5 +5,5 @@ export default {
 
     messageNotificationList: [],
     channelLastReadMessage: {},
-    fetchedChannelMetadataData: {},
+    fetchedChannelMetadataData: {}
 }
