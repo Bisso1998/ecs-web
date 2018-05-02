@@ -34,7 +34,7 @@ export default {
     },
 
     setReaderPratilipiIndexDataLoadingTrue(state) {
-        state.index.loading_state = 'LODING'
+        state.index.loading_state = 'LOADING'
     },
     setReaderPratilipiIndexDataLoadingSuccess(state, data) {
         state.index.loading_state = 'LOADING_SUCCESS';

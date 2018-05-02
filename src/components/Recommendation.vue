@@ -4,7 +4,7 @@
             :pratilipiList="getRecommendationList" 
             :title="getRecommendationTitle"
             v-bind="{ addToLibrary, removeFromLibrary }"
-            v-if="getRecommendationLoadingState === 'LOADING_SUCCESS'"
+            v-if="getRecommendationLoadingState === 'LOADING_SUCCESS' && getRecommendationList.length > 0"
             :screenName="screenName"
             :screenLocation="screenLocation"
             :redirectToReader="true"
@@ -39,6 +39,9 @@ export default {
         },
         'in-viewport-once': {
             default: true
+        },
+        'in-viewport-offset-top': {
+            default: -350
         },
         screenName: {
             type: String,
