@@ -30,7 +30,7 @@
                             </div>
                         </li>
                     </ul>
-                    <!-- <Spinner></Spinner> -->
+                    <Spinner  v-if="loadingConversations == true"></Spinner>
                 </div>
             </div>
         </div>
@@ -51,7 +51,8 @@ export default {
             conversations: [],
             channelLastMessage: {},
             channelLastReadMessage: {},
-            fetchedChannelMetadataData: {}
+            fetchedChannelMetadataData: {},
+            loadingConversations: true
         }
     },
 
@@ -158,6 +159,7 @@ export default {
 
         loadWatchedChannels(){
             const self = this;
+            self.loadingConversations = false;
             self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_added', function(snapshot){
                 debugger;
                 let channelId = snapshot.key;

@@ -25,7 +25,7 @@
                                 </button>
                             </div>
                         </div>
-
+                        <Spinner v-if="loadingMessages == true"></Spinner>
                         <div id="p2p-chat-body" class="chat-body">
                             <div id="all-messages" class="all-messages">
                                 <div v-for="message in messageList" v-bind:key="message.messageId">
@@ -58,7 +58,6 @@
                                     v-bind:disabled="isConversationBlocked == true"
                                     v-on:click="sendMessageToFirebase()"><i class="material-icons">send</i></button>
                         </div>
-                        <!-- <Spinner></Spinner> -->
                     </div>
                 </div>
             </div>
@@ -93,15 +92,14 @@ export default {
             firstMessageOfDayCheckMap: new Map(),
             isConnectedToServer: false,
             pendingMessages: [],
-            failedMessages: []
-
+            failedMessages: [],
+            loadingMessages: true
         }
     },
 
     computed: {
         ...mapGetters([
-            'getUserDetails',
-            'messageTargetUserDetails'
+            'getUserDetails'
         ]),
         isConversationBlocked: function () {
             return this.isUserBlockedBySelf || this.isBlockedByOtherUser;
@@ -182,6 +180,7 @@ export default {
             const self = this;
             self.attachMessageChildAddedListener();
             self.attachLastReadUpdater();
+            self.loadingMessages = false;
         },
 
 
@@ -280,13 +279,8 @@ export default {
             this.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(this.channelId).once('value').then(function (snapshot) {
                 debugger;
                 if (snapshot.val() == undefined) {
-                    // //TODO Needs to add the store data here
-                    // if (appViewModel.p2pChat != undefined && appViewModel.p2pChat.userDetails != undefined && appViewModel.p2pChat.userDetails.userId == this.otherUserId) {
-                    //     self.createChannelAndRenderChat();
-                    // }
-                    // else {
-                    //     redirect('/messages');
-                    // }
+                    //TODO Needs to add the store data here
+                    self.createChannelAndRenderChat();
                 }
                 else {
                     self.renderChatData(snapshot.val().users);
@@ -298,15 +292,16 @@ export default {
         createChannelAndRenderChat () {
             const self = this;
             var channelUsersData = {};
+            debugger;
             channelUsersData[self.otherUserId] = {
-                profileImageUrl: self.messageTargetUserDetails.profileImageUrl,
-                displayName: self.displayName,
-                profileUrl: self.profileUrl
+                profileImageUrl: this.$route.query.profileImageUrl,
+                displayName:this.$route.query.displayName,
+                profileUrl: this.$route.query.profileUrl
             };
-            channelUsersData[appViewModel.user.userId()] = {
-                profileImageUrl: appViewModel.user.profileImageUrl(),
-                displayName: self.conversationDisplayName().displayName(),
-                profileUrl: appViewModel.user.profilePageUrl()
+            channelUsersData[this.getUserDetails.userId] = {
+                profileImageUrl: this.getUserDetails.profileImageUrl,
+                displayName: this.getUserDetails.displayName,
+                profileUrl: this.getUserDetails.profilePageUrl
             };
             this.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId).set({users: channelUsersData}, function (error) {
                 if (error) {
@@ -317,7 +312,7 @@ export default {
                     self.renderChatData(channelUsersData);
                 }
             });
-            appViewModel.p2pChat = {};
+
         },
 
 
