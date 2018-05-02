@@ -59,11 +59,11 @@ export default {
                 });
 
                 this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
-                this.setAnalyticsUserProperty('IS_LOGGED_IN', true);
+                this.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
                 this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
             } else {
                 this.setAnalyticsUserProperty('USER_ID', "0");
-                this.setAnalyticsUserProperty('IS_LOGGED_IN', false);
+                this.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
             }
 
             const that = this;
@@ -80,11 +80,11 @@ export default {
                 FB.AppEvents.logPageView();
                 if (!isGuest) {
                     that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
-                    that.setAnalyticsUserProperty('IS_LOGGED_IN', true);
+                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
                     that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
                 } else {
                     that.setAnalyticsUserProperty('USER_ID', "0");
-                    that.setAnalyticsUserProperty('IS_LOGGED_IN', false);
+                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
                 }
                 that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
                 that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
@@ -111,12 +111,12 @@ export default {
                 if (!that.getUserDetails.isGuest) {
                     that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
                     console.log('logging is logged in to true');
-                    that.setAnalyticsUserProperty('IS_LOGGED_IN', true);
+                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
                     that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
                 } else {
                     that.setAnalyticsUserProperty('USER_ID', "0");
                     console.log('logging is logged in to false');
-                    that.setAnalyticsUserProperty('IS_LOGGED_IN', false);
+                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
                 }
                 that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
                 that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
