@@ -389,26 +389,20 @@ export default {
             const nintyPercentOfList = ( 50 / 100 ) * $('.author-page').innerHeight();
 
 
-            if (newScrollPosition > nintyPercentOfList 
-                && this.getAuthorFollowingLoadingState !== 'LOADING'  
-                && this.getAuthorFollowersLoadingState !== 'LOADING'  
-                && this.publishedContentsLoadingState !== 'LOADING') {
-                
-                if (this.getPublishedContentsCursor) {
+            if (newScrollPosition > nintyPercentOfList) {
+                if (this.publishedContentsLoadingState !== 'LOADING' && this.getPublishedContentsCursor) {
                     this.fetchMorePublishedContents({ 
                         authorId: this.getAuthorData.authorId,
                         resultCount: 10
                     });
                 }
-
-                if (this.getAuthorFollowingCursor) {
+                if (this.getAuthorFollowingLoadingState !== 'LOADING' && this.getAuthorFollowingCursor) {
                     this.fetchMoreAuthorFollowingUsers({ 
                         userId: this.getAuthorData.user.userId, 
                         resultCount: 5
                     });
                 }
-
-                if (this.getAuthorFollowersCursor) {
+                if (this.getAuthorFollowersLoadingState !== 'LOADING' && this.getAuthorFollowersCursor) {
                     this.fetchMoreAuthorFollowerUsers({ 
                         authorId: this.getAuthorData.authorId, 
                         resultCount: 5 
