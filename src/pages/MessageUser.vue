@@ -210,6 +210,7 @@ export default {
 
 
         attachLastReadUpdater () {
+            const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).limitToLast(1).on('child_added', function (snapshot) {
                 debugger;
                 console.log("Last message added : ", snapshot.key, " for channel : ", self.channelId, " Updating the last read message for user");
@@ -386,7 +387,7 @@ export default {
                 }
                 console.log(user, userData);
             });
-            if (userInChannel !== true) {
+            if (userInChannel != true) {
                 this.$router.push('/messages');
             }
             self.loadMessagesInConversation();

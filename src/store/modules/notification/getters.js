@@ -25,8 +25,7 @@ export default {
 
     //Message Notifications
     messageNotificationList: state => state.messageNotificationList,
-    readMessageNotifications: state => state.readMessageNotifications,
     fetchedChannelMetadataData: state => state.fetchedChannelMetadataData,
-    readMessageNotifications: state => state.readMessageNotifications
+    channelLastReadMessage: state => state.channelLastReadMessage
 
 }

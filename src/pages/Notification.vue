@@ -66,7 +66,7 @@
                                                 <div class="user-name" v-text="messageNotification.channelName"></div>
                                                 <div class="user-last-msg" v-text="messageNotification.lastMessage"></div>
                                             </div>
-                                            <div class="chat-info" v-bind:class="{'unread' : readMessageNotifications.indexOf(messageNotification.messageId) == -1}">
+                                            <div class="chat-info" v-bind:class="{'unread' : channelLastReadMessage[messageNotification.channelId] != messageNotification.messageId}">
                                                 <div class="chat-time" v-text="messageNotification.lastMessageTimeDisplay">11:30 PM</div>
                                             </div>
                                         </div>
@@ -116,7 +116,8 @@ export default {
 
             'messageNotificationList',
             'readMessageNotifications',
-            'fetchedChannelMetadataData'
+            'fetchedChannelMetadataData',
+            'channelLastReadMessage'
         ])
     },
     methods: {
