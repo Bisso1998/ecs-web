@@ -30,9 +30,10 @@
                             <div id="all-messages" class="all-messages">
                                 <div v-for="message in messageList" v-bind:key="message.messageId">
                                     <div class="chat-date" v-if="message.isFirstMessageOfDay"><span
-                                        v-text="message.dayDefenition">TODAY</span></div>
+                                        v-text="message.dayDefenition">TODAY</span>
+                                    </div>
                                     <div class="chat-msg"
-                                         v-bind:class="{'sender' : message.isMessageBySelf == false, 'self' : message.isMessageBySelf == true}">
+                                         v-bind:class="{'sender' : message.isMessageBySelf == false, 'self' : message.isMessageBySelf == true}" v-bind:id="message.messageId">
                                         <span class="msg-text" v-text="message.messageText"></span>
                                         <div class="extra-info">
                                             <span class="time" v-text="message.messageTime">16:40</span>
@@ -99,7 +100,8 @@ export default {
 
     computed: {
         ...mapGetters([
-            'getUserDetails'
+            'getUserDetails',
+            'messageTargetUser'
         ]),
         isConversationBlocked: function () {
             return this.isUserBlockedBySelf || this.isBlockedByOtherUser;
@@ -198,14 +200,15 @@ export default {
                 }
                 var toPushMessage = self.buildMessage(snapshot);
                 self.messageList.push(toPushMessage);
-                self.lastDeliveredMessageId = snapshot.key
+                self.lastDeliveredMessageId = snapshot.key;
+                self.$nextTick(() => {self.scrollLastMessageIntoView()});
             }, function () {
             }, self);
         },
 
-        scrollMessageIntoView (data) {
-            console.log('To scroll into view', data, ' Element : ', $('#' + data.messageId)[0]);
-            $('#' + data.messageId)[0].scrollIntoView();
+        scrollLastMessageIntoView () {
+            const self = this;
+            $('#' + self.lastDeliveredMessageId)[0].scrollIntoView();
         },
 
 
