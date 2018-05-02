@@ -32,7 +32,7 @@ export default {
     watch: {
         'getUserDetails.isGuest'(isGuest) {
             if (!isGuest) {
-                const that = this;
+                this.fetchInitialNotifications({ language: this.getCurrentLanguage().fullName.toUpperCase(), resultCount: 10 });
                 import('firebase').then((firebase) => {
                     if (firebase.apps.length === 0) {
                         const config = {
@@ -66,8 +66,13 @@ export default {
                         }
                     });
                 });
+
+                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
+                this.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
+                this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
             } else {
-                console.log('Im a guest')
+                this.setAnalyticsUserProperty('USER_ID', "0");
+                this.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
             }
 
             const that = this;
@@ -84,11 +89,11 @@ export default {
                 FB.AppEvents.logPageView();
                 if (!isGuest) {
                     that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
-                    that.setAnalyticsUserProperty('IS_LOGGED_ID', true);
+                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
                     that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
                 } else {
                     that.setAnalyticsUserProperty('USER_ID', "0");
-                    that.setAnalyticsUserProperty('IS_LOGGED_ID', false);
+                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
                 }
                 that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
                 that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
@@ -114,11 +119,13 @@ export default {
                 FB.AppEvents.logPageView();
                 if (!that.getUserDetails.isGuest) {
                     that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
-                    that.setAnalyticsUserProperty('IS_LOGGED_ID', true);
+                    console.log('logging is logged in to true');
+                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
                     that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
                 } else {
                     that.setAnalyticsUserProperty('USER_ID', "0");
-                    that.setAnalyticsUserProperty('IS_LOGGED_ID', false);
+                    console.log('logging is logged in to false');
+                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
                 }
                 that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
                 that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());

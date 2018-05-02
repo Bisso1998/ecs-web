@@ -63,6 +63,11 @@
                             <div class="follow-btn-w-count" v-if="getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="triggerEventAndFollowOrUnfollowAuthor"><!-- Following Button -->
                                 <button><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
                             </div>
+                            
+                            <!-- Message Button -->
+                            <div class="message-btn" v-if="getUserDetails.userId !== getAuthorData.user.userId" @click="messageUser">
+                                <i class="material-icons">message</i> Message
+                            </div>
                         </div>
                         <Spinner v-if="getAuthorDataLoadingState === 'LOADING'"></Spinner>
                         <div class="col-md-12 profile-bottom" v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
@@ -313,6 +318,10 @@ export default {
                 this.followOrUnfollowAuthor();
             }
         },
+        messageUser() {
+            console.log("clicked message button");
+            this.$router.push('/messages');
+        },
         openShareModal() {
             if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
                 this.triggerAnanlyticsEvent(`CLICKSHRUSER_MYPROFILEM_MYPROFILE`, 'CONTROL', {
@@ -387,28 +396,21 @@ export default {
         },
         'scrollPosition'(newScrollPosition){
             const nintyPercentOfList = ( 50 / 100 ) * $('.author-page').innerHeight();
-
-
-            if (newScrollPosition > nintyPercentOfList 
-                && this.getAuthorFollowingLoadingState !== 'LOADING'  
-                && this.getAuthorFollowersLoadingState !== 'LOADING'  
-                && this.publishedContentsLoadingState !== 'LOADING') {
-                
-                if (this.getPublishedContentsCursor) {
+            
+            if (newScrollPosition > nintyPercentOfList) {
+                if (this.publishedContentsLoadingState !== 'LOADING' && this.getPublishedContentsCursor) {
                     this.fetchMorePublishedContents({ 
                         authorId: this.getAuthorData.authorId,
                         resultCount: 10
                     });
                 }
-
-                if (this.getAuthorFollowingCursor) {
+                if (this.getAuthorFollowingLoadingState !== 'LOADING' && this.getAuthorFollowingCursor) {
                     this.fetchMoreAuthorFollowingUsers({ 
                         userId: this.getAuthorData.user.userId, 
                         resultCount: 5
                     });
                 }
-
-                if (this.getAuthorFollowersCursor) {
+                if (this.getAuthorFollowersLoadingState !== 'LOADING' && this.getAuthorFollowersCursor) {
                     this.fetchMoreAuthorFollowerUsers({ 
                         authorId: this.getAuthorData.authorId, 
                         resultCount: 5 
@@ -566,7 +568,8 @@ export default {
             font-size: 14px;
             position: relative;
             text-align: center;
-            display: block;
+            display: inline-block;
+            vertical-align: middle;
             clear: both;
             overflow: hidden;
             cursor: pointer;
@@ -600,6 +603,23 @@ export default {
                 b {
                     font-size: 12px;
                 }
+            }
+        }
+        .message-btn {
+            background: #fff;
+            color: #d0021b;
+            display: inline-block;
+            border-radius: 3px;
+            vertical-align: middle;
+            font-size: 14px;
+            text-align: center;
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: 1px solid #d0021b;
+            i {
+                vertical-align: middle;
+                padding-right: 5px;
+                font-size: 18px;
             }
         }
         .profile-user-name {

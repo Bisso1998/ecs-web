@@ -1,5 +1,6 @@
 <template>
     <div class="server_error">
+        <p><img src="https://s3.ap-south-1.amazonaws.com/growth-test-mumbai.pratilipi.com/phoenix/loading.gif" alt=""></p>
         <span v-if="message">{{ message }}</span>
         <span v-else>__("server_error_message")</span>
         <button @click="reloadWithDefinedAction" type="button" name="button"><i class="material-icons">refresh</i></button>
@@ -44,6 +45,13 @@ export default {
     text-align: center;
     span {
         display: block;
+    }
+    p {
+        margin: 0;
+        img {
+            max-width: 100%;
+            margin-top: -120px;
+        }
     }
     button {
         background: #d0021b;

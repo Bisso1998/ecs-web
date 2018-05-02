@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-10 app-info">
                     <span class="name">__("pratilipi_android_application")</span>
-                    <span class="stars"><img class="rating-image" src="http://public.pratilipi.com/images/Stars-for-App-Install-Strip.png"></span>
+                    <span class="stars"><img class="rating-image" src="../assets/Stars-for-App-Install-Strip.png"></span>
                 </div>
             </div>
             <div class="row">
@@ -113,7 +113,7 @@ export default {
     },
     watch: {
         'inViewport.now': function(visible) {
-            if (visible && this.showBanner) {
+            if (visible && this.showBanner && this.isAndroid()) {
                 const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
                 this.triggerAnanlyticsEvent(`VIEWED_APPBANNER_GLOBAL`, 'CONTROL', {
                     'USER_ID': this.getUserDetails.userId,
@@ -150,6 +150,7 @@ export default {
         margin-top: 70px;
         box-shadow: 0 1px 1px rgba(0,0,0,0.2);
         position: relative;
+        z-index: 2;
         button.close {
             position: absolute;
             right: 5px;

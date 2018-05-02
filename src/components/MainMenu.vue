@@ -6,18 +6,18 @@
           <i class="material-icons">home</i>
           <span>__("goto_home")</span>
         </div>
-        <router-link
-          :to="{ name: 'Discovery_Page' }"
-          class="main-tabs">
+        <span
+          @click="triggerDiscoverEvent"
+          class="main-tabs discover-tab">
           <i class="material-icons">all_out</i>
           <span>__('menu_category')</span>
-        </router-link>
-        <router-link
-          :to="{ name: 'Write_Page' }"
-          class="main-tabs">
+        </span>
+        <span
+          @click="triggerCreateEvent"
+          class="main-tabs create-tab">
           <i class="material-icons">mode_edit</i>
           <span>__("write")</span>
-        </router-link>
+        </span>
         <div
           @click="triggerProfileEvent"
           v-if="userDetails.profilePageUrl"
@@ -79,7 +79,23 @@ export default {
                 SCREEN_NAME
             });
             this.$router.push(this.userDetails.profilePageUrl);
-        }
+        },
+        triggerCreateEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GOCREATE_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.$router.push('/create');
+        },
+        triggerDiscoverEvent() {
+            const SCREEN_NAME = this.getAnalyticsPageSource(this.$route.meta.store);
+            this.triggerAnanlyticsEvent('GODISCOVER_HEADER_GLOBAL', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                SCREEN_NAME
+            });
+            this.$router.push('/discover');
+        },
     },
     mounted() {
         if (this.$route.path === '/' ) {
@@ -91,6 +107,12 @@ export default {
         if (this.$route.path === this.userDetails.profilePageUrl ) {
             $(".profile-tab").addClass("active");
         }
+        if (this.$route.path === '/create' ) {
+            $(".create-tab").addClass("active");
+        }
+        if (this.$route.path === '/discover' ) {
+            $(".discover-tab").addClass("active");
+        }
     }
 }
 </script>
@@ -99,6 +121,7 @@ export default {
 .tabs-section {
     .main-tabs {
         display: inline-block;
+        position: relative;
         width: 23.5%;
         color: #212121;
         font-size: 18px;

@@ -1,5 +1,56 @@
 import constants from '@/constants';
 import controlAnalyticsEvents from '@/static_scripts/analytics_events_control'
+import ratingV1AnalyticsEvents from '@/static_scripts/experiment_events/rating_v1'
+import ratingV2AnalyticsEvents from '@/static_scripts/experiment_events/rating_v2'
+import ratingV3AnalyticsEvents from '@/static_scripts/experiment_events/rating_v3'
+import ratingV4AnalyticsEvents from '@/static_scripts/experiment_events/rating_v4'
+import readerV1AnalyticsEvents from '@/static_scripts/experiment_events/reader_v1'
+import readerV2AnalyticsEvents from '@/static_scripts/experiment_events/reader_v2'
+import readerV3AnalyticsEvents from '@/static_scripts/experiment_events/reader_v3'
+import readerV4AnalyticsEvents from '@/static_scripts/experiment_events/reader_v4'
+import profileV1AnalyticsEvents from '@/static_scripts/experiment_events/profile_v1'
+import profileV2AnalyticsEvents from '@/static_scripts/experiment_events/profile_v2'
+import profileV3AnalyticsEvents from '@/static_scripts/experiment_events/profile_v3'
+import profileV4AnalyticsEvents from '@/static_scripts/experiment_events/profile_v4'
+import discoveryV1AnalyticsEvents from '@/static_scripts/experiment_events/discovery_v1'
+import discoveryV2AnalyticsEvents from '@/static_scripts/experiment_events/discovery_v2'
+import discoveryV3AnalyticsEvents from '@/static_scripts/experiment_events/discovery_v3'
+import discoveryV4AnalyticsEvents from '@/static_scripts/experiment_events/discovery_v4'
+import homeV1AnalyticsEvents from '@/static_scripts/experiment_events/home_v1'
+import homeV2AnalyticsEvents from '@/static_scripts/experiment_events/home_v2'
+import homeV3AnalyticsEvents from '@/static_scripts/experiment_events/home_v3'
+import homeV4AnalyticsEvents from '@/static_scripts/experiment_events/home_v4'
+
+const rating_v1 = ['WGEN001'];
+const rating_v2 = ['WGEN002'];
+const rating_v3 = ['WGEN003'];
+const rating_v4 = ['WGEN004'];
+const reader_v1 = ['WGEN005'];
+const reader_v2 = ['WGEN006'];
+const reader_v3 = ['WGEN007'];
+const reader_v4 = ['WGEN008'];
+const profile_v1 = ['WGEN009'];
+const profile_v2 = ['WGEN010'];
+const profile_v3 = ['WGEN011'];
+const profile_v4 = ['WGEN012'];
+const discovery_v1 = ['WGEN013'];
+const discovery_v2 = ['WGEN014'];
+const discovery_v3 = ['WGEN015'];
+const discovery_v4 = ['WGEN016'];
+const home_v1 = ['WGEN017'];
+const home_v2 = ['WGEN018'];
+const home_v3 = ['WGEN019'];
+const home_v4 = ['WGEN020'];
+
+
+let REFERRER_EVENT;
+let REFERRER_EXPERIMENTID;
+let REFERRER_DATA = {
+    REFER_ACTION: 'DIRECT',
+    REFER_LOCATION: 'DIRECT',
+    REFER_SCREEN: 'DIRECT',
+    REFER_EXPID: 'DIRECT'
+};
 
 export function translateWord(word, callback) {
     $.ajax({
@@ -227,12 +278,102 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
     
 }
 
+
+export function setReferrerEvent(eventName) {
+    REFERRER_EVENT = eventName;
+}
+
+export function getReferrerEvent() {
+    return REFERRER_EVENT;
+}
+
+export function setReferrerExperimentId(experimentId) {
+    REFERRER_EXPERIMENTID = experimentId;
+}
+
+export function getReferrerExperimentId() {
+    return REFERRER_EXPERIMENTID;
+}
+
+export function setReferrerData(referrerScreen, referrerLocation, referrerAction, referrerExpId) {
+    REFERRER_DATA = {
+        REFER_ACTION: referrerAction,
+        REFER_LOCATION: referrerLocation,
+        REFER_SCREEN: referrerScreen,
+        REFER_EXPID: referrerExpId
+    }
+}
+
+export function getReferrerData() {
+    return REFERRER_DATA;
+}
+
 export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty) {
 
     let eventProps;
-    switch(experimentType) {
-        case 'CONTROL':
+    switch(true) {
+        case (experimentType === 'CONTROL'):
             eventProps = { ...controlAnalyticsEvents[eventName] };
+            break;
+        case (rating_v1.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV1AnalyticsEvents[eventName] };
+            break;
+        case (rating_v2.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV2AnalyticsEvents[eventName] };
+            break;
+        case (rating_v3.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV3AnalyticsEvents[eventName] };
+            break;
+        case (rating_v4.indexOf(experimentType) > -1):
+            eventProps = { ...ratingV4AnalyticsEvents[eventName] };
+            break;
+        case (reader_v1.indexOf(experimentType) > -1):
+            eventProps = { ...readerV1AnalyticsEvents[eventName] };
+            break;
+        case (reader_v2.indexOf(experimentType) > -1):
+            eventProps = { ...readerV2AnalyticsEvents[eventName] };
+            break;
+        case (reader_v3.indexOf(experimentType) > -1):
+            eventProps = { ...readerV3AnalyticsEvents[eventName] };
+            break;
+        case (reader_v4.indexOf(experimentType) > -1):
+            eventProps = { ...readerV4AnalyticsEvents[eventName] };
+            break;
+        case (profile_v1.indexOf(experimentType) > -1):
+            eventProps = { ...profileV1AnalyticsEvents[eventName] };
+            break;
+        case (profile_v2.indexOf(experimentType) > -1):
+            eventProps = { ...profileV2AnalyticsEvents[eventName] };
+            break;
+        case (profile_v3.indexOf(experimentType) > -1):
+            eventProps = { ...profileV3AnalyticsEvents[eventName] };
+            break;
+        case (profile_v4.indexOf(experimentType) > -1):
+            eventProps = { ...profileV4AnalyticsEvents[eventName] };
+            break;
+        case (discovery_v1.indexOf(experimentType) > -1):
+            eventProps = { ...discoveryV1AnalyticsEvents[eventName] };
+            break;
+        case (discovery_v2.indexOf(experimentType) > -1):
+            eventProps = { ...discoveryV2AnalyticsEvents[eventName] };
+            break;
+        case (discovery_v3.indexOf(experimentType) > -1):
+            eventProps = { ...discoveryV3AnalyticsEvents[eventName] };
+            break;
+        case (discovery_v4.indexOf(experimentType) > -1):
+            eventProps = { ...discoveryV4AnalyticsEvents[eventName] };
+            break;
+        case (home_v1.indexOf(experimentType) > -1):
+            eventProps = { ...homeV1AnalyticsEvents[eventName] };
+            break;
+        case (home_v2.indexOf(experimentType) > -1):
+            eventProps = { ...homeV2AnalyticsEvents[eventName] };
+            break;
+        case (home_v3.indexOf(experimentType) > -1):
+            eventProps = { ...homeV3AnalyticsEvents[eventName] };
+            break;
+        case (home_v4.indexOf(experimentType) > -1):
+            eventProps = { ...homeV4AnalyticsEvents[eventName] };
             break;
     }
     
@@ -240,7 +381,18 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         eventProps.SCREEN_NAME = eventProperty['SCREEN_NAME'];
         delete eventProperty.SCREEN_NAME;
     }
+
+    if (eventName.indexOf('LANDED') > -1) {
+        eventProps = {
+            ...eventProps,
+            ...getReferrerData()
+        }
+    }
+
     if (eventProps && eventProps.ACTION) {
+        if (eventName !== 'VIEWED_APPBANNER_GLOBAL') {
+            setReferrerData(eventProps.SCREEN_NAME, eventProps.LOCATION, eventProps.ACTION, experimentType);
+        }
         eventProps = {
             ...eventProps,
             ...eventProperty,
@@ -251,7 +403,16 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             'SCREEN_LOCATION': eventProps.SCREEN_NAME + '_' + eventProps.LOCATION
         }
         console.log(eventName, eventProperty, eventProps);
-        amplitude.getInstance().logEvent(eventName, eventProps);
+        if (eventName !== 'VIEWED_APPBANNER_GLOBAL' &&
+            eventName !== 'VIEWED_AUTHORDETAIL_BOOK' &&
+            eventName !== 'VIEWANDROID_OPENAPP_READER' &&
+            eventName !== 'VIEWED_RATEREV_BOOK' &&
+            eventName !== 'VIEWED_RECOMMENDBOOK_BOOK' &&
+            eventName !== 'VIEWED_RECOMMENDBOOK_READER') {
+            amplitude.getInstance().logEvent(eventName, eventProps);
+        } else {
+            console.log('SKIPPING EVENT');
+        }
 
         if (!window.fbApiInit) {
             setTimeout(() => {
@@ -275,7 +436,7 @@ export function getPratilipiAnalyticsData(pratilipiData) {
     }
 }
 
-export function getAndroidIntentUri( utmParameters ) {
+export function getAndroidIntentUri( utmParameters ) {``
     const SCHEME = 'http';
     const PACKAGE_NAME = 'com.pratilipi.mobile.android';
     const PLAYSTORE_URL = 'https://play.google.com/store/apps/details?id=' + PACKAGE_NAME;

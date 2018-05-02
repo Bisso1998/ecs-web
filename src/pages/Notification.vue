@@ -146,8 +146,7 @@ export default {
             const nintyPercentOfList = ( 40 / 100 ) * $('.notification-page').innerHeight();
             // const { list_page_url } = this.$route.params;
 
-            if (newScrollPosition > nintyPercentOfList && this.getNotificationLoadingState !== 'LOADING' && this.getNotificationCursor !== null) {
-
+            if (newScrollPosition > nintyPercentOfList && this.getNotificationLoadingState !== 'LOADING' && this.getNotificationLoadingState !== 'LOADING_ERROR' && this.getNotificationCursor !== null) {
                 const currentLocale = process.env.LANGUAGE;
                 constants.LANGUAGES.forEach((eachLanguage) => {
                     if (eachLanguage.shortName === currentLocale) {
@@ -250,6 +249,8 @@ export default {
             margin: 10px 0;
             padding: 10px 0;
             border-bottom: 1px solid #e9e9e9;
+            position: relative;
+            z-index: 1;
             &.unread {
                 background: rgba(208, 2, 27, 0.1);
             }
