@@ -101,7 +101,7 @@ export default {
     computed: {
         ...mapGetters([
             'getUserDetails',
-            'messageTargetUser'
+            'messageTargetUserDetails'
         ]),
         isConversationBlocked: function () {
             return this.isUserBlockedBySelf || this.isBlockedByOtherUser;
@@ -296,28 +296,28 @@ export default {
 
 
         createChannelAndRenderChat () {
-            // const self = this;
-            // var channelUsersData = {};
-            // channelUsersData[self.otherUserId] = {
-            //     profileImageUrl: appViewModel.p2pChat.userDetails.profileImageUrl,
-            //     displayName: appViewModel.p2pChat.userDetails.displayName,
-            //     profileUrl: appViewModel.p2pChat.userDetails.profileUrl
-            // };
-            // channelUsersData[appViewModel.user.userId()] = {
-            //     profileImageUrl: appViewModel.user.profileImageUrl(),
-            //     displayName: appViewModel.user.displayName(),
-            //     profileUrl: appViewModel.user.profilePageUrl()
-            // };
-            // this.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId).set({users: channelUsersData}, function (error) {
-            //     if (error) {
-            //         redirect('/messages');
-            //         console.log("Channel metadata could not be saved. Error : " + error);
-            //     }
-            //     else {
-            //         self.renderChatData(channelUsersData);
-            //     }
-            // });
-            // appViewModel.p2pChat = {};
+            const self = this;
+            var channelUsersData = {};
+            channelUsersData[self.otherUserId] = {
+                profileImageUrl: self.messageTargetUserDetails.profileImageUrl,
+                displayName: self.displayName,
+                profileUrl: self.profileUrl
+            };
+            channelUsersData[appViewModel.user.userId()] = {
+                profileImageUrl: appViewModel.user.profileImageUrl(),
+                displayName: self.conversationDisplayName().displayName(),
+                profileUrl: appViewModel.user.profilePageUrl()
+            };
+            this.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId).set({users: channelUsersData}, function (error) {
+                if (error) {
+                    redirect('/messages');
+                    console.log("Channel metadata could not be saved. Error : " + error);
+                }
+                else {
+                    self.renderChatData(channelUsersData);
+                }
+            });
+            appViewModel.p2pChat = {};
         },
 
 
