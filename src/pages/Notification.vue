@@ -198,6 +198,7 @@ export default {
         right: 10px;
         top: 8px;
         color: #2c3e50;
+        z-index: 2;
         i {
             vertical-align: middle;
         }
@@ -302,6 +303,8 @@ export default {
         overflow-x: auto;
         white-space: nowrap;
         cursor: pointer;
+        position: relative;
+        z-index: 1;
         li {
             color: #555;
             font-size: 13px;
