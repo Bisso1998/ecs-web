@@ -198,6 +198,7 @@ export default {
         right: 10px;
         top: 8px;
         color: #2c3e50;
+        z-index: 2;
         i {
             vertical-align: middle;
         }
