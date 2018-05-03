@@ -71,6 +71,7 @@
                                     </div>
                                     </router-link>
                                 </li>
+                                <li class="no-messages" v-if="messageNotificationList.length == 0">You don't have any unread messages</li>
                             </ul>
 
                             <router-link
@@ -421,5 +422,10 @@ export default {
     margin: 10px 0;
     font-size: 14px;
     color: #d00c12;
+}
+.no-messages {
+    margin: 10px 0;
+    color: #555;
+    text-align: center;
 }
 </style>

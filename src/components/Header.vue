@@ -43,7 +43,7 @@
                             class="notification-icon">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
-                                <span v-if="!notificationCount" class="message-notification"></span><!-- Todo: Update the condition for icon showing  -->
+                                <span v-if="!notificationCount && pendingMessages.length > 0" class="message-notification"></span>
                             </div>
                         </div>
                     </div>
