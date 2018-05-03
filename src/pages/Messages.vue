@@ -29,6 +29,7 @@
                                 </div>
                             </div>
                         </li>
+                        <li class="no-messages" v-if="loadingConversations != true && conversations.length == 0">You don't have any messages</li>
                     </ul>
                     <Spinner  v-if="loadingConversations == true && !getUserDetails.isGuest"></Spinner>
                 </div>
@@ -465,6 +466,10 @@ export default {
                 color: #d0021b;
             }
         }
+    }
+    .no-messages {
+        margin: 10px 0;
+        color: #555;
     }
 }
 </style>
