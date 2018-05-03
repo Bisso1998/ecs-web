@@ -30,7 +30,7 @@
                             </div>
                         </li>
                     </ul>
-                    <Spinner  v-if="loadingConversations == true"></Spinner>
+                    <Spinner  v-if="loadingConversations == true && !getUserDetails.isGuest"></Spinner>
                 </div>
             </div>
         </div>
