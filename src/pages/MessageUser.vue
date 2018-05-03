@@ -14,7 +14,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <button type="button" class="btn report-btn"  v-on:click="redirectToOtherUserProfile()">View profile</button>
-                                <button type="button" class="btn report-btn" v-on:click="deleteConversation()">Delete Conversation
+                                <button type="button" class="btn report-btn" v-on:click="confirmAndDeleteConversation()">Delete Conversation
                                 </button>
                                 <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf == false" v-on:click="blockUser()">Block User
                                 </button>
@@ -459,6 +459,15 @@ export default {
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).set(false);
         },
 
+
+        confirmAndDeleteConversation() {
+            this.setConfirmModalAction({
+                action: `${this.$route.meta.store}/deleteConversation`,
+                heading: 'pratilipi_delete_content',
+                message: 'pratilipi_confirm_delete_content',
+            });
+            this.openConfirmationModal();
+        },
 
         deleteConversation() {
             const self = this;
