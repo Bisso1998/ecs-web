@@ -29,7 +29,7 @@
                             @click="triggerEventAndResetNotificationCount">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
-                                <span v-if="!notificationCount && pendingMessages == true" class="message-notification"></span>
+                                <span v-if="!notificationCount && pendingMessages.length > 0" class="message-notification"></span>
                             </div>
                         </div>
                         <div class="d-block d-lg-none search-box search-box-2 text-right">
@@ -76,7 +76,7 @@ export default {
             type: Number
         },
         pendingMessages: {
-            type: Boolean
+            type: Array
         },
         isHidden: {
             type: Boolean
@@ -90,11 +90,11 @@ export default {
             languages: constants.LANGUAGES,
             isCurrentLanguage: (language) => {
                 if (language === process.env.LANGUAGE) {
-                    return true;    
+                    return true;
                 } else {
                     return false;
                 }
-                
+
             },
             searchText: '',
             scrollPosition: null,
@@ -186,14 +186,14 @@ export default {
             } else if(newScrollPosition <= 70) {
                 $('header').removeClass('nav-up');
             }
-            
+
             if (newScrollPosition < prevScrollPosition) {
                 this.counter++;
                 this.scrollDirection = 'UP';
             } else {
                 this.scrollDirection = 'DOWN';
             }
-            
+
             if (this.counter > 5) {
                 $('header').removeClass('nav-up');
                 this.counter = 0;
@@ -202,7 +202,7 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
-        
+
         // Hide Footer when keyboard comes
         if (this.isMobile()) {
             $(document).on('focus', 'input', function() {

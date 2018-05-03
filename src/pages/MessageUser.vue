@@ -14,14 +14,11 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <button type="button" class="btn report-btn"  v-on:click="redirectToOtherUserProfile()">View profile</button>
-                                <button type="button" class="btn report-btn" data-toggle="modal"
-                                        data-target="#confirmation" v-on:click="deleteConversation()">Delete Conversation
+                                <button type="button" class="btn report-btn" v-on:click="deleteConversation()">Delete Conversation
                                 </button>
-                                <button type="button" class="btn report-btn" data-toggle="modal"
-                                        v-if="!isConversationBlocked" v-on:click="blockUser()">Block User
+                                <button type="button" class="btn report-btn" v-if="!isConversationBlocked" v-on:click="blockUser()">Block User
                                 </button>
-                                <button type="button" class="btn report-btn" data-toggle="modal"
-                                        v-if="isConversationBlocked" v-on:click="unblockUser()">Unblock User
+                                <button type="button" class="btn report-btn" v-if="isConversationBlocked" v-on:click="unblockUser()">Unblock User
                                 </button>
                             </div>
                         </div>
