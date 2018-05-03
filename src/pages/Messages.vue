@@ -60,7 +60,6 @@ export default {
         loadChannelMetadata(channelId){
             const self = this;
             self.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(channelId).once('value').then(function(snapshot){
-                debugger;
                 if(snapshot.val() == undefined){
                 /* TODO Something wrong */
                 }
@@ -99,7 +98,6 @@ export default {
         attachLastReadListener(channelId){
             const self = this;
             self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(self.getUserDetails.userId).child(channelId).child('lastReadMessage').on('value', function(snapshot){
-                debugger;
                 if(self.channelLastMessage[channelId] != undefined){
                     if(snapshot.val() == self.channelLastMessage[channelId].messageId){
                         self.channelLastMessage[channelId].isUnread(false);
@@ -113,9 +111,8 @@ export default {
         attachLastMessageListener(channelId){
             const self = this;
             self.firebaseGrowthDB.ref('/CHATS').child('messages').child(channelId).limitToLast(1).on('child_added', function(snapshot){
-                debugger;
                 var message = snapshot.val();
-                console.log("Last message added : ",message, " for channel : ", channelId);
+                //console.log("Last message added : ",message, " for channel : ", channelId);
                 self.conversations.filter(function(item){
                     return item.channelId == channelId;
                 });
@@ -161,14 +158,12 @@ export default {
             const self = this;
             self.loadingConversations = false;
             self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_added', function(snapshot){
-                debugger;
                 let channelId = snapshot.key;
                 self.loadChannelMetadata(channelId);
             }, function(){}, self);
 
             self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_removed', function(snapshot){
-                debugger;
-                console.log("Watching channel removed : ", snapshot.key);
+                //console.log("Watching channel removed : ", snapshot.key);
                 self.conversations.remove(function(item){
                     return item.channelId == snapshot.key;
                 });
@@ -192,7 +187,6 @@ export default {
 
         loadConversationsFromCache(){
             const self = this;
-            debugger;
             if((appViewModel.p2pChat != undefined) && (appViewModel.p2pChat.convesationCache != undefined)){
                 if(typeof appViewModel.p2pChat.convesationCache.conversations != undefined){
                     ko.utils.arrayForEach(appViewModel.p2pChat.convesationCache.conversations, function (conversation){
@@ -210,7 +204,6 @@ export default {
 
         updateUserProfile(){
             const self = this;
-            debugger;
             //TODO FIGURE OUT TO DO THIS ONCE PER SESSION
             // if((appViewModel.p2pChat != undefined) && (appViewModel.p2pChat.updatedUserProfile == true)){
             //     console.log("User profile already updated for this session. Skipping update");

@@ -111,9 +111,8 @@ export default {
 
         loadMessagesInConversation() {
             const self = this;
-            debugger;
             this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.otherUserId).child(self.channelId).on('value', function (snapshot) {
-                console.log("Changed other user watched channel status : ", snapshot.val());
+                //console.log("Changed other user watched channel status : ", snapshot.val());
                 if (snapshot.val() == true) {
                     self.isChannelInOtherUserWatchlist = true;
                 } else {
@@ -122,7 +121,7 @@ export default {
             }, function () {
             }, self);
             this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(this.getUserDetails.userId).child(self.channelId).on('value', function (snapshot) {
-                console.log("Changed self user watched channel status : ", snapshot.val());
+                //console.log("Changed self user watched channel status : ", snapshot.val());
                 if (snapshot.val() == true) {
                     self.isChannelInSelfWatchlist = true;
                 } else {
@@ -130,11 +129,11 @@ export default {
                 }
             }, function () {
             }, self);
-            console.log('Loading conversations from firebase DB for channel : ', self.channelId);
+            //console.log('Loading conversations from firebase DB for channel : ', self.channelId);
             this.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(this.getUserDetails.userId).child(self.channelId).once('value').then(function (snapshot) {
                 if (snapshot.val() != undefined) {
-                    console.log("Last read message : ", snapshot.val().lastReadMessage);
-                    console.log("Last deleted message : ", snapshot.val().lastDeletedMessage);
+                    // console.log("Last read message : ", snapshot.val().lastReadMessage);
+                    // console.log("Last deleted message : ", snapshot.val().lastDeletedMessage);
                     self.lastDeletedMessageId = snapshot.val().lastDeletedMessage;
                 }
                 self.attachMessagesListner();
@@ -184,14 +183,12 @@ export default {
         attachMessageChildAddedListener () {
             const self = this;
             var channelMessagesRef = this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).orderByKey();
-            debugger;
             if (self.lastDeletedMessageId != undefined) {
                 channelMessagesRef = channelMessagesRef.startAt(self.lastDeletedMessageId);
             }
             channelMessagesRef.on('child_added', function (snapshot) {
-                debugger;
                 if (self.lastDeletedMessageId == snapshot.key) {
-                    console.log("Skipping the first message, since firebase by default doesnt have a exclusive range query");
+                    //console.log("Skipping the first message, since firebase by default doesnt have a exclusive range query");
                     return;
                 }
                 var toPushMessage = self.buildMessage(snapshot);
@@ -211,8 +208,7 @@ export default {
         attachLastReadUpdater () {
             const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).limitToLast(1).on('child_added', function (snapshot) {
-                debugger;
-                console.log("Last message added : ", snapshot.key, " for channel : ", self.channelId, " Updating the last read message for user");
+                //console.log("Last message added : ", snapshot.key, " for channel : ", self.channelId, " Updating the last read message for user");
                 this.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(this.getUserDetails.userId).child(self.channelId).child('lastReadMessage').set(snapshot.key);
             }, function () {
             }, self);
@@ -222,7 +218,7 @@ export default {
         buildMessage (snapshot) {
             const self = this;
             var message = snapshot.val();
-            console.log("Message added : ", message, " for channel : ", self.channelId);
+            //console.log("Message added : ", message, " for channel : ", self.channelId);
             var isMessageBySelf = false;
             if (message.senderId == this.getUserDetails.userId) {
                 isMessageBySelf = true;
@@ -233,7 +229,7 @@ export default {
                 minute: 'numeric',
                 hour12: true
             });
-            console.log('Message Time : ', messageTime);
+            //console.log('Message Time : ', messageTime);
             var toPushMessage = {
                 messageId: snapshot.key,
                 isMessageBySelf: isMessageBySelf,
@@ -249,13 +245,13 @@ export default {
         watchBlockedConversation () {
             const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).on('value', function (snapshot) {
-                console.log("Changed blocked status Value : ", snapshot.val());
+                //console.log("Changed blocked status Value : ", snapshot.val());
                 self.isUserBlockedBySelf = snapshot.val();
             }, function () {
             }, self);
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(self.otherUserId).child(this.getUserDetails.userId).on('value', function (snapshot) {
                 self.isBlockedByOtherUser = snapshot.val();
-                console.log("Changed blocked status Value for other user : ", snapshot.val());
+                //console.log("Changed blocked status Value for other user : ", snapshot.val());
             }, function () {
             }, self);
         },
@@ -274,7 +270,6 @@ export default {
         loadChannelDetails () {
             const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(this.channelId).once('value').then(function (snapshot) {
-                debugger;
                 if (snapshot.val() == undefined) {
                     //TODO Needs to add the store data here
                     self.createChannelAndRenderChat();
@@ -289,7 +284,6 @@ export default {
         createChannelAndRenderChat () {
             const self = this;
             var channelUsersData = {};
-            debugger;
             channelUsersData[self.otherUserId] = {
                 profileImageUrl: this.$route.query.profileImageUrl,
                 displayName:this.$route.query.displayName,
@@ -303,7 +297,7 @@ export default {
             this.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId).set({users: channelUsersData}, function (error) {
                 if (error) {
                     redirect('/messages');
-                    console.log("Channel metadata could not be saved. Error : " + error);
+                    //console.log("Channel metadata could not be saved. Error : " + error);
                 }
                 else {
                     self.renderChatData(channelUsersData);
@@ -314,11 +308,10 @@ export default {
 
 
         readOtherUserProfileData () {
-            debugger;
             const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('user_profile').child(self.otherUserId).once('value').then(function (snapshot) {
                 if (snapshot.val() == undefined) {
-                    console.log("No profile data present for the other user. Using data from channel metadata");
+                    //console.log("No profile data present for the other user. Using data from channel metadata");
                     return;
                 }
                 else {
@@ -369,7 +362,6 @@ export default {
             const self = this;
             let userInChannel = false;
             $.each(channelUsersData, function (user, userData) {
-                debugger;
                 if (user == self.getUserDetails.userId) {
                     userInChannel = true;
                 }
@@ -380,7 +372,7 @@ export default {
                     self.conversationImageUrlScaled = scaledProfileImageUrl;
                     self.otherUserProfileUrl = userData.profileUrl;
                 }
-                console.log(user, userData);
+                //console.log(user, userData);
             });
             if (userInChannel != true) {
                 this.$router.push('/messages');
@@ -404,7 +396,6 @@ export default {
         },
 
         sendMessageToFirebase () {
-            debugger;
             const self = this;
             let addChannelToWatchlistUpdate = {};
             let watchlistUpdateNeeded = false;
@@ -419,7 +410,7 @@ export default {
             if (watchlistUpdateNeeded == true) {
                 this.firebaseGrowthDB.ref().update(addChannelToWatchlistUpdate, function (error) {
                     if (error) {
-                        console.log("Error updating data:", error);
+                        //console.log("Error updating data:", error);
                     }
                 });
             }
@@ -436,10 +427,10 @@ export default {
                 sendTime: firebase.database.ServerValue.TIMESTAMP
             }, function (error) {
                 if (error) {
-                    console.log("Message : " + messageId + " could not be saved.", error);
+                    //console.log("Message : " + messageId + " could not be saved.", error);
                     self.failedMessages.push(messageId);
                 } else {
-                    console.log("Message : " + messageId + " saved successfully.");
+                    //console.log("Message : " + messageId + " saved successfully.");
                     self.removeValueFromArray(self.pendingMessages, messageId);
                     self.removeValueFromArray(self.failedMessages, messageId);
                 }
@@ -473,7 +464,7 @@ export default {
             deleteConversationUpdates['/CHATS/user_channels/' + this.getUserDetails.userId + '/' + self.channelId + '/lastDeletedMessage'] = self.lastDeliveredMessageId;
             this.firebaseGrowthDB.ref().update(deleteConversationUpdates, function (error) {
                 if (error) {
-                    console.log("Error updating data:", error);
+                    //console.log("Error updating data:", error);
                 }
             });
             self.messageList = [];
@@ -499,20 +490,20 @@ export default {
         import('firebase').then((firebase) => {
             setTimeout(function() {
                 self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
-                console.log("Firebase growth initialized for page");
+                //console.log("Firebase growth initialized for page");
                 self.otherUserId = window.location.pathname.split("/")[2];
                 self.channelId = self.getChannelIdForConversation(self.otherUserId);
-                console.log("Channel Id : ", self.channelId);
+                //console.log("Channel Id : ", self.channelId);
                 self.loadChannelDetails();
                 let connectedRef = self.firebaseGrowthDB.ref(".info/connected");
                 connectedRef.on("value", function (snap) {
                     if (snap.val() == true) {
-                        console.log("connected to internet");
+                        //console.log("connected to internet");
                         self.isConnectedToServer = true;
                         self.setAllMessagesPending();
                     } else {
                         self.isConnectedToServer = false;
-                        console.log("not connected to internet");
+                        //console.log("not connected to internet");
                         self.setAllMessagesFailed()
                     }
                 });

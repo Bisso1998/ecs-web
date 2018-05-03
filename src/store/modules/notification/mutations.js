@@ -68,17 +68,14 @@ export default {
 
     //Message Notifications
     setChannelMetadata(state, {channelId, channelMetadata}) {
-        debugger;
         state.fetchedChannelMetadataData[channelId] = channelMetadata;
     },
 
     addMessageNotification(state, messageReceived) {
-        debugger;
         state.messageNotificationList.unshift(messageReceived);
     },
 
     setLastReadMessageForChannel(state, {channelId, messageId}) {
-        debugger;
         state.channelLastReadMessage[channelId] = messageId;
     },
 

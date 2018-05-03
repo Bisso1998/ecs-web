@@ -116,7 +116,6 @@ export default {
             /* TODO Something wrong */
                 return;
             }
-            debugger;
             firebaseGrowthDB.ref('/CHATS').child('user_profile').child(otherUserId).once('value').then(function(snapshot) {
                 if(snapshot.val() != undefined) {
                     conversationDisplayName = snapshot.val().displayName;
@@ -171,11 +170,9 @@ export default {
         if(state.channelLastReadMessage[channelId] != null) {
             channelMessagesRef = channelMessagesRef.startAt(self.channelLastReadMessage[channelId]);
         }
-        debugger;
         channelMessagesRef.limitToLast(1).on('child_added', function(snapshot) {
-            debugger;
             var message = snapshot.val();
-            console.log("Last message added : ",message, " for channel : ", channelId);
+            //console.log("Last message added : ",message, " for channel : ", channelId);
             commit('removeMessageForChannel', channelId)
             if((message.senderId == userId) || (state.channelLastReadMessage[channelId] == snapshot.key)) {
                 return;
@@ -189,11 +186,11 @@ export default {
 
     attachMessageNotificationListener({ dispatch, state }, userId) {
         const self = this;
-        console.log("Attaching message notification listener");
+        //console.log("Attaching message notification listener");
         import('firebase').then((firebase) => {
             setTimeout(function () {
                 let firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
-                console.log("Firebase growth initialized for page: ", firebaseGrowthDB);
+                //console.log("Firebase growth initialized for page: ", firebaseGrowthDB);
                 firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(userId).on('child_added', function (snapshot) {
                     let channelId = snapshot.key;
                     dispatch('loadChannelMessageNotifications', {firebaseGrowthDB, channelId, userId});
