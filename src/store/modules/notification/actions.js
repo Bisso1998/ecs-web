@@ -141,30 +141,6 @@ export default {
         });
     },
 
-    parseDateDisplay ({ dispatch, state }, sentTime) {
-        var currentDate = new Date();
-        var currentDateStart = currentDate.setHours(0,0,0,0);
-        var timeToDisplay = "";
-        var messageDate = new Date(sentTime);
-        var messageDateKey = messageDate.toLocaleDateString();
-        if(+messageDate >= +currentDateStart) {
-            timeToDisplay = new Date(sentTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-        }
-        else {
-            let yesterdayDate = new Date();
-            yesterdayDate.setTime(currentDate.getTime() - (24*3600000));
-            var yesterdayDateStart = yesterdayDate.setHours(0,0,0,0);
-            if(+messageDate >= +yesterdayDateStart) {
-                timeToDisplay = "YESTERDAY";
-            }
-            else {
-                timeToDisplay = messageDateKey;
-            }
-        }
-        return timeToDisplay;
-    },
-
-
     attachLastMessageListener ({ dispatch, commit, state }, {firebaseGrowthDB, channelId, userId}) {
         var channelMessagesRef = firebaseGrowthDB.ref('/CHATS').child('messages').child(channelId).orderByKey();
         if(state.channelLastReadMessage[channelId] != null) {
@@ -177,9 +153,31 @@ export default {
             if((message.senderId == userId) || (state.channelLastReadMessage[channelId] == snapshot.key)) {
                 return;
             }
-            var messageTimeDisplay = "1/2/3";
-            //TODO Uncomment self.parseDateDisplay(message.sendTime);
-            var messageReceived = {channelId : channelId, messageId : snapshot.key, userId : state.fetchedChannelMetadataData[channelId].otherUserId, channelName : state.fetchedChannelMetadataData[channelId].conversationDisplayName, profileImageUrl : state.fetchedChannelMetadataData[channelId].conversationImageUrl, senderId : message.senderId, lastMessage : message.messageText, lastMessageTime : message.sendTime, lastMessageTimeDisplay : messageTimeDisplay};
+            var currentDate = new Date();
+            var currentDateStart = currentDate.setHours(0,0,0,0);
+            var timeToDisplay = "";
+            var messageDate = new Date(message.sendTime);
+            var messageDateKey = messageDate.toLocaleDateString();
+            if(+messageDate >= +currentDateStart) {
+                timeToDisplay = new Date(message.sendTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+            }
+            else {
+                let yesterdayDate = new Date();
+                yesterdayDate.setTime(currentDate.getTime() - (24 * 3600000));
+                var yesterdayDateStart = yesterdayDate.setHours(0, 0, 0, 0);
+                if (+messageDate >= +yesterdayDateStart) {
+                    timeToDisplay = "YESTERDAY";
+                }
+                else {
+                    timeToDisplay = messageDateKey;
+                }
+            }
+            var isUnread = true;
+            var messageTimeDisplay = timeToDisplay;
+            if(state.channelLastReadMessage[channelId] == snapshot.key) {
+                isUnread = false;
+            }
+            var messageReceived = {channelId : channelId, messageId : snapshot.key, userId : state.fetchedChannelMetadataData[channelId].otherUserId, channelName : state.fetchedChannelMetadataData[channelId].conversationDisplayName, profileImageUrl : state.fetchedChannelMetadataData[channelId].conversationImageUrl, senderId : message.senderId, lastMessage : message.messageText, lastMessageTime : message.sendTime, lastMessageTimeDisplay : messageTimeDisplay, isUnread: isUnread};
             commit('addMessageNotification',messageReceived);
         }, function() {}, self);
     },

@@ -77,6 +77,14 @@ export default {
 
     setLastReadMessageForChannel(state, {channelId, messageId}) {
         state.channelLastReadMessage[channelId] = messageId;
+        for (var i=0; i < state.messageNotificationList.length; i++) {
+            if(state.messageNotificationList[i].channelId == channelId) {
+                if(state.messageNotificationList[i].messageId == messageId) {
+                    state.messageNotificationList.splice(i,1);
+                }
+                break;
+            }
+        }
     },
 
     removeMessageForChannel(state, channelId) {

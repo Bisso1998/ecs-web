@@ -101,10 +101,17 @@ export default {
             self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(self.getUserDetails.userId).child(channelId).child('lastReadMessage').on('value', function(snapshot){
                 if(self.channelLastMessage[channelId] != undefined){
                     if(snapshot.val() == self.channelLastMessage[channelId].messageId){
-                        self.channelLastMessage[channelId].isUnread(false);
+                        self.channelLastMessage[channelId].isUnread = false;
                     }
                 }
                 self.channelLastReadMessage[channelId] = snapshot.val();
+                // for(var i=0; i < self.conversations.length; i++) {
+                //     if(self.conversations[i].channelId == channelId) {
+                //         if(self.conversations[i].messageId == snapshot.val()) {
+                //             self.conversations[i].isUnread = false;
+                //         }
+                //     }
+                // }
             });
         },
 
