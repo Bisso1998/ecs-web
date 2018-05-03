@@ -6,7 +6,7 @@
                     <div class="col-md-12 p-0">
                         <div class="chat-header individual">
                             <div class="back-btn"><i class="material-icons" v-on:click="redirectToMessagesPage()">arrow_back</i></div>
-                            <div class="user-img"><img v-bind:src="conversationImageUrlScaled" alt="profile-img"></div>
+                            <div class="user-img" :style="{ backgroundImage: 'url(' + conversationImageUrlScaled + ')' }"></div>
                             <div class="user-name" v-text="conversationDisplayName">Rahul</div>
                             <button class="options" type="button" id="chat-user-more-option" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -594,6 +594,8 @@ export default {
                 height: 40px;
                 border-radius: 50%;
                 overflow: hidden;
+                background: #e9e9e9;
+                background-size: cover;
                 img {
                     width: 100%;
                     height: 100%;
