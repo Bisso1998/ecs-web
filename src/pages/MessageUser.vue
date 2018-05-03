@@ -14,8 +14,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <button type="button" class="btn report-btn"  v-on:click="redirectToOtherUserProfile()">View profile</button>
-                                <button type="button" class="btn report-btn" v-on:click="confirmAndDeleteConversation()">Delete Conversation
-                                </button>
+                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#confirmation">Delete Conversation</button>
                                 <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf == false" v-on:click="blockUser()">Block User
                                 </button>
                                 <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf == true" v-on:click="unblockUser()">Unblock User
@@ -61,6 +60,29 @@
                     </div>
                 </div>
             </div>
+            <!-- Message Confirmation Modal -->
+            <div class="modal fade confirmation" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="reportModalLabel">Delete Conversation?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="material-icons">close</i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label>Do you want to delete all messages?</label>
+                                </div>
+                                <button type="button" class="btn btn-submit" data-dismiss="modal" aria-label="Close">__("cancel")</button>
+                                <button type="button" @click="deleteConversation" class="cancel">__("pratilipi_confirm_delete_content_okay")</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </MessageLayout>
 </template>
@@ -107,7 +129,7 @@ export default {
     },
 
     methods: {
-
+        
         loadConversationsList() {
             redirect('/messages');
         },
@@ -459,16 +481,6 @@ export default {
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).set(false);
         },
 
-
-        confirmAndDeleteConversation() {
-            this.setConfirmModalAction({
-                action: `${this.$route.meta.store}/deleteConversation`,
-                heading: 'pratilipi_delete_content',
-                message: 'pratilipi_confirm_delete_content',
-            });
-            this.openConfirmationModal();
-        },
-
         deleteConversation() {
             const self = this;
             let deleteConversationUpdates = {};
@@ -479,6 +491,7 @@ export default {
                     //console.log("Error updating data:", error);
                 }
             });
+            $('#confirmation').modal('hide');
             self.messageList = [];
             this.$router.push('/messages');
         },
@@ -780,6 +793,34 @@ export default {
                     vertical-align: middle;
                 }
             }
+        }
+    }
+    .confirmation {
+        text-align: left;
+        max-width: 350px;
+        margin: 50px auto;
+        .modal-body {
+            padding-top: 0;
+        }
+        .form-group {
+            font-size: 14px;
+        }
+        .btn-submit {
+            background: #d0021b;
+            color: #fff;
+            border: 0;
+            font-size: 14px;
+            float: right;
+        }
+        .cancel {
+            background: #e9e9e9;
+            border: 0;
+            float: right;
+            font-size: 12px;
+            line-height: 33px;
+            margin-right: 10px;
+            padding: 0 10px;
+            border-radius: 3px;
         }
     }
 </style>
