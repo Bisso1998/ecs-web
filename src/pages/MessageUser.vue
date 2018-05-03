@@ -16,9 +16,9 @@
                                 <button type="button" class="btn report-btn"  v-on:click="redirectToOtherUserProfile()">View profile</button>
                                 <button type="button" class="btn report-btn" v-on:click="deleteConversation()">Delete Conversation
                                 </button>
-                                <button type="button" class="btn report-btn" v-if="!isConversationBlocked" v-on:click="blockUser()">Block User
+                                <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf == false" v-on:click="blockUser()">Block User
                                 </button>
-                                <button type="button" class="btn report-btn" v-if="isConversationBlocked" v-on:click="unblockUser()">Unblock User
+                                <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf == true" v-on:click="unblockUser()">Unblock User
                                 </button>
                             </div>
                         </div>
@@ -40,8 +40,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="message-blocked" v-if="isConversationBlocked == true">
-                                You cannot send anymore messages to this user
+                            <div class="message-blocked" v-if="isUserBlockedBySelf == true">
+                                Unblock the user to send messages
+                            </div>
+                            <div class="message-blocked" v-if="isBlockedByOtherUser == true && isUserBlockedBySelf == false">
+                                User has stopped receiving messages
                             </div>
                         </div>
 
