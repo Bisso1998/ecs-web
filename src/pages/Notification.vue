@@ -50,8 +50,6 @@
                                 <div class="head-title">__("seo_login_page")</div>
                                 <div class="card-content">
                                     <p><i class="material-icons">check_circle</i> Send messages to your favorite authors and friends</p>
-                                    <p><i class="material-icons">check_circle</i> __("android_banner_notification_1")</p>
-                                    <p><i class="material-icons">check_circle</i> __("android_banner_notification_2")</p>
                                     <button type="button" class="btn" data-toggle="modal" data-target="#login_modal">__("user_sign_in") / __("user_sign_up")</button>
                                 </div>
                             </div>
