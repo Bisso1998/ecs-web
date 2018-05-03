@@ -14,8 +14,8 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <button type="button" class="btn report-btn"  v-on:click="redirectToOtherUserProfile()">View profile</button>
-                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#confirmation">Delete Conversation</button>
-                                <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf == false" v-on:click="blockUser()">Block User
+                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#confirmation" v-if="messageList.length > 0">Delete Conversation</button>
+                                <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf != true" v-on:click="blockUser()">Block User
                                 </button>
                                 <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf == true" v-on:click="unblockUser()">Unblock User
                                 </button>
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </MessageLayout>
 </template>
@@ -129,7 +129,7 @@ export default {
     },
 
     methods: {
-        
+
         loadConversationsList() {
             redirect('/messages');
         },
