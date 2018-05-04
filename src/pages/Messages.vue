@@ -118,10 +118,9 @@ export default {
             const self = this;
             self.firebaseGrowthDB.ref('/CHATS').child('messages').child(channelId).limitToLast(1).on('child_added', function(snapshot){
                 var message = snapshot.val();
-                //console.log("Last message added : ",message, " for channel : ", channelId);
-                self.conversations.filter(function(item){
-                    return item.channelId == channelId;
-                });
+                console.log("Last message added : ",message, " for channel : ", channelId);
+                debugger;
+                self.removeConversationForChannel(channelId);
                 var isMessageUnread = true;
                 if((message.senderId == self.getUserDetails.userId) || (self.channelLastReadMessage[channelId] == snapshot.key)){
                     isMessageUnread = false;
@@ -132,6 +131,16 @@ export default {
                 self.conversations.unshift(messageReceived);
                 self.conversations.sort(function (l, r) { return l.lastMessageTime > r.lastMessageTime ? -1 : 1 })
             }, function(){}, self);
+        },
+
+        removeConversationForChannel(channelId) {
+            const self = this;
+            for(var i = 0; i< self.conversations.length; i++) {
+                if(self.conversations[i].channelId == channelId) {
+                    self.conversations.splice(i, 1);
+                    break;
+                }
+            }
         },
 
 
@@ -294,6 +303,9 @@ export default {
 
     beforeDestroy: function() {
         const self = this;
+        if(self.firebaseGrowthDB) {
+            return;
+        }
         var chatRef = self.firebaseGrowthDB.ref('/CHATS');
         chatRef.child('user_watched_channels').child(self.getUserDetails.userId).off();
         for (var i = 0, len = self.conversations.length; i < len; i++) {
