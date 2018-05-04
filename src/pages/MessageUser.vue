@@ -13,11 +13,11 @@
                                 <i class="material-icons">more_vert</i>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <button type="button" class="btn report-btn"  v-on:click="redirectToOtherUserProfile()">View profile</button>
-                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#confirmation" v-if="messageList.length > 0">Delete Conversation</button>
-                                <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf != true" v-on:click="blockUser()">Block User
+                                <button type="button" class="btn report-btn"  v-on:click="redirectToOtherUserProfile()">__("chat_view_profile")</button>
+                                <button type="button" class="btn report-btn" data-toggle="modal" data-target="#confirmation" v-if="messageList.length > 0">__("pratilipi_delete_content")</button>
+                                <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf != true" v-on:click="blockUser()">__("chat_block_user")
                                 </button>
-                                <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf == true" v-on:click="unblockUser()">Unblock User
+                                <button type="button" class="btn report-btn" v-if="isUserBlockedBySelf == true" v-on:click="unblockUser()">__("chat_unblock_user")
                                 </button>
                             </div>
                         </div>
@@ -40,16 +40,16 @@
                                 </div>
                             </div>
                             <div class="message-blocked" v-if="isUserBlockedBySelf == true">
-                                Unblock the user to send messages
+                                __("chat_unblock_user_msg")
                             </div>
                             <div class="message-blocked" v-if="isBlockedByOtherUser == true && isUserBlockedBySelf == false">
-                                User has stopped receiving messages
+                                __("chat_stopped_msg")
                             </div>
                         </div>
 
                         <div class="chat-box">
                             <div class="type-message">
-                                <textarea id="text-message" contenteditable="true" placeholder="Type a message"
+                                <textarea id="text-message" contenteditable="true" :placeholder="'__("chat_textbox_placeholder")'"
                                           v-bind:disabled="isConversationBlocked == true"
                                           v-model="toSendMessageText"></textarea>
                             </div>
@@ -65,7 +65,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="reportModalLabel">Delete Conversation?</h5>
+                            <h5 class="modal-title" id="reportModalLabel">__("pratilipi_delete_content")?</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <i class="material-icons">close</i>
                             </button>
@@ -73,7 +73,7 @@
                         <div class="modal-body">
                             <form>
                                 <div class="form-group">
-                                    <label>Do you want to delete all messages?</label>
+                                    <label>__("chat_delete_msg")</label>
                                 </div>
                                 <button type="button" class="btn btn-submit" data-dismiss="modal" aria-label="Close">__("cancel")</button>
                                 <button type="button" @click="deleteConversation" class="cancel">__("pratilipi_confirm_delete_content_okay")</button>
@@ -636,6 +636,7 @@ export default {
             }
             .dropdown-menu {
                 text-align: right;
+                min-width: 200px;
                 button {
                     display: block;
                     background: none;

@@ -291,7 +291,7 @@ const router = new Router({
         name: 'Messages_Page',
         component: MessagesComponent,
         meta: {
-            'title': 'Messages | __("pratilipi")',
+            'title': '__("chat_messages") | __("pratilipi")',
             'store': 'messages'
         }
     }, {

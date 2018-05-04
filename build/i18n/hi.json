@@ -192,7 +192,6 @@
     "save_changes": "परिवर्तन सुरक्षित करें",
     "show_more": "और देखें",
     "show_less": "कम देखें",
-    "show_all_messages": "Show all messages",
     "read": "पढ़िए",
     "write": "लिखिए",
     "free": "निःशुल्क",
@@ -530,5 +529,20 @@
     "name_required": "नाम अनिवार्य है",
     "reader_read_in_app_helper_text": "ऐप में पढ़ें",
     "read_popular_stories": "लोकप्रिय कहानियां पढ़ें",
-    "see_more_categories": "और श्रेणियां देखें"
+    "see_more_categories": "और श्रेणियां देखें",
+    
+    "chat_messages": "मैसेजेज",
+    "chat_message": "मैसेज",
+    "chat_show_all": "सभी देखें",
+    "chat_view_profile": "प्रोफाइल देखें",
+    "chat_block_user": "यूजर को ब्लाक करें",
+    "chat_unblock_user": "यूजर को अनब्लाक करें",
+    "chat_unblock_user_msg": "यूजर को मैसेज भेजने के लिए अनब्लाक करें",
+    "chat_stopped_msg": "यूजर ने मैसेज रिसीव करना बंद कर दिया है",
+    "chat_guest_msg": "अपने प्रिय लेखकों और दोस्तों को मैसेज भेजें",
+    "chat_blocked_msg": "इनके साथ आप मैसेज का आदान-प्रदान नहीं कर पाएंगे।",
+    "chat_delete_msg": "क्या आप सभी मैसेज डिलीट करना चाहते हैं?",
+    "chat_textbox_placeholder": "यहाँ लिखें...",
+    "chat_no_msgs": "आपके पास कोई भी मैसेज नहीं है",
+    "chat_no_unread_msgs": "आपके पास बिना पढ़ा हुआ कोई मैसेज नहीं है"
 }

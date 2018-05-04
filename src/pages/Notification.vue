@@ -6,7 +6,7 @@
                     <div class="col-md-12">
                         <ul class="tab-menu">
                             <li @click="tabchange" class="active" data-tab="notifications">__("notification_notifications")</li>
-                            <li @click="tabchange" data-tab="messages">Messages <span class="message-dot" v-if="messageNotificationList.length > 0"></span></li>
+                            <li @click="tabchange" data-tab="messages">__("chat_messages") <span class="message-dot" v-if="messageNotificationList.length > 0"></span></li>
                         </ul>
                         <router-link
                         class="notification-settings"
@@ -49,7 +49,7 @@
                             <div class="card" v-if="getUserDetails.isGuest">
                                 <div class="head-title">__("seo_login_page")</div>
                                 <div class="card-content">
-                                    <p><i class="material-icons">check_circle</i> Send messages to your favorite authors and friends</p>
+                                    <p><i class="material-icons">check_circle</i> __("chat_guest_msg")</p>
                                     <button type="button" class="btn" data-toggle="modal" data-target="#login_modal">__("user_sign_in") / __("user_sign_up")</button>
                                 </div>
                             </div>
@@ -71,14 +71,14 @@
                                     </div>
                                     </router-link>
                                 </li>
-                                <li class="no-messages" v-if="messageNotificationList.length == 0">You don't have any unread messages</li>
+                                <li class="no-messages" v-if="messageNotificationList.length == 0">__("chat_no_unread_msgs")</li>
                             </ul>
 
                             <router-link
                             class="show-more"
                             :to="{ name: 'Messages_Page'}"
                             v-if="!getUserDetails.isGuest">
-                            __("show_all_messages")
+                            __("chat_show_all")
                             </router-link>
                         </div>
                     </div>

@@ -529,5 +529,20 @@
     "name_required": "మీరు పేరును కచ్చితంగా ఇవ్వాల్సిందే",
     "reader_read_in_app_helper_text": "యాప్ లో చడవండి",
     "read_popular_stories": "ప్రసిద్ధ కథలను చదవండి",
-    "see_more_categories": "మరిన్ని వర్గాలను చూడండి"
+    "see_more_categories": "మరిన్ని వర్గాలను చూడండి",
+    
+    "chat_messages": "సందేశాలు",
+    "chat_message": "సందేశం",
+    "chat_show_all": "అన్నీ చూపండి",
+    "chat_view_profile": "ప్రొఫైల్ చూడండి",
+    "chat_block_user": "బ్లాక్ యూజర్",
+    "chat_unblock_user": "అన్ బ్లాక్ యూజర్",
+    "chat_unblock_user_msg": "సందేశాలను పంపడానికి యూజర్ ని అన్ బ్లాక్ చేయండి",
+    "chat_stopped_msg": "యూజర్ సందేశాలను స్వీకరించడం ఆపివేసారు",
+    "chat_guest_msg": "మీకు ఇష్టమైన రచయితలు మరియు స్నేహితులకు సందేశాలను పంపండి",
+    "chat_blocked_msg": "మీరు ఈ యూజర్ నుండి సందేశాలను పంపలేరు లేదా స్వీకరించలేరు.",
+    "chat_delete_msg": "మీరు అన్ని సందేశాలను తొలగించాలనుకుంటున్నారా?",
+    "chat_textbox_placeholder": "ఇక్కడ వ్రాయండి...",
+    "chat_no_msgs": "మీకు ఏ సందేశాలు లేవు",
+    "chat_no_unread_msgs": "మీకు చదవని సందేశాలు లేవు"
 }

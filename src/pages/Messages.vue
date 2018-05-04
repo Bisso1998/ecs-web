@@ -4,13 +4,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Messages</h2>
+                    <h2>__("chat_messages")</h2>
                     <div class="card" v-if="getUserDetails.isGuest">
                         <div class="head-title">__("seo_login_page")</div>
                         <div class="card-content">
-                            <p><i class="material-icons">check_circle</i> Send messages to your favorite authors and friends</p>
-                            <p><i class="material-icons">check_circle</i> __("android_banner_notification_1")</p>
-                            <p><i class="material-icons">check_circle</i> __("android_banner_notification_2")</p>
+                            <p><i class="material-icons">check_circle</i> __("chat_guest_msg")</p>
                             <button type="button" class="btn" data-toggle="modal" data-target="#login_modal">__("user_sign_in") / __("user_sign_up")</button>
                         </div>
                     </div>
@@ -29,7 +27,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="no-messages" v-if="loadingConversations != true && conversations.length == 0">You don't have any messages</li>
+                        <li class="no-messages" v-if="loadingConversations != true && conversations.length == 0">__("chat_no_msgs")</li>
                     </ul>
                     <Spinner  v-if="loadingConversations == true && !getUserDetails.isGuest"></Spinner>
                 </div>
