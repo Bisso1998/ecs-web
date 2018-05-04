@@ -64,4 +64,7 @@ export default {
     max-height: calc(100vh - 200px);
     overflow-y: auto;
 }
+.footer-menu {
+    display: none !important;
+}
 </style>
