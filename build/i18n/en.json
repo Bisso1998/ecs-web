@@ -508,7 +508,7 @@
     "hours": "hrs",
     "minute": "min",
     "minutes": "mins",
-    
+
     "menu_category": "Category",
     "menu_profile": "Profile",
     "join_pratilipi": "Join Pratilipi",
@@ -528,5 +528,20 @@
     "signup_failed": "Signup Failed. Please retry.",
     "name_required": "Name is mandatory",
     "read_popular_stories": "Read popular stories",
-    "see_more_categories": "See more categories"
+    "see_more_categories": "See more categories",
+    
+    "chat_messages": "Messages",
+    "chat_message": "Message",
+    "chat_show_all": "Show all",
+    "chat_view_profile": "View Profile",
+    "chat_block_user": "Block User",
+    "chat_unblock_user": "Unblock User",
+    "chat_unblock_user_msg": "Unblock the user to send messages",
+    "chat_stopped_msg": "User has stopped receiving messages",
+    "chat_guest_msg": "Send messages to your favorite authors and friends",
+    "chat_blocked_msg": "You will not be able to send or recieve messages from this user.",
+    "chat_delete_msg": "Do you want to delete all messages?",
+    "chat_textbox_placeholder": "Write here...",
+    "chat_no_msgs": "You don't have any messages",
+    "chat_no_unread_msgs": "You don't have any unread messages"
 }

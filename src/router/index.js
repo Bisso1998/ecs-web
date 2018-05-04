@@ -15,6 +15,8 @@ import SettingsPageComponent from '@/pages/Settings.vue'
 import SearchPageComponent from '@/pages/Search.vue'
 import LoginPageComponent from '@/pages/Login.vue'
 import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
+import MessagesComponent from '@/pages/Messages.vue'
+import MessageUserComponent from '@/pages/MessageUser.vue'
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -283,6 +285,22 @@ const router = new Router({
         meta: {
             'title': '__("seo_register_page") | __("pratilipi")',
             'store': 'register'
+        }
+    }, {
+        path: '/messages',
+        name: 'Messages_Page',
+        component: MessagesComponent,
+        meta: {
+            'title': '__("chat_messages") | __("pratilipi")',
+            'store': 'messages'
+        }
+    }, {
+        path: '/messages/:channel_id',
+        name: 'MessageUser_Page',
+        component: MessageUserComponent,
+        meta: {
+            'title': 'Messages | __("pratilipi")',
+            'store': 'messageuser'
         }
     }, {
         path: '/blog',

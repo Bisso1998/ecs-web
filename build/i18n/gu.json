@@ -529,5 +529,20 @@
     "name_required": "નામ જરૂરી છે",
     "reader_read_in_app_helper_text": "એપમાં વાંચો",
     "read_popular_stories": "લોકપ્રિય વાર્તાઓ વાંચો",
-    "see_more_categories": "વધુ કૅટેગરીઝ જુઓ"
+    "see_more_categories": "વધુ કૅટેગરીઝ જુઓ",
+    
+    "chat_messages": "મેસેજ",
+    "chat_message": "મેસેજ",
+    "chat_show_all": "બધા જુઓ",
+    "chat_view_profile": "પ્રોફાઈલ જુઓ",
+    "chat_block_user": "યુઝરને બ્લોક કરો",
+    "chat_unblock_user": "યુઝરને અનબ્લોક કરો",
+    "chat_unblock_user_msg": "યુઝરને મેસેજ મોકલવા માટે અનબ્લોક કરો",
+    "chat_stopped_msg": "યુઝર દ્વારા મેસેજ રિસીવ કરવાનું બંધ કરી દેવાયું છે",
+    "chat_guest_msg": "આપના મનપસંદ લેખક અને મિત્રોને મેસેજ મોકલો",
+    "chat_blocked_msg": "આપ આ યુઝરને મેસેજ મોકલવા કે મેસેજ પ્રાપ્ત કરવા માટે સક્ષમ નથી.",
+    "chat_delete_msg": "શું આપ બધા મેસેજ ડિલીટ કરવા માંગો છો?",
+    "chat_textbox_placeholder": "અહીં લખો...",
+    "chat_no_msgs": "આપની પાસે કોઈ મેસેજ નથી",
+    "chat_no_unread_msgs": "આપની પાસે ન-વંચાયેલા કોઈ મેસેજ નથી"
 }

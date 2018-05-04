@@ -529,5 +529,20 @@
     "name_required": "নাম বাধ্যতামূলক",
     "reader_read_in_app_helper_text": "অ্যাপে পড়ুন",
     "read_popular_stories": "জনপ্রিয় গল্পগুলি পড়ুন",
-    "see_more_categories": "আরো বিভাগ দেখুন"
+    "see_more_categories": "আরো বিভাগ দেখুন",
+    
+    "chat_messages": "মেসেজ",
+    "chat_message": "মেসেজ",
+    "chat_show_all": "পুরোটা দেখুন",
+    "chat_view_profile": "প্রোফাইল দেখুন",
+    "chat_block_user": "ব্যবহারকারীকে ব্লক করুন",
+    "chat_unblock_user": "ব্যবহারকারীকে আনব্লক করুন",
+    "chat_unblock_user_msg": "ব্যবহারকারীকে মেসেজ পাঠানোর জন্য আনব্লক করুন",
+    "chat_stopped_msg": "ব্যবহারকারী মেসেজ গ্রহণ বন্ধ করেছেন",
+    "chat_guest_msg": "আপনার প্রিয় লেখক ও বন্ধুদের মেসেজ পাঠান",
+    "chat_blocked_msg": "আপনি এই ব্যবহারকারীর থেকে মেসেজ পাঠাতে বা গ্রহণ করতে পারবেন না।",
+    "chat_delete_msg": "আপনি কি সব মেসেজ ডিলিট করতে চান?",
+    "chat_textbox_placeholder": "এখানে লিখুন...",
+    "chat_no_msgs": "আপনার কাছে কোন মেসেজ নেই",
+    "chat_no_unread_msgs": "আপনার কাছেে অপঠিত কোন মেসেজ নেই"
 }

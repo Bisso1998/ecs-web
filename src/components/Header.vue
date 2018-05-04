@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header>
+        <header v-if="!isHidden">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-2 col-sm-4 col-5 p-r-0">
@@ -29,6 +29,7 @@
                             @click="triggerEventAndResetNotificationCount">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
+                                <span v-if="!notificationCount && pendingMessages.length > 0" class="message-notification"></span>
                             </div>
                         </div>
                         <div class="d-block d-lg-none search-box search-box-2 text-right">
@@ -42,6 +43,7 @@
                             class="notification-icon">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
+                                <span v-if="!notificationCount && pendingMessages.length > 0" class="message-notification"></span>
                             </div>
                         </div>
                     </div>
@@ -72,6 +74,12 @@ export default {
         },
         notificationCount: {
             type: Number
+        },
+        pendingMessages: {
+            type: Array
+        },
+        isHidden: {
+            type: Boolean
         }
     },
     mixins: [
@@ -82,11 +90,11 @@ export default {
             languages: constants.LANGUAGES,
             isCurrentLanguage: (language) => {
                 if (language === process.env.LANGUAGE) {
-                    return true;    
+                    return true;
                 } else {
                     return false;
                 }
-                
+
             },
             searchText: '',
             scrollPosition: null,
@@ -178,14 +186,14 @@ export default {
             } else if(newScrollPosition <= 70) {
                 $('header').removeClass('nav-up');
             }
-            
+
             if (newScrollPosition < prevScrollPosition) {
                 this.counter++;
                 this.scrollDirection = 'UP';
             } else {
                 this.scrollDirection = 'DOWN';
             }
-            
+
             if (this.counter > 5) {
                 $('header').removeClass('nav-up');
                 this.counter = 0;
@@ -194,7 +202,7 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
-        
+
         // Hide Footer when keyboard comes
         if (this.isMobile()) {
             $(document).on('focus', 'input', function() {
@@ -350,6 +358,13 @@ export default {
                 text-align: center;
                 font-size: 11px;
                 line-height: 22px;
+            }
+            span.message-notification {
+                width: 10px;
+                height: 10px;
+                top: 3px;
+                right: 2px;
+                border: 1px solid #fff;
             }
             &.router-link-exact-active , &.active {
                 color: #d00b12;

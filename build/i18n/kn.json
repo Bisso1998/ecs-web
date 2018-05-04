@@ -529,5 +529,20 @@
     "name_required": "ಹೆಸರು ಕಡ್ಡಾಯ",
     "reader_read_in_app_helper_text": "ಅಪ್ಲಿಕೇಶನ್ನಿನಲ್ಲಿ ಓದಿರಿ",
     "read_popular_stories": "ಜನಪ್ರಿಯ ಕಥೆಗಳನ್ನು ಓದಿ",
-    "see_more_categories": "ಹೆಚ್ಚಿನ ವಿಭಾಗಗಳನ್ನು ನೋಡಿ"
+    "see_more_categories": "ಹೆಚ್ಚಿನ ವಿಭಾಗಗಳನ್ನು ನೋಡಿ",
+    
+    "chat_messages": "ಸಂದೇಶಗಳು",
+    "chat_message": "ಸಂದೇಶ",
+    "chat_show_all": "ಎಲ್ಲವನ್ನೂ ತೋರಿಸಿ",
+    "chat_view_profile": "ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಣೆ",
+    "chat_block_user": "ಬ್ಲಾಕ್ ಯೂಸರ್",
+    "chat_unblock_user": "ಅನ್ ಬ್ಲಾಕ್ ಯೂಸರ್",
+    "chat_unblock_user_msg": "ಸಂದೇಶವನ್ನು ಕಳುಹಿಸಲು ಯೂಸರ್ ಅನ್ ಬ್ಲಾಕ್ ಮಾಡಿ",
+    "chat_stopped_msg": "ಬಳಕೆದಾರರು ಸಂದೇಶ ಪಡೆಯುವುದನ್ನು ನಿಲ್ಲಿಸಿದ್ದಾರೆ.",
+    "chat_guest_msg": "ನಿಮ್ಮ ನೆಚ್ಚಿನ ಸಾಹಿತಿಗಳು ಮತ್ತು ಸ್ನೇಹಿತರಿಗೆ ಸಂದೇಶವನ್ನು ಕಳುಹಿಸಿರಿ",
+    "chat_blocked_msg": "ನೀವು ಈ ಬಳಕೆದಾರರಿಗೆ ಮೆಸೇಜ್ ಕಳುಹಿಸಲು ಮತ್ತು ಇವರಿಂದ ಮೆಸೇಜ್ ಪಡೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+    "chat_delete_msg": "ನೀವು ಎಲ್ಲಾ ಮೆಸೇಜ್ ಗಳನ್ನೂ ಅಳಿಸಲು ಇಚ್ಚಿಸುತ್ತೀರಾ?",
+    "chat_textbox_placeholder": "ಇಲ್ಲಿ ಬರೆಯಿರಿ...",
+    "chat_no_msgs": "ನಿಮಗೆ ಯಾವುದೇ ಸಂದೇಶ ಇರುವುದಿಲ್ಲ",
+    "chat_no_unread_msgs": "ನಿಮಗೆ ಯಾವುದೇ ಓದದ ಸಂದೇಶ ಇರುವುದಿಲ್ಲ"
 }

@@ -1,6 +1,6 @@
 <template>
     <div :class="currentLocale">
-        <Header :userDetails="getUserDetails" :notificationCount="getNotificationCount" ></Header>
+        <Header :userDetails="getUserDetails" :notificationCount="getNotificationCount" :pendingMessages="messageNotificationList"></Header>
         <AppBanner></AppBanner>
         <slot></slot>
         <PratilipiModal></PratilipiModal>
@@ -35,7 +35,8 @@ export default {
     computed: {
         ...mapGetters([
             'getUserDetails',
-            'getNotificationCount'
+            'getNotificationCount',
+            'messageNotificationList'
         ])
     },
     data() {
@@ -49,7 +50,8 @@ export default {
     methods: {
         ...mapActions([
             'fetchUserDetails',
-            'fetchInitialNotifications'
+            'fetchInitialNotifications',
+            'attachMessageNotificationListener'
         ])
     },
     components: {
@@ -63,6 +65,14 @@ export default {
         ConfirmationModal,
         Footer,
         Alert
+    },
+    watch: {
+        'getUserDetails.userId'(newValue) {
+            if (newValue) {
+                this.fetchInitialNotifications({ language: this.getCurrentLanguage().fullName.toUpperCase(), resultCount: 10 });
+                this.attachMessageNotificationListener(this.getUserDetails.userId);
+            }
+        }
     },
     created() {
         this.currentLocale = 'language-' + process.env.LANGUAGE;

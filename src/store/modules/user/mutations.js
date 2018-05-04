@@ -69,16 +69,20 @@ export default {
     setLoginSource(state, source) {
         state.login_source = source;
     },
-    
+
     setForgotPasswordUpdateStateTrue(state) {
         state.forgot_password_update_state = 'LOADING';
     },
-    
+
     setForgotPasswordUpdateStateSucess(state) {
         state.forgot_password_update_state = 'LOADING_SUCCESS';
     },
-    
+
     setForgotPasswordUpdateStateError(state) {
         state.forgot_password_update_state = 'LOADING_ERROR';
+    },
+
+    setPendingMessagesStatus(state, status) {
+        state.pendingMessages = status;
     }
 }

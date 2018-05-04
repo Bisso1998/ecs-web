@@ -18,16 +18,16 @@
                                 <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId" @click="uploadImage('cover-image')"><i class="material-icons">camera_alt</i></button>
                                 <input type="file" hidden name="coverimage" @change="triggerCoverImageUpload($event)" accept="image/*" id="coverimage_uploader">
                                 <div class="uploading" v-if="getCoverImageLoadingState === 'LOADING'">
-                                    <Spinner></Spinner> 
+                                    <Spinner></Spinner>
                                 </div>
                             </div>
-                            
+
                             <div class="profile-image">
                                 <img :src="getAuthorData.imageUrl + '?width=150'" alt="profile">
                                 <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId" @click="uploadImage('profile-image')"><i class="material-icons">camera_alt</i></button>
                                 <input type="file" hidden name="profileimage" @change="triggerProfileImageUpload($event)" accept="image/*" id="profile_uploader">
                                 <div class="uploading" v-if="getProfileImageLoadingState === 'LOADING'">
-                                    <Spinner></Spinner> 
+                                    <Spinner></Spinner>
                                 </div>
                             </div>
                             <div class="profile-user-name">{{ getAuthorData.name }}</div>
@@ -62,6 +62,11 @@
                             </div>
                             <div class="follow-btn-w-count" v-if="getAuthorData.following && getUserDetails.userId !== getAuthorData.user.userId" @click="triggerEventAndFollowOrUnfollowAuthor"><!-- Following Button -->
                                 <button><i class="material-icons">check</i> __("author_following")</button><span><b>{{ getAuthorData.followCount }}</b></span>
+                            </div>
+
+                            <!-- Message Button -->
+                            <div class="message-btn" v-if="getUserDetails.userId !== getAuthorData.user.userId" @click="messageUser">
+                                <i class="material-icons">message</i> __("chat_message")
                             </div>
                         </div>
                         <Spinner v-if="getAuthorDataLoadingState === 'LOADING'"></Spinner>
@@ -112,8 +117,8 @@
                                     </router-link>
                                 </div>
                                 <div class="list followers" id="followers">
-                                    <AuthorCard  v-for="each_follower in getAuthorFollowers" 
-                                        :authorData="each_follower" 
+                                    <AuthorCard  v-for="each_follower in getAuthorFollowers"
+                                        :authorData="each_follower"
                                         :key="each_follower.userId"
                                         :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
                                         :screenLocation="'FOLLOWERS'"
@@ -124,8 +129,8 @@
                                     <Spinner v-if="getAuthorFollowersLoadingState === 'LOADING'"></Spinner>
                                 </div>
                                 <div class="list following" id="following">
-                                    <AuthorCard v-for="each_following in getAuthorFollowing" 
-                                        :authorData="each_following" 
+                                    <AuthorCard v-for="each_following in getAuthorFollowing"
+                                        :authorData="each_following"
                                         :key="each_following.userId"
                                         :screenName=" getUserDetails.authorId === getAuthorData.authorId ? 'MYPROFILE' : 'USER'"
                                         :screenLocation="'FOLLOWINGS'"
@@ -215,7 +220,7 @@ export default {
             'setAfterLoginAction'
         ]),
         tabchange(event) {
-            event.preventDefault();        
+            event.preventDefault();
             var tab_id = $(event.currentTarget).attr('data-tab');
             $(".profile-menu a").removeClass("active");
             $(event.currentTarget).addClass("active");
@@ -289,7 +294,7 @@ export default {
                     }
                     break;
             }
-            
+
         },
         triggerSettingsEvent() {
             this.triggerAnanlyticsEvent(`CLICKSETTINGS_MYPROFILEM_MYPROFILE`, 'CONTROL', {
@@ -303,7 +308,7 @@ export default {
                 'ENTITY_VALUE': this.getAuthorData.followCount,
                 'AUTHOR_ID': this.getAuthorData.authorId
             });
-            
+
             if (this.getUserDetails.isGuest) {
                 // throw popup modal
                 console.log(this.$route);
@@ -313,6 +318,11 @@ export default {
                 this.followOrUnfollowAuthor();
             }
         },
+
+        messageUser() {
+            this.$router.push({path : '/messages/' + this.getAuthorData.user.userId, query : {profileImageUrl:this.getAuthorData.profileImageUrl, displayName: this.getAuthorData.fullName, profileUrl: this.getAuthorData.pageUrl}});
+        },
+
         openShareModal() {
             if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
                 this.triggerAnanlyticsEvent(`CLICKSHRUSER_MYPROFILEM_MYPROFILE`, 'CONTROL', {
@@ -354,32 +364,32 @@ export default {
             } else {
                 // your element doesn't have overflow
                 this.showShowMoreOfSummary = false;
-            }   
+            }
         }
     },
     watch: {
         'getAuthorData.authorId'(newValue) {
 
             if (newValue) {
-                this.fetchInitialPublishedContents({ 
+                this.fetchInitialPublishedContents({
                     authorId: newValue,
                     resultCount: 10
                 });
 
-                this.fetchInitialAuthorFollowingUsers({ 
-                    userId: this.getAuthorData.user.userId, 
+                this.fetchInitialAuthorFollowingUsers({
+                    userId: this.getAuthorData.user.userId,
                     resultCount: 20
                 });
 
-                this.fetchInitialAuthorFollowerUsers({ 
-                    authorId: newValue, 
+                this.fetchInitialAuthorFollowerUsers({
+                    authorId: newValue,
                     resultCount: 20
                 });
 
                 if (this.getUserDetails.author.authorId === this.getAuthorData.authorId) {
                     this.fetchInitialLibraryList(10);
                 }
-                
+
             }
         },
         '$route.params.user_slug' (user_slug) {
@@ -387,24 +397,24 @@ export default {
         },
         'scrollPosition'(newScrollPosition){
             const nintyPercentOfList = ( 50 / 100 ) * $('.author-page').innerHeight();
-            
+
             if (newScrollPosition > nintyPercentOfList) {
                 if (this.publishedContentsLoadingState !== 'LOADING' && this.getPublishedContentsCursor) {
-                    this.fetchMorePublishedContents({ 
+                    this.fetchMorePublishedContents({
                         authorId: this.getAuthorData.authorId,
                         resultCount: 10
                     });
                 }
                 if (this.getAuthorFollowingLoadingState !== 'LOADING' && this.getAuthorFollowingCursor) {
-                    this.fetchMoreAuthorFollowingUsers({ 
-                        userId: this.getAuthorData.user.userId, 
+                    this.fetchMoreAuthorFollowingUsers({
+                        userId: this.getAuthorData.user.userId,
                         resultCount: 5
                     });
                 }
                 if (this.getAuthorFollowersLoadingState !== 'LOADING' && this.getAuthorFollowersCursor) {
-                    this.fetchMoreAuthorFollowerUsers({ 
-                        authorId: this.getAuthorData.authorId, 
-                        resultCount: 5 
+                    this.fetchMoreAuthorFollowerUsers({
+                        authorId: this.getAuthorData.authorId,
+                        resultCount: 5
                     });
                 }
             }
@@ -413,9 +423,9 @@ export default {
             if (state === 'LOADING_SUCCESS') {
                 if (decodeURI(this.$route.path) !== this.getUserDetails.profilePageUrl) {
                     setTimeout(() => {
-                        this.goToPublishedContentsTab();    
+                        this.goToPublishedContentsTab();
                     }, 0);
-                    
+
                 }
 
                 if (decodeURI(this.$route.path) !== this.getUserDetails.profilePageUrl) {
@@ -434,7 +444,7 @@ export default {
 
                 const that = this;
                 setTimeout(() => {
-                    that.detectOverflow();    
+                    that.detectOverflow();
                 }, 0);
             }
         }
@@ -516,7 +526,7 @@ export default {
                 height: 120px;
                 border-radius: 50%;
             }
-            .update-img { 
+            .update-img {
                 bottom: 5px;
                 left: 45px;
             }
@@ -559,7 +569,8 @@ export default {
             font-size: 14px;
             position: relative;
             text-align: center;
-            display: block;
+            display: inline-block;
+            vertical-align: middle;
             clear: both;
             overflow: hidden;
             cursor: pointer;
@@ -595,6 +606,23 @@ export default {
                 }
             }
         }
+        .message-btn {
+            background: #fff;
+            color: #d0021b;
+            display: inline-block;
+            border-radius: 3px;
+            vertical-align: middle;
+            font-size: 14px;
+            text-align: center;
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: 1px solid #d0021b;
+            i {
+                vertical-align: middle;
+                padding-right: 5px;
+                font-size: 18px;
+            }
+        }
         .profile-user-name {
             font-weight: bold;
             margin: 5px 0 0;
@@ -628,7 +656,7 @@ export default {
                         line-height: 19px;
                     }
                 }
-                
+
             }
             p {
                 margin: 2px 5px 5px 10px;
@@ -760,7 +788,7 @@ export default {
 				}
 				span {
 					height: 41px;
-					line-height: 37px; 
+					line-height: 37px;
 					display: block;
 				}
 			}
