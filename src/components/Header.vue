@@ -53,7 +53,7 @@
                 </div>
             </div>
         </header>
-        <div class="d-block d-lg-none footer-menu">
+        <div class="d-block d-lg-none footer-menu" v-if="!hideFooter">
             <MainMenu :userDetails="userDetails"></MainMenu>
         </div>
     </div>
@@ -79,6 +79,9 @@ export default {
             type: Array
         },
         isHidden: {
+            type: Boolean
+        },
+        hideFooter: {
             type: Boolean
         }
     },
