@@ -660,7 +660,7 @@ export default {
             text-align: center;
             overflow-y: scroll;
             background: #f9f9f9;
-            height: calc(100vh - 155px);
+            height: calc(100vh - 110px);
             .chat-date {
                 text-align: center;
                 margin: 7px 0;
