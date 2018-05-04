@@ -119,7 +119,6 @@ export default {
             self.firebaseGrowthDB.ref('/CHATS').child('messages').child(channelId).limitToLast(1).on('child_added', function(snapshot){
                 var message = snapshot.val();
                 console.log("Last message added : ",message, " for channel : ", channelId);
-                debugger;
                 self.removeConversationForChannel(channelId);
                 var isMessageUnread = true;
                 if((message.senderId == self.getUserDetails.userId) || (self.channelLastReadMessage[channelId] == snapshot.key)){
