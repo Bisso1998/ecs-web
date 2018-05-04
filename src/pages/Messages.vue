@@ -29,7 +29,7 @@
                         </li>
                         <li class="no-messages" v-if="loadingConversations != true && conversations.length == 0">__("chat_no_msgs")</li>
                     </ul>
-                    <Spinner  v-if="loadingConversations == true && !getUserDetails.isGuest"></Spinner>
+                    <Spinner  v-if="loadingConversations == true && !getUserDetails.isGuest && conversations.length == 0"></Spinner>
                 </div>
             </div>
         </div>
@@ -162,7 +162,9 @@ export default {
 
         loadWatchedChannels(){
             const self = this;
-            self.loadingConversations = false;
+            setTimeout(() => {
+                self.loadingConversations = false;
+            }, 2000);
             self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_added', function(snapshot){
                 let channelId = snapshot.key;
                 self.loadChannelMetadata(channelId);

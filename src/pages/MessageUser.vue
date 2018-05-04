@@ -39,10 +39,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="message-blocked" v-if="isUserBlockedBySelf == true">
+                            <div class="message-blocked" v-if="isUserBlockedBySelf == true" id="unblock-user-panel-message">
                                 __("chat_unblock_user_msg")
                             </div>
-                            <div class="message-blocked" v-if="isBlockedByOtherUser == true && isUserBlockedBySelf == false">
+                            <div class="message-blocked" v-if="isBlockedByOtherUser == true && isUserBlockedBySelf == false" id="user-blocked-panel-message">
                                 __("chat_stopped_msg")
                             </div>
                         </div>
@@ -219,14 +219,13 @@ export default {
                 var toPushMessage = self.buildMessage(snapshot);
                 self.messageList.push(toPushMessage);
                 self.lastDeliveredMessageId = snapshot.key;
-                self.$nextTick(() => {self.scrollLastMessageIntoView()});
+                self.$nextTick(() => {self.scrollIntoView(snapshot.key);});
             }, function () {
             }, self);
         },
 
-        scrollLastMessageIntoView () {
-            const self = this;
-            $('#' + self.lastDeliveredMessageId)[0].scrollIntoView();
+        scrollIntoView (elementId) {
+            $('#' + elementId)[0].scrollIntoView();
         },
 
 
@@ -272,11 +271,21 @@ export default {
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).on('value', function (snapshot) {
                 //console.log("Changed blocked status Value : ", snapshot.val());
                 self.isUserBlockedBySelf = snapshot.val();
+                if(self.isUserBlockedBySelf == true) {
+                    self.$nextTick(() => {
+                        self.scrollIntoView("unblock-user-panel-message");
+                    });
+                }
             }, function () {
             }, self);
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(self.otherUserId).child(this.getUserDetails.userId).on('value', function (snapshot) {
                 self.isBlockedByOtherUser = snapshot.val();
                 //console.log("Changed blocked status Value for other user : ", snapshot.val());
+                if(self.isUserBlockedBySelf != true && self.isBlockedByOtherUser == true) {
+                    self.$nextTick(() => {
+                        self.scrollIntoView("user-blocked-panel-message");
+                    });
+                }
             }, function () {
             }, self);
         },
