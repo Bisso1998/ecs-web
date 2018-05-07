@@ -1,6 +1,6 @@
 <template>
     <div :class="currentLocale">
-        <Header :isHidden="true" :userDetails="getUserDetails"></Header>
+        <Header :isHidden="true" :hideFooter="true" :userDetails="getUserDetails"></Header>
         <slot></slot>
         <LoginModal></LoginModal>
         <ConfirmationModal></ConfirmationModal>

@@ -1,7 +1,7 @@
 <template>
     <MessageLayout>
         <div class="message-page page-wrap">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 p-0">
                         <div class="chat-header individual">
@@ -614,7 +614,10 @@ export default {
             }
         }
         .chat-header.individual {
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             .user-img {
                 float: left;
                 width: 40px;
@@ -665,7 +668,8 @@ export default {
             text-align: center;
             overflow-y: scroll;
             background: #f9f9f9;
-            height: calc(100vh - 155px);
+            height: calc(100vh - 110px);
+            margin-top: 55px;
             .chat-date {
                 text-align: center;
                 margin: 7px 0;
@@ -837,5 +841,8 @@ export default {
             padding: 0 10px;
             border-radius: 3px;
         }
+    }
+    .spinner {
+        margin-top: 60px;
     }
 </style>
