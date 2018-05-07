@@ -25,6 +25,7 @@ import sharemodal from './modules/sharemodal'
 import inputmodal from './modules/inputmodal'
 import readerpage from './modules/readerpage'
 import pratilipimodal from './modules/pratilipimodal'
+import messages from './modules/messages'
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -55,7 +56,8 @@ export default new Vuex.Store({
         reviews,
         readerpage,
         inputmodal,
-        pratilipimodal
+        pratilipimodal,
+        messages
     },
     strict: debug
 })
