@@ -284,6 +284,17 @@ export default {
             return window.canUseWebp ? "webp" : "jpg";
 
         },
+
+        initializeFirebaseAndStartListening() {
+            const self = this;
+            import('firebase').then((firebase) => {
+                self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
+                console.log("Firebase growth initialized for page");
+                //self.loadConversationsFromCache();
+                self.loadWatchedChannels();
+                self.updateUserProfile();
+            });
+        }
     },
 
     created() {
@@ -297,16 +308,17 @@ export default {
             this.$router.go('/login');
         }
         const self = this;
-        import('firebase').then((firebase) => {
-            setTimeout(function() {
-                self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
-                console.log("Firebase growth initialized for page");
-                //self.loadConversationsFromCache();
-                self.loadWatchedChannels();
-                self.updateUserProfile();
-            }, 3000);
-            //TODO Fix the watcher
-        });
+        if (this.getFirebaseGrowthDBLoadingState) {
+            this.initializeFirebaseAndStartListening();
+        }
+    },
+
+    watch: {
+        'getFirebaseGrowthDBLoadingState'(loaded) {
+            if (loaded) {
+                this.initializeFirebaseAndStartListening();
+            }
+        }
     },
 
     beforeDestroy() {
@@ -323,7 +335,8 @@ export default {
 
     computed: {
         ...mapGetters([
-            'getUserDetails'
+            'getUserDetails',
+            'getFirebaseGrowthDBLoadingState'
         ])
     }
 }

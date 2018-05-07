@@ -122,7 +122,8 @@ export default {
 
     computed: {
         ...mapGetters([
-            'getUserDetails'
+            'getUserDetails',
+            'getFirebaseGrowthDBLoadingState'
         ]),
         isConversationBlocked: function () {
             return this.isUserBlockedBySelf || this.isBlockedByOtherUser;
@@ -519,17 +520,10 @@ export default {
 
         redirectToMessagesPage() {
             this.$router.push('/messages');
-        }
-
-    },
-
-    mounted() {
-        if (this.getUserDetails.isGuest) {
-            this.$router.push('/login');
-        }
-        const self = this;
-        import('firebase').then((firebase) => {
-            setTimeout(function() {
+        },
+        initializeFirebaseAndStartListening() {
+            const self = this;
+            import('firebase').then((firebase) => {
                 self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
                 //console.log("Firebase growth initialized for page");
                 self.otherUserId = window.location.pathname.split("/")[2];
@@ -548,8 +542,27 @@ export default {
                         self.setAllMessagesFailed()
                     }
                 });
-            }, 3000);
-        });
+            });
+        }
+
+    },
+
+    mounted() {
+        if (this.getUserDetails.isGuest) {
+            this.$router.push('/login');
+        }
+
+        if (this.getFirebaseGrowthDBLoadingState) {
+            this.initializeFirebaseAndStartListening();
+        }
+    },
+
+    watch: {
+        'getFirebaseGrowthDBLoadingState'(loaded) {
+            if (loaded) {
+                this.initializeFirebaseAndStartListening();
+            }
+        }
     },
 
     beforeDestroy() {
