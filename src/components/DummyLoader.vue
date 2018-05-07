@@ -1,6 +1,6 @@
 <template>
-    <div class="dummy-content-loader">
-        <div class="dummy-section" v-for="i in 2" :key="i">
+    <div class="dummy-content-loader" :class="className">
+        <div class="dummy-section" v-for="i in sectionCount || 2" :key="i">
             <div class="background-masker dummy-title"></div>
             <div class="dummy-item" v-for="j in 6" :key="j">
                 <div class="background-masker dummy-image"></div>
@@ -15,12 +15,23 @@
         </div>
     </div>
 </template>
+<script>
 
+export default {
+    name: 'Dummy-Loader',
+    props: {
+        sectionCount: {
+            type: Number
+        },
+        className: {
+            type: Object
+        }
+    }
+}
+</script>
 <style  lang="scss" scoped>
 .dummy-content-loader {
     background: #fff;
-    border: 1px solid;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
     border-radius: 3px;
     padding: 12px;
     margin: 0 auto;
@@ -81,13 +92,24 @@
     }
     .dummy-stats {
         .stats {
-            width: 32%;
+            width: 31.5%;
             height: 40px;
             display: inline-block;
             &.stats-2 {
                 margin: 0 2px;
             }
         }
+    }
+}
+.dummy-content-loader.list .dummy-section {
+    overflow: auto;
+    white-space: normal;
+    text-align: left;
+    @media screen and (max-width: 992px) {
+        text-align: center;
+    }
+    .dummy-item {
+        margin: 0 10px 20px;
     }
 }
 </style>
