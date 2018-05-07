@@ -184,7 +184,7 @@ export default {
 
     attachMessageNotificationListener({ dispatch, state }, userId) {
         const self = this;
-        //console.log("Attaching message notification listener");
+        console.log("Attaching message notification listener");
         import('firebase').then((firebase) => {
             setTimeout(function () {
                 let firebaseGrowthDB = firebase.app("FirebaseGrowth").database();

@@ -32,6 +32,7 @@ export default {
     watch: {
         'getUserDetails.isGuest'(isGuest) {
             if (!isGuest) {
+                const that = this;
                 this.fetchInitialNotifications({ language: this.getCurrentLanguage().fullName.toUpperCase(), resultCount: 10 });
                 import('firebase').then((firebase) => {
                     if (firebase.apps.length === 0) {
@@ -52,6 +53,7 @@ export default {
                         };
                         console.log("Growth Firebase props : ", configGrowth);
                         firebase.initializeApp(configGrowth, "FirebaseGrowth");
+                        that.attachMessageNotificationListener(that.getUserDetails.userId);
                     }
 
                     firebase.auth().onAuthStateChanged( function( fbUser ) {

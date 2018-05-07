@@ -51,7 +51,8 @@ export default {
             channelLastMessage: {},
             channelLastReadMessage: {},
             fetchedChannelMetadataData: {},
-            loadingConversations: true
+            loadingConversations: true,
+            listenerCallbacks: []
         }
     },
 
@@ -96,29 +97,32 @@ export default {
 
         attachLastReadListener(channelId){
             const self = this;
-            self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(self.getUserDetails.userId).child(channelId).child('lastReadMessage').on('value', function(snapshot){
+            const lastReadRef = self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(self.getUserDetails.userId).child(channelId).child('lastReadMessage');
+            let lastReadCallback = lastReadRef.on('value', function(snapshot){
                 if(self.channelLastMessage[channelId] != undefined){
                     if(snapshot.val() == self.channelLastMessage[channelId].messageId){
                         self.channelLastMessage[channelId].isUnread = false;
                     }
                 }
                 self.channelLastReadMessage[channelId] = snapshot.val();
-                // for(var i=0; i < self.conversations.length; i++) {
-                //     if(self.conversations[i].channelId == channelId) {
-                //         if(self.conversations[i].messageId == snapshot.val()) {
-                //             self.conversations[i].isUnread = false;
-                //         }
-                //     }
-                // }
+                for(var i=0; i < self.conversations.length; i++) {
+                    if(self.conversations[i].channelId == channelId) {
+                        if(self.conversations[i].messageId == snapshot.val()) {
+                            self.conversations[i].isUnread = false;
+                        }
+                    }
+                }
             });
+            self.listenerCallbacks.push({ref: lastReadRef, callback: lastReadCallback, type:"value"});
         },
 
 
         attachLastMessageListener(channelId){
             const self = this;
-            self.firebaseGrowthDB.ref('/CHATS').child('messages').child(channelId).limitToLast(1).on('child_added', function(snapshot){
+            const lastMessageRef = self.firebaseGrowthDB.ref('/CHATS').child('messages').child(channelId).limitToLast(1);
+            let lastMessageCallback = lastMessageRef.on('child_added', function(snapshot){
                 var message = snapshot.val();
-                console.log("Last message added : ",message, " for channel : ", channelId);
+                console.log("Messages : Last message added : ",message, " for channel : ", channelId);
                 self.removeConversationForChannel(channelId);
                 var isMessageUnread = true;
                 if((message.senderId == self.getUserDetails.userId) || (self.channelLastReadMessage[channelId] == snapshot.key)){
@@ -129,7 +133,8 @@ export default {
                 self.channelLastMessage[channelId] = messageReceived;
                 self.conversations.unshift(messageReceived);
                 self.conversations.sort(function (l, r) { return l.lastMessageTime > r.lastMessageTime ? -1 : 1 })
-            }, function(){}, self);
+            });
+            self.listenerCallbacks.push({ref: lastMessageRef, callback: lastMessageCallback, type:"child_added"});
         },
 
         removeConversationForChannel(channelId) {
@@ -176,7 +181,7 @@ export default {
             self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_added', function(snapshot){
                 let channelId = snapshot.key;
                 self.loadChannelMetadata(channelId);
-            }, function(){}, self);
+            });
 
             self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_removed', function(snapshot){
                 //console.log("Watching channel removed : ", snapshot.key);
@@ -184,7 +189,7 @@ export default {
                     return item.channelId == snapshot.key;
                 });
                 self.firebaseGrowthDB.ref('/CHATS').child('messages').child(snapshot.key).off();
-            }, function(){}, self);
+            });
 
         },
 
@@ -288,6 +293,9 @@ export default {
     },
 
     mounted() {
+        if (this.getUserDetails.isGuest) {
+            this.$router.go('/login');
+        }
         const self = this;
         import('firebase').then((firebase) => {
             setTimeout(function() {
@@ -297,22 +305,15 @@ export default {
                 self.loadWatchedChannels();
                 self.updateUserProfile();
             }, 3000);
+            //TODO Fix the watcher
         });
     },
 
-    beforeDestroy: function() {
-        const self = this;
-        if(self.firebaseGrowthDB) {
-            return;
-        }
-        var chatRef = self.firebaseGrowthDB.ref('/CHATS');
-        chatRef.child('user_watched_channels').child(self.getUserDetails.userId).off();
-        for (var i = 0, len = self.conversations.length; i < len; i++) {
-            var conversation = self.conversations[i];
-            var conversationChannel = conversation.channelId;
-            chatRef.child('user_channels').child(self.getUserDetails.userId).child(conversationChannel).child('lastReadMessage').off();
-            chatRef.child('messages').child(conversationChannel).off();
-        }
+    beforeDestroy() {
+        console.log("Destroy callback : Messages")
+        this.listenerCallbacks.forEach((entry) => {
+            entry.ref.off(entry.type, entry.callback);
+        });
     },
 
     components: {
