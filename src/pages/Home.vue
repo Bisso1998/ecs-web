@@ -4,21 +4,7 @@
             <Banners v-if="getHomePageBannersLoadingState === 'LOADING_SUCCESS'"
                 :banners="getHomePageBanners"
             ></Banners>
-            <div class="dummy-content-loader" v-if="getHomePageLoadingState === 'LOADING'">
-                <div class="dummy-section" v-for="i in 2">
-                    <div class="background-masker dummy-title"></div>
-                    <div class="dummy-item" v-for="j in 6">
-                        <div class="background-masker dummy-image"></div>
-                        <div class="background-masker dummy-name"></div>
-                        <div class="background-masker dummy-author"></div>
-                        <div class="dummy-stats">
-                            <div class="background-masker stats"></div>
-                            <div class="background-masker stats stats-2"></div>
-                            <div class="background-masker stats"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <DummyLoader v-if="getHomePageLoadingState === 'LOADING'"></DummyLoader>
             <PratilipiListComponent v-if="getHomePageLoadingState === 'LOADING_SUCCESS'" v-bind:key="eachSection.listPageUrl" v-for="eachSection in getHomePageSections"
                 :pratilipiList="eachSection.pratilipiList" 
                 :title="eachSection.title"
@@ -34,6 +20,7 @@
 
 <script>
 import Spinner from '@/components/Spinner.vue';
+import DummyLoader from '@/components/DummyLoader.vue';
 import PratilipiListComponent from '@/components/PratilipiList.vue';
 import MainLayout from '@/layout/main-layout.vue';
 import Banners from '@/components/Banners.vue';
@@ -79,7 +66,8 @@ export default {
         PratilipiListComponent,
         MainLayout,
         Banners,
-        ServerError
+        ServerError,
+        DummyLoader
     },
     created() {
         this.fetchBanners(this.getCurrentLanguage().fullName.toUpperCase());
@@ -100,77 +88,6 @@ export default {
         min-height: 700px;
         @media screen and (max-width: 992px ) {
             margin-top: 65px;
-        }
-    }
-    .dummy-content-loader {
-        background: #fff;
-        border: 1px solid;
-        border-color: #e5e6e9 #dfe0e4 #d0d1d5;
-        border-radius: 3px;
-        padding: 12px;
-
-        margin: 0 auto;
-        min-height: 200px;
-        text-align: left;
-        @keyframes placeHolderShimmer {
-            0%{
-                background-position: -468px 0
-            }
-            100%{
-                background-position: 468px 0
-            }
-        }
-        .dummy-section {
-            background: #fff;
-            position: relative;
-            overflow-x: scroll;
-            width: 100%;
-            white-space: nowrap;
-            margin-bottom: 30px;
-        }
-        .background-masker {
-            animation-duration: 1s;
-            animation-fill-mode: forwards;
-            animation-iteration-count: infinite;
-            animation-name: placeHolderShimmer;
-            animation-timing-function: linear;
-            background: #f6f7f8;
-            background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-            background-size: 800px 104px;
-            min-height: 10px;
-            position: relative;
-        }
-        .dummy-title {
-            height: 34px;
-            margin-bottom: 10px;
-        }
-        .dummy-item {
-            width: 275px;
-            height: 250px;
-            display: inline-block;
-            margin-right: 20px;
-        }
-        .dummy-image {
-            margin: 5px 0;
-            height: 150px;
-        }
-        .dummy-name {
-            height: 25px;
-            margin-bottom: 5px;
-        }
-        .dummy-author {
-            height: 20px;
-            margin-bottom: 5px;
-        }
-        .dummy-stats {
-            .stats {
-                width: 32%;
-                height: 40px;
-                display: inline-block;
-                &.stats-2 {
-                    margin: 0 2px;
-                }
-            }
         }
     }
 </style>
