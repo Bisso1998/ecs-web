@@ -219,7 +219,7 @@ export default {
                     //console.log("Skipping the first message, since firebase by default doesnt have a exclusive range query");
                     return;
                 }
-                console.log("Message User : Message added : ", snapshot.key, " for channel : ", self.channelId);
+                //console.log("Message User : Message added : ", snapshot.key, " for channel : ", self.channelId);
                 var toPushMessage = self.buildMessage(snapshot);
                 self.messageList.push(toPushMessage);
                 self.lastDeliveredMessageId = snapshot.key;
@@ -237,7 +237,7 @@ export default {
             const self = this;
             const lastReadRef = this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).limitToLast(1);
             let lastReadCallback = lastReadRef.on('child_added', function (snapshot) {
-                console.log("Message User : Last Read message added : ", snapshot.key, " for channel : ", self.channelId, " Updating the last read message for user");
+                //console.log("Message User : Last Read message added : ", snapshot.key, " for channel : ", self.channelId, " Updating the last read message for user");
                 self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(self.getUserDetails.userId).child(self.channelId).child('lastReadMessage').set(snapshot.key);
             });
             self.listenerCallbacks.push({ref: lastReadRef, callback: lastReadCallback, type:"child_added"});
@@ -553,8 +553,7 @@ export default {
     },
 
     beforeDestroy() {
-        debugger;
-        console.log("Destroy callback : Message User")
+        //console.log("Destroy callback : Message User")
         this.listenerCallbacks.forEach((entry) => {
             console.log("Entry : ", entry);
             entry.ref.off(entry.type, entry.callback);
