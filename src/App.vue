@@ -121,12 +121,10 @@ export default {
                 FB.AppEvents.logPageView();
                 if (!that.getUserDetails.isGuest) {
                     that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
-                    console.log('logging is logged in to true');
                     that.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
                     that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
                 } else {
                     that.setAnalyticsUserProperty('USER_ID', "0");
-                    console.log('logging is logged in to false');
                     that.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
                 }
                 that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
