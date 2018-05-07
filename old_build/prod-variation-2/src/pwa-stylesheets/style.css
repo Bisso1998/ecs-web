@@ -6897,12 +6897,14 @@ main.mdl-layout__content {
     cursor: pointer;
     position: relative;
     z-index: 1;
-    margin: 0; }
+    margin: 0 0 10px; }
     .pratilipi-header .header-tab-menu li {
       color: #555;
       font-size: 13px;
       border-bottom: 2px solid #fff;
-      padding: 5px 5px 11px;
+      padding: 5px 0 10px;
+      width: 50%;
+      text-align: center;
       display: inline-block; }
       .pratilipi-header .header-tab-menu li a {
         color: #555; }
@@ -7869,12 +7871,12 @@ nav.pratilipi-navigation-drawer {
     cursor: pointer;
     position: relative;
     z-index: 1;
-    margin: 0; }
+    margin: 0 0 10px; }
     .pratilipi-notifications-page .tab-menu li {
       color: #555;
       font-size: 13px;
       border-bottom: 2px solid #fff;
-      padding: 5px 5px 11px;
+      padding: 5px 20px 10px;
       display: inline-block; }
       .pratilipi-notifications-page .tab-menu li a {
         color: #555; }
