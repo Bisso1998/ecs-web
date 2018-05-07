@@ -59,10 +59,13 @@
         margin-bottom: 10px;
     }
     .dummy-item {
-        width: 275px;
+        width: 300px;
         height: 250px;
         display: inline-block;
         margin-right: 20px;
+        @media screen and (max-width: 768px) {
+            width: 260px;
+        }
     }
     .dummy-image {
         margin: 5px 0;
