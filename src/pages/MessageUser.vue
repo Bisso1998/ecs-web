@@ -125,6 +125,11 @@ export default {
             'getUserDetails',
             'getFirebaseGrowthDBLoadingState'
         ]),
+
+        ...mapGetters('messages', [
+            'fetchedChannelMetadataDataCached'
+        ]),
+
         isConversationBlocked: function () {
             return this.isUserBlockedBySelf || this.isBlockedByOtherUser;
         }
