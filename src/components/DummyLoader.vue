@@ -1,8 +1,8 @@
 <template>
     <div class="dummy-content-loader">
-        <div class="dummy-section" v-for="i in 2">
+        <div class="dummy-section" v-for="i in 2" :key="i">
             <div class="background-masker dummy-title"></div>
-            <div class="dummy-item" v-for="j in 6">
+            <div class="dummy-item" v-for="j in 6" :key="j">
                 <div class="background-masker dummy-image"></div>
                 <div class="background-masker dummy-name"></div>
                 <div class="background-masker dummy-author"></div>
