@@ -115,7 +115,8 @@ export default {
             isConnectedToServer: false,
             pendingMessages: [],
             failedMessages: [],
-            loadingMessages: true
+            loadingMessages: true,
+            listenerCallbacks: []
         }
     },
 
@@ -136,24 +137,26 @@ export default {
 
         loadMessagesInConversation() {
             const self = this;
-            this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.otherUserId).child(self.channelId).on('value', function (snapshot) {
+            const otherUserWatchedChannelRef = this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.otherUserId).child(self.channelId);
+            const otherUserWatchedChannelCallback  = otherUserWatchedChannelRef.on('value', function (snapshot) {
                 //console.log("Changed other user watched channel status : ", snapshot.val());
                 if (snapshot.val() == true) {
                     self.isChannelInOtherUserWatchlist = true;
                 } else {
                     self.isChannelInOtherUserWatchlist = false;
                 }
-            }, function () {
-            }, self);
-            this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(this.getUserDetails.userId).child(self.channelId).on('value', function (snapshot) {
+            });
+            self.listenerCallbacks.push({ref: otherUserWatchedChannelRef, callback: otherUserWatchedChannelCallback, type:"value"});
+            const currentUserWatchedChannelRef = this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(this.getUserDetails.userId).child(self.channelId);
+            const currentUserWatchedChannelCallback = currentUserWatchedChannelRef.on('value', function (snapshot) {
                 //console.log("Changed self user watched channel status : ", snapshot.val());
                 if (snapshot.val() == true) {
                     self.isChannelInSelfWatchlist = true;
                 } else {
                     self.isChannelInSelfWatchlist = false;
                 }
-            }, function () {
-            }, self);
+            });
+            self.listenerCallbacks.push({ref: currentUserWatchedChannelRef, callback: currentUserWatchedChannelCallback, type:"value"});
             //console.log('Loading conversations from firebase DB for channel : ', self.channelId);
             this.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(this.getUserDetails.userId).child(self.channelId).once('value').then(function (snapshot) {
                 if (snapshot.val() != undefined) {
@@ -211,17 +214,18 @@ export default {
             if (self.lastDeletedMessageId != undefined) {
                 channelMessagesRef = channelMessagesRef.startAt(self.lastDeletedMessageId);
             }
-            channelMessagesRef.on('child_added', function (snapshot) {
+            const messageListenerCallback = channelMessagesRef.on('child_added', function (snapshot) {
                 if (self.lastDeletedMessageId == snapshot.key) {
                     //console.log("Skipping the first message, since firebase by default doesnt have a exclusive range query");
                     return;
                 }
+                console.log("Message User : Message added : ", snapshot.key, " for channel : ", self.channelId);
                 var toPushMessage = self.buildMessage(snapshot);
                 self.messageList.push(toPushMessage);
                 self.lastDeliveredMessageId = snapshot.key;
                 self.$nextTick(() => {self.scrollIntoView(snapshot.key);});
-            }, function () {
-            }, self);
+            });
+            self.listenerCallbacks.push({ref: channelMessagesRef, callback: messageListenerCallback, type:'child_added'});
         },
 
         scrollIntoView (elementId) {
@@ -231,11 +235,12 @@ export default {
 
         attachLastReadUpdater () {
             const self = this;
-            this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).limitToLast(1).on('child_added', function (snapshot) {
-                //console.log("Last message added : ", snapshot.key, " for channel : ", self.channelId, " Updating the last read message for user");
-                this.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(this.getUserDetails.userId).child(self.channelId).child('lastReadMessage').set(snapshot.key);
-            }, function () {
-            }, self);
+            const lastReadRef = this.firebaseGrowthDB.ref('/CHATS').child('messages').child(self.channelId).limitToLast(1);
+            let lastReadCallback = lastReadRef.on('child_added', function (snapshot) {
+                console.log("Message User : Last Read message added : ", snapshot.key, " for channel : ", self.channelId, " Updating the last read message for user");
+                self.firebaseGrowthDB.ref('/CHATS').child('user_channels').child(self.getUserDetails.userId).child(self.channelId).child('lastReadMessage').set(snapshot.key);
+            });
+            self.listenerCallbacks.push({ref: lastReadRef, callback: lastReadCallback, type:"child_added"});
         },
 
 
@@ -268,7 +273,8 @@ export default {
 
         watchBlockedConversation () {
             const self = this;
-            this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).on('value', function (snapshot) {
+            const userBlockedRef = this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId);
+            let userBlockedCallback = userBlockedRef.on('value', function (snapshot) {
                 //console.log("Changed blocked status Value : ", snapshot.val());
                 self.isUserBlockedBySelf = snapshot.val();
                 if(self.isUserBlockedBySelf == true) {
@@ -276,9 +282,10 @@ export default {
                         self.scrollIntoView("unblock-user-panel-message");
                     });
                 }
-            }, function () {
-            }, self);
-            this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(self.otherUserId).child(this.getUserDetails.userId).on('value', function (snapshot) {
+            });
+            self.listenerCallbacks.push({ref: userBlockedRef, callback: userBlockedCallback, type:"value"});
+            const otherUserBlockedRef = this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(self.otherUserId).child(this.getUserDetails.userId);
+            let otherUserBlockedCallback = otherUserBlockedRef.on('value', function (snapshot) {
                 self.isBlockedByOtherUser = snapshot.val();
                 //console.log("Changed blocked status Value for other user : ", snapshot.val());
                 if(self.isUserBlockedBySelf != true && self.isBlockedByOtherUser == true) {
@@ -286,8 +293,8 @@ export default {
                         self.scrollIntoView("user-blocked-panel-message");
                     });
                 }
-            }, function () {
-            }, self);
+            });
+            self.listenerCallbacks.push({ref: otherUserBlockedRef, callback: otherUserBlockedCallback, type:"value"});
         },
 
 
@@ -545,15 +552,13 @@ export default {
         });
     },
 
-    beforeDestroy: function() {
-        const self = this;
-        var chatRef = self.firebaseGrowthDB.ref('/CHATS');
-        chatRef.child('messages').child(self.channelId).off();
-        chatRef.child('blocked_users').child(self.getUserDetails.userId).child(self.otherUserId).off();
-        chatRef.child('blocked_users').child(self.otherUserId).child(self.getUserDetails.userId).off();
-        chatRef.child('user_watched_channels').child(self.getUserDetails.userId).child(self.channelId).off();
-        chatRef.child('user_watched_channels').child(self.otherUserId).child(self.channelId).off();
-        self.firebaseGrowthDB.ref(".info/connected").off();
+    beforeDestroy() {
+        debugger;
+        console.log("Destroy callback : Message User")
+        this.listenerCallbacks.forEach((entry) => {
+            console.log("Entry : ", entry);
+            entry.ref.off(entry.type, entry.callback);
+        });
     },
 
     components: {
