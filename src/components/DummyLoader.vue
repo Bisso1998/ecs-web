@@ -92,7 +92,7 @@ export default {
     }
     .dummy-stats {
         .stats {
-            width: 31.5%;
+            width: 32%;
             height: 40px;
             display: inline-block;
             &.stats-2 {
@@ -110,6 +110,11 @@ export default {
     }
     .dummy-item {
         margin: 0 10px 20px;
+        .dummy-stats {
+            .stats {
+                width: 31.5%;
+            }
+        }
     }
 }
 </style>
