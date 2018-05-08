@@ -10425,7 +10425,12 @@ ul.pratilipi-notification-list li.show-more.small-show-more button {
     border-radius: 50%;
     margin-right: 5px;
     float: right;
-    margin-top: 15px; }
+    margin-top: 15px;
+    border: 0; }
+    .chat-box .send-message:active, .chat-box .send-message:focus {
+      border: 0;
+      outline: none;
+      box-shadow: none; }
 
 .pratilipi-info-cover {
   width: 100% !important;
