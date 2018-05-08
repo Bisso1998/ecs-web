@@ -91,6 +91,7 @@
 
 <script>
 import MessageLayout from '@/layout/message-layout.vue';
+import mixins from '@/mixins'
 import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions } from 'vuex'
 import $ from 'jquery'
@@ -121,7 +122,9 @@ export default {
             listenerCallbacks: []
         }
     },
-
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters([
             'getUserDetails',
@@ -579,6 +582,9 @@ export default {
         }
         if (this.getFirebaseGrowthDBLoadingState) {
             this.initializeFirebaseAndStartListening();
+        }
+        if(this.isMobile()) {
+            $('.chat-body').css({ height: (window.innerHeight - 140) });
         }
     },
 
