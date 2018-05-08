@@ -7,6 +7,10 @@ export default {
         commit('setFetchedChannelMetadataDataCached', fetchedChannelMetadataData);
     },
 
+    removeChannelFromCache({ commit }, { channelId }) {
+        commit('removeChannelFromCache', channelId);
+    },
+
     clearConversationsDataCache({ commit }) {
         commit('clearConversationsDataCache');
     }
