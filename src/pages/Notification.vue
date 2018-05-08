@@ -307,7 +307,7 @@ export default {
             color: #555;
             font-size: 13px;
             border-bottom: 2px solid #fff;
-            padding: 5px 5px 11px;
+            padding: 5px 25px 11px;
             display: inline-block;
             a {
                 color: #555;
