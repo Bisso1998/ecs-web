@@ -41,9 +41,9 @@
                             </div>
                             <div class="message-blocked fixed-msg" v-if="isUserBlockedBySelf == true" id="unblock-user-panel-message">
                                 __("chat_unblock_user_msg")
-                                <button type="button" class="btn report-btn btn-on-fixed-msg" v-if="isUserBlockedBySelf == true" v-on:click="unblockUser()">__("chat_unblock_user")</button>
+                                <button type="button" class="btn report-btn btn-on-fixed-msg" v-on:click="unblockUser()">__("chat_unblock_user")</button>
                             </div>
-                            <div class="message-blocked fixed-msg" v-if="isBlockedByOtherUser == true && isUserBlockedBySelf == false" id="user-blocked-panel-message">
+                            <div class="message-blocked fixed-msg" v-if="isBlockedByOtherUser == true && isUserBlockedBySelf != true" id="user-blocked-panel-message">
                                 __("chat_stopped_msg")
                             </div>
                         </div>
