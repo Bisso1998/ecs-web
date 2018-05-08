@@ -9,7 +9,7 @@ module.exports = {
   FIREBASE_STORAGE_BUCKET: '"prod-pratilipi.appspot.com"',
   LANGUAGE: `"${process.env.LANGUAGE || 'hi'}"`,
   FACEBOOK_APP_ID: '293990794105516',
-  FACEBOOK_SDK_VERSION: "'2.10v'",
+  FACEBOOK_SDK_VERSION: '"v3.0"',
   AMPLITUDE_APP_ID: "'a2af45f6f1b31d716b0f34b3d4101e97'",
   GA_WEBSITE: "'PWA'",
   GA_WEBSITE_MODE: "'Standard'",
