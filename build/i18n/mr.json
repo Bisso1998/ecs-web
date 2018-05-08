@@ -544,5 +544,7 @@
     "chat_delete_msg": "आपण सर्व मेसेजस हटवू इच्छिता?",
     "chat_textbox_placeholder": "ईथे लिहा...",
     "chat_no_msgs": "आपल्याकडे काहीही मेसेजस नाहीत",
-    "chat_no_unread_msgs": "आपल्याकडे कोणतेही न वाचलेले मेसेज नाहीत"
+    "chat_no_unread_msgs": "आपल्याकडे कोणतेही न वाचलेले मेसेज नाहीत",
+    "chat_yesterday": "काल",
+    "chat_today": "आज"
 }

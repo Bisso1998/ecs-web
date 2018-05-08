@@ -198,14 +198,14 @@ export default {
                 self.firstMessageOfDayCheckMap.set(messageDateKey, true);
                 isFirstMessageOfDay = true;
                 if (+messageDate >= +currentDateStart) {
-                    dayDefenition = "TODAY";
+                    dayDefenition = "__('chat_today')";
                 }
                 else {
                     let yesterdayDate = new Date();
                     yesterdayDate.setTime(currentDate.getTime() - (24 * 3600000));
                     let yesterdayDateStart = yesterdayDate.setHours(0, 0, 0, 0);
                     if (+messageDate >= +yesterdayDateStart) {
-                        dayDefenition = "YESTERDAY";
+                        dayDefenition = "__('chat_yesterday')";
                     }
                     else {
                         dayDefenition = messageDateKey;

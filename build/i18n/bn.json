@@ -544,5 +544,7 @@
     "chat_delete_msg": "আপনি কি সব মেসেজ ডিলিট করতে চান?",
     "chat_textbox_placeholder": "এখানে লিখুন...",
     "chat_no_msgs": "আপনার কাছে কোন মেসেজ নেই",
-    "chat_no_unread_msgs": "আপনার কাছেে অপঠিত কোন মেসেজ নেই"
+    "chat_no_unread_msgs": "আপনার কাছেে অপঠিত কোন মেসেজ নেই",
+    "chat_yesterday": "গতকাল",
+    "chat_today": "আজ"
 }
