@@ -56,7 +56,7 @@
                             </div>
                             <button type="button" name="button" class="send-message"
                                     v-bind:disabled="isConversationBlocked == true || toSendMessageText.length == 0"
-                                    v-on:click="sendMessageToFirebase()"><i class="material-icons">send</i></button>
+                                    v-on:click.prevent="sendMessageToFirebase()"><i class="material-icons">send</i></button>
                         </div>
                     </div>
                 </div>
