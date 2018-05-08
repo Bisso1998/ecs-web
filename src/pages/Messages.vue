@@ -60,6 +60,7 @@ export default {
 
         ...mapActions('messages', [
             'saveConversationsDataToCache',
+            'clearConversationsDataCache'
         ]),
 
         loadChannelMetadata(channelId){
@@ -218,6 +219,7 @@ export default {
                 self.channelLastMessage = self.channelLastMessageCached;
                 self.channelLastReadMessage = self.channelLastReadMessageCached;
                 self.fetchedChannelMetadataData = self.fetchedChannelMetadataDataCached;
+                self.clearConversationsDataCache();
             }
             setTimeout(self.clearConversationsFromCache, 4000);
         },

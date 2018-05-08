@@ -9,6 +9,10 @@ export default {
         commit('setChannelLastMessageCached', channelLastMessage);
         commit('setChannelLastReadMessageCached', channelLastReadMessage);
         commit('setFetchedChannelMetadataDataCached', fetchedChannelMetadataData);
+    },
+
+    clearConversationsDataCache({ commit }) {
+        commit('clearConversationsDataCache');
     }
 
 }

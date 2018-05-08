@@ -14,6 +14,13 @@ export default {
 
     setFetchedChannelMetadataDataCached(state, fetchedChannelMetadataData) {
         state.fetchedChannelMetadataDataCached = fetchedChannelMetadataData;
+    },
+
+    clearConversationsDataCache(state) {
+        state.conversationListCached = [],
+        state.channelLastMessageCached = {},
+        state.channelLastReadMessageCached = {},
+        state.fetchedChannelMetadataDataCached = {}
     }
 
 }
