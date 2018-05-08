@@ -183,7 +183,7 @@ export default {
             const self = this;
             setTimeout(() => {
                 self.loadingConversations = false;
-            }, 2000);
+            }, 4000);
             const watchedChannelRef = self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId);
             let watchedChannelAddedCallback = watchedChannelRef.on('child_added', function(snapshot){
                 let channelId = snapshot.key;

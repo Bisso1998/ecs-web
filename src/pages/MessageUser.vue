@@ -529,12 +529,19 @@ export default {
         },
         initializeFirebaseAndStartListening() {
             const self = this;
+            this.otherUserId = window.location.pathname.split("/")[2];
+            this.channelId = this.getChannelIdForConversation(self.otherUserId);
+            //console.log("Channel Id : ", self.channelId);
+            if(this.fetchedChannelMetadataDataCached) {
+                if(this.fetchedChannelMetadataDataCached[this.channelId] != undefined) {
+                    this.conversationDisplayName = this.fetchedChannelMetadataDataCached[this.channelId].conversationDisplayName;
+                    this.conversationImageUrl= this.fetchedChannelMetadataDataCached[this.channelId].conversationImageUrl;
+                }
+            }
             import('firebase').then((firebase) => {
                 self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
                 //console.log("Firebase growth initialized for page");
-                self.otherUserId = window.location.pathname.split("/")[2];
-                self.channelId = self.getChannelIdForConversation(self.otherUserId);
-                //console.log("Channel Id : ", self.channelId);
+                console.log("Fetched cache channel metadata : ", self.fetchedChannelMetadataDataCached);
                 self.loadChannelDetails();
                 let connectedRef = self.firebaseGrowthDB.ref(".info/connected");
                 connectedRef.on("value", function (snap) {
@@ -557,7 +564,6 @@ export default {
         if (this.getUserDetails.isGuest) {
             this.$router.push('/login');
         }
-
         if (this.getFirebaseGrowthDBLoadingState) {
             this.initializeFirebaseAndStartListening();
         }
