@@ -252,6 +252,10 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
     const propertyObject = {};
     propertyObject[propertyName] = String(propertyValue)
 
+    if (propertyName === 'USER_ID' && propertyValue != "0" ) {
+        amplitude.getInstance().setUserId(propertyValue);
+    }
+
     if (!window.FB) {
         setTimeout(() => {
             if (propertyName === 'USER_ID') {
@@ -393,6 +397,12 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         if (eventName !== 'VIEWED_APPBANNER_GLOBAL') {
             setReferrerData(eventProps.SCREEN_NAME, eventProps.LOCATION, eventProps.ACTION, experimentType);
         }
+
+        if (eventProps.ACTION === 'LOGOUT') {
+            amplitude.getInstance().setUserId(null);
+            amplitude.getInstance().regenerateDeviceId();
+        }
+
         eventProps = {
             ...eventProps,
             ...eventProperty,

@@ -15,7 +15,7 @@
                         :screenName="'CATEGORY'"
                         :screenLocation="'CATEGORYM'"
                         ></PratilipiComponent>
-                        <Spinner v-if="getPratilipiListLoadingState === 'LOADING'"></Spinner>
+                        <DummyLoader v-if="getPratilipiListLoadingState === 'LOADING'" :sectionCount="1" :className="{list: true}"></DummyLoader>
                     </div>
                 </div>
             </div>
@@ -27,6 +27,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import Spinner from '@/components/Spinner.vue';
+import DummyLoader from '@/components/DummyLoader.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
 import PageNotFound from '@/components/404.vue';
 import constants from '@/constants'
@@ -131,7 +132,8 @@ export default {
         MainLayout,
         PratilipiComponent,
         Spinner,
-        PageNotFound
+        PageNotFound,
+        DummyLoader
     }
 }
 </script>

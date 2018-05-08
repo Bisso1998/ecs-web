@@ -1,6 +1,3 @@
-import DataAccessor from '@/utils/DataAccessor'
-import $ from 'jquery'
-
 export default {
 
     saveConversationsDataToCache({ commit }, { conversations, channelLastMessage, channelLastReadMessage, fetchedChannelMetadataData }) {

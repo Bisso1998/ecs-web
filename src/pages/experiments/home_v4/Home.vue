@@ -4,7 +4,7 @@
             <Banners v-if="getHomePageBannersLoadingState === 'LOADING_SUCCESS'"
                 :banners="getHomePageBanners"
             ></Banners>
-            <Spinner v-if="getHomePageLoadingState === 'LOADING'"></Spinner>
+            <DummyLoader v-if="getHomePageLoadingState === 'LOADING'"></DummyLoader>
             <PratilipiListComponent v-if="getHomePageLoadingState === 'LOADING_SUCCESS'" v-bind:key="eachSection.listPageUrl" v-for="eachSection in getHomePageSections"
                 :pratilipiList="eachSection.pratilipiList" 
                 :title="eachSection.title"
@@ -20,6 +20,7 @@
 
 <script>
 import Spinner from '@/components/Spinner.vue';
+import DummyLoader from '@/components/DummyLoader.vue';
 import PratilipiListComponent from '@/components/experiments/home_v4/PratilipiList.vue';
 import MainLayout from '@/layout/main-layout.vue';
 import Banners from '@/components/Banners.vue';
@@ -65,7 +66,8 @@ export default {
         PratilipiListComponent,
         MainLayout,
         Banners,
-        ServerError
+        ServerError,
+        DummyLoader
     },
     created() {
         this.fetchBanners(this.getCurrentLanguage().fullName.toUpperCase());
