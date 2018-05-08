@@ -57,6 +57,12 @@ export default {
     },
 
     methods: {
+
+        ...mapActions('messages', [
+            'saveConversationsDataToCache',
+            'clearConversationsDataCache'
+        ]),
+
         loadChannelMetadata(channelId){
             const self = this;
             self.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(channelId).once('value').then(function(snapshot){
@@ -178,29 +184,26 @@ export default {
             setTimeout(() => {
                 self.loadingConversations = false;
             }, 2000);
-            self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_added', function(snapshot){
+            const watchedChannelRef = self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId);
+            let watchedChannelAddedCallback = watchedChannelRef.on('child_added', function(snapshot){
                 let channelId = snapshot.key;
                 self.loadChannelMetadata(channelId);
             });
-
-            self.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.getUserDetails.userId).on('child_removed', function(snapshot){
+            let watchedChannelRemovedCallback = watchedChannelRef.on('child_removed', function(snapshot){
                 //console.log("Watching channel removed : ", snapshot.key);
-                self.conversations.remove(function(item){
-                    return item.channelId == snapshot.key;
-                });
+                self.removeConversationForChannel(snapshot.key);
                 self.firebaseGrowthDB.ref('/CHATS').child('messages').child(snapshot.key).off();
             });
-
+            self.listenerCallbacks.push({ref: watchedChannelRef, callback: watchedChannelAddedCallback, type:"child_added"});
+            self.listenerCallbacks.push({ref: watchedChannelRef, callback: watchedChannelRemovedCallback, type:"child_removed"});
         },
 
 
         clearConversationsFromCache(){
             const self = this;
-            ko.utils.arrayForEach(self.conversations(), function (conversation){
+            self.conversations.forEach( function (conversation){
                 if(conversation.isLoadedFromCache != undefined && conversation.isLoadedFromCache == true){
-                    self.conversations.remove(function(item){
-                        return item.channelId == conversation.channelId;
-                    });
+                    self.removeConversationForChannel(conversation.channelId);
                 }
             });
         },
@@ -208,16 +211,15 @@ export default {
 
         loadConversationsFromCache(){
             const self = this;
-            if((appViewModel.p2pChat != undefined) && (appViewModel.p2pChat.convesationCache != undefined)){
-                if(typeof appViewModel.p2pChat.convesationCache.conversations != undefined){
-                    ko.utils.arrayForEach(appViewModel.p2pChat.convesationCache.conversations, function (conversation){
-                        conversation.isLoadedFromCache = true;
-                        self.conversations.push(conversation);
-                    });
-                }
-                self.channelLastMessage = appViewModel.p2pChat.convesationCache.channelLastMessage;
-                self.channelLastReadMessage = appViewModel.p2pChat.convesationCache.channelLastReadMessage;
-                self.fetchedChannelMetadataData = appViewModel.p2pChat.convesationCache.fetchedChannelMetadataData;
+            if((self.conversationListCached != undefined) && (self.conversationListCached.length > 0)){
+                self.conversationListCached.forEach( function (conversation){
+                    conversation.isLoadedFromCache = true;
+                    self.conversations.push(conversation);
+                });
+                self.channelLastMessage = self.channelLastMessageCached;
+                self.channelLastReadMessage = self.channelLastReadMessageCached;
+                self.fetchedChannelMetadataData = self.fetchedChannelMetadataDataCached;
+                self.clearConversationsDataCache();
             }
             setTimeout(self.clearConversationsFromCache, 4000);
         },
@@ -284,6 +286,17 @@ export default {
             return window.canUseWebp ? "webp" : "jpg";
 
         },
+
+        initializeFirebaseAndStartListening() {
+            const self = this;
+            import('firebase').then((firebase) => {
+                self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
+                console.log("Firebase growth initialized for page");
+                self.loadConversationsFromCache();
+                self.loadWatchedChannels();
+                self.updateUserProfile();
+            });
+        }
     },
 
     created() {
@@ -297,16 +310,17 @@ export default {
             this.$router.go('/login');
         }
         const self = this;
-        import('firebase').then((firebase) => {
-            setTimeout(function() {
-                self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
-                console.log("Firebase growth initialized for page");
-                //self.loadConversationsFromCache();
-                self.loadWatchedChannels();
-                self.updateUserProfile();
-            }, 3000);
-            //TODO Fix the watcher
-        });
+        if (this.getFirebaseGrowthDBLoadingState) {
+            this.initializeFirebaseAndStartListening();
+        }
+    },
+
+    watch: {
+        'getFirebaseGrowthDBLoadingState'(loaded) {
+            if (loaded) {
+                this.initializeFirebaseAndStartListening();
+            }
+        }
     },
 
     beforeDestroy() {
@@ -314,6 +328,11 @@ export default {
         this.listenerCallbacks.forEach((entry) => {
             entry.ref.off(entry.type, entry.callback);
         });
+        this.saveConversationsDataToCache({
+            conversations: this.conversations,
+            channelLastMessage: this.channelLastMessage,
+            channelLastReadMessage: this.channelLastReadMessage,
+            fetchedChannelMetadataData: this.fetchedChannelMetadataData});
     },
 
     components: {
@@ -323,9 +342,18 @@ export default {
 
     computed: {
         ...mapGetters([
-            'getUserDetails'
+            'getUserDetails',
+            'getFirebaseGrowthDBLoadingState',
+        ]),
+
+        ...mapGetters('messages', [
+            'conversationListCached',
+            'channelLastMessageCached',
+            'channelLastReadMessageCached',
+            'fetchedChannelMetadataDataCached'
         ])
     }
+
 }
 </script>
 

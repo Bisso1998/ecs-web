@@ -18,7 +18,8 @@ export default {
             'fetchUserDetails',
             'fetchInitialNotifications',
             'setNotificationCount',
-            'attachMessageNotificationListener'
+            'attachMessageNotificationListener',
+            'setFirebaseGrowthDBInitialisedTrue'
         ])
     },
     computed: {
@@ -53,6 +54,7 @@ export default {
                         };
                         console.log("Growth Firebase props : ", configGrowth);
                         firebase.initializeApp(configGrowth, "FirebaseGrowth");
+                        that.setFirebaseGrowthDBInitialisedTrue();
                         that.attachMessageNotificationListener(that.getUserDetails.userId);
                     }
 
