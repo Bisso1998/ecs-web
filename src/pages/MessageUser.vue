@@ -50,9 +50,10 @@
 
                         <div class="chat-box" v-if="!isConversationBlocked">
                             <div class="type-message">
-                                <textarea id="text-message" contenteditable="true" :placeholder="'__("chat_textbox_placeholder")'"
+                                <textarea id="text-message" :placeholder="'__("chat_textbox_placeholder")'"
                                           v-bind:disabled="isConversationBlocked == true"
-                                          v-model="toSendMessageText"></textarea>
+                                          :value="toSendMessageText"
+                                          @input="updateToSendMessageText"></textarea>
                             </div>
                             <button type="button" name="button" class="send-message"
                                     v-bind:disabled="isConversationBlocked == true || toSendMessageText.length == 0"
@@ -142,6 +143,10 @@ export default {
             redirect('/messages');
         },
 
+        updateToSendMessageText(event) {
+            this.toSendMessageText = event.target.value;
+        },
+        
         loadMessagesInConversation() {
             const self = this;
             const otherUserWatchedChannelRef = this.firebaseGrowthDB.ref('/CHATS').child('user_watched_channels').child(self.otherUserId).child(self.channelId);
