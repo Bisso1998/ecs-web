@@ -585,6 +585,9 @@ export default {
         }
         if(this.isMobile()) {
             $('.chat-body').css({ height: (window.innerHeight - 110) });
+            $(window).on('resize', function(){
+                $('.chat-body').css({ height: (window.innerHeight - 110) });
+            });
         }
     },
 
