@@ -584,7 +584,7 @@ export default {
             this.initializeFirebaseAndStartListening();
         }
         if(this.isMobile()) {
-            $('.chat-body').css({ height: (window.innerHeight - 140) });
+            $('.chat-body').css({ height: (window.innerHeight - 95) });
         }
     },
 
