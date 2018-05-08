@@ -21,6 +21,15 @@ export default {
         state.channelLastMessageCached = {},
         state.channelLastReadMessageCached = {},
         state.fetchedChannelMetadataDataCached = {}
+    },
+
+    removeChannelFromCache(state, channelId) {
+        for(let i = 0; i< state.conversationListCached.length; i++) {
+            if(state.conversationListCached[i].channelId == channelId) {
+                state.conversationListCached.splice(i, 1);
+                break;
+            }
+        }
     }
 
 }
