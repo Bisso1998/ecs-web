@@ -584,7 +584,7 @@ export default {
             this.initializeFirebaseAndStartListening();
         }
         if(this.isMobile()) {
-            $('.chat-body').css({ height: (window.innerHeight - 95) });
+            $('.chat-body').css({ height: (window.innerHeight - 110) });
         }
     },
 
@@ -834,7 +834,8 @@ export default {
         }
 
         .chat-box {
-            position: relative;
+            position: fixed;
+            bottom: 0;
             width: 100%;
             height: 45px;
             background: #f9f9f9;
