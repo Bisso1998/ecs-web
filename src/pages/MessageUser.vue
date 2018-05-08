@@ -557,7 +557,7 @@ export default {
             import('firebase').then((firebase) => {
                 self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
                 //console.log("Firebase growth initialized for page");
-                console.log("Fetched cache channel metadata : ", self.fetchedChannelMetadataDataCached);
+                // console.log("Fetched cache channel metadata : ", self.fetchedChannelMetadataDataCached);
                 self.loadChannelDetails();
                 let connectedRef = self.firebaseGrowthDB.ref(".info/connected");
                 connectedRef.on("value", function (snap) {
@@ -602,7 +602,7 @@ export default {
     beforeDestroy() {
         //console.log("Destroy callback : Message User")
         this.listenerCallbacks.forEach((entry) => {
-            console.log("Entry : ", entry);
+            // console.log("Entry : ", entry);
             entry.ref.off(entry.type, entry.callback);
         });
     },

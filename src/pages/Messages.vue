@@ -81,7 +81,7 @@ export default {
                         conversationDisplayName = userDetails.displayName;
                         conversationImageUrl = userDetails.profileImageUrl;
                     }
-                    console.log(user, userDetails);
+                    // console.log(user, userDetails);
                 });
                 if(userInChannel != true){
                 /* TODO Something wrong */
@@ -128,7 +128,7 @@ export default {
             const lastMessageRef = self.firebaseGrowthDB.ref('/CHATS').child('messages').child(channelId).limitToLast(1);
             let lastMessageCallback = lastMessageRef.on('child_added', function(snapshot){
                 const message = snapshot.val();
-                console.log("Messages : Last message added : ",message, " for channel : ", channelId);
+                // console.log("Messages : Last message added : ",message, " for channel : ", channelId);
                 self.removeConversationForChannel(channelId);
                 let isMessageUnread = true;
                 if((message.senderId == self.getUserDetails.userId) || (self.channelLastReadMessage[channelId] == snapshot.key)){
@@ -283,7 +283,7 @@ export default {
             const self = this;
             import('firebase').then((firebase) => {
                 self.firebaseGrowthDB = firebase.app("FirebaseGrowth").database();
-                console.log("Firebase growth initialized for page");
+                // console.log("Firebase growth initialized for page");
                 self.loadConversationsFromCache();
                 self.loadWatchedChannels();
                 self.updateUserProfile();
@@ -316,7 +316,7 @@ export default {
     },
 
     beforeDestroy() {
-        console.log("Destroy callback : Messages")
+        // console.log("Destroy callback : Messages")
         this.listenerCallbacks.forEach((entry) => {
             entry.ref.off(entry.type, entry.callback);
         });
