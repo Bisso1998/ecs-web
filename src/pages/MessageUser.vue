@@ -39,15 +39,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="message-blocked" v-if="isUserBlockedBySelf == true" id="unblock-user-panel-message">
+                            <div class="message-blocked fixed-msg" v-if="isUserBlockedBySelf == true" id="unblock-user-panel-message">
                                 __("chat_unblock_user_msg")
+                                <button type="button" class="btn report-btn btn-on-fixed-msg" v-if="isUserBlockedBySelf == true" v-on:click="unblockUser()">__("chat_unblock_user")</button>
                             </div>
-                            <div class="message-blocked" v-if="isBlockedByOtherUser == true && isUserBlockedBySelf == false" id="user-blocked-panel-message">
+                            <div class="message-blocked fixed-msg" v-if="isBlockedByOtherUser == true && isUserBlockedBySelf == false" id="user-blocked-panel-message">
                                 __("chat_stopped_msg")
                             </div>
                         </div>
 
-                        <div class="chat-box">
+                        <div class="chat-box" v-if="!isConversationBlocked">
                             <div class="type-message">
                                 <textarea id="text-message" contenteditable="true" :placeholder="'__("chat_textbox_placeholder")'"
                                           v-bind:disabled="isConversationBlocked == true"
@@ -711,9 +712,26 @@ export default {
                 clear: both;
                 margin: 10px 5px;
                 font-size: 14px;
-                color: #9e9e9e;
+                color: #555;
                 text-align: center;
                 font-style: italic;
+            }
+            .fixed-msg {
+                position: fixed;
+                bottom: 0px;
+                background: #e9e9e9;
+                margin: 0;
+                width: 100%;
+                text-align: center;
+                padding: 4px 0;
+                min-height: 55px;
+                .btn-on-fixed-msg {
+                    display: block;
+                    margin: 5px auto;
+                    padding: 5px 10px;
+                    font-size: 13px;
+                    color: #D1021B;
+                }
             }
             .chat-msg {
                 background-color: #fff;
@@ -795,24 +813,29 @@ export default {
             width: 100%;
             height: 45px;
             background: #f9f9f9;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             .type-message {
                 background: #fff;
                 margin: 0 5px;
                 width: calc(100% - 75px);
                 position: relative;
-                border-radius: 4px;
-                box-shadow: 0 1px 1px 0 rgba(164, 152, 135, 0.32), 0 0 1px 0 #A39F98;
                 #text-message {
                     outline: none;
-                    padding: 5px;
+                    padding: 10px;
                     overflow-y: scroll;
-                    height: 40px;
-                    width: 92%;
+                    height: 45px;
+                    width: 100%;
                     display: inline-block;
                     font-size: 14px;
                     border: 0;
+                    margin-top: 2px;
                     resize: none;
+                    border: 1px solid #e9e9e9;
+                    background: #fff;
+                    border-radius: 4px;
+                    &:disabled {
+                        background: #e9e9e9;
+                    }
                 }
             }
             .send-message {
@@ -825,8 +848,14 @@ export default {
                 position: absolute;
                 bottom: 0px;
                 right: 5px;
+                border: 0;
                 i {
                     vertical-align: middle;
+                }
+                &:active, &:focus {
+                    border: 0;
+                    outline: none;
+                    box-shadow: none;
                 }
             }
         }
