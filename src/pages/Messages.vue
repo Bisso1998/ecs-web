@@ -68,10 +68,10 @@ export default {
                 if(snapshot.val() == undefined){
                 /* TODO Something wrong */
                 }
-                var userInChannel = false;
-                var otherUserId = 0;
-                var conversationDisplayName = "";
-                var conversationImageUrl = "";
+                let userInChannel = false;
+                let otherUserId = 0;
+                let conversationDisplayName = "";
+                let conversationImageUrl = "";
                 $.each(snapshot.val().users, function(user, userDetails){
                     if(user == self.getUserDetails.userId){
                         userInChannel = true;
@@ -110,7 +110,7 @@ export default {
                     }
                 }
                 self.channelLastReadMessage[channelId] = snapshot.val();
-                for(var i=0; i < self.conversations.length; i++) {
+                for(let i=0; i < self.conversations.length; i++) {
                     if(self.conversations[i].channelId == channelId) {
                         if(self.conversations[i].messageId == snapshot.val()) {
                             self.conversations[i].isUnread = false;
@@ -126,15 +126,15 @@ export default {
             const self = this;
             const lastMessageRef = self.firebaseGrowthDB.ref('/CHATS').child('messages').child(channelId).limitToLast(1);
             let lastMessageCallback = lastMessageRef.on('child_added', function(snapshot){
-                var message = snapshot.val();
+                const message = snapshot.val();
                 console.log("Messages : Last message added : ",message, " for channel : ", channelId);
                 self.removeConversationForChannel(channelId);
-                var isMessageUnread = true;
+                let isMessageUnread = true;
                 if((message.senderId == self.getUserDetails.userId) || (self.channelLastReadMessage[channelId] == snapshot.key)){
                     isMessageUnread = false;
                 }
-                var messageTimeDisplay = self.parseDateDisplay(message.sendTime);
-                var messageReceived = {channelId : channelId, messageId : snapshot.key, userId : self.fetchedChannelMetadataData[channelId].otherUserId, channelName : self.fetchedChannelMetadataData[channelId].conversationDisplayName, profileImageUrl : self.fetchedChannelMetadataData[channelId].conversationImageUrl, senderId : message.senderId, lastMessage : message.messageText, lastMessageTime : message.sendTime, lastMessageTimeDisplay : messageTimeDisplay, isUnread : isMessageUnread};
+                const messageTimeDisplay = self.parseDateDisplay(message.sendTime);
+                const messageReceived = {channelId : channelId, messageId : snapshot.key, userId : self.fetchedChannelMetadataData[channelId].otherUserId, channelName : self.fetchedChannelMetadataData[channelId].conversationDisplayName, profileImageUrl : self.fetchedChannelMetadataData[channelId].conversationImageUrl, senderId : message.senderId, lastMessage : message.messageText, lastMessageTime : message.sendTime, lastMessageTimeDisplay : messageTimeDisplay, isUnread : isMessageUnread};
                 self.channelLastMessage[channelId] = messageReceived;
                 self.conversations.unshift(messageReceived);
                 self.conversations.sort(function (l, r) { return l.lastMessageTime > r.lastMessageTime ? -1 : 1 })
@@ -144,7 +144,7 @@ export default {
 
         removeConversationForChannel(channelId) {
             const self = this;
-            for(var i = 0; i< self.conversations.length; i++) {
+            for(let i = 0; i< self.conversations.length; i++) {
                 if(self.conversations[i].channelId == channelId) {
                     self.conversations.splice(i, 1);
                     break;
@@ -155,11 +155,11 @@ export default {
 
         parseDateDisplay(sentTime){
             const self = this;
-            var currentDate = new Date();
-            var currentDateStart = currentDate.setHours(0,0,0,0);
-            var timeToDisplay = "";
-            var messageDate = new Date(sentTime);
-            var messageDateKey = messageDate.toLocaleDateString();
+            const currentDate = new Date();
+            const currentDateStart = currentDate.setHours(0,0,0,0);
+            let timeToDisplay = "";
+            const messageDate = new Date(sentTime);
+            const messageDateKey = messageDate.toLocaleDateString();
             if(+messageDate >= +currentDateStart){
                 timeToDisplay = new Date(sentTime).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
             }
@@ -250,14 +250,6 @@ export default {
             this.$router.push('/messages/' + userId );
         },
 
-        redirectToSourcePage(){
-            var sourcePath = "/";
-            if((appViewModel.p2pChat != undefined) && (appViewModel.p2pChat.sourcePagePath != undefined )){
-                sourcePath = appViewModel.p2pChat.sourcePagePath;
-            }
-            redirect(sourcePath);
-        },
-
         getImageUrl( imageUrl, width, compressed ) {
             const self = this;
             if( imageUrl == null ) return null;
@@ -330,7 +322,8 @@ export default {
             conversations: this.conversations,
             channelLastMessage: this.channelLastMessage,
             channelLastReadMessage: this.channelLastReadMessage,
-            fetchedChannelMetadataData: this.fetchedChannelMetadataData});
+            fetchedChannelMetadataData: this.fetchedChannelMetadataData
+        });
     },
 
     components: {
