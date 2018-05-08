@@ -539,13 +539,16 @@ export default {
         },
         initializeFirebaseAndStartListening() {
             const self = this;
-            this.otherUserId = window.location.pathname.split("/")[2];
-            this.channelId = this.getChannelIdForConversation(self.otherUserId);
+            self.otherUserId = window.location.pathname.split("/")[2];
+            self.channelId = this.getChannelIdForConversation(self.otherUserId);
             //console.log("Channel Id : ", self.channelId);
             if(this.fetchedChannelMetadataDataCached) {
-                if(this.fetchedChannelMetadataDataCached[this.channelId] != undefined) {
-                    this.conversationDisplayName = this.fetchedChannelMetadataDataCached[this.channelId].conversationDisplayName;
-                    this.conversationImageUrl= this.fetchedChannelMetadataDataCached[this.channelId].conversationImageUrl;
+                if(self.fetchedChannelMetadataDataCached[self.channelId] != undefined) {
+                    self.conversationDisplayName = self.fetchedChannelMetadataDataCached[self.channelId].conversationDisplayName;
+                    self.conversationImageUrl= self.fetchedChannelMetadataDataCached[self.channelId].conversationImageUrl;
+                    if(self.conversationImageUrl != undefined && self.conversationImageUrl.length > 0) {
+                        self.conversationImageUrlScaled = self.getImageUrl(self.conversationImageUrl, 100);
+                    }
                 }
             }
             import('firebase').then((firebase) => {
