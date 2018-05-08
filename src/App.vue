@@ -20,7 +20,41 @@ export default {
             'setNotificationCount',
             'attachMessageNotificationListener',
             'setFirebaseGrowthDBInitialisedTrue'
-        ])
+        ]),
+
+        setGuestUserProperties() {
+            this.setAnalyticsUserProperty('USER_ID', "0");
+            this.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
+        },
+
+        setLoggedInUserProperties() {
+            this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
+            this.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
+            this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
+        },
+
+        initializeFbAsyncInit() {
+            const that = this;
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId: process.env.FACEBOOK_APP_ID,
+                    cookie: true,
+                    xfbml: true,
+                    autoLogAppEvents: false,
+                    version: process.env.FACEBOOK_SDK_VERSION
+                });
+
+                window.fbApiInit = true;
+                FB.AppEvents.logPageView();
+                if (!that.getUserDetails.isGuest) {
+                    that.setLoggedInUserProperties();
+                } else {
+                    that.setGuestUserProperties();
+                }
+                that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
+                that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
+            };   
+        }
     },
     computed: {
         ...mapGetters([
@@ -75,40 +109,6 @@ export default {
             }
 
             this.initializeFbAsyncInit();
-        },
-
-        setGuestUserProperties() {
-            this.setAnalyticsUserProperty('USER_ID', "0");
-            this.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
-        },
-
-        setLoggedInUserProperties() {
-            this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
-            this.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
-            this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
-        },
-
-        initializeFbAsyncInit() {
-            const that = this;
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId: process.env.FACEBOOK_APP_ID,
-                    cookie: true,
-                    xfbml: true,
-                    autoLogAppEvents: false,
-                    version: process.env.FACEBOOK_SDK_VERSION
-                });
-
-                window.fbApiInit = true;
-                FB.AppEvents.logPageView();
-                if (!that.getUserDetails.isGuest) {
-                    that.setLoggedInUserProperties();
-                } else {
-                    that.setGuestUserProperties();
-                }
-                that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
-                that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
-            };   
         }
     },
     created() {
