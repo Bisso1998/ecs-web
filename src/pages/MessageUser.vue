@@ -587,6 +587,7 @@ export default {
             $('.chat-body').css({ height: (window.innerHeight - 110) });
             $(window).on('resize', function(){
                 $('.chat-body').css({ height: (window.innerHeight - 110) });
+                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
             });
         }
     },
