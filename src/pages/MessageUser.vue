@@ -546,7 +546,9 @@ export default {
                 if(self.fetchedChannelMetadataDataCached[self.channelId] != undefined) {
                     self.conversationDisplayName = self.fetchedChannelMetadataDataCached[self.channelId].conversationDisplayName;
                     self.conversationImageUrl= self.fetchedChannelMetadataDataCached[self.channelId].conversationImageUrl;
-                    self.conversationImageUrlScaled = self.getImageUrl(self.conversationImageUrl, 100);
+                    if(self.conversationImageUrl != undefined && self.conversationImageUrl.length > 0) {
+                        self.conversationImageUrlScaled = self.getImageUrl(self.conversationImageUrl, 100);
+                    }
                 }
             }
             import('firebase').then((firebase) => {
