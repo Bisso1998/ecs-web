@@ -52,7 +52,6 @@ export default {
                             projectId: process.env.FIREBASE_PROJECT_ID,
                             storageBucket: process.env.FIREBASE_STORAGE_BUCKET
                         };
-                        console.log("Growth Firebase props : ", configGrowth);
                         firebase.initializeApp(configGrowth, "FirebaseGrowth");
                         that.setFirebaseGrowthDBInitialisedTrue();
                         that.attachMessageNotificationListener(that.getUserDetails.userId);
@@ -70,15 +69,26 @@ export default {
                         }
                     });
                 });
-
-                this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
-                this.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
-                this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
+                this.setLoggedInUserProperties();
             } else {
-                this.setAnalyticsUserProperty('USER_ID', "0");
-                this.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
+                this.setGuestUserProperties();
             }
 
+            this.initializeFbAsyncInit();
+        },
+
+        setGuestUserProperties() {
+            this.setAnalyticsUserProperty('USER_ID', "0");
+            this.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
+        },
+
+        setLoggedInUserProperties() {
+            this.setAnalyticsUserProperty('USER_ID', this.getUserDetails.userId || "0");
+            this.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
+            this.setAnalyticsUserProperty('AUTHOR_ID', this.getUserDetails.authorId);
+        },
+
+        initializeFbAsyncInit() {
             const that = this;
             window.fbAsyncInit = function() {
                 FB.init({
@@ -86,23 +96,19 @@ export default {
                     cookie: true,
                     xfbml: true,
                     autoLogAppEvents: false,
-                    version: 'v2.10'
+                    version: process.env.FACEBOOK_SDK_VERSION
                 });
 
                 window.fbApiInit = true;
                 FB.AppEvents.logPageView();
-                if (!isGuest) {
-                    that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
-                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
-                    that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
+                if (!that.getUserDetails.isGuest) {
+                    that.setLoggedInUserProperties();
                 } else {
-                    that.setAnalyticsUserProperty('USER_ID', "0");
-                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
+                    that.setGuestUserProperties();
                 }
                 that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
                 that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
-            }
-
+            };   
         }
     },
     created() {
@@ -110,30 +116,7 @@ export default {
 
         const that = this;
         if (this.getUserDetails.isGuest !== undefined || this.getUserDetails.isGuest !== null) {
-            window.fbAsyncInit = function() {
-                FB.init({
-                    appId: process.env.FACEBOOK_APP_ID,
-                    cookie: true,
-                    xfbml: true,
-                    autoLogAppEvents: false,
-                    version: 'v2.10'
-                });
-
-                window.fbApiInit = true;
-                FB.AppEvents.logPageView();
-                if (!that.getUserDetails.isGuest) {
-                    that.setAnalyticsUserProperty('USER_ID', that.getUserDetails.userId || "0");
-                    console.log('logging is logged in to true');
-                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "YES");
-                    that.setAnalyticsUserProperty('AUTHOR_ID', that.getUserDetails.authorId);
-                } else {
-                    that.setAnalyticsUserProperty('USER_ID', "0");
-                    console.log('logging is logged in to false');
-                    that.setAnalyticsUserProperty('IS_LOGGED_IN', "NO");
-                }
-                that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
-                that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
-            };
+            this.initializeFbAsyncInit();
         }
     }
 }
