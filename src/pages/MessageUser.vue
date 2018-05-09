@@ -39,6 +39,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="typing-wrap" v-if="isOtherUserTyping">
+                                <div class="typing">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
                             <div class="message-blocked fixed-msg" v-if="isUserBlockedBySelf == true" id="unblock-user-panel-message">
                                 __("chat_unblock_user_msg")
                                 <button type="button" class="btn report-btn btn-on-fixed-msg" v-on:click="unblockUser()">__("chat_unblock_user")</button>
@@ -119,7 +126,11 @@ export default {
             pendingMessages: [],
             failedMessages: [],
             loadingMessages: true,
-            listenerCallbacks: []
+            listenerCallbacks: [],
+            otherUserLastTypedTime: null,
+            isOtherUserTyping: false,
+            otherUserTypingWatcherInterval: null,
+            lastMessageTimeByOtherUser: null
         }
     },
     mixins: [
@@ -239,7 +250,11 @@ export default {
                     return;
                 }
                 //console.log("Message User : Message added : ", snapshot.key, " for channel : ", self.channelId);
+                self.isOtherUserTyping = false;
                 var toPushMessage = self.buildMessage(snapshot);
+                if(toPushMessage.isMessageBySelf != true) {
+                    self.lastMessageTimeByOtherUser = new Date();
+                }
                 self.messageList.push(toPushMessage);
                 self.lastDeliveredMessageId = snapshot.key;
                 self.$nextTick(() => {self.scrollIntoView(snapshot.key);});
@@ -316,6 +331,35 @@ export default {
             self.listenerCallbacks.push({ref: otherUserBlockedRef, callback: otherUserBlockedCallback, type:"value"});
         },
 
+        watchOtherUserTyping() {
+            var self = this;
+            var lastTypedTimeRef = self.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(self.channelId).child('users').child(self.otherUserId).child('lastTypedTime');
+            let lastTypedCallback = lastTypedTimeRef.on('value', function(snapshot) {
+                self.otherUserLastTypedTime = new Date(snapshot.val());
+            });
+            self.listenerCallbacks.push({ref: lastTypedTimeRef, callback: lastTypedCallback, type:"value"});
+        },
+
+        updateOtherUserTypingStatus() {
+            var self = this;
+            if(self.otherUserLastTypedTime == null) {
+                return;
+            }
+            let twoSecondBeforeDate = new Date();
+            twoSecondBeforeDate.setTime(twoSecondBeforeDate.getTime() - (2000));
+            if(self.lastMessageTimeByOtherUser != null && +self.lastMessageTimeByOtherUser > +self.otherUserLastTypedTime) {
+                self.isOtherUserTyping = false;
+                return;
+            }
+            if (+self.otherUserLastTypedTime >= +twoSecondBeforeDate ) {
+                self.isOtherUserTyping = true;
+                self.$nextTick(() => {
+                    $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
+                });
+            } else {
+                self.isOtherUserTyping = false;
+            }
+        },
 
         getChannelIdForConversation (otherUser) {
             if (this.getUserDetails.userId < otherUser) {
@@ -440,6 +484,8 @@ export default {
             self.loadMessagesInConversation();
             self.watchBlockedConversation();
             self.readOtherUserProfileData();
+            self.watchOtherUserTyping();
+            self.otherUserTypingWatcherInterval = setInterval(self.updateOtherUserTypingStatus, 1000);
         },
 
 
@@ -504,6 +550,11 @@ export default {
             if(index > -1) {
                 arr.splice(index, 1);
             }
+        },
+
+        updateLastTypedTimeInFirebase() {
+            var self = this;
+            this.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId + '/users/' + this.getUserDetails.userId + '/lastTypedTime').set(firebase.database.ServerValue.TIMESTAMP);
         },
 
 
@@ -605,12 +656,18 @@ export default {
             if (loaded) {
                 this.initializeFirebaseAndStartListening();
             }
+        },
+
+        'toSendMessageText'(newMessageToSend) {
+            this.updateLastTypedTimeInFirebase();
         }
     },
 
     beforeDestroy() {
         //console.log("Destroy callback : Message User")
-        this.listenerCallbacks.forEach((entry) => {
+        var self = this;
+        clearInterval(self.otherUserTypingWatcherInterval);
+        self.listenerCallbacks.forEach((entry) => {
             // console.log("Entry : ", entry);
             entry.ref.off(entry.type, entry.callback);
         });
@@ -752,6 +809,65 @@ export default {
                 color: #555;
                 text-align: center;
                 font-style: italic;
+            }
+            .typing-wrap {
+                background-color: #fff;
+                width: 50px;
+                line-height: 16px;
+                display: block;
+                border-radius: 5px;
+                padding: 5px;
+                text-align: left;
+                box-shadow: 0 1px 1px 0 rgba(164, 152, 135, 0.32), 0 0 1px 0 #A39F98;
+                margin: 5px 20px 10px;
+                position: relative;
+                .typing {
+                    text-align: center;
+                    span {
+                        display: inline-block;
+                        background-color: #9e9e9e;
+                        width: 5px;
+                        height: 5px;
+                        border-radius: 50%;
+                        margin-right: 0px;
+                        vertical-align: middle;
+                        animation: typeSwing 1s infinite;
+
+                        &:nth-child(2) {
+                            animation-delay: 0.15s;
+                        }
+                        &:nth-child(3) {
+                            animation-delay: 0.3s;
+                            margin-right: 0;
+                        }
+                    }
+                }
+                @keyframes typeSwing {
+                    10% {
+                        transform: translateY(-10px);
+                        background-color: #9E9DA2;
+                    }
+                    50% {
+                        transform: translateY(0);
+                        background-color: #B6B5BA;
+                    }
+                }
+                &:before {
+                    background-color: #fff;
+                    content: "\A0";
+                    display: block;
+                    height: 16px;
+                    position: absolute;
+                    top: -1px;
+                    transform: rotate(45deg) skew(-45deg);
+                    -moz-transform: rotate(45deg) skew(-45deg);
+                    -ms-transform: rotate(45deg) skew(-45deg);
+                    -o-transform: rotate(45deg) skew(-45deg);
+                    -webkit-transform: rotate(45deg) skew(-45deg);
+                    width: 20px;
+                    box-shadow: -1px 1px 1px 0 rgba(164, 152, 135, 0.32);
+                    left: -5px;
+                }
             }
             .fixed-msg {
                 position: fixed;
