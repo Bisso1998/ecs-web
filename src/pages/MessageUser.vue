@@ -129,7 +129,8 @@ export default {
             listenerCallbacks: [],
             otherUserLastTypedTime: null,
             isOtherUserTyping: false,
-            otherUserTypingWatcherInterval: null
+            otherUserTypingWatcherInterval: null,
+            lastMessageTimeByOtherUser: null
         }
     },
     mixins: [
@@ -251,6 +252,9 @@ export default {
                 //console.log("Message User : Message added : ", snapshot.key, " for channel : ", self.channelId);
                 self.isOtherUserTyping = false;
                 var toPushMessage = self.buildMessage(snapshot);
+                if(toPushMessage.isMessageBySelf != true) {
+                    self.lastMessageTimeByOtherUser = new Date();
+                }
                 self.messageList.push(toPushMessage);
                 self.lastDeliveredMessageId = snapshot.key;
                 self.$nextTick(() => {self.scrollIntoView(snapshot.key);});
@@ -338,8 +342,15 @@ export default {
 
         updateOtherUserTypingStatus() {
             var self = this;
+            if(self.otherUserLastTypedTime == null) {
+                return;
+            }
             let twoSecondBeforeDate = new Date();
             twoSecondBeforeDate.setTime(twoSecondBeforeDate.getTime() - (2000));
+            if(self.lastMessageTimeByOtherUser != null && +self.lastMessageTimeByOtherUser > +self.otherUserLastTypedTime) {
+                self.isOtherUserTyping = false;
+                return;
+            }
             if (+self.otherUserLastTypedTime >= +twoSecondBeforeDate ) {
                 self.isOtherUserTyping = true;
                 $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
