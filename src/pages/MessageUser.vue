@@ -542,7 +542,7 @@ export default {
         },
         initializeFirebaseAndStartListening() {
             const self = this;
-            self.otherUserId = window.location.pathname.split("/")[2];
+            self.otherUserId = this.$route.params.channel_id;
             self.channelId = this.getChannelIdForConversation(self.otherUserId);
             //console.log("Channel Id : ", self.channelId);
             if(this.fetchedChannelMetadataDataCached) {
