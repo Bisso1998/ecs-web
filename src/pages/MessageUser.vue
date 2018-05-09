@@ -353,7 +353,9 @@ export default {
             }
             if (+self.otherUserLastTypedTime >= +twoSecondBeforeDate ) {
                 self.isOtherUserTyping = true;
-                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
+                self.$nextTick(() => {
+                    $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
+                });
             } else {
                 self.isOtherUserTyping = false;
             }
