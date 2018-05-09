@@ -388,6 +388,11 @@ export default {
         createChannelAndRenderChat () {
             const self = this;
             var channelUsersData = {};
+            if(this.$route.query.profileImageUrl == undefined || this.$route.query.profileImageUrl.length == 0
+                || this.$route.query.displayName == undefined || this.$route.query.displayName.length == 0
+                || this.$route.query.profileUrl == undefined || this.$route.query.profileUrl.length == 0) {
+                self.$router.push('/messages');
+            }
             channelUsersData[self.otherUserId] = {
                 profileImageUrl: this.$route.query.profileImageUrl,
                 displayName:this.$route.query.displayName,
@@ -400,7 +405,7 @@ export default {
             };
             this.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId).set({users: channelUsersData}, function (error) {
                 if (error) {
-                    redirect('/messages');
+                    self.$router.push('/messages');
                     //console.log("Channel metadata could not be saved. Error : " + error);
                 }
                 else {
