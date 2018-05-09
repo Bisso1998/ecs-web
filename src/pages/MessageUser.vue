@@ -636,9 +636,6 @@ export default {
     },
 
     mounted() {
-        if (this.getUserDetails.isGuest) {
-            this.$router.push('/login');
-        }
         if (this.getFirebaseGrowthDBLoadingState) {
             this.initializeFirebaseAndStartListening();
         }
@@ -660,6 +657,11 @@ export default {
 
         'toSendMessageText'(newMessageToSend) {
             this.updateLastTypedTimeInFirebase();
+        },
+        'getUserDetails.isGuest'(isGuest) {
+            if (isGuest) {
+                this.$router.push('/login');
+            }
         }
     },
 
