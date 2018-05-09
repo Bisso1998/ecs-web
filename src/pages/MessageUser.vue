@@ -56,7 +56,7 @@
                                           @input="updateToSendMessageText"></textarea>
                             </div>
                             <button type="button" name="button" class="send-message"
-                                    v-bind:disabled="isConversationBlocked == true || toSendMessageText.length == 0"
+                                    v-bind:disabled="isConversationBlocked == true || toSendMessageText.trim().length == 0"
                                     v-on:click.prevent="sendMessageToFirebase()"><i class="material-icons">send</i></button>
                         </div>
                     </div>
@@ -481,9 +481,10 @@ export default {
             } else {
                 self.failedMessages.push(messageId);
             }
+            let messageTextTrimmed = self.toSendMessageText.trim();
             messagePushRef.set({
                 senderId: this.getUserDetails.userId + "",
-                messageText: self.toSendMessageText,
+                messageText: messageTextTrimmed,
                 sendTime: firebase.database.ServerValue.TIMESTAMP
             }, function (error) {
                 if (error) {
@@ -542,7 +543,7 @@ export default {
         },
         initializeFirebaseAndStartListening() {
             const self = this;
-            self.otherUserId = window.location.pathname.split("/")[2];
+            self.otherUserId = this.$route.params.channel_id;
             self.channelId = this.getChannelIdForConversation(self.otherUserId);
             //console.log("Channel Id : ", self.channelId);
             if(this.fetchedChannelMetadataDataCached) {
