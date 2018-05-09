@@ -50,7 +50,7 @@
 
                         <div class="chat-box" v-if="!isConversationBlocked">
                             <div class="type-message">
-                                <textarea id="text-message" :placeholder="'__("chat_textbox_placeholder")'"
+                                <textarea id="text-message" :placeholder="'__("chat_textbox_placeholder")'" @keydown="enterToSend"
                                           v-bind:disabled="isConversationBlocked == true"
                                           :value="toSendMessageText"
                                           @input="updateToSendMessageText"></textarea>
@@ -572,8 +572,15 @@ export default {
                     }
                 });
             });
-        }
+        },
 
+        enterToSend(event) {
+            if(event.which === 13 && !event.shiftKey && this.toSendMessageText != "" && !this.isMobile()) {
+                event.preventDefault();
+                this.sendMessageToFirebase();
+                this.toSendMessageText = "";
+            }
+        }
     },
 
     mounted() {
@@ -815,14 +822,15 @@ export default {
                 }
                 .msg-text {
                     position: relative;
+                    white-space: pre-line;
                 }
                 .extra-info {
                     display: inline-block;
-                    float: right;
                     font-size: 11px;
                     margin-left: 5px;
                     color: rgba(0, 0, 0, 0.5);
                     position: relative;
+                    vertical-align: baseline;
                     .status {
                         vertical-align: middle;
                         margin-left: 4px;
