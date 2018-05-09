@@ -799,24 +799,26 @@ export default {
             }
             .typing-wrap {
                 background-color: #fff;
-                width: 70px;
+                width: 50px;
                 line-height: 16px;
                 display: block;
                 border-radius: 5px;
-                padding: 7px 10px;
+                padding: 5px;
                 text-align: left;
                 box-shadow: 0 1px 1px 0 rgba(164, 152, 135, 0.32), 0 0 1px 0 #A39F98;
                 margin: 5px 20px 10px;
+                position: relative;
                 .typing {
                     text-align: center;
                     span {
                         display: inline-block;
-                        background-color: #B6B5BA;
-                        width: 7px;
-                        height: 7px;
-                        border-radius: 100%;
-                        margin-right: 4px;
-                        animation: bob 1s infinite;
+                        background-color: #9e9e9e;
+                        width: 5px;
+                        height: 5px;
+                        border-radius: 50%;
+                        margin-right: 0px;
+                        vertical-align: middle;
+                        animation: typeSwing 1s infinite;
 
                         &:nth-child(2) {
                             animation-delay: 0.15s;
@@ -827,7 +829,7 @@ export default {
                         }
                     }
                 }
-                @keyframes bob {
+                @keyframes typeSwing {
                     10% {
                         transform: translateY(-10px);
                         background-color: #9E9DA2;
@@ -836,6 +838,22 @@ export default {
                         transform: translateY(0);
                         background-color: #B6B5BA;
                     }
+                }
+                &:before {
+                    background-color: #fff;
+                    content: "\A0";
+                    display: block;
+                    height: 16px;
+                    position: absolute;
+                    top: -1px;
+                    transform: rotate(45deg) skew(-45deg);
+                    -moz-transform: rotate(45deg) skew(-45deg);
+                    -ms-transform: rotate(45deg) skew(-45deg);
+                    -o-transform: rotate(45deg) skew(-45deg);
+                    -webkit-transform: rotate(45deg) skew(-45deg);
+                    width: 20px;
+                    box-shadow: -1px 1px 1px 0 rgba(164, 152, 135, 0.32);
+                    left: -5px;
                 }
             }
             .fixed-msg {
