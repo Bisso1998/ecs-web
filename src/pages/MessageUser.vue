@@ -39,7 +39,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <p v-if="isOtherUserTyping">Typing.....</p>
+                            <div class="typing-wrap" v-if="isOtherUserTyping">
+                                <div class="typing">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
                             <div class="message-blocked fixed-msg" v-if="isUserBlockedBySelf == true" id="unblock-user-panel-message">
                                 __("chat_unblock_user_msg")
                                 <button type="button" class="btn report-btn btn-on-fixed-msg" v-on:click="unblockUser()">__("chat_unblock_user")</button>
@@ -243,6 +249,7 @@ export default {
                     return;
                 }
                 //console.log("Message User : Message added : ", snapshot.key, " for channel : ", self.channelId);
+                self.isOtherUserTyping = false;
                 var toPushMessage = self.buildMessage(snapshot);
                 self.messageList.push(toPushMessage);
                 self.lastDeliveredMessageId = snapshot.key;
@@ -335,6 +342,7 @@ export default {
             twoSecondBeforeDate.setTime(twoSecondBeforeDate.getTime() - (2000));
             if (+self.otherUserLastTypedTime >= +twoSecondBeforeDate ) {
                 self.isOtherUserTyping = true;
+                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
             } else {
                 self.isOtherUserTyping = false;
             }
@@ -638,7 +646,6 @@ export default {
         },
 
         'toSendMessageText'(newMessageToSend) {
-            console.log("Typing: ", newMessageToSend);
             this.updateLastTypedTimeInFirebase();
         }
     },
@@ -789,6 +796,47 @@ export default {
                 color: #555;
                 text-align: center;
                 font-style: italic;
+            }
+            .typing-wrap {
+                background-color: #fff;
+                width: 70px;
+                line-height: 16px;
+                display: block;
+                border-radius: 5px;
+                padding: 7px 10px;
+                text-align: left;
+                box-shadow: 0 1px 1px 0 rgba(164, 152, 135, 0.32), 0 0 1px 0 #A39F98;
+                margin: 5px 20px 10px;
+                .typing {
+                    text-align: center;
+                    span {
+                        display: inline-block;
+                        background-color: #B6B5BA;
+                        width: 7px;
+                        height: 7px;
+                        border-radius: 100%;
+                        margin-right: 4px;
+                        animation: bob 1s infinite;
+
+                        &:nth-child(2) {
+                            animation-delay: 0.15s;
+                        }
+                        &:nth-child(3) {
+                            animation-delay: 0.3s;
+                            margin-right: 0;
+                        }
+                    }
+                }
+                @keyframes bob {
+                    10% {
+                        transform: translateY(-10px);
+                        background-color: #9E9DA2;
+                    }
+                    50% {
+                        transform: translateY(0);
+                        background-color: #B6B5BA;
+                    }
+                }
             }
             .fixed-msg {
                 position: fixed;
