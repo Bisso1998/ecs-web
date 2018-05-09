@@ -39,6 +39,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <p v-if="isOtherUserTyping">Typing.....</p>
                             <div class="message-blocked fixed-msg" v-if="isUserBlockedBySelf == true" id="unblock-user-panel-message">
                                 __("chat_unblock_user_msg")
                                 <button type="button" class="btn report-btn btn-on-fixed-msg" v-on:click="unblockUser()">__("chat_unblock_user")</button>
@@ -119,7 +120,10 @@ export default {
             pendingMessages: [],
             failedMessages: [],
             loadingMessages: true,
-            listenerCallbacks: []
+            listenerCallbacks: [],
+            otherUserLastTypedTime: null,
+            isOtherUserTyping: false,
+            otherUserTypingWatcherInterval: null
         }
     },
     mixins: [
@@ -316,6 +320,25 @@ export default {
             self.listenerCallbacks.push({ref: otherUserBlockedRef, callback: otherUserBlockedCallback, type:"value"});
         },
 
+        watchOtherUserTyping() {
+            var self = this;
+            var lastTypedTimeRef = self.firebaseGrowthDB.ref('/CHATS').child('channel_metadata').child(self.channelId).child('users').child(self.otherUserId).child('lastTypedTime');
+            let lastTypedCallback = lastTypedTimeRef.on('value', function(snapshot) {
+                self.otherUserLastTypedTime = new Date(snapshot.val());
+            });
+            self.listenerCallbacks.push({ref: lastTypedTimeRef, callback: lastTypedCallback, type:"value"});
+        },
+
+        updateOtherUserTypingStatus() {
+            var self = this;
+            let twoSecondBeforeDate = new Date();
+            twoSecondBeforeDate.setTime(twoSecondBeforeDate.getTime() - (2000));
+            if (+self.otherUserLastTypedTime >= +twoSecondBeforeDate ) {
+                self.isOtherUserTyping = true;
+            } else {
+                self.isOtherUserTyping = false;
+            }
+        },
 
         getChannelIdForConversation (otherUser) {
             if (this.getUserDetails.userId < otherUser) {
@@ -440,6 +463,8 @@ export default {
             self.loadMessagesInConversation();
             self.watchBlockedConversation();
             self.readOtherUserProfileData();
+            self.watchOtherUserTyping();
+            self.otherUserTypingWatcherInterval = setInterval(self.updateOtherUserTypingStatus, 1000);
         },
 
 
@@ -504,6 +529,11 @@ export default {
             if(index > -1) {
                 arr.splice(index, 1);
             }
+        },
+
+        updateLastTypedTimeInFirebase() {
+            var self = this;
+            this.firebaseGrowthDB.ref('/CHATS/channel_metadata/' + self.channelId + '/users/' + this.getUserDetails.userId + '/lastTypedTime').set(firebase.database.ServerValue.TIMESTAMP);
         },
 
 
@@ -605,12 +635,19 @@ export default {
             if (loaded) {
                 this.initializeFirebaseAndStartListening();
             }
+        },
+
+        'toSendMessageText'(newMessageToSend) {
+            console.log("Typing: ", newMessageToSend);
+            this.updateLastTypedTimeInFirebase();
         }
     },
 
     beforeDestroy() {
         //console.log("Destroy callback : Message User")
-        this.listenerCallbacks.forEach((entry) => {
+        var self = this;
+        clearInterval(self.otherUserTypingWatcherInterval);
+        self.listenerCallbacks.forEach((entry) => {
             // console.log("Entry : ", entry);
             entry.ref.off(entry.type, entry.callback);
         });
