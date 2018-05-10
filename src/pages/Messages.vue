@@ -67,7 +67,8 @@ export default {
 
         ...mapActions('messages', [
             'saveConversationsDataToCache',
-            'clearConversationsDataCache'
+            'clearConversationsDataCache',
+            'removeChannelFromCache'
         ]),
 
         loadChannelMetadata(channelId){
@@ -220,12 +221,13 @@ export default {
             const self = this;
             if((self.conversationListCached != undefined) && (self.conversationListCached.length > 0)){
                 self.conversationListCached.forEach( function (conversation){
-                    conversation.isLoadedFromCache = true;
-                    self.conversations.push(conversation);
+                    const conversationObj = { ...conversation };
+                    conversationObj.isLoadedFromCache = true;
+                    self.conversations.push(conversationObj);
                 });
-                self.channelLastMessage = self.channelLastMessageCached;
-                self.channelLastReadMessage = self.channelLastReadMessageCached;
-                self.fetchedChannelMetadataData = self.fetchedChannelMetadataDataCached;
+                self.channelLastMessage = { ...self.channelLastMessageCached };
+                self.channelLastReadMessage = { ...self.channelLastReadMessageCached };
+                self.fetchedChannelMetadataData = { ...self.fetchedChannelMetadataDataCached };
                 self.clearConversationsDataCache();
             }
             setTimeout(self.clearConversationsFromCache, 4000);
@@ -284,6 +286,21 @@ export default {
 
             return window.canUseWebp ? "webp" : "jpg";
 
+        },
+
+        deleteConversation(channelId, lastDeliveredMessage) {
+            const self = this;
+            self.removeChannelFromCache({channelId: channelId});
+            self.removeConversationForChannel(channelId);
+            let deleteConversationUpdates = {};
+            deleteConversationUpdates['/CHATS/user_watched_channels/' + this.getUserDetails.userId + '/' + channelId] = {};
+            deleteConversationUpdates['/CHATS/user_channels/' + this.getUserDetails.userId + '/' + channelId + '/lastDeletedMessage'] = lastDeliveredMessage;
+            self.firebaseGrowthDB.ref().update(deleteConversationUpdates, function (error) {
+                if (error) {
+                    //console.log("Error updating data:", error);
+                }
+            });
+            $('#confirmation').modal('hide');
         },
 
         initializeFirebaseAndStartListening() {
