@@ -14,16 +14,23 @@
                     </div>
                     <ul class="chat-list" v-if="!getUserDetails.isGuest">
                         <li class="chat-item" v-for="conversation in conversations"  v-bind:key="conversation.channelId">
-                            <div v-on:click="loadMessagesForConversation(conversation.userId)">
-                                <div class="user-img"><img  v-bind:src="conversation.profileImageUrl"  alt="profile-img"></div>
-                                <div class="chat-wrap">
-                                    <div class="user-info">
-                                        <div class="user-name" v-text="conversation.channelName"></div>
-                                        <div class="user-last-msg" v-text="conversation.lastMessage"></div>
-                                    </div>
-                                    <div class="chat-info" v-bind:class="{unread : conversation.isUnread}">
-                                        <div class="chat-time" v-text="conversation.lastMessageTimeDisplay"></div>
-                                    </div>
+                            <div class="user-img" v-on:click="loadMessagesForConversation(conversation.userId)"><img  v-bind:src="conversation.profileImageUrl"  alt="profile-img"></div>
+                            <div class="chat-wrap">
+                                <div class="user-info" v-on:click="loadMessagesForConversation(conversation.userId)">
+                                    <div class="user-name" v-text="conversation.channelName"></div>
+                                    <div class="user-last-msg" v-text="conversation.lastMessage"></div>
+                                </div>
+                                <div class="chat-info" v-bind:class="{unread : conversation.isUnread}" v-on:click="loadMessagesForConversation(conversation.userId)">
+                                    <div class="chat-time" v-text="conversation.lastMessageTimeDisplay"></div>
+                                </div>
+                                <button class="options-btn" type="button" id="msg-user-more-option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="OptionsDropdownMenu">
+                                    <button type="button" class="btn report-btn">__("chat_view_profile")</button>
+                                    <button type="button" class="btn report-btn" data-toggle="modal" data-target="#confirmation">__("pratilipi_delete_content")</button>
+                                    <button type="button" class="btn report-btn">__("chat_block_user")</button>
+                                    <button type="button" class="btn report-btn">__("chat_unblock_user")</button>
                                 </div>
                             </div>
                         </li>
@@ -453,7 +460,7 @@ export default {
             }
             .user-info {
                 float: left;
-                width: calc(100% - 65px);
+                width: calc(100% - 100px);
                 margin-right: 5px;
                 .user-name {
                     font-size: 15px;
@@ -475,7 +482,7 @@ export default {
                 }
             }
             .chat-info {
-                float: right;
+                float: left;
                 width: 60px;
                 text-align: right;
                 color: #9B9B9B;
@@ -493,6 +500,24 @@ export default {
                     float: right;
                     margin: 5px 0;
                     border-radius: 50%;
+                }
+            }
+            .options-btn {
+                width: 30px;
+                float: right;
+                position: relative;
+                z-index: 2;
+                padding: 0;
+            }
+            .dropdown-menu {
+                text-align: right;
+                min-width: 200px;
+                button {
+                    display: block;
+                    background: none;
+                    text-align: right;
+                    width: 100%;
+                    font-size: 13px;
                 }
             }
         }
