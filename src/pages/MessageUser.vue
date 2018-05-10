@@ -637,6 +637,11 @@ export default {
                 this.sendMessageToFirebase();
                 this.toSendMessageText = "";
             }
+        },
+
+        onResizeWindow() {
+            $('.chat-body').css({ height: (window.innerHeight - 110) });
+            $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
         }
     },
 
@@ -646,10 +651,7 @@ export default {
         }
         if(this.isMobile()) {
             $('.chat-body').css({ height: (window.innerHeight - 110) });
-            $(window).on('resize', function(){
-                $('.chat-body').css({ height: (window.innerHeight - 110) });
-                $('.chat-body').scrollTop($('.chat-body')[0].scrollHeight);
-            });
+            $(window).on('resize', this.onResizeWindow);
         }
     },
 
@@ -678,6 +680,7 @@ export default {
             // console.log("Entry : ", entry);
             entry.ref.off(entry.type, entry.callback);
         });
+        $(window).off('resize', this.onResizeWindow);
     },
 
     components: {
