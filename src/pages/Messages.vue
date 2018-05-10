@@ -28,7 +28,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="OptionsDropdownMenu">
                                     <button type="button" class="btn report-btn">__("chat_view_profile")</button>
-                                    <button type="button" class="btn report-btn" data-toggle="modal" data-target="#confirmation">__("pratilipi_delete_content")</button>
+                                    <button type="button" class="btn report-btn" data-toggle="modal" data-target="#messagesConfirmation">__("pratilipi_delete_content")</button>
                                     <button type="button" class="btn report-btn">__("chat_block_user")</button>
                                     <button type="button" class="btn report-btn">__("chat_unblock_user")</button>
                                 </div>
@@ -36,6 +36,30 @@
                         </li>
                         <li class="no-messages" v-if="loadingConversations != true && conversations.length == 0">__("chat_no_msgs")</li>
                     </ul>
+
+                    <!-- Message Confirmation Modal -->
+                    <div class="modal fade confirmation" id="messagesConfirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reportModalLabel">__("pratilipi_delete_content")?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>__("chat_delete_msg")</label>
+                                        </div>
+                                        <button type="button" class="btn btn-submit" data-dismiss="modal" aria-label="Close">__("cancel")</button>
+                                        <button type="button" @click="deleteConversation" class="cancel">__("pratilipi_confirm_delete_content_okay")</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <Spinner  v-if="loadingConversations == true && !getUserDetails.isGuest && conversations.length == 0"></Spinner>
                 </div>
             </div>
@@ -551,6 +575,34 @@ export default {
     .no-messages {
         margin: 10px 0;
         color: #555;
+    }
+    .confirmation {
+        text-align: left;
+        max-width: 350px;
+        margin: 50px auto;
+        .modal-body {
+            padding-top: 0;
+        }
+        .form-group {
+            font-size: 14px;
+        }
+        .btn-submit {
+            background: #d0021b;
+            color: #fff;
+            border: 0;
+            font-size: 14px;
+            float: right;
+        }
+        .cancel {
+            background: #e9e9e9;
+            border: 0;
+            float: right;
+            font-size: 12px;
+            line-height: 33px;
+            margin-right: 10px;
+            padding: 0 10px;
+            border-radius: 3px;
+        }
     }
 }
 </style>
