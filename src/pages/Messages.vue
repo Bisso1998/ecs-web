@@ -22,6 +22,7 @@
                                 </div>
                                 <div class="chat-info" v-bind:class="{unread : conversation.isUnread}" v-on:click="loadMessagesForConversation(conversation.userId)">
                                     <div class="chat-time" v-text="conversation.lastMessageTimeDisplay"></div>
+                                    <span class="blocked"><i class="material-icons">block</i></span>
                                 </div>
                                 <button class="options-btn" type="button" id="msg-user-more-option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="material-icons">more_vert</i>
@@ -531,6 +532,14 @@ export default {
                 float: right;
                 position: relative;
                 z-index: 2;
+                color: #9e9e9e;
+            }
+            .blocked {
+                i {
+                    font-size: 13px;
+                    margin: 4px;
+                    color: #9e9e9e;
+                }
             }
             .dropdown-menu {
                 text-align: right;
