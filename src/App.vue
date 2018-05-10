@@ -53,7 +53,7 @@ export default {
                 }
                 that.setAnalyticsUserProperty('ENVIRONMENT', 'GROWTH');
                 that.setAnalyticsUserProperty('CONTENT_LANGUAGE', that.getCurrentLanguage().fullName.toUpperCase());
-            };   
+            };
         }
     },
     computed: {
@@ -87,19 +87,23 @@ export default {
                             storageBucket: process.env.FIREBASE_STORAGE_BUCKET
                         };
                         firebase.initializeApp(configGrowth, "FirebaseGrowth");
-                        that.setFirebaseGrowthDBInitialisedTrue();
-                        that.attachMessageNotificationListener(that.getUserDetails.userId);
                     }
 
                     firebase.auth().onAuthStateChanged( function( fbUser ) {
                         if( fbUser ) {
+                            console.log("Logged-In FB User");
                             var newNotificationCountNode = firebase.database().ref( "NOTIFICATION" ).child( fbUser.uid ).child( "newNotificationCount" );
                             newNotificationCountNode.on( 'value', function( snapshot ) {
                                 var newNotificationCount = snapshot.val() != null ? snapshot.val() : 0;
                                 that.setNotificationCount(newNotificationCount);
                             });
+                            that.setFirebaseGrowthDBInitialisedTrue();
+                            that.attachMessageNotificationListener(that.getUserDetails.userId);
                         } else {
-                            firebase.auth().signInWithCustomToken( that.getUserDetails.firebaseToken );
+                            console.log("Non Logged-In FB User. Firebase token : ", that.getUserDetails.firebaseToken);
+                            firebase.auth().signInWithCustomToken( that.getUserDetails.firebaseToken ).catch(function(error) {
+                                console.log("Error in Firebase logging in. ", error);
+                            });
                         }
                     });
                 });

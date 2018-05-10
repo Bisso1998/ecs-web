@@ -26,11 +26,10 @@
                                 <button class="options-btn" type="button" id="msg-user-more-option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="material-icons">more_vert</i>
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="OptionsDropdownMenu">
-                                    <button type="button" class="btn report-btn">__("chat_view_profile")</button>
+                                <div class="dropdown-menu" aria-labelledby="OptionsDropdownMenu" v-on:click="setToBeDeletedChannelData(conversation.channelId, conversation.messageId)">
                                     <button type="button" class="btn report-btn" data-toggle="modal" data-target="#messagesConfirmation">__("pratilipi_delete_content")</button>
-                                    <button type="button" class="btn report-btn">__("chat_block_user")</button>
-                                    <button type="button" class="btn report-btn">__("chat_unblock_user")</button>
+                                    <button type="button" class="btn report-btn" v-if="blockedUserStatus[conversation.userId] != true" v-on:click="blockUser(conversation.userId)">__("chat_block_user")</button>
+                                    <button type="button" class="btn report-btn" v-if="blockedUserStatus[conversation.userId] == true" v-on:click="unblockUser(conversation.userId)">__("chat_unblock_user")</button>
                                 </div>
                             </div>
                         </li>
@@ -83,7 +82,10 @@ export default {
             channelLastReadMessage: {},
             fetchedChannelMetadataData: {},
             loadingConversations: true,
-            listenerCallbacks: []
+            listenerCallbacks: [],
+            toDeleteChannelId: '',
+            toDeleteChannelLastMessage: '',
+            blockedUserStatus: {}
         }
     },
 
@@ -128,6 +130,7 @@ export default {
                     self.fetchedChannelMetadataData[channelId] = {'otherUserId' : otherUserId, conversationDisplayName : conversationDisplayName, conversationImageUrl : conversationImageUrlScaled};
                     self.attachLastReadListener(channelId);
                     self.attachLastMessageListener(channelId);
+                    self.watchBlockedConversation(otherUserId);
                 });
             });
         },
@@ -312,19 +315,53 @@ export default {
 
         },
 
-        deleteConversation(channelId, lastDeliveredMessage) {
+        setToBeDeletedChannelData(channelId, lastDeliveredMessageId) {
             const self = this;
-            self.removeChannelFromCache({channelId: channelId});
-            self.removeConversationForChannel(channelId);
+            console.log("Setting to be deleted channel data. Channel Id : ", channelId, " Last Delivered message : ", lastDeliveredMessageId);
+            self.toDeleteChannelId = channelId;
+            self.toDeleteChannelLastMessage = lastDeliveredMessageId;
+            console.log("Setting to be deleted channel data. Channel Id : ", self.toDeleteChannelId, " Last Delivered message : ", self.toDeleteChannelLastMessage);
+        },
+
+        deleteConversation() {
+            const self = this;
+            debugger;
+            self.removeChannelFromCache({channelId: self.toDeleteChannelId});
+            self.removeConversationForChannel(self.toDeleteChannelId);
             let deleteConversationUpdates = {};
-            deleteConversationUpdates['/CHATS/user_watched_channels/' + this.getUserDetails.userId + '/' + channelId] = {};
-            deleteConversationUpdates['/CHATS/user_channels/' + this.getUserDetails.userId + '/' + channelId + '/lastDeletedMessage'] = lastDeliveredMessage;
+            deleteConversationUpdates['/CHATS/user_watched_channels/' + this.getUserDetails.userId + '/' + self.toDeleteChannelId] = {};
+            deleteConversationUpdates['/CHATS/user_channels/' + this.getUserDetails.userId + '/' + self.toDeleteChannelId + '/lastDeletedMessage'] = self.toDeleteChannelLastMessage;
             self.firebaseGrowthDB.ref().update(deleteConversationUpdates, function (error) {
                 if (error) {
-                    //console.log("Error updating data:", error);
+                    console.log("Error updating data:", error);
                 }
             });
-            $('#confirmation').modal('hide');
+            $('#messagesConfirmation').modal('hide');
+        },
+
+        watchBlockedConversation (otherUserId) {
+            const self = this;
+            const userBlockedRef = this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId);
+            let userBlockedCallback = userBlockedRef.on('value', function (snapshot) {
+                console.log("Changed blocked status for user : ",otherUserId ,"Value : ", snapshot.val());
+                let isUserBlockedBySelf = snapshot.val();
+                if(isUserBlockedBySelf == true) {
+                    self.blockedUserStatus[otherUserId] = true;
+                }
+                else {
+                    self.blockedUserStatus[otherUserId] = false;
+                }
+            });
+            self.listenerCallbacks.push({ref: userBlockedRef, callback: userBlockedCallback, type:"value"});
+        },
+
+        blockUser (otherUserId) {
+            this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId).set(true);
+        },
+
+
+        unblockUser (otherUserId) {
+            this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId).set(false);
         },
 
         initializeFirebaseAndStartListening() {
@@ -337,6 +374,7 @@ export default {
                 self.updateUserProfile();
             });
         }
+
     },
 
     created() {
