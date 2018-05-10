@@ -412,7 +412,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             'CONTENT_LANGUAGE': getCurrentLanguage().fullName.toUpperCase(),
             'SCREEN_LOCATION': eventProps.SCREEN_NAME + '_' + eventProps.LOCATION
         }
-        console.log(eventName, eventProperty, eventProps);
+        console.info(eventName, eventProperty, eventProps);
         if (eventName !== 'VIEWED_APPBANNER_GLOBAL' &&
             eventName !== 'VIEWED_AUTHORDETAIL_BOOK' &&
             eventName !== 'VIEWANDROID_OPENAPP_READER' &&
@@ -421,7 +421,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             eventName !== 'VIEWED_RECOMMENDBOOK_READER') {
             amplitude.getInstance().logEvent(eventName, eventProps);
         } else {
-            console.log('SKIPPING EVENT');
+            console.info('SKIPPING EVENT');
         }
 
         if (!window.fbApiInit) {
@@ -433,7 +433,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         }
         
     } else {
-        console.log('NON REGISTERED EVENT: ', eventName);
+        console.info('NON REGISTERED EVENT: ', eventName);
     }
 }
 
