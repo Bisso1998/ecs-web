@@ -490,7 +490,6 @@ export default {
                 float: right;
                 position: relative;
                 z-index: 2;
-                padding: 0;
             }
             .dropdown-menu {
                 text-align: right;
