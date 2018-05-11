@@ -79,6 +79,22 @@ export default {
                         };
                         firebase.initializeApp(config);
 
+                        firebase.auth().onAuthStateChanged( function( fbUser ) {
+                            if( fbUser ) {
+                                console.log("Firebase Default App Login Success ");
+                                var newNotificationCountNode = firebase.database().ref( "NOTIFICATION" ).child( fbUser.uid ).child( "newNotificationCount" );
+                                newNotificationCountNode.on( 'value', function( snapshot ) {
+                                    var newNotificationCount = snapshot.val() != null ? snapshot.val() : 0;
+                                    that.setNotificationCount(newNotificationCount);
+                                });
+                            } else {
+                                console.log("Non Logged-In FB User. Firebase token : ", that.getUserDetails.firebaseToken);
+                                firebase.auth().signInWithCustomToken( that.getUserDetails.firebaseToken ).catch(function(error) {
+                                    console.log("Error in Firebase logging in. ", error);
+                                });
+                            }
+                        });
+
                         const configGrowth = {
                             apiKey: process.env.FIREBASE_API_KEY,
                             authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -86,26 +102,23 @@ export default {
                             projectId: process.env.FIREBASE_PROJECT_ID,
                             storageBucket: process.env.FIREBASE_STORAGE_BUCKET
                         };
-                        firebase.initializeApp(configGrowth, "FirebaseGrowth");
+
+                        var growthFirebaseApp = firebase.initializeApp(configGrowth, "FirebaseGrowth");
+
+                        firebase.auth(growthFirebaseApp).onAuthStateChanged( function( fbUser ) {
+                            if( fbUser ) {
+                                console.log("Firebase Growth App Login Success ");
+                                that.setFirebaseGrowthDBInitialisedTrue();
+                                that.attachMessageNotificationListener(that.getUserDetails.userId);
+                            } else {
+                                console.log("Non Logged-In FB User. Firebase token : ", that.getUserDetails.firebaseToken);
+                                firebase.auth(growthFirebaseApp).signInWithCustomToken( that.getUserDetails.firebaseToken ).catch(function(error) {
+                                    console.log("Error in Firebase logging in. ", error);
+                                });
+                            }
+                        });
                     }
 
-                    firebase.auth().onAuthStateChanged( function( fbUser ) {
-                        if( fbUser ) {
-                            console.log("Logged-In FB User");
-                            var newNotificationCountNode = firebase.database().ref( "NOTIFICATION" ).child( fbUser.uid ).child( "newNotificationCount" );
-                            newNotificationCountNode.on( 'value', function( snapshot ) {
-                                var newNotificationCount = snapshot.val() != null ? snapshot.val() : 0;
-                                that.setNotificationCount(newNotificationCount);
-                            });
-                            that.setFirebaseGrowthDBInitialisedTrue();
-                            that.attachMessageNotificationListener(that.getUserDetails.userId);
-                        } else {
-                            console.log("Non Logged-In FB User. Firebase token : ", that.getUserDetails.firebaseToken);
-                            firebase.auth().signInWithCustomToken( that.getUserDetails.firebaseToken ).catch(function(error) {
-                                console.log("Error in Firebase logging in. ", error);
-                            });
-                        }
-                    });
                 });
                 this.setLoggedInUserProperties();
             } else {
