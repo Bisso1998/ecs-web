@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="chat-info" v-bind:class="{unread : conversation.isUnread}" v-on:click="loadMessagesForConversation(conversation.userId)">
                                     <div class="chat-time" v-text="conversation.lastMessageTimeDisplay"></div>
-                                    <span class="blocked"><i class="material-icons">block</i></span>
+                                    <span class="blocked" v-if="blockedUserStatus[conversation.userId] == true"><i class="material-icons">block</i></span>
                                 </div>
                                 <button class="options-btn" type="button" id="msg-user-more-option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="material-icons">more_vert</i>
@@ -347,10 +347,10 @@ export default {
                 console.log("Changed blocked status for user : ",otherUserId ,"Value : ", snapshot.val());
                 let isUserBlockedBySelf = snapshot.val();
                 if(isUserBlockedBySelf == true) {
-                    self.blockedUserStatus[otherUserId] = true;
+                    self.$set(self.blockedUserStatus, otherUserId ,true);
                 }
                 else {
-                    self.blockedUserStatus[otherUserId] = false;
+                    self.$set(self.blockedUserStatus, otherUserId ,false);
                 }
             });
             self.listenerCallbacks.push({ref: userBlockedRef, callback: userBlockedCallback, type:"value"});
