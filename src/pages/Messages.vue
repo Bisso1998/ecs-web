@@ -571,6 +571,13 @@ export default {
                 position: relative;
                 z-index: 2;
                 color: #9e9e9e;
+                background: none;
+                border: 0;
+                &:focus, &:active {
+                    outline: none;
+                    box-shadow: none;
+                    border: 0;
+                }
             }
             .blocked {
                 i {
