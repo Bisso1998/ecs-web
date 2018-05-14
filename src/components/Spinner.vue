@@ -209,7 +209,6 @@ export default {
                 }
                 span {
                     color: $white;
-                    line-height: 32px;
                     &:after,
                     &:before {
                         border-color: $grey;
