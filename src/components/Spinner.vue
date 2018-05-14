@@ -1,27 +1,81 @@
 <template>
     <div class="loading-wrap">
         <div class="cube">
-            <div class="front-side face cell">
-                <span>പ്ര</span>
-            </div>
-            <div class="back-side face cell">
-                <span>প্র</span>
-            </div>
-            <div class="top-side face cell">
-                <span>પ્ર</span>
-            </div>
-            <div class="bottom-side face cell">
-                <span>ಪ್ರ</span>
-            </div>
-            <div class="left-side face cell">
-                <span>பி</span>
-            </div>
-            <div class="right-side face cell red">
-                <span>प्र</span>
+            <div v-for="(eachSide, index) in cubeSidesToShow" class="face cell" :class="{ 
+                    'right-side': eachSide.frontFacing === true,
+                    'front-side': index === 1,
+                    'back-side': index === 2,
+                    'top-side': index === 3,
+                    'bottom-side': index === 4,
+                    'left-side': index === 5
+                }" :key="eachSide.language">
+                <span>{{ eachSide.text }}</span>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+
+export default {
+    name: 'Pratilipi-Loader-Cube',
+    data() {
+        return {
+            cubeSidesToShow: [],
+            cubeSides: [{
+                language: 'bn',
+                text: 'প্র',
+                frontFacing: false
+            }, {
+                language: 'ml',
+                text: 'പ്ര',
+                frontFacing: false
+            }, {
+                language: 'gu',
+                text: 'પ્ર',
+                frontFacing: false
+            }, {
+                language: 'hi',
+                text: 'प्र',
+                frontFacing: false
+            }, {
+                language: 'kn',
+                text: 'ಪ್ರ',
+                frontFacing: false
+            }, {
+                language: 'ta',
+                text: 'பி',
+                frontFacing: false
+            }, {
+                language: 'te',
+                text: 'ప్ర',
+                frontFacing: false
+            }, {
+                language: 'mr',
+                text: 'प्र',
+                frontFacing: false
+            }]
+        }
+    },
+    created() {
+        const currentLangauge = process.env.LANGUAGE;
+        let mainLanguage;
+        this.cubeSides.forEach((eachSide, index) => {
+            if (eachSide.language === currentLangauge) {
+                mainLanguage = index;
+            }
+        });
+
+        this.cubeSides[mainLanguage].frontFacing = true;
+        this.cubeSidesToShow.push(this.cubeSides[mainLanguage]);
+        this.cubeSides.splice(mainLanguage, 1);
+
+        for (var i = 0; i < 5; i++) {
+            this.cubeSidesToShow.push(this.cubeSides[i]);
+        }
+    }
+}
+</script>
 
 <style lang="scss" scoped>
     .spinner {
@@ -146,7 +200,7 @@
             border-radius: 0;
             border: 1px solid #000;
 
-            &.cell.red {
+            &.cell.right-side {
                 transition: none;
                 background-color: $black;
                 &:after,
@@ -155,6 +209,7 @@
                 }
                 span {
                     color: $white;
+                    line-height: 32px;
                     &:after,
                     &:before {
                         border-color: $grey;
