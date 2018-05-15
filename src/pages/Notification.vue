@@ -256,22 +256,24 @@ export default {
             a {
                 text-decoration: none;
                 color: #212121;
-                display: flex;
+                display: block;
                 font-size: 14px;
                 .notif-display-image {
-                    width: 60px;
-                    height: 60px;
+                    width: 30px;
+                    height: 30px;
                     overflow: hidden;
                     position: relative;
+                    display: inline-block;
                     border-radius: 50%;
-                    align-self: center;
-                    margin: 0 10px;
+                    margin: 0 5px;
+                    vertical-align: top;
                     img {
                         max-width: 100%;
                     }
                 }
                 .message-wrap {
-                    flex-grow: 1;
+                    width: calc(100% - 100px);
+                    display: inline-block;
                 }
                 .notif-date {
                     display: block;
@@ -279,12 +281,13 @@ export default {
                     margin-top: 5px;
                 }
                 .notif-source-image {
-                    width: 60px;
+                    width: 40px;
                     height: 60px;
                     overflow: hidden;
                     position: relative;
-                    align-self: center;
-                    margin: 0 10px;
+                    display: inline-block;
+                    margin: 0 5px;
+                    vertical-align: top;
                     img {
                         max-width: 100%;
                     }
