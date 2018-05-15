@@ -1,0 +1,514 @@
+<template>
+    <MainLayout>
+        <div class="static-page page-wrap">
+            <div class="container">
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
+                    <a class="chapters" :class="{ 'selected-chapter': selectedChapter === index }" v-for="(eachChapter, index) in chapters" :key="index">
+                        <span class="chapter-title" @click="selectChapter(index)">__('writer_chapter') &nbsp; &nbsp; {{ index + 1 }}</span>
+                        <i class="material-icons chapter-delete" @click="deleteChapter(index)">delete</i>
+                    </a>
+
+                    <a class="chapter-add" @click="addChapter">
+                        <i class="material-icons">add</i>
+                    </a>
+                </div>
+
+                <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+                <div id="main">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="follow-btn-w-count" @click="openNav"><!-- Follow Button -->
+                                <button>
+                                    <i class="material-icons">list</i>
+                                </button><span><b>__('writer_chapter')</b></span>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <TranslatingInput :value="chapters[selectedChapter].title" placeholder="__('writer_add_chapter_title')" :oninput="updateTitle"></TranslatingInput>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Use any element to open the sidenav -->
+                            <div class="writer-area" contenteditable="true"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MainLayout>
+</template>
+
+<script>
+import MainLayout from '@/layout/main-layout.vue';
+import constants from '@/constants';
+import TranslatingInput from '@/components/TranslatingInput.vue';
+import Spinner from '@/components/Spinner.vue';
+import { mapGetters, mapActions } from 'vuex'
+
+export default {
+    components: {
+        MainLayout,
+        TranslatingInput,
+        Spinner
+    },
+    computed: {
+        
+    },
+    data() {
+        return {
+            selectedChapter: 0,
+            chapters: []
+        }
+    },
+    methods: {
+        addChapter() {
+            this.chapters.push({
+                title: '',
+                content: ''
+            });
+        },
+
+        selectChapter(index) {
+            this.selectedChapter = index;
+            tinymce.activeEditor.setContent(this.chapters[index].content);
+            this.closeNav();
+        },
+
+        updateTitle(value) {
+            this.chapters[this.selectedChapter].title = value;
+        },
+
+        deleteChapter(index) {
+            if (this.chapters.length === 1) {
+                alert('You need to have atleast one chapter');
+            }
+
+            if (index === this.chapters.length - 1) {
+                this.selectedChapter = index - 1;
+            }
+            this.chapters.splice(index, 1);
+        },
+
+        openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            // document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+        },
+
+        /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+        closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            document.body.style.backgroundColor = "white";
+        },
+        uploadOnServer() {
+            var field_name = "#" + $( '#field_name' ).val();
+            var $parent_div = $( field_name ).closest( "div" );
+            var fd = new FormData();;
+            var blob = $('#image_input').get(0).files[0];
+            fd.append( 'data', blob );
+            fd.append( 'pratilipiId', pratilipiId );
+            fd.append( 'pageNo', cur_page );
+            $parent_div.addClass( "small-spinner" );
+
+            $.ajax({
+                type:'POST',
+                url: `https://gamma.pratilipi.com/api/pratilipi/content/image?pratilipiId=${ pratilipiId }&pageNo=` + chapterNo,
+                data: fd,
+                cache: true,
+                contentType: false,
+                processData: false,
+                success: function( data ) {
+                    var parsed_data = JSON.parse( data );
+                    var image_name = parsed_data.name;
+                    var image_url = `https://gamma.pratilipi.com/api/pratilipi/content/image?pratilipiId=${ pratilipiId }&name=` + image_name;
+                    $('#image_input').val("");
+                    $( field_name ).val( image_url );
+                },
+                error: function( data ) {
+                    alert( 'HTTP Error: ' + data.status );
+                    return;
+                }
+            });
+        }
+    },
+    watch: {
+        
+    },
+    created() {
+        this.chapters.push({
+            title: '',
+            content: ''
+        });
+    },
+    mounted() {
+        const that = this;
+        tinymce.init({
+            selector: '.writer-area',  // change this value according to your HTML,
+            // inline: true,
+            block_formats: 'Paragraph=p;',
+            plugins: ['autoresize autolink lists link image', 'paste'],
+            menubar: false,
+            statusbar: false,
+            toolbar: 'bold italic underline | CustomLeftAlign CustomCenterAlign CustomRightAlign | CustomBlockquote link imageCustom | Ulist Olist',
+            // height: 300,
+            language: 'hi',
+            link_context_toolbar: false,
+            anchor_bottom: false,
+            anchor_top: false,
+            default_link_target: "_blank",
+            allow_unsafe_link_target: false,
+            target_list: false,
+            link_title: false,
+            paste_data_images: true,
+            paste_as_text: false,
+            paste_auto_cleanup_on_paste: true,
+            paste_webkit_styles: "none",
+            paste_remove_styles_if_webkit: false,
+            paste_text_linebreaktype: "p",
+
+            browser_spellcheck: false,
+            allow_conditional_comments: false,
+            allow_html_in_named_anchor: false,
+
+            forced_root_block: 'p',
+            force_br_newlines: false,
+            force_p_newlines: true,
+            remove_trailing_brs: false,
+
+            formats: {
+                bold:
+                {
+                    inline: 'b',
+                    exact: true
+                },
+                italic:
+                {
+                    inline: 'i',
+                    exact: true
+                },
+                underline:
+                {
+                    inline: 'u',
+                    exact: true
+                },
+                blockquote:
+                {
+                    block: 'blockquote'
+                },
+                img:
+                {
+                    block: 'img'
+                },
+                alignleft:
+                {
+                    selector: 'p,li',
+                    styles:
+                    {
+                        textAlign: 'left'
+                    }
+                },
+                aligncenter:
+                {
+                    selector: 'p,li',
+                    styles:
+                    {
+                        textAlign: 'center'
+                    }
+                },
+                alignright:
+                {
+                    selector: 'p,li',
+                    styles:
+                    {
+                        textAlign: 'right'
+                    }
+                },
+            },
+            images_upload_handler: function( blobInfo, success, failure ) {
+                var fd = new FormData();
+                var cur_page = chapterNo;
+                fd.append( 'data', blobInfo.blob() );
+                fd.append( 'pratilipiId', pratilipiId ); 
+                fd.append( 'pageNo', cur_page );
+                $.ajax({
+                    type:'POST',
+                    url: `https://gamma.pratilipi.com/api/pratilipi/content/image?pratilipiId=${ pratilipiId }&pageNo=` + chapterNo,
+                    data: fd,
+                    cache: true,
+                    contentType: false,
+                    processData: false,
+                    success: function( data ) {
+                        var parsed_data = JSON.parse( data );
+                        var image_name = parsed_data.name;
+                        var image_url = `https://gamma.pratilipi.com/api/pratilipi/content/image?pratilipiId=${ pratilipiId }&name=` + image_name;
+                        _this.parent_object.setNewImageFlag( true );
+                        success( image_url );
+                    },
+                    error: function( data ) {
+                        alert( 'HTTP Error: ' + data.status );
+                        return;
+                    }
+                });
+            },
+            file_browser_callback: function( field_name, url, type, win ) {
+                if( type=='image' ) {
+                    $( '#field_name' ).val( field_name );
+                    $( "#image_input" ).click();
+                }
+            },
+            paste_postprocess: function( plugin, args ) {
+                $( args.node ).find( "a:has(img)" ).replaceWith( function() {
+                    return $(this).find( "img" );
+                });         
+                $( args.node ).find( "div" ).replaceWith( function() {
+                    if( $(this).text().length ) {
+                        return "<p>" + $(this).html() + '</p>';
+                    } else {
+                        return "";
+                    }
+                });
+                $( args.node ).find( "h1,h2,h3,h4,h5,h6" ).replaceWith( function() {
+                    if( $(this).text().length ) {
+                        if( $(this).closest( "p,blockquote,li" ).length ) {
+                            return "<b>" + $(this).html() + '</b>';
+                        } else {
+                            return "<p><b>" + $(this).html() + "</b></p>";
+                        }
+                    } else {
+                        return "";
+                    }
+                });      
+            },
+            setup: function(ed) {
+                ed.on("keyup", function(){
+                    that.chapters[that.selectedChapter].content = tinymce.activeEditor.getContent();
+                });
+
+                ed.addButton('CustomLeftAlign', {
+                    icon: 'mce-ico mce-i-alignleft',
+                    tooltip: "Align left",
+                    cmd: "JustifyLeft",
+                    onpostrender: monitorAlignmentChange
+                });
+                ed.addButton('CustomCenterAlign', {
+                    icon: 'mce-ico mce-i-aligncenter',
+                    tooltip: "Align center",
+                    cmd: "JustifyCenter",
+                    onpostrender: monitorAlignmentChange
+                });
+                ed.addButton('CustomRightAlign', {
+                    icon: 'mce-ico mce-i-alignright',
+                    tooltip: "Align right",
+                    cmd: "JustifyRight",
+                    onpostrender: monitorAlignmentChange
+                });
+                ed.addButton('imageCustom', {
+                    icon: 'image',
+                    tooltip: "Insert/edit image",
+                    cmd: "mceImage",
+                    onpostrender: monitorImageChange
+                });
+
+                function monitorImageChange() {
+                    var btn = this;
+                    ed.on('NodeChange', function(e) {
+                        var parents = e.parents.map(lowercasedElemName);
+                        btn.disabled(parents.includes("blockquote") ||
+                            parents.includes("li") ||
+                            parents.includes("u") ||
+                            parents.includes("i") ||
+                            parents.includes("b") ||
+                            parents.includes("a"));
+                    });
+                }
+
+                function lowercasedElemName(elem) {
+                    return elem.nodeName.toLowerCase();
+                }
+
+                function monitorAlignmentChange() {
+                    var btn = this;
+                    ed.on('NodeChange', function(e) {
+                        var parents = e.parents.map(lowercasedElemName);
+                        btn.disabled(parents.includes("blockquote") || parents.includes("img"));
+                    });
+                }
+            },
+            valid_elements : 'p[style],img[src|width|height],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
+            extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li[style],a[href|target=_blank],br',
+            valid_children : 'body[p|img|blockquote|ol|ul],-body[br],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],-blockquote[blockquote|img|p],ol[li],ul[li],-ul[ul|ol|img],li[b|i|u|a[href]|br],-li[img|blockquote|p]',
+            invalid_elements : "div",
+            valid_styles: { 'p': 'text-align', 'li': 'text-align' },
+
+            image_description: false,
+            image_dimensions: false
+        });
+
+        $('#image_input').on( "change", function() {
+            that.uploadOnServer();
+        });
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.static-page {
+    margin-top: 85px;
+    text-align: left;
+    min-height: 600px;
+    @media screen and (max-width: 992px ) {
+        margin-top: 65px;
+    }
+    h2 {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: left;
+        border-left: 3px solid #d0021b;
+        padding-left: 10px;
+        margin: 10px 0;
+        @media screen and (max-width: 992px ) {
+            font-size: 18px;
+        }
+    }
+
+    /* The side navigation menu */
+    .sidenav {
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 5; /* Stay on top */
+        top: 0; /* Stay at the top */
+        left: 0;
+        background-color: #FFF; /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 60px; /* Place content 60px from the top */
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+        -webkit-box-shadow: 5px 0px 31px 0px rgba(0,0,0,0.68);
+        -moz-box-shadow: 5px 0px 31px 0px rgba(0,0,0,0.68);
+        box-shadow: 5px 0px 31px 0px rgba(0,0,0,0.68);
+
+        .chapter-title {
+            display: inline-block;
+            width: 80%;
+        }
+
+        .chapter-delete {
+            display: inline-block; 
+            font-size: 1.2em; 
+            vertical-align: middle;
+            float: right;
+            cursor: pointer;
+        }
+
+        .chapter-delete:hover {
+            color: red;
+        }
+
+        .chapter-add {
+            text-align: center;
+            color: #fff;
+
+            i {
+                background: #d0021b;
+                display: inline-block;
+                clear: both;
+                width: 100%;
+                border: 1px solid #d0021b;
+                border-radius: 3px;
+                padding: 5px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    /* The navigation menu links */
+    .sidenav a {
+        padding: 8px 20px 8px 32px;
+        text-decoration: none;
+        color: #000;
+        display: block;
+        transition: 0.3s;
+        font-size: 0.9em;
+    }
+
+    .sidenav a.chapters.selected-chapter{
+        background: #DCDCDC;
+    }
+
+    /* When you mouse over the navigation links, change their color */
+    .sidenav a.chapters:hover {
+        background: #DCDCDC;
+    }
+
+    /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 25px;
+        margin-left: 50px;
+    }
+
+    /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+        transition: margin-left .5s;
+        padding: 20px;
+
+        .follow-btn-w-count {
+            color: #fff;
+            font-size: 14px;
+            position: relative;
+            text-align: center;
+            display: inline-block;
+            clear: both;
+            overflow: hidden;
+            cursor: pointer;
+            button {
+                background: #d0021b;
+                border: 1px solid #d0021b;
+                border: 1px solid #d0021b;
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+                outline: none;
+                color: #fff;
+                margin: 0;
+                padding: 8px;
+                display: inline-block;
+                clear: both;
+                cursor: pointer;
+            }
+            i {
+                vertical-align: middle;
+                padding-right: 5px;
+                font-size: 18px;
+            }
+            span {
+                background: #fff;
+                color: #d0021b;
+                display: inline-block;
+                border: 1px solid #d0021b;
+                padding: 8px;
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+                b {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
+    }
+}
+</style>
+<style>
+p {
+    word-break: break-word !important;
+}
+</style>

@@ -17,6 +17,7 @@ import LoginPageComponent from '@/pages/Login.vue'
 import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
 import MessagesComponent from '@/pages/Messages.vue'
 import MessageUserComponent from '@/pages/MessageUser.vue'
+import WriterPageComponent from '@/pages/Writer.vue'
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -390,6 +391,9 @@ const router = new Router({
                 }
             });
         }
+    }, {
+        path: '/writer',
+        component: WriterPageComponent
     }, {
         path: '/:list_page_url',
         name: 'List_Page',
