@@ -16,6 +16,36 @@
 
                 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
                 <div id="main">
+                    <div class="row steps">
+                        <div class="step step-1 active">
+                            <div class="step-number">
+                                <span>1</span>
+                                <i class="material-icons">check</i>
+                            </div>
+                            <p>__("writer_add_content_title")</p>
+                        </div>
+                        <div class="step step-2">
+                            <div class="step-number">
+                                <span>2</span>
+                                <i class="material-icons">check</i>
+                            </div>
+                            <p>__("writer_table_of_contents")</p>
+                        </div>
+                        <div class="step step-3">
+                            <div class="step-number">
+                                <span>3</span>
+                                <i class="material-icons">check</i>
+                            </div>
+                            <p>__("writer_editor_image")</p>
+                        </div>
+                        <div class="step step-4">
+                            <div class="step-number">
+                                <span>4</span>
+                                <i class="material-icons">check</i>
+                            </div>
+                            <p>__("writer_finish")</p>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-2">
                             <div class="follow-btn-w-count" @click="openNav"><!-- Follow Button -->
@@ -34,8 +64,17 @@
                             <div class="writer-area" contenteditable="true"></div>
                         </div>
                     </div>
+                    <div class="row writer-navigation">
+                        <div class="col-6">
+                            <button class="prev">__("back")</button>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="next">__("writer_to_next_screen")</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="backdrop"></div>
         </div>
     </MainLayout>
 </template>
@@ -93,15 +132,14 @@ export default {
 
         openNav() {
             document.getElementById("mySidenav").style.width = "250px";
-            // document.getElementById("main").style.marginLeft = "250px";
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            $(".backdrop").fadeIn();
         },
 
         /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
         closeNav() {
             document.getElementById("mySidenav").style.width = "0";
             document.getElementById("main").style.marginLeft = "0";
-            document.body.style.backgroundColor = "white";
+            $(".backdrop").hide();
         },
         uploadOnServer() {
             var field_name = "#" + $( '#field_name' ).val();
@@ -379,7 +417,7 @@ export default {
         height: 100%; /* 100% Full-height */
         width: 0; /* 0 width - change this with JavaScript */
         position: fixed; /* Stay in place */
-        z-index: 5; /* Stay on top */
+        z-index: 101; /* Stay on top */
         top: 0; /* Stay at the top */
         left: 0;
         background-color: #FFF; /* Black*/
@@ -455,7 +493,7 @@ export default {
     /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
     #main {
         transition: margin-left .5s;
-        padding: 20px;
+        padding: 10px 0;
 
         .follow-btn-w-count {
             color: #fff;
@@ -504,6 +542,98 @@ export default {
     @media screen and (max-height: 450px) {
         .sidenav {padding-top: 15px;}
         .sidenav a {font-size: 18px;}
+    }
+    .steps {
+        text-align: left;
+        position: relative;
+        margin: 0 0 30px;
+        .step {
+            display: inline-block;
+            width: 25%;
+            z-index: 1;
+            position: relative;
+            &:after {
+                content:'';
+                position: absolute;
+                width:100%;
+                height:2px;
+                background-color: #ddd;
+                top: 20px;
+                left: -50%;
+                z-index: -1;
+            }
+            &:first-child:after {
+                content:none;
+            }
+            p {
+                font-size: 12px;
+                text-align: center;
+                margin: 5px 0;
+                line-height: 16px;
+            }
+            span {
+                // display: none;
+            }
+            i {
+                vertical-align: middle;
+                font-size: 18px;
+                line-height: 40px;
+                display: none;
+            }
+        }
+        .step-1 {
+            z-index: 4;
+        }
+        .step-2 {
+            z-index: 3;
+        }
+        .step-3 {
+            z-index: 2;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 14px;
+            border-radius: 50%;
+            line-height: 40px;
+            margin: 0 auto;
+            background: #e9e9e9;
+        }
+        .active .step-number {
+            background: #d0021b;
+            color: #fff;
+        }
+    }
+    .writer-navigation {
+        margin: 10px 0;
+        .col-6 {
+            padding: 0;
+            button {
+                font-size: 14px;
+                background: #9e9e9e;
+                color: #fff;
+                border: 0;
+                box-sizing: none;
+                outline: none;
+                border-radius: 15px;
+                padding: 5px 10px;
+                cursor: pointer;
+                &.next {
+                    background: #d0021b;
+                }
+            }
+        }
+    }
+    .backdrop {
+        background: rgba(0,0,0,0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        display: none;
     }
 }
 </style>
