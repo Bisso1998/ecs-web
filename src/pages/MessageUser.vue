@@ -982,7 +982,7 @@ export default {
             .type-message {
                 background: #fff;
                 margin: 0 5px;
-                width: calc(100% - 75px);
+                width: calc(100% - 75px) !important;
                 position: relative;
                 #text-message {
                     outline: none;
@@ -992,7 +992,6 @@ export default {
                     width: 100%;
                     display: inline-block;
                     font-size: 14px;
-                    border: 0;
                     margin-top: 2px;
                     resize: none;
                     border: 1px solid #e9e9e9;
