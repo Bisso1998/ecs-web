@@ -165,18 +165,17 @@ const router = new Router({
         path: '/read',
         name: 'Reader_Page',
         component: () => {
-            const isTrue = true;
             if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/reader_v1/Reader.vue');
+                return import('@/pages/experiments/reader_v5/Reader.vue');
             }
             else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/reader_v2/Reader.vue');
+                return import('@/pages/experiments/reader_v6/Reader.vue');
             }
             else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/reader_v3/Reader.vue');
+                return import('@/pages/experiments/reader_v7/Reader.vue');
             }
             else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/reader_v4/Reader.vue');
+                return import('@/pages/experiments/reader_v8/Reader.vue');
             }
             else {
                 return import('@/pages/Reader.vue');
