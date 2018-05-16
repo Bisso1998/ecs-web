@@ -238,7 +238,7 @@ li {
         }
     }
     .comment-box {
-        background: #f8f8f8;
+        background: rgba(40, 167, 69,0.2);
         margin-top: -50px;
         padding: 40px 5px 10px;
         overflow: hidden;
@@ -246,7 +246,7 @@ li {
             background: #d0021b;
             border: 0;
             font-size: 14px;
-            margin: 10px 0;
+            margin: 5px 0;
             &:focus {
                 outline: none;
                 box-shadow: none;
@@ -266,6 +266,7 @@ li {
                 background: none;
                 i {
                     font-size: 18px;
+                    color: #28a745;
                 }
             }
             .dropdown-menu .options-btn {
@@ -324,18 +325,18 @@ li {
             }
             .rating {
                 border: none;
-                width: 160px;
+                width: 230px;
                 margin: 0 auto;
                 input {
                     display: none;
                 }
                 label:before { 
                     margin: 2px 5px 0 0;
-                    font-size: 26px;
+                    font-size: 40px;
                     font-family: 'Material Icons';
                     display: inline-block;
                     content: "\e83a";
-                    color: #d0021b;
+                    color: #28a745;
                 }
                 label { 
                     color: #9e9e9e; 
