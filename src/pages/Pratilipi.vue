@@ -5,7 +5,6 @@
                 <div class="row" v-if="getPratilipiLoadingState === 'LOADING_SUCCESS'">
                     <div class="book-details col-md-12 col-lg-5 p-0">
                         <div class="card">
-                            <button type="button" data-toggle="modal" @click="openShareModal" class="share-icon"><i class="material-icons">share</i></button>
                             <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getPratilipiData.coverImageUrl  + ')' }">
                                 <button class="update-img" v-if="getPratilipiData.hasAccessToUpdate" @click="uploadImage('pratilipi-image')"><i class="material-icons">camera_alt</i></button>
                                 <input type="file" hidden name="pratilipiimage" @change="triggerPratilipiImageUpload($event)" accept="image/*" id="pratilipiimage-uploader">
@@ -69,6 +68,9 @@
                                   <span>__("read")</span>
                                 </router-link>
                             </div>
+                            <BookShareStrip
+                            :data="getPratilipiData"
+                            :type="'PRATILIPI'"></BookShareStrip>
                         </div>
                         <BookTags 
                             v-if="getPratilipiData.hasAccessToUpdate"
@@ -170,6 +172,7 @@ import Recommendation from '@/components/Recommendation.vue';
 import AboutAuthor from '@/components/AboutAuthor.vue';
 import Spinner from '@/components/Spinner.vue';
 import Reviews from '@/components/Reviews.vue';
+import BookShareStrip from '@/components/BookShareStrip.vue';
 import ServerError from '@/components/ServerError.vue';
 import BookTags from '@/components/BookTags.vue';
 import mixins from '@/mixins';
@@ -510,7 +513,8 @@ export default {
         Spinner,
         BookTags,
         Reviews,
-        ServerError
+        ServerError,
+        BookShareStrip
     },
     watch: {
         '$route.params.slug_id' (slug_id) {
