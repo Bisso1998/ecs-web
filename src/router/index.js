@@ -17,6 +17,7 @@ import LoginPageComponent from '@/pages/Login.vue'
 import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
 import MessagesComponent from '@/pages/Messages.vue'
 import MessageUserComponent from '@/pages/MessageUser.vue'
+import PratilipiPageComponent from '@/pages/Pratilipi.vue';
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -69,24 +70,23 @@ const router = new Router({
     }, {
         path: '/story/:slug_id',
         name: 'Pratilipi',
-        component: () => {
-            const isTrue = true;
-            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/rating_v1/Pratilipi.vue');
-            }
-            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/rating_v2/Pratilipi.vue');
-            }
-            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/rating_v3/Pratilipi.vue');
-            }
-            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/rating_v4/Pratilipi.vue');
-            }
-            else {
-                return import('@/pages/Pratilipi.vue');
-            }
-        },
+        // component: () => {
+        //     const isTrue = true;
+        //     // if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+        //     //     return import('@/pages/experiments/rating_v1/Pratilipi.vue');
+        //     // }
+        //     // else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+        //     //     return import('@/pages/experiments/rating_v2/Pratilipi.vue');
+        //     // }
+        //     // else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+        //     //     return import('@/pages/experiments/rating_v3/Pratilipi.vue');
+        //     // }
+        //     // else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+        //     //     return import('@/pages/experiments/rating_v4/Pratilipi.vue');
+        //     // }
+        //     PratilipiPageComponent
+        // },
+        component: PratilipiPageComponent,
         meta: {
             'store': 'pratilipipage',
             'id_prop': 'slug_id'
