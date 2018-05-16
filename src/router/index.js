@@ -18,6 +18,7 @@ import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
 import MessagesComponent from '@/pages/Messages.vue'
 import MessageUserComponent from '@/pages/MessageUser.vue'
 import PratilipiPageComponent from '@/pages/Pratilipi.vue';
+import DiscoveryPageComponent from '@/pages/Discovery.vue'
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -133,24 +134,25 @@ const router = new Router({
     }, {
         path: '/discover',
         name: 'Discovery_Page',
-        component: () => {
-            const isTrue = true;
-            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/discovery_v1/Discovery.vue');
-            }
-            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/discovery_v2/Discovery.vue');
-            }
-            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/discovery_v3/Discovery.vue');
-            }
-            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/discovery_v4/Discovery.vue');
-            }
-            else {
-                return import('@/pages/Discovery.vue');
-            }
-        },
+        // component: () => {
+        //     const isTrue = true;
+        //     if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+        //         return import('@/pages/experiments/discovery_v1/Discovery.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+        //         return import('@/pages/experiments/discovery_v2/Discovery.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+        //         return import('@/pages/experiments/discovery_v3/Discovery.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+        //         return import('@/pages/experiments/discovery_v4/Discovery.vue');
+        //     }
+        //     else {
+        //         return import('@/pages/Discovery.vue');
+        //     }
+        // },
+        component: DiscoveryPageComponent,
         meta: {
             'title': '__("seo_navigation_page") | __("pratilipi")',
             'store': 'discover'
