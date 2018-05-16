@@ -20,6 +20,7 @@ import MessageUserComponent from '@/pages/MessageUser.vue'
 import PratilipiPageComponent from '@/pages/Pratilipi.vue';
 import DiscoveryPageComponent from '@/pages/Discovery.vue'
 import AuthorPageComponent from '@/pages/Author.vue'
+import HomePageComponent from '@/pages/Home.vue'
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -33,24 +34,25 @@ const router = new Router({
     routes: [{
         path: '/',
         name: 'Home',
-        component: () => {
-            const isTrue = true;
-            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/home_v1/Home.vue');
-            }
-            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/home_v2/Home.vue');
-            }
-            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/home_v3/Home.vue');
-            }
-            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/home_v4/Home.vue');
-            }
-            else {
-                return import('@/pages/Home.vue');
-            }
-        },
+        // component: () => {
+        //     const isTrue = true;
+        //     if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+        //         return import('@/pages/experiments/home_v1/Home.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+        //         return import('@/pages/experiments/home_v2/Home.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+        //         return import('@/pages/experiments/home_v3/Home.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+        //         return import('@/pages/experiments/home_v4/Home.vue');
+        //     }
+        //     else {
+        //         return import('@/pages/Home.vue');
+        //     }
+        // },
+        component: HomePageComponent,
         meta: {
             'store': 'homepage',
             'title': '__("seo_home_page") | __("pratilipi")'
