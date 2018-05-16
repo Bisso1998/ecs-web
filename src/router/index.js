@@ -19,6 +19,7 @@ import MessagesComponent from '@/pages/Messages.vue'
 import MessageUserComponent from '@/pages/MessageUser.vue'
 import PratilipiPageComponent from '@/pages/Pratilipi.vue';
 import DiscoveryPageComponent from '@/pages/Discovery.vue'
+import AuthorPageComponent from '@/pages/Author.vue'
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -95,24 +96,25 @@ const router = new Router({
     }, {
         path: '/user/:user_slug',
         name: 'User',
-        component: () => {
-            const isTrue = true;
-            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/profile_v1/Author.vue');
-            }
-            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/profile_v2/Author.vue');
-            }
-            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/profile_v3/Author.vue');
-            }
-            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/profile_v4/Author.vue');
-            }
-            else {
-                return import('@/pages/Author.vue');
-            }
-        },
+        // component: () => {
+        //     const isTrue = true;
+        //     if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+        //         return import('@/pages/experiments/profile_v1/Author.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+        //         return import('@/pages/experiments/profile_v2/Author.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+        //         return import('@/pages/experiments/profile_v3/Author.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+        //         return import('@/pages/experiments/profile_v4/Author.vue');
+        //     }
+        //     else {
+        //         return import('@/pages/Author.vue');
+        //     }
+        // },
+        component: AuthorPageComponent,
         meta: {
             'store': 'authorpage',
             'title': '__("seo_home_page")',
