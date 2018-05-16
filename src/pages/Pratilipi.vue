@@ -46,11 +46,19 @@
                                 </div>
                                 <span v-if="!getPratilipiData.hasAccessToUpdate">
                                     <button v-if="!getUserPratilipiData.addedToLib" class="library-btn" @click="addPratilipiToLibrary(getPratilipiData.pratilipiId)">
-                                        <span>+ __("library")</span>
+                                        <span>
+                                            <i class="material-icons">bookmark_border</i>
+                                            <i class="material-icons stacked white">add</i>
+                                        </span>
+                                        __("library")
                                     </button>
 
                                     <button v-if="getUserPratilipiData.addedToLib" class="library-btn" @click="removeFromLibraryAndTriggerAnalytics(getPratilipiData.pratilipiId)">
-                                        <span>- __("library")</span>
+                                        <span>
+                                            <i class="material-icons added-to-lib">bookmark</i>
+                                            <i class="material-icons stacked grey">check</i>
+                                        </span>
+                                        __("library")
                                     </button>
                                 </span>
 
@@ -780,10 +788,49 @@ export default {
                     }
                 }
                 .library-btn {
-                    background: #9E9E9E;
+                    background: #fff;
+                    color: #555;
+                    border: 1px solid #9e9e9e;
+                    &:hover {
+                        opacity: 1;
+                    }
+                    span {
+                        position: relative;
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+                    i {
+                        height: 40px;
+                        line-height: 40px;
+                        font-size: 30px;
+                        color: #555;
+                        vertical-align: middle;
+                        &.stacked {
+                            position: absolute;
+                            top: -1px;
+                            left: -1px;
+                            margin-left: 14px;
+                            font-size: 11px;
+                            color: #555;
+                            font-weight: bold;
+                            &.white {
+                                color: #555;
+                                margin-left: 10px;
+                                margin-top: 7px;
+                                left: 0;
+                            }
+                            &.grey {
+                                color: #9e9e9e;
+                                margin-left: 9px;
+                                margin-top: 8px;
+                                left: 0;
+                            }
+                        }
+                    }
                 }
                 .read-btn {
                     background: #d0021b;
+                    border: 1px solid #d0021b;
                 }
             }
         }
