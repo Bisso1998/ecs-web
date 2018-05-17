@@ -59,7 +59,7 @@ export default {
             finalContents.push({
                 chapterTitle: eachChapter.title,
                 chapterNo: index + 1,
-                content: eachChapter.content
+                content: encodeURIComponent(eachChapter.content)
             });
         })
         DataAccessor.bulkSaveChapters(eventPratilipiId, JSON.stringify(finalContents), (contentData) => {

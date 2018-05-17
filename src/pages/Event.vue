@@ -8,6 +8,7 @@
                             <div class="head-title">{{ getEventData.name }}</div>
                             <img :src="getEventData.bannerImageUrl" alt="">
                             <div class="desc" v-html="getEventData.description"></div>
+                            <button type="button" name="button" @click="goToEventParticipate">Participate</button>
                             <Spinner v-if="getEventDataLoadingState === 'LOADING'"></Spinner>
                         </div>
                     </div>
@@ -77,6 +78,9 @@ export default {
         ]),
         updateScroll() {
             this.scrollPosition = window.scrollY;
+        },
+        goToEventParticipate() {
+            this.$router.push('/participate/' + this.getEventData.eventId);
         }
     },
     watch: {

@@ -2,6 +2,11 @@
     <MainLayout>
         <div class="static-page page-wrap">
             <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="head-title">{{ getEventData.name }}</div>
+                    </div>
+                </div>
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
                     <a class="chapters" :class="{ 'selected-chapter': selectedChapter === index }" v-for="(eachChapter, index) in chapters" :key="index">
@@ -13,10 +18,6 @@
                         <i class="material-icons">add</i>
                     </a>
                 </div>
-
-                <br>
-                <div class="head-title">{{ getEventData.name }}</div>
-                <br>
                 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
                 <div id="main">
                     <div class="row steps">
@@ -53,8 +54,8 @@
 
                     <div v-if="currentStep == 1">
                         <div class="row">
-                            <div class="col-md-4">
-                                <div :style="{ backgroundImage: 'url(' + getEventData.bannerImageUrl + ')', 'width': '100%', height: '100%', backgroundSize: 'cover' }"></div>
+                            <div class="col-md-4 mb-10">
+                                <div class="event-image" :style="{ backgroundImage: 'url(' + getEventData.bannerImageUrl + ')' }"></div>
                             </div>
                             <div class="col-md-8">
                                 <form>
@@ -92,24 +93,24 @@
 
                     <div v-if="currentStep == 2">
                         <div class="row">
-                            <ul>
-                                <li @click="selectSuggestion(eachSuggestion)" :key="index" v-for="(eachSuggestion, index ) in suggestions">{{ eachSuggestion }}</li>
-                            </ul>
-                            <div class="col-md-2">
+                            <div class="col-12 chapter">
                                 <div class="follow-btn-w-count" @click="openNav"><!-- Follow Button -->
                                     <button>
                                         <i class="material-icons">list</i>
                                     </button><span><b>__('writer_chapter')</b></span>
                                 </div>
-                            </div>
-                            <div class="col-md-10">
                                 <TranslatingInput :value="chapters[selectedChapter].title" placeholder="__('writer_add_chapter_title')" :oninput="updateTitle"></TranslatingInput>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <!-- Use any element to open the sidenav -->
-                                <div class="writer-area" contenteditable="true"></div>
+                                <div class="writer-wrapper">
+                                    <!-- Use any element to open the sidenav -->
+                                    <div class="writer-area" contenteditable="true"></div>
+                                    <ul class="word-suggestions">
+                                        <li @click="selectSuggestion(eachSuggestion)" :key="index" v-for="(eachSuggestion, index ) in suggestions">{{ eachSuggestion }}</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="row writer-navigation">
@@ -221,7 +222,10 @@ export default {
             currentWord: '',
             wordToTranslate: '',
             lastTranslatedWord: '',
-            wordList: []
+            wordList: [],
+            writerInFocus: false,
+            inputInFocus: false,
+            scrollPosition: null
         }
     },
     methods: {
@@ -425,6 +429,7 @@ export default {
             tinymce.activeEditor.focus();
             tinymce.activeEditor.selection.select(spaceNode, true);
             tinymce.activeEditor.selection.collapse(false);
+            this.suggestions = [];
         },
 
         initializeTinyMCE() {
@@ -562,10 +567,19 @@ export default {
                     });      
                 },
                 setup: function(ed) {
+                    if(that.isMobile()) {
+                        ed.on("focus", function(event) {
+                            that.writerInFocus = true;
+                        });
+                        ed.on("blur", function(event) {
+                            that.writerInFocus = false;
+                        });
+                    }
+                    
                     ed.on("keyup", function(event){
                         that.chapters[that.selectedChapter].content = tinymce.activeEditor.getContent();
 
-                        const words = event.target.innerText.split(/\n| /).map(function(item) {
+                        const words = event.target.innerText.split(/\n| |\u00A0/).map(function(item) {
                             return item.trim();
                         });;
 
@@ -674,6 +688,20 @@ export default {
                 image_description: false,
                 image_dimensions: false
             });
+        },
+        updateScroll() {
+            this.scrollPosition = window.scrollY
+        },
+        
+        checkWordSuggester() {
+            if (this.isMobile()) {
+                if ((this.scrollPosition + $(window).height()) > $('.writer-navigation').position().top) {
+                    $(".word-suggestions").removeClass("fixed");
+                }
+                else {
+                    $(".word-suggestions").addClass("fixed");
+                }
+            }
         }
     },
     watch: {
@@ -763,6 +791,9 @@ export default {
             if (step == 2) {
                 this.fetchPratilipiContent(this.$route.params.eventPratilipiId);
                 this.goToSecondStep();
+                setTimeout(() => {
+                    this.checkWordSuggester();
+                }, 500);
             }
 
             if (step == 1) {
@@ -791,6 +822,24 @@ export default {
                 alert('Invalid event id');
                 this.$router.push('/event');
             }
+        },
+        
+        'writerInFocus'(inFocus) {
+            if (inFocus || this.inputInFocus) {
+                $(".footer-menu").css("height", "0")
+            } else {
+                $(".footer-menu").css("height", "51px")
+            }
+        },
+        'inputInFocus'(inFocus) {
+            if (inFocus || this.writerInFocus) {
+                $(".footer-menu").css("height", "0")
+            } else {
+                $(".footer-menu").css("height", "51px")
+            }
+        },
+        'scrollPosition'(newScrollPosition) {
+            this.checkWordSuggester();
         }
     },
     created() {
@@ -829,6 +878,25 @@ export default {
         $('#image_input').on( "change", function() {
             that.uploadOnServer();
         });
+        
+        // Hide Footer when keyboard comes
+        if (this.isMobile()) {
+            $(document).on('focus', 'input', function() {
+                console.log('input in focus');
+                that.inputInFocus = true;
+            });
+            $(document).on('blur', 'input', function() {
+                that.inputInFocus = false;
+            });
+        }
+        
+        window.addEventListener('scroll', this.updateScroll);
+        setTimeout(() => {
+            this.checkWordSuggester();
+        }, 500);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.updateScroll);
     }
 }
 </script>
@@ -941,14 +1009,17 @@ export default {
         font-size: 14px;
         float: right;
     }
-
-    .book-image {
-        background-size: contain;
+    .mb-10 {
+        margin-bottom: 10px;
+    }
+    .event-image, .book-image {
+        background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
-        margin: 10px 0 5px;
+        margin: 0;
         width: 100%;
-        height: 200px;
+        height: 100%;
+        min-height: 200px;
         position: relative;
     }
 
@@ -1115,45 +1186,60 @@ export default {
     #main {
         transition: margin-left .5s;
         padding: 10px 0;
-
-        .follow-btn-w-count {
-            color: #fff;
-            font-size: 14px;
-            position: relative;
-            text-align: center;
-            display: inline-block;
-            clear: both;
-            overflow: hidden;
-            cursor: pointer;
-            button {
-                background: #d0021b;
-                border: 1px solid #d0021b;
-                border: 1px solid #d0021b;
-                border-top-left-radius: 3px;
-                border-bottom-left-radius: 3px;
-                outline: none;
+        .chapter {
+            margin: 0 0 20px;
+            .follow-btn-w-count {
                 color: #fff;
-                margin: 0;
-                padding: 8px;
+                font-size: 14px;
+                position: relative;
+                text-align: center;
                 display: inline-block;
                 clear: both;
+                overflow: hidden;
                 cursor: pointer;
+                float: left;
+                @media screen and (max-width: 450px) { 
+                    margin-bottom: 10px;
+                }
+                button {
+                    background: #d0021b;
+                    border: 1px solid #d0021b;
+                    border: 1px solid #d0021b;
+                    border-top-left-radius: 3px;
+                    border-bottom-left-radius: 3px;
+                    outline: none;
+                    color: #fff;
+                    margin: 0;
+                    padding: 8px;
+                    display: inline-block;
+                    clear: both;
+                    cursor: pointer;
+                }
+                i {
+                    vertical-align: middle;
+                    padding-right: 5px;
+                    font-size: 18px;
+                }
+                span {
+                    background: #fff;
+                    color: #d0021b;
+                    display: inline-block;
+                    border: 1px solid #d0021b;
+                    padding: 8px;
+                    border-top-right-radius: 3px;
+                    border-bottom-right-radius: 3px;
+                    b {
+                        font-size: 12px;
+                    }
+                }
             }
-            i {
-                vertical-align: middle;
-                padding-right: 5px;
-                font-size: 18px;
-            }
-            span {
-                background: #fff;
-                color: #d0021b;
-                display: inline-block;
-                border: 1px solid #d0021b;
-                padding: 8px;
-                border-top-right-radius: 3px;
-                border-bottom-right-radius: 3px;
-                b {
-                    font-size: 12px;
+            .translate-input-wrapper {
+                float: right;
+                width: calc(100% - 150px);
+                @media screen and (max-width: 450px) { 
+                    float: none;
+                    width: 100%;
+                    clear: both;
                 }
             }
         }
@@ -1167,7 +1253,7 @@ export default {
     .steps {
         text-align: left;
         position: relative;
-        margin: 0 0 30px;
+        margin: 0 0 20px;
         .step {
             display: inline-block;
             width: 25%;
@@ -1244,6 +1330,33 @@ export default {
                     background: #d0021b;
                 }
             }
+        }
+    }
+    .writer-wrapper {
+        position: relative;
+    }
+    .word-suggestions {
+        margin: 0;
+        padding: 5px;
+        list-style: none;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: #e9e9e9;
+        width: 100%;
+        border: 1px solid rgba(0,0,0,0.2);
+        li {
+            display: inline-block;
+            padding: 0 5px;
+            color: #000;
+            background: #fff;
+            margin: 4px;
+            padding: 5px;
+        }
+        &.fixed {
+            position: fixed;
+            margin: 0 15px;
+            width: calc(100% - 30px);
         }
     }
     .backdrop {
