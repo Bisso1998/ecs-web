@@ -1,0 +1,1265 @@
+<template>
+    <MainLayout>
+        <div class="static-page page-wrap">
+            <div class="container">
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
+                    <a class="chapters" :class="{ 'selected-chapter': selectedChapter === index }" v-for="(eachChapter, index) in chapters" :key="index">
+                        <span class="chapter-title" @click="selectChapter(index)">__('writer_chapter') &nbsp; &nbsp; {{ index + 1 }}</span>
+                        <i class="material-icons chapter-delete" @click="deleteChapter(index)">delete</i>
+                    </a>
+
+                    <a class="chapter-add" @click="addChapter">
+                        <i class="material-icons">add</i>
+                    </a>
+                </div>
+
+                <br>
+                <div class="head-title">{{ getEventData.name }}</div>
+                <br>
+                <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+                <div id="main">
+                    <div class="row steps">
+                        <div class="step step-1" :class="{ active: currentStep === 1 }">
+                            <div class="step-number">
+                                <span>1</span>
+                                <i class="material-icons">check</i>
+                            </div>
+                            <p>__("writer_add_content_title")</p>
+                        </div>
+                        <div class="step step-2" :class="{ active: currentStep === 2 }">
+                            <div class="step-number">
+                                <span>2</span>
+                                <i class="material-icons">check</i>
+                            </div>
+                            <p>__("writer_table_of_contents")</p>
+                        </div>
+                        <div class="step step-3" :class="{ active: currentStep === 3 }">
+                            <div class="step-number">
+                                <span>3</span>
+                                <i class="material-icons">check</i>
+                            </div>
+                            <p>__("writer_editor_image")</p>
+                        </div>
+                        <div class="step step-4" :class="{ active: currentStep === 4 }">
+                            <div class="step-number">
+                                <span>4</span>
+                                <i class="material-icons">check</i>
+                            </div>
+                            <p>__("writer_finish")</p>
+                        </div>
+                    </div>
+
+
+                    <div v-if="currentStep == 1">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div :style="{ backgroundImage: 'url(' + getEventData.bannerImageUrl + ')', 'width': '100%', height: '100%', backgroundSize: 'cover' }"></div>
+                            </div>
+                            <div class="col-md-8">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="pratilipi_write_title_input">__("writer_input_title") *</label>
+                                        <TranslatingInput :value="title" :oninput="updateCurrentTitle" :placeholder="'__("writer_input_title")'"></TranslatingInput>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pratilipi_write_title_en_input">__("writer_input_title_en")</label>
+                                        <input type="text" :value="titleEn" @input="($event) => { titleEn = $event.target.value}" class="form-control" id="pratilipi_write_title_en_input" :placeholder="'__("writer_input_title_en")'">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pratilipi_write_type">__("write_type")</label>
+                                        <select class="form-control" id="pratilipi_write_type" v-model="type">
+                                            <option disabled value="">__('write_type')</option>
+                                            <option value="POEM">__('_pratilipi_type_poem')</option>
+                                            <option value="STORY">__('_pratilipi_type_story')</option>
+                                            <option value="ARTICLE">__('_pratilipi_type_article')</option>
+                                        </select>
+                                    </div>
+                                    <label class="form-check-label" for="agree-terms-conditions">__("writer_accept_copyright")</label>
+                                    <a href="/terms-of-service" class="terms-link" target="_blank">__("writer_read_copyright")</a>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row writer-navigation">
+                            <div class="col-6">
+                            </div>
+                            <div class="col-6 text-right">
+                                <button class="next" @click="createEventPratilipi">__("writer_to_next_screen")</button>
+                            </div>
+                        </div>    
+                    </div>
+
+
+                    <div v-if="currentStep == 2">
+                        <div class="row">
+                            <ul>
+                                <li @click="selectSuggestion(eachSuggestion)" :key="index" v-for="(eachSuggestion, index ) in suggestions">{{ eachSuggestion }}</li>
+                            </ul>
+                            <div class="col-md-2">
+                                <div class="follow-btn-w-count" @click="openNav"><!-- Follow Button -->
+                                    <button>
+                                        <i class="material-icons">list</i>
+                                    </button><span><b>__('writer_chapter')</b></span>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <TranslatingInput :value="chapters[selectedChapter].title" placeholder="__('writer_add_chapter_title')" :oninput="updateTitle"></TranslatingInput>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Use any element to open the sidenav -->
+                                <div class="writer-area" contenteditable="true"></div>
+                            </div>
+                        </div>
+                        <div class="row writer-navigation">
+                            <div class="col-6">
+                                <button class="prev" @click="goToFirstStepForEdit">__("back")</button>
+                            </div>
+                            <div class="col-6 text-right">
+                                <button class="next" @click="saveContentAndGoToThirdStep">__("writer_to_next_screen")</button>
+                            </div>
+                        </div>    
+                    </div>
+
+                    <div v-if="currentStep == 3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="book-image" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/pratilipi/cover)' }">
+                                    <button class="update-img"><i class="material-icons">camera_alt</i></button>
+                                    <input type="file" hidden name="pratilipiimage" accept="image/*" id="pratilipiimage-uploader">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="head-title">__("pratilipi_summary")</div>
+                                <br>
+                                <textarea class="description-input" :value="description" @input="($event) => { description = $event.target.value}" placeholder="__('edit_pratilipi_summary')" required></textarea>
+
+                                <!-- <div class="tag-sections">
+                                    <div class="head-title">__("tags_categories")</div>
+                                    <div class="tag-section-body">
+                                        <span class="all-tags active" v-for="each_tag in pratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span>
+                                        <span class="all-tags"
+                                            v-for="each_tag in [ {id: 1, name: 'test1'}, {id: 2, name: 'test2'}, {id: 3, name: 'test3'}, {id: 4, name: 'test4'} ]" 
+                                            :key="each_tag.id">{{ each_tag.name }}</span>
+                                    </div>
+                                </div> -->
+                            </div>
+                            
+                        </div>
+                        <div class="row writer-navigation">
+                            <div class="col-6">
+                                <button class="prev" @click="goToSecondStepForEdit">__("back")</button>
+                            </div>
+                            <div class="col-6 text-right">
+                                <button class="next" @click="saveMetaInformationAndFinalSubmit">__("writer_to_next_screen")</button>
+                            </div>
+                        </div>    
+                    </div>
+
+                    <div v-if="currentStep == 4">
+                        <div class="row">
+                            <div class="circle-loader">
+                                <div class="checkmark draw"></div>
+                            </div>
+                        </div>
+                        <div class="row" v-if="showAcceptedMessage" style="text-align: center">
+                            <span style="width: 100%">We have accepted your entry and we'll be publishing your content after the event is over.</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="backdrop"></div>
+        </div>
+        <input name="image" id="image_input" type="file" style="display: none;">
+        <input type="hidden" id="field_name" value="" />
+    </MainLayout>
+</template>
+
+<script>
+import MainLayout from '@/layout/main-layout.vue';
+import constants from '@/constants';
+import mixins from '@/mixins';
+import TranslatingInput from '@/components/TranslatingInput.vue';
+import Spinner from '@/components/Spinner.vue';
+import { mapGetters, mapActions } from 'vuex'
+
+export default {
+    components: {
+        MainLayout,
+        TranslatingInput,
+        Spinner
+    },
+    computed: {
+        ...mapGetters('eventparticipate', [
+            'getEventPratilipiCreateOrUpdateStateSuccess',
+            'getEventPratilipiLoadingState',
+            'getEventPratilipiData',
+            'getContentLoadingState',
+            'getEventPratilipDescUpdateState',
+            'getContents',
+            'getEventData',
+            'getEventLoadingState'
+        ])
+    },
+    mixins: [
+        mixins
+    ],
+    data() {
+        return {
+            currentStep: 1,
+            constants,
+            description: '',
+            showAcceptedMessage: false,
+            title: '',
+            titleEn: '',
+            type: 'STORY',
+            selectedChapter: 0,
+            chapters: [],
+            suggestions: [],
+            currentWord: '',
+            wordToTranslate: '',
+            lastTranslatedWord: '',
+            wordList: []
+        }
+    },
+    methods: {
+
+        ...mapActions('eventparticipate', [
+            'fetchEventPratilipiData',
+            'createEventPratilipiData',
+            'updateEventPratilipiData',
+            'updatePratilipiContent',
+            'fetchPratilipiContent',
+            'updateDescriptionAndTags',
+            'fetchEventDetails'
+        ]),
+
+        updateCurrentTitle(value) {
+            this.title = value;
+        },
+
+        createEventPratilipi() {
+            // this.currentStep = 2;
+            
+            if(this.$route.params.eventId && this.$route.params.eventPratilipiId) {
+                this.updateEventPratilipiData({
+                    eventPratilipiId: this.$route.params.eventPratilipiId,
+                    title: this.title,
+                    titleEn: this.titleEn,
+                    type: this.type
+                });
+            } else {
+                const { eventId } = this.$route.params;
+                this.createEventPratilipiData({ 
+                    eventId, 
+                    title: this.title,
+                    titleEn: this.titleEn,
+                    type: this.type,
+                    language: this.getCurrentLanguage().fullName.toUpperCase()
+                });
+            }
+        },
+
+        saveContentAndGoToThirdStep() {
+            this.updatePratilipiContent({ eventPratilipiId: this.$route.params.eventPratilipiId, contents: this.chapters });
+            this.$router.push({
+                query: { step : 3 }
+            });
+        },
+
+        saveMetaInformationAndFinalSubmit() {
+            this.updateDescriptionAndTags({ eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description });
+            this.$router.push({
+                query: { step : 4 }
+            });
+        },
+
+        goToFirstStep() {
+            this.currentStep = 1;
+        },
+
+        goToFirstStepForEdit() {
+            this.$router.push({
+                query: { step : 1 }
+            });
+        },
+
+        goToSecondStepForEdit() {
+            this.$router.push({
+                query: { step : 2 }
+            });
+        },
+
+        goToSecondStep() {
+            this.currentStep = 2;
+        },
+
+        goToThirdStep() {
+            this.currentStep = 3;
+        },
+
+        goToFourthStep() {
+            const that = this;
+            this.currentStep = 4;
+            setTimeout(() => {
+                $('.circle-loader').toggleClass('load-complete');
+                $('.checkmark').toggle();
+                that.showAcceptedMessage = true;
+            }, 1000);
+        },
+
+        addChapter() {
+            this.chapters.push({
+                title: '',
+                content: ''
+            });
+        },
+
+        selectChapter(index) {
+            this.selectedChapter = index;
+            tinymce.activeEditor.setContent(this.chapters[index].content);
+            this.closeNav();
+        },
+
+        updateTitle(value) {
+            this.chapters[this.selectedChapter].title = value;
+        },
+
+        deleteChapter(index) {
+            if (this.chapters.length === 1) {
+                alert('You need to have atleast one chapter');
+            }
+
+            if (index === this.chapters.length - 1) {
+                this.selectedChapter = index - 1;
+            }
+            this.chapters.splice(index, 1);
+        },
+
+        openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            $(".backdrop").fadeIn();
+        },
+
+        /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+        closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            $(".backdrop").hide();
+        },
+        uploadOnServer() {
+            var field_name = "#" + $( '#field_name' ).val();
+            var fd = new FormData();;
+            var blob = $('#image_input').get(0).files[0];
+            fd.append( 'file', blob );
+            // fd.append( 'pratilipiId', pratilipiId );
+            // fd.append( 'pageNo', cur_page );
+            
+            $.ajax({
+                type:'POST',
+                url: `https://gamma.pratilipi.com/event-participate/images`,
+                data: fd,
+                cache: true,
+                contentType: false,
+                processData: false,
+                headers: {
+                    'accesstoken': this.getCookie('access_token')
+                },
+                success: function( data ) {
+                    $('#image_input').val("");
+                    $( field_name ).val( data.url );
+                },
+                error: function( data ) {
+                    alert( 'HTTP Error: ' + data.status );
+                    return;
+                }
+            });
+        },
+        arr_diff(a1, a2) {
+
+            var a = [], diff = [];
+
+            for (var i = 0; i < a1.length; i++) {
+                a[a1[i]] = true;
+            }
+
+            for (var i = 0; i < a2.length; i++) {
+                if (a[a2[i]]) {
+                    delete a[a2[i]];
+                } else {
+                    a[a2[i]] = true;
+                }
+            }
+
+            for (var k in a) {
+                diff.push(k);
+            }
+
+            return diff;
+        },
+
+        selectSuggestion(suggestion, fromSpace) {
+            const editorRange = tinymce.activeEditor.selection.getRng();
+            var node = editorRange.commonAncestorContainer; // relative node to the selection
+            const range = document.createRange(); // create a new range object for the deletion
+            range.selectNodeContents(node);
+
+            if (fromSpace) {
+                range.setStart(node, editorRange.endOffset - this.wordToTranslate.length - 1); // current caret pos - 3     
+            } else {
+                range.setStart(node, editorRange.endOffset - this.wordToTranslate.length); // current caret pos - 3     
+            }
+            
+            range.setEnd(node, editorRange.endOffset); // current caret pos
+            range.deleteContents();
+
+            // tinymce.activeEditor.focus();
+            const suggestionNode = document.createTextNode(suggestion);
+            const spaceNode = document.createTextNode('\u00A0');
+            editorRange.insertNode(spaceNode);
+            editorRange.insertNode(suggestionNode);
+            this.lastTranslatedWord = suggestion;
+
+            tinymce.activeEditor.focus();
+            tinymce.activeEditor.selection.select(spaceNode, true);
+            tinymce.activeEditor.selection.collapse(false);
+        },
+
+        initializeTinyMCE() {
+            const that = this;
+            tinymce.init({
+                selector: '.writer-area',  // change this value according to your HTML,
+                // inline: true,
+                block_formats: 'Paragraph=p;',
+                plugins: ['autolink lists link image', 'paste'],
+                menubar: false,
+                statusbar: false,
+                toolbar: 'bold italic underline | CustomLeftAlign CustomCenterAlign CustomRightAlign | CustomBlockquote link imageCustom | Ulist Olist',
+                height: '50vh',
+                language: process.env.LANGUAGE,
+                link_context_toolbar: false,
+                anchor_bottom: false,
+                anchor_top: false,
+                default_link_target: "_blank",
+                allow_unsafe_link_target: false,
+                target_list: false,
+                link_title: false,
+                paste_data_images: true,
+                paste_as_text: false,
+                paste_auto_cleanup_on_paste: true,
+                paste_webkit_styles: "none",
+                paste_remove_styles_if_webkit: false,
+                paste_text_linebreaktype: "p",
+
+                browser_spellcheck: false,
+                allow_conditional_comments: false,
+                allow_html_in_named_anchor: false,
+
+                forced_root_block: 'p',
+                force_br_newlines: false,
+                force_p_newlines: true,
+                remove_trailing_brs: false,
+
+                formats: {
+                    bold:
+                    {
+                        inline: 'b',
+                        exact: true
+                    },
+                    italic:
+                    {
+                        inline: 'i',
+                        exact: true
+                    },
+                    underline:
+                    {
+                        inline: 'u',
+                        exact: true
+                    },
+                    blockquote:
+                    {
+                        block: 'blockquote'
+                    },
+                    img:
+                    {
+                        block: 'img'
+                    },
+                    alignleft:
+                    {
+                        selector: 'p,li',
+                        styles:
+                        {
+                            textAlign: 'left'
+                        }
+                    },
+                    aligncenter:
+                    {
+                        selector: 'p,li',
+                        styles:
+                        {
+                            textAlign: 'center'
+                        }
+                    },
+                    alignright:
+                    {
+                        selector: 'p,li',
+                        styles:
+                        {
+                            textAlign: 'right'
+                        }
+                    },
+                },
+                images_upload_handler: function( blobInfo, success, failure ) {
+                    var fd = new FormData();
+                    fd.append( 'file', blobInfo.blob() );
+                    $.ajax({
+                        type:'POST',
+                        url: `https://gamma.pratilipi.com/event-participate/images`,
+                        data: fd,
+                        cache: true,
+                        contentType: false,
+                        processData: false,
+                        success: function( data ) {
+                            var parsed_data = JSON.parse( data );
+                            _this.parent_object.setNewImageFlag( true );
+                            success( parsed_data.url );
+                        },
+                        error: function( data ) {
+                            alert( 'HTTP Error: ' + data.status );
+                            return;
+                        }
+                    });
+                },
+                file_browser_callback: function( field_name, url, type, win ) {
+                    if( type=='image' ) {
+                        $( '#field_name' ).val( field_name );
+                        $( "#image_input" ).click();
+                    }
+                },
+                paste_postprocess: function( plugin, args ) {
+                    $( args.node ).find( "a:has(img)" ).replaceWith( function() {
+                        return $(this).find( "img" );
+                    });         
+                    $( args.node ).find( "div" ).replaceWith( function() {
+                        if( $(this).text().length ) {
+                            return "<p>" + $(this).html() + '</p>';
+                        } else {
+                            return "";
+                        }
+                    });
+                    $( args.node ).find( "h1,h2,h3,h4,h5,h6" ).replaceWith( function() {
+                        if( $(this).text().length ) {
+                            if( $(this).closest( "p,blockquote,li" ).length ) {
+                                return "<b>" + $(this).html() + '</b>';
+                            } else {
+                                return "<p><b>" + $(this).html() + "</b></p>";
+                            }
+                        } else {
+                            return "";
+                        }
+                    });      
+                },
+                setup: function(ed) {
+                    ed.on("keyup", function(event){
+                        that.chapters[that.selectedChapter].content = tinymce.activeEditor.getContent();
+
+                        const words = event.target.innerText.split(/\n| /).map(function(item) {
+                            return item.trim();
+                        });;
+
+                        if (event.code === 'Space') {
+                            if (that.suggestions.length > 0) {
+                                that.selectSuggestion(that.suggestions[0], true);
+                            }
+                            that.suggestions = [];
+                        }
+
+                        console.log('---------------------------------');
+                        console.log([...that.wordList]);
+                        console.log(words);
+                        console.log(that.arr_diff(words, that.wordList));
+
+                        const changedWords = that.arr_diff(words, that.wordList);
+                        if (changedWords.length === 0) {
+                            // that.suggestions = [];
+                        } else if (changedWords.length > 0 && changedWords[0] === '') {
+                            that.suggestions = [];
+                        } else if( that.lastTranslatedWord === changedWords[0]) {
+                            // 
+                        } else {
+                            const wordToTranslate = changedWords[0];
+                            that.wordToTranslate = wordToTranslate;
+                            that.translateWord(changedWords[0], (suggestions) => {
+                                that.suggestions = suggestions;
+                            });    
+                        }
+
+                        console.log(tinymce.activeEditor.selection.getRng());
+                        console.log('---------------------------------');
+                        // if (event.code ) {}
+
+
+                        
+                        that.wordList = [ ...words ];
+                        // console.log(event.code);
+                        // console.log($(tinymce.activeEditor.selection.getNode()).text());
+                        // console.log(tinymce.activeEditor.selection.getEnd());
+                        // console.log(tinymce.activeEditor.selection.getRng());
+                        // // console.log($(ed.getContainer()).position());
+                        // const range = tinymce.activeEditor.selection.getRng()
+                        // console.log($(tinymce.activeEditor.selection.getNode()).position());
+                        // console.log($(tinymce.activeEditor.selection.getNode()).width());
+                        // console.log(range);
+                        // range.insertNode($('.suggestion').get(0));
+                    });
+
+                    ed.addButton('CustomLeftAlign', {
+                        icon: 'mce-ico mce-i-alignleft',
+                        tooltip: "Align left",
+                        cmd: "JustifyLeft",
+                        onpostrender: monitorAlignmentChange
+                    });
+                    ed.addButton('CustomCenterAlign', {
+                        icon: 'mce-ico mce-i-aligncenter',
+                        tooltip: "Align center",
+                        cmd: "JustifyCenter",
+                        onpostrender: monitorAlignmentChange
+                    });
+                    ed.addButton('CustomRightAlign', {
+                        icon: 'mce-ico mce-i-alignright',
+                        tooltip: "Align right",
+                        cmd: "JustifyRight",
+                        onpostrender: monitorAlignmentChange
+                    });
+                    ed.addButton('imageCustom', {
+                        icon: 'image',
+                        tooltip: "Insert/edit image",
+                        cmd: "mceImage",
+                        onpostrender: monitorImageChange
+                    });
+
+                    function monitorImageChange() {
+                        var btn = this;
+                        ed.on('NodeChange', function(e) {
+                            var parents = e.parents.map(lowercasedElemName);
+                            btn.disabled(parents.includes("blockquote") ||
+                                parents.includes("li") ||
+                                parents.includes("u") ||
+                                parents.includes("i") ||
+                                parents.includes("b") ||
+                                parents.includes("a"));
+                        });
+                    }
+
+                    function lowercasedElemName(elem) {
+                        return elem.nodeName.toLowerCase();
+                    }
+
+                    function monitorAlignmentChange() {
+                        var btn = this;
+                        ed.on('NodeChange', function(e) {
+                            var parents = e.parents.map(lowercasedElemName);
+                            btn.disabled(parents.includes("blockquote") || parents.includes("img"));
+                        });
+                    }
+                },
+                valid_elements : 'p[style],img[src|width|height],blockquote,b,i,u,a[href|target=_blank],br,b/strong,i/em,ol,ul,li',
+                extended_valid_elements: 'img[src|width|height],p[style],blockquote,ul,ol,li[style],a[href|target=_blank],br',
+                valid_children : 'body[p|img|blockquote|ol|ul],-body[br],p[b|i|u|a[href]|br],-p[img],blockquote[b|i|u|a[href]|br],-blockquote[blockquote|img|p],ol[li],ul[li],-ul[ul|ol|img],li[b|i|u|a[href]|br],-li[img|blockquote|p]',
+                invalid_elements : "div",
+                valid_styles: { 'p': 'text-align', 'li': 'text-align' },
+
+                image_description: false,
+                image_dimensions: false
+            });
+        }
+    },
+    watch: {
+        'currentStep'(stepNumber){
+            console.log(stepNumber);
+            if (stepNumber === 2) {
+                setTimeout(( ) => {
+                    this.initializeTinyMCE()
+                }, 10);
+            } else {
+                tinymce.remove();
+            }
+        },
+        'getEventPratilipiCreateOrUpdateStateSuccess'(state) {
+            if (state === 'LOADING_SUCCESS') {
+                this.$router.push({
+                    path: `/participate/${this.$route.params.eventId}/${this.getEventPratilipiData._id}`,
+                    query: {
+                        step: 2
+                    }
+                });
+            }
+        },
+        'getEventPratilipiLoadingState'(state) {
+            if (state === 'LOADING_SUCCESS') {
+                console.log(this.getEventPratilipiData);
+                this.title = this.getEventPratilipiData.title;
+                this.titleEn = this.getEventPratilipiData.titleEn;
+                this.type = this.getEventPratilipiData.type;
+                this.description = this.getEventPratilipiData.description;
+            }
+
+            if (state === 'LOADING_ERROR') {
+                alert('Ha! You cannot do that!');
+                this.$router.push({
+                    path: `/participate/${this.$route.params.eventId}`
+                })
+            }
+        },
+
+        'getEventPratilipDescUpdateState'(state) {
+            if (state === 'LOADING_SUCCESS') {
+
+            }
+        },
+
+        'getContentLoadingState'(state) {
+            const that = this;
+
+            console.log('LOADING STATE OF CONTENT: ', state);
+            function compare(a,b) {
+                if (a.chapterNo < b.chapterNo)
+                    return -1;
+                if (a.chapterNo > b.chapterNo)
+                    return 1;
+                return 0;
+            }
+            if (state === 'LOADING_SUCCESS') {
+                console.log('state is now success');
+                const tempChapters = [ ...this.getContents ];
+                tempChapters.sort(compare);
+
+                that.chapters = [];
+                tempChapters.forEach((eachChapter) => {
+                    that.chapters.push({
+                        title: eachChapter.chapterTitle,
+                        content: eachChapter.content
+                    });
+                });
+
+                if (that.chapters.length === 0) {
+                    this.chapters.push({
+                        title: '',
+                        content: ''
+                    });
+                }
+                tinymce.activeEditor.setContent(this.chapters[this.selectedChapter].content);
+            }
+        },
+        '$route.query.step'(step) {
+            console.log('CURRENTLY Im on STEP: ', step);
+
+            if (!step) {
+                this.goToFirstStep();
+            }
+
+            if (step == 2) {
+                this.fetchPratilipiContent(this.$route.params.eventPratilipiId);
+                this.goToSecondStep();
+            }
+
+            if (step == 1) {
+                console.log('this is bad');
+                console.log(this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined);
+                console.log(this.$route.params.eventId);
+                console.log(this.$route.params.eventPratilipiId);
+                if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined) {
+                    this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
+                    this.goToFirstStep();
+                }
+            }
+
+            if (step == 3) {
+                this.goToThirdStep();
+            }
+
+            if (step == 4) {
+                this.goToFourthStep();
+            }
+        },
+
+        'getEventLoadingState'(state) {
+            console.log(state);
+            if (state === 'LOADING_ERROR') {
+                alert('Invalid event id');
+                this.$router.push('/event');
+            }
+        }
+    },
+    created() {
+        this.chapters.push({
+            title: '',
+            content: ''
+        });
+
+        this.fetchEventDetails(this.$route.params.eventId);
+
+        if (!this.$route.params.eventPratilipiId) {
+            this.currentStep = 1;
+        }
+
+        if (this.$route.params.eventId && this.$route.params.eventPratilipiId && this.$route.query.step == 2) {
+            this.fetchPratilipiContent(this.$route.params.eventPratilipiId);
+            this.goToSecondStep();
+        }
+        if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 1) {
+            this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
+            this.goToFirstStepForEdit();
+        }
+
+        if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 3) {
+            this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
+            this.goToThirdStep();
+        }
+
+        if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 4) {
+            this.goToFourthStep();
+        }
+    },
+    mounted() {
+        const that = this;
+
+        $('#image_input').on( "change", function() {
+            that.uploadOnServer();
+        });
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.static-page {
+    margin-top: 85px;
+    text-align: left;
+    min-height: 600px;
+    @media screen and (max-width: 992px ) {
+        margin-top: 65px;
+    }
+    h2 {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: left;
+        border-left: 3px solid #d0021b;
+        padding-left: 10px;
+        margin: 10px 0;
+        @media screen and (max-width: 992px ) {
+            font-size: 18px;
+        }
+    }
+
+    // Define vars we'll be using 
+    $brand-success: #d0021b;
+    $loader-size: 7em;
+    $check-height: $loader-size/2;
+    $check-width: $check-height/2;
+    $check-left: ($loader-size/6 + $loader-size/12);
+    $check-thickness: 3px;
+    $check-color: $brand-success;
+    .circle-loader {
+        margin: auto;
+        margin-top: 100px;
+        margin-bottom: $loader-size/2;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-left-color: $check-color;
+        animation: loader-spin 1.2s infinite linear;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        border-radius: 50%;
+        width: $loader-size;
+        height: $loader-size;
+    }
+    .load-complete {
+        -webkit-animation: none;
+        animation: none;
+        border-color: $check-color;
+        transition: border 500ms ease-out;
+    }
+     .checkmark {
+        display: none;
+         &.draw:after {
+             animation-duration: 800ms;
+             animation-timing-function: ease;
+             animation-name: checkmark;
+             transform: scaleX(-1) rotate(135deg);
+        }
+         &:after {
+             opacity: 1;
+             height: $check-height;
+             width: $check-width;
+             transform-origin: left top;
+             border-right: $check-thickness solid $check-color;
+             border-top: $check-thickness solid $check-color;
+             content: '';
+             left: $check-left;
+             top: $check-height;
+             position: absolute;
+        }
+    }
+     @keyframes loader-spin {
+         0% {
+             transform: rotate(0deg);
+        }
+         100% {
+             transform: rotate(360deg);
+        }
+    }
+     @keyframes checkmark {
+         0% {
+             height: 0;
+             width: 0;
+             opacity: 1;
+        }
+         20% {
+             height: 0;
+             width: $check-width;
+             opacity: 1;
+        }
+         40% {
+             height: $check-height;
+             width: $check-width;
+             opacity: 1;
+        }
+         100% {
+             height: $check-height;
+             width: $check-width;
+             opacity: 1;
+        }
+    }
+
+
+    .btn-submit {
+        background: #d0021b;
+        color: #fff;
+        border: 0;
+        font-size: 14px;
+        float: right;
+    }
+
+    .book-image {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 10px 0 5px;
+        width: 100%;
+        height: 200px;
+        position: relative;
+    }
+
+    .update-img {
+        position: absolute;
+        bottom: 0;
+        left: 45%;
+        background: rgba(255,255,255,0.4);
+        border: 0;
+        outline: none;
+        cursor: pointer;
+        padding: 5px 10px;
+        text-align: center;
+        i {
+            vertical-align: middle;
+            font-size: 18px;
+        }
+    }
+
+    .tag-sections {
+        margin: 10px 0;
+        text-align: left;
+        .tag-section-title {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 0;
+        }
+        .tag-section-body {
+            font-size: 16px;
+            .all-tags {
+                display: inline-block;
+                background: #fff;
+                border: 1px solid #e9e9e9;
+                border-radius: 15px;
+                color: #212121;
+                margin: 5px 4px;
+                padding: 5px 10px;
+                font-size: 14px;
+                cursor: pointer;
+                &.active {
+                    background: #e9e9e9;
+                }
+                &.new-tag {
+                    i {
+                        font-size: 18px;
+                        vertical-align: middle;
+                        padding-left: 5px;
+                    }
+                }
+            }
+            .form-group {
+                margin-bottom: 0;
+            }
+            .form-control {
+                font-size: 14px;
+            }
+            .add-category {
+                background: none;
+                padding: 0;
+                margin-left: 10px;
+                i {
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+
+    .head-title {
+        text-align: left;
+        font-weight: bold;
+        font-size: 18px;
+        border-left: 3px solid #d0021b;
+        padding-left: 10px;
+        margin: 10px 0;
+    }
+
+    .description-input{
+        width: 100%;
+        border: none;
+        border-bottom-width: 2px;
+        border-bottom-color: #b2beb5;
+        border-bottom-style: solid;
+    }
+
+    /* The side navigation menu */
+    .sidenav {
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 101; /* Stay on top */
+        top: 0; /* Stay at the top */
+        left: 0;
+        background-color: #FFF; /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 60px; /* Place content 60px from the top */
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+        -webkit-box-shadow: 5px 0px 31px 0px rgba(0,0,0,0.68);
+        -moz-box-shadow: 5px 0px 31px 0px rgba(0,0,0,0.68);
+        box-shadow: 5px 0px 31px 0px rgba(0,0,0,0.68);
+
+        .chapter-title {
+            display: inline-block;
+            width: 80%;
+        }
+
+        .chapter-delete {
+            display: inline-block; 
+            font-size: 1.2em; 
+            vertical-align: middle;
+            float: right;
+            cursor: pointer;
+        }
+
+        .chapter-delete:hover {
+            color: red;
+        }
+
+        .chapter-add {
+            text-align: center;
+            color: #fff;
+
+            i {
+                background: #d0021b;
+                display: inline-block;
+                clear: both;
+                width: 100%;
+                border: 1px solid #d0021b;
+                border-radius: 3px;
+                padding: 5px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    /* The navigation menu links */
+    .sidenav a {
+        padding: 8px 20px 8px 32px;
+        text-decoration: none;
+        color: #000;
+        display: block;
+        transition: 0.3s;
+        font-size: 0.9em;
+    }
+
+    .sidenav a.chapters.selected-chapter{
+        background: #DCDCDC;
+    }
+
+    /* When you mouse over the navigation links, change their color */
+    .sidenav a.chapters:hover {
+        background: #DCDCDC;
+    }
+
+    /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 25px;
+        margin-left: 50px;
+    }
+
+    /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+        transition: margin-left .5s;
+        padding: 10px 0;
+
+        .follow-btn-w-count {
+            color: #fff;
+            font-size: 14px;
+            position: relative;
+            text-align: center;
+            display: inline-block;
+            clear: both;
+            overflow: hidden;
+            cursor: pointer;
+            button {
+                background: #d0021b;
+                border: 1px solid #d0021b;
+                border: 1px solid #d0021b;
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+                outline: none;
+                color: #fff;
+                margin: 0;
+                padding: 8px;
+                display: inline-block;
+                clear: both;
+                cursor: pointer;
+            }
+            i {
+                vertical-align: middle;
+                padding-right: 5px;
+                font-size: 18px;
+            }
+            span {
+                background: #fff;
+                color: #d0021b;
+                display: inline-block;
+                border: 1px solid #d0021b;
+                padding: 8px;
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+                b {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
+    }
+    .steps {
+        text-align: left;
+        position: relative;
+        margin: 0 0 30px;
+        .step {
+            display: inline-block;
+            width: 25%;
+            z-index: 1;
+            position: relative;
+            &:after {
+                content:'';
+                position: absolute;
+                width:100%;
+                height:2px;
+                background-color: #ddd;
+                top: 20px;
+                left: -50%;
+                z-index: -1;
+            }
+            &:first-child:after {
+                content:none;
+            }
+            p {
+                font-size: 12px;
+                text-align: center;
+                margin: 5px 0;
+                line-height: 16px;
+            }
+            span {
+                // display: none;
+            }
+            i {
+                vertical-align: middle;
+                font-size: 18px;
+                line-height: 40px;
+                display: none;
+            }
+        }
+        .step-1 {
+            z-index: 4;
+        }
+        .step-2 {
+            z-index: 3;
+        }
+        .step-3 {
+            z-index: 2;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 14px;
+            border-radius: 50%;
+            line-height: 40px;
+            margin: 0 auto;
+            background: #e9e9e9;
+        }
+        .active .step-number {
+            background: #d0021b;
+            color: #fff;
+        }
+    }
+    .writer-navigation {
+        margin: 10px 0;
+        .col-6 {
+            padding: 0;
+            button {
+                font-size: 14px;
+                background: #9e9e9e;
+                color: #fff;
+                border: 0;
+                box-sizing: none;
+                outline: none;
+                border-radius: 15px;
+                padding: 5px 10px;
+                cursor: pointer;
+                &.next {
+                    background: #d0021b;
+                }
+            }
+        }
+    }
+    .backdrop {
+        background: rgba(0,0,0,0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        display: none;
+    }
+}
+</style>
+<style>
+p {
+    word-break: break-word !important;
+}
+</style>
