@@ -107,7 +107,7 @@
                                 <div class="writer-wrapper">
                                     <!-- Use any element to open the sidenav -->
                                     <div class="writer-area" contenteditable="true"></div>
-                                    <ul class="word-suggestions-dropdown">
+                                    <ul class="word-suggestions-dropdown" :class="{hidden: suggestions.length === 0}">
                                         <li :class="{ active: index === selectedSuggestion }" @click="selectSuggestion(eachSuggestion)" :key="index" v-for="(eachSuggestion, index ) in suggestions">{{ eachSuggestion }}</li>
                                     </ul>
 
@@ -652,10 +652,7 @@ export default {
 
                         
                         that.wordList = [ ...words ];
-
-
-
-
+                        
                         var tinymcePosition = $(ed.getContainer()).position();
                         console.log('tinymcePosition', tinymcePosition);
                         var toolbarPosition = $(ed.getContainer()).find(".mce-toolbar").first();
@@ -681,7 +678,15 @@ export default {
                         // $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
                         // $(".word-suggestions-dropdown").css("left", caretPosition.left - 140);
                         $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
-                        $(".word-suggestions-dropdown").css("left", caretPosition.left);
+                        
+                        const suggesterWidth = $(".word-suggestions-dropdown").width();
+                        if ((suggesterWidth + caretPosition.left) >= ($(window).width() - 35)) {
+                            $(".word-suggestions-dropdown").css("left", "auto");
+                            $(".word-suggestions-dropdown").css("right", "0");
+                        }
+                        else {
+                            $(".word-suggestions-dropdown").css("left", caretPosition.left);
+                        }
 
                         console.log(caretPosition);
                         // console.log(event.code);
@@ -694,6 +699,7 @@ export default {
                         // console.log($(tinymce.activeEditor.selection.getNode()).width());
                         // console.log(range);
                         // range.insertNode($('.suggestion').get(0));
+
                     });
 
                     ed.addButton('CustomLeftAlign', {
@@ -1431,10 +1437,19 @@ export default {
         padding: 0;
         list-style: none;
         position: absolute;
-        background: #e9e9e9;
+        background: #fff;
+        padding: 5px;
+        border: 1px solid #e9e9e9;
         li {
             display: block;
             padding: 5px;
+            &.active {
+                background: #e9e9e9;
+            }
+        }
+        &.hidden {
+            padding: 0;
+            border: 0;
         }
     }
     .accepted-msg {
