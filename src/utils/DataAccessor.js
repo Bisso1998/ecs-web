@@ -779,6 +779,13 @@ export default {
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 
+    uploadEventPratilipiImage: (formData, successCallBack, errorCallBack) => {
+        httpUtil.postMultipart(API_PREFIX + '/event-participate/images?type=' + 'PRATILIPI',
+            null,
+            formData,
+            function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
+    },
+
     getTrendingSearchKeywords: function( language, aCallBack ) {
         httpUtil.get( API_PREFIX + SEARCH_PREFIX + SEARCH_TRENDING_API,
             null,
