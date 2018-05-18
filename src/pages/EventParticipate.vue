@@ -171,7 +171,7 @@
                         <div class="row accepted-msg" v-if="showAcceptedMessage">
                             <div class="col-12">
                                 <p>We have accepted your entry and we'll be publishing your content after the event is over.</p>
-                                <p><a href="#">Check Your Entry Here</a></p>
+                                <p><router-link :to="getEventData.pageUrl + '#yourEntries'">Check Your Entry Here</router-link></p>
                             </div>
                         </div>
                     </div>

@@ -7,7 +7,7 @@
             <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
             <div class="pratilipi-details">
                 <span class="title">{{ pratilipiData.title }}</span>
-                <p class="summary">__("pratilipi_listing_date"): {{ pratilipiData.createdAt | convertDate }}</p>
+                <p class="date">__("pratilipi_listing_date"): {{ pratilipiData.createdAt | convertDate }}</p>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@ export default {
         text-decoration: none;
         outline: none;
     }
-    .list-page .pratilipi-wrap, .event-list .pratilipi-wrap, .event-list .pratilipi-wrap .pratilipi, .author-page .pratilipi-wrap, .search-page .pratilipi-wrap {
+    .event-list .pratilipi-wrap {
         display: inline-block;
     }
     .pratilipi {
@@ -144,66 +144,6 @@ export default {
             background-position: center;
             position: relative;
         }
-        .image-mask {
-            position: absolute;
-            top: 0;
-            margin: 5px;
-            transition: all 0.5s, visibility 0s;
-            -ms-transition: all 0.5s, visibility 0s;
-            -webkit-transition: all 0.5s, visibility 0s;
-            -moz-transition: all 0.5s, visibility 0s;
-            opacity: 1;
-            background: none;
-            text-align: right;
-            width: auto;
-            height: auto;
-            right: 0;
-            left: auto;
-            button {
-                padding: 0;
-                margin: 5px 5px 0 0;
-                text-align: center;
-                width: 40px;
-                height: 40px;
-                font-size: 14px;
-                background: #fff;
-                color: #2c3e50;
-                border-radius: 50%;
-                cursor: pointer;
-                outline: none;
-                border: 1px solid #e9e9e9;
-                z-index: 2;
-                position: relative;
-                float: right;
-                &.add-library i {
-                    font-size: 23px;
-                }
-                i {
-                    height: 40px;
-                    line-height: 40px;
-                    font-size: 18px;
-                    &.stacked {
-                        position: absolute;
-                        top: -1px;
-                        left: -1px;
-                        margin-left: 14px;
-                        font-size: 11px;
-                        color: #fff;
-                        font-weight: bold;
-                        &.grey {
-                            color: #212121;
-                            margin-left: 13.5px;
-                            margin-top: -1px;
-                            left: 0;
-                        }
-                    }
-                }
-            }
-        }
-        &:hover .image-mask {
-            opacity: 1;
-        }
-        
         .pratilipi-details {
             text-align: left;
             padding: 0 10px;
@@ -223,46 +163,12 @@ export default {
                     color: #555555;
                 }
             }
-            .summary {
+            .date {
                 color: #212121;
                 font-size: 12px;
                 overflow: hidden;
                 margin: 5px 0 10px;
             }
-        }
-        .stats {
-            border-top: 1px solid #e9e9e9;
-            margin-top: 5px;
-            overflow: hidden;
-            text-align: center;
-            .rating, .read-count, .read-time {
-                float: left;
-                width: 32%;
-                padding: 10px 2px;
-                font-size: 12px;
-                color: #212121;
-                .icons {
-                    display: inline-block;
-                    vertical-align: middle;
-                    padding-right: 4px;
-                    i {
-                        font-size: 13px;
-                    }
-                }
-            }
-            .read-count, .read-time {
-                border-left: 1px solid #e9e9e9;
-                padding: 10px 0;
-            }
-            .read-time {
-                font-size: 12px;
-            }
-        }
-    }
-    .language-ta .pratilipi .stats .read-time, .language-te .pratilipi .stats .read-time, .language-ml .pratilipi .stats .read-time, .language-kn .pratilipi .stats .read-time {
-        font-size: 10px;
-        @media screen and (max-width: 768px ) {
-            font-size: 8.5px;
         }
     }
 </style>
