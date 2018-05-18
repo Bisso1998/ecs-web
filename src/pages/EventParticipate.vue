@@ -19,6 +19,7 @@
                                     description: pratilipiData.description,
                                     createdAt: pratilipiData.createdAt
                                 }"
+                                @click.native="goToSecondStepToEdit(pratilipiData.eventId, pratilipiData._id)"
                                 :key="pratilipiData._id"
                                 v-for="pratilipiData in getDraftedEventPratilipi"
                                 :isEventParticipatePage="true"
@@ -346,6 +347,12 @@ export default {
                 $('.checkmark').toggle();
                 that.showAcceptedMessage = true;
             }, 1000);
+        },
+
+        goToSecondStepToEdit(eventId, pratilipiEventId) {
+            this.$router.push({
+                path: `/participate/${eventId}/${pratilipiEventId}?step=2`
+            });
         },
 
         addChapter() {
