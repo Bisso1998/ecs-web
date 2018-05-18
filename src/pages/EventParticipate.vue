@@ -54,10 +54,10 @@
 
                     <div v-if="currentStep == 1">
                         <div class="row">
-                            <div class="col-md-4 mb-10">
+                            <div class="col-md-5 mb-10">
                                 <div class="event-image" :style="{ backgroundImage: 'url(' + getEventData.bannerImageUrl + ')' }"></div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <form>
                                     <div class="form-group">
                                         <label for="pratilipi_write_title_input">__("writer_input_title") *</label>
@@ -1102,7 +1102,7 @@ export default {
         margin-bottom: 10px;
     }
     .event-image, .book-image {
-        background-size: cover;
+        background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
         margin: 0;
