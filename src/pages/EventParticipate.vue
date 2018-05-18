@@ -7,6 +7,11 @@
                         <div class="head-title">{{ getEventData.name }}</div>
                     </div>
                 </div>
+                <div class="row">
+                    <div v-for="eachContent in getDraftedEventPratilipi" :key="eachContent._id">
+                        {{ eachContent.title }}
+                    </div>
+                </div>
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
                     <a class="chapters" :class="{ 'selected-chapter': selectedChapter === index }" v-for="(eachChapter, index) in chapters" :key="index">
@@ -208,7 +213,9 @@ export default {
             'getEventPratilipDescUpdateState',
             'getContents',
             'getEventData',
-            'getEventLoadingState'
+            'getEventLoadingState',
+            'getDraftedEventPratilipiLoadingState',
+            'getDraftedEventPratilipi'
         ])
     },
     mixins: [
@@ -246,7 +253,8 @@ export default {
             'fetchPratilipiContent',
             'updateDescriptionAndTags',
             'fetchEventDetails',
-            'uploadEventPratilipiImage'
+            'uploadEventPratilipiImage',
+            'fetchDraftedUserEventPratilipis'
         ]),
 
         updateCurrentTitle(value) {
@@ -909,6 +917,10 @@ export default {
             if (state === 'LOADING_ERROR') {
                 alert('Invalid event id');
                 this.$router.push('/event');
+            }
+
+            if (state === 'LOADING_SUCCESS') {
+                this.fetchDraftedUserEventPratilipis(this.getEventData.eventId);
             }
         },
         

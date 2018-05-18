@@ -6,5 +6,9 @@ export default {
     contentLoadingState: 'LOADING',
     eventPratilipDescUpdateState: 'LOADING',
     eventDataLoadingState: 'LOADING',
-    event: {}
+    event: {},
+    draftedEventPratilipis: {
+    	data: [],
+    	loading_state: 'LOADING'
+    }
 }

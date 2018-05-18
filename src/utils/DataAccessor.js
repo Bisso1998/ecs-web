@@ -830,6 +830,13 @@ export default {
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
     },
 
+    getDraftedEventPratilipis: (eventId, aCallBack) => {
+        httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_LIST,
+            null,
+            { eventId, status: 'DRAFTED' },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) });
+    },
+
     createEventPratilipi: ({ language, title, titleEn, type, eventId }, successCallBack, errorCallBack) => {
         httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_CREATE,
             null,

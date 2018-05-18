@@ -13,6 +13,17 @@ export default {
         });
     },
 
+    fetchDraftedUserEventPratilipis({ commit, state }, eventId) {
+        commit('setUserEventPratilipiDraftedDataLoadingTrue');
+        DataAccessor.getDraftedEventPratilipis(eventId, (eventPratilipiData) => {
+            if (eventPratilipiData.status === 200) {
+                commit('setUserEventPratilipiDraftedDataLoadingSuccess', eventPratilipiData.response.pratilipis);
+            } else {
+                commit('setUserEventPratilipiDraftedDataLoadingError');
+            }
+        });
+    },
+
     createEventPratilipiData({ commit, state }, { eventId, title, titleEn, type, language }) {
         commit('setEventPratilipiCreateOrUpdateStateTrue');
         DataAccessor.createEventPratilipi({

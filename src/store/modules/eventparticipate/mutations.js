@@ -74,4 +74,15 @@ export default {
     setPratilipiImageUploadingError(state) {
         state.eventPratilipi.pratilipi_image_upload_state = 'LOADING_ERROR';
     },
+
+    setUserEventPratilipiDraftedDataLoadingTrue(state) {
+        state.draftedEventPratilipis.loading_state = 'LOADING';
+    },
+    setUserEventPratilipiDraftedDataLoadingSuccess(state, data) {
+        state.draftedEventPratilipis.loading_state = 'LOADING_SUCCESS';
+        state.draftedEventPratilipis.data = data;
+    },
+    setUserEventPratilipiDraftedDataLoadingError(state) {
+        state.draftedEventPratilipis.loading_state = 'LOADING_ERROR';
+    },
 }

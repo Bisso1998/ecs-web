@@ -25,6 +25,7 @@ export default {
     getEventPratilipDescUpdateState: state => state.eventPratilipDescUpdateState,
     getContents: state => state.contents,
     getEventData: state => state.event,
-    getEventLoadingState: state => state.eventDataLoadingState
-
+    getEventLoadingState: state => state.eventDataLoadingState,
+    getDraftedEventPratilipiLoadingState: state => state.draftedEventPratilipis.loading_state,
+    getDraftedEventPratilipi: state => state.draftedEventPratilipis.data
 }
