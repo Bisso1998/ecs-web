@@ -107,6 +107,7 @@ export default {
         'getEventData.eventId' (eventId) {
             if (eventId) {
                 this.fetchInitialEventPratilipis({ eventId, resultCount: 20 });
+                this.fetchEventPratilipis(eventId);
                 this.triggerAnanlyticsEvent('LANDED_EVENTM_EVENT', 'CONTROL', {
                     'USER_ID': this.getUserDetails.userId,
                     'PARENT_ID': this.getEventData.eventId
@@ -132,7 +133,7 @@ export default {
         } else {
             this.fetchEventDetails(event_slug);
         }
-        this.fetchEventPratilipis();
+        
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);

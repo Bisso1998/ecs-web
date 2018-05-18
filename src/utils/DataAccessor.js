@@ -816,10 +816,10 @@ export default {
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
     },
 
-    getEventPratilipiList: (aCallBack) => {
+    getEventPratilipiList: (eventId, aCallBack) => {
         httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_LIST,
             null,
-            null,
+            { eventId },
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
     },
 
