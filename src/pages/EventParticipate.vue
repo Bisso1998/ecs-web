@@ -700,6 +700,7 @@ export default {
                         }
                         else {
                             $(".word-suggestions-dropdown").css("left", caretPosition.left);
+                            $(".word-suggestions-dropdown").css("right", "auto");
                         }
 
                         console.log(caretPosition);

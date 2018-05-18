@@ -7,7 +7,7 @@
             <PratilipiImage :coverImageUrl="pratilipiData.coverImageUrl"></PratilipiImage>
             <div class="pratilipi-details">
                 <span class="title">{{ pratilipiData.title }}</span>
-                <p v-if="pratilipiData.description" class="summary">{{ pratilipiData.description }}</p>
+                <p class="summary">__("pratilipi_listing_date"): {{ pratilipiData.createdAt | convertDate }}</p>
             </div>
         </div>
     </div>
