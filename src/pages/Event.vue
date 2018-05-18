@@ -20,7 +20,8 @@
                                     title: pratilipiData.title, 
                                     coverImageUrl: pratilipiData.coverImageUrl || 'https://0.ptlp.co/pratilipi/cover', 
                                     type: pratilipiData.type,
-                                    description: pratilipiData.description
+                                    description: pratilipiData.description,
+                                    createdAt: pratilipiData.createdAt
                                 }"
                                 :key="pratilipiData._id"
                                 v-for="pratilipiData in getUserEventData"
