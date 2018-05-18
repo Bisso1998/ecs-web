@@ -63,4 +63,15 @@ export default {
             commit('removePratilipiFromLibraryError');
         })
     },
+
+    fetchEventPratilipis({ commit, state }) {
+        commit('setEventPratilipiDataLoadingTrue');
+        DataAccessor.getEventPratilipiList((eventPratilipiData) => {
+            if (eventPratilipiData.status === 200) {
+                commit('setEventPratilipiDataLoadingSuccess', eventPratilipiData.response);
+            } else {
+                commit('setEventPratilipiDataLoadingError');
+            }
+        });
+    },
 }

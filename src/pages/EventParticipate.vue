@@ -168,8 +168,11 @@
                                 <div class="checkmark draw"></div>
                             </div>
                         </div>
-                        <div class="row" v-if="showAcceptedMessage" style="text-align: center">
-                            <span style="width: 100%">We have accepted your entry and we'll be publishing your content after the event is over.</span>
+                        <div class="row accepted-msg" v-if="showAcceptedMessage">
+                            <div class="col-12">
+                                <p>We have accepted your entry and we'll be publishing your content after the event is over.</p>
+                                <p><a href="#">Check Your Entry Here</a></p>
+                            </div>
                         </div>
                     </div>
                     
@@ -995,7 +998,7 @@ export default {
     $check-color: $brand-success;
     .circle-loader {
         margin: auto;
-        margin-top: 100px;
+        margin-top: 30px;
         margin-bottom: $loader-size/2;
         border: 1px solid rgba(0, 0, 0, 0.2);
         border-left-color: $check-color;
@@ -1432,6 +1435,16 @@ export default {
         li {
             display: block;
             padding: 5px;
+        }
+    }
+    .accepted-msg {
+        p {
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            a {
+                color: #d0021b;
+            }
         }
     }
     .backdrop {

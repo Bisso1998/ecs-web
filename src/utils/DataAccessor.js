@@ -59,6 +59,7 @@ const USER_FCM_TOKEN_API = "/user/accesstoken/fcmtoken";
 
 const EVENT_PARTICIPATE_PREFIX = '/event-participate';
 const EVENT_PARTICIPATE_GET = '/metadata';
+const EVENT_PARTICIPATE_LIST = '/list';
 const EVENT_PARTICIPATE_CREATE = '/metadata';
 const EVENT_PARTICIPATE_UPDATE = '/metadata';
 const EVENT_PARTICIPATE_CONTENT = '/content';
@@ -814,6 +815,16 @@ export default {
             },
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
     },
+
+    getEventPratilipiList: (aCallBack) => {
+        httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_LIST,
+            null,
+            {
+                eventPratilipiId
+            },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) });
+    },
+
     createEventPratilipi: ({ language, title, titleEn, type, eventId }, successCallBack, errorCallBack) => {
         httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_CREATE,
             null,
