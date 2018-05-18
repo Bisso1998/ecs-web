@@ -7,9 +7,23 @@
                         <div class="head-title">{{ getEventData.name }}</div>
                     </div>
                 </div>
-                <div class="row">
-                    <div v-for="eachContent in getDraftedEventPratilipi" :key="eachContent._id">
-                        {{ eachContent.title }}
+                <div class="row" v-if="getDraftedEventPratilipi.length > 0 && getEventLoadingState === 'LOADING_SUCCESS'">
+                    <div  class="col-md-12">
+                        <p class="drafted-msg">Your already have the following drafted item(s). Click on it to edit it or create a new one below.</p>
+                        <div class="drafted-items">
+                            <UserEventPratilipiComponent
+                                :pratilipiData="{ 
+                                    title: pratilipiData.title, 
+                                    coverImageUrl: pratilipiData.coverImageUrl || 'https://0.ptlp.co/pratilipi/cover', 
+                                    type: pratilipiData.type,
+                                    description: pratilipiData.description,
+                                    createdAt: pratilipiData.createdAt
+                                }"
+                                :key="pratilipiData._id"
+                                v-for="pratilipiData in getDraftedEventPratilipi"
+                                :isEventParticipatePage="true"
+                                ></UserEventPratilipiComponent>
+                        </div>
                     </div>
                 </div>
                 <div id="mySidenav" class="sidenav">
@@ -196,6 +210,7 @@ import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants';
 import mixins from '@/mixins';
 import TranslatingInput from '@/components/TranslatingInput.vue';
+import UserEventPratilipiComponent from '@/components/UserEventPratilipi.vue';
 import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions } from 'vuex'
 
@@ -203,7 +218,8 @@ export default {
     components: {
         MainLayout,
         TranslatingInput,
-        Spinner
+        Spinner,
+        UserEventPratilipiComponent
     },
     computed: {
         ...mapGetters('eventparticipate', [
@@ -1499,6 +1515,14 @@ export default {
         height: 100%;
         z-index: 100;
         display: none;
+    }
+    .drafted-msg {
+        font-size: 14px;
+        margin: 5px 10px;
+    }
+    .drafted-items {
+        overflow-x: auto;
+        white-space: nowrap;
     }
 }
 </style>

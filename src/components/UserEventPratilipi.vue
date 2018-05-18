@@ -1,5 +1,5 @@
 <template>
-    <div class="pratilipi-wrap">
+    <div class="pratilipi-wrap" :class="{ 'event-participate-page': isEventParticipatePage }">
         <div class="pratilipi">
             <div class="book-type" :class="pratilipiData.type">
                 {{ pratilipiData.type | getPratilipiTypeInNativeLanguage }} <span></span>
@@ -24,6 +24,9 @@ export default {
         pratilipiData: {
             type: Object,
             required: true
+        },
+        isEventParticipatePage: {
+            type: Boolean
         }
     },
     mixins: [
@@ -60,7 +63,7 @@ export default {
         text-decoration: none;
         outline: none;
     }
-    .event-list .pratilipi-wrap {
+    .event-list .pratilipi-wrap, .static-page .pratilipi-wrap {
         display: inline-block;
     }
     .pratilipi {
@@ -168,6 +171,14 @@ export default {
                 font-size: 12px;
                 overflow: hidden;
                 margin: 5px 0 10px;
+            }
+        }
+    }
+    .event-participate-page {
+        .pratilipi {
+            width: 210px;
+            .pratilipi-image {
+                height: 100px;
             }
         }
     }
