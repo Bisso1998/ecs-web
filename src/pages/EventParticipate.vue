@@ -24,7 +24,7 @@
                     </a>
                 </div>
                 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-                <div id="main">
+                <div id="main" v-if="getEventLoadingState === 'LOADING_SUCCESS'">
                     <div class="row steps">
                         <div class="step step-1" :class="{ active: currentStep === 1 }">
                             <div class="step-number">
@@ -59,10 +59,10 @@
 
                     <div v-if="currentStep == 1">
                         <div class="row">
-                            <div class="col-md-4 mb-10">
+                            <div class="col-md-5 mb-10">
                                 <div class="event-image" :style="{ backgroundImage: 'url(' + getEventData.bannerImageUrl + ')' }"></div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <form>
                                     <div class="form-group">
                                         <label for="pratilipi_write_title_input">__("writer_input_title") *</label>
@@ -176,12 +176,13 @@
                         <div class="row accepted-msg" v-if="showAcceptedMessage">
                             <div class="col-12">
                                 <p>We have accepted your entry and we'll be publishing your content after the event is over.</p>
-                                <p><a href="#">Check Your Entry Here</a></p>
+                                <p><router-link :to="getEventData.pageUrl + '#yourEntries'">Check Your Entry Here</router-link></p>
                             </div>
                         </div>
                     </div>
                     
                 </div>
+                <Spinner v-if="getEventLoadingState === 'LOADING'"></Spinner>
             </div>
             <div class="backdrop"></div>
         </div>
@@ -1113,7 +1114,7 @@ export default {
         margin-bottom: 10px;
     }
     .event-image, .book-image {
-        background-size: cover;
+        background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
         margin: 0;

@@ -13,8 +13,8 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="page-content event-list card">
-                            <div class="head-title">Your Entry</div>
+                        <div class="page-content event-list card" id="yourEntries">
+                            <div class="head-title">Your Entries</div>
                             <UserEventPratilipiComponent
                                 :pratilipiData="{ 
                                     title: pratilipiData.title, 
@@ -124,6 +124,19 @@ export default {
                 this.getEventPratilipisCursor !== null) {
 
                 this.fetchMorePratilipisForEvent({ eventId, resultCount: 20 });
+            }
+        },
+        'getEventDataLoadingState'(state) {
+            if (state === 'LOADING_SUCCESS') {
+                var hash = window.location.hash;
+                console.log(window.location.hash);
+                if (hash == "#yourEntries") {
+                    setTimeout(() => {
+                        $('html, body').animate({
+                            scrollTop: $("#yourEntries").offset().top
+                        }, 1000);
+                    }, 500);
+                }
             }
         }
     },
