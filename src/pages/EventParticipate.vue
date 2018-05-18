@@ -107,7 +107,11 @@
                                 <div class="writer-wrapper">
                                     <!-- Use any element to open the sidenav -->
                                     <div class="writer-area" contenteditable="true"></div>
-                                    <ul class="word-suggestions">
+                                    <ul class="word-suggestions-dropdown">
+                                        <li :class="{ active: index === selectedSuggestion }" @click="selectSuggestion(eachSuggestion)" :key="index" v-for="(eachSuggestion, index ) in suggestions">{{ eachSuggestion }}</li>
+                                    </ul>
+
+                                    <ul class="word-suggestions" v-if="false">
                                         <li @click="selectSuggestion(eachSuggestion)" :key="index" v-for="(eachSuggestion, index ) in suggestions">{{ eachSuggestion }}</li>
                                     </ul>
                                 </div>
@@ -225,7 +229,8 @@ export default {
             wordList: [],
             writerInFocus: false,
             inputInFocus: false,
-            scrollPosition: null
+            scrollPosition: null,
+            selectedSuggestion: 0
         }
     },
     methods: {
@@ -411,7 +416,7 @@ export default {
             range.selectNodeContents(node);
 
             if (fromSpace) {
-                range.setStart(node, editorRange.endOffset - this.wordToTranslate.length - 1); // current caret pos - 3     
+                range.setStart(node, editorRange.endOffset - this.wordToTranslate.length); // current caret pos - 3     
             } else {
                 range.setStart(node, editorRange.endOffset - this.wordToTranslate.length); // current caret pos - 3     
             }
@@ -438,11 +443,12 @@ export default {
                 selector: '.writer-area',  // change this value according to your HTML,
                 // inline: true,
                 block_formats: 'Paragraph=p;',
-                plugins: ['autolink lists link image', 'paste'],
+                plugins: ['autoresize autolink lists link image', 'paste'],
                 menubar: false,
                 statusbar: false,
                 toolbar: 'bold italic underline | CustomLeftAlign CustomCenterAlign CustomRightAlign | CustomBlockquote link imageCustom | Ulist Olist',
-                height: '50vh',
+                // height: '50vh',
+                // min_height: '600',
                 language: process.env.LANGUAGE,
                 link_context_toolbar: false,
                 anchor_bottom: false,
@@ -466,6 +472,8 @@ export default {
                 force_br_newlines: false,
                 force_p_newlines: true,
                 remove_trailing_brs: false,
+                autoresize_min_height: 300,
+                autoresize_bottom_margin: 100,
 
                 formats: {
                     bold:
@@ -575,20 +583,43 @@ export default {
                             that.writerInFocus = false;
                         });
                     }
+
+                    ed.on('keydown', (event) => {
+                        if (event.code === 'Space' || event.code === 'Enter') {
+                            if (that.suggestions.length > 0) {
+                                that.selectSuggestion(that.suggestions[that.selectedSuggestion], true);
+                                event.preventDefault();
+                            }
+                            that.suggestions = [];
+                            that.selectedSuggestion = 0;
+                        }
+
+                        if (event.code === 'ArrowDown' && that.suggestions.length > 0) {
+                            event.preventDefault();
+                            if (that.selectedSuggestion + 1 >= that.suggestions.length) {
+                                return;
+                            }
+                            that.selectedSuggestion++;
+                        }
+
+                        if (event.code === 'ArrowUp' && that.suggestions.length > 0) {
+                            event.preventDefault();
+                            if (that.selectedSuggestion - 1 < 0) {
+                                return;
+                            }
+                            that.selectedSuggestion--;
+                        }
+
+                    });
                     
                     ed.on("keyup", function(event){
+                        console.log(event.code);
                         that.chapters[that.selectedChapter].content = tinymce.activeEditor.getContent();
 
                         const words = event.target.innerText.split(/\n| |\u00A0/).map(function(item) {
                             return item.trim();
-                        });;
-
-                        if (event.code === 'Space') {
-                            if (that.suggestions.length > 0) {
-                                that.selectSuggestion(that.suggestions[0], true);
-                            }
-                            that.suggestions = [];
-                        }
+                        });
+                        
 
                         console.log('---------------------------------');
                         console.log([...that.wordList]);
@@ -606,6 +637,7 @@ export default {
                             const wordToTranslate = changedWords[0];
                             that.wordToTranslate = wordToTranslate;
                             that.translateWord(changedWords[0], (suggestions) => {
+                                that.selectedSuggestion = 0;
                                 that.suggestions = suggestions;
                             });    
                         }
@@ -617,6 +649,38 @@ export default {
 
                         
                         that.wordList = [ ...words ];
+
+
+
+
+                        var tinymcePosition = $(ed.getContainer()).position();
+                        console.log('tinymcePosition', tinymcePosition);
+                        var toolbarPosition = $(ed.getContainer()).find(".mce-toolbar").first();
+
+                        var nodePosition = $(ed.selection.getNode()).position();
+                        var textareaTop = 0;
+                        var textareaLeft = 0;
+
+                        if (ed.selection.getRng().getClientRects().length > 0) {
+                            textareaTop = ed.selection.getRng().getClientRects()[0].top + ed.selection.getRng().getClientRects()[0].height;
+                            textareaLeft = ed.selection.getRng().getClientRects()[0].x;
+                            console.log(ed.selection.getRng().getClientRects()[0].x);
+                        } else {
+                            textareaTop = parseInt($(ed.selection.getNode()).css("font-size")) + nodePosition.top;
+                            textareaLeft = nodePosition.left;
+                        }
+
+                        var position = $(ed.getContainer()).offset();
+                        var caretPosition = {
+                            top:  tinymcePosition.top + toolbarPosition.innerHeight() + textareaTop,
+                            left: textareaLeft
+                        }
+                        // $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
+                        // $(".word-suggestions-dropdown").css("left", caretPosition.left - 140);
+                        $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
+                        $(".word-suggestions-dropdown").css("left", caretPosition.left);
+
+                        console.log(caretPosition);
                         // console.log(event.code);
                         // console.log($(tinymce.activeEditor.selection.getNode()).text());
                         // console.log(tinymce.activeEditor.selection.getEnd());
@@ -1357,6 +1421,17 @@ export default {
             position: fixed;
             margin: 0 15px;
             width: calc(100% - 30px);
+        }
+    }
+    .word-suggestions-dropdown {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: absolute;
+        background: #e9e9e9;
+        li {
+            display: block;
+            padding: 5px;
         }
     }
     .backdrop {
