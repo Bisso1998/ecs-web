@@ -95,4 +95,15 @@ export default {
             }
         });
     },
+
+    uploadEventPratilipiImage({ commit, state }, formData ) {
+        commit('setPratilipiImageUploadingTrue');
+        DataAccessor.uploadEventPratilipiImage(formData, (successData) => {
+            console.log('Now I can die in peace');
+            commit('setPratilipiImageUploadingSuccess', successData);
+        }, (errorData) => {
+            console.log('My life is wasted');
+            commit('setPratilipiImageUploadingError');
+        });
+    },
 }

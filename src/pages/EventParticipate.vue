@@ -130,9 +130,9 @@
                     <div v-if="currentStep == 3">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="book-image" v-bind:style="{ backgroundImage: 'url(https://0.ptlp.co/pratilipi/cover)' }">
-                                    <button class="update-img"><i class="material-icons">camera_alt</i></button>
-                                    <input type="file" hidden name="pratilipiimage" accept="image/*" id="pratilipiimage-uploader">
+                                <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getEventPratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover' + ')' }">
+                                    <button class="update-img" @click="uploadCoverImage"><i class="material-icons">camera_alt</i></button>
+                                    <input type="file" hidden name="pratilipiimage" accept="image/*" @change="triggerPratilipiImageUpload" id="pratilipiimage-uploader">
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -246,7 +246,8 @@ export default {
             'updatePratilipiContent',
             'fetchPratilipiContent',
             'updateDescriptionAndTags',
-            'fetchEventDetails'
+            'fetchEventDetails',
+            'uploadEventPratilipiImage'
         ]),
 
         updateCurrentTitle(value) {
@@ -330,6 +331,17 @@ export default {
             });
         },
 
+        uploadCoverImage() {
+            $('#pratilipiimage-uploader').click();
+        },
+
+        triggerPratilipiImageUpload(event) {
+            const formData = new FormData();
+            formData.append('file', event.target.files[0], event.target.files[0].name);
+            formData.append('eventPratilipiId', this.getEventPratilipiData._id);
+            this.uploadEventPratilipiImage(formData);
+        },
+
         selectChapter(index) {
             this.selectedChapter = index;
             tinymce.activeEditor.setContent(this.chapters[index].content);
@@ -367,12 +379,13 @@ export default {
             var fd = new FormData();;
             var blob = $('#image_input').get(0).files[0];
             fd.append( 'file', blob );
+            fd.append( 'eventPratilipiId', this.getEventPratilipiData._id );
             // fd.append( 'pratilipiId', pratilipiId );
             // fd.append( 'pageNo', cur_page );
             
             $.ajax({
                 type:'POST',
-                url: `https://gamma.pratilipi.com/event-participate/images`,
+                url: `https://gamma.pratilipi.com/event-participate/images?type=CONTENT`,
                 data: fd,
                 cache: true,
                 contentType: false,
@@ -531,9 +544,10 @@ export default {
                 images_upload_handler: function( blobInfo, success, failure ) {
                     var fd = new FormData();
                     fd.append( 'file', blobInfo.blob() );
+                    fd.append( 'eventPratilipiId', that.getEventPratilipiData._id );
                     $.ajax({
                         type:'POST',
-                        url: `https://gamma.pratilipi.com/event-participate/images`,
+                        url: `https://gamma.pratilipi.com/event-participate/images?type=CONTENT`,
                         data: fd,
                         cache: true,
                         contentType: false,
