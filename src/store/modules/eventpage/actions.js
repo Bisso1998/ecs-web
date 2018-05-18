@@ -65,12 +65,12 @@ export default {
     },
 
     fetchEventPratilipis({ commit, state }) {
-        commit('setEventPratilipiDataLoadingTrue');
+        commit('setUserEventPratilipiDataLoadingTrue');
         DataAccessor.getEventPratilipiList((eventPratilipiData) => {
             if (eventPratilipiData.status === 200) {
-                commit('setEventPratilipiDataLoadingSuccess', eventPratilipiData.response);
+                commit('setUserEventPratilipiDataLoadingSuccess', eventPratilipiData.response.pratilipis);
             } else {
-                commit('setEventPratilipiDataLoadingError');
+                commit('setUserEventPratilipiDataLoadingError');
             }
         });
     },

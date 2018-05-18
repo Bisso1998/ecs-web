@@ -15,15 +15,16 @@
                     <div class="col-md-12">
                         <div class="page-content event-list card">
                             <div class="head-title">Your Entry</div>
-                            <!-- <PratilipiComponent
-                                :pratilipiData="pratilipiData"
-                                :key="pratilipiData.pratilipiId"
-                                v-for="pratilipiData in getEventPratilipis"
-                                :addToLibrary="addToLibrary"
-                                :removeFromLibrary="removeFromLibrary"
-                                :screenName="'EVENT'"
-                                :screenLocation="'EVENTRIES'"
-                                ></PratilipiComponent> -->
+                            <UserEventPratilipiComponent
+                                :pratilipiData="{ 
+                                    title: pratilipiData.title, 
+                                    coverImageUrl: pratilipiData.coverImageUrl || 'https://0.ptlp.co/pratilipi/cover', 
+                                    type: pratilipiData.type,
+                                    description: pratilipiData.description
+                                }"
+                                :key="pratilipiData._id"
+                                v-for="pratilipiData in getUserEventData"
+                                ></UserEventPratilipiComponent>
                             <!-- <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner> -->
                         </div>
                     </div>
@@ -51,6 +52,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
+import UserEventPratilipiComponent from '@/components/UserEventPratilipi.vue';
 import Spinner from '@/components/Spinner.vue';
 import constants from '@/constants'
 import mixins from '@/mixins';
@@ -60,6 +62,7 @@ export default {
     components: {
         MainLayout,
         PratilipiComponent,
+        UserEventPratilipiComponent,
         Spinner
     },
     data() {
@@ -76,7 +79,8 @@ export default {
             'getEventDataLoadingState',
             'getEventPratilipis',
             'getEventPratilipisLoadingState',
-            'getEventPratilipisCursor'
+            'getEventPratilipisCursor',
+            'getUserEventData'
         ]),
         ...mapGetters([
             'getUserDetails'
@@ -89,7 +93,8 @@ export default {
             'fetchInitialEventPratilipis',
             'fetchMorePratilipisForEvent',
             'addToLibrary',
-            'removeFromLibrary'
+            'removeFromLibrary',
+            'fetchEventPratilipis'
         ]),
         updateScroll() {
             this.scrollPosition = window.scrollY;
@@ -127,7 +132,7 @@ export default {
         } else {
             this.fetchEventDetails(event_slug);
         }
-        
+        this.fetchEventPratilipis();
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);

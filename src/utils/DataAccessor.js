@@ -819,9 +819,7 @@ export default {
     getEventPratilipiList: (aCallBack) => {
         httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_LIST,
             null,
-            {
-                eventPratilipiId
-            },
+            null,
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
     },
 
