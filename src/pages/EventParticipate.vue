@@ -7,7 +7,7 @@
                         <div class="head-title">{{ getEventData.name }}</div>
                     </div>
                 </div>
-                <div class="row" v-if="getDraftedEventPratilipi.length > 0 && getEventLoadingState === 'LOADING_SUCCESS'">
+                <div class="row" v-if="getDraftedEventPratilipi.length > 0 && getEventLoadingState === 'LOADING_SUCCESS' && currentStep === 1 && !$route.params.eventPratilipiId">
                     <div  class="col-md-12">
                         <p class="drafted-msg">Your already have the following drafted item(s). Click on it to edit it or create a new one below.</p>
                         <div class="drafted-items">
@@ -38,7 +38,7 @@
                     </a>
                 </div>
                 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-                <div id="main" v-if="getEventLoadingState === 'LOADING_SUCCESS'">
+                <div id="main" v-show="getEventLoadingState === 'LOADING_SUCCESS'">
                     <div class="row steps">
                         <div class="step step-1" :class="{ active: currentStep === 1 }">
                             <div class="step-number">
