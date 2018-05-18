@@ -8,8 +8,23 @@
                             <div class="head-title">{{ getEventData.name }}</div>
                             <img :src="getEventData.bannerImageUrl" alt="">
                             <div class="desc" v-html="getEventData.description"></div>
-                            <button type="button" name="button" @click="goToEventParticipate">Participate</button>
+                            <button type="button" class="participate_btn" name="button" @click="goToEventParticipate">Participate</button>
                             <Spinner v-if="getEventDataLoadingState === 'LOADING'"></Spinner>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="page-content event-list card">
+                            <div class="head-title">Your Entry</div>
+                            <!-- <PratilipiComponent
+                                :pratilipiData="pratilipiData"
+                                :key="pratilipiData.pratilipiId"
+                                v-for="pratilipiData in getEventPratilipis"
+                                :addToLibrary="addToLibrary"
+                                :removeFromLibrary="removeFromLibrary"
+                                :screenName="'EVENT'"
+                                :screenLocation="'EVENTRIES'"
+                                ></PratilipiComponent> -->
+                            <!-- <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner> -->
                         </div>
                     </div>
                     <div class="col-md-12" v-if="getEventPratilipisLoadingState === 'LOADING_SUCCESS' && getEventPratilipis.length !== 0">
@@ -161,6 +176,18 @@ export default {
             text-align: left;
             padding: 10px;
             font-size: 14px;
+        }
+        .participate_btn {
+            background: #d0021b;
+            color: #fff;
+            max-width: 250px;
+            margin: 10px;
+            padding: 5px;
+            border-radius: 3px;
+            outline: none;
+            border: 0;
+            font-size: 14px;
+            cursor: pointer;
         }
     }
     .event-list {
