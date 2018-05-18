@@ -19,7 +19,7 @@
                     </a>
                 </div>
                 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-                <div id="main">
+                <div id="main" v-if="getEventLoadingState === 'LOADING_SUCCESS'">
                     <div class="row steps">
                         <div class="step step-1" :class="{ active: currentStep === 1 }">
                             <div class="step-number">
@@ -177,6 +177,7 @@
                     </div>
                     
                 </div>
+                <Spinner v-if="getEventLoadingState === 'LOADING'"></Spinner>
             </div>
             <div class="backdrop"></div>
         </div>
