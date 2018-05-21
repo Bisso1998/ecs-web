@@ -126,7 +126,7 @@ export default {
         },
         goToSecondStepToEdit(eventId, pratilipiEventId) {
             this.$router.push({
-                path: `/participate/${eventId}/${pratilipiEventId}?step=2`
+                path: `event/${eventId}/participate/${pratilipiEventId}?step=2`
             });
         }
     },

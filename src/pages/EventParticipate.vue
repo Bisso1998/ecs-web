@@ -392,7 +392,7 @@ export default {
 
         goToSecondStepToEdit(eventId, pratilipiEventId) {
             this.$router.push({
-                path: `/participate/${eventId}/${pratilipiEventId}?step=2`
+                path: `event/${eventId}/participate/${pratilipiEventId}?step=2`
             });
         },
 
@@ -915,7 +915,7 @@ export default {
         'getEventPratilipiCreateOrUpdateStateSuccess'(state) {
             if (state === 'LOADING_SUCCESS') {
                 this.$router.push({
-                    path: `/participate/${this.$route.params.eventId}/${this.getEventPratilipiData._id}`,
+                    path: `/event/${this.$route.params.eventId}/participate/${this.getEventPratilipiData._id}`,
                     query: {
                         step: 2
                     }
@@ -933,7 +933,7 @@ export default {
             if (state === 'LOADING_ERROR') {
                 alert('Ha! You cannot do that!');
                 this.$router.push({
-                    path: `/participate/${this.$route.params.eventId}`
+                    path: `/event/${this.$route.params.eventId}/participate/`
                 })
             }
         },

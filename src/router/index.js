@@ -398,7 +398,7 @@ const router = new Router({
             });
         }
     }, {
-        path: '/participate/:eventId',
+        path: '/event/:eventId/participate',
         meta: {
             'title': '__("seo_home_page")',
             'id_prop': 'pratilipi_id',
@@ -406,7 +406,7 @@ const router = new Router({
         },
         component: EventParticipatePageComponent
     }, {
-        path: '/participate/:eventId/:eventPratilipiId',
+        path: '/event/:eventId/participate/:eventPratilipiId',
         meta: {
             'title': '__("seo_home_page")',
             'id_prop': 'pratilipi_id',
