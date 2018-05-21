@@ -391,8 +391,9 @@ export default {
         },
 
         goToSecondStepToEdit(eventId, pratilipiEventId) {
+            console.log(`/event/${this.$route.params.eventSlug}/participate/${pratilipiEventId}?step=2`)
             this.$router.push({
-                path: `event/${eventId}/participate/${pratilipiEventId}?step=2`
+                path: `/event/${this.$route.params.eventSlug}/participate/${pratilipiEventId}?step=2`
             });
         },
 
@@ -915,7 +916,7 @@ export default {
         'getEventPratilipiCreateOrUpdateStateSuccess'(state) {
             if (state === 'LOADING_SUCCESS') {
                 this.$router.push({
-                    path: `/event/${this.$route.params.eventId}/participate/${this.getEventPratilipiData._id}`,
+                    path: `/event/${this.$route.params.eventSlug}/participate/${this.getEventPratilipiData._id}`,
                     query: {
                         step: 2
                     }
@@ -933,7 +934,7 @@ export default {
             if (state === 'LOADING_ERROR') {
                 alert('Ha! You cannot do that!');
                 this.$router.push({
-                    path: `/event/${this.$route.params.eventId}/participate/`
+                    path: `/event/${this.$route.params.eventSlug}/participate/`
                 })
             }
         },
@@ -1053,7 +1054,7 @@ export default {
         });
 
         this.fetchEventDetails(this.$route.params.eventId);
-
+        console.log('FROM PARTICIPATE PAGE: ', this.$route.params);
         if (!this.$route.params.eventPratilipiId) {
             this.currentStep = 1;
         }

@@ -122,11 +122,11 @@ export default {
             this.scrollPosition = window.scrollY;
         },
         goToEventParticipate() {
-            this.$router.push('/participate/' + this.getEventData.eventId);
+            this.$router.push(`/event/${this.$route.params.event_slug}/participate/`);
         },
         goToSecondStepToEdit(eventId, pratilipiEventId) {
             this.$router.push({
-                path: `event/${eventId}/participate/${pratilipiEventId}?step=2`
+                path: `/event/${this.$route.params.event_slug}/participate/${pratilipiEventId}?step=2`
             });
         }
     },

@@ -398,19 +398,41 @@ const router = new Router({
             });
         }
     }, {
-        path: '/event/:eventId/participate',
+        path: '/event/:eventSlug/participate',
         meta: {
             'title': '__("seo_home_page")',
             'id_prop': 'pratilipi_id',
             'store': 'eventparticipate'
         },
+        beforeEnter: (to, from, next) => {
+            const eventSlug = to.params.eventSlug;
+            DataAccessor.getEventBySlug(eventSlug, (data) => {
+                if (!data) {
+                    next('/notfound');
+                    return;
+                }
+                to.params.eventId = data.eventId;
+                next();
+            });
+        },
         component: EventParticipatePageComponent
     }, {
-        path: '/event/:eventId/participate/:eventPratilipiId',
+        path: '/event/:eventSlug/participate/:eventPratilipiId',
         meta: {
             'title': '__("seo_home_page")',
             'id_prop': 'pratilipi_id',
             'store': 'eventparticipate'
+        },
+        beforeEnter: (to, from, next) => {
+            const eventSlug = to.params.eventSlug;
+            DataAccessor.getEventBySlug(eventSlug, (data) => {
+                if (!data) {
+                    next('/notfound');
+                    return;
+                }
+                to.params.eventId = data.eventId;
+                next();
+            });
         },
         component: EventParticipatePageComponent
     }, {
