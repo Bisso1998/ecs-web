@@ -189,6 +189,7 @@ export default {
         width: $sideLength;
         height: $sideLength;
         transform-style: preserve-3d;
+        z-index: 101;
 
         .face {
             position: absolute;

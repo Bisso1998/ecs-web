@@ -31,5 +31,6 @@ export default {
     getEventData: state => state.event,
     getEventLoadingState: state => state.eventDataLoadingState,
     getDraftedEventPratilipiLoadingState: state => state.draftedEventPratilipis.loading_state,
-    getDraftedEventPratilipi: state => state.draftedEventPratilipis.data
+    getDraftedEventPratilipi: state => state.draftedEventPratilipis.data,
+    getEventPratilipiImageUploadLoadingState: state => state.pratilipi_image_upload_state
 }

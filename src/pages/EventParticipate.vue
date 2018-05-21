@@ -156,6 +156,9 @@
                                 <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getEventPratilipiCoverImage + ')' }">
                                     <button class="update-img" @click="uploadCoverImage"><i class="material-icons">camera_alt</i></button>
                                     <input type="file" hidden name="pratilipiimage" accept="image/*" @change="triggerPratilipiImageUpload" id="pratilipiimage-uploader">
+                                    <div class="uploading" v-if="getEventPratilipiImageUploadLoadingState === 'LOADING'">
+                                        <Spinner></Spinner> 
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -240,7 +243,8 @@ export default {
             'getEventLoadingState',
             'getDraftedEventPratilipiLoadingState',
             'getDraftedEventPratilipi',
-            'getEventPratilipiCoverImage'
+            'getEventPratilipiCoverImage',
+            'getEventPratilipiImageUploadLoadingState'
         ])
     },
     mixins: [
@@ -980,6 +984,7 @@ export default {
                     this.checkWordSuggester();
                 }, 500);
             }
+            this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
 
             if (step == 1) {
                 if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined) {
@@ -1040,6 +1045,7 @@ export default {
 
         if (this.$route.params.eventId && this.$route.params.eventPratilipiId && this.$route.query.step == 2) {
             this.fetchPratilipiContent(this.$route.params.eventPratilipiId);
+            this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
             this.goToSecondStep();
         }
         if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 1) {
