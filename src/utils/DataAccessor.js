@@ -826,7 +826,7 @@ export default {
     getEventPratilipiList: (eventId, aCallBack) => {
         httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_LIST,
             null,
-            { eventId, state: 'SUBMITTED' },
+            { eventId },
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
     },
 

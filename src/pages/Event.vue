@@ -9,10 +9,28 @@
                             <img :src="getEventData.bannerImageUrl" alt="">
                             <div class="desc" v-html="getEventData.description"></div>
                             <button type="button" class="participate_btn" name="button" @click="goToEventParticipate">Participate</button>
-                            <Spinner v-if="getEventDataLoadingState === 'LOADING'"></Spinner>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-if="getUserEventDraftData.length > 0">
+                        <div class="page-content event-list card" id="yourEntries">
+                            <div class="head-title">Your Drafts</div>
+                            <UserEventPratilipiComponent
+                                :pratilipiData="{ 
+                                    title: pratilipiData.title, 
+                                    coverImageUrl: pratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover', 
+                                    type: pratilipiData.type,
+                                    description: pratilipiData.description,
+                                    createdAt: pratilipiData.createdAt
+                                }"
+                                @click.native="goToSecondStepToEdit(pratilipiData.eventId, pratilipiData._id)"
+                                :key="pratilipiData._id"
+                                v-for="pratilipiData in getUserEventDraftData"
+                                ></UserEventPratilipiComponent>
+                            <!-- <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner> -->
+                        </div>
+                    </div>
+
+                    <div class="col-md-12" v-if="getUserEventData.length > 0">
                         <div class="page-content event-list card" id="yourEntries">
                             <div class="head-title">Your Entries</div>
                             <UserEventPratilipiComponent
@@ -44,6 +62,8 @@
                             <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner>
                         </div>
                     </div>
+
+                    <Spinner v-if="getEventDataLoadingState === 'LOADING'"></Spinner>
                 </div>
             </div>
         </div>
@@ -81,7 +101,8 @@ export default {
             'getEventPratilipis',
             'getEventPratilipisLoadingState',
             'getEventPratilipisCursor',
-            'getUserEventData'
+            'getUserEventData',
+            'getUserEventDraftData'
         ]),
         ...mapGetters([
             'getUserDetails'
@@ -102,6 +123,11 @@ export default {
         },
         goToEventParticipate() {
             this.$router.push('/participate/' + this.getEventData.eventId);
+        },
+        goToSecondStepToEdit(eventId, pratilipiEventId) {
+            this.$router.push({
+                path: `/participate/${eventId}/${pratilipiEventId}?step=2`
+            });
         }
     },
     watch: {
