@@ -513,6 +513,43 @@ export default {
             this.suggestions = [];
         },
 
+        setAndLocateSuggestionDropdown() {
+            const ed = tinymce.activeEditor;
+            var tinymcePosition = $(ed.getContainer()).position();
+            var toolbarPosition = $(ed.getContainer()).find(".mce-toolbar").first();
+
+            var nodePosition = $(ed.selection.getNode()).position();
+            var textareaTop = 0;
+            var textareaLeft = 0;
+
+            if (ed.selection.getRng().getClientRects().length > 0) {
+                textareaTop = ed.selection.getRng().getClientRects()[0].top + ed.selection.getRng().getClientRects()[0].height;
+                textareaLeft = ed.selection.getRng().getClientRects()[0].x;
+            } else {
+                textareaTop = parseInt($(ed.selection.getNode()).css("font-size")) + nodePosition.top;
+                textareaLeft = nodePosition.left;
+            }
+
+            var position = $(ed.getContainer()).offset();
+            var caretPosition = {
+                top:  tinymcePosition.top + toolbarPosition.innerHeight() + textareaTop,
+                left: textareaLeft
+            }
+            // $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
+            // $(".word-suggestions-dropdown").css("left", caretPosition.left - 140);
+            $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
+            
+            const suggesterWidth = $(".word-suggestions-dropdown").width();
+            if ((suggesterWidth + caretPosition.left) >= ($(window).width() - 35)) {
+                $(".word-suggestions-dropdown").css("left", "auto");
+                $(".word-suggestions-dropdown").css("right", "0");
+            }
+            else {
+                $(".word-suggestions-dropdown").css("left", caretPosition.left);
+                $(".word-suggestions-dropdown").css("right", "auto");
+            }
+        },
+
         initializeTinyMCE() {
             const that = this;
             tinymce.init({
@@ -662,6 +699,12 @@ export default {
                     }
 
                     ed.on('keydown', (event) => {
+
+                        if (event.code === 'Escape') {
+                            that.suggestions = [];
+                            that.selectedSuggestion = 0;
+                        }
+
                         if (event.code === 'Space' || event.code === 'Enter') {
                             if (that.suggestions.length > 0) {
                                 that.selectSuggestion(that.suggestions[that.selectedSuggestion], true);
@@ -688,10 +731,19 @@ export default {
                         }
 
                     });
+
+                    ed.on("mousedown", () => {
+                        that.suggestions = [];
+                        that.selectedSuggestion = 0;
+                    });
                     
                     ed.on("keyup", function(event){
-                        console.log(event.code);
+                        that.setAndLocateSuggestionDropdown();
                         that.chapters[that.selectedChapter].content = tinymce.activeEditor.getContent();
+
+                        if (event.code === 'Space' || event.code === 'Enter') {
+                            return;
+                        }                        
 
                         const words = event.target.innerText.split(/\n| |\u00A0/).map(function(item) {
                             return item.trim();
@@ -699,9 +751,9 @@ export default {
                         
 
                         console.log('---------------------------------');
-                        console.log([...that.wordList]);
-                        console.log(words);
-                        console.log(that.arr_diff(words, that.wordList));
+                        console.log('OLD LIST:', [...that.wordList]);
+                        console.log('NEW LIST:', words);
+                        console.log('DIFF: ', that.arr_diff(words, that.wordList));
 
                         const changedWords = that.arr_diff(words, that.wordList);
                         if (changedWords.length === 0) {
@@ -714,56 +766,17 @@ export default {
                             const wordToTranslate = changedWords[0];
                             that.wordToTranslate = wordToTranslate;
                             that.translateWord(changedWords[0], (suggestions) => {
+                                suggestions.push(wordToTranslate);
                                 that.selectedSuggestion = 0;
                                 that.suggestions = suggestions;
                             });    
                         }
-
-                        console.log(tinymce.activeEditor.selection.getRng());
                         console.log('---------------------------------');
-                        // if (event.code ) {}
-
-
                         
                         that.wordList = [ ...words ];
                         
-                        var tinymcePosition = $(ed.getContainer()).position();
-                        console.log('tinymcePosition', tinymcePosition);
-                        var toolbarPosition = $(ed.getContainer()).find(".mce-toolbar").first();
 
-                        var nodePosition = $(ed.selection.getNode()).position();
-                        var textareaTop = 0;
-                        var textareaLeft = 0;
-
-                        if (ed.selection.getRng().getClientRects().length > 0) {
-                            textareaTop = ed.selection.getRng().getClientRects()[0].top + ed.selection.getRng().getClientRects()[0].height;
-                            textareaLeft = ed.selection.getRng().getClientRects()[0].x;
-                            console.log(ed.selection.getRng().getClientRects()[0].x);
-                        } else {
-                            textareaTop = parseInt($(ed.selection.getNode()).css("font-size")) + nodePosition.top;
-                            textareaLeft = nodePosition.left;
-                        }
-
-                        var position = $(ed.getContainer()).offset();
-                        var caretPosition = {
-                            top:  tinymcePosition.top + toolbarPosition.innerHeight() + textareaTop,
-                            left: textareaLeft
-                        }
-                        // $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
-                        // $(".word-suggestions-dropdown").css("left", caretPosition.left - 140);
-                        $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
-                        
-                        const suggesterWidth = $(".word-suggestions-dropdown").width();
-                        if ((suggesterWidth + caretPosition.left) >= ($(window).width() - 35)) {
-                            $(".word-suggestions-dropdown").css("left", "auto");
-                            $(".word-suggestions-dropdown").css("right", "0");
-                        }
-                        else {
-                            $(".word-suggestions-dropdown").css("left", caretPosition.left);
-                            $(".word-suggestions-dropdown").css("right", "auto");
-                        }
-
-                        console.log(caretPosition);
+                        // console.log(caretPosition);
                         // console.log(event.code);
                         // console.log($(tinymce.activeEditor.selection.getNode()).text());
                         // console.log(tinymce.activeEditor.selection.getEnd());
