@@ -338,6 +338,10 @@ export default {
             });
         },
 
+        autoSaveContents() {
+            this.updatePratilipiContent({ eventPratilipiId: this.$route.params.eventPratilipiId, contents: this.chapters });
+        },
+
         saveMetaInformationAndFinalSubmit() {
             // this.updateDescriptionAndTags({ eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description, state: 'SUBMITTED' });
 
@@ -824,8 +828,10 @@ export default {
                         console.log('dirty');    
                         setTimeout(() => {
                             console.log('setting dirty');
-                            ed.setDirty(true);
-                        }, 2000);
+                            // ed.setDirty(true);
+                            that.autoSaveContents();
+                            tinymce.triggerSave();
+                        }, 20000);
                     });
 
                     ed.addButton('CustomLeftAlign', {
