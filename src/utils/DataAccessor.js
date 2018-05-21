@@ -833,7 +833,7 @@ export default {
     getDraftedEventPratilipis: (eventId, aCallBack) => {
         httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_LIST,
             null,
-            { eventId, status: 'DRAFTED' },
+            { eventId, state: 'DRAFTED' },
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
     },
 
@@ -862,12 +862,13 @@ export default {
             function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
     },
 
-    updateEventPratilipiDesc: (eventPratilipiId, { description }, successCallBack, errorCallBack) => {
+    updateEventPratilipiDesc: (eventPratilipiId, { description, state }, successCallBack, errorCallBack) => {
         httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_UPDATE,
             null,
             {
                 description,
-                eventPratilipiId
+                eventPratilipiId,
+                state
             },
             function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
     },
