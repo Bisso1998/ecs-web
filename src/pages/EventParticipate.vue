@@ -30,7 +30,10 @@
                 <div id="mySidenav" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
                     <a class="chapters" :class="{ 'selected-chapter': selectedChapter === index }" v-for="(eachChapter, index) in chapters" :key="index">
-                        <span class="chapter-title" @click="selectChapter(index)">__('writer_chapter') &nbsp; &nbsp; {{ index + 1 }}</span>
+                        <span class="chapter-title" @click="selectChapter(index)">
+                            <span v-if="chapters[index].title">{{chapters[index].title}}</span>
+                            <span v-else>__('writer_chapter') &nbsp; &nbsp; {{ index + 1 }}</span>
+                        </span>
                         <i class="material-icons chapter-delete" @click="deleteChapter(index)">delete</i>
                     </a>
 
@@ -158,7 +161,7 @@
                             <div class="col-md-8">
                                 <div class="head-title">__("pratilipi_summary")</div>
                                 <br>
-                                <textarea class="description-input" :value="description" @input="($event) => { description = $event.target.value}" placeholder="__('edit_pratilipi_summary')" required></textarea>
+                                <TranslatingInput :value="description" :oninput="(value) => { description = value}" :placeholder="'__("edit_pratilipi_summary")'"></TranslatingInput>
 
                                 <!-- <div class="tag-sections">
                                     <div class="head-title">__("tags_categories")</div>
@@ -340,7 +343,7 @@ export default {
                 message: 'confirm_submission_message',
                 data: { eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description, state: 'SUBMITTED' }
             });
-            this.openConfirmationModal();
+            this.openPrimaryConfirmationModal();
         },
 
         goToFirstStep() {
@@ -388,6 +391,9 @@ export default {
                 title: '',
                 content: ''
             });
+            this.selectedChapter = this.chapters.length - 1;
+            tinymce.activeEditor.setContent(this.chapters[this.selectedChapter].content);
+
         },
 
         uploadCoverImage() {
@@ -414,11 +420,18 @@ export default {
         deleteChapter(index) {
             if (this.chapters.length === 1) {
                 alert('You need to have atleast one chapter');
+                return;
             }
 
+            // if (index === this.chapters.length) {}
             if (index === this.chapters.length - 1) {
                 this.selectedChapter = index - 1;
             }
+
+            if (this.selectedChapter >= this.chapters.length - 1) {
+                this.selectedChapter = this.selectedChapter - 1;
+            }
+
             this.chapters.splice(index, 1);
         },
 
@@ -750,10 +763,10 @@ export default {
                         });
                         
 
-                        console.log('---------------------------------');
-                        console.log('OLD LIST:', [...that.wordList]);
-                        console.log('NEW LIST:', words);
-                        console.log('DIFF: ', that.arr_diff(words, that.wordList));
+                        // console.log('---------------------------------');
+                        // console.log('OLD LIST:', [...that.wordList]);
+                        // console.log('NEW LIST:', words);
+                        // console.log('DIFF: ', that.arr_diff(words, that.wordList));
 
                         const changedWords = that.arr_diff(words, that.wordList);
                         if (changedWords.length === 0) {
@@ -771,7 +784,7 @@ export default {
                                 that.suggestions = suggestions;
                             });    
                         }
-                        console.log('---------------------------------');
+                        // console.log('---------------------------------');
                         
                         that.wordList = [ ...words ];
                         
@@ -788,6 +801,20 @@ export default {
                         // console.log(range);
                         // range.insertNode($('.suggestion').get(0));
 
+                    });
+
+                    ed.on('init', (event) => {
+                        console.log(that.chapters[that.selectedChapter]);
+                        console.log('CHAPTERS: ', that.chapters);
+                        tinymce.activeEditor.setContent(that.chapters[that.selectedChapter].content);
+                    });
+
+                    ed.on('dirty', (event) => {
+                        console.log('dirty');    
+                        setTimeout(() => {
+                            console.log('setting dirty');
+                            ed.setDirty(true);
+                        }, 2000);
                     });
 
                     ed.addButton('CustomLeftAlign', {
@@ -867,7 +894,6 @@ export default {
     },
     watch: {
         'currentStep'(stepNumber){
-            console.log(stepNumber);
             if (stepNumber === 2) {
                 setTimeout(( ) => {
                     this.initializeTinyMCE()
@@ -888,7 +914,6 @@ export default {
         },
         'getEventPratilipiLoadingState'(state) {
             if (state === 'LOADING_SUCCESS') {
-                console.log(this.getEventPratilipiData);
                 this.title = this.getEventPratilipiData.title;
                 this.titleEn = this.getEventPratilipiData.titleEn;
                 this.type = this.getEventPratilipiData.type;
@@ -913,8 +938,6 @@ export default {
 
         'getContentLoadingState'(state) {
             const that = this;
-
-            console.log('LOADING STATE OF CONTENT: ', state);
             function compare(a,b) {
                 if (a.chapterNo < b.chapterNo)
                     return -1;
@@ -923,7 +946,6 @@ export default {
                 return 0;
             }
             if (state === 'LOADING_SUCCESS') {
-                console.log('state is now success');
                 const tempChapters = [ ...this.getContents ];
                 tempChapters.sort(compare);
 
@@ -941,11 +963,11 @@ export default {
                         content: ''
                     });
                 }
-                tinymce.activeEditor.setContent(this.chapters[this.selectedChapter].content);
+                const activeEditor = tinymce.activeEditor;
+                if(activeEditor) activeEditor.setContent(this.chapters[this.selectedChapter].content);
             }
         },
         '$route.query.step'(step) {
-            console.log('CURRENTLY Im on STEP: ', step);
 
             if (!step) {
                 this.goToFirstStep();
@@ -960,10 +982,6 @@ export default {
             }
 
             if (step == 1) {
-                console.log('this is bad');
-                console.log(this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined);
-                console.log(this.$route.params.eventId);
-                console.log(this.$route.params.eventPratilipiId);
                 if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined) {
                     this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
                     this.goToFirstStep();
@@ -980,7 +998,6 @@ export default {
         },
 
         'getEventLoadingState'(state) {
-            console.log(state);
             if (state === 'LOADING_ERROR') {
                 alert('Invalid event id');
                 this.$router.push('/event');
@@ -1042,6 +1059,10 @@ export default {
     mounted() {
         const that = this;
 
+        $('.backdrop').click(() => {
+            this.closeNav();
+        });
+
         $('#image_input').on( "change", function() {
             that.uploadOnServer();
         });
@@ -1049,7 +1070,6 @@ export default {
         // Hide Footer when keyboard comes
         if (this.isMobile()) {
             $(document).on('focus', 'input', function() {
-                console.log('input in focus');
                 that.inputInFocus = true;
             });
             $(document).on('blur', 'input', function() {

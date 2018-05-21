@@ -23,6 +23,7 @@ import {
     openInNewTab,
     openPratilipiModal,
     getCookie,
+    openPrimaryConfirmationModal,
     setCookie
 } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
@@ -58,6 +59,7 @@ export default {
         openInNewTab,
         openPratilipiModal,
         getCookie,
-        setCookie
+        setCookie,
+        openPrimaryConfirmationModal
     }
 }

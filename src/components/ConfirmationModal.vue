@@ -1,5 +1,8 @@
 <template>
     <!-- Confirmation Modal -->
+    <div>
+        
+    
     <div class="modal fade confirmation" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -20,6 +23,30 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade confirmation" id="confirmation-primary" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reportModalLabel">{{ getModalTitle }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="material-icons">close</i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label>{{ getModalMessage }}</label>
+                        </div>
+                        <button type="button" @click="dispatchActionAndCloseModal" class="btn btn-submit">__("pratilipi_confirm_delete_content_okay")</button>
+                        <button type="button" class="cancel" data-dismiss="modal" aria-label="Close">__("cancel")</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 </template>
 
@@ -46,6 +73,7 @@ export default {
         ]),
         dispatchActionAndCloseModal() {
             $('#confirmation').modal('hide');
+            $('#confirmation-primary').modal('hide');
             this.dispatchAction();
         }
     }

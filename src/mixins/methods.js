@@ -165,6 +165,10 @@ export function openConfirmationModal() {
     $('#confirmation').modal('show');
 }
 
+export function openPrimaryConfirmationModal() {
+    $('#confirmation-primary').modal('show');
+}
+
 export function openWritePratilipiModal() {
     $('#writermodal').modal('show');
 }
