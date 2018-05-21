@@ -26,7 +26,7 @@ export default {
             case 'edit_pratilipi_title':
             	return ['__("writer_input_title")', '__("writer_input_title_en")'];
             case 'confirm_submission_message':
-                return 'After final submission you wont be able to change the content';
+                return ['After final submission you wont be able to change the content'];
             default:
             	return []
         }	
