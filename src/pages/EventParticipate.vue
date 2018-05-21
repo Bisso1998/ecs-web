@@ -207,7 +207,7 @@
             </div>
             <div class="backdrop"></div>
         </div>
-        <input name="image" id="image_input" type="file" style="display: none;">
+        <input name="image" id="image_input" type="file" accept="image/*" style="display: none;">
         <input type="hidden" id="field_name" value="" />
     </MainLayout>
 </template>
@@ -351,6 +351,8 @@ export default {
         },
 
         goToFirstStep() {
+            $('.circle-loader').removeClass('load-complete');
+            $('.checkmark').hide();
             this.currentStep = 1;
         },
 
@@ -367,10 +369,14 @@ export default {
         },
 
         goToSecondStep() {
+            $('.circle-loader').removeClass('load-complete');
+            $('.checkmark').hide();
             this.currentStep = 2;
         },
 
         goToThirdStep() {
+            $('.circle-loader').removeClass('load-complete');
+            $('.checkmark').hide();
             this.currentStep = 3;
         },
 
@@ -378,8 +384,8 @@ export default {
             const that = this;
             this.currentStep = 4;
             setTimeout(() => {
-                $('.circle-loader').toggleClass('load-complete');
-                $('.checkmark').toggle();
+                $('.circle-loader').addClass('load-complete');
+                $('.checkmark').show();
                 that.showAcceptedMessage = true;
             }, 1000);
         },
@@ -950,6 +956,8 @@ export default {
                 return 0;
             }
             if (state === 'LOADING_SUCCESS') {
+
+
                 const tempChapters = [ ...this.getContents ];
                 tempChapters.sort(compare);
 
@@ -971,11 +979,18 @@ export default {
                 if(activeEditor) activeEditor.setContent(this.chapters[this.selectedChapter].content);
             }
         },
+        'getEventPratilipiData.state'(state) {
+            if (state === 'SUBMITTED') {
+                this.goToFourthStep();
+            }
+        },
+
         '$route.query.step'(step) {
 
             if (!step) {
                 this.goToFirstStep();
             }
+
 
             if (step == 2) {
                 this.fetchPratilipiContent(this.$route.params.eventPratilipiId);
@@ -1042,6 +1057,7 @@ export default {
         if (!this.$route.params.eventPratilipiId) {
             this.currentStep = 1;
         }
+
 
         if (this.$route.params.eventId && this.$route.params.eventPratilipiId && this.$route.query.step == 2) {
             this.fetchPratilipiContent(this.$route.params.eventPratilipiId);
