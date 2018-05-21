@@ -393,9 +393,19 @@ const router = new Router({
         }
     }, {
         path: '/participate/:eventId',
+        meta: {
+            'title': '__("seo_home_page")',
+            'id_prop': 'pratilipi_id',
+            'store': 'eventparticipate'
+        },
         component: EventParticipatePageComponent
     }, {
         path: '/participate/:eventId/:eventPratilipiId',
+        meta: {
+            'title': '__("seo_home_page")',
+            'id_prop': 'pratilipi_id',
+            'store': 'eventparticipate'
+        },
         component: EventParticipatePageComponent
     }, {
         path: '/:list_page_url',
