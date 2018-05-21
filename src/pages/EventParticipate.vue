@@ -336,8 +336,8 @@ export default {
 
             this.setConfirmModalAction({ 
                 action: `eventparticipate/updateDescriptionAndTags`, 
-                heading: 'Confirm Submission',
-                message: 'You wont be able to make changes after you submit',
+                heading: 'confirm_submission',
+                message: 'confirm_submission_message',
                 data: { eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description, state: 'SUBMITTED' }
             });
             this.openConfirmationModal();
