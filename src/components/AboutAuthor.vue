@@ -9,7 +9,7 @@
                 <img :src="getAuthorDetails.profileImageUrl" alt="author" class="auth-img" >
                 <div class="auth-name">{{ getAuthorDetails.name }}</div>
             </router-link>
-            <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow")</button>
+            <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow") <span class="follow-count">({{getAuthorDetails.followCount | showThousandsInK(1)}})</span></button>
             <button class="btn btn-light follow-link following" @click="checkUserAndFollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
             <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
             <button type="button" v-if="showShowMoreOfSummary" class="show_more_auth_desc" name="button" data-toggle="modal" data-target="#auth_summary_modal">__("view_more")</button>
@@ -201,10 +201,15 @@ export default {
         float: right;
         margin: 4px 10px 0 0;
         font-size: 14px;
+        border-color: #d0021b;
         i {
             vertical-align: middle;
             padding-right: 5px;
             font-size: 18px;
+        }
+        span.follow-count {
+            font-size: 10px;
+            vertical-align: text-bottom;
         }
     }
     .auth-desc {

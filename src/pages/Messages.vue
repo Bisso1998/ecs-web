@@ -14,21 +14,52 @@
                     </div>
                     <ul class="chat-list" v-if="!getUserDetails.isGuest">
                         <li class="chat-item" v-for="conversation in conversations"  v-bind:key="conversation.channelId">
-                            <div v-on:click="loadMessagesForConversation(conversation.userId)">
-                                <div class="user-img"><img  v-bind:src="conversation.profileImageUrl"  alt="profile-img"></div>
-                                <div class="chat-wrap">
-                                    <div class="user-info">
-                                        <div class="user-name" v-text="conversation.channelName"></div>
-                                        <div class="user-last-msg" v-text="conversation.lastMessage"></div>
-                                    </div>
-                                    <div class="chat-info" v-bind:class="{unread : conversation.isUnread}">
-                                        <div class="chat-time" v-text="conversation.lastMessageTimeDisplay"></div>
-                                    </div>
+                            <div class="user-img" v-on:click="loadMessagesForConversation(conversation.userId)"><img  v-bind:src="conversation.profileImageUrl"  alt="profile-img"></div>
+                            <div class="chat-wrap">
+                                <div class="user-info" v-on:click="loadMessagesForConversation(conversation.userId)">
+                                    <div class="user-name" v-text="conversation.channelName"></div>
+                                    <div class="user-last-msg" v-text="conversation.lastMessage"></div>
+                                </div>
+                                <div class="chat-info" v-bind:class="{unread : conversation.isUnread}" v-on:click="loadMessagesForConversation(conversation.userId)">
+                                    <div class="chat-time" v-text="conversation.lastMessageTimeDisplay"></div>
+                                    <span class="blocked" v-if="blockedUserStatus[conversation.userId] == true"><i class="material-icons">block</i></span>
+                                </div>
+                                <button class="options-btn" type="button" id="msg-user-more-option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="OptionsDropdownMenu" v-on:click="setToBeDeletedChannelData(conversation.channelId, conversation.messageId)">
+                                    <button type="button" class="btn report-btn" data-toggle="modal" data-target="#messagesConfirmation">__("pratilipi_delete_content")</button>
+                                    <button type="button" class="btn report-btn" v-if="blockedUserStatus[conversation.userId] != true" v-on:click="blockUser(conversation.userId)">__("chat_block_user")</button>
+                                    <button type="button" class="btn report-btn" v-if="blockedUserStatus[conversation.userId] == true" v-on:click="unblockUser(conversation.userId)">__("chat_unblock_user")</button>
                                 </div>
                             </div>
                         </li>
                         <li class="no-messages" v-if="loadingConversations != true && conversations.length == 0">__("chat_no_msgs")</li>
                     </ul>
+
+                    <!-- Message Confirmation Modal -->
+                    <div class="modal fade confirmation" id="messagesConfirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reportModalLabel">__("pratilipi_delete_content")?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>__("chat_delete_msg")</label>
+                                        </div>
+                                        <button type="button" class="btn btn-submit" data-dismiss="modal" aria-label="Close">__("cancel")</button>
+                                        <button type="button" @click="deleteConversation" class="cancel">__("pratilipi_confirm_delete_content_okay")</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <Spinner  v-if="loadingConversations == true && !getUserDetails.isGuest && conversations.length == 0"></Spinner>
                 </div>
             </div>
@@ -52,7 +83,10 @@ export default {
             channelLastReadMessage: {},
             fetchedChannelMetadataData: {},
             loadingConversations: true,
-            listenerCallbacks: []
+            listenerCallbacks: [],
+            toDeleteChannelId: '',
+            toDeleteChannelLastMessage: '',
+            blockedUserStatus: {}
         }
     },
 
@@ -60,7 +94,8 @@ export default {
 
         ...mapActions('messages', [
             'saveConversationsDataToCache',
-            'clearConversationsDataCache'
+            'clearConversationsDataCache',
+            'removeChannelFromCache'
         ]),
 
         loadChannelMetadata(channelId){
@@ -96,6 +131,7 @@ export default {
                     self.fetchedChannelMetadataData[channelId] = {'otherUserId' : otherUserId, conversationDisplayName : conversationDisplayName, conversationImageUrl : conversationImageUrlScaled};
                     self.attachLastReadListener(channelId);
                     self.attachLastMessageListener(channelId);
+                    self.watchBlockedConversation(otherUserId);
                 });
             });
         },
@@ -213,12 +249,13 @@ export default {
             const self = this;
             if((self.conversationListCached != undefined) && (self.conversationListCached.length > 0)){
                 self.conversationListCached.forEach( function (conversation){
-                    conversation.isLoadedFromCache = true;
-                    self.conversations.push(conversation);
+                    const conversationObj = { ...conversation };
+                    conversationObj.isLoadedFromCache = true;
+                    self.conversations.push(conversationObj);
                 });
-                self.channelLastMessage = self.channelLastMessageCached;
-                self.channelLastReadMessage = self.channelLastReadMessageCached;
-                self.fetchedChannelMetadataData = self.fetchedChannelMetadataDataCached;
+                self.channelLastMessage = { ...self.channelLastMessageCached };
+                self.channelLastReadMessage = { ...self.channelLastReadMessageCached };
+                self.fetchedChannelMetadataData = { ...self.fetchedChannelMetadataDataCached };
                 self.clearConversationsDataCache();
             }
             setTimeout(self.clearConversationsFromCache, 4000);
@@ -279,6 +316,55 @@ export default {
 
         },
 
+        setToBeDeletedChannelData(channelId, lastDeliveredMessageId) {
+            const self = this;
+            console.log("Setting to be deleted channel data. Channel Id : ", channelId, " Last Delivered message : ", lastDeliveredMessageId);
+            self.toDeleteChannelId = channelId;
+            self.toDeleteChannelLastMessage = lastDeliveredMessageId;
+            console.log("Setting to be deleted channel data. Channel Id : ", self.toDeleteChannelId, " Last Delivered message : ", self.toDeleteChannelLastMessage);
+        },
+
+        deleteConversation() {
+            const self = this;
+            debugger;
+            self.removeChannelFromCache({channelId: self.toDeleteChannelId});
+            self.removeConversationForChannel(self.toDeleteChannelId);
+            let deleteConversationUpdates = {};
+            deleteConversationUpdates['/CHATS/user_watched_channels/' + this.getUserDetails.userId + '/' + self.toDeleteChannelId] = {};
+            deleteConversationUpdates['/CHATS/user_channels/' + this.getUserDetails.userId + '/' + self.toDeleteChannelId + '/lastDeletedMessage'] = self.toDeleteChannelLastMessage;
+            self.firebaseGrowthDB.ref().update(deleteConversationUpdates, function (error) {
+                if (error) {
+                    console.log("Error updating data:", error);
+                }
+            });
+            $('#messagesConfirmation').modal('hide');
+        },
+
+        watchBlockedConversation (otherUserId) {
+            const self = this;
+            const userBlockedRef = this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId);
+            let userBlockedCallback = userBlockedRef.on('value', function (snapshot) {
+                console.log("Changed blocked status for user : ",otherUserId ,"Value : ", snapshot.val());
+                let isUserBlockedBySelf = snapshot.val();
+                if(isUserBlockedBySelf == true) {
+                    self.$set(self.blockedUserStatus, otherUserId ,true);
+                }
+                else {
+                    self.$set(self.blockedUserStatus, otherUserId ,false);
+                }
+            });
+            self.listenerCallbacks.push({ref: userBlockedRef, callback: userBlockedCallback, type:"value"});
+        },
+
+        blockUser (otherUserId) {
+            this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId).set(true);
+        },
+
+
+        unblockUser (otherUserId) {
+            this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId).set(false);
+        },
+
         initializeFirebaseAndStartListening() {
             const self = this;
             import('firebase').then((firebase) => {
@@ -289,6 +375,7 @@ export default {
                 self.updateUserProfile();
             });
         }
+
     },
 
     created() {
@@ -436,7 +523,7 @@ export default {
             }
             .user-info {
                 float: left;
-                width: calc(100% - 65px);
+                width: calc(100% - 100px);
                 margin-right: 5px;
                 .user-name {
                     font-size: 15px;
@@ -458,7 +545,7 @@ export default {
                 }
             }
             .chat-info {
-                float: right;
+                float: left;
                 width: 60px;
                 text-align: right;
                 color: #9B9B9B;
@@ -476,6 +563,38 @@ export default {
                     float: right;
                     margin: 5px 0;
                     border-radius: 50%;
+                }
+            }
+            .options-btn {
+                width: 30px;
+                float: right;
+                position: relative;
+                z-index: 2;
+                color: #9e9e9e;
+                background: none;
+                border: 0;
+                &:focus, &:active {
+                    outline: none;
+                    box-shadow: none;
+                    border: 0;
+                }
+            }
+            .blocked {
+                i {
+                    font-size: 13px;
+                    margin: 4px;
+                    color: #9e9e9e;
+                }
+            }
+            .dropdown-menu {
+                text-align: right;
+                min-width: 200px;
+                button {
+                    display: block;
+                    background: none;
+                    text-align: right;
+                    width: 100%;
+                    font-size: 13px;
                 }
             }
         }
@@ -510,6 +629,34 @@ export default {
     .no-messages {
         margin: 10px 0;
         color: #555;
+    }
+    .confirmation {
+        text-align: left;
+        max-width: 350px;
+        margin: 50px auto;
+        .modal-body {
+            padding-top: 0;
+        }
+        .form-group {
+            font-size: 14px;
+        }
+        .btn-submit {
+            background: #d0021b;
+            color: #fff;
+            border: 0;
+            font-size: 14px;
+            float: right;
+        }
+        .cancel {
+            background: #e9e9e9;
+            border: 0;
+            float: right;
+            font-size: 12px;
+            line-height: 33px;
+            margin-right: 10px;
+            padding: 0 10px;
+            border-radius: 3px;
+        }
     }
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
     <div class="social-share">
+        <span class="text">__("seo_share_page"): </span>
         <a :href="getFacebookShareUrl" @click="triggerFbEndShareEvent" class="fb" target="_blank">
             <span class="social-icon"><icon name="facebook-f"></icon></span>
         </a>
@@ -109,8 +110,15 @@ export default {
 
 <style  lang="scss" scoped>
 .social-share {
-    width: 180px;
+    width: 280px;
     margin: 0 auto;
+    text-align: center;
+    span.text {
+        font-size: 14px;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+    }
     a {
         vertical-align: middle;
         color: #2c3e50;
@@ -120,13 +128,13 @@ export default {
         font-size: 14px;
         .social-icon {
             display: inline-block;
-            width: 35px;
-            height: 35px;
+            width: 45px;
+            height: 45px;
             background: #3b5998;
             color: #fff;
             border-radius: 50%;
             text-align: center;
-            line-height: 35px;
+            line-height: 45px;
             margin-right: 5px;
         }
         .fa-icon {

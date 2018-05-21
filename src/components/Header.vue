@@ -20,7 +20,7 @@
                     <div class="col-lg-5 col-sm-8 col-7 search-box-wrap">
                         <div class="search-box d-none d-lg-block">
                             <div class="form-group has-feedback" id="search-box-big">
-                                <input type="text" class="form-control" @input="changeSearchText" @keyup.enter="goToSearchPage" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
+                                <input type="text" class="form-control" :value="searchText" @input="changeSearchText" @keyup.enter="goToSearchPage" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
                                 <i class="material-icons">search</i>
                                 <SearchBox :searchText="searchText"></SearchBox>
                             </div>
@@ -34,7 +34,7 @@
                         </div>
                         <div class="d-block d-lg-none search-box search-box-2 text-right">
                             <div class="form-group has-feedback" id="search-box-small">
-                                <input type="text" class="form-control" @input="changeSearchText" @keyup.enter="goToSearchPage" @click="openmobilesearch" v-bind:placeholder="'__("search")'"/>
+                                <input type="text" class="form-control" :value="searchText" @input="changeSearchText" @keyup.enter="goToSearchPage" @click="openmobilesearch" v-bind:placeholder="'__("search")'"/>
                                 <i class="material-icons">search</i>
                                 <SearchBox :searchText="searchText"></SearchBox>
                             </div>
@@ -201,6 +201,9 @@ export default {
                 $('header').removeClass('nav-up');
                 this.counter = 0;
             }
+        },
+        '$route.query.q'(value) {
+            this.searchText = value;
         }
     },
     mounted() {
@@ -217,6 +220,10 @@ export default {
         }
         if (this.$route.path === '/notifications' ) {
             $(".notification-icon").addClass("active");
+        }
+
+        if(this.$route.query.q) {
+            this.searchText = this.$route.query.q;
         }
     },
     destroyed() {

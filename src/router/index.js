@@ -17,6 +17,11 @@ import LoginPageComponent from '@/pages/Login.vue'
 import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
 import MessagesComponent from '@/pages/Messages.vue'
 import MessageUserComponent from '@/pages/MessageUser.vue'
+
+import PratilipiPageComponent from '@/pages/Pratilipi.vue';
+import DiscoveryPageComponent from '@/pages/Discovery.vue'
+import AuthorPageComponent from '@/pages/Author.vue'
+import HomePageComponent from '@/pages/Home.vue'
 import EventParticipatePageComponent from '@/pages/EventParticipate.vue'
 
 import constants from '@/constants'
@@ -31,24 +36,25 @@ const router = new Router({
     routes: [{
         path: '/',
         name: 'Home',
-        component: () => {
-            const isTrue = true;
-            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/home_v1/Home.vue');
-            }
-            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/home_v2/Home.vue');
-            }
-            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/home_v3/Home.vue');
-            }
-            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/home_v4/Home.vue');
-            }
-            else {
-                return import('@/pages/Home.vue');
-            }
-        },
+        // component: () => {
+        //     const isTrue = true;
+        //     if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+        //         return import('@/pages/experiments/home_v1/Home.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+        //         return import('@/pages/experiments/home_v2/Home.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+        //         return import('@/pages/experiments/home_v3/Home.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+        //         return import('@/pages/experiments/home_v4/Home.vue');
+        //     }
+        //     else {
+        //         return import('@/pages/Home.vue');
+        //     }
+        // },
+        component: HomePageComponent,
         meta: {
             'store': 'homepage',
             'title': '__("seo_home_page") | __("pratilipi")'
@@ -70,24 +76,23 @@ const router = new Router({
     }, {
         path: '/story/:slug_id',
         name: 'Pratilipi',
-        component: () => {
-            const isTrue = true;
-            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/rating_v1/Pratilipi.vue');
-            }
-            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/rating_v2/Pratilipi.vue');
-            }
-            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/rating_v3/Pratilipi.vue');
-            }
-            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/rating_v4/Pratilipi.vue');
-            }
-            else {
-                return import('@/pages/Pratilipi.vue');
-            }
-        },
+        // component: () => {
+        //     const isTrue = true;
+        //     // if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+        //     //     return import('@/pages/experiments/rating_v1/Pratilipi.vue');
+        //     // }
+        //     // else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+        //     //     return import('@/pages/experiments/rating_v2/Pratilipi.vue');
+        //     // }
+        //     // else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+        //     //     return import('@/pages/experiments/rating_v3/Pratilipi.vue');
+        //     // }
+        //     // else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+        //     //     return import('@/pages/experiments/rating_v4/Pratilipi.vue');
+        //     // }
+        //     PratilipiPageComponent
+        // },
+        component: PratilipiPageComponent,
         meta: {
             'store': 'pratilipipage',
             'id_prop': 'slug_id'
@@ -95,24 +100,25 @@ const router = new Router({
     }, {
         path: '/user/:user_slug',
         name: 'User',
-        component: () => {
-            const isTrue = true;
-            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/profile_v1/Author.vue');
-            }
-            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/profile_v2/Author.vue');
-            }
-            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/profile_v3/Author.vue');
-            }
-            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/profile_v4/Author.vue');
-            }
-            else {
-                return import('@/pages/Author.vue');
-            }
-        },
+        // component: () => {
+        //     const isTrue = true;
+        //     if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+        //         return import('@/pages/experiments/profile_v1/Author.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+        //         return import('@/pages/experiments/profile_v2/Author.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+        //         return import('@/pages/experiments/profile_v3/Author.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+        //         return import('@/pages/experiments/profile_v4/Author.vue');
+        //     }
+        //     else {
+        //         return import('@/pages/Author.vue');
+        //     }
+        // },
+        component: AuthorPageComponent,
         meta: {
             'store': 'authorpage',
             'title': '__("seo_home_page")',
@@ -134,24 +140,25 @@ const router = new Router({
     }, {
         path: '/discover',
         name: 'Discovery_Page',
-        component: () => {
-            const isTrue = true;
-            if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/discovery_v1/Discovery.vue');
-            }
-            else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/discovery_v2/Discovery.vue');
-            }
-            else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/discovery_v3/Discovery.vue');
-            }
-            else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/discovery_v4/Discovery.vue');
-            }
-            else {
-                return import('@/pages/Discovery.vue');
-            }
-        },
+        // component: () => {
+        //     const isTrue = true;
+        //     if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
+        //         return import('@/pages/experiments/discovery_v1/Discovery.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
+        //         return import('@/pages/experiments/discovery_v2/Discovery.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
+        //         return import('@/pages/experiments/discovery_v3/Discovery.vue');
+        //     }
+        //     else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
+        //         return import('@/pages/experiments/discovery_v4/Discovery.vue');
+        //     }
+        //     else {
+        //         return import('@/pages/Discovery.vue');
+        //     }
+        // },
+        component: DiscoveryPageComponent,
         meta: {
             'title': '__("seo_navigation_page") | __("pratilipi")',
             'store': 'discover'
@@ -160,18 +167,17 @@ const router = new Router({
         path: '/read',
         name: 'Reader_Page',
         component: () => {
-            const isTrue = true;
             if (getCookie('bucketId') >= 2 && getCookie('bucketId') < 4) {
-                return import('@/pages/experiments/reader_v1/Reader.vue');
+                return import('@/pages/experiments/reader_v5/Reader.vue');
             }
             else if (getCookie('bucketId') >= 4 && getCookie('bucketId') < 6) {
-                return import('@/pages/experiments/reader_v2/Reader.vue');
+                return import('@/pages/experiments/reader_v6/Reader.vue');
             }
             else if (getCookie('bucketId') >= 6 && getCookie('bucketId') < 8) {
-                return import('@/pages/experiments/reader_v3/Reader.vue');
+                return import('@/pages/experiments/reader_v7/Reader.vue');
             }
             else if (getCookie('bucketId') >= 8 && getCookie('bucketId') < 10) {
-                return import('@/pages/experiments/reader_v4/Reader.vue');
+                return import('@/pages/experiments/reader_v8/Reader.vue');
             }
             else {
                 return import('@/pages/Reader.vue');

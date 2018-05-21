@@ -8,6 +8,10 @@ import readerV1AnalyticsEvents from '@/static_scripts/experiment_events/reader_v
 import readerV2AnalyticsEvents from '@/static_scripts/experiment_events/reader_v2'
 import readerV3AnalyticsEvents from '@/static_scripts/experiment_events/reader_v3'
 import readerV4AnalyticsEvents from '@/static_scripts/experiment_events/reader_v4'
+import readerV5AnalyticsEvents from '@/static_scripts/experiment_events/reader_v5'
+import readerV6AnalyticsEvents from '@/static_scripts/experiment_events/reader_v6'
+import readerV7AnalyticsEvents from '@/static_scripts/experiment_events/reader_v7'
+import readerV8AnalyticsEvents from '@/static_scripts/experiment_events/reader_v8'
 import profileV1AnalyticsEvents from '@/static_scripts/experiment_events/profile_v1'
 import profileV2AnalyticsEvents from '@/static_scripts/experiment_events/profile_v2'
 import profileV3AnalyticsEvents from '@/static_scripts/experiment_events/profile_v3'
@@ -25,10 +29,14 @@ const rating_v1 = ['WGEN001'];
 const rating_v2 = ['WGEN002'];
 const rating_v3 = ['WGEN003'];
 const rating_v4 = ['WGEN004'];
-const reader_v1 = ['WGEN005'];
-const reader_v2 = ['WGEN006'];
-const reader_v3 = ['WGEN007'];
-const reader_v4 = ['WGEN008'];
+// const reader_v1 = ['WGEN005'];
+// const reader_v2 = ['WGEN006'];
+// const reader_v3 = ['WGEN007'];
+// const reader_v4 = ['WGEN008'];
+const reader_v5 = ['WGEN005'];
+const reader_v6 = ['WGEN006'];
+const reader_v7 = ['WGEN007'];
+const reader_v8 = ['WGEN008'];
 const profile_v1 = ['WGEN009'];
 const profile_v2 = ['WGEN010'];
 const profile_v3 = ['WGEN011'];
@@ -331,17 +339,29 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         case (rating_v4.indexOf(experimentType) > -1):
             eventProps = { ...ratingV4AnalyticsEvents[eventName] };
             break;
-        case (reader_v1.indexOf(experimentType) > -1):
-            eventProps = { ...readerV1AnalyticsEvents[eventName] };
+        // case (reader_v1.indexOf(experimentType) > -1):
+        //     eventProps = { ...readerV1AnalyticsEvents[eventName] };
+        //     break;
+        // case (reader_v2.indexOf(experimentType) > -1):
+        //     eventProps = { ...readerV2AnalyticsEvents[eventName] };
+        //     break;
+        // case (reader_v3.indexOf(experimentType) > -1):
+        //     eventProps = { ...readerV3AnalyticsEvents[eventName] };
+        //     break;
+        // case (reader_v4.indexOf(experimentType) > -1):
+        //     eventProps = { ...readerV4AnalyticsEvents[eventName] };
+        //     break;
+        case (reader_v5.indexOf(experimentType) > -1):
+            eventProps = { ...readerV5AnalyticsEvents[eventName] };
             break;
-        case (reader_v2.indexOf(experimentType) > -1):
-            eventProps = { ...readerV2AnalyticsEvents[eventName] };
+        case (reader_v6.indexOf(experimentType) > -1):
+            eventProps = { ...readerV6AnalyticsEvents[eventName] };
             break;
-        case (reader_v3.indexOf(experimentType) > -1):
-            eventProps = { ...readerV3AnalyticsEvents[eventName] };
+        case (reader_v7.indexOf(experimentType) > -1):
+            eventProps = { ...readerV7AnalyticsEvents[eventName] };
             break;
-        case (reader_v4.indexOf(experimentType) > -1):
-            eventProps = { ...readerV4AnalyticsEvents[eventName] };
+        case (reader_v8.indexOf(experimentType) > -1):
+            eventProps = { ...readerV8AnalyticsEvents[eventName] };
             break;
         case (profile_v1.indexOf(experimentType) > -1):
             eventProps = { ...profileV1AnalyticsEvents[eventName] };
