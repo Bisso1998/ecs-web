@@ -21,6 +21,10 @@ export default {
     getEventPratilipiCreateOrUpdateStateSuccess: state => state.eventPratilipiCreateOrUpdateState,
     getEventPratilipiLoadingState: state => state.eventPratilipiLoadingState,
     getEventPratilipiData: state => state.eventPratilipi,
+    getEventPratilipiCoverImage: state => { 
+        if(state.eventPratilipi.coverImage) return state.eventPratilipi.coverImage;
+        else return 'https://0.ptlp.co/pratilipi/cover'
+    },
     getContentLoadingState: state => state.contentLoadingState,
     getEventPratilipDescUpdateState: state => state.eventPratilipDescUpdateState,
     getContents: state => state.contents,

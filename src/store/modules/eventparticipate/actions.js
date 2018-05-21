@@ -50,10 +50,10 @@ export default {
         });
     },
 
-    updateDescriptionAndTags({ commit, state }, { eventPratilipiId, description }) {
+    updateDescriptionAndTags({ commit }, { eventPratilipiId, description, state }) {
         commit('setEventPratilipiDescUpdateStateTrue');
         DataAccessor.updateEventPratilipiDesc(eventPratilipiId, {
-            description
+            description, state
         }, (eventPratilipiData) => {
             if (eventPratilipiData) {
                 commit('setEventPratilipiDescUpdateStateSuccess', eventPratilipiData);
