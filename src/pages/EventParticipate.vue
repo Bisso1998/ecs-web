@@ -938,7 +938,6 @@ export default {
             }
 
             if (state === 'LOADING_ERROR') {
-                alert('Ha! You cannot do that!');
                 this.$router.push({
                     path: `/event/${this.$route.params.eventSlug}/participate/`
                 })
