@@ -12,7 +12,7 @@
                         </div>
                     </div>
                     <div class="col-md-12" v-if="getUserEventDraftData.length > 0">
-                        <div class="page-content event-list card" id="yourEntries">
+                        <div class="page-content event-list card" id="yourDrafts">
                             <div class="head-title">Your Drafts</div>
                             <UserEventPratilipiComponent
                                 :pratilipiData="{ 
