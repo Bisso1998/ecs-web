@@ -26,6 +26,7 @@ import inputmodal from './modules/inputmodal'
 import readerpage from './modules/readerpage'
 import pratilipimodal from './modules/pratilipimodal'
 import messages from './modules/messages'
+import eventparticipate from './modules/eventparticipate'
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -57,7 +58,8 @@ export default new Vuex.Store({
         readerpage,
         inputmodal,
         pratilipimodal,
-        messages
+        messages,
+        eventparticipate
     },
     strict: debug
 })

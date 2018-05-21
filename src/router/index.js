@@ -17,6 +17,7 @@ import LoginPageComponent from '@/pages/Login.vue'
 import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
 import MessagesComponent from '@/pages/Messages.vue'
 import MessageUserComponent from '@/pages/MessageUser.vue'
+import EventParticipatePageComponent from '@/pages/EventParticipate.vue'
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -390,6 +391,22 @@ const router = new Router({
                 }
             });
         }
+    }, {
+        path: '/participate/:eventId',
+        meta: {
+            'title': '__("seo_home_page")',
+            'id_prop': 'pratilipi_id',
+            'store': 'eventparticipate'
+        },
+        component: EventParticipatePageComponent
+    }, {
+        path: '/participate/:eventId/:eventPratilipiId',
+        meta: {
+            'title': '__("seo_home_page")',
+            'id_prop': 'pratilipi_id',
+            'store': 'eventparticipate'
+        },
+        component: EventParticipatePageComponent
     }, {
         path: '/:list_page_url',
         name: 'List_Page',

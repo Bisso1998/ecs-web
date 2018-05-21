@@ -57,6 +57,13 @@ const USER_EMAIL_API = "/user/email";
 const TOP_AUTHORS_API = "/author/list/readcount";
 const USER_FCM_TOKEN_API = "/user/accesstoken/fcmtoken";
 
+const EVENT_PARTICIPATE_PREFIX = '/event-participate';
+const EVENT_PARTICIPATE_GET = '/metadata';
+const EVENT_PARTICIPATE_LIST = '/list';
+const EVENT_PARTICIPATE_CREATE = '/metadata';
+const EVENT_PARTICIPATE_UPDATE = '/metadata';
+const EVENT_PARTICIPATE_CONTENT = '/content';
+
 const request = function(name, api, params) {
     return {
         "name": name,
@@ -772,6 +779,13 @@ export default {
             function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
     },
 
+    uploadEventPratilipiImage: (formData, successCallBack, errorCallBack) => {
+        httpUtil.postMultipart(API_PREFIX + '/event-participate/images?type=' + 'PRATILIPI',
+            null,
+            formData,
+            function(response, status) { processPostResponse(response, status, successCallBack, errorCallBack) });
+    },
+
     getTrendingSearchKeywords: function( language, aCallBack ) {
         httpUtil.get( API_PREFIX + SEARCH_PREFIX + SEARCH_TRENDING_API,
             null,
@@ -797,6 +811,81 @@ export default {
                 "pratilipiResultCount": resultCount != null ? resultCount : 20,
                 "authorResultCount": 0 },
             function( response, status ) { processGetResponse( response, status, aCallBack ) } );
+    },
+
+
+    getEventPratilipiById: (eventPratilipiId, aCallBack) => {
+        httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_GET,
+            null,
+            {
+                eventPratilipiId
+            },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) });
+    },
+
+    getEventPratilipiList: (eventId, aCallBack) => {
+        httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_LIST,
+            null,
+            { eventId },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) });
+    },
+
+    getDraftedEventPratilipis: (eventId, aCallBack) => {
+        httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_LIST,
+            null,
+            { eventId, state: 'DRAFTED' },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) });
+    },
+
+    createEventPratilipi: ({ language, title, titleEn, type, eventId }, successCallBack, errorCallBack) => {
+        httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_CREATE,
+            null,
+            {
+                language,
+                title,
+                titleEn,
+                eventId,
+                type
+            },
+            function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack) } );
+    },
+    updateEventPratilipi: (eventPratilipiId, { language, title, titleEn, type }, successCallBack, errorCallBack) => {
+        httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_UPDATE,
+            null,
+            {
+                language,
+                title,
+                titleEn,
+                type,
+                eventPratilipiId
+            },
+            function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+    },
+
+    updateEventPratilipiDesc: (eventPratilipiId, { description, state }, successCallBack, errorCallBack) => {
+        httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_UPDATE,
+            null,
+            {
+                description,
+                eventPratilipiId,
+                state
+            },
+            function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+    },
+
+    bulkSaveChapters: (eventPratilipiId, contents, successCallBack, errorCallBack) => {
+        httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_CONTENT,
+            null,
+            { contents, eventPratilipiId },
+            function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+    },
+    getEventPratilipiContent: (eventPratilipiId, aCallBack) => {
+        httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_CONTENT,
+            null,
+            {
+                eventPratilipiId
+            },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) });
     }
 
 };

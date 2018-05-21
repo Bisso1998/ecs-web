@@ -8,7 +8,25 @@
                             <div class="head-title">{{ getEventData.name }}</div>
                             <img :src="getEventData.bannerImageUrl" alt="">
                             <div class="desc" v-html="getEventData.description"></div>
+                            <button type="button" class="participate_btn" name="button" @click="goToEventParticipate">Participate</button>
                             <Spinner v-if="getEventDataLoadingState === 'LOADING'"></Spinner>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="page-content event-list card" id="yourEntries">
+                            <div class="head-title">Your Entries</div>
+                            <UserEventPratilipiComponent
+                                :pratilipiData="{ 
+                                    title: pratilipiData.title, 
+                                    coverImageUrl: pratilipiData.coverImageUrl || 'https://0.ptlp.co/pratilipi/cover', 
+                                    type: pratilipiData.type,
+                                    description: pratilipiData.description,
+                                    createdAt: pratilipiData.createdAt
+                                }"
+                                :key="pratilipiData._id"
+                                v-for="pratilipiData in getUserEventData"
+                                ></UserEventPratilipiComponent>
+                            <!-- <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner> -->
                         </div>
                     </div>
                     <div class="col-md-12" v-if="getEventPratilipisLoadingState === 'LOADING_SUCCESS' && getEventPratilipis.length !== 0">
@@ -35,6 +53,7 @@
 <script>
 import MainLayout from '@/layout/main-layout.vue';
 import PratilipiComponent from '@/components/Pratilipi.vue';
+import UserEventPratilipiComponent from '@/components/UserEventPratilipi.vue';
 import Spinner from '@/components/Spinner.vue';
 import constants from '@/constants'
 import mixins from '@/mixins';
@@ -44,6 +63,7 @@ export default {
     components: {
         MainLayout,
         PratilipiComponent,
+        UserEventPratilipiComponent,
         Spinner
     },
     data() {
@@ -60,7 +80,8 @@ export default {
             'getEventDataLoadingState',
             'getEventPratilipis',
             'getEventPratilipisLoadingState',
-            'getEventPratilipisCursor'
+            'getEventPratilipisCursor',
+            'getUserEventData'
         ]),
         ...mapGetters([
             'getUserDetails'
@@ -73,16 +94,21 @@ export default {
             'fetchInitialEventPratilipis',
             'fetchMorePratilipisForEvent',
             'addToLibrary',
-            'removeFromLibrary'
+            'removeFromLibrary',
+            'fetchEventPratilipis'
         ]),
         updateScroll() {
             this.scrollPosition = window.scrollY;
+        },
+        goToEventParticipate() {
+            this.$router.push('/participate/' + this.getEventData.eventId);
         }
     },
     watch: {
         'getEventData.eventId' (eventId) {
             if (eventId) {
                 this.fetchInitialEventPratilipis({ eventId, resultCount: 20 });
+                this.fetchEventPratilipis(eventId);
                 this.triggerAnanlyticsEvent('LANDED_EVENTM_EVENT', 'CONTROL', {
                     'USER_ID': this.getUserDetails.userId,
                     'PARENT_ID': this.getEventData.eventId
@@ -98,6 +124,19 @@ export default {
                 this.getEventPratilipisCursor !== null) {
 
                 this.fetchMorePratilipisForEvent({ eventId, resultCount: 20 });
+            }
+        },
+        'getEventDataLoadingState'(state) {
+            if (state === 'LOADING_SUCCESS') {
+                var hash = window.location.hash;
+                console.log(window.location.hash);
+                if (hash == "#yourEntries") {
+                    setTimeout(() => {
+                        $('html, body').animate({
+                            scrollTop: $("#yourEntries").offset().top
+                        }, 1000);
+                    }, 500);
+                }
             }
         }
     },
@@ -157,6 +196,18 @@ export default {
             text-align: left;
             padding: 10px;
             font-size: 14px;
+        }
+        .participate_btn {
+            background: #d0021b;
+            color: #fff;
+            max-width: 250px;
+            margin: 10px;
+            padding: 5px;
+            border-radius: 3px;
+            outline: none;
+            border: 0;
+            font-size: 14px;
+            cursor: pointer;
         }
     }
     .event-list {

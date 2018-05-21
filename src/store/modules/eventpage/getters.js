@@ -28,6 +28,8 @@ export default {
 
     getEventPratilipis: state => state.pratilipiList.data,
     getEventPratilipisCursor: state => state.pratilipiList.cursor,
-    getEventPratilipisLoadingState: state => state.pratilipiList.loading_state
+    getEventPratilipisLoadingState: state => state.pratilipiList.loading_state,
 
+    getUserEventDataLoadingState: state => state.userEventPratilipis.loading_state,
+    getUserEventData: state => state.userEventPratilipis.data,
 }
