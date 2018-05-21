@@ -18,7 +18,7 @@
                             <UserEventPratilipiComponent
                                 :pratilipiData="{ 
                                     title: pratilipiData.title, 
-                                    coverImageUrl: pratilipiData.coverImageUrl || 'https://0.ptlp.co/pratilipi/cover', 
+                                    coverImageUrl: pratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover', 
                                     type: pratilipiData.type,
                                     description: pratilipiData.description,
                                     createdAt: pratilipiData.createdAt
