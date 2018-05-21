@@ -150,7 +150,7 @@
                     <div v-if="currentStep == 3">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getEventPratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover' + ')' }">
+                                <div class="book-image" v-bind:style="{ backgroundImage: 'url(' + getEventPratilipiCoverImage + ')' }">
                                     <button class="update-img" @click="uploadCoverImage"><i class="material-icons">camera_alt</i></button>
                                     <input type="file" hidden name="pratilipiimage" accept="image/*" @change="triggerPratilipiImageUpload" id="pratilipiimage-uploader">
                                 </div>
@@ -177,7 +177,7 @@
                                 <button class="prev" @click="goToSecondStepForEdit">__("back")</button>
                             </div>
                             <div class="col-6 text-right">
-                                <button class="next" @click="saveMetaInformationAndFinalSubmit">__("writer_to_next_screen")</button>
+                                <button class="next" @click="saveMetaInformationAndFinalSubmit">Finish</button>
                             </div>
                         </div>    
                     </div>
@@ -223,6 +223,9 @@ export default {
         UserEventPratilipiComponent
     },
     computed: {
+        ...mapGetters([
+            'getUserDetails'
+        ]),
         ...mapGetters('eventparticipate', [
             'getEventPratilipiCreateOrUpdateStateSuccess',
             'getEventPratilipiLoadingState',
@@ -233,7 +236,8 @@ export default {
             'getEventData',
             'getEventLoadingState',
             'getDraftedEventPratilipiLoadingState',
-            'getDraftedEventPratilipi'
+            'getDraftedEventPratilipi',
+            'getEventPratilipiCoverImage'
         ])
     },
     mixins: [
@@ -275,12 +279,31 @@ export default {
             'fetchDraftedUserEventPratilipis'
         ]),
 
+        ...mapActions([
+            'setAfterLoginAction',
+            'setConfirmModalAction'
+        ]),
+
         updateCurrentTitle(value) {
             this.title = value;
         },
 
         createEventPratilipi() {
             // this.currentStep = 2;
+            
+            if (this.getUserDetails.isGuest) {
+                const { eventId } = this.$route.params;
+                this.setAfterLoginAction({ action: `eventparticipate/createEventPratilipiData`, data: { 
+                    eventId, 
+                    title: this.title,
+                    titleEn: this.titleEn,
+                    type: this.type,
+                    language: this.getCurrentLanguage().fullName.toUpperCase()
+                }});
+                this.openLoginModal(this.$route.meta.store, 'EVENTPARTICIPATECREATE', 'EVENTPARTICIPATE');
+                return;
+            }
+            
             
             if(this.$route.params.eventId && this.$route.params.eventPratilipiId) {
                 this.updateEventPratilipiData({
@@ -309,10 +332,15 @@ export default {
         },
 
         saveMetaInformationAndFinalSubmit() {
-            this.updateDescriptionAndTags({ eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description });
-            this.$router.push({
-                query: { step : 4 }
+            // this.updateDescriptionAndTags({ eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description, state: 'SUBMITTED' });
+
+            this.setConfirmModalAction({ 
+                action: `eventparticipate/updateDescriptionAndTags`, 
+                heading: 'Confirm Submission',
+                message: 'You wont be able to make changes after you submit',
+                data: { eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description, state: 'SUBMITTED' }
             });
+            this.openConfirmationModal();
         },
 
         goToFirstStep() {
@@ -864,7 +892,9 @@ export default {
 
         'getEventPratilipDescUpdateState'(state) {
             if (state === 'LOADING_SUCCESS') {
-
+                this.$router.push({
+                    query: { step : 4 }
+                });
             }
         },
 
