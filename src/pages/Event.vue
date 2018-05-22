@@ -14,7 +14,8 @@
                     <div class="col-md-12" v-if="getUserEventDraftData.length > 0">
                         <div class="page-content event-list card" id="yourDrafts">
                             <div class="head-title">Your Drafts</div>
-                            <UserEventPratilipiComponent
+                            <router-link v-for="pratilipiData in getUserEventDraftData" :key="pratilipiData._id" :to='"/event/" + $route.params.event_slug + "/participate/" + pratilipiData._id + "?step=2"'>
+                                <UserEventPratilipiComponent
                                 :pratilipiData="{ 
                                     title: pratilipiData.title, 
                                     coverImageUrl: pratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover', 
@@ -22,29 +23,25 @@
                                     description: pratilipiData.description,
                                     createdAt: pratilipiData.createdAt
                                 }"
-                                @click.native="goToSecondStepToEdit(pratilipiData.eventId, pratilipiData._id)"
-                                :key="pratilipiData._id"
-                                v-for="pratilipiData in getUserEventDraftData"
                                 ></UserEventPratilipiComponent>
-                            <!-- <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner> -->
+                            </router-link>
                         </div>
                     </div>
 
                     <div class="col-md-12" v-if="getUserEventData.length > 0">
                         <div class="page-content event-list card" id="yourEntries">
                             <div class="head-title">Your Entries</div>
-                            <UserEventPratilipiComponent
+                            <router-link v-for="pratilipiData in getUserEventData" :key="pratilipiData._id" :to='"/event/" + $route.params.event_slug + "/participate/" + pratilipiData._id + "?step=2"'>
+                                <UserEventPratilipiComponent
                                 :pratilipiData="{ 
-                                    title: pratilipiData.title, 
-                                    coverImageUrl: pratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover', 
+                                    title: pratilipiData.title,
+                                    coverImageUrl: pratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover',
                                     type: pratilipiData.type,
                                     description: pratilipiData.description,
                                     createdAt: pratilipiData.createdAt
                                 }"
-                                :key="pratilipiData._id"
-                                v-for="pratilipiData in getUserEventData"
                                 ></UserEventPratilipiComponent>
-                            <!-- <Spinner v-if="getEventPratilipisLoadingState === 'LOADING'"></Spinner> -->
+                            </router-link>
                         </div>
                     </div>
                     <div class="col-md-12" v-if="getEventPratilipisLoadingState === 'LOADING_SUCCESS' && getEventPratilipis.length !== 0">
@@ -123,11 +120,6 @@ export default {
         },
         goToEventParticipate() {
             this.$router.push(`/event/${this.$route.params.event_slug}/participate/`);
-        },
-        goToSecondStepToEdit(eventId, pratilipiEventId) {
-            this.$router.push({
-                path: `/event/${this.$route.params.event_slug}/participate/${pratilipiEventId}?step=2`
-            });
         }
     },
     watch: {

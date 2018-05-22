@@ -84,7 +84,11 @@
                                 <form>
                                     <div class="form-group">
                                         <label for="pratilipi_write_title_input">__("writer_input_title") *</label>
-                                        <TranslatingInput :value="title" :oninput="updateCurrentTitle" :placeholder="'__("writer_input_title")'"></TranslatingInput>
+                                        <p class="validation_error" v-if="titleIsMissing">
+                                            <i class="material-icons">error</i>
+                                            <span>This is a madatory field</span>
+                                        </p>
+                                        <TranslatingInput :classObj="{ error: titleIsMissing }" :value="title" :oninput="updateCurrentTitle" :placeholder="'__("writer_input_title")'"></TranslatingInput>
                                     </div>
                                     <div class="form-group">
                                         <label for="pratilipi_write_title_en_input">__("writer_input_title_en")</label>
@@ -269,7 +273,8 @@ export default {
             writerInFocus: false,
             inputInFocus: false,
             scrollPosition: null,
-            selectedSuggestion: 0
+            selectedSuggestion: 0,
+            titleIsMissing: false
         }
     },
     methods: {
@@ -298,11 +303,17 @@ export default {
         createEventPratilipi() {
             // this.currentStep = 2;
             
+            if (!this.title || this.title.trim() === '') {
+                this.titleIsMissing = true;
+                return;
+            }
+
+            this.titleIsMissing = false;
             if (this.getUserDetails.isGuest) {
                 const { eventId } = this.$route.params;
                 this.setAfterLoginAction({ action: `eventparticipate/createEventPratilipiData`, data: { 
                     eventId, 
-                    title: this.title,
+                    title: this.title.trim(),
                     titleEn: this.titleEn,
                     type: this.type,
                     language: this.getCurrentLanguage().fullName.toUpperCase()
@@ -312,7 +323,7 @@ export default {
             }
             
             
-            if(this.$route.params.eventId && this.$route.params.eventPratilipiId) {
+            if(this.$route.params.eventSlug && this.$route.params.eventPratilipiId) {
                 this.updateEventPratilipiData({
                     eventPratilipiId: this.$route.params.eventPratilipiId,
                     title: this.title,
@@ -362,7 +373,10 @@ export default {
 
         goToFirstStepForEdit() {
             this.$router.push({
-                query: { step : 1 }
+                path: `/event/${this.$route.params.eventSlug}/participate/${this.$route.params.eventPratilipiId}?step=1`,
+                params: {
+                    eventId: this.getEventData.eventId
+                }
             });
         },
 
@@ -563,8 +577,6 @@ export default {
                 top:  tinymcePosition.top + toolbarPosition.innerHeight() + textareaTop,
                 left: textareaLeft
             }
-            // $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
-            // $(".word-suggestions-dropdown").css("left", caretPosition.left - 140);
             $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
             
             const suggesterWidth = $(".word-suggestions-dropdown").width();
@@ -769,7 +781,7 @@ export default {
                         that.setAndLocateSuggestionDropdown();
                         that.chapters[that.selectedChapter].content = tinymce.activeEditor.getContent();
 
-                        if (event.code === 'Space' || event.code === 'Enter') {
+                        if (event.code === 'Space' || event.code === 'Enter' || (event.code === 'ArrowDown' && that.suggestions.length > 0) || (event.code === 'ArrowUp' && that.suggestions.length > 0)) {
                             return;
                         }                        
 
@@ -985,12 +997,6 @@ export default {
                 if(activeEditor) activeEditor.setContent(this.chapters[this.selectedChapter].content);
             }
         },
-        'getEventPratilipiData.state'(state) {
-            if (state === 'SUBMITTED') {
-                this.goToFourthStep();
-            }
-        },
-
         '$route.query.step'(step) {
 
             if (!step) {
@@ -1008,7 +1014,8 @@ export default {
             this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
 
             if (step == 1) {
-                if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined) {
+                console.log(this.$route.params);
+                if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined) {
                     this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
                     this.goToFirstStep();
                 }
@@ -1058,29 +1065,29 @@ export default {
             content: ''
         });
 
-        this.fetchEventDetails(this.$route.params.eventId);
+        this.fetchEventDetails(this.$route.params.eventSlug);
         console.log('FROM PARTICIPATE PAGE: ', this.$route.params);
         if (!this.$route.params.eventPratilipiId) {
             this.currentStep = 1;
         }
 
 
-        if (this.$route.params.eventId && this.$route.params.eventPratilipiId && this.$route.query.step == 2) {
+        if (this.$route.params.eventSlug && this.$route.params.eventPratilipiId && this.$route.query.step == 2) {
             this.fetchPratilipiContent(this.$route.params.eventPratilipiId);
             this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
             this.goToSecondStep();
         }
-        if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 1) {
+        if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 1) {
             this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
             this.goToFirstStepForEdit();
         }
 
-        if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 3) {
+        if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 3) {
             this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
             this.goToThirdStep();
         }
 
-        if (this.$route.params.eventId != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 4) {
+        if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 4) {
             this.goToFourthStep();
         }
     },
@@ -1621,6 +1628,21 @@ export default {
     .drafted-items {
         overflow-x: auto;
         white-space: nowrap;
+    }
+    .validation_error {
+        margin: 5px 5px 5px 0;
+        font-size: 12px;
+        color: #d00b12;
+        i {
+            font-size: 16px;
+            vertical-align: middle;
+        }
+        span {
+            vertical-align: middle;
+        }
+    }
+    .form-control.error {
+        border-color: #d00b12;
     }
 }
 </style>
