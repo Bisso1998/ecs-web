@@ -404,17 +404,6 @@ const router = new Router({
             'id_prop': 'pratilipi_id',
             'store': 'eventparticipate'
         },
-        beforeEnter: (to, from, next) => {
-            const eventSlug = to.params.eventSlug;
-            DataAccessor.getEventBySlug(eventSlug, (data) => {
-                if (!data) {
-                    next('/notfound');
-                    return;
-                }
-                to.params.eventId = data.eventId;
-                next();
-            });
-        },
         component: EventParticipatePageComponent
     }, {
         path: '/event/:eventSlug/participate/:eventPratilipiId',
@@ -422,17 +411,6 @@ const router = new Router({
             'title': '__("seo_home_page")',
             'id_prop': 'pratilipi_id',
             'store': 'eventparticipate'
-        },
-        beforeEnter: (to, from, next) => {
-            const eventSlug = to.params.eventSlug;
-            DataAccessor.getEventBySlug(eventSlug, (data) => {
-                if (!data) {
-                    next('/notfound');
-                    return;
-                }
-                to.params.eventId = data.eventId;
-                next();
-            });
         },
         component: EventParticipatePageComponent
     }, {

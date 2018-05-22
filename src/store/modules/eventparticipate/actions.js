@@ -98,9 +98,9 @@ export default {
     fetchEventDetails({ commit, state }, eventId) {
         console.log(eventId);
         commit('setEventDataLoadingTrue');
-        DataAccessor.getEventById(eventId, (eventData) => {
-            if (eventData.status === 200) {
-                commit('setEventDataLoadingSuccess', eventData.response);
+        DataAccessor.getEventBySlug(eventId, (eventData) => {
+            if (eventData) {
+                commit('setEventDataLoadingSuccess', eventData);
             } else {
                 commit('setEventDataLoadingError');
             }
