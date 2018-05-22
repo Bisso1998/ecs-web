@@ -5,7 +5,7 @@
                 <router-link
                     :to="{ path: each_banner.actionUrl }"
                      @click.native="triggerAnalyticsEvent(each_banner.bannerId)">
-                    <img :src="getHighResolutionImage(each_banner.imageUrl)" alt="">
+                    <img :src="getHighResolutionImage(each_banner.imageUrl)" alt="banner-image">
                 </router-link>
             </div>
         </slick>
