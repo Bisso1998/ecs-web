@@ -6,7 +6,7 @@
                     <div class="col-md-4">
                         <div class="foot-title">__("footer_mobile_app")</div>
                         <div class="foot-items">
-                            <a @click.prevent="triggerEvent" href="#" target="_blank">
+                            <a @click.prevent="triggerEvent" href="#" target="_blank" rel="noopener">
                                 <img src="../assets/google-play-badge.png" alt="google-play" class="google-play-badge">
                             </a>
                         </div>
@@ -21,10 +21,10 @@
                     <div class="col-md-4">
                         <div class="foot-title">__("footer_follow_us_on_social_media")</div>
                         <div class="foot-items social">
-                            <a @click="triggerFbEvent" :href="'__('facebook_page')'" class="fb" target="_blank"><icon name="facebook-f"></icon></a>
-                            <a @click="triggerTwEvent" :href="'__('twitter_page')'" class="twitter" target="_blank"><icon name="twitter"></icon></a>
-                            <a @click="triggerGpEvent" :href="'__('googleplus_page')'" class="google" target="_blank"><icon name="google-plus"></icon></a>
-                            <a @click="triggerLnEvent" :href="'__('linkedin_page')'" class="linkedin" target="_blank"><icon name="linkedin"></icon></a>
+                            <a @click="triggerFbEvent" :href="'__('facebook_page')'" class="fb" target="_blank" rel="noopener"><icon name="facebook-f"></icon></a>
+                            <a @click="triggerTwEvent" :href="'__('twitter_page')'" class="twitter" target="_blank" rel="noopener"><icon name="twitter"></icon></a>
+                            <a @click="triggerGpEvent" :href="'__('googleplus_page')'" class="google" target="_blank" rel="noopener"><icon name="google-plus"></icon></a>
+                            <a @click="triggerLnEvent" :href="'__('linkedin_page')'" class="linkedin" target="_blank" rel="noopener"><icon name="linkedin"></icon></a>
                         </div>
                     </div>
                 </div>

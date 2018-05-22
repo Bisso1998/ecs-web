@@ -15,7 +15,7 @@
                         <div class="col-md-12 d-block d-md-block d-lg-none" v-if="isMobile()"><!-- Android only -->
                             <div class="card install-app">
                                 <div class="card-content">
-                                <a @click.prevent="triggerEvent" href="#" target="_blank">
+                                <a @click.prevent="triggerEvent" href="#" target="_blank" rel="noopener">
                                     <p>Write your stories on Pratilipi App</p>
                                     <img src="https://www.ptlp.co/resource-all/image/google-play-badge.png" alt="">
                                 </a>
