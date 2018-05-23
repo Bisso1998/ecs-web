@@ -4,41 +4,54 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">check</th>
-                                    <th scope="col">User</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Title_En</th>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">Language</th>
-                                    <!-- <th scope="col">Word Count</th> -->
-                                    <th scope="col">Submission ID</th>
-                                    <th scope="col">Slug</th>
-                                    <th scope="col">State</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="eachEventPratilipi in getEventPratilipis" :key="eachEventPratilipi._id">
-                                    <th scope="row">1</th>
-                                    <td>{{ eachEventPratilipi.pratilipiUserId }}</td>
-                                    <td>{{ eachEventPratilipi.title }}</td>
-                                    <td>{{ eachEventPratilipi.titleEn }}</td>
-                                    <td>{{ eachEventPratilipi.type }}</td>
-                                    <td>{{ eachEventPratilipi.language }}</td>
-                                    <!-- <td>{{ eachEventPratilipi.titleEn }}</td> -->
-                                    <td>{{ eachEventPratilipi._id }}</td>
-                                    <td v-if="eachEventPratilipi.pratilipiSlug"><router-link :to="eachEventPratilipi.pratilipiSlug">{{ eachEventPratilipi.pratilipiSlug }}</router-link></td>
-                                    <td v-else>NA</td>
-                                    <td>{{ eachEventPratilipi.state }}</td>
-                                    <td>
-                                        <button type="button" class="btn sign-in" :disabled="eachEventPratilipi.state !== 'SUBMITTED'" @click="publishContent(eachEventPratilipi._id)">Publish</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive-md event-table">
+                            <table class="table table-hover table-sm">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">User</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Title_En</th>
+                                        <th scope="col">Type</th>
+                                        <!-- <th scope="col">Language</th> -->
+                                        <!-- <th scope="col">Word Count</th> -->
+                                        <th scope="col">Submission ID</th>
+                                        <th scope="col">Slug</th>
+                                        <th scope="col">State</th>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(eachEventPratilipi, index) in getEventPratilipis" :key="eachEventPratilipi._id">
+                                        <th scope="row">{{ index + 1 }}</th>
+                                        <td>{{ eachEventPratilipi.pratilipiUserId }}</td>
+                                        <td>{{ eachEventPratilipi.title }}</td>
+                                        <td>{{ eachEventPratilipi.titleEn }}</td>
+                                        <td>{{ eachEventPratilipi.type }}</td>
+                                        <!-- <td>{{ eachEventPratilipi.language }}</td> -->
+                                        <!-- <td>{{ eachEventPratilipi.titleEn }}</td> -->
+                                        <td>{{ eachEventPratilipi._id }}</td>
+                                        <td v-if="eachEventPratilipi.pratilipiSlug"><router-link :to="eachEventPratilipi.pratilipiSlug">{{ eachEventPratilipi.pratilipiSlug.split('/').pop() }}</router-link></td>
+                                        <td v-else>NA</td>
+                                        <td class="state" :class="{
+                                            'drafted': eachEventPratilipi.state === 'DRAFTED',
+                                            'submitted': eachEventPratilipi.state === 'SUBMITTED',
+                                            'pratilipi-created': eachEventPratilipi.state === 'PRATILIPI_CREATED',
+                                            'content-created': eachEventPratilipi.state === 'CONTENT_CREATED',
+                                            'published': eachEventPratilipi.state === 'PRATILIPI_PUBLISHED',
+                                        }"><span>{{ eachEventPratilipi.state.split('_')[1] || eachEventPratilipi.state.split('_')[0] }}</span></td>
+                                        <td>
+                                            <button type="button" class="btn sign-in" :disabled="eachEventPratilipi.state !== 'SUBMITTED'" @click="publishContent(eachEventPratilipi._id)">Publish</button>
+                                        </td>
+                                        <td>
+                                            <i class="material-icons">delete</i>
+                                            <!-- <i class="material-icons">restore_from_trash</i> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,6 +116,33 @@ export default {
         margin-right: 10px;
         &:hover {
             opacity: 0.9;
+        }
+    }
+    .event-table {
+        font-size: 14px;
+        td {
+            vertical-align: middle;
+            &.state span {
+                background: #e9e9e9;
+                border-radius: 3px;
+                padding: 5px;
+                font-size: 12px;
+            }
+            &.state.published span {
+                background: #4CAF50;
+            }
+            &.state.drafted span {
+                background: #FF9800;
+            }
+            &.state.submitted span {
+                background: #42bab0;
+            }
+            &.state.pratilipi-created span {
+                background: #e9e9e9;
+            }
+            &.state.content-created span {
+                background: #e9e9e9;
+            }
         }
     }
 }
