@@ -68,11 +68,11 @@
             </div>
             
             <!-- Report Modal -->
-            <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+            <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="reportModalLabel">__("report_title")</h5>
+                            <h5 class="modal-title">__("report_title")</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <i class="material-icons">close</i>
                             </button>
@@ -81,7 +81,7 @@
                             <form>
                                 <div class="form-group">
                                     <label for="reportModalTextarea">__("report_issue")</label>
-                                    <textarea class="form-control" id="reportModalTextarea" rows="3" placeholder="__('report_issue')"></textarea>
+                                    <textarea class="form-control" rows="3" placeholder="__('report_issue')"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-submit">__("submit")</button>
                                 <button type="button" class="cancel" data-dismiss="modal" aria-label="Close">__("cancel")</button>
