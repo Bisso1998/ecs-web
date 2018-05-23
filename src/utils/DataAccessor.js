@@ -58,11 +58,13 @@ const TOP_AUTHORS_API = "/author/list/readcount";
 const USER_FCM_TOKEN_API = "/user/accesstoken/fcmtoken";
 
 const EVENT_PARTICIPATE_PREFIX = '/event-participate';
+const EVENT_PARTICIPATE_PREFIX_ADMIN = '/event-participate/admin';
 const EVENT_PARTICIPATE_GET = '/metadata';
 const EVENT_PARTICIPATE_LIST = '/list';
 const EVENT_PARTICIPATE_CREATE = '/metadata';
 const EVENT_PARTICIPATE_UPDATE = '/metadata';
 const EVENT_PARTICIPATE_CONTENT = '/content';
+const EVENT_PARTICIPATE_PUBLISH = '/publish';
 
 const request = function(name, api, params) {
     return {
@@ -886,6 +888,20 @@ export default {
                 eventPratilipiId
             },
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
+    },
+
+    getAdminEventPratilipi: (query, aCallBack) => {
+        httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX_ADMIN + EVENT_PARTICIPATE_LIST,
+            null,
+            query,
+            function( response, status ) { processGetResponse( response, status, aCallBack ) });
+    },
+
+    publishAdminEventPratilipi: (id, successCallBack, errorCallBack) => {
+        httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX_ADMIN + EVENT_PARTICIPATE_PUBLISH,
+            null,
+            { id },
+            function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
     }
 
 };
