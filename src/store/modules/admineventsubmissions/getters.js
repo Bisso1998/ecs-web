@@ -1,4 +1,5 @@
 export default {
     getEventPratilipisLoadingStatus: state => state.eventPratilipi.loading_state,
-    getEventPratilipis: state => state.eventPratilipi.data
+    getEventPratilipis: state => state.eventPratilipi.data,
+    getEventPratilipiCount: state => state.eventPratilipi.count
 }

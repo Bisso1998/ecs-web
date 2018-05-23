@@ -21,5 +21,15 @@ export default {
     },
     setEventPratilipiPublishError(state) {
 
+    },
+
+    setEventPratilipiCountLoadingTrue(state) {
+
+    },
+    setEventPratilipiCountLoadingSuccess(state, count) {
+        state.eventPratilipi.count = count;
+    },
+    setEventPratilipiCountLoadingError(state) {
+
     }
 }

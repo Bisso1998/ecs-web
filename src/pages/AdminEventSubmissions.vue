@@ -8,10 +8,14 @@
                             <p>Filter By:</p>
                             <div class="form-row">
                                 <div class="form-group col-md-3">
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Language...</option>
-                                        <option>Hindi</option>
-                                        <option>Malayalam</option>
+                                    <select id="inputState" class="form-control" v-model="selectedLanguage">
+                                        <option disabled selected>__("language_choose_language")</option>
+                                        <option 
+                                            :value="eachLanguage.fullName.toUpperCase()" 
+                                            v-for="eachLanguage in constants.LANGUAGES" 
+                                            :key="eachLanguage.shortName">
+                                            {{ eachLanguage.fullName.toUpperCase() }}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
@@ -60,7 +64,7 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(eachEventPratilipi, index) in getEventPratilipis" :key="eachEventPratilipi._id">
-                                        <th scope="row">{{ index + 1 }}</th>
+                                        <th scope="row">{{ ((currentPage - 1) * limitPerPage ) + index + 1 }}</th>
                                         <td class="user-id">{{ eachEventPratilipi.pratilipiUserId }}</td>
                                         <td class="title">{{ eachEventPratilipi.title }}</td>
                                         <td class="title-en">{{ eachEventPratilipi.titleEn }}</td>
@@ -91,15 +95,19 @@
                         <div class="pagination">
                             <nav aria-label="...">
                                 <ul class="pagination">
-                                    <li class="page-item disabled">
-                                        <span class="page-link">Previous</span>
+                                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                        <span class="page-link" @click="goToPage(currentPage - 1)">Previous</span>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item active">
+                                    <li class="page-item" :class="{ active: currentPage == index }" v-for="index in Math.ceil(getEventPratilipiCount/limitPerPage)" :key="index">
+                                        <span class="page-link" @click="goToPage(index)">{{ index }}</span>
+                                    </li>
+                                    <!-- <li class="page-item active">
                                         <span class="page-link">2</span>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                                    <li class="page-item" :class="{ disabled: currentPage ===  Math.ceil(getEventPratilipiCount/limitPerPage)}">
+                                        <span class="page-link" @click="goToPage(currentPage + 1)">Next</span>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -114,30 +122,55 @@
 import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants';
 import Spinner from '@/components/Spinner.vue';
+import mixins from '@/mixins';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    data() {
+        return {
+            limitPerPage: 20,
+            currentPage: 1,
+            constants: constants,
+            selectedLanguage: this.getCurrentLanguage().fullName.toUpperCase()
+        }
+    },
     components: {
         MainLayout,
         Spinner
     },
+    mixins: [
+        mixins
+    ],
     computed: {
         ...mapGetters('admineventsubmissions', [
             'getEventPratilipis',
-            'getEventPratilipisLoadingStatus'
+            'getEventPratilipisLoadingStatus',
+            'getEventPratilipiCount'
         ])
     },
     methods: {
         ...mapActions('admineventsubmissions', [
             'fetchEventPratilipis',
+            'fetchEventPratilipiCount',
             'publishContent'
         ]),
+
+        goToPage(page) {
+            const skip = (page - 1) * this.limitPerPage;
+            this.currentPage = page;
+            this.fetchEventPratilipis({ limit: this.limitPerPage, skip });
+        }
     },
     watch: {
-        
+        'selectedLanguage'(language) {
+            console.log(language);
+            this.currentPage = 1;
+            this.fetchEventPratilipis({ limit: this.limitPerPage, language });
+        }
     },
     created() {
-        this.fetchEventPratilipis();
+        this.fetchEventPratilipis({ limit: this.limitPerPage, language: this.getCurrentLanguage().fullName.toUpperCase() });
+        this.fetchEventPratilipiCount({ language: this.getCurrentLanguage().fullName.toUpperCase() });
     }
 }
 </script>

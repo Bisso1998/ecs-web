@@ -1,6 +1,7 @@
 export default {
     eventPratilipi: {
         data: [],
-        loading_state: 'LOADING'
+        loading_state: 'LOADING',
+        count: 0
     }
 }
