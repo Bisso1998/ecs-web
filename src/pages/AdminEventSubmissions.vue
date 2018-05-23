@@ -61,7 +61,17 @@
                                 <tbody>
                                     <tr v-for="(eachEventPratilipi, index) in getEventPratilipis" :key="eachEventPratilipi._id">
                                         <th scope="row">{{ index + 1 }}</th>
-                                        <td class="user-id">{{ eachEventPratilipi.pratilipiUserId }}</td>
+                                        <td class="user-id">
+                                            <div class="popover_wrapper">
+                                                <span class="popover_title">{{ eachEventPratilipi.pratilipiUserId }}</span>
+                                                <div class="push popover_content">
+                                                    <a href="#">
+                                                        <div class="author-img"><img src="https://0.ptlp.co/author/image?width=100" alt=""></div>
+                                                        <div class="author-name">Author Name</div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td class="title">{{ eachEventPratilipi.title }}</td>
                                         <td class="title-en">{{ eachEventPratilipi.titleEn }}</td>
                                         <td>{{ eachEventPratilipi.type }}</td>
@@ -219,6 +229,62 @@ export default {
                         color: #555;
                         vertical-align: middle;
                     }
+                }
+            }
+            
+            .popover_wrapper {
+                position: relative;
+                margin-top: 0px;
+                display: inline-block;
+                .popover_title {
+                    color: #17a2b8;
+                }
+                .popover_content {
+                    opacity: 0;
+                    visibility: hidden;
+                    position: absolute;
+                    left: 0;
+                    top: 30px;
+                    transform: translate(0,10px);
+                    background-color: #fff;
+                    padding: 10px;
+                    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+                    width: auto;
+                    min-width: 180px;
+                    a {
+                        text-decoration: none;
+                        display: block;
+                        position: relative;
+                        color: #17a2b8;
+                        .author-img {
+                            width: 40px;
+                            height: 40px;
+                            overflow: hidden;
+                            border-radius: 50%;
+                            float: left;
+                            margin-right: 10px;
+                            vertical-align: middle;
+                            img {
+                                max-width: 100%;
+                            }
+                        }
+                        .author-name {
+                            vertical-align: middle;
+                            font-size: 13px;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            max-width: 100px;
+                            overflow: hidden;
+                            line-height: 40px;
+                        }
+                    }
+                }
+                &:hover .popover_content {
+                    z-index: 10;
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translate(0,-20px);
+                    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
                 }
             }
         }
