@@ -1,6 +1,6 @@
 <template>
     <div class="comments-container">
-        <ul id="comments-list" @scroll="updateScroll" :class="{'y-scrolling': haveInfiniteScroll }" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
+        <ul @scroll="updateScroll" :class="{'y-scrolling': haveInfiniteScroll }" class="comments-list" v-if="getReviewsLoadingState === 'LOADING_SUCCESS' || getReviewsData.length > 0">
             <OwnReview 
                 :userPratilipiData="userPratilipiData" 
                 :authorId="authorId"
