@@ -4,6 +4,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+                        <h2>Event Submissions</h2>
                         <div class="filters">
                             <p>Filter By:</p>
                             <div class="form-row">
@@ -161,7 +162,7 @@ export default {
         margin-top: 65px;
     }
     h2 {
-        font-size: 22px;
+        font-size: 20px;
         font-weight: bold;
         text-align: left;
         border-left: 3px solid #d0021b;
