@@ -15,10 +15,10 @@ export default {
 
     publishContent({ commit, state }, id) {
         DataAccessor.publishAdminEventPratilipi(id, (eventPratilipiData) => {
-            if (eventPratilipiData.status === 200) {
-                // commit('setEventPratilipiDataLoadingSuccess', eventPratilipiData.response.pratilipis);
+            if (eventPratilipiData) {
+                commit('setEventPratilipiPublishSuccess', eventPratilipiData);
             } else {
-                // commit('setEventPratilipiDataLoadingError');
+                commit('setEventPratilipiPublishError');
             }
         });
     }
