@@ -4,6 +4,42 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="filters">
+                            <p>Filter By:</p>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <select id="inputState" class="form-control">
+                                        <option selected>Language...</option>
+                                        <option>Hindi</option>
+                                        <option>Malayalam</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <select id="inputState" class="form-control">
+                                        <option selected>State...</option>
+                                        <option>Drafted</option>
+                                        <option>Submitted</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <select id="inputState" class="form-control">
+                                        <option selected>Event Id...</option>
+                                        <option>Id 1</option>
+                                        <option>Id 2</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                        <label class="form-check-label" for="inlineCheckbox1">Viewed</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                        <label class="form-check-label" for="inlineCheckbox2">Approved</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-responsive-md event-table">
                             <table class="table table-hover table-sm">
                                 <thead class="thead-light">
@@ -25,14 +61,14 @@
                                 <tbody>
                                     <tr v-for="(eachEventPratilipi, index) in getEventPratilipis" :key="eachEventPratilipi._id">
                                         <th scope="row">{{ index + 1 }}</th>
-                                        <td>{{ eachEventPratilipi.pratilipiUserId }}</td>
-                                        <td>{{ eachEventPratilipi.title }}</td>
-                                        <td>{{ eachEventPratilipi.titleEn }}</td>
+                                        <td class="user-id">{{ eachEventPratilipi.pratilipiUserId }}</td>
+                                        <td class="title">{{ eachEventPratilipi.title }}</td>
+                                        <td class="title-en">{{ eachEventPratilipi.titleEn }}</td>
                                         <td>{{ eachEventPratilipi.type }}</td>
                                         <!-- <td>{{ eachEventPratilipi.language }}</td> -->
                                         <!-- <td>{{ eachEventPratilipi.titleEn }}</td> -->
-                                        <td>{{ eachEventPratilipi._id }}</td>
-                                        <td v-if="eachEventPratilipi.pratilipiSlug"><router-link :to="eachEventPratilipi.pratilipiSlug">{{ eachEventPratilipi.pratilipiSlug.split('/').pop() }}</router-link></td>
+                                        <td class="submission-id">{{ eachEventPratilipi._id }}</td>
+                                        <td class="slug" v-if="eachEventPratilipi.pratilipiSlug"><router-link :to="eachEventPratilipi.pratilipiSlug">{{ eachEventPratilipi.pratilipiSlug.split('/').pop() }}</router-link></td>
                                         <td v-else>NA</td>
                                         <td class="state" :class="{
                                             'drafted': eachEventPratilipi.state === 'DRAFTED',
@@ -42,11 +78,11 @@
                                             'published': eachEventPratilipi.state === 'PRATILIPI_PUBLISHED',
                                         }"><span>{{ eachEventPratilipi.state.split('_')[1] || eachEventPratilipi.state.split('_')[0] }}</span></td>
                                         <td>
-                                            <button type="button" class="btn sign-in" :disabled="eachEventPratilipi.state !== 'SUBMITTED'" @click="publishContent(eachEventPratilipi._id)">Publish</button>
+                                            <button type="button" class="btn publish" :disabled="eachEventPratilipi.state !== 'SUBMITTED'" @click="publishContent(eachEventPratilipi._id)">Publish</button>
                                         </td>
-                                        <td>
-                                            <i class="material-icons">delete</i>
-                                            <!-- <i class="material-icons">restore_from_trash</i> -->
+                                        <td class="delete-option">
+                                            <button type="button" name="button"><i class="material-icons">delete</i></button>
+                                            <!-- <button type="button" name="button"><i class="material-icons">restore_from_trash</i></button> -->
                                         </td>
                                     </tr>
                                 </tbody>
@@ -125,16 +161,11 @@ export default {
             font-size: 18px;
         }
     }
-    .sign-in {
-        background: #d00b12;
-        color: #fff;
-        margin-right: 10px;
-        &:hover {
-            opacity: 0.9;
-        }
-    }
     .event-table {
-        font-size: 14px;
+        font-size: 12px;
+        th {
+            vertical-align: middle;
+        }
         td {
             vertical-align: middle;
             &.state span {
@@ -158,6 +189,51 @@ export default {
             &.state.content-created span {
                 background: #e9e9e9;
             }
+            &.submission-id, &.user-id {
+                font-size: 11px;
+            }
+            &.title, &.title-en, &.slug {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 100px;
+                overflow: hidden;
+            }
+            &.slug {
+                direction: rtl;
+            }
+            .publish {
+                background: #d00b12;
+                color: #fff;
+                margin-right: 10px;
+                font-size: 14px;
+                &:disabled {
+                    background: #9e9e9e;
+                }
+            }
+            &.delete-option {
+                button {
+                    background: none;
+                    border: 0;
+                    cursor: pointer;
+                    i {
+                        color: #555;
+                        vertical-align: middle;
+                    }
+                }
+            }
+        }
+    }
+    .filters {
+        margin: 10px 0;
+        font-size: 14px;
+        background: #f8f9fa;
+        padding: 5px 10px;
+        p {
+            margin: 0 0 5px;
+            font-weight: bold;
+        }
+        .form-check {
+            margin-top: 10px;
         }
     }
 }
