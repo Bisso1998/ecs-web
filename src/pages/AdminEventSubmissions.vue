@@ -93,7 +93,7 @@
                                         </td>
                                         <td class="delete-option">
                                             <button type="button" name="button"><i class="material-icons">delete</i></button>
-                                            <!-- <button type="button" name="button"><i class="material-icons">restore_from_trash</i></button> -->
+                                            <!-- <button type="button" name="button"><i class="material-icons">restore_page</i></button> -->
                                         </td>
                                     </tr>
                                 </tbody>
