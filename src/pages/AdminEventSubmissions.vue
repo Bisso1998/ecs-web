@@ -12,6 +12,7 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Title_En</th>
                                     <th scope="col">Type</th>
+                                    <th scope="col">Language</th>
                                     <!-- <th scope="col">Word Count</th> -->
                                     <th scope="col">Submission ID</th>
                                     <th scope="col">Slug</th>
@@ -26,6 +27,7 @@
                                     <td>{{ eachEventPratilipi.title }}</td>
                                     <td>{{ eachEventPratilipi.titleEn }}</td>
                                     <td>{{ eachEventPratilipi.type }}</td>
+                                    <td>{{ eachEventPratilipi.language }}</td>
                                     <!-- <td>{{ eachEventPratilipi.titleEn }}</td> -->
                                     <td>{{ eachEventPratilipi._id }}</td>
                                     <td v-if="eachEventPratilipi.pratilipiSlug"><router-link :to="eachEventPratilipi.pratilipiSlug">{{ eachEventPratilipi.pratilipiSlug }}</router-link></td>
