@@ -310,7 +310,7 @@ export default {
 
             this.titleIsMissing = false;
             if (this.getUserDetails.isGuest) {
-                const { eventId } = this.$route.params;
+                const { eventId } = this.getEventData;
                 this.setAfterLoginAction({ action: `eventparticipate/createEventPratilipiData`, data: { 
                     eventId, 
                     title: this.title.trim(),
@@ -331,7 +331,7 @@ export default {
                     type: this.type
                 });
             } else {
-                const { eventId } = this.$route.params;
+                const { eventId } = this.getEventData;
                 this.createEventPratilipiData({ 
                     eventId, 
                     title: this.title,
