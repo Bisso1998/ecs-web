@@ -77,7 +77,7 @@
                                                 <span class="popover_title" @mouseover="getHoveredAuthorDetails(eachEventPratilipi.pratilipiUserId)">{{ eachEventPratilipi.pratilipiUserId }}</span>
                                                 <div class="push popover_content">
                                                     <router-link target="_blank" :to="getAuthorData.pageUrl"  v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
-                                                        <div class="author-img"><img :src="getLowResolutionImage(getAuthorData.coverImageUrl)" alt=""></div>
+                                                        <div class="author-img" :style="{ backgroundImage: 'url(' + getLowResolutionImage(getAuthorData.imageUrl) + ')' }"></div>
                                                         <div class="author-name">{{ getAuthorData.displayName }}</div>
                                                     </router-link>
                                                     <Spinner v-else></Spinner>
@@ -312,6 +312,10 @@ export default {
         }
         td {
             vertical-align: middle;
+            button:active, button:focus {
+                outline: none;
+                box-shadow: none;
+            }
             &.state span {
                 background: #e9e9e9;
                 border-radius: 3px;
@@ -336,13 +340,13 @@ export default {
             &.submission-id, &.user-id {
                 font-size: 11px;
             }
-            &.title, &.title-en, &.slug {
+            &.title, &.title-en, &.slug, &.submission-id {
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                max-width: 100px;
+                max-width: 90px;
                 overflow: hidden;
             }
-            &.slug {
+            &.slug, &.submission-id {
                 direction: rtl;
             }
             .publish {
@@ -434,9 +438,10 @@ export default {
                             float: left;
                             margin-right: 10px;
                             vertical-align: middle;
-                            img {
-                                max-width: 100%;
-                            }
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            background-position: center;
+                            background-color: #e9e9e9;
                         }
                         .author-name {
                             vertical-align: middle;
