@@ -70,5 +70,15 @@ export default {
                 commit('setSingleEventPratilipiDataLoadingError');
             }
         });
+    },
+
+    updateSingleEventPratilipi({ commit, state }, data) {
+        DataAccessor.updateAdminEventPratilipi(data, (eventPratilipiData) => {
+            if (eventPratilipiData) {
+                commit('setEventPratilipiUpdateSuccess', eventPratilipiData);
+            } else {
+                commit('setEventPratilipiUpdateError');
+            }
+        });
     }
 }

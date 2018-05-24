@@ -70,4 +70,15 @@ export default {
     setSingleEventPratilipiDataLoadingError(state) {
         state.singleEventPratilipi.loading_state = 'LOADING_ERROR';
     },
+
+    setEventPratilipiUpdateSuccess(state, data) {
+
+        const eventPratilipi = state.eventPratilipi.data.find(eachEventPratilipi => eachEventPratilipi._id === data._id);
+        eventPratilipi.adminViewed = data.adminViewed;
+        eventPratilipi.adminReviewed = data.adminReviewed;
+        eventPratilipi.adminDeleted = data.adminDeleted;
+    },
+    setEventPratilipiUpdateError(state) {
+
+    }
 }

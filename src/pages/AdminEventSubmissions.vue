@@ -101,8 +101,8 @@
                                             <button type="button" class="btn publish" :disabled="eachEventPratilipi.state !== 'SUBMITTED'" @click="publishContent(eachEventPratilipi._id)">Publish</button>
                                         </td>
                                         <td class="delete-option">
-                                            <button type="button" name="button"><i class="material-icons">delete</i></button>
-                                            <!-- <button type="button" name="button"><i class="material-icons">restore_page</i></button> -->
+                                            <button type="button" name="button" v-if="!eachEventPratilipi.adminDeleted" @click="deleteEventPratilipi(eachEventPratilipi._id)"><i class="material-icons">delete</i></button>
+                                            <button type="button" v-else @click="restoreEventPratilipi(eachEventPratilipi._id)" name="button"><i class="material-icons">restore_page</i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -176,7 +176,8 @@ export default {
             'fetchEventPratilipiCount',
             'fetchAuthorDetails',
             'fetchListOfEvents',
-            'publishContent'
+            'publishContent',
+            'updateSingleEventPratilipi'
         ]),
 
         getHoveredAuthorDetails(userId) {
@@ -198,8 +199,12 @@ export default {
             }
 
 
-            if (this.selectedState !== "null" && this.selectedState) {
+            if (this.selectedState !== "null" && this.selectedState !== "DELETED" && this.selectedState) {
                 queryObj.state = this.selectedState;
+            }
+
+            if (this.selectedState !== "null" && this.selectedState === "DELETED" && this.selectedState) {
+                queryObj.adminDeleted = true;
             }
 
             if (this.selectedEventId !== "null" && this.selectedEventId) {
@@ -212,7 +217,14 @@ export default {
             delete queryObj.skip;
             delete queryObj.limit;
             this.fetchEventPratilipiCount(queryObj);
-        }
+        },
+        deleteEventPratilipi(eventPratilipiId) {
+            this.updateSingleEventPratilipi({ eventPratilipiId, adminDeleted: true });
+        },
+
+        restoreEventPratilipi(eventPratilipiId) {
+            this.updateSingleEventPratilipi({ eventPratilipiId, adminDeleted: false });
+        },
     },
     watch: {
         'selectedLanguage'(language) {

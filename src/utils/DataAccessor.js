@@ -918,6 +918,13 @@ export default {
                 userId
             },
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
+    },
+
+    updateAdminEventPratilipi: (data, successCallBack, errorCallBack) => {
+        httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX_ADMIN + EVENT_PARTICIPATE_UPDATE,
+            null,
+            data,
+            function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
     }
 
 };
