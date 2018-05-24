@@ -4,6 +4,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+                        <h2>Event Submissions</h2>
                         <div class="filters">
                             <p>Filter By:</p>
                             <div class="form-row">
@@ -101,7 +102,7 @@
                                         </td>
                                         <td class="delete-option">
                                             <button type="button" name="button"><i class="material-icons">delete</i></button>
-                                            <!-- <button type="button" name="button"><i class="material-icons">restore_from_trash</i></button> -->
+                                            <!-- <button type="button" name="button"><i class="material-icons">restore_page</i></button> -->
                                         </td>
                                     </tr>
                                 </tbody>
@@ -248,7 +249,7 @@ export default {
         margin-top: 65px;
     }
     h2 {
-        font-size: 22px;
+        font-size: 20px;
         font-weight: bold;
         text-align: left;
         border-left: 3px solid #d0021b;
