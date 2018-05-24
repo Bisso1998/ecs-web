@@ -11,6 +11,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 let StringReplacePlugin = require('string-replace-webpack-plugin');
+const translation = require('./i18n');
+const languageJSON = translation[process.env.LANGUAGE || 'hi'];
 
 const env = require('../config/prod.env')
 
@@ -73,6 +75,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: config.build.index,
       template: 'index.html',
+      language: process.env.LANGUAGE,
       inject: true,
       minify: {
         removeComments: true,
@@ -123,7 +126,23 @@ const webpackConfig = merge(baseWebpackConfig, {
       {
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
-        ignore: ['.*']
+        ignore: ['.*'],
+        transform(content, path) {
+          
+          return new Promise((resolve, reject) => {
+            if (path.indexOf('manifest.json') > -1) {
+              const manifestData = JSON.parse(content.toString('utf-8'));
+              manifestData.lang = process.env.LANGUAGE;
+              manifestData.description = languageJSON['home_page_title'];
+              manifestData.short_name = languageJSON['pratilipi'];
+              manifestData.name = languageJSON['pratilipi'];
+              manifestData.gcm_sender_id = '659873510744';
+              resolve(JSON.stringify(manifestData, null, 4));
+            } else {
+              resolve(content);
+            }
+          });
+        }
       }
     ])
   ]

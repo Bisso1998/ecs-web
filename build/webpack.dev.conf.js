@@ -13,6 +13,8 @@ const portfinder = require('portfinder')
 const cookie = require('cookie')
 const request = require('request');
 let StringReplacePlugin = require('string-replace-webpack-plugin');
+const translation = require('./i18n');
+const languageJSON = translation[process.env.LANGUAGE || 'hi'];
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -87,6 +89,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
+      language: process.env.LANGUAGE,
       inject: true
     }),
     // copy custom static assets
@@ -94,7 +97,23 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       {
         from: path.resolve(__dirname, '../static'),
         to: config.dev.assetsSubDirectory,
-        ignore: ['.*']
+        ignore: ['.*'],
+        transform(content, path) {
+          
+          return new Promise((resolve, reject) => {
+            if (path.indexOf('manifest.json') > -1) {
+              const manifestData = JSON.parse(content.toString('utf-8'));
+              manifestData.lang = process.env.LANGUAGE;
+              manifestData.description = languageJSON['home_page_title'];
+              manifestData.short_name = languageJSON['pratilipi'];
+              manifestData.name = languageJSON['pratilipi'];
+              manifestData.gcm_sender_id = '659873510744';
+              resolve(JSON.stringify(manifestData, null, 4));
+            } else {
+              resolve(content);
+            }
+          });
+        }
       }
     ])
   ]
