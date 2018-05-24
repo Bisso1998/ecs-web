@@ -20,20 +20,20 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
+                                    <select id="inputState" class="form-control" v-model="selectedEventId">
+                                        <option selected value="null">All Events</option>
+                                        <option v-for="eachEvent in getEventsData"
+                                            :value="eachEvent.eventId"
+                                            :key="eachEvent.eventId">{{ eachEvent.eventId + ' - ' + eachEvent.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
                                     <select id="inputState" class="form-control" v-model="selectedState">
                                         <option selected value="null">All States</option>
                                         <option value="DRAFTED">Drafted</option>
                                         <option value="SUBMITTED">Submitted</option>
                                         <option value="DELETED">Deleted</option>
                                         <option value="PRATILIPI_PUBLISHED">Published</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <select id="inputState" class="form-control" v-model="selectedEventId">
-                                        <option selected value="null">All Events</option>
-                                        <option v-for="eachEvent in getEventsData"
-                                            :value="eachEvent.eventId"
-                                            :key="eachEvent.eventId">{{ eachEvent.eventId + ' - ' + eachEvent.name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
@@ -53,7 +53,7 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">User</th>
+                                        <th scope="col">Author</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Title_En</th>
                                         <th scope="col">Type</th>
@@ -64,10 +64,12 @@
                                         <th scope="col">State</th>
                                         <th scope="col">Action</th>
                                         <th scope="col">Delete</th>
+                                        <th scope="col">View</th>
+                                        <th scope="col">Approve</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(eachEventPratilipi, index) in getEventPratilipis" :key="eachEventPratilipi._id">
+                                    <tr v-for="(eachEventPratilipi, index) in getEventPratilipis" :key="eachEventPratilipi._id" :id="eachEventPratilipi._id">
 
                                         <th scope="row">{{ ((currentPage - 1) * limitPerPage ) + index + 1 }}</th>
                                         <td class="user-id">
@@ -88,7 +90,7 @@
                                         <!-- <td>{{ eachEventPratilipi.language }}</td> -->
                                         <!-- <td>{{ eachEventPratilipi.titleEn }}</td> -->
                                         <td class="submission-id"><router-link target="_blank" :to="'/submissions/' + eachEventPratilipi._id">{{ eachEventPratilipi._id }}</router-link></td>
-                                        <td class="slug" v-if="eachEventPratilipi.pratilipiSlug"><router-link :to="eachEventPratilipi.pratilipiSlug">{{ eachEventPratilipi.pratilipiSlug.split('/').pop() }}</router-link></td>
+                                        <td class="slug" v-if="eachEventPratilipi.pratilipiSlug"><router-link :to="eachEventPratilipi.pratilipiSlug" target="_blank">{{ eachEventPratilipi.pratilipiSlug.split('/').pop() }}</router-link></td>
                                         <td v-else>NA</td>
                                         <td class="state" :class="{
                                             'drafted': eachEventPratilipi.state === 'DRAFTED',
@@ -103,6 +105,12 @@
                                         <td class="delete-option">
                                             <button type="button" name="button"><i class="material-icons">delete</i></button>
                                             <!-- <button type="button" name="button"><i class="material-icons">restore_page</i></button> -->
+                                        </td>
+                                        <td class="view">
+                                            <button type="button" name="button" @click="toggleViewed(eachEventPratilipi._id)"><i class="material-icons">remove_red_eye</i></button>
+                                        </td>
+                                        <td class="approve">
+                                            <button type="button" name="button"  @click="toggleApproved(eachEventPratilipi._id)"><i class="material-icons">thumb_up</i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -212,6 +220,12 @@ export default {
             delete queryObj.skip;
             delete queryObj.limit;
             this.fetchEventPratilipiCount(queryObj);
+        },
+        toggleViewed(id) {
+            $(`#${id} .view button`).toggleClass("viewed");
+        },
+        toggleApproved(approveId) {
+            $(`#${approveId} .approve button`).toggleClass("approved");
         }
     },
     watch: {
@@ -316,6 +330,42 @@ export default {
                     i {
                         color: #555;
                         vertical-align: middle;
+                    }
+                }
+            }
+            &.view {
+                button {
+                    background: none;
+                    border: 0;
+                    cursor: pointer;
+                    i {
+                        color: #9e9e9e;
+                        vertical-align: middle;
+                    }
+                }
+            }
+            &.view {
+                button.viewed {
+                    i {
+                        color: #d00b12;
+                    }
+                }
+            }
+            &.approve {
+                button {
+                    background: none;
+                    border: 0;
+                    cursor: pointer;
+                    i {
+                        color: #9e9e9e;
+                        vertical-align: middle;
+                    }
+                }
+            }
+            &.approve {
+                button.approved {
+                    i {
+                        color: #28a745;
                     }
                 }
             }
