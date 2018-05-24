@@ -919,6 +919,21 @@ export default {
                     $(".word-suggestions").addClass("fixed");
                 }
             }
+        },
+        loadTinyMCE(callback) {
+            const script = document.createElement('script');
+            // script.setAttribute('async', '');
+            // script.setAttribute('defer', '');
+            // script.id = 'tinymcescript';
+            script.setAttribute('src', 'https://0.ptlp.co/third-party/tinymce-4.5.1/tinymce.min.js');
+            console.log(script);
+            script.onload = function() {
+                document.getElementsByTagName('head')[0].appendChild(script);
+                console.log('loading tinymce');
+                callback();
+            }
+
+            document.head.appendChild(script);
         }
     },
     watch: {
@@ -1065,31 +1080,34 @@ export default {
             content: ''
         });
 
-        this.fetchEventDetails(this.$route.params.eventSlug);
-        console.log('FROM PARTICIPATE PAGE: ', this.$route.params);
-        if (!this.$route.params.eventPratilipiId) {
-            this.currentStep = 1;
-        }
+
+        this.loadTinyMCE(() => {
+            this.fetchEventDetails(this.$route.params.eventSlug);
+            console.log('FROM PARTICIPATE PAGE: ', this.$route.params);
+            if (!this.$route.params.eventPratilipiId) {
+                this.currentStep = 1;
+            }
 
 
-        if (this.$route.params.eventSlug && this.$route.params.eventPratilipiId && this.$route.query.step == 2) {
-            this.fetchPratilipiContent(this.$route.params.eventPratilipiId);
-            this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
-            this.goToSecondStep();
-        }
-        if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 1) {
-            this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
-            this.goToFirstStepForEdit();
-        }
+            if (this.$route.params.eventSlug && this.$route.params.eventPratilipiId && this.$route.query.step == 2) {
+                this.fetchPratilipiContent(this.$route.params.eventPratilipiId);
+                this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
+                this.goToSecondStep();
+            }
+            if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 1) {
+                this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
+                this.goToFirstStepForEdit();
+            }
 
-        if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 3) {
-            this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
-            this.goToThirdStep();
-        }
+            if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 3) {
+                this.fetchEventPratilipiData(this.$route.params.eventPratilipiId);
+                this.goToThirdStep();
+            }
 
-        if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 4) {
-            this.goToFourthStep();
-        }
+            if (this.$route.params.eventSlug != undefined && this.$route.params.eventPratilipiId != undefined && this.$route.query.step == 4) {
+                this.goToFourthStep();
+            }
+        });
     },
     mounted() {
         const that = this;
