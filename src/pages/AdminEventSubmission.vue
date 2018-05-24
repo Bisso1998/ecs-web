@@ -14,7 +14,7 @@
                     <div class="col-md-8 submission-info">
                         <div class="submission-title"><span>Title:</span> {{ getSingleEventPratilipi.title }}</div>
                         <div class="submission-title-en"><span>Title En:</span> {{ getSingleEventPratilipi.titleEn }}</div>
-                        <div class="submission-author"><span>Author:</span> <router-link :to="'/submissions/'" target="_blank">Author Name</router-link></div>
+                        <!-- <div class="submission-author"><span>Author:</span> <router-link :to="'/submissions/'" target="_blank">Author Name</router-link></div> -->
                         <div class="submission-type"><span>Type:</span> {{ getSingleEventPratilipi.type }}</div>
                         <div class="submission-state"><span>State:</span> {{ getSingleEventPratilipi.state }}</div>
                         <div class="submission-description"><span>Description:</span> {{ getSingleEventPratilipi.description }}</div>
