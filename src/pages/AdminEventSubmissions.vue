@@ -19,17 +19,20 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <select id="inputState" class="form-control">
-                                        <option selected>State...</option>
-                                        <option>Drafted</option>
-                                        <option>Submitted</option>
+                                    <select id="inputState" class="form-control" v-model="selectedState">
+                                        <option selected value="null">All States</option>
+                                        <option value="DRAFTED">Drafted</option>
+                                        <option value="SUBMITTED">Submitted</option>
+                                        <option value="DELETED">Deleted</option>
+                                        <option value="PRATILIPI_PUBLISHED">Published</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Event Id...</option>
-                                        <option>Id 1</option>
-                                        <option>Id 2</option>
+                                    <select id="inputState" class="form-control" v-model="selectedEventId">
+                                        <option selected value="null">All Events</option>
+                                        <option v-for="eachEvent in getEventsData"
+                                            :value="eachEvent.eventId"
+                                            :key="eachEvent.eventId">{{ eachEvent.eventId + ' - ' + eachEvent.name }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
@@ -64,8 +67,20 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(eachEventPratilipi, index) in getEventPratilipis" :key="eachEventPratilipi._id">
+
                                         <th scope="row">{{ ((currentPage - 1) * limitPerPage ) + index + 1 }}</th>
-                                        <td class="user-id">{{ eachEventPratilipi.pratilipiUserId }}</td>
+                                        <td class="user-id">
+                                            <div class="popover_wrapper">
+                                                <span class="popover_title" @mouseover="getHoveredAuthorDetails(eachEventPratilipi.pratilipiUserId)">{{ eachEventPratilipi.pratilipiUserId }}</span>
+                                                <div class="push popover_content">
+                                                    <router-link :to="getAuthorData.pageUrl"  v-if="getAuthorDataLoadingState === 'LOADING_SUCCESS'">
+                                                        <div class="author-img"><img :src="getLowResolutionImage(getAuthorData.coverImageUrl)" alt=""></div>
+                                                        <div class="author-name">{{ getAuthorData.displayName }}</div>
+                                                    </router-link>
+                                                    <Spinner v-else></Spinner>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td class="title">{{ eachEventPratilipi.title }}</td>
                                         <td class="title-en">{{ eachEventPratilipi.titleEn }}</td>
                                         <td>{{ eachEventPratilipi.type }}</td>
@@ -131,7 +146,9 @@ export default {
             limitPerPage: 20,
             currentPage: 1,
             constants: constants,
-            selectedLanguage: this.getCurrentLanguage().fullName.toUpperCase()
+            selectedLanguage: this.getCurrentLanguage().fullName.toUpperCase(),
+            selectedState: null,
+            selectedEventId: null
         }
     },
     components: {
@@ -145,32 +162,79 @@ export default {
         ...mapGetters('admineventsubmissions', [
             'getEventPratilipis',
             'getEventPratilipisLoadingStatus',
-            'getEventPratilipiCount'
+            'getEventPratilipiCount',
+            'getAuthorData',
+            'getAuthorDataLoadingState',
+            'getEventsLoadingState',
+            'getEventsData'
         ])
     },
     methods: {
         ...mapActions('admineventsubmissions', [
             'fetchEventPratilipis',
             'fetchEventPratilipiCount',
+            'fetchAuthorDetails',
+            'fetchListOfEvents',
             'publishContent'
         ]),
 
+        getHoveredAuthorDetails(userId) {
+            this.fetchAuthorDetails(userId);
+        },
+
         goToPage(page) {
-            const skip = (page - 1) * this.limitPerPage;
             this.currentPage = page;
-            this.fetchEventPratilipis({ limit: this.limitPerPage, skip });
+            this.fetchEventPratilipisWithFilter();
+        },
+
+        fetchEventPratilipisWithFilter(){
+            const skip = (this.currentPage - 1) * this.limitPerPage;
+
+            const queryObj = {
+                limit: this.limitPerPage,
+                skip,
+                language: this.selectedLanguage
+            }
+
+
+            if (this.selectedState !== "null" && this.selectedState) {
+                queryObj.state = this.selectedState;
+            }
+
+            if (this.selectedEventId !== "null" && this.selectedEventId) {
+                queryObj.eventId = this.selectedEventId;
+            }
+
+            this.fetchEventPratilipis(queryObj);
+
+
+            delete queryObj.skip;
+            delete queryObj.limit;
+            this.fetchEventPratilipiCount(queryObj);
         }
     },
     watch: {
         'selectedLanguage'(language) {
-            console.log(language);
             this.currentPage = 1;
-            this.fetchEventPratilipis({ limit: this.limitPerPage, language });
+            this.selectedEventId = "null";
+            this.fetchListOfEvents(language);
+            this.fetchEventPratilipisWithFilter();
+        },
+
+        'selectedEventId'(eventId) {
+            this.currentPage = 1;
+            this.selectedState = "null";
+            this.fetchEventPratilipisWithFilter();
+        },
+
+        'selectedState'(state) {
+            this.currentPage = 1;
+            this.fetchEventPratilipisWithFilter();
         }
     },
     created() {
-        this.fetchEventPratilipis({ limit: this.limitPerPage, language: this.getCurrentLanguage().fullName.toUpperCase() });
-        this.fetchEventPratilipiCount({ language: this.getCurrentLanguage().fullName.toUpperCase() });
+        this.fetchListOfEvents(this.selectedLanguage);
+        this.fetchEventPratilipisWithFilter({ limit: this.limitPerPage, language: this.selectedLanguage });
     }
 }
 </script>
@@ -252,6 +316,62 @@ export default {
                         color: #555;
                         vertical-align: middle;
                     }
+                }
+            }
+            
+            .popover_wrapper {
+                position: relative;
+                margin-top: 0px;
+                display: inline-block;
+                .popover_title {
+                    color: #17a2b8;
+                }
+                .popover_content {
+                    opacity: 0;
+                    visibility: hidden;
+                    position: absolute;
+                    left: 0;
+                    top: 30px;
+                    transform: translate(0,10px);
+                    background-color: #fff;
+                    padding: 10px;
+                    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+                    width: auto;
+                    min-width: 180px;
+                    a {
+                        text-decoration: none;
+                        display: block;
+                        position: relative;
+                        color: #17a2b8;
+                        .author-img {
+                            width: 40px;
+                            height: 40px;
+                            overflow: hidden;
+                            border-radius: 50%;
+                            float: left;
+                            margin-right: 10px;
+                            vertical-align: middle;
+                            img {
+                                max-width: 100%;
+                            }
+                        }
+                        .author-name {
+                            vertical-align: middle;
+                            font-size: 13px;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            max-width: 100px;
+                            overflow: hidden;
+                            line-height: 40px;
+                        }
+                    }
+                }
+                &:hover .popover_content {
+                    z-index: 10;
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translate(0,-20px);
+                    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
                 }
             }
         }

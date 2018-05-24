@@ -31,5 +31,29 @@ export default {
     },
     setEventPratilipiCountLoadingError(state) {
 
+    },
+
+    setAuthorDataTrue(state) {
+        state.author.loading_state = 'LOADING';
+    },
+    setAuthorDataSuccess(state, data) {
+        state.author.data = data;
+        state.author.loading_state = 'LOADING_SUCCESS';
+    },
+    setAuthorDataError(state) {
+        state.author.loading_state = 'LOADING_ERROR';
+    },
+    setEventsDataLoadingTrue(state) {
+        state.events.loading_state = 'LOADING';
+    },
+
+    setEventsDataLoadingSuccess(state, data) {
+        state.events.loading_state = 'LOADING_SUCCESS';
+        state.events.data = data.eventList;
+    },
+
+    setEventsDataLoadingError(state) {
+        state.events.loading_state = 'LOADING_ERROR';
+        state.events.data = [];
     }
 }

@@ -902,6 +902,15 @@ export default {
             null,
             { id },
             function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
+    },
+
+    getAuthorByUserId: (userId, aCallBack) => {
+        httpUtil.get( API_PREFIX + AUTHOR_NEW_API,
+            null,
+            {
+                userId
+            },
+            function( response, status ) { processGetResponse( response, status, aCallBack ) });
     }
 
 };
