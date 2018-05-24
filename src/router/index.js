@@ -24,6 +24,7 @@ import AuthorPageComponent from '@/pages/Author.vue'
 import HomePageComponent from '@/pages/Home.vue'
 import EventParticipatePageComponent from '@/pages/EventParticipate.vue'
 import AdminEventSubmissions from '@/pages/AdminEventSubmissions.vue'
+import AdminEventSubmission from '@/pages/AdminEventSubmission.vue'
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -402,7 +403,7 @@ const router = new Router({
         path: '/event/:eventSlug/participate',
         meta: {
             'title': '__("seo_home_page")',
-            'id_prop': 'pratilipi_id',
+            'id_prop': 'eventSlug',
             'store': 'eventparticipate'
         },
         component: EventParticipatePageComponent
@@ -410,7 +411,7 @@ const router = new Router({
         path: '/event/:eventSlug/participate/:eventPratilipiId',
         meta: {
             'title': '__("seo_home_page")',
-            'id_prop': 'pratilipi_id',
+            'id_prop': 'eventSlug',
             'store': 'eventparticipate'
         },
         component: EventParticipatePageComponent
@@ -422,6 +423,14 @@ const router = new Router({
             'store': 'admineventsubmissions'
         },
         component: AdminEventSubmissions
+    }, {
+        path: '/submissions/:eventPratilipiId',
+        meta: {
+            'title': '__("seo_home_page")',
+            'id_prop': 'eventPratilipiId',
+            'store': 'admineventsubmission'
+        },
+        component: AdminEventSubmission
     }, {
         path: '/:list_page_url',
         name: 'List_Page',

@@ -11,5 +11,9 @@ export default {
     events: {
     	loading_state: 'LOADING',
     	data: []
+    },
+    singleEventPratilipi: {
+        data: {},
+        loading_state: 'LOADING'
     }
 }

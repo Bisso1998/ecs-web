@@ -890,10 +890,17 @@ export default {
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
     },
 
-    getAdminEventPratilipi: (query, aCallBack) => {
+    getAdminEventPratilipis: (query, aCallBack) => {
         httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX_ADMIN + EVENT_PARTICIPATE_LIST,
             null,
             query,
+            function( response, status ) { processGetResponse( response, status, aCallBack ) });
+    },
+
+    getAdminEventPratilipi: (eventPratilipiId, aCallBack) => {
+        httpUtil.get( API_PREFIX + EVENT_PARTICIPATE_PREFIX_ADMIN + EVENT_PARTICIPATE_GET,
+            null,
+            { eventPratilipiId },
             function( response, status ) { processGetResponse( response, status, aCallBack ) });
     },
 

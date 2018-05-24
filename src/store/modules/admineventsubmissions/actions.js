@@ -4,7 +4,7 @@ export default {
 
     fetchEventPratilipis({ commit, state }, query) {
         commit('setEventPratilipiDataLoadingTrue');
-        DataAccessor.getAdminEventPratilipi(query, (eventPratilipiData) => {
+        DataAccessor.getAdminEventPratilipis(query, (eventPratilipiData) => {
             if (eventPratilipiData.status === 200) {
                 commit('setEventPratilipiDataLoadingSuccess', eventPratilipiData.response.pratilipis);
             } else {
@@ -15,7 +15,7 @@ export default {
 
     fetchEventPratilipiCount({ commit, state }, query) {
         commit('setEventPratilipiCountLoadingTrue');
-        DataAccessor.getAdminEventPratilipi({ getCount: 'TRUE', ...query }, (eventPratilipiCount) => {
+        DataAccessor.getAdminEventPratilipis({ getCount: 'TRUE', ...query }, (eventPratilipiCount) => {
             if (eventPratilipiCount.status === 200) {
                 // commit('setEventPratilipiCountLoadingSuccess', 90);
                 commit('setEventPratilipiCountLoadingSuccess', eventPratilipiCount.response.count);
@@ -52,12 +52,22 @@ export default {
 
     fetchListOfEvents({ commit, state }, language) {
         commit('setEventsDataLoadingTrue');
-        console.log(language);
         DataAccessor.getEventList(language, function(data) {
             if (data.status === 200) {
                 commit('setEventsDataLoadingSuccess', data.response);
             } else {
                 commit('setEventsDataLoadingError');
+            }
+        });
+    },
+
+    fetchSingleEventPratilipi({ commit, state }, eventPratilipiId) {
+        commit('setSingleEventPratilipiDataLoadingTrue');
+        DataAccessor.getAdminEventPratilipi(eventPratilipiId, (eventPratilipiData) => {
+            if (eventPratilipiData.status === 200) {
+                commit('setSingleEventPratilipiDataLoadingSuccess', eventPratilipiData.response);
+            } else {
+                commit('setSingleEventPratilipiDataLoadingError');
             }
         });
     }

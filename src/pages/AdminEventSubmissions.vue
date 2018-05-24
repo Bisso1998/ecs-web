@@ -86,7 +86,7 @@
                                         <td>{{ eachEventPratilipi.type }}</td>
                                         <!-- <td>{{ eachEventPratilipi.language }}</td> -->
                                         <!-- <td>{{ eachEventPratilipi.titleEn }}</td> -->
-                                        <td class="submission-id">{{ eachEventPratilipi._id }}</td>
+                                        <td class="submission-id"><router-link target="_blank" :to="'/submissions/' + eachEventPratilipi._id">{{ eachEventPratilipi._id }}</router-link></td>
                                         <td class="slug" v-if="eachEventPratilipi.pratilipiSlug"><router-link :to="eachEventPratilipi.pratilipiSlug">{{ eachEventPratilipi.pratilipiSlug.split('/').pop() }}</router-link></td>
                                         <td v-else>NA</td>
                                         <td class="state" :class="{

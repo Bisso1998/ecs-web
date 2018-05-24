@@ -55,5 +55,19 @@ export default {
     setEventsDataLoadingError(state) {
         state.events.loading_state = 'LOADING_ERROR';
         state.events.data = [];
-    }
+    },
+
+    setSingleEventPratilipiDataLoadingTrue(state) {
+        state.singleEventPratilipi.loading_state = 'LOADING';
+        state.singleEventPratilipi.data = {};
+    },
+
+    setSingleEventPratilipiDataLoadingSuccess(state, data) {
+        state.singleEventPratilipi.data = data;
+        state.singleEventPratilipi.loading_state = 'LOADING_SUCCESS';
+    },
+
+    setSingleEventPratilipiDataLoadingError(state) {
+        state.singleEventPratilipi.loading_state = 'LOADING_ERROR';
+    },
 }
