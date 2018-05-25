@@ -1,7 +1,7 @@
 <template>
     <li class="ownReview">
         <div  v-if="authorId !== getUserDetails.authorId" class="comment-main-level">
-            <div class="comment-avatar"><img :src="userPratilipiData.userId == 0 ? defaultAuthorImage : userPratilipiData.userImageUrl" alt="author"></div>
+            <div class="comment-avatar"><img :src="userPratilipiData.userId == 0 ? defaultAuthorImage : getLowResolutionImage(userPratilipiData.userImageUrl)" alt="author"></div>
             <div class="comment-box">
                 <div class="already-rated"  v-if="userPratilipiData.reviewDateMillis != null && !editRatingMode">
                     <button class="btn more-options" type="button" id="ownReviewMoreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

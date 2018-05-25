@@ -6,7 +6,7 @@
                 :to="getAuthorDetails.pageUrl"
                 @click.native="triggerClickAuthorEvent"
                 class="author-link">
-                <img :src="getAuthorDetails.profileImageUrl" alt="author" class="auth-img" >
+                <img :src="getLowResolutionImage(getAuthorDetails.profileImageUrl)" alt="author" class="auth-img" >
                 <div class="auth-name">{{ getAuthorDetails.name }}</div>
             </router-link>
             <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow") <span class="follow-count">({{getAuthorDetails.followCount | showThousandsInK(1)}})</span></button>

@@ -2,7 +2,7 @@
     <li>
         <div class="comment-main-level">
             <div class="comment-avatar">
-                <router-link :to="eachReview.userProfilePageUrl" @click.native="triggerClickReviewUser(eachReview.userId)"><img :src="eachReview.userImageUrl" alt="author"></router-link>
+                <router-link :to="eachReview.userProfilePageUrl" @click.native="triggerClickReviewUser(eachReview.userId)"><img :src="getLowResolutionImage(eachReview.userImageUrl)" alt="author"></router-link>
             </div>
             <div class="comment-box">
                 <div class="comment-head">
