@@ -20,7 +20,8 @@
                     <div class="col-lg-5 col-sm-8 col-7 search-box-wrap">
                         <div class="search-box d-none d-lg-block">
                             <div class="form-group has-feedback" id="search-box-big">
-                                <input type="text" class="form-control" :value="searchText" @input="changeSearchText" @keyup.enter="goToSearchPage" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
+                                <label for="big-search">Search</label>
+                                <input id="big-search" type="text" class="form-control" :value="searchText" @input="changeSearchText" @keyup.enter="goToSearchPage" @click="opendesktopsearch" v-bind:placeholder="'__("search_bar_help")'"/>
                                 <i class="material-icons">search</i>
                                 <SearchBox :searchText="searchText"></SearchBox>
                             </div>
@@ -34,7 +35,8 @@
                         </div>
                         <div class="d-block d-lg-none search-box search-box-2 text-right">
                             <div class="form-group has-feedback" id="search-box-small">
-                                <input type="text" class="form-control" :value="searchText" @input="changeSearchText" @keyup.enter="goToSearchPage" @click="openmobilesearch" v-bind:placeholder="'__("search")'"/>
+                                <label for="small-search">Search</label>
+                                <input type="text" id="small-search" class="form-control" :value="searchText" @input="changeSearchText" @keyup.enter="goToSearchPage" @click="openmobilesearch" v-bind:placeholder="'__("search")'"/>
                                 <i class="material-icons">search</i>
                                 <SearchBox :searchText="searchText"></SearchBox>
                             </div>
@@ -287,6 +289,12 @@ export default {
         .search-box-wrap {
             padding: 0;
             margin-left: auto;
+            .search-box label {
+                position: absolute;
+                z-index: -1;
+                left: 0;
+                color: #fff;
+            }
         }
         .search-box {
             margin-top: 4px;
