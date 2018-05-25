@@ -4,10 +4,10 @@
             <div class="comment-avatar"><img :src="userPratilipiData.userId == 0 ? defaultAuthorImage : userPratilipiData.userImageUrl" alt="author"></div>
             <div class="comment-box">
                 <div class="already-rated"  v-if="userPratilipiData.reviewDateMillis != null && !editRatingMode">
-                    <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn more-options" type="button" id="ownReviewMoreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">more_vert</i>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="moreOptions">
+                    <div class="dropdown-menu" aria-labelledby="ownReviewMoreOptions">
                         <button type="button" class="btn options-btn" data-toggle="modal" @click="openReviewAndEditRating">
                             __("review_edit_review")
                         </button>

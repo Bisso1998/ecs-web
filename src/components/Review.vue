@@ -10,10 +10,10 @@
                         <h6 class="comment-name">
                             <router-link :to="eachReview.userProfilePageUrl" @click.native="triggerClickReviewUser(eachReview.userId)">{{ eachReview.userName }}</router-link>
                         </h6>
-                        <button class="btn more-options" type="button" id="moreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn more-options" type="button" id="ReviewMoreOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="moreOptions">
+                        <div class="dropdown-menu" aria-labelledby="ReviewMoreOptions">
                             <button type="button" class="btn options-btn" data-toggle="modal" data-target="#reportModal">
                                 __("report_button")
                             </button>
