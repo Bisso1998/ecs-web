@@ -140,6 +140,10 @@ export default {
                 this.triggerAnanlyticsEvent('LANDED_NEWCHATS_NOTIFS', 'CONTROL', {
                     'USER_ID': this.getUserDetails.userId
                 });
+                $(".notification-settings").hide();
+            }
+            if (tab_id === 'notifications') {
+                $(".notification-settings").show();
             }
         },
         triggerConversationEvent(receiver_id) {
