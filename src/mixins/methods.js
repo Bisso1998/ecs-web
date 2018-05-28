@@ -433,6 +433,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             'DEVICE_TYPE': isMobile() ? 'MOBILE':'DESKTOP',
             'WEBSITE_TYPE': 'PHOENIX',
             'EXPERIMENT_ID': experimentType,
+            'ENVIRONMENT': 'GROWTH',
             'CONTENT_LANGUAGE': getCurrentLanguage().fullName.toUpperCase(),
             'SCREEN_LOCATION': eventProps.SCREEN_NAME + '_' + eventProps.LOCATION
         }
