@@ -591,6 +591,12 @@ export default {
             });
             $('#confirmation').modal('hide');
             self.messageList = [];
+            
+            this.triggerAnanlyticsEvent('DELETECHAT_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
+            
             this.$router.push('/messages');
         },
 
