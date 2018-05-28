@@ -55,7 +55,7 @@
                             </div>
                             <ul class="chat-list" v-if="!getUserDetails.isGuest">
                                 <li class="chat-item" v-for="messageNotification in messageNotificationList" v-bind:key="messageNotification.messageId">
-                                    <router-link
+                                    <router-link @click.native="triggerConversationEvent(messageNotification.userId)"
                                         :to="'/messages/' + messageNotification.userId">
                                     <div>
                                         <div class="user-img"><img v-bind:src="messageNotification.profileImageUrl" alt="profile-img"></div>
@@ -76,6 +76,7 @@
 
                             <router-link
                             class="show-more"
+                            @click.native="triggerAllMessagesEvent"
                             :to="{ name: 'Messages_Page'}"
                             v-if="!getUserDetails.isGuest">
                             __("chat_show_all")
@@ -134,7 +135,28 @@ export default {
             $(event.currentTarget).addClass("active");
             $(".tab-content").hide();
             $("#" + tab_id).show();
+            
+            if (tab_id === 'messages') {
+                this.triggerAnanlyticsEvent('LANDED_NEWCHATS_NOTIFS', 'CONTROL', {
+                    'USER_ID': this.getUserDetails.userId
+                });
+                $(".notification-settings").hide();
+            }
+            if (tab_id === 'notifications') {
+                $(".notification-settings").show();
+            }
         },
+        triggerConversationEvent(receiver_id) {
+            this.triggerAnanlyticsEvent('STARTCHAT_NEWCHATS_NOTIFS', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': receiver_id
+            });
+        },
+        triggerAllMessagesEvent() {
+            this.triggerAnanlyticsEvent('VIEWALLCHATS_NEWCHATS_NOTIFS', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
+            });
+        }
     },
     created() {
 
@@ -298,6 +320,7 @@ export default {
     .tab-menu {
         border-bottom: 1px solid #e9e9e9;
         padding: 8px 0 0;
+        margin: 0;
         text-align: left;
         overflow: hidden;
         width: 100%;

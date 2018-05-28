@@ -70,6 +70,7 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import mixins from '@/mixins'
 import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions } from 'vuex';
 import $ from 'jquery'
@@ -89,7 +90,9 @@ export default {
             blockedUserStatus: {}
         }
     },
-
+    mixins: [
+        mixins
+    ],
     methods: {
 
         ...mapActions('messages', [
@@ -287,6 +290,11 @@ export default {
 
         loadMessagesForConversation(userId){
             this.$router.push('/messages/' + userId );
+            
+            this.triggerAnanlyticsEvent('STARTCHAT_ALLCHATS_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': userId
+            });
         },
 
         getImageUrl( imageUrl, width, compressed ) {
@@ -326,7 +334,6 @@ export default {
 
         deleteConversation() {
             const self = this;
-            debugger;
             self.removeChannelFromCache({channelId: self.toDeleteChannelId});
             self.removeConversationForChannel(self.toDeleteChannelId);
             let deleteConversationUpdates = {};
@@ -338,6 +345,11 @@ export default {
                 }
             });
             $('#messagesConfirmation').modal('hide');
+            
+            this.triggerAnanlyticsEvent('DELETECHAT_ALLCHATS_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': self.fetchedChannelMetadataData[self.toDeleteChannelId].otherUserId
+            });
         },
 
         watchBlockedConversation (otherUserId) {
@@ -358,11 +370,21 @@ export default {
 
         blockUser (otherUserId) {
             this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId).set(true);
+            
+            this.triggerAnanlyticsEvent('BLOCKUSER_ALLCHATS_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': otherUserId
+            });
         },
 
 
         unblockUser (otherUserId) {
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId).set(false);
+            
+            this.triggerAnanlyticsEvent('UNBLOCKUSER_ALLCHATS_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': otherUserId
+            });
         },
 
         initializeFirebaseAndStartListening() {

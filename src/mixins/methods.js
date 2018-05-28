@@ -443,13 +443,33 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             eventName !== 'VIEWANDROID_OPENAPP_READER' &&
             eventName !== 'VIEWED_RATEREV_BOOK' &&
             eventName !== 'VIEWED_RECOMMENDBOOK_BOOK' &&
-            eventName !== 'VIEWED_RECOMMENDBOOK_READER') {
+            eventName !== 'VIEWED_RECOMMENDBOOK_READER' &&
+            eventName !== 'STARTCHAT_USERM_USER' &&
+            eventName !== 'SENDMESSAGE_USERCHAT_P2PCHAT' &&
+            eventName !== 'CLICKUSER_USERCHAT_P2PCHAT' &&
+            eventName !== 'BLOCKUSER_USERCHAT_P2PCHAT' &&
+            eventName !== 'UNBLOCKUSER_USERCHAT_P2PCHAT' &&
+            eventName !== 'DELETECHAT_USERCHAT_P2PCHAT' &&
+            eventName !== 'VIEWALLCHATS_USERCHAT_P2PCHAT' &&
+            eventName !== 'DELETECHAT_ALLCHATS_P2PCHAT' &&
+            eventName !== 'UNBLOCKUSER_ALLCHATS_P2PCHAT' &&
+            eventName !== 'BLOCKUSER_ALLCHATS_P2PCHAT' &&
+            eventName !== 'STARTCHAT_ALLCHATS_P2PCHAT' &&
+            eventName !== 'DELETECHAT_ALLCHATS_P2PCHAT' &&
+            eventName !== 'STARTCHAT_NEWCHATS_NOTIFS' &&
+            eventName !== 'VIEWALLCHATS_NEWCHATS_NOTIFS' &&
+            eventName !== 'LANDED_NEWCHATS_NOTIFS') {
             amplitude.getInstance().logEvent(eventName, eventProps);
         } else {
             console.info('SKIPPING EVENT');
         }
 
-        ga( 'send', 'event', eventProps.LOCATION, eventProps.ACTION, eventProps.SCREEN_NAME );
+        ga('send', {
+            hitType: 'event',
+            eventCategory: eventProps.LOCATION,
+            eventAction: eventProps.ACTION,
+            eventLabel: eventProps.SCREEN_NAME
+        });
 
         if (!window.fbApiInit) {
             setTimeout(() => {

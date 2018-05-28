@@ -548,6 +548,11 @@ export default {
                 }
             });
             self.toSendMessageText = "";
+            
+            this.triggerAnanlyticsEvent('SENDMESSAGE_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
         },
 
         removeValueFromArray(arr, val) {
@@ -565,12 +570,22 @@ export default {
 
         blockUser () {
             this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(this.getUserDetails.userId).child(this.otherUserId).set(true);
+            
+            this.triggerAnanlyticsEvent('BLOCKUSER_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
         },
 
 
         unblockUser () {
             const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).set(false);
+            
+            this.triggerAnanlyticsEvent('UNBLOCKUSER_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
         },
 
         deleteConversation() {
@@ -586,16 +601,31 @@ export default {
             });
             $('#confirmation').modal('hide');
             self.messageList = [];
+            
+            this.triggerAnanlyticsEvent('DELETECHAT_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
+            
             this.$router.push('/messages');
         },
 
 
         redirectToOtherUserProfile() {
             this.$router.push(this.otherUserProfileUrl);
+            this.triggerAnanlyticsEvent('CLICKUSER_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
         },
 
         redirectToMessagesPage() {
             this.$router.push('/messages');
+            
+            this.triggerAnanlyticsEvent('VIEWALLCHATS_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
         },
         initializeFirebaseAndStartListening() {
             const self = this;
@@ -1054,5 +1084,10 @@ export default {
     }
     .spinner {
         margin-top: 60px;
+    }
+</style>
+<style lang="scss">
+    .msg-text a {
+        color: #007bff;
     }
 </style>
