@@ -10,7 +10,8 @@
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
     "postinstall": "npm run build",
-    "server": "node server.js"
+    "server": "node server.js",
+    "build_prod": "bash build/build_prod.sh"
   },
   "dependencies": {
     "bootstrap": "^4.0.0",
@@ -25,6 +26,7 @@
     "vue": "^2.5.15",
     "vue-awesome": "^2.3.4",
     "vue-in-viewport-mixin": "^1.0.3",
+    "vue-linkify": "^1.0.1",
     "vue-router": "^3.0.1",
     "vue-slick": "^1.1.12",
     "vuefire": "^1.4.5",
