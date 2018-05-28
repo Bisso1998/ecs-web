@@ -597,6 +597,10 @@ export default {
 
         redirectToOtherUserProfile() {
             this.$router.push(this.otherUserProfileUrl);
+            this.triggerAnanlyticsEvent('CLICKUSER_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
         },
 
         redirectToMessagesPage() {

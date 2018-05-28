@@ -1913,5 +1913,10 @@ export default {
         "SCREEN_NAME": "P2PCHAT",
         "LOCATION": "USERCHAT",
         "ACTION": "SENDMESSAGE"
+    },
+    "CLICKUSER_USERCHAT_P2PCHAT": {
+        "SCREEN_NAME": "P2PCHAT",
+        "LOCATION": "USERCHAT",
+        "ACTION": "CLICKUSER"
     }
 };
