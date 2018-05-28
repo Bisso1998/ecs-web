@@ -76,6 +76,7 @@
 
                             <router-link
                             class="show-more"
+                            @click.native="triggerAllMessagesEvent"
                             :to="{ name: 'Messages_Page'}"
                             v-if="!getUserDetails.isGuest">
                             __("chat_show_all")
@@ -139,6 +140,11 @@ export default {
             this.triggerAnanlyticsEvent('STARTCHAT_NEWCHATS_NOTIFS', 'CONTROL', {
                 'USER_ID': this.getUserDetails.userId,
                 'RECEIVER_ID': receiver_id
+            });
+        },
+        triggerAllMessagesEvent() {
+            this.triggerAnanlyticsEvent('VIEWALLCHATS_NEWCHATS_NOTIFS', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId
             });
         }
     },

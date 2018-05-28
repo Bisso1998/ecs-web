@@ -1963,5 +1963,10 @@ export default {
         "SCREEN_NAME": "NOTIFS",
         "LOCATION": "NEWCHATS",
         "ACTION": "STARTCHAT"
+    },
+    "VIEWALLCHATS_NEWCHATS_NOTIFS": {
+        "SCREEN_NAME": "NOTIFS",
+        "LOCATION": "NEWCHATS",
+        "ACTION": "VIEWALLCHATS"
     }
 };
