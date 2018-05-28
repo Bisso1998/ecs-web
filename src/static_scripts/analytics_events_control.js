@@ -1903,5 +1903,10 @@ export default {
         "SCREEN_NAME": "DISCOVER",
         "LOCATION": "TOPICS",
         "ACTION": "CLICKCATEGORY"  
+    },
+    "STARTCHAT_USERM_USER": {
+        "SCREEN_NAME": "USER",
+        "LOCATION": "USERM",
+        "ACTION": "STARTCHAT"
     }
 };
