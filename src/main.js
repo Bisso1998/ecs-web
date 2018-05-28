@@ -14,6 +14,7 @@ import Icon from 'vue-awesome/components/Icon'
 
 import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
+import linkify from 'vue-linkify'
 
 if (process.env.NODE_ENV === 'production') {
     Raven
@@ -25,6 +26,7 @@ if (process.env.NODE_ENV === 'production') {
 
 Vue.config.productionTip = false
 Vue.use(Vuex);
+Vue.directive('linkified', linkify)
 Vue.component('icon', Icon)
 
 /* eslint-disable no-new */

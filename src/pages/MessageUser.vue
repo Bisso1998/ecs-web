@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="chat-msg"
                                          v-bind:class="{'sender' : message.isMessageBySelf == false, 'self' : message.isMessageBySelf == true}" v-bind:id="message.messageId">
-                                        <span class="msg-text" v-text="message.messageText"></span>
+                                        <span class="msg-text" v-html="message.messageText" v-linkified></span>
                                         <div class="extra-info">
                                             <span class="time" v-text="message.messageTime">16:40</span>
                                             <span class="status sent error" v-if="failedMessages.indexOf(message.messageId) > -1"><i class="material-icons">error</i></span>
