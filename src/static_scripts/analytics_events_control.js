@@ -1968,5 +1968,10 @@ export default {
         "SCREEN_NAME": "NOTIFS",
         "LOCATION": "NEWCHATS",
         "ACTION": "VIEWALLCHATS"
+    },
+    "LANDED_NEWCHATS_NOTIFS": {
+        "SCREEN_NAME": "NOTIFS",
+        "LOCATION": "NEWCHATS",
+        "ACTION": "LANDED"
     }
 };
