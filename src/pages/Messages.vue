@@ -70,6 +70,7 @@
 
 <script>
 import MainLayout from '@/layout/main-layout.vue';
+import mixins from '@/mixins'
 import Spinner from '@/components/Spinner.vue';
 import { mapGetters, mapActions } from 'vuex';
 import $ from 'jquery'
@@ -89,7 +90,9 @@ export default {
             blockedUserStatus: {}
         }
     },
-
+    mixins: [
+        mixins
+    ],
     methods: {
 
         ...mapActions('messages', [
@@ -326,7 +329,6 @@ export default {
 
         deleteConversation() {
             const self = this;
-            debugger;
             self.removeChannelFromCache({channelId: self.toDeleteChannelId});
             self.removeConversationForChannel(self.toDeleteChannelId);
             let deleteConversationUpdates = {};
@@ -338,6 +340,11 @@ export default {
                 }
             });
             $('#messagesConfirmation').modal('hide');
+            
+            this.triggerAnanlyticsEvent('DELETECHAT_ALLCHATS_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': self.fetchedChannelMetadataData[self.toDeleteChannelId].otherUserId
+            });
         },
 
         watchBlockedConversation (otherUserId) {

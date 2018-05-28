@@ -1938,5 +1938,10 @@ export default {
         "SCREEN_NAME": "P2PCHAT",
         "LOCATION": "USERCHAT",
         "ACTION": "VIEWALLCHATS"
+    },
+    "DELETECHAT_ALLCHATS_P2PCHAT": {
+        "SCREEN_NAME": "P2PCHAT",
+        "LOCATION": "ALLCHATS",
+        "ACTION": "DELETECHAT"
     }
 };
