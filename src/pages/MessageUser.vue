@@ -621,6 +621,11 @@ export default {
 
         redirectToMessagesPage() {
             this.$router.push('/messages');
+            
+            this.triggerAnanlyticsEvent('VIEWALLCHATS_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
         },
         initializeFirebaseAndStartListening() {
             const self = this;

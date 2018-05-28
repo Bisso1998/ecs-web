@@ -1933,5 +1933,10 @@ export default {
         "SCREEN_NAME": "P2PCHAT",
         "LOCATION": "USERCHAT",
         "ACTION": "UNBLOCKUSER"
+    },
+    "VIEWALLCHATS_USERCHAT_P2PCHAT": {
+        "SCREEN_NAME": "P2PCHAT",
+        "LOCATION": "USERCHAT",
+        "ACTION": "VIEWALLCHATS"
     }
 };
