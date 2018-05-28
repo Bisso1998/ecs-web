@@ -9,7 +9,6 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "postinstall": "npm run build",
     "server": "node server.js",
     "build_prod": "bash build/build_prod.sh"
   },
