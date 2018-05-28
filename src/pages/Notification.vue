@@ -55,7 +55,7 @@
                             </div>
                             <ul class="chat-list" v-if="!getUserDetails.isGuest">
                                 <li class="chat-item" v-for="messageNotification in messageNotificationList" v-bind:key="messageNotification.messageId">
-                                    <router-link
+                                    <router-link @click.native="triggerConversationEvent(messageNotification.userId)"
                                         :to="'/messages/' + messageNotification.userId">
                                     <div>
                                         <div class="user-img"><img v-bind:src="messageNotification.profileImageUrl" alt="profile-img"></div>
@@ -135,6 +135,12 @@ export default {
             $(".tab-content").hide();
             $("#" + tab_id).show();
         },
+        triggerConversationEvent(receiver_id) {
+            this.triggerAnanlyticsEvent('STARTCHAT_NEWCHATS_NOTIFS', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': receiver_id
+            });
+        }
     },
     created() {
 
@@ -298,6 +304,7 @@ export default {
     .tab-menu {
         border-bottom: 1px solid #e9e9e9;
         padding: 8px 0 0;
+        margin: 0;
         text-align: left;
         overflow: hidden;
         width: 100%;

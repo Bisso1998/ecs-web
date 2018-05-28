@@ -1958,5 +1958,10 @@ export default {
         "SCREEN_NAME": "P2PCHAT",
         "LOCATION": "ALLCHATS",
         "ACTION": "STARTCHAT"
+    },
+    "STARTCHAT_NEWCHATS_NOTIFS": {
+        "SCREEN_NAME": "NOTIFS",
+        "LOCATION": "NEWCHATS",
+        "ACTION": "STARTCHAT"
     }
 };
