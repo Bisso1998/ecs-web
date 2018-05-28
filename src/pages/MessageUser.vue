@@ -683,6 +683,8 @@ export default {
             $('.chat-body').css({ height: (window.innerHeight - 110) });
             $(window).on('resize', this.onResizeWindow);
         }
+
+        $('.modal-backdrop').hide();
     },
 
     watch: {

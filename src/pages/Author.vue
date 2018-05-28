@@ -188,7 +188,8 @@ export default {
             'getAuthorFollowingCursor',
             'getAuthorFollowersCursor',
             'getProfileImageLoadingState',
-            'getCoverImageLoadingState'
+            'getCoverImageLoadingState',
+            'getRouteToMessageUserState'
         ]),
         ...mapState({
             publishedContents: state => state.authorpage.published_contents.data,
@@ -213,7 +214,8 @@ export default {
             'uploadCoverImage',
             'uploadProfileImage',
             'removeFromLibraryPublished',
-            'addToLibraryPublished'
+            'addToLibraryPublished',
+            'triggerRouteToMessageUser'
         ]),
         ...mapActions([
             'setShareDetails',
@@ -325,7 +327,12 @@ export default {
                 'RECEIVER_ID': this.getAuthorData.authorId
             });
             
-            this.$router.push({path : '/messages/' + this.getAuthorData.user.userId, query : {profileImageUrl:this.getAuthorData.profileImageUrl, displayName: this.getAuthorData.fullName, profileUrl: this.getAuthorData.pageUrl}});
+            if (this.getUserDetails.isGuest) {
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/triggerRouteToMessageUser`, data: true });
+                this.openLoginModal(this.$route.meta.store, 'STARTCHAT', 'USER_USERM');
+            } else {
+                this.$router.push({path : '/messages/' + this.getAuthorData.user.userId, query : {profileImageUrl:this.getAuthorData.profileImageUrl, displayName: this.getAuthorData.fullName, profileUrl: this.getAuthorData.pageUrl}});
+            }
         },
 
         openShareModal() {
@@ -373,6 +380,12 @@ export default {
         }
     },
     watch: {
+        'getRouteToMessageUserState'(state) {
+            if (state) {
+                this.triggerRouteToMessageUser(false);
+                this.$router.push({path : '/messages/' + this.getAuthorData.user.userId, query : {profileImageUrl:this.getAuthorData.profileImageUrl, displayName: this.getAuthorData.fullName, profileUrl: this.getAuthorData.pageUrl}});
+            }
+        },
         'getAuthorData.authorId'(newValue) {
 
             if (newValue) {

@@ -256,5 +256,9 @@ export default {
     },
     setProfileImageUploadingError(state) {
         state.author.profile_image_upload_state = 'LOADING_ERROR';
+    },
+
+    setRouteToMessageUser(state, routeState) {
+        state.route_to_message_user = routeState;
     }
 }

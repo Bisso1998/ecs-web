@@ -40,4 +40,6 @@ export default {
     
     getCoverImageLoadingState: state => state.author.cover_image_upload_state,
     getProfileImageLoadingState: state => state.author.profile_image_upload_state,
+
+    getRouteToMessageUserState: state => state.route_to_message_user
 }
