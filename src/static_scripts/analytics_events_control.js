@@ -1908,5 +1908,10 @@ export default {
         "SCREEN_NAME": "USER",
         "LOCATION": "USERM",
         "ACTION": "STARTCHAT"
+    },
+    "SENDMESSAGE_USERCHAT_P2PCHAT": {
+        "SCREEN_NAME": "P2PCHAT",
+        "LOCATION": "USERCHAT",
+        "ACTION": "SENDMESSAGE"
     }
 };
