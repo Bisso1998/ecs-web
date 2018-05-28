@@ -1954,4 +1954,9 @@ export default {
         "LOCATION": "ALLCHATS",
         "ACTION": "UNBLOCKUSER"
     },
+    "STARTCHAT_ALLCHATS_P2PCHAT": {
+        "SCREEN_NAME": "P2PCHAT",
+        "LOCATION": "ALLCHATS",
+        "ACTION": "STARTCHAT"
+    }
 };

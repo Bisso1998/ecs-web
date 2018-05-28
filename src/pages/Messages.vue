@@ -290,6 +290,11 @@ export default {
 
         loadMessagesForConversation(userId){
             this.$router.push('/messages/' + userId );
+            
+            this.triggerAnanlyticsEvent('STARTCHAT_ALLCHATS_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': userId
+            });
         },
 
         getImageUrl( imageUrl, width, compressed ) {
