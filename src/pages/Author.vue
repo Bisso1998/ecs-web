@@ -322,7 +322,7 @@ export default {
         messageUser() {
             this.triggerAnanlyticsEvent('STARTCHAT_USERM_USER', 'CONTROL', {
                 'USER_ID': this.getUserDetails.userId,
-                'AUTHOR_ID': this.getAuthorData.authorId
+                'RECEIVER_ID': this.getAuthorData.authorId
             });
             
             this.$router.push({path : '/messages/' + this.getAuthorData.user.userId, query : {profileImageUrl:this.getAuthorData.profileImageUrl, displayName: this.getAuthorData.fullName, profileUrl: this.getAuthorData.pageUrl}});
