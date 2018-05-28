@@ -305,10 +305,29 @@ export default {
             this.updateUserPassword(data);
         },
         triggerEventAndLogoutUser() {
+            const that = this;
             this.triggerAnanlyticsEvent('LOGOUT_SETTINGSM_SETTINGS', 'CONTROL', {
                 'USER_ID': this.getUserDetails.userId
             });
-            this.logoutUser();
+            
+            import('firebase').then((firebase) => {
+                firebase.auth().signOut().then(function() {
+                    console.log( 'Firebase logout success!' );
+
+                    firebase.auth(firebase.app("FirebaseGrowth")).signOut().then(() => {
+                        console.log('Firebase Growth logout success');
+                        that.logoutUser();
+                    }).catch((error) => {
+                        console.log(error);
+                        console.log('Firebase Growth logout error');
+                        that.logoutUser();
+                    })
+                }).catch(function(error) {
+                    console.log(error);
+                    console.log( 'Firebase logout error!' );
+                    that.logoutUser();
+                });
+            });
         },
         detectChangesAndTriggerEvent() {
 
