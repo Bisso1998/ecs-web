@@ -183,6 +183,11 @@ export default {
         }, function (error) {
             commit('setFollowUnfollowFollowersLoadingDataLoadingError');
         });
+    },
+
+    triggerRouteToMessageUser({ commit, state }, routeState) {
+        console.log('i have been called: ', routeState);
+        commit('setRouteToMessageUser', routeState);
     }
 
 
