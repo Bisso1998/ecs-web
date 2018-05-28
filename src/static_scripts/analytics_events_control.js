@@ -1943,5 +1943,15 @@ export default {
         "SCREEN_NAME": "P2PCHAT",
         "LOCATION": "ALLCHATS",
         "ACTION": "DELETECHAT"
-    }
+    },
+    "BLOCKUSER_ALLCHATS_P2PCHAT": {
+        "SCREEN_NAME": "P2PCHAT",
+        "LOCATION": "ALLCHATS",
+        "ACTION": "BLOCKUSER"
+    },
+    "UNBLOCKUSER_ALLCHATS_P2PCHAT": {
+        "SCREEN_NAME": "P2PCHAT",
+        "LOCATION": "ALLCHATS",
+        "ACTION": "UNBLOCKUSER"
+    },
 };

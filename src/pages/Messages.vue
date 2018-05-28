@@ -365,11 +365,21 @@ export default {
 
         blockUser (otherUserId) {
             this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId).set(true);
+            
+            this.triggerAnanlyticsEvent('BLOCKUSER_ALLCHATS_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': otherUserId
+            });
         },
 
 
         unblockUser (otherUserId) {
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(otherUserId).set(false);
+            
+            this.triggerAnanlyticsEvent('UNBLOCKUSER_ALLCHATS_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': otherUserId
+            });
         },
 
         initializeFirebaseAndStartListening() {
