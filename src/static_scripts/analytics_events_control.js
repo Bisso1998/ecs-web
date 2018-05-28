@@ -1923,5 +1923,15 @@ export default {
         "SCREEN_NAME": "P2PCHAT",
         "LOCATION": "USERCHAT",
         "ACTION": "DELETECHAT"
+    },
+    "BLOCKUSER_USERCHAT_P2PCHAT": {
+        "SCREEN_NAME": "P2PCHAT",
+        "LOCATION": "USERCHAT",
+        "ACTION": "BLOCKUSER"
+    },
+    "UNBLOCKUSER_USERCHAT_P2PCHAT": {
+        "SCREEN_NAME": "P2PCHAT",
+        "LOCATION": "USERCHAT",
+        "ACTION": "UNBLOCKUSER"
     }
 };

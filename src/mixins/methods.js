@@ -448,6 +448,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             eventName !== 'SENDMESSAGE_USERCHAT_P2PCHAT' &&
             eventName !== 'CLICKUSER_USERCHAT_P2PCHAT' &&
             eventName !== 'BLOCKUSER_USERCHAT_P2PCHAT' &&
+            eventName !== 'UNBLOCKUSER_USERCHAT_P2PCHAT' &&
             eventName !== 'DELETECHAT_USERCHAT_P2PCHAT' &&
             eventName !== 'VIEWALLCHATS_USERCHAT_P2PCHAT' &&
             eventName !== 'DELETECHAT_ALLCHATS_P2PCHAT' &&

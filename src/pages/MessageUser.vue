@@ -570,12 +570,22 @@ export default {
 
         blockUser () {
             this.firebaseGrowthDB.ref('CHATS').child('blocked_users').child(this.getUserDetails.userId).child(this.otherUserId).set(true);
+            
+            this.triggerAnanlyticsEvent('BLOCKUSER_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
         },
 
 
         unblockUser () {
             const self = this;
             this.firebaseGrowthDB.ref('/CHATS').child('blocked_users').child(this.getUserDetails.userId).child(self.otherUserId).set(false);
+            
+            this.triggerAnanlyticsEvent('UNBLOCKUSER_USERCHAT_P2PCHAT', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.otherUserId
+            });
         },
 
         deleteConversation() {
