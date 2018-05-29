@@ -13,7 +13,7 @@
                         <span class="help-text">Preview:</span>
                         <div class="quotes" :style="{ backgroundImage: 'url(' + currentBackground + ')' }">
                             <div class="quote-text" :class="{ 
-                                'overlay': shouldHaveOverlay === 'overlay-yes',
+                                'overlay-yes': shouldHaveOverlay === 'overlay-yes',
                                 'font-medium': fontSize === 'medium',
                                 'font-small': fontSize === 'small',
                                 'font-large': fontSize === 'large',
@@ -227,7 +227,7 @@ export default {
                 position: absolute;
                 z-index: 1;
             }
-            &.overlay {
+            &.overlay-yes {
                 background-color: rgba(0,0,0,0.5);
                 width: 100%;
             }
