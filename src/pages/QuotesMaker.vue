@@ -206,9 +206,12 @@ export default {
         background-color: #e9e9e9;
         background-size: cover;
         background-repeat: no-repeat;
-        height: 215px;
+        height: 250px;
         position: relative;
         overflow: hidden;
+        @media screen and (min-width: 992px ) {
+            height: 400px;
+        }
         .quote-text {
             position: relative;
             height: 100%;
@@ -279,6 +282,10 @@ export default {
     }
     .image-options {
         margin: 20px 0;
+        @media screen and (max-width: 500px ) {
+            height: 250px;
+            overflow-y: scroll;
+        }
         .choose-image {
             margin: 10px 0;
             padding: 0;
@@ -313,6 +320,9 @@ export default {
             margin: 20px 0;
             font-size: 16px;
             font-weight: bold;
+            &:disabled {
+                background: grey;
+            }
         }
     }
 }
