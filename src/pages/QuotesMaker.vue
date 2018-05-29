@@ -12,8 +12,20 @@
                         <!-- Quotes image -->
                         <span class="help-text">Preview:</span>
                         <div class="quotes" :style="{ backgroundImage: 'url(/static/quotes_1.jpg)' }">
-                            <div class="quote-text overlay font-medium color-white text-center">
-                                <div class="text" style="top: 0%; left: 0%">{{ quote }}</div>
+                            <div class="quote-text" :class="{ 
+                                'overlay': shouldHaveOverlay === 'overlay-yes',
+                                'font-medium': fontSize === 'medium',
+                                'font-small': fontSize === 'small',
+                                'font-large': fontSize === 'large',
+                                'color-white': fontColor === 'white',
+                                'color-black': fontColor === 'black',
+                                'color-red': fontColor === 'red',
+                                'color-green': fontColor === 'green',
+                                'text-center': fontAlign === 'center',
+                                'text-left': fontAlign === 'left',
+                                'text-right': fontAlign === 'right',
+                            }">
+                                <div class="text" :style="{top: (fontTopLocation || 0) + 'px', left: (fontLeftLocation || 0 )+ 'px' }">{{ quote }}</div>
                             </div>
                         </div>
                     </div>
@@ -32,57 +44,57 @@
                         
                         <span class="label">Do you need a background overlay?</span>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="background-overlay" id="overlay-yes" value="overlay-yes" checked>
+                            <input class="form-check-input" type="radio" v-model="shouldHaveOverlay" name="background-overlay" id="overlay-yes" value="overlay-yes" checked>
                             <label class="form-check-label" for="overlay-yes">Yes</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="background-overlay" id="overlay-no" value="overlay-no">
+                            <input class="form-check-input" type="radio" v-model="shouldHaveOverlay" name="background-overlay" id="overlay-no" value="overlay-no">
                             <label class="form-check-label" for="overlay-no">No</label>
                         </div>
                         
                         <span class="label">Select text size:</span>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-size" id="text-large" value="large">
+                            <input class="form-check-input" type="radio" v-model="fontSize" name="text-size" id="text-large" value="large">
                             <label class="form-check-label" for="text-large">Large</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-size" id="text-medium" value="medium" checked>
+                            <input class="form-check-input" type="radio" v-model="fontSize" name="text-size" id="text-medium" value="medium">
                             <label class="form-check-label" for="text-medium">Medium</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-size" id="text-small" value="small">
+                            <input class="form-check-input" type="radio" v-model="fontSize" name="text-size" id="text-small" value="small">
                             <label class="form-check-label" for="inlineRadio2">Small</label>
                         </div>
                         
                         <span class="label">Select text color:</span>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-color" id="text-white" value="white" checked>
+                            <input class="form-check-input" type="radio" v-model="fontColor" name="text-color" id="text-white" value="white">
                             <label class="form-check-label" for="text-white">White</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-color" id="text-black" value="black">
+                            <input class="form-check-input" type="radio" v-model="fontColor" name="text-color" id="text-black" value="black">
                             <label class="form-check-label" for="text-black">Black</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-color" id="text-red" value="red">
+                            <input class="form-check-input" type="radio" v-model="fontColor" name="text-color" id="text-red" value="red">
                             <label class="form-check-label" for="text-red">Red</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-color" id="text-green" value="green">
+                            <input class="form-check-input" type="radio" v-model="fontColor" name="text-color" id="text-green" value="green">
                             <label class="form-check-label" for="text-green">Green</label>
                         </div>
                         
                         <span class="label">Select text align:</span>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-align" id="align-left" value="left">
+                            <input class="form-check-input" type="radio" v-model="fontAlign" name="text-align" id="align-left" value="left">
                             <label class="form-check-label" for="align-left">Left</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-align" id="align-center" value="center" checked>
+                            <input class="form-check-input" type="radio" v-model="fontAlign" name="text-align" id="align-center" value="center">
                             <label class="form-check-label" for="align-center">Center</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="text-align" id="align-right" value="right">
+                            <input class="form-check-input" type="radio" v-model="fontAlign" name="text-align" id="align-right" value="right">
                             <label class="form-check-label" for="align-right">Right</label>
                         </div>
                         
@@ -90,16 +102,16 @@
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="topPosition">Top:</label>
-                                <input type="text" class="form-control" id="topPosition" placeholder="Top">
+                                <input type="number" class="form-control" id="topPosition" v-model="fontTopLocation" placeholder="Top">
                             </div>
                             <div class="form-group col-6">
                                 <label for="leftPosition">Left:</label>
-                                <input type="text" class="form-control" id="leftPosition" placeholder="Left">
+                                <input type="number" class="form-control" id="leftPosition" v-model="fontLeftLocation" placeholder="Left">
                             </div>
                         </div>
                         
-                        <button class="generate-btn" @click="takeScreenShot">Generate Quote</button>
-                        <a v-if="dataImageUrl" :href="dataImageUrl" download>Download Image</a>
+                        <button class="generate-btn" @click="takeScreenShot" :disabled="generateIsDisabled">Generate Quote</button>
+                        <a v-if="dataImageUrl && !generateIsDisabled" :href="dataImageUrl" download>Download Image</a>
                     </div>
                 </div>
             </div>
@@ -120,7 +132,14 @@ export default {
     data() {
         return {
             quote: '',
-            dataImageUrl: null
+            dataImageUrl: null,
+            shouldHaveOverlay: 'overlay-yes',
+            fontSize: 'medium',
+            fontColor: 'white',
+            fontAlign: 'center',
+            fontTopLocation: 0,
+            fontLeftLocation: 0,
+            generateIsDisabled: false
         }
     },
     components: {
@@ -138,8 +157,10 @@ export default {
         takeScreenShot() {
             const that = this;
             console.log(new Date);
+            that.generateIsDisabled = true;
             html2canvas($('.quotes')[0], { useCORS: true}).then(function(canvas) {
                 that.dataImageUrl = canvas.toDataURL("image/png");
+                that.generateIsDisabled = false;
             }).catch((error) => {
                 console.log(error);
             });
