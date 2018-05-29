@@ -11,7 +11,7 @@
                     <div class="col-md-6">
                         <!-- Quotes image -->
                         <span class="help-text">Preview:</span>
-                        <div class="quotes" :style="{ backgroundImage: 'url(https://i.ytimg.com/vi/fbpK5RPCpUg/maxresdefault.jpg)' }">
+                        <div class="quotes" :style="{ backgroundImage: 'url(/static/quotes_1.jpg)' }">
                             <div class="quote-text overlay font-medium color-white text-center">
                                 <div class="text" style="top: 0%; left: 0%">{{ quote }}</div>
                             </div>
@@ -98,7 +98,8 @@
                             </div>
                         </div>
                         
-                        <button class="generate-btn">Generate Quote</button>
+                        <button class="generate-btn" @click="takeScreenShot">Generate Quote</button>
+                        <a v-if="dataImageUrl" :href="dataImageUrl" download>Download Image</a>
                     </div>
                 </div>
             </div>
@@ -107,6 +108,8 @@
 </template>
 
 <script>
+import html2canvas from 'html2canvas';
+
 import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants';
 import Spinner from '@/components/Spinner.vue';
@@ -117,6 +120,7 @@ export default {
     data() {
         return {
             quote: '',
+            dataImageUrl: null
         }
     },
     components: {
@@ -129,6 +133,16 @@ export default {
     methods: {
         updateQuoteText(text) {
             this.quote = text;
+        },
+
+        takeScreenShot() {
+            const that = this;
+            console.log(new Date);
+            html2canvas($('.quotes')[0], { useCORS: true}).then(function(canvas) {
+                that.dataImageUrl = canvas.toDataURL("image/png");
+            }).catch((error) => {
+                console.log(error);
+            });
         }
     },
     watch: {
