@@ -96,7 +96,7 @@
                             <label class="form-check-label" for="align-right">Right</label>
                         </div>
                         
-                        <span class="label">Select text position.(Enter value in % or px)</span>
+                        <span class="label">Select text position.(Enter value in px)</span>
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="topPosition">Top:</label>
