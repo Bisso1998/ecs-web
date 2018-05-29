@@ -11,7 +11,7 @@
                     <div class="col-md-6">
                         <!-- Quotes image -->
                         <span class="help-text">Preview:</span>
-                        <div class="quotes" :style="{ backgroundImage: 'url(/static/quotes_1.jpg)' }">
+                        <div class="quotes" :style="{ backgroundImage: 'url(' + currentBackground + ')' }">
                             <div class="quote-text" :class="{ 
                                 'overlay': shouldHaveOverlay === 'overlay-yes',
                                 'font-medium': fontSize === 'medium',
@@ -37,9 +37,7 @@
                         
                         <span class="label">Choose an image from the below options:</span>
                         <ul class="choose-image">
-                            <li><img src="https://i.ytimg.com/vi/bLFErGV93yc/maxresdefault.jpg" alt=""></li>
-                            <li class="selected"><img src="https://i.ytimg.com/vi/fbpK5RPCpUg/maxresdefault.jpg" alt=""></li>
-                            <li><img src="http://images5.fanpop.com/image/photos/31600000/Inspiration-true-writers-31667986-500-313.png" alt=""></li>
+                            <li v-for="eachBackground in availableBackgrounds" :class="{ selected: eachBackground === currentBackground }" @click="changeBackground(eachBackground)"><img :src="eachBackground" alt=""></li>
                         </ul>
                         
                         <span class="label">Do you need a background overlay?</span>
@@ -139,7 +137,13 @@ export default {
             fontAlign: 'center',
             fontTopLocation: 0,
             fontLeftLocation: 0,
-            generateIsDisabled: false
+            generateIsDisabled: false,
+            currentBackground: '/static/quotes_1.jpg',
+            availableBackgrounds: [
+                '/static/quotes_1.jpg',
+                '/static/quotes_2.jpg',
+                '/static/quotes_3.png'
+            ]
         }
     },
     components: {
@@ -152,6 +156,10 @@ export default {
     methods: {
         updateQuoteText(text) {
             this.quote = text;
+        },
+
+        changeBackground(newBackground) {
+            this.currentBackground = newBackground;
         },
 
         takeScreenShot() {
