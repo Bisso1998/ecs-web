@@ -25,6 +25,7 @@ import HomePageComponent from '@/pages/Home.vue'
 import EventParticipatePageComponent from '@/pages/EventParticipate.vue'
 import AdminEventSubmissions from '@/pages/AdminEventSubmissions.vue'
 import AdminEventSubmission from '@/pages/AdminEventSubmission.vue'
+import QuotesMakerPageComponent from '@/pages/QuotesMaker.vue'
 
 import constants from '@/constants'
 import DataAccessor from '@/utils/DataAccessor'
@@ -367,6 +368,10 @@ const router = new Router({
         beforeEnter: (to, from, next) => {
             next('login#forgot-pass')
         }
+    }, {
+        path: '/quotes-maker',
+        name: 'Quotes-Creator',
+        component: QuotesMakerPageComponent,
     }, {
         path: '/author/:author_id',
         meta: {
