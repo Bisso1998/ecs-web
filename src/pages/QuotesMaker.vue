@@ -7,6 +7,23 @@
                         <h2>Quotes Maker</h2>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- QUotes image -->
+                        <div class="quotes">
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="">
+                            <TranslatingInput :value="quote" :oninput="updateQuoteText"></TranslatingInput>
+                        </div>
+
+                        <div class="">
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </MainLayout>
@@ -16,16 +33,26 @@
 import MainLayout from '@/layout/main-layout.vue';
 import constants from '@/constants';
 import Spinner from '@/components/Spinner.vue';
+import TranslatingInput from '@/components/TranslatingInput.vue';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    data() {
+        return {
+            quote: '',
+        }
+    },
     components: {
         MainLayout,
-        Spinner
+        Spinner,
+        TranslatingInput
     },
     computed: {
     },
     methods: {
+        updateQuoteText(text) {
+            this.quote = text;
+        }
     },
     watch: {
         
@@ -53,6 +80,12 @@ export default {
         @media screen and (max-width: 992px ) {
             font-size: 18px;
         }
+    }
+
+    .quotes {
+        background-image: url('https://www.capetownchiro.com/wp-content/uploads/2017/07/freedom-sunset-web-header.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 }
 </style>
