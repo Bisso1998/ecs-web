@@ -183,8 +183,20 @@ export default {
         .quote-text {
             position: relative;
             height: 100%;
+            &:after {
+                content: "";
+                background: url(https://www.ptlp.co/resource-all/home-page/pratilipi_logo.png) no-repeat;
+                background-size: 30px;
+                width: 30px;
+                height: 30px;
+                opacity: 0.8;
+                bottom: 10px;
+                right: 10px;
+                position: absolute;
+                z-index: 1;
+            }
             &.overlay {
-                background: rgba(0,0,0,0.5);
+                background-color: rgba(0,0,0,0.5);
                 width: 100%;
             }
             &.font-large {
