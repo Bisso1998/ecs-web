@@ -13,6 +13,6 @@ module.exports = {
   AMPLITUDE_APP_ID: "'a2af45f6f1b31d716b0f34b3d4101e97'",
   GA_WEBSITE: "'PWA'",
   GA_WEBSITE_MODE: "'Standard'",
-  GA_WEBSITE_VERSION: "'Pheonix'",
+  GA_WEBSITE_VERSION: "'Mark-8'",
   GOOGLE_CLIENT_ID: "'659873510744-kfim969enh181h4gbctffrjg5j47tfuq.apps.googleusercontent.com'"
 }
