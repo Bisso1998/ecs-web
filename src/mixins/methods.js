@@ -431,7 +431,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             ...eventProps,
             ...eventProperty,
             'DEVICE_TYPE': isMobile() ? 'MOBILE':'DESKTOP',
-            'WEBSITE_TYPE': 'PHOENIX',
+            'WEBSITE_TYPE': process.env.GA_WEBSITE_VERSION,
             'EXPERIMENT_ID': experimentType,
             'ENVIRONMENT': 'GROWTH',
             'CONTENT_LANGUAGE': getCurrentLanguage().fullName.toUpperCase(),
