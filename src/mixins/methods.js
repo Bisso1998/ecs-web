@@ -217,6 +217,23 @@ export function getLowResolutionImage(imageUrl) {
     }
 }
 
+// For Author Image
+export function getMediumResolutionImage(imageUrl) {
+    let type;
+
+    if (isChrome()){
+        type = 'webp';
+    } else {
+        type = 'jpg';
+    }
+
+    if (imageUrl.indexOf('?') === -1) {
+        return imageUrl + `?quality=high&type=${type}&width=120`;
+    } else {
+        return imageUrl + `&quality=high&type=${type}&width=120`;
+    }
+}
+
 export function getHighResolutionImage(imageUrl) {
     let type;
     if (isChrome()){

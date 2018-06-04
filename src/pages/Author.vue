@@ -23,7 +23,7 @@
                             </div>
 
                             <div class="profile-image">
-                                <img :src="getAuthorData.imageUrl + '?width=150'" alt="profile">
+                                <img :src="getMediumResolutionImage(getAuthorData.imageUrl)" alt="profile">
                                 <button class="update-img" v-if="getUserDetails.userId === getAuthorData.user.userId" @click="uploadImage('profile-image')"><i class="material-icons">camera_alt</i></button>
                                 <input type="file" hidden name="profileimage" @change="triggerProfileImageUpload($event)" accept="image/*" id="profile_uploader">
                                 <div class="uploading" v-if="getProfileImageLoadingState === 'LOADING'">
