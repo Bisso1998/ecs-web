@@ -7,7 +7,7 @@
                         <div class="foot-title">__("footer_mobile_app")</div>
                         <div class="foot-items">
                             <a @click.prevent="triggerEvent" href="#" target="_blank" rel="noopener">
-                                <img src="../assets/google-play-badge.png" alt="google-play" class="google-play-badge">
+                                <img v-lazy="require('../assets/google-play-badge.png')" alt="google-play" class="google-play-badge">
                             </a>
                         </div>
                     </div>
