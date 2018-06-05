@@ -60,7 +60,33 @@ const router = new Router({
         component: HomePageComponent,
         meta: {
             'store': 'homepage',
-            'title': '__("seo_home_page") | __("pratilipi")'
+            'title': '__("seo_home_page") | __("pratilipi")',
+            metaTags: [
+                {
+                    property: 'og:title',
+                    content: '__("seo_home_page") | __("pratilipi")'
+                },
+                {
+                    property: 'og:description',
+                    content: 'A platform to discover, read and share your favorite stories, poems and books in a language, device and format of your choice.'
+                },
+                {
+                    property: 'og:type',
+                    content: 'books.book'
+                },
+                {
+                    property: 'og:image',
+                    content: 'https://www.ptlp.co/resource-all/home-page/pratilipi-banner-compressed-mobile.jpg'
+                },
+                {
+                    property: 'og:url',
+                    content: window.location.protocol + '//' + window.location.host
+                },
+                {
+                    property: 'og:locale',
+                    content: process.env.LANGUAGE + '_IN'
+                }
+            ]
         },
         beforeEnter: (to, from, next) => {
             if (to.query.email && to.query.token && to.query.passwordReset) {
@@ -513,10 +539,48 @@ const router = new Router({
     scrollBehavior: () => ({ y: 0 })
 });
 
+// router.beforeEach((to, from, next) => {
+//     document.title = to.meta.title
+//     next()
+// })
+
+// This callback runs before every route change, including on page load.
 router.beforeEach((to, from, next) => {
-    document.title = to.meta.title
-    next()
-})
+  // This goes through the matched routes from last to first, finding the closest route with a title.
+  // eg. if we have /some/deep/nested/route and /some, /deep, and /nested have titles, nested's will be chosen.
+  const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
+
+  // Find the nearest route element with meta tags.
+  const nearestWithMeta = to.matched.slice().reverse().find(r => r.meta && r.meta.metaTags);
+  const previousNearestWithMeta = from.matched.slice().reverse().find(r => r.meta && r.meta.metaTags);
+
+  // If a route with a title was found, set the document (page) title to that value.
+  if(nearestWithTitle) document.title = nearestWithTitle.meta.title;
+
+  // Remove any stale meta tags from the document using the key attribute we set below.
+  Array.from(document.querySelectorAll('[data-vue-router-controlled]')).map(el => el.parentNode.removeChild(el));
+
+  // Skip rendering meta tags if there are none.
+  if(!nearestWithMeta) return next();
+
+  // Turn the meta tag definitions into actual elements in the head.
+  nearestWithMeta.meta.metaTags.map(tagDef => {
+    const tag = document.createElement('meta');
+
+    Object.keys(tagDef).forEach(key => {
+      tag.setAttribute(key, tagDef[key]);
+    });
+
+    // We use this to track which meta tags we create, so we don't interfere with other ones.
+    tag.setAttribute('data-vue-router-controlled', '');
+
+    return tag;
+  })
+  // Add the meta tags to the document head.
+  .forEach(tag => document.head.appendChild(tag));
+
+  next();
+});
 
 router.afterEach((to, from) => {
     ga('set', 'page', to.path + window.location.search);
