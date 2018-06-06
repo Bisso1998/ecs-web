@@ -16,7 +16,7 @@ import SearchPageComponent from '@/pages/Search.vue'
 import LoginPageComponent from '@/pages/Login.vue'
 import PasswordResetPageComponent from '@/pages/PasswordReset.vue'
 import MessagesComponent from '@/pages/Messages.vue'
-import MessageUserComponent from '@/pages/MessageUser.vue'
+// import MessageUserComponent from '@/pages/MessageUser.vue'
 
 import PratilipiPageComponent from '@/pages/Pratilipi.vue';
 import DiscoveryPageComponent from '@/pages/Discovery.vue'
@@ -307,7 +307,9 @@ const router = new Router({
     }, {
         path: '/messages/:channel_id',
         name: 'MessageUser_Page',
-        component: MessageUserComponent,
+        component: () => {
+            return import('@/pages/MessageUser.vue');
+        },
         meta: {
             'title': 'Messages | __("pratilipi")',
             'store': 'messageuser'
