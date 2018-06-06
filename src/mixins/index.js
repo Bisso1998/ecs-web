@@ -1,7 +1,7 @@
-import { 
-    translateWord, 
-    openLoginModal, 
-    openInputModal, 
+import {
+    translateWord,
+    openLoginModal,
+    openInputModal,
     openMultiInputModal,
     openConfirmationModal,
     openForgotPasswordModal,
@@ -25,7 +25,8 @@ import {
     openPratilipiModal,
     getCookie,
     openPrimaryConfirmationModal,
-    setCookie
+    setCookie,
+    isCurrentEvent
 } from '@/mixins/methods'
 import { defaultAuthorImage } from '@/mixins/data'
 
@@ -62,6 +63,7 @@ export default {
         openPratilipiModal,
         getCookie,
         setCookie,
-        openPrimaryConfirmationModal
+        openPrimaryConfirmationModal,
+        isCurrentEvent
     }
 }

@@ -8,17 +8,17 @@
                             <div class="head-title">{{ getEventData.name }}</div>
                             <img :src="getEventData.bannerImageUrl" alt="">
                             <div class="desc" v-html="getEventData.description"></div>
-                            <button v-if="false" type="button" class="participate_btn" name="button" @click="goToEventParticipate">Participate</button>
+                            <button v-if="canParticipate && false" type="button" class="participate_btn" name="button" @click="goToEventParticipate">Participate</button>
                         </div>
                     </div>
-                    <div class="col-md-12" v-if="getUserEventDraftData.length > 0 && false">
+                    <div class="col-md-12" v-if="getUserEventDraftData.length > 0 && canParticipate && false">
                         <div class="page-content event-list card" id="yourDrafts">
                             <div class="head-title">Your Drafts</div>
                             <router-link v-for="pratilipiData in getUserEventDraftData" :key="pratilipiData._id" :to='"/event/" + $route.params.event_slug + "/participate/" + pratilipiData._id + "?step=2"'>
                                 <UserEventPratilipiComponent
-                                :pratilipiData="{ 
-                                    title: pratilipiData.title, 
-                                    coverImageUrl: pratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover', 
+                                :pratilipiData="{
+                                    title: pratilipiData.title,
+                                    coverImageUrl: pratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover',
                                     type: pratilipiData.type,
                                     description: pratilipiData.description,
                                     createdAt: pratilipiData.createdAt
@@ -27,13 +27,12 @@
                             </router-link>
                         </div>
                     </div>
-
-                    <div class="col-md-12" v-if="getUserEventData.length > 0 && false">
+                    <div class="col-md-12" v-if="getUserEventData.length > 0 && canParticipate && false">
                         <div class="page-content event-list card" id="yourEntries">
                             <div class="head-title">Your Entries</div>
                             <router-link v-for="pratilipiData in getUserEventData" :key="pratilipiData._id" :to='"/event/" + $route.params.event_slug + "/participate/" + pratilipiData._id + "?step=2"'>
                                 <UserEventPratilipiComponent
-                                :pratilipiData="{ 
+                                :pratilipiData="{
                                     title: pratilipiData.title,
                                     coverImageUrl: pratilipiData.coverImage || 'https://0.ptlp.co/pratilipi/cover',
                                     type: pratilipiData.type,
@@ -85,7 +84,8 @@ export default {
     },
     data() {
         return {
-            scrollPosition: null
+            scrollPosition: null,
+            canParticipate: false
         }
     },
     mixins: [
@@ -131,14 +131,19 @@ export default {
                     'USER_ID': this.getUserDetails.userId,
                     'PARENT_ID': this.getEventData.eventId
                 });
+
+                console.log('IS CURRENT EVENT: ', this.isCurrentEvent(eventId));
+                if (this.isCurrentEvent(eventId)) {
+                    this.canParticipate = true;
+                }
             }
         },
         'scrollPosition'(newScrollPosition){
             const nintyPercentOfList = ( 80 / 100 ) * $('.event-page').innerHeight();
             const { eventId } = this.getEventData;
 
-            if (newScrollPosition > nintyPercentOfList && 
-                this.getEventPratilipisLoadingState !== 'LOADING' && 
+            if (newScrollPosition > nintyPercentOfList &&
+                this.getEventPratilipisLoadingState !== 'LOADING' &&
                 this.getEventPratilipisCursor !== null) {
 
                 this.fetchMorePratilipisForEvent({ eventId, resultCount: 20 });
@@ -165,7 +170,7 @@ export default {
         } else {
             this.fetchEventDetails(event_slug);
         }
-        
+
     },
     mounted() {
         window.addEventListener('scroll', this.updateScroll);
