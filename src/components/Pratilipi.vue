@@ -28,25 +28,19 @@
                 </div>
                 <div class="stats">
                     <div class="rating">
-                        <div class="icons">
-                            <i class="material-icons">star</i>
-                        </div>
+                        <i class="material-icons">star</i>
                         <span>
                             {{ pratilipiData.averageRating | round(1) }}
                         </span>
                     </div>
                     <div class="read-count">
-                        <div class="icons">
-                            <i class="material-icons">remove_red_eye</i>
-                        </div>
+                        <i class="material-icons">remove_red_eye</i>
                         <span>
                             {{ pratilipiData.readCount | round(1) }}    
                         </span>
                     </div>
                     <div class="read-time">
-                        <div class="icons">
-                            <i class="material-icons">access_time</i>
-                        </div>
+                        <i class="material-icons">access_time</i>
                         <span>
                             {{ pratilipiData.readingTime | showInMinutesOrHours }}
                         </span>
@@ -355,13 +349,14 @@ export default {
                 padding: 10px 2px;
                 font-size: 12px;
                 color: #212121;
-                .icons {
+                i {
+                    font-size: 13px;
                     display: inline-block;
                     vertical-align: middle;
                     padding-right: 4px;
-                    i {
-                        font-size: 13px;
-                    }
+                }
+                span {
+                    vertical-align: middle;
                 }
             }
             .read-count, .read-time {
