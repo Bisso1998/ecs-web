@@ -27,7 +27,6 @@
                             </router-link>
                         </div>
                     </div>
-
                     <div class="col-md-12" v-if="getUserEventData.length > 0 && canParticipate && false">
                         <div class="page-content event-list card" id="yourEntries">
                             <div class="head-title">Your Entries</div>
