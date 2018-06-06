@@ -343,9 +343,11 @@ export default {
             margin-top: 5px;
             overflow: hidden;
             text-align: center;
+            display: flex;
+            flex-wrap: wrap;
             .rating, .read-count, .read-time {
-                float: left;
-                width: 32%;
+                flex-grow: 1;
+                flex-basis: 33%;
                 padding: 10px 2px;
                 font-size: 12px;
                 color: #212121;
