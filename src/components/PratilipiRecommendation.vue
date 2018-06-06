@@ -2,7 +2,7 @@
     <div class="pratilipi-wrap">
         <div class="pratilipi">
             <router-link :to="redirectToReader ? pratilipiData.readPageUrl : pratilipiData.pageUrl" @click.native="triggerReadPratilipiEvent" :title="pratilipiData.title">
-                <div class="recommendation" :style="{ backgroundImage: 'url(' + pratilipiData.coverImageUrl + ')' }">
+                <div class="recommendation" v-lazy:background-image="pratilipiImageObject">
                     <span class="title">{{ pratilipiData.title }}</span>
                     <div class="stats-container">
                         <div class="icons"><i class="material-icons">star</i></div>
@@ -64,6 +64,10 @@ export default {
     ],
     data() {
         return {
+            pratilipiImageObject: {
+                src: this.getHighResolutionImage(this.pratilipiData.coverImageUrl),
+                loading: this.getLowResolutionImage(this.pratilipiData.coverImageUrl)
+             },
         }
     },
     computed: {
