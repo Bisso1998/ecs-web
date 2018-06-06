@@ -91,49 +91,49 @@ export function openPratilipiModal() {
 export function getAnalyticsPageSource(pageSource) {
     let analyticsPageSource;
     switch (pageSource) {
-        case 'homepage': 
+        case 'homepage':
             analyticsPageSource = 'HOME';
             break;
-        case 'pratilipipage': 
+        case 'pratilipipage':
             analyticsPageSource = 'BOOK';
             break;
-        case 'authorpage': 
+        case 'authorpage':
             analyticsPageSource = 'USER';
             break;
-        case 'notification': 
+        case 'notification':
             analyticsPageSource = 'NOTIFS';
             break;
-        case 'readerpage': 
+        case 'readerpage':
             analyticsPageSource = 'READER';
             break;
-        case 'eventspage': 
+        case 'eventspage':
             analyticsPageSource = 'EVENTLIST';
             break;
-        case 'eventpage': 
+        case 'eventpage':
             analyticsPageSource = 'EVENT';
             break;
-        case 'writepage': 
+        case 'writepage':
             analyticsPageSource = 'CREATE';
             break;
-        case 'librarypage': 
+        case 'librarypage':
             analyticsPageSource = 'LIBRARY';
             break;
-        case 'searchpage': 
+        case 'searchpage':
             analyticsPageSource = 'SEARCH';
             break;
-        case 'blogspage': 
+        case 'blogspage':
             analyticsPageSource = 'BLOGLIST';
             break;
-        case 'blogpage': 
+        case 'blogpage':
             analyticsPageSource = 'BLOG';
             break;
-        case 'interviewspage': 
+        case 'interviewspage':
             analyticsPageSource = 'AUTHORINT';
             break;
-        case 'interviewpage': 
+        case 'interviewpage':
             analyticsPageSource = 'AUTHORINT';
             break;
-        case 'listpage': 
+        case 'listpage':
             analyticsPageSource = 'CATEGORY';
             break;
         case 'discover':
@@ -308,7 +308,7 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
             console.log("FACEBOOK USER_PROPS: ", res);
         });
     }
-    
+
 }
 
 
@@ -421,7 +421,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             eventProps = { ...homeV4AnalyticsEvents[eventName] };
             break;
     }
-    
+
     if (!eventProps.SCREEN_NAME) {
         eventProps.SCREEN_NAME = eventProperty['SCREEN_NAME'];
         delete eventProperty.SCREEN_NAME;
@@ -495,7 +495,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
         } else {
             FB.AppEvents.logEvent(eventName, null, eventProperty)
         }
-        
+
     } else {
         console.info('NON REGISTERED EVENT: ', eventName);
     }
@@ -540,4 +540,23 @@ export function setCookie( name, value, days, path ) {
         expires = "expires=" + date.toGMTString() + ";";
     }
     document.cookie = name + "=" + ( value ? value : "" ) + ";" + expires + "path=" + ( path ? path : '/' );
+}
+
+export function isCurrentEvent( eventId ) {
+
+    let isItCurrentEvent = false;
+
+    if(!eventId) {
+        return isItCurrentEvent;
+    }
+
+    constants.CATEGORY_DATA.sections.forEach((eachSection) => {
+        eachSection.categories.forEach((eachCategory) => {
+            if (eachCategory && eachCategory.pratilipiListData && eachCategory.pratilipiListData.eventId == eventId) {
+                isItCurrentEvent = true;
+            }
+        });
+    });
+
+    return isItCurrentEvent;
 }
