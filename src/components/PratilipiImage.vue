@@ -1,7 +1,6 @@
 <template>
     <div 
-        class="pratilipi-image blur" 
-        :style="{ 'background-image': 'url(' + getLowResolutionImage( coverImageUrl ) + ')' }">
+        class="pratilipi-image" v-lazy:background-image="pratilipiImageObject">
     </div>
 </template>
 
@@ -18,6 +17,10 @@ export default {
     },
     data() {
         return {
+            pratilipiImageObject: {
+                src: this.getHighResolutionImage(this.coverImageUrl),
+                loading: this.getLowResolutionImage(this.coverImageUrl)
+             },
         }
     },
     mixins: [
@@ -25,14 +28,6 @@ export default {
     ],
     methods: {
         
-    },
-    beforeMount() {
-        const that = this;
-        $('<img/>').attr('src', that.getHighResolutionImage(that.coverImageUrl)).on('load', function() {
-            $(this).remove(); // prevent memory leaks as @benweet suggested
-            $(that.$el).css('background-image', `url(${that.getHighResolutionImage(that.coverImageUrl)})`);
-            $(that.$el).removeClass('blur');
-        });
     }
 }
 </script>
@@ -46,7 +41,7 @@ export default {
     position: relative;
     overflow: hidden;
     transition: all 0.5s;
-    &.blur {
+    &[lazy=loading] {
         filter: blur(5px);
         padding: 5px;
     }

@@ -16,6 +16,8 @@ import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
 import linkify from 'vue-linkify'
 
+import VueLazyload from 'vue-lazyload'
+
 if (process.env.NODE_ENV === 'production') {
     Raven
         .config('https://04a769a856594059abd7e06da9a203e7@sentry.io/305909')
@@ -28,6 +30,8 @@ Vue.config.productionTip = false
 Vue.use(Vuex);
 Vue.directive('linkified', linkify)
 Vue.component('icon', Icon)
+
+Vue.use(VueLazyload)
 
 /* eslint-disable no-new */
 new Vue({
