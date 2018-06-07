@@ -92,7 +92,8 @@ const processGetResponse = function(response, status, aCallBack) {
             extra: {
                 language: process.env.LANGUAGE,
                 status,
-                response: response.message
+                response: response.message,
+                method: 'GET'
             }
         });
     }
@@ -110,8 +111,18 @@ const processGetResponse = function(response, status, aCallBack) {
 const processPostResponse = function(response, status, successCallBack, errorCallBack) {
     if (status == 200 && successCallBack != null)
         successCallBack(response);
-    else if (status != 200 && errorCallBack != null)
+    else if (status != 200 && errorCallBack != null) {
+        Raven.captureMessage('Server Exception', {
+            level: 'error', // one of 'info', 'warning', or 'error'
+            extra: {
+                language: process.env.LANGUAGE,
+                status,
+                response: response.message,
+                method: 'POST'
+            }
+        });
         errorCallBack(response);
+    }
 };
 
 
