@@ -75,7 +75,7 @@
                                 <a href="#" v-if="getUserDetails.userId === getAuthorData.user.userId" v-on:click="tabchange" class="active" data-tab="library">__("library")</a>
                                 <a href="#" id="menu-published" v-on:click="tabchange" data-tab="published"><span>{{ getAuthorData.contentPublished }}</span>__("author_published_contents")</a>
                                 <a href="#" v-on:click="tabchange" data-tab="followers"><span>{{ getAuthorData.followCount }}</span>__("author_followers")</a>
-                                <a href="#" v-on:click="tabchange" data-tab="following"><span>{{ getAuthorData.user.followCount }}</span>__("author_following")</a>
+                                <a href="#" v-on:click="tabchange" data-tab="following" v-if="getAuthorData.user && getAuthorData.user.userId"><span>{{ getAuthorData.user.followCount }}</span>__("author_following")</a>
                             </div>
                             <div class="bottom-contents">
                                 <div class="list published-contents" id="published">

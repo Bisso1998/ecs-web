@@ -124,8 +124,10 @@ export default {
             } else {
                 this.setGuestUserProperties();
             }
-
-            this.initializeFbAsyncInit();
+            try {
+                this.initializeFbAsyncInit();
+            } catch (e) {}
+            
         }
     },
     created() {
@@ -133,7 +135,9 @@ export default {
 
         const that = this;
         if (this.getUserDetails.isGuest !== undefined || this.getUserDetails.isGuest !== null) {
-            this.initializeFbAsyncInit();
+            try {
+                this.initializeFbAsyncInit();
+            } catch (e) {}
         }
     }
 }
