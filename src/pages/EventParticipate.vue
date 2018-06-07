@@ -358,8 +358,8 @@ export default {
 
             this.setConfirmModalAction({
                 action: `eventparticipate/updateDescriptionAndTags`,
-                heading: 'confirm_submission',
-                message: 'confirm_submission_message',
+                heading: 'event_participate_confirm_submission',
+                message: 'event_participate_cannot_change_drafts',
                 data: { eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description, state: 'SUBMITTED' }
             });
             this.openPrimaryConfirmationModal();
