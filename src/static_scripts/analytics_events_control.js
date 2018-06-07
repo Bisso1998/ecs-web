@@ -1973,5 +1973,10 @@ export default {
         "SCREEN_NAME": "NOTIFS",
         "LOCATION": "NEWCHATS",
         "ACTION": "LANDED"
+    },
+    "STARTCHAT_AUTHORDETAIL_BOOK": {
+        "SCREEN_NAME": "BOOK",
+        "LOCATION": "AUTHORDETAIL",
+        "ACTION": "STARTCHAT"
     }
 };
