@@ -1,5 +1,5 @@
 export default {
-    
+
     getModalActionAndData: state =>  state,
 
     getModalTitle: state => {
@@ -12,8 +12,8 @@ export default {
             	return '__("edit_pratilipi_title")';
             case 'pratilipi_delete_content':
                 return '__("pratilipi_delete_content")';
-            case 'confirm_submission':
-                return 'Confirm Submission';
+            case 'event_participate_confirm_submission':
+                return '__("event_participate_confirm_submission")';
         }
     },
 
@@ -29,7 +29,7 @@ export default {
                 return ['After final submission you wont be able to change the content'];
             default:
             	return []
-        }	
+        }
     },
 
     getModalMessage: state => {
