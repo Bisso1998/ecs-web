@@ -24,6 +24,10 @@ import homeV1AnalyticsEvents from '@/static_scripts/experiment_events/home_v1'
 import homeV2AnalyticsEvents from '@/static_scripts/experiment_events/home_v2'
 import homeV3AnalyticsEvents from '@/static_scripts/experiment_events/home_v3'
 import homeV4AnalyticsEvents from '@/static_scripts/experiment_events/home_v4'
+import bookv1AnalyticsEvents from '@/static_scripts/experiment_events/book_v1'
+import bookv2AnalyticsEvents from '@/static_scripts/experiment_events/book_v2'
+import bookv3AnalyticsEvents from '@/static_scripts/experiment_events/book_v3'
+import bookv4AnalyticsEvents from '@/static_scripts/experiment_events/book_v4'
 
 const rating_v1 = ['WGEN001'];
 const rating_v2 = ['WGEN002'];
@@ -49,6 +53,10 @@ const home_v1 = ['WGEN017'];
 const home_v2 = ['WGEN018'];
 const home_v3 = ['WGEN019'];
 const home_v4 = ['WGEN020'];
+const book_v1 = ['WGEN021'];
+const book_v2 = ['WGEN022'];
+const book_v3 = ['WGEN023'];
+const book_v4 = ['WGEN024'];
 
 
 let REFERRER_EVENT;
@@ -428,6 +436,18 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             break;
         case (home_v4.indexOf(experimentType) > -1):
             eventProps = { ...homeV4AnalyticsEvents[eventName] };
+            break;
+        case (book_v1.indexOf(experimentType) > -1):
+            eventProps = { ...bookv1AnalyticsEvents[eventName] };
+            break;
+        case (book_v2.indexOf(experimentType) > -1):
+            eventProps = { ...bookv2AnalyticsEvents[eventName] };
+            break;
+        case (book_v3.indexOf(experimentType) > -1):
+            eventProps = { ...bookv3AnalyticsEvents[eventName] };
+            break;
+        case (book_v4.indexOf(experimentType) > -1):
+            eventProps = { ...bookv4AnalyticsEvents[eventName] };
             break;
     }
 
