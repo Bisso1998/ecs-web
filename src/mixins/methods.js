@@ -288,25 +288,34 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
     if (!window.FB) {
         setTimeout(() => {
             if (propertyName === 'USER_ID') {
-                FB.AppEvents.setUserID(String(propertyValue));
+                try {
+                    FB.AppEvents.setUserID(String(propertyValue));
+                } catch (e) {}
             }
-            if (FB.AppEvents.getUserID() === undefined || FB.AppEvents.getUserID() === null || FB.AppEvents.getUserID().trim() === '') {
+            if (window.FB && FB.AppEvents.getUserID() === undefined || FB.AppEvents.getUserID() === null || FB.AppEvents.getUserID().trim() === '') {
                 return;
             }
-            FB.AppEvents.updateUserProperties(propertyObject, function (res, error) {
-                console.log(res);
-            });
+            try{
+                FB.AppEvents.updateUserProperties(propertyObject, function (res, error) {
+                    console.log(res);
+                });
+            } catch (e) {}
         }, 15000);
     } else {
         if (propertyName === 'USER_ID') {
-            FB.AppEvents.setUserID(String(propertyValue));
+            try {
+                FB.AppEvents.setUserID(String(propertyValue));
+            } catch (e) {}
         }
         if (FB.AppEvents.getUserID() === undefined || FB.AppEvents.getUserID() === null || FB.AppEvents.getUserID().trim() === '') {
             return;
         }
-        FB.AppEvents.updateUserProperties(propertyObject, function (res) {
-            console.log("FACEBOOK USER_PROPS: ", res);
-        });
+        
+        try {
+            FB.AppEvents.updateUserProperties(propertyObject, function (res) {
+                console.log("FACEBOOK USER_PROPS: ", res);
+            });
+        } catch(e) {}
     }
 
 }
@@ -490,7 +499,9 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
 
         if (!window.fbApiInit) {
             setTimeout(() => {
-                FB.AppEvents.logEvent(eventName, null, eventProperty)
+                try {
+                    FB.AppEvents.logEvent(eventName, null, eventProperty)
+                } catch (e) {}
             }, 15000);
         } else {
             FB.AppEvents.logEvent(eventName, null, eventProperty)
