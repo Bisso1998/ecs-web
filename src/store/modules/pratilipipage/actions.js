@@ -214,5 +214,9 @@ export default {
         }, (error) => {
             commit('setUpdatedTypeAndCategoriesError');
         })
+    },
+    
+    triggerRouteToMessageUser({ commit, state }, routeState) {
+        commit('setRouteToMessageUser', routeState);
     }
 }

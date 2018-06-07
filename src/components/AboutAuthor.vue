@@ -9,8 +9,13 @@
                 <img :src="getLowResolutionImage(getAuthorDetails.profileImageUrl)" alt="author" class="auth-img" >
                 <div class="auth-name">{{ getAuthorDetails.name }}</div>
             </router-link>
-            <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow") <span class="follow-count">({{getAuthorDetails.followCount | showThousandsInK(1)}})</span></button>
-            <button class="btn btn-light follow-link following" @click="checkUserAndFollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
+            <div class="author-actions">
+                <button class="btn btn-light follow-link" @click="checkUserAndFollowAuthor" v-if="!getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId"><i class="material-icons">person_add</i> __("author_follow") <span class="follow-count">({{getAuthorDetails.followCount | showThousandsInK(1)}})</span></button>
+                <button class="btn btn-light follow-link following" @click="checkUserAndFollowAuthor" v-if="getAuthorDetails.following && getUserDetails.authorId !== getAuthorDetails.authorId">__("author_unfollow")</button>
+                <div class="message-btn" v-if="getAuthorDetails.user && getAuthorDetails.user.userId && getUserDetails.userId !== getAuthorDetails.user.userId" @click="messageUser">
+                    <i class="material-icons">chat</i> __("chat_message")
+                </div>
+            </div>
             <p class="auth-desc show-more-height">{{ getAuthorDetails.summary }}</p>
             <button type="button" v-if="showShowMoreOfSummary" class="show_more_auth_desc" name="button" data-toggle="modal" data-target="#auth_summary_modal">__("view_more")</button>
             <!-- SUMMARY MODAL -->
@@ -72,13 +77,15 @@ export default {
         ]),
         ...mapGetters('pratilipipage', [
             'getAuthorDetails',
-            'getAuthorDetailsLoadingState'
+            'getAuthorDetailsLoadingState',
+            'getRouteToMessageUserState'
         ])
     },
     methods: {
         ...mapActions('pratilipipage', [
             'fetchAuthorDetails',
-            'followOrUnfollowAuthor'
+            'followOrUnfollowAuthor',
+            'triggerRouteToMessageUser'
         ]),
         ...mapActions([
             'setAfterLoginAction'
@@ -120,12 +127,33 @@ export default {
                 'PARENT_ID': this.getAuthorDetails.user.userId,
                 'AUTHOR_ID': this.getAuthorDetails.authorId
             });
+        },
+        messageUser() {
+            this.triggerAnanlyticsEvent('STARTCHAT_AUTHORDETAIL_BOOK', 'CONTROL', {
+                'USER_ID': this.getUserDetails.userId,
+                'RECEIVER_ID': this.getAuthorDetails.authorId
+            });
+            
+            if (this.getUserDetails.isGuest) {
+                this.setAfterLoginAction({ action: `${this.$route.meta.store}/triggerRouteToMessageUser`, data: true });
+                this.openLoginModal(this.$route.meta.store, 'STARTCHAT', 'USER_USERM');
+            } else {
+                this.$router.push({path : '/messages/' + this.getAuthorDetails.user.userId, query : {profileImageUrl:this.getAuthorDetails.profileImageUrl, displayName: this.getAuthorDetails.fullName, profileUrl: this.getAuthorDetails.pageUrl}});
+            }
         }
     },
     components: {
         
     },
     watch: {
+        'getRouteToMessageUserState'(state) {
+            console.log(state);
+            if (state) {
+                this.triggerRouteToMessageUser(false);
+                this.$router.push({path : '/messages/' + this.getAuthorDetails.user.userId, query : {profileImageUrl:this.getAuthorDetails.profileImageUrl, displayName: this.getAuthorDetails.fullName, profileUrl: this.getAuthorDetails.pageUrl}});
+            }
+        },
+        
         'getAuthorDetailsLoadingState'( state ) {
             if (state === 'LOADING_SUCCESS') {
                 const that = this;
@@ -146,6 +174,10 @@ export default {
         }
     },
     created() {
+        if (this.getRouteToMessageUserState) {
+            this.triggerRouteToMessageUser(false);
+            this.$router.push({path : '/messages/' + this.getAuthorDetails.user.userId, query : {profileImageUrl:this.getAuthorDetails.profileImageUrl, displayName: this.getAuthorDetails.fullName, profileUrl: this.getAuthorDetails.pageUrl}});
+        }
         this.fetchAuthorDetails(this.authorId);
     }
 }
@@ -172,6 +204,7 @@ export default {
     }
     .author-link {
         color: #d0021b;
+        float: left;
         .auth-img {
             border-radius: 50%;
             width: 50px;
@@ -185,31 +218,55 @@ export default {
             margin: 0 10px;
             font-size: 14px;
             vertical-align: middle;
-            @media screen and (max-width: 992px ) {
-                max-width: 110px;
-            }
             @media screen and (max-width: 768px ) {
-                max-width: 70px;
+                max-width: 200px;
             }
         }
         &:hover {
             text-decoration: none;
         }
     }
-    .follow-link {
-        color: #d0021b;
+    .author-actions {
         float: right;
-        margin: 4px 10px 0 0;
-        font-size: 14px;
-        border-color: #d0021b;
-        i {
-            vertical-align: middle;
-            padding-right: 5px;
-            font-size: 18px;
+        @media screen and (max-width: 768px ) {
+            float: left;
         }
-        span.follow-count {
-            font-size: 10px;
-            vertical-align: text-bottom;
+        .follow-link {
+            color: #d0021b;
+            float: left;
+            margin: 5px 0 10px 10px;
+            font-size: 14px;
+            border-color: #d0021b;
+            i {
+                vertical-align: middle;
+                padding-right: 5px;
+                font-size: 18px;
+            }
+            span.follow-count {
+                font-size: 10px;
+                vertical-align: text-bottom;
+            }
+        }
+        .message-btn {
+            background: #fff;
+            color: #d0021b;
+            display: inline-block;
+            border-radius: 3px;
+            vertical-align: middle;
+            font-size: 14px;
+            text-align: center;
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: 1px solid #d0021b;
+            cursor: pointer;
+            float: left;
+            margin: 5px 10px 10px;
+            height: 35px;
+            i {
+                vertical-align: middle;
+                padding-right: 5px;
+                font-size: 18px;
+            }
         }
     }
     .auth-desc {
