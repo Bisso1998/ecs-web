@@ -9,12 +9,12 @@
                 </div>
                 <div class="row" v-if="getDraftedEventPratilipi.length > 0 && getEventLoadingState === 'LOADING_SUCCESS' && currentStep === 1 && !$route.params.eventPratilipiId">
                     <div  class="col-md-12">
-                        <p class="drafted-msg">Your already have the following drafted item(s). Click on it to edit it or create a new one below.</p>
+                        <p class="drafted-msg">__('event_participate_drafted_item_edit')</p>
                         <div class="drafted-items">
                             <UserEventPratilipiComponent
-                                :pratilipiData="{ 
-                                    title: pratilipiData.title, 
-                                    coverImageUrl: pratilipiData.coverImageUrl || 'https://0.ptlp.co/pratilipi/cover', 
+                                :pratilipiData="{
+                                    title: pratilipiData.title,
+                                    coverImageUrl: pratilipiData.coverImageUrl || 'https://0.ptlp.co/pratilipi/cover',
                                     type: pratilipiData.type,
                                     description: pratilipiData.description,
                                     createdAt: pratilipiData.createdAt
@@ -114,7 +114,7 @@
                             <div class="col-6 text-right">
                                 <button class="next" @click="createEventPratilipi">__("writer_to_next_screen")</button>
                             </div>
-                        </div>    
+                        </div>
                     </div>
 
 
@@ -151,7 +151,7 @@
                             <div class="col-6 text-right">
                                 <button class="next" @click="saveContentAndGoToThirdStep">__("writer_to_next_screen")</button>
                             </div>
-                        </div>    
+                        </div>
                     </div>
 
                     <div v-if="currentStep == 3">
@@ -161,7 +161,7 @@
                                     <button class="update-img" @click="uploadCoverImage"><i class="material-icons">camera_alt</i></button>
                                     <input type="file" hidden name="pratilipiimage" accept="image/*" @change="triggerPratilipiImageUpload" id="pratilipiimage-uploader">
                                     <div class="uploading" v-if="getEventPratilipiImageUploadLoadingState === 'LOADING'">
-                                        <Spinner></Spinner> 
+                                        <Spinner></Spinner>
                                     </div>
                                 </div>
                             </div>
@@ -175,21 +175,21 @@
                                     <div class="tag-section-body">
                                         <span class="all-tags active" v-for="each_tag in pratilipiData.tags" :key="each_tag.id">{{ each_tag.name}}</span>
                                         <span class="all-tags"
-                                            v-for="each_tag in [ {id: 1, name: 'test1'}, {id: 2, name: 'test2'}, {id: 3, name: 'test3'}, {id: 4, name: 'test4'} ]" 
+                                            v-for="each_tag in [ {id: 1, name: 'test1'}, {id: 2, name: 'test2'}, {id: 3, name: 'test3'}, {id: 4, name: 'test4'} ]"
                                             :key="each_tag.id">{{ each_tag.name }}</span>
                                     </div>
                                 </div> -->
                             </div>
-                            
+
                         </div>
                         <div class="row writer-navigation">
                             <div class="col-6">
                                 <button class="prev" @click="goToSecondStepForEdit">__("back")</button>
                             </div>
                             <div class="col-6 text-right">
-                                <button class="next" @click="saveMetaInformationAndFinalSubmit">Finish</button>
+                                <button class="next" @click="saveMetaInformationAndFinalSubmit">__('event_participate_finish')</button>
                             </div>
-                        </div>    
+                        </div>
                     </div>
 
                     <div v-if="currentStep == 4">
@@ -200,12 +200,12 @@
                         </div>
                         <div class="row accepted-msg" v-if="showAcceptedMessage">
                             <div class="col-12">
-                                <p>We have accepted your entry and we'll be publishing your content after the event is over.</p>
-                                <p><router-link :to="getEventData.pageUrl + '#yourEntries'">Check Your Entry Here</router-link></p>
+                                <p>__('event_participate_accepted_message')</p>
+                                <p><router-link :to="getEventData.pageUrl + '#yourEntries'">__('event_participate_check_your_entry_here')</router-link></p>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <Spinner v-if="getEventLoadingState === 'LOADING'"></Spinner>
             </div>
@@ -302,7 +302,7 @@ export default {
 
         createEventPratilipi() {
             // this.currentStep = 2;
-            
+
             if (!this.title || this.title.trim() === '') {
                 this.titleIsMissing = true;
                 return;
@@ -311,8 +311,8 @@ export default {
             this.titleIsMissing = false;
             if (this.getUserDetails.isGuest) {
                 const { eventId } = this.getEventData;
-                this.setAfterLoginAction({ action: `eventparticipate/createEventPratilipiData`, data: { 
-                    eventId, 
+                this.setAfterLoginAction({ action: `eventparticipate/createEventPratilipiData`, data: {
+                    eventId,
                     title: this.title.trim(),
                     titleEn: this.titleEn,
                     type: this.type,
@@ -321,8 +321,8 @@ export default {
                 this.openLoginModal(this.$route.meta.store, 'EVENTPARTICIPATECREATE', 'EVENTPARTICIPATE');
                 return;
             }
-            
-            
+
+
             if(this.$route.params.eventSlug && this.$route.params.eventPratilipiId) {
                 this.updateEventPratilipiData({
                     eventPratilipiId: this.$route.params.eventPratilipiId,
@@ -332,8 +332,8 @@ export default {
                 });
             } else {
                 const { eventId } = this.getEventData;
-                this.createEventPratilipiData({ 
-                    eventId, 
+                this.createEventPratilipiData({
+                    eventId,
                     title: this.title,
                     titleEn: this.titleEn,
                     type: this.type,
@@ -356,10 +356,10 @@ export default {
         saveMetaInformationAndFinalSubmit() {
             // this.updateDescriptionAndTags({ eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description, state: 'SUBMITTED' });
 
-            this.setConfirmModalAction({ 
-                action: `eventparticipate/updateDescriptionAndTags`, 
-                heading: 'confirm_submission',
-                message: 'confirm_submission_message',
+            this.setConfirmModalAction({
+                action: `eventparticipate/updateDescriptionAndTags`,
+                heading: 'event_participate_confirm_submission',
+                message: 'event_participate_cannot_change_drafts',
                 data: { eventPratilipiId: this.$route.params.eventPratilipiId, description: this.description, state: 'SUBMITTED' }
             });
             this.openPrimaryConfirmationModal();
@@ -483,7 +483,7 @@ export default {
             fd.append( 'eventPratilipiId', this.getEventPratilipiData._id );
             // fd.append( 'pratilipiId', pratilipiId );
             // fd.append( 'pageNo', cur_page );
-            
+
             $.ajax({
                 type:'POST',
                 url: `https://gamma.pratilipi.com/event-participate/images?type=CONTENT`,
@@ -534,11 +534,11 @@ export default {
             range.selectNodeContents(node);
 
             if (fromSpace) {
-                range.setStart(node, editorRange.endOffset - this.wordToTranslate.length); // current caret pos - 3     
+                range.setStart(node, editorRange.endOffset - this.wordToTranslate.length); // current caret pos - 3
             } else {
-                range.setStart(node, editorRange.endOffset - this.wordToTranslate.length); // current caret pos - 3     
+                range.setStart(node, editorRange.endOffset - this.wordToTranslate.length); // current caret pos - 3
             }
-            
+
             range.setEnd(node, editorRange.endOffset); // current caret pos
             range.deleteContents();
 
@@ -578,7 +578,7 @@ export default {
                 left: textareaLeft
             }
             $(".word-suggestions-dropdown").css("top", caretPosition.top + 10);
-            
+
             const suggesterWidth = $(".word-suggestions-dropdown").width();
             if ((suggesterWidth + caretPosition.left) >= ($(window).width() - 35)) {
                 $(".word-suggestions-dropdown").css("left", "auto");
@@ -708,7 +708,7 @@ export default {
                 paste_postprocess: function( plugin, args ) {
                     $( args.node ).find( "a:has(img)" ).replaceWith( function() {
                         return $(this).find( "img" );
-                    });         
+                    });
                     $( args.node ).find( "div" ).replaceWith( function() {
                         if( $(this).text().length ) {
                             return "<p>" + $(this).html() + '</p>';
@@ -726,7 +726,7 @@ export default {
                         } else {
                             return "";
                         }
-                    });      
+                    });
                 },
                 setup: function(ed) {
                     if(that.isMobile()) {
@@ -776,19 +776,19 @@ export default {
                         that.suggestions = [];
                         that.selectedSuggestion = 0;
                     });
-                    
+
                     ed.on("keyup", function(event){
                         that.setAndLocateSuggestionDropdown();
                         that.chapters[that.selectedChapter].content = tinymce.activeEditor.getContent();
 
                         if (event.code === 'Space' || event.code === 'Enter' || (event.code === 'ArrowDown' && that.suggestions.length > 0) || (event.code === 'ArrowUp' && that.suggestions.length > 0)) {
                             return;
-                        }                        
+                        }
 
                         const words = event.target.innerText.split(/\n| |\u00A0/).map(function(item) {
                             return item.trim();
                         });
-                        
+
 
                         // console.log('---------------------------------');
                         // console.log('OLD LIST:', [...that.wordList]);
@@ -801,7 +801,7 @@ export default {
                         } else if (changedWords.length > 0 && changedWords[0] === '') {
                             that.suggestions = [];
                         } else if( that.lastTranslatedWord === changedWords[0]) {
-                            // 
+                            //
                         } else {
                             const wordToTranslate = changedWords[0];
                             that.wordToTranslate = wordToTranslate;
@@ -809,12 +809,12 @@ export default {
                                 suggestions.push(wordToTranslate);
                                 that.selectedSuggestion = 0;
                                 that.suggestions = suggestions;
-                            });    
+                            });
                         }
                         // console.log('---------------------------------');
-                        
+
                         that.wordList = [ ...words ];
-                        
+
 
                         // console.log(caretPosition);
                         // console.log(event.code);
@@ -837,7 +837,7 @@ export default {
                     });
 
                     ed.on('dirty', (event) => {
-                        console.log('dirty');    
+                        console.log('dirty');
                         setTimeout(() => {
                             console.log('setting dirty');
                             // ed.setDirty(true);
@@ -909,7 +909,7 @@ export default {
         updateScroll() {
             this.scrollPosition = window.scrollY
         },
-        
+
         checkWordSuggester() {
             if (this.isMobile()) {
                 if ((this.scrollPosition + $(window).height()) > $('.writer-navigation').position().top) {
@@ -1055,7 +1055,7 @@ export default {
                 this.fetchDraftedUserEventPratilipis(this.getEventData.eventId);
             }
         },
-        
+
         'writerInFocus'(inFocus) {
             if (inFocus || this.inputInFocus) {
                 $(".footer-menu").css("height", "0")
@@ -1119,7 +1119,7 @@ export default {
         $('#image_input').on( "change", function() {
             that.uploadOnServer();
         });
-        
+
         // Hide Footer when keyboard comes
         if (this.isMobile()) {
             $(document).on('focus', 'input', function() {
@@ -1129,7 +1129,7 @@ export default {
                 that.inputInFocus = false;
             });
         }
-        
+
         window.addEventListener('scroll', this.updateScroll);
         setTimeout(() => {
             this.checkWordSuggester();
@@ -1161,7 +1161,7 @@ export default {
         }
     }
 
-    // Define vars we'll be using 
+    // Define vars we'll be using
     $brand-success: #d0021b;
     $loader-size: 7em;
     $check-height: $loader-size/2;
@@ -1366,8 +1366,8 @@ export default {
         }
 
         .chapter-delete {
-            display: inline-block; 
-            font-size: 1.2em; 
+            display: inline-block;
+            font-size: 1.2em;
             vertical-align: middle;
             float: right;
             cursor: pointer;
@@ -1438,7 +1438,7 @@ export default {
                 overflow: hidden;
                 cursor: pointer;
                 float: left;
-                @media screen and (max-width: 450px) { 
+                @media screen and (max-width: 450px) {
                     margin-bottom: 10px;
                 }
                 button {
@@ -1476,7 +1476,7 @@ export default {
             .translate-input-wrapper {
                 float: right;
                 width: calc(100% - 150px);
-                @media screen and (max-width: 450px) { 
+                @media screen and (max-width: 450px) {
                     float: none;
                     width: 100%;
                     clear: both;

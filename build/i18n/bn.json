@@ -508,7 +508,7 @@
     "hours": "ঘন্টা",
     "minute": "মিনিট",
     "minutes": "মিনিট",
-    
+
     "menu_category": "শ্রেণী",
     "menu_profile": "প্রোফাইল",
     "join_pratilipi": "প্রতিলিপির সাথে মিতালী গড়ুন",
@@ -530,7 +530,7 @@
     "reader_read_in_app_helper_text": "অ্যাপে পড়ুন",
     "read_popular_stories": "জনপ্রিয় গল্পগুলি পড়ুন",
     "see_more_categories": "আরো বিভাগ দেখুন",
-    
+
     "chat_messages": "মেসেজ",
     "chat_message": "মেসেজ",
     "chat_show_all": "পুরোটা দেখুন",
@@ -546,5 +546,16 @@
     "chat_no_msgs": "আপনার কাছে কোন মেসেজ নেই",
     "chat_no_unread_msgs": "আপনার কাছেে অপঠিত কোন মেসেজ নেই",
     "chat_yesterday": "গতকাল",
-    "chat_today": "আজ"
+    "chat_today": "আজ",
+
+    "event_participate":"অংশগ্রহণ করুন",
+    "event_participate_your_drafts":"আপনার রচনা",
+    "event_participate_your_submissions":"আপনার সাবমিশন্স",
+    "event_participate_accepted_message":"",
+    "event_participate_drafted_item_edit":"",
+    "event_participate_last_edited_on":"শেষ সম্পাদন",
+    "event_participate_finish":"শেষ",
+    "event_participate_confirm_submission":"",
+    "event_participate_cannot_change_drafts":"",
+    "event_participate_check_your_entry_here":"এখানে আপনার রচনা দেখুন"
 }

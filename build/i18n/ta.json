@@ -508,7 +508,7 @@
     "hours": "மணி நேரம்",
     "minute": "நிமிடம்",
     "minutes": "நிமிடங்கள்",
-    
+
     "menu_category": "வகைகள்",
     "menu_profile": "பக்கம்",
     "join_pratilipi": "பிரதிலிபியில் இணையுங்கள்",
@@ -530,7 +530,7 @@
     "reader_read_in_app_helper_text": "செயலியில் பார்க்க",
     "read_popular_stories": "பிரபலமான கதைகளைப் படிக்கவும்",
     "see_more_categories": "மேலும் வகைகளைக் காணவும்",
-    
+
     "chat_messages": "குறுஞ்செய்திகள்",
     "chat_message": "குறுஞ்செய்தி அனுப்ப",
     "chat_show_all": "அனைத்தையும் பார்க்க",
@@ -546,5 +546,16 @@
     "chat_no_msgs": "குறுஞ்செய்திகள் எதுவும் இல்லை",
     "chat_no_unread_msgs": "படிக்கப்படாத குறுஞ்செய்திகள் எதுவும் இல்லை",
     "chat_yesterday": "நேற்று",
-    "chat_today": "இன்று"
+    "chat_today": "இன்று",
+
+    "event_participate":"பங்கேற்க",
+    "event_participate_your_drafts":"உங்களது வரைவுகள்",
+    "event_participate_your_submissions":"நீங்கள் சமர்ப்பித்த படைப்புகள்",
+    "event_participate_accepted_message":"உங்களது படைப்பு போட்டிக்கு ஏற்றுக்கொள்ளப்பட்டது. கடைசித் தேதி முடிந்ததும் படைப்பு பதிப்பிக்கப்படும்.",
+    "event_participate_drafted_item_edit":"கீழே இருக்கும் படைப்புகள் ஏற்கனவே உங்களது வரைவுகளில் உள்ளது. அதனை எடிட் செய்ய அதன் மேல் சொடுக்கவும் அல்லது புதிய படைப்பை உருவாக்க கீழே சொடுக்கவும். ",
+    "event_participate_last_edited_on":"கடைசியாக திருத்தப்பட்டது",
+    "event_participate_finish":"முடிக்க",
+    "event_participate_confirm_submission":"சமர்பித்தலை உறுதிப்படுத்தவும்",
+    "event_participate_cannot_change_drafts":"இறுதி சமர்ப்பிப்பிற்கு பிறகு உங்களது படைப்பை திருத்த முடியாது. உறுதியாக படைப்பை சமர்ப்பிக்க வேண்டுமா?",
+    "event_participate_check_your_entry_here":"நீங்கள் சமர்ப்பித்த படைப்புகளை இங்கே பார்க்கவும்"
 }
