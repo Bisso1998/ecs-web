@@ -502,8 +502,7 @@ export function triggerAnanlyticsEvent(eventName, experimentType, eventProperty)
             eventName !== 'STARTCHAT_ALLCHATS_P2PCHAT' &&
             eventName !== 'DELETECHAT_ALLCHATS_P2PCHAT' &&
             eventName !== 'STARTCHAT_NEWCHATS_NOTIFS' &&
-            eventName !== 'VIEWALLCHATS_NEWCHATS_NOTIFS' &&
-            eventName !== 'LANDED_NEWCHATS_NOTIFS') {
+            eventName !== 'VIEWALLCHATS_NEWCHATS_NOTIFS') {
             amplitude.getInstance().logEvent(eventName, eventProps);
         } else {
             console.info('SKIPPING EVENT');
