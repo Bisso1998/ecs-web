@@ -11,9 +11,9 @@
                                 <div class="form-group col-md-3">
                                     <select id="inputState" class="form-control" v-model="selectedLanguage">
                                         <option disabled selected>__("language_choose_language")</option>
-                                        <option 
-                                            :value="eachLanguage.fullName.toUpperCase()" 
-                                            v-for="eachLanguage in constants.LANGUAGES" 
+                                        <option
+                                            :value="eachLanguage.fullName.toUpperCase()"
+                                            v-for="eachLanguage in constants.LANGUAGES"
                                             :key="eachLanguage.shortName">
                                             {{ eachLanguage.fullName.toUpperCase() }}
                                         </option>
@@ -100,7 +100,7 @@
                                             'published': eachEventPratilipi.state === 'PRATILIPI_PUBLISHED',
                                         }"><span>{{ eachEventPratilipi.state.split('_')[1] || eachEventPratilipi.state.split('_')[0] }}</span></td>
                                         <td>
-                                            <button type="button" class="btn publish" :disabled="eachEventPratilipi.state !== 'SUBMITTED'" @click="publishContent(eachEventPratilipi._id)">Publish</button>
+                                            <button type="button" class="btn publish" :disabled="eachEventPratilipi.state !== 'SUBMITTED' || eachEventPratilipi.state !== 'SUBMITTING'" @click="publishContent(eachEventPratilipi._id)">Publish</button>
                                         </td>
                                         <td class="delete-option">
                                             <button type="button" name="button" v-if="!eachEventPratilipi.adminDeleted" @click="deleteEventPratilipi(eachEventPratilipi._id)"><i class="material-icons">delete</i></button>
@@ -222,9 +222,9 @@ export default {
             }
 
             if (this.viewedChecked) {
-                queryObj.adminViewed = this.viewedChecked;    
+                queryObj.adminViewed = this.viewedChecked;
             }
-            
+
             if (this.reviewedChecked) {
                 queryObj.adminReviewed = this.reviewedChecked;
             }
@@ -405,7 +405,7 @@ export default {
                     }
                 }
             }
-            
+
             .popover_wrapper {
                 position: relative;
                 margin-top: 0px;

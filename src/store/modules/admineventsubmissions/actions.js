@@ -26,6 +26,7 @@ export default {
     },
 
     publishContent({ commit, state }, id) {
+        commit('setEventPratilipiPublishLoading', id);
         DataAccessor.publishAdminEventPratilipi(id, (eventPratilipiData) => {
             if (eventPratilipiData) {
                 commit('setEventPratilipiPublishSuccess', eventPratilipiData);

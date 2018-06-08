@@ -13,6 +13,11 @@ export default {
     	state.eventPratilipi.loading_state = 'LOADING_ERROR';
     },
 
+    setEventPratilipiPublishLoading(state, id) {
+        const eventPratilipi = state.eventPratilipi.data.find(eachEventPratilipi => eachEventPratilipi._id === id);
+        eventPratilipi.state = 'SUBMITTING';
+    },
+
     setEventPratilipiPublishSuccess(state, data) {
 
         const eventPratilipi = state.eventPratilipi.data.find(eachEventPratilipi => eachEventPratilipi._id === data._id);
