@@ -576,17 +576,22 @@ export function isCurrentEvent( eventId ) {
 
     let isItCurrentEvent = false;
 
+
     if(!eventId) {
         return isItCurrentEvent;
     }
 
-    constants.CATEGORY_DATA.sections.forEach((eachSection) => {
-        eachSection.categories.forEach((eachCategory) => {
-            if (eachCategory && eachCategory.pratilipiListData && eachCategory.pratilipiListData.eventId == eventId) {
-                isItCurrentEvent = true;
-            }
-        });
-    });
+    if ( eventId == 6900000000000074 || eventId == 6900000000000075 || eventId == 6900000000000077 || eventId == 6900000000000078 ){
+        isItCurrentEvent = true;
+    }
+    //
+    // constants.CATEGORY_DATA.sections.forEach((eachSection) => {
+    //     eachSection.categories.forEach((eachCategory) => {
+    //         if (eachCategory && eachCategory.pratilipiListData && eachCategory.pratilipiListData.eventId == eventId) {
+    //             isItCurrentEvent = true;
+    //         }
+    //     });
+    // });
 
     return isItCurrentEvent;
 }
