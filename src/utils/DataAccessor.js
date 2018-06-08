@@ -766,7 +766,7 @@ export default {
         console.log(authorId);
         if (formData == null) return;
         if (authorId == null) return;
-        
+
         httpUtil.postMultipart(API_PREFIX + '/author/cover?authorId=' + authorId,
             null,
             formData,
@@ -778,7 +778,7 @@ export default {
         console.log(authorId);
         if (formData == null) return;
         if (authorId == null) return;
-        
+
         httpUtil.postMultipart(API_PREFIX + '/author/image?authorId=' + authorId,
             null,
             formData,
@@ -790,7 +790,7 @@ export default {
         console.log(pratilipiId);
         if (formData == null) return;
         if (pratilipiId == null) return;
-        
+
         httpUtil.postMultipart(API_PREFIX + '/pratilipi/cover?pratilipiId=' + pratilipiId,
             null,
             formData,
@@ -894,7 +894,7 @@ export default {
     bulkSaveChapters: (eventPratilipiId, contents, successCallBack, errorCallBack) => {
         httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_CONTENT,
             null,
-            { contents, eventPratilipiId },
+            { contents: encodeURIComponent(contents), eventPratilipiId },
             function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
     },
     getEventPratilipiContent: (eventPratilipiId, aCallBack) => {
