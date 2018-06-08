@@ -318,7 +318,7 @@ export function setAnalyticsUserProperty(propertyName, propertyValue) {
         if (FB.AppEvents.getUserID() === undefined || FB.AppEvents.getUserID() === null || FB.AppEvents.getUserID().trim() === '') {
             return;
         }
-        
+
         try {
             FB.AppEvents.updateUserProperties(propertyObject, function (res) {
                 console.log("FACEBOOK USER_PROPS: ", res);
@@ -580,7 +580,7 @@ export function isCurrentEvent( eventId ) {
         return isItCurrentEvent;
     }
 
-    if ( eventId == 6900000000000074 || eventId == 6900000000000075 || eventId == 6900000000000077 || eventId == 6900000000000078 ){
+    if ( eventId == 6900000000000080 || eventId == 6900000000000079 || eventId == 6900000000000083 ){
         isItCurrentEvent = true;
     }
     //

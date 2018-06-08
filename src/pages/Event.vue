@@ -8,10 +8,10 @@
                             <div class="head-title">{{ getEventData.name }}</div>
                             <img :src="getEventData.bannerImageUrl" alt="">
                             <div class="desc" v-html="getEventData.description"></div>
-                            <button v-if="canParticipate && false" type="button" class="participate_btn" name="button" @click="goToEventParticipate">__('event_participate')</button>
+                            <button v-if="canParticipate" type="button" class="participate_btn" name="button" @click="goToEventParticipate">__('event_participate')</button>
                         </div>
                     </div>
-                    <div class="col-md-12" v-if="getUserEventDraftData.length > 0 && canParticipate && false">
+                    <div class="col-md-12" v-if="getUserEventDraftData.length > 0 && canParticipate">
                         <div class="page-content event-list card" id="yourDrafts">
                             <div class="head-title">__('event_participate_your_drafts')</div>
                             <router-link v-for="pratilipiData in getUserEventDraftData" :key="pratilipiData._id" :to='"/event/" + $route.params.event_slug + "/participate/" + pratilipiData._id + "?step=2"'>
@@ -27,7 +27,7 @@
                             </router-link>
                         </div>
                     </div>
-                    <div class="col-md-12" v-if="getUserEventData.length > 0 && canParticipate && false">
+                    <div class="col-md-12" v-if="getUserEventData.length > 0 && canParticipate">
                         <div class="page-content event-list card" id="yourEntries">
                             <div class="head-title">__('event_participate_your_submissions')</div>
                             <router-link v-for="pratilipiData in getUserEventData" :key="pratilipiData._id" :to='"/event/" + $route.params.event_slug + "/participate/" + pratilipiData._id + "?step=2"'>
