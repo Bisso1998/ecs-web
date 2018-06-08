@@ -894,7 +894,7 @@ export default {
     bulkSaveChapters: (eventPratilipiId, contents, successCallBack, errorCallBack) => {
         httpUtil.post( API_PREFIX + EVENT_PARTICIPATE_PREFIX + EVENT_PARTICIPATE_CONTENT,
             null,
-            { contents: encodeURIComponent(contents), eventPratilipiId },
+            { contents, eventPratilipiId },
             function( response, status ) { processPostResponse( response, status, successCallBack, errorCallBack ) } );
     },
     getEventPratilipiContent: (eventPratilipiId, aCallBack) => {
