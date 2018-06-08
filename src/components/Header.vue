@@ -30,7 +30,7 @@
                             @click="triggerEventAndResetNotificationCount">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
-                                <span v-if="!notificationCount && pendingMessages.length > 0" class="message-notification"></span>
+                                <span v-if="(!notificationCount && pendingMessages.length > 0) || this.getUserDetails.isGuest" class="message-notification"></span>
                             </div>
                         </div>
                         <div class="d-block d-lg-none search-box search-box-2 text-right">
@@ -45,7 +45,7 @@
                             class="notification-icon">
                                 <i class="material-icons">notifications</i>
                                 <span v-if="notificationCount">{{ notificationCount }}</span>
-                                <span v-if="!notificationCount && pendingMessages.length > 0" class="message-notification"></span>
+                                <span v-if="(!notificationCount && pendingMessages.length > 0) || this.getUserDetails.isGuest" class="message-notification"></span>
                             </div>
                         </div>
                     </div>
