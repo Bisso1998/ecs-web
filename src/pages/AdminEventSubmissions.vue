@@ -100,7 +100,7 @@
                                             'published': eachEventPratilipi.state === 'PRATILIPI_PUBLISHED',
                                         }"><span>{{ eachEventPratilipi.state.split('_')[1] || eachEventPratilipi.state.split('_')[0] }}</span></td>
                                         <td>
-                                            <button type="button" class="btn publish" :disabled="eachEventPratilipi.state !== 'SUBMITTED' || eachEventPratilipi.state !== 'SUBMITTING'" @click="publishContent(eachEventPratilipi._id)">Publish</button>
+                                            <button type="button" class="btn publish" :disabled="eachEventPratilipi.state !== 'SUBMITTED' || eachEventPratilipi.state === 'SUBMITTING'" @click="publishContent(eachEventPratilipi._id)">Publish</button>
                                         </td>
                                         <td class="delete-option">
                                             <button type="button" name="button" v-if="!eachEventPratilipi.adminDeleted" @click="deleteEventPratilipi(eachEventPratilipi._id)"><i class="material-icons">delete</i></button>
