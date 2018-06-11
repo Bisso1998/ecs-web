@@ -170,6 +170,7 @@
                 <Spinner v-if="getPratilipiLoadingState === 'LOADING'"></Spinner>
                 <ServerError :action="'pratilipipage/fetchPratilipiDetailsAndUserPratilipiData'" :data="$route.params.slug_id" v-if="getPratilipiLoadingState === 'LOADING_ERROR'"></ServerError>
             </div>
+            <ChatBanner></ChatBanner>
         </div>
     </MainLayout>
 </template>
@@ -183,6 +184,7 @@ import Reviews from '@/components/Reviews.vue';
 import BookShareStrip from '@/components/BookShareStrip.vue';
 import ServerError from '@/components/ServerError.vue';
 import BookTags from '@/components/BookTags.vue';
+import ChatBanner from '@/components/ChatBanner.vue';
 import mixins from '@/mixins';
 import constants from '@/constants'
 import { mapGetters, mapActions } from 'vuex'
@@ -522,7 +524,8 @@ export default {
         BookTags,
         Reviews,
         ServerError,
-        BookShareStrip
+        BookShareStrip,
+        ChatBanner
     },
     watch: {
         '$route.params.slug_id' (slug_id) {
